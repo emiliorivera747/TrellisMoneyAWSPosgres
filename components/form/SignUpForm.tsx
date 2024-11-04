@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 // Firebase
 import { auth, googleProvider } from "@/lib/firebaseConfig";
@@ -16,13 +16,34 @@ type Inputs = {
   password: string;
 };
 
+import { z } from "zod";
+
+const schema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[^a-zA-Z0-9]/, "Password must contain at least one special character"),
+});
+
 export default function Signup() {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    resolver: async (data) => {
+      try {
+        schema.parse(data);
+        return { values: data, errors: {} };
+      } catch (e) {
+        return { values: {}, errors: e.errors };
+      }
+    },
+  });
 
   const [err, setErr] = useState<string | null>(null);
 
@@ -33,7 +54,6 @@ export default function Signup() {
         data.email,
         data.password
       );
-      console.log("User signed up:", userCredential.user);
     } catch (err) {
       setErr((err as any).message);
     }
@@ -69,8 +89,8 @@ export default function Signup() {
           placeholder="Password"
           errors={errors}
           register={register}
-          getValues={getValues}
           name="password"
+          passwordTooltip={true}
         />
         <PrimarySubmitButton
           bgColor="bg-blue-500"

@@ -22,9 +22,9 @@ export default function Home() {
           Your personal finance management tool to track investments across all
           accounts.
         </p>
-        <button className="mt-4 px-8 py-4 bg-blue-500 text-white border-none rounded cursor-pointer">
+        <Link href='/sign-up' className="mt-4 px-8 py-4 bg-blue-500 text-white border-none rounded cursor-pointer">
           Get Started
-        </button>
+        </Link>
       </header>
       <Footer/>
     </div>

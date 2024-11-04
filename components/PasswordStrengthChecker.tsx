@@ -1,4 +1,5 @@
-import zxcvbn from 'zxcvbn';
+import zxcvbn from "zxcvbn";
+import React from "react";
 
 function PasswordStrengthChecker({ password }: { password: String }) {
   console.log(password);
@@ -11,12 +12,29 @@ function PasswordStrengthChecker({ password }: { password: String }) {
   const feedback = result.feedback.warning; // Get warning messages
 
   // Map score to a strength label
-  const strengthLabel = ['Weak', 'Fair', 'Good', 'Strong', 'Very Strong'][strengthScore];
+  const strengthLabel = ["Weak", "Fair", "Good", "Strong", "Very Strong"][
+    strengthScore
+  ];
+  const strengthColors = [
+    "bg-red-500",
+    "bg-orange-500",
+    "bg-yellow-500",
+    "bg-blue-500",
+    "bg-green-500",
+  ];
 
   return (
-    <div>
-      <p>Strength: {strengthLabel}</p>
-      {feedback && <p>{feedback}</p>}
+    <div className="mb-1 text-[0.8rem] mt-4">
+      <div className="flex flex-col items-start">
+        <p className="text-[#343a40]">Password strength: {strengthLabel}</p>
+        {feedback && <p className="mb-1 text-xs text-[#495057] font-light">{feedback}</p>}
+      </div>
+      <div className="w-full bg-gray-300 h-2 rounded mt-1">
+        <div
+          className={`h-2 rounded ${strengthColors[strengthScore]}`}
+          style={{ width: `${(strengthScore + 1) * 20}%` }}
+        ></div>
+      </div>
     </div>
   );
 }
