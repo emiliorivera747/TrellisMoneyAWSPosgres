@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
 // Next
 import Link from "next/link";
@@ -44,12 +45,12 @@ const SignInForm = () => {
 
   const handleEmailSignIn: SubmitHandler<Inputs> = async (data) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
         auth,
         data.email,
         data.password
       );
-      console.log("User signed in:", userCredential.user);
+      toast.success("Signed In successfully!", { theme: "colored" });
       // Redirect to a protected page or dashboard
       router.push("/");
     } catch (err) {

@@ -1,6 +1,13 @@
 "use client";
+
+//Next and React
 import Image from "next/image";
-import { useState} from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+// External libraries
+import { toast } from "react-toastify";
+import { z } from "zod";
 
 // Firebase
 import { auth, googleProvider } from "@/lib/firebaseConfig";
@@ -16,8 +23,6 @@ type Inputs = {
   password: string;
 };
 
-import { z } from "zod";
-
 const schema = z.object({
   email: z.string().email("Invalid email address"),
   password: z
@@ -26,10 +31,14 @@ const schema = z.object({
     .regex(/[0-9]/, "Password must contain at least one number")
     .regex(/[a-z]/, "Password must contain at least one lowercase letter")
     .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[^a-zA-Z0-9]/, "Password must contain at least one special character"),
+    .regex(
+      /[^a-zA-Z0-9]/,
+      "Password must contain at least one special character"
+    ),
 });
 
 export default function Signup() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -49,22 +58,29 @@ export default function Signup() {
 
   const handleEmailSignUp: SubmitHandler<Inputs> = async (data) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         data.email,
         data.password
       );
+      toast.success("Signed up successfully!", { theme: "colored" });
+      router.push('/');
     } catch (err) {
       setErr((err as any).message);
+      toast.error((err as any).message);
     }
   };
 
   const handleGoogleSignUp = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      console.log("User signed up with Google:", result.user);
+      await signInWithPopup(auth, googleProvider);
+      toast.success("Signed up successfully!", {
+        theme: "colored",
+      });
+      router.push('/');
     } catch (err) {
       setErr((err as any).message);
+      toast.error((err as any).message);
     }
   };
 

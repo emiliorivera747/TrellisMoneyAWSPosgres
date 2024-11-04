@@ -1,4 +1,10 @@
 import type { Metadata } from "next";
+
+//External Libraries
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify';
+
+//Styles
 import localFont from "next/font/local";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -34,6 +40,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased ${inter.className}`}
       >
         {children}
+        <ToastContainer />
       </body>
     </html>
   );
