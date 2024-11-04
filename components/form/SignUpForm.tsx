@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// Firebase
 import { auth, googleProvider } from "@/lib/firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
@@ -18,8 +20,10 @@ export default function Signup() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<Inputs>();
+
   const [err, setErr] = useState<string | null>(null);
 
   const handleEmailSignUp: SubmitHandler<Inputs> = async (data) => {
@@ -40,7 +44,6 @@ export default function Signup() {
       const result = await signInWithPopup(auth, googleProvider);
       console.log("User signed up with Google:", result.user);
     } catch (err) {
-      console.error("Error during Google sign-up:", err);
       setErr((err as any).message);
     }
   };
@@ -66,6 +69,7 @@ export default function Signup() {
           placeholder="Password"
           errors={errors}
           register={register}
+          getValues={getValues}
           name="password"
         />
         <PrimarySubmitButton
