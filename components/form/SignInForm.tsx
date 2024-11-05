@@ -1,4 +1,4 @@
-"use-client";
+"use client"
 import { useState } from "react";
 
 //External libraries
@@ -50,11 +50,9 @@ const SignInForm = () => {
         data.email,
         data.password
       );
-      toast.success("Signed In successfully!", { theme: "colored" });
-      // Redirect to a protected page or dashboard
-      router.push("/");
+      toast.success("Signed in successfully!", { theme: "colored" });
+      router.push("/dashboard");
     } catch (err) {
-      // console.error("Error signing in:", err);
       setErr(err.message);
     }
   };
@@ -62,9 +60,9 @@ const SignInForm = () => {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("User signed in:", result.user);
+      toast.success("Signed in successfully!", { theme: "colored" });
+      router.push("/");
     } catch (error) {
-      // console.error("Error during sign-in:", error);
     }
   };
 

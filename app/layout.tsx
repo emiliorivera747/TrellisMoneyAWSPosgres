@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 
+// AuthProvider
+import { AuthProvider } from "./AuthContext";
+
 //External Libraries
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
 //Styles
 import localFont from "next/font/local";
@@ -39,8 +42,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased ${inter.className}`}
       >
-        {children}
-        <ToastContainer />
+        <AuthProvider>
+          {children}
+          <ToastContainer />
+        </AuthProvider>
       </body>
     </html>
   );

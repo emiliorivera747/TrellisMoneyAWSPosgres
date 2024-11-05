@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 //Next and React
 import Image from "next/image";
@@ -77,7 +77,7 @@ export default function Signup() {
       toast.success("Signed up successfully!", {
         theme: "colored",
       });
-      router.push('/');
+      router.push('/dashboard');
     } catch (err) {
       setErr((err as any).message);
       toast.error((err as any).message);

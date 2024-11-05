@@ -1,9 +1,18 @@
-import React from 'react'
+"use client";
+
+//Components
+import SignOutButton from "@/components/buttons/SignOutButton";
+import PrivateRoute from "@/components/private-route/PrivateRoute";
 
 const Dashboard = () => {
-  return (
-    <div>page</div>
-  )
-}
 
-export default Dashboard
+  return (
+    <PrivateRoute>
+      <div>
+        <SignOutButton />
+      </div>
+    </PrivateRoute>
+  );
+};
+
+export default Dashboard;

@@ -1,12 +1,27 @@
+"use client";
 
+// Auth Context
+import { useAuth } from "@/app/AuthContext";
+
+// Next and React
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import Link from "next/link";
+
 export const dynamic = "force-dynamic";
 
 // Components
 import SignInButton from "@/components/sign in/SignInButton";
-import Footer from "@/components/Footer"
+import Footer from "@/components/Footer";
 
 export default function Home() {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) router.push("/dashboard"); // Redirect if logged in
+  }, [user, router]);
+
   return (
     <div className="bg-white h-screen">
       <nav className="flex justify-between p-4 border-b border-gray-200 mx-10">
@@ -14,7 +29,7 @@ export default function Home() {
           {/* <img src="/logo.png" alt="Trellis Money Logo" className="h-10 mr-4" /> */}
           <span className="text-xl font-bold">Trellis Money</span>
         </div>
-        <SignInButton/>
+        <SignInButton />
       </nav>
       <header className="text-center   h-[25rem] items-center flex flex-col mt-[10%] bg-white">
         <h1 className="text-3xl font-bold">Welcome to Trellis Money</h1>
@@ -22,11 +37,14 @@ export default function Home() {
           Your personal finance management tool to track investments across all
           accounts.
         </p>
-        <Link href='/sign-up' className="mt-4 px-8 py-4 bg-blue-500 text-white border-none rounded cursor-pointer">
+        <Link
+          href="/sign-up"
+          className="mt-4 px-8 py-4 bg-blue-500 text-white border-none rounded cursor-pointer"
+        >
           Get Started
         </Link>
       </header>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
