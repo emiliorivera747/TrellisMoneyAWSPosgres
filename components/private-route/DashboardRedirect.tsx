@@ -17,6 +17,8 @@ const PrivateRoute = ({ children }: ProtectedRouteProps) => {
       router.push("/dashboard"); // Redirect to home if not authenticated
     }
   }, [user, router]);
+  
+  if (user) return null; // Render nothing until redirect happens
 
   return <>{children}</>;
 };

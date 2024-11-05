@@ -1,26 +1,23 @@
-
-"use client";
-import { useAuth } from "@/app/AuthContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+'use client'
+import { useAuth } from '@/app/AuthContext';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
-const PrivateRoute = ({ children }: ProtectedRouteProps) => {
-  const { user } = useAuth();
-  const router = useRouter();
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+    const router = useRouter();
+    const { user } = useAuth();
 
-  useEffect(() => {
-    if (!user) {
-      router.push("/"); // Redirect to home if not authenticated
-    }
-  }, [user, router]);
+    useEffect(() => {
+        if (!user) {
+            router.push('/');
+        }
+    }, [router, user]);
 
-  if (!user) return null; // Render nothing until redirect happens
-
-  return <>{children}</>;
+    return <div>{user ? children : null}</div>;
 };
 
-export default PrivateRoute;
+export default ProtectedRoute;
