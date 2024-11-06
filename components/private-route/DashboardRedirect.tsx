@@ -14,13 +14,15 @@ const PrivateRoute = ({ children }: ProtectedRouteProps) => {
 
   useEffect(() => {
     if (user) {
-      router.push("/dashboard"); // Redirect to home if not authenticated
+      return router.push("/dashboard"); // Redirect to dashboard if authenticated
     }
   }, [user, router]);
-  
-  if (user) return null; // Render nothing until redirect happens
 
-  return <>{children}</>;
+  if (!user) {
+    return <>{children}</>; // Render children if user is not authenticated
+  }
+
+  return null;
 };
 
 export default PrivateRoute;

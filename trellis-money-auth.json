@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "trellis-money-auth",
+  "private_key_id": "237ccdbee83651d26ac2965ddc663018d0ab0c05",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCnaZWR18x6+f4X\ncSU4QSNWEGtEugtxb8UONVw63c8qQh7r3DdHSh4M9r2RTUtOPqKCrYggWrgZirsu\nNjvZnAL4n1tFfiq5OG89kKDvbypHUfyCZdJRgss/gGnZ9nPb9i81q7HhGmjfZZvV\nn5iu+FIsn22NtzUPbClvkavxeB8aF4d48eAQbaQ0vfNuWnc6BSph5O+6MJU049ST\nQUKKFqdDbZcTBsNUw4Oz7CWJxWpuZc2ESpduyksElbex6Ax7daucbaNwjIvaEQeC\nPQ6F2a/wjfyR98CYRJ7j1v8qNikQL11QJaioRcgcyxjBgcQg5x2qpLl7ZZEuJTXp\nA7M3nev7AgMBAAECggEATDXKeuvsEAeB3hYJxYQRm/o5er3eu7MP15n+9GVJC4my\nHdjP6UoaR/iC74RqRaJJxIdOsrvZlvcKoszZjgRxbdDNceMve8XvDe2q9ZR7gKAX\n/RxxE94gvDWu+iQxNe7qKtqQTVMCbsAIosTWcsBkWB/zdVHze6PXcQy1Y2U1c2CJ\n8DojsvJe2tbT7gC3Av+bL0VwUXI1q1nz4JnpBFjemm68dCiuimq1AXXVuXANw3Bj\n+F5uowX4fP1mJSyMfK2hkGm8Px0xDNXRdag4mOZlpc5C9nZC5DqUdf0Tjq/NQl7P\ndOrH1auuQ1cTW8l6uyU2/UJs/ZPWjjZRM7rIoR2kAQKBgQDaZahMfLWhMksYg6Gn\nB3MARwbsI2vU9NR5Yjg0W8CFRIW+A501PKjM8n2Hnc6PGZqspCBJy9XHhNbOTCU2\nqaIszoHyuiRmV30+DUcgp6jSoV0JKUAjVNEEV6m+aN/rGwrTK5X+WTFRYl12dRNT\n21rx8FZpkYv9u+yB6f3N14hI+wKBgQDEPKnWMGvIEO+P5XKhc6R91DmBlP8S4yIN\nReN5hleeIbt111XmJBtWL4is28zIhsRNnAe2xfoPofMovHSmVw0E3uHipURlvu1i\noQAJAgzWaJu9tECR1GLUtBTew60mIsH7XEQLcJnLBHO4aZlWk0pJQkPtXxLpbO2g\nQol4mxV5AQKBgCmIMYQyJxw7gzprNd+ctAr2duOLLON3l7xpqESUujzdtg1XhJru\nKS+oYaTbpr9h4B86qwU9pS7nHS5oHp+RjMy2jNHLAkcQFjoprkAQgjNkClxGovLV\nG1aXESmrqgF8yAc2f7S5434Vla6EPyOwUFA4I0a6LgQXq7dc9y4g8cLnAoGAHOLN\nIUFJbE7J5MWipQ9vxDHsMR3smiwjBA8ol+fll9phTMxg0Zq5B2vB06gbMd1cogv4\nurfTwl9Vesaa6S1hNjlUyNcJBW0gZmdKqQjLOPh3DGqvIog/8A1+EPh+0WFGaqi/\nP2vYx6ClJB0vPCY8RiJh+1wGXaPyKqgAsmcptwECgYAkkWz/TctSK8nPBd2moX7F\nEmLTXz9jAwLJE3PPucC+euE+u229CCv9P/UxuszTMqwpR3EjROw2/TvYOtk89E1R\nKdvV0VyN1AYTGOKJHK9raJGQvFTNuQ8A0p4Kq3zRA9mJsGy3hvK8wpQwPtmVVX/b\n/l1sWsgYD27ytdmk/wEFcg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-wepcy@trellis-money-auth.iam.gserviceaccount.com",
+  "client_id": "111259385163672506680",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-wepcy%40trellis-money-auth.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
