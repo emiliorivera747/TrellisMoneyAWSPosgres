@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 
 //External libraries
@@ -15,11 +15,15 @@ import { useRouter } from "next/navigation";
 // Components
 import InputLabel from "@/components/form-components/InputLabel";
 import PrimarySubmitButton from "../buttons/PrimarySubmitButton";
+import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 
 // Firebase
 import { auth, googleProvider } from "@/lib/firebaseConfig";
 import { signInWithPopup } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
+
+//Functions
+import { getFirebaseErrorMessage } from "@/functions/firebaseErrorMessages";
 
 const schema = z.object({
   email: z.string().email("Invalid email format"),
@@ -41,19 +45,16 @@ const SignInForm = () => {
   });
 
   const router = useRouter();
-  const [err, setErr] = useState(null);
+  const [errMsg, setErrMsg] = useState<String | null>(null);
 
-  const handleEmailSignIn: SubmitHandler<Inputs> = async (data) => {
+  const handleEmailSignIn: SubmitHandler<Inputs> = async (data: Inputs) => {
     try {
-      await signInWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
+      await signInWithEmailAndPassword(auth, data.email, data.password);
       toast.success("Signed in successfully!", { theme: "colored" });
       router.push("/dashboard");
-    } catch (err) {
-      setErr(err.message);
+    } catch (err: any) {
+      console.log(err.code);
+      setErrMsg(getFirebaseErrorMessage(err));
     }
   };
 
@@ -62,8 +63,7 @@ const SignInForm = () => {
       const result = await signInWithPopup(auth, googleProvider);
       toast.success("Signed in successfully!", { theme: "colored" });
       router.push("/");
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (
@@ -106,7 +106,7 @@ const SignInForm = () => {
           Forgot pasword?
         </Link>
       </div>
-
+      {errMsg && <PrimaryErrorMessage errMsg={errMsg} />}
       {/* Or */}
       <div className="flex justify-center items-center h-[5rem] w-full ">
         <hr className="w-full border-t border-gray-300" />

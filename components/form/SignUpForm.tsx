@@ -17,6 +17,7 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import InputLabel from "@/components/form-components/InputLabel";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import { useForm, SubmitHandler } from "react-hook-form";
+import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 
 type Inputs = {
   email: string;
@@ -65,9 +66,8 @@ export default function Signup() {
       );
       toast.success("Signed up successfully!", { theme: "colored" });
       router.push('/');
-    } catch (err) {
-      setErr((err as any).message);
-      toast.error((err as any).message);
+    } catch (err: any) {
+      setErr(err);
     }
   };
 
@@ -122,7 +122,7 @@ export default function Signup() {
         <p className="text-gray-500 text-sm px-4 font-medium">Or</p>
         <hr className="w-full border-t border-gray-300" />
       </div>
-
+      {err && <PrimaryErrorMessage errMsg={err} />}
       {/* Sign up with google button */}
       <button
         onClick={handleGoogleSignUp}

@@ -7,14 +7,14 @@ import DashboardRedirect from "@/components/private-route/DashboardRedirect";
 
 const page = () => {
   return (
-    <DashboardRedirect>
+    // <DashboardRedirect>
       <div className="flex flex-col items-center justify-center m-h-screen h-auto min-w-screen w-auto">
         <div className="w-full">
           <NavBar />
         </div>
         <SignUpForm />
       </div>
-    </DashboardRedirect>
+    // </DashboardRedirect>
   );
 };
 
