@@ -3,10 +3,16 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import { auth } from '@/lib/firebaseConfig';
 import { onAuthStateChanged, User } from 'firebase/auth';
 
+
+type AuthState = {
+  authenticated: boolean;
+  initializing: boolean;
+}
+
 // Define the shape of the context value
 interface AuthContextType {
   user: User | null;
-  loading: boolean; // Add loading to the context type
+  authentication: AuthState;
 }
 
 // Create the AuthContext with an initial undefined value
@@ -18,18 +24,28 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [authentication, setAuthState] = useState<AuthState>({
+    authenticated: false,
+    initializing: true
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
-      setLoading(false); // Set loading to false after auth status is resolved
+      if (firebaseUser) {
+        setUser(firebaseUser);
+        setAuthState({ authenticated: true, initializing: false });
+      }
+      else{
+        setUser(null);
+        setAuthState({ authenticated: false, initializing: false });
+      }
+
     });
     return () => unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}> {/* Pass loading */}
+    <AuthContext.Provider value={{ user, authentication }}> {/* Pass loading */}
       {children}
     </AuthContext.Provider>
   );

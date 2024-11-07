@@ -1,6 +1,5 @@
 "use client";
 import { useAuth } from "@/app/AuthContext";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -9,24 +8,32 @@ interface ProtectedRouteProps {
 }
 
 const DashboardRedirect= ({ children }: ProtectedRouteProps) => {
-  const { user, loading } = useAuth();
+  const { user, authentication } = useAuth();
   const router = useRouter();
-  const [isUserChecked, setIsUserChecked] = useState(false);
 
   useEffect(() => {
-    if (!loading) {
-      setIsUserChecked(true);
-      if (user) {
-        return router.push("/dashboard"); // Redirect to dashboard if authenticated
-      }
-    }
-  }, [ user, router]);
 
-  if (!isUserChecked || loading) {
-    return <div>Loading...</div>; // Show loading until auth status is confirmed
+    /**
+     * If the user is not authenticated and the app is not initializing, redirect to home page
+     */
+    if (authentication.authenticated && !authentication.initializing) {
+      router.push("/dashboard");
+    }
+  }, [user, router, authentication]);
+
+  /**
+   * If the app is initializing, show a loading message
+   */
+  if (authentication.initializing) {
+    return <div>Loading</div>;
   }
 
-  return children ;
+  /**
+   * If the user is not authenticated and the app is not initializing, render the children
+   */
+  if(!authentication.authenticated && !authentication.initializing){
+    return children;
+  }
 };
 
 export default DashboardRedirect;

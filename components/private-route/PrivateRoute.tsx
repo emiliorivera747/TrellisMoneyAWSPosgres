@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import { useAuth } from "@/app/AuthContext";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface ProtectedRouteProps {
@@ -8,24 +8,31 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { user, loading } = useAuth();
+  const { user, authentication } = useAuth();
   const router = useRouter();
-  const [isUserChecked, setIsUserChecked] = useState(false);
 
   useEffect(() => {
-    if (!loading) {
-      setIsUserChecked(true);
-      if (!user){
-         return router.push("/");
-      }
+    /**
+     * If the user is not authenticated and the app is not initializing, redirect to the login page
+     */
+    if (!authentication.authenticated && !authentication.initializing) {
+      router.push("/");
     }
-  }, []);
+  }, [user, router, authentication]);
 
-  if (!isUserChecked || loading) {
-    return <div>Loading...</div>; // Show loading until auth status is confirmed
+  /**
+   * If the app is initializing, show a loading message
+   */
+  if (authentication.initializing) {
+    return <div>Loading</div>;
   }
 
-  return children;
+  /**
+   * If the user is authenticated and the app is not initializing, render the children
+   */
+  if(authentication.authenticated && !authentication.initializing){
+    return children;
+  }
 };
 
 export default ProtectedRoute;

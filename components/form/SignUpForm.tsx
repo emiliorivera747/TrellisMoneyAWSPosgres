@@ -19,6 +19,9 @@ import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import { useForm, SubmitHandler } from "react-hook-form";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 
+//Functions
+import { getFirebaseErrorMessage } from "@/functions/firebaseErrorMessages";
+
 type Inputs = {
   email: string;
   password: string;
@@ -67,7 +70,8 @@ export default function Signup() {
       toast.success("Signed up successfully!", { theme: "colored" });
       router.push('/');
     } catch (err: any) {
-      setErr(err);
+      
+      setErr(getFirebaseErrorMessage(err));
     }
   };
 

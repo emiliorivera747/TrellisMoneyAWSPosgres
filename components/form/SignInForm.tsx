@@ -53,17 +53,18 @@ const SignInForm = () => {
       toast.success("Signed in successfully!", { theme: "colored" });
       router.push("/dashboard");
     } catch (err: any) {
-      console.log(err.code);
       setErrMsg(getFirebaseErrorMessage(err));
     }
   };
 
   const handleGoogleSignIn = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider);
       toast.success("Signed in successfully!", { theme: "colored" });
-      router.push("/");
-    } catch (error) {}
+      router.push("/dashboard");
+    } catch (err) {
+      setErrMsg(getFirebaseErrorMessage(err));
+    }
   };
 
   return (

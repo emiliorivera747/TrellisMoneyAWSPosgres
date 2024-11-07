@@ -4,6 +4,7 @@ type FirebaseError = {
 };
 
 export function getFirebaseErrorMessage(error: FirebaseError): string {
+    console.log(error);
     switch (error.code) {
         case 'auth/user-not-found':
             return 'No user found with the provided credentials.';
