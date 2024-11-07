@@ -58,7 +58,7 @@ export default function PasswordReset() {
   };
 
   return (
-    <DashboardRedirect>
+    // <DashboardRedirect>
       <div className="flex flex-col items-center justify-center m-h-screen h-auto min-w-screen w-auto">
         <div className="w-full">
           <NavBar />
@@ -98,6 +98,6 @@ export default function PasswordReset() {
           {err && <p style={{ color: "red" }}>{err}</p>}
         </div>
       </div>
-    </DashboardRedirect>
+    // </DashboardRedirect>
   );
 }

@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, getIdToken, Auth } from "firebase/auth";
+import { getInstallations } from "firebase/installations";
 import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -27,7 +28,8 @@ export async function getAuthIdToken(): Promise<string | null> {
   
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
+const installations = getInstallations(app);
 const googleProvider = new GoogleAuthProvider();
 const analytics = isSupported().then((yes) => (yes ? getAnalytics(app) : null));
 
-export { auth, googleProvider, analytics };
+export {app, auth, googleProvider, analytics, installations };

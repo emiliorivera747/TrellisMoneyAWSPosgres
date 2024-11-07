@@ -1,6 +1,6 @@
-
 "use client";
 import { useAuth } from "@/app/AuthContext";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -8,21 +8,25 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
-const PrivateRoute = ({ children }: ProtectedRouteProps) => {
-  const { user } = useAuth();
+const DashboardRedirect= ({ children }: ProtectedRouteProps) => {
+  const { user, loading } = useAuth();
   const router = useRouter();
+  const [isUserChecked, setIsUserChecked] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      return router.push("/dashboard"); // Redirect to dashboard if authenticated
+    if (!loading) {
+      setIsUserChecked(true);
+      if (user) {
+        return router.push("/dashboard"); // Redirect to dashboard if authenticated
+      }
     }
-  }, [user, router]);
+  }, [ user, router]);
 
-  if (!user) {
-    return <>{children}</>; // Render children if user is not authenticated
+  if (!isUserChecked || loading) {
+    return <div>Loading...</div>; // Show loading until auth status is confirmed
   }
 
-  return null;
+  return children ;
 };
 
-export default PrivateRoute;
+export default DashboardRedirect;

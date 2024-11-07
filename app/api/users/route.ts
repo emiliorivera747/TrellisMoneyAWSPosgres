@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
     if (!idToken) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-  
+    
     try {
       const decodedToken = await authAdmin.verifyIdToken(idToken);
       const userId = decodedToken.uid;
