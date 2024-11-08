@@ -26,7 +26,14 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { getFirebaseErrorMessage } from "@/functions/firebaseErrorMessages";
 
 const schema = z.object({
-  email: z.string().email("Invalid email format"),
+  email: z
+    .string()
+    .email("Invalid email format")
+    .max(254, "Email cannot be longer than 254 characters")
+    .refine((email) => {
+      const [localPart] = email.split("@");
+      return localPart.length <= 63;
+    }, "Email local part cannot be longer than 63 characters"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 

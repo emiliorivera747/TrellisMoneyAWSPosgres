@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "@/app/AuthContext";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface ProtectedRouteProps {

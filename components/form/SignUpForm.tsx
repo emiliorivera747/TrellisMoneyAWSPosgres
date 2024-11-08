@@ -8,6 +8,9 @@ import { useState } from "react";
 // External libraries
 import { toast } from "react-toastify";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+
 
 // Firebase
 import { auth, googleProvider } from "@/lib/firebaseConfig";
@@ -16,7 +19,6 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 // Components
 import InputLabel from "@/components/form-components/InputLabel";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
-import { useForm, SubmitHandler } from "react-hook-form";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 
 //Functions
@@ -28,7 +30,14 @@ type Inputs = {
 };
 
 const schema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z
+    .string()
+    .email("Invalid email format")
+    .max(254, "Email cannot be longer than 254 characters")
+    .refine((email) => {
+      const [localPart] = email.split("@");
+      return localPart.length <= 63;
+    }, "Email local part cannot be longer than 63 characters"),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters long")
@@ -48,14 +57,7 @@ export default function Signup() {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
-    resolver: async (data) => {
-      try {
-        schema.parse(data);
-        return { values: data, errors: {} };
-      } catch (e) {
-        return { values: {}, errors: e.errors };
-      }
-    },
+    resolver: zodResolver(schema),
   });
 
   const [err, setErr] = useState<string | null>(null);
