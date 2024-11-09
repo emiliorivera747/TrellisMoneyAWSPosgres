@@ -18,8 +18,9 @@ import OrDivider from "@/components/form-components/OrDivider";
 import GoogleButton from "@/components/buttons/GoogleButton";
 import ForgotPassword from "@/components/buttons/ForgotPasswordButton";
 
-//Functions
-import {handleEmailSignIn, handleGoogleSignIn} from "@/functions/sign-in/handleSignIn";
+//Hooks
+import { useHandleEmailSignIn } from "@/hooks/useHandleEmailSignIn";
+import { useHandleGoogleSignIn } from "@/hooks/useHandleGoogleSignIn";
 
 //Schema
 import {signInSchema} from "@/lib/schemas/formSchemas";
@@ -38,17 +39,18 @@ const SignInForm = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  const router = useRouter();
+  const handleEmailSignIn = useHandleEmailSignIn();
+  const handleGoogleSignIn = useHandleGoogleSignIn();
 
   const [errMsg, setErrMsg] = useState<String | null>(null);
 
   const emailSignIn: SubmitHandler<Inputs> = async (data: Inputs) => {
-    const error = await handleEmailSignIn(data, router);
+    const error = await handleEmailSignIn(data);
     if (error) setErrMsg(error);
   };
 
   const googleSignIn = async () => {
-    const error = await handleGoogleSignIn(router);
+    const error = await handleGoogleSignIn();
     if (error) setErrMsg(error);
   };
 
@@ -100,7 +102,7 @@ const SignInForm = () => {
         handleFunction={googleSignIn}
         label={"Sign in with Google"}
       />
-      
+
       <Link
         href="/sign-up"
         className="w-full px-[.94118rem] py-[1.05882rem] rounded-[12px] text-sm font-medium text-gray-700 bg-[#e9ecef] shadow-sm hover:bg-[#dee2e6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4 mb-4"

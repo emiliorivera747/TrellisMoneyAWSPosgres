@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-
 // Components
 import InputLabel from "@/components/form-components/InputLabel";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
@@ -16,8 +15,9 @@ import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
 import GoogleButton from "@/components/buttons/GoogleButton";
 
-// Functions
-import { handleEmailSignUp, handleGoogleSignUp } from "@/functions/sign-up/handleEmailSignUp";
+// Hooks
+import { useHandleEmailSignUp } from "@/hooks/useHandleEmailSignUp";
+import { useHandleGoogleSignUp } from "@/hooks/useHandleGoogleSignUp";
 
 // Schema
 import { signUpSchema } from "@/lib/schemas/formSchemas";
@@ -28,7 +28,8 @@ type Inputs = {
 };
 
 export default function Signup() {
-  const router = useRouter();
+  const handleEmailSignUp = useHandleEmailSignUp();
+  const handleGoogleSignUp = useHandleGoogleSignUp();
 
   const {
     register,
@@ -41,12 +42,12 @@ export default function Signup() {
   const [err, setErr] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const error = await handleEmailSignUp(data, router);
+    const error = await handleEmailSignUp(data);
     if (error) setErr(error);
   };
 
   const handleGoogleSignupClick = async () => {
-    const error = await handleGoogleSignUp(router);
+    const error = await handleGoogleSignUp();
     if (error) setErr(error);
   };
 
