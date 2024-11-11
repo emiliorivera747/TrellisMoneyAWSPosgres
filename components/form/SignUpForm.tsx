@@ -2,6 +2,7 @@
 
 // Next and React
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 // External libraries
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -24,14 +25,54 @@ import { signUpSchema } from "@/lib/schemas/formSchemas";
 //Services
 import userService from "@/lib/features/user/userService";
 
+/**
+ * Declared type for the inputs
+ */
 type Inputs = {
   email: string;
   password: string;
 };
 
+/**
+ *
+ * Sends a request to register the user
+ *
+ * @param user
+ */
+const registerUser = async (user: any) => {
+  const body = {
+    email: user?.user?.email,
+    userId: user?.user?.uid,
+    name: user?.user?.displayName ? user?.user?.displayName : user?.user?.email,
+  };
+  const payload = await userService.registerUser(body);
+  return payload;
+};
+
+/**
+ * If the user was successfully registered to firebase, then register the user to our database
+ * Otherwise, return an error
+ *
+ * @param result
+ * @returns true if successful, false if not
+ */
+const handleFirebaseResponse = async (result: any) => {
+  if (result.success) {
+    return await registerUser(result.user);
+  } else {
+    return { status: "error" };
+  }
+};
+
+/**
+ * Sign up form
+ *
+ * @returns JSX.Element
+ */
 export default function Signup() {
   const handleEmailSignUp = useHandleEmailSignUp();
   const handleGoogleSignUp = useHandleGoogleSignUp();
+  const router = useRouter();
 
   const {
     register,
@@ -43,43 +84,45 @@ export default function Signup() {
 
   const [err, setErr] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const result = await handleEmailSignUp(data);
-    if (result.success) {
-      const { user } = result;
-      const body = {
-        email: user?.user?.email,
-        userId: user?.user?.uid,
-        name: user?.user?.displayName? user?.user?.displayName: user?.user?.email,
-      };
-      const res = await userService.registerUser(body);
+  /**
+   * If there is an error, set the error message
+   * If the response is successful, redirect to the dashboard
+   */
+  const handleResponse = async (response: any) => {
+    if (response.status === "error") {
+      setErr(response.message);
     }
-    if (!result.success)
-      setErr(
-        result?.error
-          ? result.error
-          : "An error occurred. Please try again later."
-      );
+    if (response.status === "success") {
+      router.push("/dashboard");
+    }
   };
 
+  /**
+   * Submit the email and password to firebase.
+   * 1. If successful, register the user to our database
+   * 2. If not, return an error
+   * 3. Handle the response accordingly
+   *
+   * @param data
+   */
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const firebaseResponse = await handleEmailSignUp(data);
+    const serverResponse = await handleFirebaseResponse(firebaseResponse);
+    handleResponse(serverResponse);
+  };
+
+  /**
+   * Sign In with google using firebase.
+   * 1. If successful, register the user to our database
+   * 2. If not, return an error
+   * 3. Handle the response accordingly
+   *
+   * @param data
+   */
   const handleGoogleSignupClick = async () => {
-    const result = await handleGoogleSignUp();
-    if (result.success) {
-      const { user } = result;
-      const body = {
-        email: user?.user?.email,
-        userId: user?.user?.uid,
-        name: user?.user?.displayName? user?.user?.displayName: user?.user?.email,
-      };
-      const res = await userService.registerUser(body);
-      console.log(res);
-    }
-    if (!result.success)
-      setErr(
-        result?.error
-          ? result.error
-          : "An error occurred. Please try again later."
-      );
+    const firebaseResponse = await handleGoogleSignUp();
+    const serverResponse = await handleFirebaseResponse(firebaseResponse);
+    handleResponse(serverResponse);
   };
 
   return (
