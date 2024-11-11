@@ -1,7 +1,6 @@
 "use client";
 
 // Next and React
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 // External libraries
@@ -21,6 +20,9 @@ import { useHandleGoogleSignUp } from "@/hooks/useHandleGoogleSignUp";
 
 // Schema
 import { signUpSchema } from "@/lib/schemas/formSchemas";
+
+//Services
+import userService from "@/lib/features/user/userService";
 
 type Inputs = {
   email: string;
@@ -42,18 +44,46 @@ export default function Signup() {
   const [err, setErr] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const error = await handleEmailSignUp(data);
-    if (error) setErr(error);
+    const result = await handleEmailSignUp(data);
+    if (result.success) {
+      const { user } = result;
+      const body = {
+        email: user?.user?.email,
+        userId: user?.user?.uid,
+        name: user?.user?.displayName? user?.user?.displayName: user?.user?.email,
+      };
+      const res = await userService.registerUser(body);
+    }
+    if (!result.success)
+      setErr(
+        result?.error
+          ? result.error
+          : "An error occurred. Please try again later."
+      );
   };
 
   const handleGoogleSignupClick = async () => {
-    const error = await handleGoogleSignUp();
-    if (error) setErr(error);
+    const result = await handleGoogleSignUp();
+    if (result.success) {
+      const { user } = result;
+      const body = {
+        email: user?.user?.email,
+        userId: user?.user?.uid,
+        name: user?.user?.displayName? user?.user?.displayName: user?.user?.email,
+      };
+      const res = await userService.registerUser(body);
+      console.log(res);
+    }
+    if (!result.success)
+      setErr(
+        result?.error
+          ? result.error
+          : "An error occurred. Please try again later."
+      );
   };
 
   return (
     <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg ">
-
       {/* Sign Up form*/}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">

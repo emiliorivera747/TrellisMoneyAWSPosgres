@@ -1,21 +1,18 @@
 "use client";
-
-import { useRouter } from "next/navigation";
 import { auth, googleProvider } from "@/lib/firebaseConfig";
 import { signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
+import { getFirebaseErrorMessage } from "@/functions/firebaseErrorMessages";
 
 export const useHandleGoogleSignUp = () => {
-  const router = useRouter();
   const handleGoogleSignUp = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const user = await signInWithPopup(auth, googleProvider);
       toast.success("Signed up successfully!", { theme: "colored" });
-      router.push("/dashboard");
+      return { user, success: true };
     } catch (err: any) {
-      const errorMessage = err.message;
-      toast.error(errorMessage);
-      return errorMessage;
+      const errorMessage = getFirebaseErrorMessage(err);
+      return { error: errorMessage, success: false };
     }
   };
 

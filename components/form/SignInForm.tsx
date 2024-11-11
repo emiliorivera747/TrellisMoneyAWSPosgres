@@ -4,11 +4,9 @@ import { useState } from "react";
 //External libraries
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
 
 // Next
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 // Components
 import InputLabel from "@/components/form-components/InputLabel";
