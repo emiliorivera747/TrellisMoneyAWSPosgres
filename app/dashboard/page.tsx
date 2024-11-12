@@ -48,7 +48,7 @@ const Dashboard = () => {
   }
 
   return (
-    <PrivateRoute>
+    // <PrivateRoute>
       <div className="">
         {user && (
           <div>
@@ -62,7 +62,7 @@ const Dashboard = () => {
           Fetch Data
         </button>
       </div>
-    </PrivateRoute>
+    // </PrivateRoute>
   );
 };
 

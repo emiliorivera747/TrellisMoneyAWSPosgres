@@ -36,9 +36,9 @@ export default function PasswordReset() {
     resolver: zodResolver(schema),
   });
 
-  const [message, setMessage] = useState<String | null>(null);
-  const [err, setErr] = useState<String | null>(null);
-  const [emailSent, setEmailSent] = useState<Boolean>(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [emailSent, setEmailSent] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
     setMessage(null);
@@ -57,7 +57,7 @@ export default function PasswordReset() {
   };
 
   return (
-    <DashboardRedirect>
+    // <DashboardRedirect>
       <div className="flex flex-col items-center justify-center m-h-screen h-auto min-w-screen w-auto">
         <div className="w-full">
           <NavBar />
@@ -97,6 +97,6 @@ export default function PasswordReset() {
           {err && <p style={{ color: "red" }}>{err}</p>}
         </div>
       </div>
-    </DashboardRedirect>
+    // </DashboardRedirect>
   );
 }

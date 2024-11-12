@@ -4,9 +4,9 @@ import PrivateRoute from "@/components/private-route/PrivateRoute";
 
 const InvestmentGoals = () => {
   return (
-    <PrivateRoute>
+    // <PrivateRoute>
       <div>Investment goals</div>
-    </PrivateRoute>
+    // </PrivateRoute>
   );
 };
 

@@ -12,7 +12,7 @@ import DashboardRedirect from "@/components/private-route/DashboardRedirect";
 
 export default function Home() {
   return (
-    <DashboardRedirect>
+    // <DashboardRedirect>
       <div className="bg-white h-screen">
         <nav className="flex justify-between p-4 border-b border-gray-200 mx-10">
           <div className="flex items-center">
@@ -36,6 +36,6 @@ export default function Home() {
         </header>
         <Footer />
       </div>
-    </DashboardRedirect>
+    // </DashboardRedirect>
   );
 }
