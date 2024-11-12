@@ -24,35 +24,43 @@ const Dashboard = () => {
   const [data, setData] = useState<ProtectedData | null>(null);
   const [userEx, setUserEx] = useState<boolean>(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      // try {
-      //   const response = await fetchWithFirebaseHeaders("/api/users");
-      //   const result = await response.json();
-      //   if (response.ok) {
-      //     setData(result);
-      //   } else {
-      //     console.log(result.error);
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      // }
+  async function fetchData() {
+    try {
+      const response = await fetchWithFirebaseHeaders("/api/users");
+      const result = await response.json();
+      if (response.ok) {
+        setData(result);
+      } else {
+        console.log(result.error);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
+  useEffect(() => {
     fetchData();
   }, []);
 
+  const buttonClick = () => {
+    console.log("Button Clicked");
+    fetchData();
+  }
+
   return (
     <PrivateRoute>
-      <div>
+      <div className="">
         {user && (
           <div>
-            <p>Email: {user? user?.email: "no name"}</p>
+            <p>Email: {user ? user?.email : "no name"}</p>
             <p>UID: {user ? user?.uid : "no name"}</p>
-            <p>USER EXISTS: {userEx?"True": "False"}</p>
+            <p>USER EXISTS: {userEx ? "True" : "False"}</p>
           </div>
         )}
         <SignOutButton />
+        <button onClick={buttonClick} className="bg-blue-300">
+          Fetch Data
+        </button>
       </div>
     </PrivateRoute>
   );
