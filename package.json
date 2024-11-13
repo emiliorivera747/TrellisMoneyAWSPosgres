@@ -19,6 +19,8 @@
     "bcrypt": "^5.1.1",
     "firebase": "^11.0.1",
     "firebase-admin": "^12.7.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "next": "15.0.2",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
