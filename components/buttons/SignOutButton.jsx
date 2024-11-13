@@ -1,8 +1,6 @@
-// app/components/SignOutButton.tsx
 "use client";
 const API_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/auth`;
-
-import { useState } from "react";
+import React,{ useState } from "react";
 import { auth } from "@/lib/firebaseConfig";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -29,7 +27,7 @@ export default function SignOutButton() {
   };
 
   return (
-    <button onClick={handleSignOut} disabled={isLoading} className="signout-button">
+    <button onClick={handleSignOut} disabled={isLoading} className="signout-button p-4 bg-zinc-300 font-bold rounded-md">
       {isLoading ? "Signing out..." : "Sign Out"}
     </button>
   );

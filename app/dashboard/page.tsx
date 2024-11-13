@@ -1,20 +1,17 @@
-
-
 //React
 import React from "react";
 // import { useState, useEffect } from "react";
 
 //Components
 import SignOutButton from "@/components/buttons/SignOutButton";
+import DeleteUserButton from "@/components/buttons/DeleteUserButton";
 
 //Auth Context
 import getUser from "@/lib/getUser";
 
-
 const Dashboard = async () => {
-  
   const user = await getUser();
-  const formattedString = JSON.stringify(user?user:{}, null, "\t");
+  const formattedString = JSON.stringify(user ? user : {}, null, "\t");
 
   return (
     <div className="">
@@ -29,6 +26,7 @@ const Dashboard = async () => {
         </div>
       )}
       <SignOutButton />
+      <DeleteUserButton />
     </div>
   );
 };
