@@ -177,11 +177,11 @@ export async function DELETE(req: Request) {
     }
     const body = await req.json();
 
-    const { email } = userSchema.parse(body);
+    const { userId } = userSchema.parse(body);
 
     const user = await prisma.user.findUnique({
       where: {
-        email,
+        userId,
       },
     });
 
@@ -194,7 +194,7 @@ export async function DELETE(req: Request) {
 
     await prisma.user.delete({
       where: {
-        email,
+        userId,
       },
     });
 
