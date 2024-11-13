@@ -1,9 +1,13 @@
 // app/components/SignOutButton.tsx
 "use client";
+const API_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/auth`;
+
 import { useState } from "react";
 import { auth } from "@/lib/firebaseConfig";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
+
+import authService from "@/lib/features/auth/authService";
 
 export default function SignOutButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,10 +17,8 @@ export default function SignOutButton() {
     setIsLoading(true);
     try {
       await signOut(auth); // Sign out from Firebase
-      await fetch("http:/localhost:3000/api/auth", {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await authService.invalidateLogin();
+      console.log(res);
       document.cookie = "session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
       router.push("/"); // Redirect to the home page or login page
     } catch (error) {
