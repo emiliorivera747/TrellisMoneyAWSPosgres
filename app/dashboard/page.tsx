@@ -12,8 +12,9 @@ import getUser from "@/lib/getUser";
 
 
 const Dashboard = async () => {
+  
   const user = await getUser();
-  const formattedString = JSON.stringify(user, null, "\t");
+  const formattedString = JSON.stringify(user?user:{}, null, "\t");
 
   return (
     <div className="">

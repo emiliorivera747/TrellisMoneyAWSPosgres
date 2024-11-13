@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const session = request.cookies.get("session");
 
-  //Return to /login if don't have a session
+  //Return to / if don't have a session
   if (!session) {
     return NextResponse.redirect(new URL("/", request.url));
   }

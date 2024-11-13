@@ -29,12 +29,21 @@ export default async function Home() {
           Your personal finance management tool to track investments across all
           accounts.
         </p>
-        <Link
-          href="/sign-up"
-          className="mt-4 px-8 py-4 bg-blue-500 text-white border-none rounded cursor-pointer"
-        >
-          Get Started
-        </Link>
+        {user ? (
+          <Link
+            href="/dashboard"
+            className="mt-4 px-8 py-4 bg-green-500 text-white border-none rounded cursor-pointer"
+          >
+            Go to Dashboard
+          </Link>
+        ) : (
+          <Link
+            href="/sign-up"
+            className="mt-4 px-8 py-4 bg-blue-500 text-white border-none rounded cursor-pointer"
+          >
+            Get Started
+          </Link>
+        )}
       </header>
       <Footer />
     </div>

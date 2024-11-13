@@ -87,15 +87,15 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    // console.log(err);
     return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 }
 
 export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
+  const headersList = await headers();
+  const authHeader = headersList.get("Authorization");
+  
   const idToken = authHeader ? authHeader.split("Bearer ")[1] : null;
-  // console.log(idToken);
 
   if (!idToken) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -107,8 +107,93 @@ export async function GET(request: NextRequest) {
 
     // Your protected logic here
     return NextResponse.json({ message: "Protected data", userId });
-  } catch (error) {
+  } catch (error: unknown) {
     // console.error("Token verification failed", error);
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+}
+
+
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json();
+
+    const { name, email, userId } = userSchema.parse(body);
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { status: "error", message: "User does not exist" },
+        { status: 404 }
+      );
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: {
+        email,
+      },
+      data: {
+        name,
+        userId,
+      },
+    });
+
+    return NextResponse.json(
+      { status: "success", message: "User updated", user: updatedUser },
+      { status: 200 }
+    );
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      return NextResponse.json(
+        { status: "error", message: err.errors },
+        { status: 400 }
+      );
+    }
+    return NextResponse.json({ message: "Server Error" }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const body = await req.json();
+
+    const { email } = userSchema.parse(body);
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { status: "error", message: "User does not exist" },
+        { status: 404 }
+      );
+    }
+
+    await prisma.user.delete({
+      where: {
+        email,
+      },
+    });
+
+    return NextResponse.json(
+      { status: "success", message: "User deleted" },
+      { status: 200 }
+    );
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      return NextResponse.json(
+        { status: "error", message: err.errors },
+        { status: 400 }
+      );
+    }
+    return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 }

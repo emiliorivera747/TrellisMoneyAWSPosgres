@@ -13,11 +13,8 @@ export async function GET() {
     if (!session) {
       return NextResponse.json({ isLogged: false }, { status: 401 });
     }
-
-    // console.log("Session cookie:", session);
     // Use Firebase Admin to validate the session cookie
     const decodedClaims = await authAdmin.verifySessionCookie(session, true);
-    // console.log("Decoded claims:", decodedClaims);
 
     if (!decodedClaims) {
       return NextResponse.json({ isLogged: false }, { status: 401 });
