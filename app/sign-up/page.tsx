@@ -5,6 +5,7 @@ import SignUpForm from "@/components/form/SignUpForm";
 import NavBar from "@/components/NavBar";
 import DashboardRedirect from "@/components/private-route/DashboardRedirect";
 
+
 const page = () => {
   return (
     <DashboardRedirect>

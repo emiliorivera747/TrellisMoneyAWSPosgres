@@ -1,41 +1,42 @@
-"use client";
-
 // Next and React
 import Link from "next/link";
+import React from "react";
 
 export const dynamic = "force-dynamic";
 
 // Components
 import SignInButton from "@/components/sign in/SignInButton";
 import Footer from "@/components/Footer";
-import DashboardRedirect from "@/components/private-route/DashboardRedirect";
+import SignOutButton from "@/components/buttons/SignOutButton";
 
-export default function Home() {
+import getUser from "@/lib/getUser";
+
+export default async function Home() {
+  const user = await getUser();
+
   return (
-    // <DashboardRedirect>
-      <div className="bg-white h-screen">
-        <nav className="flex justify-between p-4 border-b border-gray-200 mx-10">
-          <div className="flex items-center">
-            {/* <img src="/logo.png" alt="Trellis Money Logo" className="h-10 mr-4" /> */}
-            <span className="text-xl font-bold">Trellis Money</span>
-          </div>
-          <SignInButton />
-        </nav>
-        <header className="text-center   h-[25rem] items-center flex flex-col mt-[10%] bg-white">
-          <h1 className="text-3xl font-bold">Welcome to Trellis Money</h1>
-          <p className="mt-4">
-            Your personal finance management tool to track investments across
-            all accounts.
-          </p>
-          <Link
-            href="/sign-up"
-            className="mt-4 px-8 py-4 bg-blue-500 text-white border-none rounded cursor-pointer"
-          >
-            Get Started
-          </Link>
-        </header>
-        <Footer />
-      </div>
-    // </DashboardRedirect>
+    <div className="bg-white h-screen">
+      <nav className="flex justify-between p-4 border-b border-gray-200 mx-10">
+        <div className="flex items-center">
+          {/* <img src="/logo.png" alt="Trellis Money Logo" className="h-10 mr-4" /> */}
+          <span className="text-xl font-bold">Trellis Money</span>
+        </div>
+        {user ? <SignOutButton /> : <SignInButton />}
+      </nav>
+      <header className="text-center   h-[25rem] items-center flex flex-col mt-[10%] bg-white">
+        <h1 className="text-3xl font-bold">Welcome to Trellis Money</h1>
+        <p className="mt-4">
+          Your personal finance management tool to track investments across all
+          accounts.
+        </p>
+        <Link
+          href="/sign-up"
+          className="mt-4 px-8 py-4 bg-blue-500 text-white border-none rounded cursor-pointer"
+        >
+          Get Started
+        </Link>
+      </header>
+      <Footer />
+    </div>
   );
 }
