@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 //Components
@@ -45,7 +45,7 @@ const InputLabel = ({
   }, []);
 
   return (
-    <div className="relative my-1">
+    <div className="relative my-1 ">
       <input
         type={type === "password" && showPassword ? "text" : type}
         id={id}
@@ -66,7 +66,7 @@ const InputLabel = ({
       {/* Password visibility functionality */}
       {type === "password" && (
         <div
-          className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+          className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer  h-[3.29412rem]"
           onClick={togglePasswordVisibility}
         >
           {showPassword ? (
@@ -76,7 +76,7 @@ const InputLabel = ({
           )}
         </div>
       )}
-        
+
       {/* Password tooltip */}
       {type === "password" && isFocused && password && passwordTooltip && (
         <PasswordTooltip password={password} />
@@ -89,8 +89,12 @@ const InputLabel = ({
       >
         {placeholder}
       </label>
+
+      {/* Error message */}
       {errors[name] && (
-        <p className="text-red-500 text-sm mt-1">{errors[name].message}</p>
+        <p className="text-red-500 text-sm mt-1 ">
+          {errors[name].message}
+        </p>
       )}
     </div>
   );

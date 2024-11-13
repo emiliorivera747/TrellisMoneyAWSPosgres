@@ -89,11 +89,11 @@ export default function Signup() {
    * If there is an error, set the error message
    * If the response is successful, redirect to the dashboard
    */
-  const handleResponse = async (response: any) => {
-    if (response.status === "error") {
-      setErr(response.error);
+  const handleResponse = async (firebaseResponse : any, serverResponse: any ) => {
+    if (serverResponse.status === "error") {
+      setErr(firebaseResponse.error);
     }
-    if (response.status === "success") {
+    if (serverResponse.status === "success") {
       router.push("/dashboard");
     }
   };
@@ -109,7 +109,8 @@ export default function Signup() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const firebaseResponse = await handleEmailSignUp(data);
     const serverResponse = await handleFirebaseResponse(firebaseResponse);
-    handleResponse(serverResponse);
+    console.log(serverResponse);
+    handleResponse(firebaseResponse, serverResponse);
   };
 
   /**
@@ -123,7 +124,8 @@ export default function Signup() {
   const handleGoogleSignupClick = async () => {
     const firebaseResponse = await handleGoogleSignUp();
     const serverResponse = await handleFirebaseResponse(firebaseResponse);
-    handleResponse(serverResponse);
+    console.log(serverResponse);
+    handleResponse(firebaseResponse, serverResponse);
   };
 
   return (
