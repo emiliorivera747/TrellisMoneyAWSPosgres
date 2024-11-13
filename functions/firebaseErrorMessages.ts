@@ -1,9 +1,5 @@
-type FirebaseError = {
-    code: string;
-    message: string;
-};
 
-export function getFirebaseErrorMessage(error: FirebaseError): string {
+export function getFirebaseErrorMessage(error: unknown): string {
     console.log(error);
     switch (error.code) {
         case 'auth/user-not-found':

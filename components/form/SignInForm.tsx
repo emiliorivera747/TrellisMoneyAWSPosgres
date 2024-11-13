@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Next
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // Components
 import InputLabel from "@/components/form-components/InputLabel";
@@ -21,7 +22,13 @@ import { useHandleEmailSignIn } from "@/hooks/useHandleEmailSignIn";
 import { useHandleGoogleSignIn } from "@/hooks/useHandleGoogleSignIn";
 
 //Schema
-import {signInSchema} from "@/lib/schemas/formSchemas";
+import { signInSchema } from "@/lib/schemas/formSchemas";
+
+//Services
+import authService from "@/lib/features/auth/authService";
+
+//Functions
+import { handleFirebaseAuthentication } from "@/functions/handleFirebaseAuthentication";
 
 type Inputs = {
   email: string;
@@ -39,17 +46,30 @@ const SignInForm = () => {
 
   const handleEmailSignIn = useHandleEmailSignIn();
   const handleGoogleSignIn = useHandleGoogleSignIn();
+  const router = useRouter();
 
-  const [errMsg, setErrMsg] = useState<String | null>(null);
+  const [errMsg, setErrMsg] = useState<string | null>(null);
+
+  const handleError = (firebaseReponse: any) => {
+    if (!firebaseReponse?.success) {
+      setErrMsg(
+        firebaseReponse?.error ? firebaseReponse.error : "Unknown Error"
+      );
+    }
+  };
 
   const emailSignIn: SubmitHandler<Inputs> = async (data: Inputs) => {
-    const error = await handleEmailSignIn(data);
-    if (error) setErrMsg(error);
+    const firebaseReponse = await handleEmailSignIn(data);
+    const response = await handleFirebaseAuthentication(firebaseReponse);
+    if (response?.ok) router.push("/dashboard");
+    handleError(firebaseReponse);
   };
 
   const googleSignIn = async () => {
-    const error = await handleGoogleSignIn();
-    if (error) setErrMsg(error);
+    const firebaseReponse = await handleGoogleSignIn();
+    const response = await handleFirebaseAuthentication(firebaseReponse);
+    if (response?.ok) router.push("/dashboard");
+    handleError(firebaseReponse);
   };
 
   return (

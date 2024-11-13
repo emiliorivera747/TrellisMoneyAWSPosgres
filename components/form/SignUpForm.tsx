@@ -25,6 +25,10 @@ import { signUpSchema } from "@/lib/schemas/formSchemas";
 //Services
 import userService from "@/lib/features/user/userService";
 
+// Functions
+import { handleFirebaseAuthentication } from "@/functions/handleFirebaseAuthentication";
+
+
 /**
  * Declared type for the inputs
  */
@@ -90,7 +94,7 @@ export default function Signup() {
    */
   const handleResponse = async (response: any) => {
     if (response.status === "error") {
-      setErr(response.message);
+      setErr(response.error);
     }
     if (response.status === "success") {
       router.push("/dashboard");

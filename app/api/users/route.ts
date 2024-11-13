@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { authAdmin } from "@/lib/firebaseAdmin";
 import type { NextRequest } from "next/server";
+import { cookies } from "next/headers";
 
 const userSchema = z.object({
   name: z.string(),
@@ -46,6 +47,24 @@ export async function POST(req: Request) {
         userId,
       },
     });
+
+    const cookieStore = await cookies();
+
+    const expiresIn = 60 * 60 * 24 * 5 * 1000;
+    const sessionCookie = await authAdmin.createSessionCookie(idToken, {
+      expiresIn,
+    });
+    
+    const options = {
+      name: "session",
+      value: sessionCookie,
+      maxAge: expiresIn,
+      httpOnly: true,
+      secure: true,
+    };
+
+    // Add the cookie to the browser
+    cookieStore.set(options);
 
     return NextResponse.json(
       { status: "success", message: "User created", user: newUser },

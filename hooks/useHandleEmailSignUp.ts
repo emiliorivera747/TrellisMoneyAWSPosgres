@@ -18,7 +18,7 @@ export const useHandleEmailSignUp = () => {
       );
       toast.success("Signed up successfully!", { theme: "colored" });
       return { user, success: true };
-    } catch (err: any) {
+    } catch (err: unknown) {
       const errorMessage = getFirebaseErrorMessage(err);
       return { error: errorMessage, success: false };
     }
