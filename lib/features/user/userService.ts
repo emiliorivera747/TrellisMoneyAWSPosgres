@@ -1,5 +1,5 @@
 const API_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/users`;
-import { fetchWithFirebaseHeaders } from '@/lib/fetchWithFireBaseHeaders';
+import { fetchWithFirebaseHeaders } from "@/lib/fetchWithFireBaseHeaders";
 
 /**
  * Fetch User by userId
@@ -7,8 +7,8 @@ import { fetchWithFirebaseHeaders } from '@/lib/fetchWithFireBaseHeaders';
  * @param userId
  * @returns User
  */
-const fetchUser = async (userId: string) => {
-  const response = await fetchWithFirebaseHeaders(`${API_URL}/${userId}`);
+const fetchUser = async () => {
+  const response = await fetchWithFirebaseHeaders(`${API_URL}/id`);
   return response.json();
 };
 
@@ -30,20 +30,19 @@ const registerUser = async (user: any) => {
 };
 
 /**
- * Check if user exists
- *
- * @param email
- * @returns boolean
+ * Delete User
  */
-const userExists = async (email: String) => {
-    const response = await fetchWithFirebaseHeaders(`${API_URL}/exists?email=${email}`);
-    return response.json();
-}
+const deleteUser = async () => {
+  const response = await fetchWithFirebaseHeaders(`${API_URL}/id`, {
+    method: "DELETE",
+  });
+  return response.json();
+};
 
 const userService = {
   fetchUser,
   registerUser,
-  userExists,
+  deleteUser,
 };
 
 export default userService;
