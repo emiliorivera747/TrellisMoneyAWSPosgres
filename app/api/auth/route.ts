@@ -2,28 +2,40 @@ import { auth } from "firebase-admin";
 import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { authAdmin } from "@/lib/firebaseAdmin";
+import { validateSession } from "@/lib/authHelper";
 
 export async function GET() {
   try {
-    // Get the session cookie from the browser
-    const cookieStore = await cookies();
-    const session = cookieStore.get("session")?.value || "";
+    // // Get the session cookie from the browser
+    // const cookieStore = await cookies();
+    // const session = cookieStore.get("session")?.value || "";
 
-    // Validate if the cookie exists in the request
-    if (!session) {
-      return NextResponse.json({ isLogged: false }, { status: 401 });
+    // // Validate if the cookie exists in the request
+    // if (!session) {
+    //   return NextResponse.json({ isLogged: false }, { status: 401 });
+    // }
+    // // Use Firebase Admin to validate the session cookie
+    // const decodedClaims = await authAdmin.verifySessionCookie(session, true);
+
+    // if (!decodedClaims) {
+    //   return NextResponse.json({ isLogged: false }, { status: 401 });
+    // }
+
+    const sessionValidation = await validateSession();
+
+    if (!sessionValidation.isValid) {
+      return NextResponse.json(
+        { error: "Unauthorized", isLogged: sessionValidation.isValid },
+        { status: sessionValidation.status }
+      );
     }
-    // Use Firebase Admin to validate the session cookie
-    const decodedClaims = await authAdmin.verifySessionCookie(session, true);
-
-    if (!decodedClaims) {
-      return NextResponse.json({ isLogged: false }, { status: 401 });
-    }
-
     return NextResponse.json({ isLogged: true }, { status: 200 });
-  } catch (error) {
+  } catch (error: unknown) {
     // console.error("Error in GET request:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: error },
+      { status: 500 }
+    );
   }
 }
 
@@ -61,7 +73,10 @@ export async function POST() {
     return NextResponse.json({}, { status: 200 });
   } catch (error) {
     // console.error("Error in POST request:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
@@ -77,10 +92,7 @@ export async function DELETE() {
 
 // Create a separate file for this utility function if you prefer that way
 export const invalidateLogin = async (token: string) => {
-  const decodedClaims = await authAdmin.verifySessionCookie(
-    token,
-    true
-  );
+  const decodedClaims = await authAdmin.verifySessionCookie(token, true);
   await authAdmin.revokeRefreshTokens(decodedClaims.uid);
   const cookieStore = await cookies();
   cookieStore.delete("session");

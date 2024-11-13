@@ -4,7 +4,8 @@ import { z } from "zod";
 
 import { authAdmin } from "@/lib/firebaseAdmin";
 import type { NextRequest } from "next/server";
-import { cookies, headers} from "next/headers";
+import { cookies, headers } from "next/headers";
+import { validateSession } from "@/lib/authHelper";
 
 const userSchema = z.object({
   name: z.string(),
@@ -91,31 +92,37 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(request: NextRequest) {
-  const headersList = await headers();
-  const authHeader = headersList.get("Authorization");
-  
-  const idToken = authHeader ? authHeader.split("Bearer ")[1] : null;
-
-  if (!idToken) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
+/**
+ * 
+ * @returns 
+ */
+export async function GET() {
   try {
-    const decodedToken = await authAdmin.verifyIdToken(idToken);
-    const userId = decodedToken.uid;
-
-    // Your protected logic here
-    return NextResponse.json({ message: "Protected data", userId });
-  } catch (error: unknown) {
-    // console.error("Token verification failed", error);
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const sessionValidation = await validateSession();
+  
+    if (!sessionValidation.isValid) {
+      return NextResponse.json(
+        { error: "Unauthorized", isLogged: sessionValidation.isValid },
+        { status: sessionValidation.status }
+      );
+    }
+    const users = await prisma.user.findMany();
+    return NextResponse.json({ status: "success", users }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 }
 
-
 export async function PUT(req: Request) {
   try {
+    const sessionValidation = await validateSession();
+  
+    if (!sessionValidation.isValid) {
+      return NextResponse.json(
+        { error: "Unauthorized", isLogged: sessionValidation.isValid },
+        { status: sessionValidation.status }
+      );
+    }
     const body = await req.json();
 
     const { name, email, userId } = userSchema.parse(body);
@@ -160,6 +167,14 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
+    const sessionValidation = await validateSession();
+  
+    if (!sessionValidation.isValid) {
+      return NextResponse.json(
+        { error: "Unauthorized", isLogged: sessionValidation.isValid },
+        { status: sessionValidation.status }
+      );
+    }
     const body = await req.json();
 
     const { email } = userSchema.parse(body);
