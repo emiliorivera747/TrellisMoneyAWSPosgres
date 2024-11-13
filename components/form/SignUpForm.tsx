@@ -25,9 +25,6 @@ import { signUpSchema } from "@/lib/schemas/formSchemas";
 //Services
 import userService from "@/lib/features/user/userService";
 
-// Functions
-import { handleFirebaseAuthentication } from "@/functions/handleFirebaseAuthentication";
-
 
 /**
  * Declared type for the inputs

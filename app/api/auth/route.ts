@@ -14,10 +14,10 @@ export async function GET() {
       return NextResponse.json({ isLogged: false }, { status: 401 });
     }
 
-    console.log("Session cookie:", session);
+    // console.log("Session cookie:", session);
     // Use Firebase Admin to validate the session cookie
     const decodedClaims = await authAdmin.verifySessionCookie(session, true);
-    console.log("Decoded claims:", decodedClaims);
+    // console.log("Decoded claims:", decodedClaims);
 
     if (!decodedClaims) {
       return NextResponse.json({ isLogged: false }, { status: 401 });
@@ -25,7 +25,7 @@ export async function GET() {
 
     return NextResponse.json({ isLogged: true }, { status: 200 });
   } catch (error) {
-    console.error("Error in GET request:", error);
+    // console.error("Error in GET request:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -63,7 +63,7 @@ export async function POST() {
 
     return NextResponse.json({}, { status: 200 });
   } catch (error) {
-    console.error("Error in POST request:", error);
+    // console.error("Error in POST request:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

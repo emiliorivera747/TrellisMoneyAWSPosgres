@@ -2,8 +2,6 @@
 import { getAuthIdToken, installations} from "./firebaseConfig";
 import {getToken} from "firebase/installations";
 
-
-
 export async function fetchWithFirebaseHeaders(
   url: string,
   options: RequestInit = {}
