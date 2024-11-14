@@ -1,3 +1,3 @@
-const API_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/users`;
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/users`;
 
 

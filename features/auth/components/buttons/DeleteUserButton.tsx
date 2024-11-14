@@ -18,7 +18,7 @@ const DeleteUserButton = () => {
       if (res.status === "success") {
         document.cookie =
           "session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-        router.push("/sign-in"); // Redirect to the home page or login page
+        router.push("/"); // Redirect to the home page or login page
       }
     } catch (error: unknown) {
       console.log("Error deleting user:", error);

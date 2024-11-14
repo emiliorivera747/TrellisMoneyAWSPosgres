@@ -170,7 +170,7 @@ export default function Signup() {
       {/* Sign up with google button */}
       <GoogleButton
         handleFunction={handleGoogleSignupClick}
-        label="Sign up with Google"
+        label="Continue with Google"
       />
     </div>
   );

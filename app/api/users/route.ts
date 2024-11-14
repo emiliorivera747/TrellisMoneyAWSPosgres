@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { authAdmin } from "@/config/firebaseAdmin";
-import type { NextRequest } from "next/server";
 import { cookies, headers } from "next/headers";
 import { validateSession } from "@/utils/authHelper";
 

@@ -125,7 +125,7 @@ const SignInForm = () => {
       {/* Sign Up with google or create account */}
       <GoogleButton
         handleFunction={googleSignIn}
-        label={"Sign in with Google"}
+        label={"Continue with Google"}
       />
 
       <Link

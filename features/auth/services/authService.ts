@@ -1,4 +1,4 @@
-const API_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/auth`;
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/auth`;
 
 /**
  * Authenticate with the backend API
