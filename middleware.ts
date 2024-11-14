@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  //Return to /login if token is not authorized
+  //Return to / if token is not authorized
   if (responseAPI.status !== 200) {
     return NextResponse.redirect(new URL("/", request.url));
   }

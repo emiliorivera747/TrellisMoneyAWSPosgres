@@ -54,13 +54,21 @@ export async function DELETE() {
       );
     }
 
-    await authAdmin.deleteUser(userId ? userId : "");
 
-    await prisma.user.delete({
-      where: {
+    await authAdmin.deleteUser(userId ? userId : "")
+      .then(async () => {
+      await prisma.user.delete({
+        where: {
         userId,
-      },
-    });
+        },
+      });
+      })
+      .catch((error) => {
+      return NextResponse.json(
+        { status: "error", message: "Failed to delete user from Firebase", error },
+        { status: 500 }
+      );
+      });
 
     return NextResponse.json(
       { status: "success", message: "User deleted" },

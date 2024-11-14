@@ -14,6 +14,7 @@ import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
 import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
+import AlreadyHaveAccount from "@/features/auth/components/buttons/AlreadyHaveAccount";
 
 // Hooks
 import { useHandleEmailSignUp } from "@/features/auth/hooks/useHandleEmailSignUp";
@@ -24,7 +25,6 @@ import { signUpSchema } from "@/features/auth/schemas/formSchemas";
 
 //Services
 import userService from "@/features/user/services/userService";
-
 
 /**
  * Declared type for the inputs
@@ -89,7 +89,7 @@ export default function Signup() {
    * If there is an error, set the error message
    * If the response is successful, redirect to the dashboard
    */
-  const handleResponse = async (firebaseResponse : any, serverResponse: any ) => {
+  const handleResponse = async (firebaseResponse: any, serverResponse: any) => {
     if (serverResponse.status === "error") {
       setErr(firebaseResponse.error);
     }
@@ -159,6 +159,9 @@ export default function Signup() {
           text="Sign Up"
         />
       </form>
+
+      {/* Already have and account? */}
+      <AlreadyHaveAccount />
 
       {/* OR section */}
       <OrDivider />

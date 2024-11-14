@@ -10,6 +10,7 @@ interface ProtectedRouteProps {
 const DashboardRedirect= ({ children }: ProtectedRouteProps) => {
   const { user, authentication } = useAuth();
   const router = useRouter();
+ 
 
   useEffect(() => {
 
@@ -25,7 +26,7 @@ const DashboardRedirect= ({ children }: ProtectedRouteProps) => {
    * If the app is initializing, show a loading message
    */
   if (authentication.initializing) {
-    return <div>Loading</div>;
+    return <div>Loading...</div>;
   }
 
   /**
