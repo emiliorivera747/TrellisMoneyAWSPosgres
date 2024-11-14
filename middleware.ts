@@ -16,9 +16,11 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  //Return to / if token is not authorized
+  //Return to / if token is not authorized and destroy the session
   if (responseAPI.status !== 200) {
-    return NextResponse.redirect(new URL("/", request.url));
+    const response = NextResponse.redirect(new URL("/", request.url));
+    response.cookies.delete("session");
+    return response;
   }
 
   return NextResponse.next();
@@ -26,8 +28,5 @@ export async function middleware(request: NextRequest) {
 
 // Apply middleware to specific routes
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/investment-goals/:path*",
-  ],
+  matcher: ["/dashboard/:path*", "/investment-goals/:path*"],
 };

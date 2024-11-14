@@ -1,9 +1,8 @@
 import { auth } from "firebase-admin";
 import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { authAdmin } from "@/config/firebaseAdmin";
 import { validateSession } from "@/utils/authHelper";
-
+import { invalidateLogin } from "@/utils/invalidateLogin";
 export async function GET() {
   try {
     // // Get the session cookie from the browser
@@ -31,6 +30,8 @@ export async function GET() {
     }
     return NextResponse.json({ isLogged: true }, { status: 200 });
   } catch (error: unknown) {
+    console.log("Error in POST request:", error);
+
     // console.error("Error in GET request:", error);
     return NextResponse.json(
       { error: error },
@@ -90,11 +91,4 @@ export async function DELETE() {
   return NextResponse.json({}, { status: 200 });
 }
 
-// Create a separate file for this utility function if you prefer that way
-export const invalidateLogin = async (token: string) => {
-  const decodedClaims = await authAdmin.verifySessionCookie(token, true);
-  await authAdmin.revokeRefreshTokens(decodedClaims.uid);
-  const cookieStore = await cookies();
-  cookieStore.delete("session");
-  return;
-};
+

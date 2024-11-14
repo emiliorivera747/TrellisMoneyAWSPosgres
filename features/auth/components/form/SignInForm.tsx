@@ -39,6 +39,7 @@ const SignInForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(signInSchema),
@@ -61,14 +62,20 @@ const SignInForm = () => {
   const emailSignIn: SubmitHandler<Inputs> = async (data: Inputs) => {
     const firebaseReponse = await handleEmailSignIn(data);
     const response = await handleFirebaseAuthentication(firebaseReponse);
-    if (response?.ok) router.push("/dashboard");
+    if (response?.ok) {
+      reset();
+      router.push("/dashboard");
+    }
     handleError(firebaseReponse);
   };
 
   const googleSignIn = async () => {
     const firebaseReponse = await handleGoogleSignIn();
     const response = await handleFirebaseAuthentication(firebaseReponse);
-    if (response?.ok) router.push("/dashboard");
+    if (response?.ok) {
+      reset();
+      router.push("/dashboard");
+    }
     handleError(firebaseReponse);
   };
 

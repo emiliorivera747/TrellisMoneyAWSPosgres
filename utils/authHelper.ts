@@ -12,7 +12,7 @@ export async function validateSession() {
     if (!decodedClaims) {
       return { isValid: false, status: 401 };
     }
-    return { isValid: true, decodedClaims};
+    return { isValid: true, decodedClaims , session};
   } catch (error: unknown) {
     return { isValid: false, status: 500, error: error };
   }

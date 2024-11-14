@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { validateSession } from "@/utils/authHelper";
 import { authAdmin } from "@/config/firebaseAdmin";
+import { invalidateLogin } from "@/utils/invalidateLogin";
 
 export async function GET() {
   try {
@@ -40,6 +41,9 @@ export async function DELETE() {
       );
     }
     const userId = sessionValidation.decodedClaims?.uid;
+    await invalidateLogin(
+      sessionValidation.session ? sessionValidation.session : ""
+    );
 
     const user = await prisma.user.findUnique({
       where: {
@@ -54,20 +58,24 @@ export async function DELETE() {
       );
     }
 
-
-    await authAdmin.deleteUser(userId ? userId : "")
+    await authAdmin
+      .deleteUser(userId ? userId : "")
       .then(async () => {
-      await prisma.user.delete({
-        where: {
-        userId,
-        },
-      });
+        await prisma.user.delete({
+          where: {
+            userId,
+          },
+        });
       })
       .catch((error) => {
-      return NextResponse.json(
-        { status: "error", message: "Failed to delete user from Firebase", error },
-        { status: 500 }
-      );
+        return NextResponse.json(
+          {
+            status: "error",
+            message: "Failed to delete user from Firebase",
+            error,
+          },
+          { status: 500 }
+        );
       });
 
     return NextResponse.json(

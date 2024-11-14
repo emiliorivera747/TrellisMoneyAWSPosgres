@@ -79,6 +79,7 @@ export default function Signup() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Inputs>({
     resolver: zodResolver(signUpSchema),
   });
@@ -94,6 +95,7 @@ export default function Signup() {
       setErr(firebaseResponse.error);
     }
     if (serverResponse.status === "success") {
+      reset();
       router.push("/dashboard");
     }
   };
@@ -109,7 +111,6 @@ export default function Signup() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const firebaseResponse = await handleEmailSignUp(data);
     const serverResponse = await handleFirebaseResponse(firebaseResponse);
-    console.log(serverResponse);
     handleResponse(firebaseResponse, serverResponse);
   };
 
@@ -124,7 +125,6 @@ export default function Signup() {
   const handleGoogleSignupClick = async () => {
     const firebaseResponse = await handleGoogleSignUp();
     const serverResponse = await handleFirebaseResponse(firebaseResponse);
-    console.log(serverResponse);
     handleResponse(firebaseResponse, serverResponse);
   };
 

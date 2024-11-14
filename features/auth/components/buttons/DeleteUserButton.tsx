@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import userService from "@/features/user/services/userService";
-import authService from "@/features/auth/services/authService";
 import { useRouter } from "next/navigation";
 
 const DeleteUserButton = () => {
@@ -19,10 +18,7 @@ const DeleteUserButton = () => {
       if (res.status === "success") {
         document.cookie =
           "session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-        const res = await authService.invalidateLogin();
-        console.log(res);
-        console.log("User deleted successfully");
-        router.push("/"); // Redirect to the home page or login page
+        router.push("/sign-in"); // Redirect to the home page or login page
       }
     } catch (error: unknown) {
       console.log("Error deleting user:", error);
