@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { authAdmin } from "@/lib/firebaseAdmin"; // Adjust the import path based on your project structure
+import { authAdmin } from "@/config/firebaseAdmin"; // Adjust the import path based on your project structure
 
 export async function validateSession() {
   try {

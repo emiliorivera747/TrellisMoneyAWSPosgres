@@ -1,7 +1,7 @@
 "use client";
 const API_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/auth`;
 import React,{ useState } from "react";
-import { auth } from "@/lib/firebaseConfig";
+import { auth } from "@/config/firebaseConfig";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 

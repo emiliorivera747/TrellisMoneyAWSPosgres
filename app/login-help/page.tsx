@@ -10,7 +10,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 //Firebase
-import { auth } from "@/lib/firebaseConfig";
+import { auth } from "@/config/firebaseConfig";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 //Compenents

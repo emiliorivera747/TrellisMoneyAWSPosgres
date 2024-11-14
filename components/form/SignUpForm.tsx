@@ -16,8 +16,8 @@ import OrDivider from "@/components/form-components/OrDivider";
 import GoogleButton from "@/components/buttons/GoogleButton";
 
 // Hooks
-import { useHandleEmailSignUp } from "@/hooks/useHandleEmailSignUp";
-import { useHandleGoogleSignUp } from "@/hooks/useHandleGoogleSignUp";
+import { useHandleEmailSignUp } from "@/utils/hooks/useHandleEmailSignUp";
+import { useHandleGoogleSignUp } from "@/utils/hooks/useHandleGoogleSignUp";
 
 // Schema
 import { signUpSchema } from "@/lib/schemas/formSchemas";

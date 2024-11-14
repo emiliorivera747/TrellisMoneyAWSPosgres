@@ -1,5 +1,5 @@
 const API_URL = `${process.env.NEXT_PUBLIC_DOMAIN}/users`;
-import { fetchWithFirebaseHeaders } from "@/lib/fetchWithFireBaseHeaders";
+import { fetchWithFirebaseHeaders } from "@/utils/fetchWithFireBaseHeaders";
 
 /**
  * Fetch User by userId

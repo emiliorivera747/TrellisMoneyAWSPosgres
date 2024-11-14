@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { authAdmin } from "@/lib/firebaseAdmin";
+import { authAdmin } from "@/config/firebaseAdmin";
 
 //Get the user from the session cookie
 //if theres no session or its invalid, return null

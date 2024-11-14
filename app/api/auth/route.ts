@@ -1,8 +1,8 @@
 import { auth } from "firebase-admin";
 import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { authAdmin } from "@/lib/firebaseAdmin";
-import { validateSession } from "@/lib/authHelper";
+import { authAdmin } from "@/config/firebaseAdmin";
+import { validateSession } from "@/utils/authHelper";
 
 export async function GET() {
   try {

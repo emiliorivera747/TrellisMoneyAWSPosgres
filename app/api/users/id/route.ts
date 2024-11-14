@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { validateSession } from "@/lib/authHelper";
-import { authAdmin } from "@/lib/firebaseAdmin";
+import { validateSession } from "@/utils/authHelper";
+import { authAdmin } from "@/config/firebaseAdmin";
 
 export async function GET() {
   try {

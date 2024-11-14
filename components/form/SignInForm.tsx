@@ -18,8 +18,8 @@ import GoogleButton from "@/components/buttons/GoogleButton";
 import ForgotPassword from "@/components/buttons/ForgotPasswordButton";
 
 //Hooks
-import { useHandleEmailSignIn } from "@/hooks/useHandleEmailSignIn";
-import { useHandleGoogleSignIn } from "@/hooks/useHandleGoogleSignIn";
+import { useHandleEmailSignIn } from "@/utils/hooks/useHandleEmailSignIn";
+import { useHandleGoogleSignIn } from "@/utils/hooks/useHandleGoogleSignIn";
 
 //Schema
 import { signInSchema } from "@/lib/schemas/formSchemas";
@@ -28,7 +28,7 @@ import { signInSchema } from "@/lib/schemas/formSchemas";
 import authService from "@/lib/features/auth/authService";
 
 //Functions
-import { handleFirebaseAuthentication } from "@/functions/handleFirebaseAuthentication";
+import { handleFirebaseAuthentication } from "@/utils/functions/handleFirebaseAuthentication";
 
 type Inputs = {
   email: string;

@@ -1,5 +1,5 @@
 
-import { getAuthIdToken, installations} from "./firebaseConfig";
+import { getAuthIdToken, installations} from "../config/firebaseConfig";
 import {getToken} from "firebase/installations";
 
 export async function fetchWithFirebaseHeaders(

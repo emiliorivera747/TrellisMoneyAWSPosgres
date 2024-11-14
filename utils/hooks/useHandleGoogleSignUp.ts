@@ -1,8 +1,8 @@
 "use client";
-import { auth, googleProvider } from "@/lib/firebaseConfig";
+import { auth, googleProvider } from "@/config/firebaseConfig";
 import { signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
-import { getFirebaseErrorMessage } from "@/functions/firebaseErrorMessages";
+import { getFirebaseErrorMessage } from "@/utils/functions/firebaseErrorMessages";
 
 export const useHandleGoogleSignUp = () => {
   const handleGoogleSignUp = async () => {
