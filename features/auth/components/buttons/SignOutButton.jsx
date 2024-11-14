@@ -5,7 +5,7 @@ import { auth } from "@/config/firebaseConfig";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
-import authService from "@/lib/features/auth/authService";
+import authService from "@/features/auth/services/authService";
 
 export default function SignOutButton() {
   const [isLoading, setIsLoading] = useState(false);

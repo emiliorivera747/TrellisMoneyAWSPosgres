@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/nav-bars/NavBar";
 
 //Components
-import DashboardRedirect from "@/components/private-route/DashboardRedirect";
+import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 
 //Forms
-import SignInForm from "@/components/form/SignInForm";
+import SignInForm from "@/features/auth/components/form/SignInForm";
 
 const LoginPage = () => {
   return (

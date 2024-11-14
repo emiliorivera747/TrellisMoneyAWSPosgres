@@ -11,24 +11,24 @@ import { useRouter } from "next/navigation";
 
 // Components
 import InputLabel from "@/components/form-components/InputLabel";
-import PrimarySubmitButton from "../buttons/PrimarySubmitButton";
+import PrimarySubmitButton from "../../../../components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
-import GoogleButton from "@/components/buttons/GoogleButton";
-import ForgotPassword from "@/components/buttons/ForgotPasswordButton";
+import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
+import ForgotPassword from "@/features/auth/components/buttons/ForgotPasswordButton";
 
 //Hooks
-import { useHandleEmailSignIn } from "@/utils/hooks/useHandleEmailSignIn";
-import { useHandleGoogleSignIn } from "@/utils/hooks/useHandleGoogleSignIn";
+import { useHandleEmailSignIn } from "@/features/auth/hooks/useHandleEmailSignIn";
+import { useHandleGoogleSignIn } from "@/features/auth/hooks/useHandleGoogleSignIn";
 
 //Schema
-import { signInSchema } from "@/lib/schemas/formSchemas";
+import { signInSchema } from "@/features/auth/schemas/formSchemas";
 
 //Services
-import authService from "@/lib/features/auth/authService";
+import authService from "@/features/auth/services/authService";
 
 //Functions
-import { handleFirebaseAuthentication } from "@/utils/functions/handleFirebaseAuthentication";
+import { handleFirebaseAuthentication } from "@/utils/handleFirebaseAuthentication";
 
 type Inputs = {
   email: string;

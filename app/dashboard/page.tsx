@@ -3,11 +3,11 @@ import React from "react";
 // import { useState, useEffect } from "react";
 
 //Components
-import SignOutButton from "@/components/buttons/SignOutButton";
-import DeleteUserButton from "@/components/buttons/DeleteUserButton";
+import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
+import DeleteUserButton from "@/features/auth/components/buttons/DeleteUserButton";
 
 //Auth Context
-import getUser from "@/lib/getUser";
+import getUser from "@/utils/getUser";
 
 const Dashboard = async () => {
   const user = await getUser();

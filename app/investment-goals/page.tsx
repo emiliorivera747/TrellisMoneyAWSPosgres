@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import PrivateRoute from "@/components/private-route/PrivateRoute";
+import PrivateRoute from "@/features/auth/components/private-route/PrivateRoute";
 
 const InvestmentGoals = () => {
   return (

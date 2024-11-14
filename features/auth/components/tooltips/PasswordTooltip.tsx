@@ -1,7 +1,7 @@
 import React from "react";
 
 //Components
-import PasswordStrengthChecker from "@/components/PasswordStrengthChecker";
+import PasswordStrengthChecker from "@/features/auth/components/password-strength-checker/PasswordStrengthChecker";
 
 //Icons
 import { IoIosCheckmarkCircle } from "react-icons/io";

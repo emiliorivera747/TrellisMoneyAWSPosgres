@@ -1,4 +1,4 @@
-import authService from "@/lib/features/auth/authService";
+import authService from "@/features/auth/services/authService";
 
 interface FirebaseResponse {
   success?: boolean | undefined;

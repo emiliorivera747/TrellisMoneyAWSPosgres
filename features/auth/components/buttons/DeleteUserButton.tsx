@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import userService from "@/lib/features/user/userService";
-import authService from "@/lib/features/auth/authService";
+import userService from "@/features/user/services/userService";
+import authService from "@/features/auth/services/authService";
 import { useRouter } from "next/navigation";
 
 const DeleteUserButton = () => {

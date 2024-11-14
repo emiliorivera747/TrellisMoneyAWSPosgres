@@ -1,7 +1,7 @@
 "use client";
 import { auth } from "@/config/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { getFirebaseErrorMessage } from "@/utils/functions/firebaseErrorMessages";
+import { getFirebaseErrorMessage } from "@/utils/firebaseErrorMessages";
 import { toast } from "react-toastify";
 
 export const useHandleEmailSignIn = () => {

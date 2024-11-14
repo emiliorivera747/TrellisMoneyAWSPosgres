@@ -16,8 +16,8 @@ import { sendPasswordResetEmail } from "firebase/auth";
 //Compenents
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import InputLabel from "@/components/form-components/InputLabel";
-import NavBar from "@/components/NavBar";
-import DashboardRedirect from "@/components/private-route/DashboardRedirect";
+import NavBar from "@/components/nav-bars/NavBar";
+import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 
 const schema = z.object({
   email: z.string().email("Invalid email format"),

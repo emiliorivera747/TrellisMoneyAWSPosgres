@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 //Components
-import PasswordTooltip from "@/components/tooltips/PasswordTooltip";
+import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip";
 
 interface InputLabelProps {
   type: string;

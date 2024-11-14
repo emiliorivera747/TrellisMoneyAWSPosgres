@@ -5,11 +5,11 @@ import React from "react";
 export const dynamic = "force-dynamic";
 
 // Components
-import SignInButton from "@/components/sign in/SignInButton";
-import Footer from "@/components/Footer";
-import SignOutButton from "@/components/buttons/SignOutButton";
+import SignInButton from "@/features/auth/components/buttons/SignInButton";
+import Footer from "@/components/footers/Footer";
+import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 
-import getUser from "@/lib/getUser";
+import getUser from "@/utils/getUser";
 
 export default async function Home() {
   const user = await getUser();

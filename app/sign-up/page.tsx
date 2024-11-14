@@ -1,9 +1,9 @@
 import React from "react";
 
 // Components
-import SignUpForm from "@/components/form/SignUpForm";
-import NavBar from "@/components/NavBar";
-import DashboardRedirect from "@/components/private-route/DashboardRedirect";
+import SignUpForm from "@/features/auth/components/form/SignUpForm";
+import NavBar from "@/components/nav-bars/NavBar";
+import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 
 
 const page = () => {

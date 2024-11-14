@@ -13,17 +13,17 @@ import InputLabel from "@/components/form-components/InputLabel";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
-import GoogleButton from "@/components/buttons/GoogleButton";
+import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
 
 // Hooks
-import { useHandleEmailSignUp } from "@/utils/hooks/useHandleEmailSignUp";
-import { useHandleGoogleSignUp } from "@/utils/hooks/useHandleGoogleSignUp";
+import { useHandleEmailSignUp } from "@/features/auth/hooks/useHandleEmailSignUp";
+import { useHandleGoogleSignUp } from "@/features/auth/hooks/useHandleGoogleSignUp";
 
 // Schema
-import { signUpSchema } from "@/lib/schemas/formSchemas";
+import { signUpSchema } from "@/features/auth/schemas/formSchemas";
 
 //Services
-import userService from "@/lib/features/user/userService";
+import userService from "@/features/user/services/userService";
 
 
 /**
