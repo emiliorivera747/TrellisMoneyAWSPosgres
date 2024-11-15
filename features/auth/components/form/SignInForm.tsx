@@ -25,7 +25,7 @@ import { useHandleGoogleSignIn } from "@/features/auth/hooks/useHandleGoogleSign
 import { signInSchema } from "@/features/auth/schemas/formSchemas";
 
 //Services
-import authService from "@/features/auth/services/authService";
+import userService from "@/features/user/services/userService";
 
 //Functions
 import { handleFirebaseAuthentication } from "@/utils/handleFirebaseAuthentication";
@@ -71,6 +71,13 @@ const SignInForm = () => {
 
   const googleSignIn = async () => {
     const firebaseReponse = await handleGoogleSignIn();
+    if (firebaseReponse?.success) {
+      console.log(firebaseReponse);
+      const res = await userService.fetchUserById(
+        firebaseReponse?.user?.user?.uid ?? ""
+      );
+      console.log(res);
+    }
     const response = await handleFirebaseAuthentication(firebaseReponse);
     if (response?.ok) {
       reset();

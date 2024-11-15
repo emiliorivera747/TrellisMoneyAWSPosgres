@@ -18,6 +18,7 @@ export async function fetchWithFirebaseHeaders(
   if (authIdToken) {
     headers.append("Authorization", `Bearer ${authIdToken}`);
   }
+  console.log("Options", options);
 
   const newOptions: RequestInit = {
     ...options,

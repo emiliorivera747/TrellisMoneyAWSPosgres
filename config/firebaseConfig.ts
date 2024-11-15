@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, getIdToken, Auth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, getIdToken} from "firebase/auth";
 import { getInstallations } from "firebase/installations";
 import { getAnalytics, isSupported } from "firebase/analytics";
 

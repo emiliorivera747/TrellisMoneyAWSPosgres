@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 // AuthProvider
-import { AuthProvider } from "./AuthContext";
+import { AuthProvider } from "../providers/AuthContext";
 
 //External Libraries
 import "react-toastify/dist/ReactToastify.css";

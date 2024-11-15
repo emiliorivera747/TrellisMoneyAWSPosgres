@@ -10,7 +10,8 @@ export const useHandleGoogleSignIn = () => {
     try {
       const user = await signInWithPopup(auth, googleProvider);
       toast.success("Signed in successfully!", { theme: "colored" });
-      if (user) return {user, success: true};
+      console.log("USER", user);
+      if (user) return {user: user, success: true};
       if (!user) return {error:"Unkown Error", success: false};
     } catch (err: unknown) {
       const errorMessage = getFirebaseErrorMessage(err);

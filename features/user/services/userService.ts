@@ -12,6 +12,11 @@ const fetchUser = async () => {
   return response.json();
 };
 
+const fetchUserById = async (userId: string) => {
+  const response = await fetch(`${API_URL}/${userId}`);
+  return response.json();
+};
+
 /**
  * Register User
  *
@@ -43,6 +48,7 @@ const userService = {
   fetchUser,
   registerUser,
   deleteUser,
+  fetchUserById,
 };
 
 export default userService;

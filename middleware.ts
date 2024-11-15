@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-const sign_up =`${process.env.NEXT_PUBLIC_DOMAIN}/sign-up`;
-const sign_in =`${process.env.NEXT_PUBLIC_DOMAIN}/sign-in`;
 
 export async function middleware(request: NextRequest) {
 
