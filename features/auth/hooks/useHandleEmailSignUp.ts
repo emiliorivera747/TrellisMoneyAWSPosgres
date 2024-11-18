@@ -1,7 +1,7 @@
 "use client";
 import { auth } from "@/config/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirebaseErrorMessage } from "@/utils/firebaseErrorMessages";
+import { getFirebaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
 import { toast } from "react-toastify";
 import { hasCustomGetInitialProps } from "next/dist/build/utils";
 

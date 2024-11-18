@@ -21,6 +21,7 @@ export const signUpSchema = z.object({
     ),
 });
 
+
 export const signInSchema = z.object({
   email: z
     .string()
@@ -32,3 +33,7 @@ export const signInSchema = z.object({
     }, "Email local part cannot be longer than 63 characters"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
+
+
+export type SignUpInputs = z.infer<typeof signUpSchema>;
+export type SignInInputs = z.infer<typeof signInSchema>;

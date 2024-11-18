@@ -18,7 +18,6 @@ const Dashboard = () => {
   const { user } = useAuth();
 
   return (
-    <PrivateRoute>
       <div className="">
         {user && (
           <div>
@@ -29,7 +28,6 @@ const Dashboard = () => {
         <SignOutButton />
         <DeleteUserButton />
       </div>
-    </PrivateRoute>
   );
 };
 

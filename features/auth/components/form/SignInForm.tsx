@@ -30,6 +30,7 @@ import userService from "@/features/user/services/userService";
 //Functions
 import { handleFirebaseAuthentication } from "@/utils/handleFirebaseAuthentication";
 
+
 type Inputs = {
   email: string;
   password: string;
@@ -45,45 +46,45 @@ const SignInForm = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  const handleEmailSignIn = useHandleEmailSignIn();
-  const handleGoogleSignIn = useHandleGoogleSignIn();
+  // const handleEmailSignIn = useHandleEmailSignIn();
+  // const handleGoogleSignIn = useHandleGoogleSignIn();
   const router = useRouter();
 
   const [errMsg, setErrMsg] = useState<string | null>(null);
 
   const handleError = (firebaseReponse: any) => {
-    if (!firebaseReponse?.success) {
-      setErrMsg(
-        firebaseReponse?.error ? firebaseReponse.error : "Unknown Error"
-      );
-    }
+    // if (!firebaseReponse?.success) {
+    //   setErrMsg(
+    //     firebaseReponse?.error ? firebaseReponse.error : "Unknown Error"
+    //   );
+    // }
   };
 
   const emailSignIn: SubmitHandler<Inputs> = async (data: Inputs) => {
-    const firebaseReponse = await handleEmailSignIn(data);
-    const response = await handleFirebaseAuthentication(firebaseReponse);
-    if (response?.ok) {
-      reset();
-      router.push("/dashboard");
-    }
-    handleError(firebaseReponse);
+    // const firebaseReponse = await handleEmailSignIn(data);
+    // const response = await handleFirebaseAuthentication(firebaseReponse);
+    // if (response?.ok) {
+    //   reset();
+    //   router.push("/dashboard");
+    // }
+    // handleError(firebaseReponse);
   };
 
   const googleSignIn = async () => {
-    const firebaseReponse = await handleGoogleSignIn();
-    if (firebaseReponse?.success) {
-      console.log(firebaseReponse);
-      const res = await userService.fetchUserById(
-        firebaseReponse?.user?.user?.uid ?? ""
-      );
-      console.log(res);
-    }
-    const response = await handleFirebaseAuthentication(firebaseReponse);
-    if (response?.ok) {
-      reset();
-      router.push("/dashboard");
-    }
-    handleError(firebaseReponse);
+    // const firebaseReponse = await handleGoogleSignIn();
+    // if (firebaseReponse?.success) {
+    //   console.log(firebaseReponse);
+    //   const res = await userService.fetchUserById(
+    //     firebaseReponse?.user?.user?.uid ?? ""
+    //   );
+    //   console.log(res);
+    // }
+    // const response = await handleFirebaseAuthentication(firebaseReponse);
+    // if (response?.ok) {
+    //   reset();
+    //   router.push("/dashboard");
+    // }
+    // handleError(firebaseReponse);
   };
 
   return (

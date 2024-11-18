@@ -2,7 +2,7 @@
 import { auth, googleProvider } from "@/config/firebaseConfig";
 import { signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
-import { getFirebaseErrorMessage } from "@/utils/firebaseErrorMessages";
+import { getFirebaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
 
 export const useHandleGoogleSignUp = () => {
   const handleGoogleSignUp = async () => {
