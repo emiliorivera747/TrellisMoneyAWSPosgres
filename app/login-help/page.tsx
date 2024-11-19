@@ -80,10 +80,11 @@ export default function PasswordReset() {
               register={register}
             />
             <PrimarySubmitButton
-              bgColor="bg-blue-500"
+              bgColor="bg-primary-700 "
               textColor="text-white"
-              hoverBgColor="hover:bg-blue-600"
+              hoverBgColor="hover:bg-primary-900"
               text="Send Email"
+              disabled={false}
             />
           </form>
           {emailSent && (

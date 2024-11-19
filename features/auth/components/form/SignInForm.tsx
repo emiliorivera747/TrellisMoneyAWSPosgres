@@ -109,9 +109,9 @@ const SignInForm = () => {
           />
         </div>
         <PrimarySubmitButton
-          bgColor="bg-blue-500"
+          bgColor="bg-primary-700"
           textColor="text-white"
-          hoverBgColor="hover:bg-blue-600"
+          hoverBgColor="hover:bg-primary-900"
           text="Sign In"
           disabled={!isValid || pending}
         />

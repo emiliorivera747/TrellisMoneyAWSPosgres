@@ -10,15 +10,15 @@ const EmailVerification = ({ email }: { email: string }) => {
         {" "}
         Verify your email address
       </h2>
-      <div className="px-2 pb-8 flex flex-col gap-4 ">
-        <p className="text-[#495057]">
-          We have sent a verification link to <b>{email}</b>. Please check your
+      <div className="flex flex-col gap-4 text-center mb-10 mt-6 ">
+        <p className="text-[#495057] text-[1rem] tracking-wide leading-6">
+          We have sent a verification link to <b className="text-primary-800">{email}</b>. Please check your
           inbox.
         </p>
       </div>
 
       <button
-        className="w-full px-[.94118rem] py-[1.05882rem] text-white hover:bg-blue-600 bg-blue-500 rounded-[12px] transition duration-300"
+        className="w-full px-[.94118rem] py-[1.05882rem] text-white hover:bg-primary-700 bg-primary-900 rounded-[12px] transition duration-300"
         onClick={handleResendEmail}
       >
         Resend Email

@@ -36,14 +36,14 @@ export default async function Home() {
         {user ? (
           <Link
             href="/dashboard"
-            className="mt-4 px-8 py-4 bg-green-500 text-white border-none rounded cursor-pointer"
+            className="mt-4 px-8 py-4 bg-secondary-700 hover:bg-secondary-900 transition duration-300 text-white border-none rounded cursor-pointer"
           >
             Go to Dashboard
           </Link>
         ) : (
           <Link
             href="/sign-up"
-            className="mt-4 px-8 py-4  transition duration-300 rounded bg-primary-700 hover:bg-primary-800 text-white border-none cursor-pointer "
+            className="mt-4 px-8 py-4  transition duration-300 rounded bg-primary-700 hover:bg-primary-900 text-white border-none cursor-pointer "
           >
             Get Started
           </Link>
