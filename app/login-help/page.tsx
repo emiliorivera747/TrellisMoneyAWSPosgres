@@ -17,6 +17,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import InputLabel from "@/components/form-components/InputLabel";
 import NavBar from "@/components/nav-bars/NavBar";
+import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 
 const schema = z.object({
   email: z.string().email("Invalid email format"),
@@ -56,44 +57,46 @@ export default function PasswordReset() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center m-h-screen h-auto min-w-screen w-auto">
-      <div className="w-full">
-        <NavBar />
-      </div>
-      <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-2 mb-2"
-        >
-          <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
-            Reset Your Password
-          </h2>
-          {message && <p style={{ color: "green" }}>{message}</p>}
-          <InputLabel
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Email"
-            errors={errors}
-            register={register}
-          />
-          <PrimarySubmitButton
-            bgColor="bg-blue-500"
-            textColor="text-white"
-            hoverBgColor="hover:bg-blue-600"
-            text="Send Email"
-          />
-        </form>
-        {emailSent && (
-          <Link
-            href="/sign-in"
-            className="w-full px-[.94118rem] py-[1.05882rem] rounded-[12px] text-sm font-semibold text-gray-700 bg-[#e9ecef] shadow-sm hover:bg-[#dee2e6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4 mb-4"
+    <DashboardRedirect>
+      <div className="flex flex-col items-center justify-center m-h-screen h-auto min-w-screen w-auto">
+        <div className="w-full">
+          <NavBar />
+        </div>
+        <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-2 mb-2"
           >
-            Return to Sign In
-          </Link>
-        )}
-        {err && <p style={{ color: "red" }}>{err}</p>}
+            <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
+              Reset Your Password
+            </h2>
+            {message && <p style={{ color: "green" }}>{message}</p>}
+            <InputLabel
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email"
+              errors={errors}
+              register={register}
+            />
+            <PrimarySubmitButton
+              bgColor="bg-blue-500"
+              textColor="text-white"
+              hoverBgColor="hover:bg-blue-600"
+              text="Send Email"
+            />
+          </form>
+          {emailSent && (
+            <Link
+              href="/sign-in"
+              className="w-full px-[.94118rem] py-[1.05882rem] rounded-[12px] text-sm font-semibold text-gray-700 bg-[#e9ecef] shadow-sm hover:bg-[#dee2e6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4 mb-4"
+            >
+              Return to Sign In
+            </Link>
+          )}
+          {err && <p style={{ color: "red" }}>{err}</p>}
+        </div>
       </div>
-    </div>
+    </DashboardRedirect>
   );
 }

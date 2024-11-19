@@ -9,10 +9,14 @@ import SignInButton from "@/features/auth/components/buttons/SignInButton";
 import Footer from "@/components/footers/Footer";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 
-import getUser from "@/utils/getUser";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function Home() {
-  const user = await getUser();
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     <div className="bg-white h-screen">
@@ -39,7 +43,7 @@ export default async function Home() {
         ) : (
           <Link
             href="/sign-up"
-            className="mt-4 px-8 py-4 bg-blue-500 text-white border-none rounded cursor-pointer"
+            className="mt-4 px-8 py-4  transition duration-300 rounded bg-primary-700 hover:bg-primary-800 text-white border-none cursor-pointer "
           >
             Get Started
           </Link>

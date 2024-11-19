@@ -6,7 +6,7 @@ import Link from "next/link";
 const SignInButton = () => {
     return (
         <div>
-            <Link className="px-4 py-2 bg-blue-500 text-white border-none rounded cursor-pointer" href="/sign-in">Sign In</Link>
+            <Link className=" transition duration-300 px-[.94118rem] py-[0.6rem] rounded bg-primary-700 hover:bg-primary-800 text-white border-none cursor-pointer " href="/sign-in">Sign In</Link>
         </div>
     )
 }

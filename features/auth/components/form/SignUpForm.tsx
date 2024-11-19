@@ -126,7 +126,7 @@ export default function Signup() {
       )}
 
       {/* Email verification */}
-      {userSuccess && <EmailVerification email={email} />}
+      {userSuccess && <EmailVerification email={email? email : "your email"} />}
 
       {/* Already have and account? */}
       {!userSuccess && <AlreadyHaveAccount />}
