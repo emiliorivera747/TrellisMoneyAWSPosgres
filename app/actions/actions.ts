@@ -34,7 +34,7 @@ const handleOtherErrors = (e: unknown): State => {
   return {
     status: "error",
     message: "Something went wrong. Please try again.",
-    errors: e,
+    errors: e.code,
   };
 };
 
@@ -86,14 +86,14 @@ export async function login(
       validatedFields
     );
 
-    if (error) throw error;
+    if (error) return handleOtherErrors(error) as State;
 
     // Add user to the database if they don't exist
     return handleSuccess(formData);
   } catch (e) {
     console.log(e);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
-    return handleZodError(e) as State|| handleOtherErrors(e) as State;
+    return handleZodError(e) as State || handleOtherErrors(e) as State;
   }
 }
 
@@ -113,12 +113,25 @@ export async function signUp(
       validatedFields
     );
 
-    if (error) throw error;
+    if (error) return handleOtherErrors(error) as State;
 
     return handleSuccess(formData);
   } catch (e) {
-    console.log(e);
+    console.log("e: ", e);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
     return handleZodError(e) as State || (handleOtherErrors(e) as State);
   }
+}
+
+export async function signOut() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (user) {
+    await supabase.auth.signOut()
+  }
+  revalidatePath("/", "layout");
+  return redirect("/");
 }

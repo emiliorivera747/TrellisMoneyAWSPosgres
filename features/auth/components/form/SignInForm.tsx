@@ -1,35 +1,30 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useActionState, useEffect } from "react";
 
 //External libraries
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, setError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Next
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useFormStatus } from "react-dom";
 
 // Components
 import InputLabel from "@/components/form-components/InputLabel";
 import PrimarySubmitButton from "../../../../components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
-import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
 import ForgotPassword from "@/features/auth/components/buttons/ForgotPasswordButton";
-
-//Hooks
-import { useHandleEmailSignIn } from "@/features/auth/hooks/useHandleEmailSignIn";
-import { useHandleGoogleSignIn } from "@/features/auth/hooks/useHandleGoogleSignIn";
 
 //Schema
 import { signInSchema } from "@/features/auth/schemas/formSchemas";
 
-//Services
-import userService from "@/features/user/services/userService";
+// Server actions
+import { login, State } from "@/app/actions/actions";
 
-//Functions
-import { handleFirebaseAuthentication } from "@/utils/handleFirebaseAuthentication";
-
+// Functions
+import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
 
 type Inputs = {
   email: string;
@@ -39,9 +34,9 @@ type Inputs = {
 const SignInForm = () => {
   const {
     register,
-    handleSubmit,
     reset,
-    formState: { errors },
+    formState: { isValid, errors },
+    setError,
   } = useForm<Inputs>({
     resolver: zodResolver(signInSchema),
   });
@@ -50,50 +45,45 @@ const SignInForm = () => {
   // const handleGoogleSignIn = useHandleGoogleSignIn();
   const router = useRouter();
 
-  const [errMsg, setErrMsg] = useState<string | null>(null);
+  const { pending } = useFormStatus();
 
-  const handleError = (firebaseReponse: any) => {
-    // if (!firebaseReponse?.success) {
-    //   setErrMsg(
-    //     firebaseReponse?.error ? firebaseReponse.error : "Unknown Error"
-    //   );
-    // }
-  };
+  const [state, formAction] = useActionState<State, FormData>(login, null);
 
-  const emailSignIn: SubmitHandler<Inputs> = async (data: Inputs) => {
-    // const firebaseReponse = await handleEmailSignIn(data);
-    // const response = await handleFirebaseAuthentication(firebaseReponse);
-    // if (response?.ok) {
-    //   reset();
-    //   router.push("/dashboard");
-    // }
-    // handleError(firebaseReponse);
-  };
+  const [err, setErr] = useState<string | null>(null);
 
-  const googleSignIn = async () => {
-    // const firebaseReponse = await handleGoogleSignIn();
-    // if (firebaseReponse?.success) {
-    //   console.log(firebaseReponse);
-    //   const res = await userService.fetchUserById(
-    //     firebaseReponse?.user?.user?.uid ?? ""
-    //   );
-    //   console.log(res);
-    // }
-    // const response = await handleFirebaseAuthentication(firebaseReponse);
-    // if (response?.ok) {
-    //   reset();
-    //   router.push("/dashboard");
-    // }
-    // handleError(firebaseReponse);
-  };
+  useEffect(() => {
+    if (!state) {
+      return;
+    }
+
+    // In case our form action returns `error` we can now `setError`s
+    if (state.status === "error") {
+      console.log(state.message);
+      console.log(state.errors);
+      if (Array.isArray(state.errors)) {
+        state.errors.forEach((error: unknown) => {
+          setError(
+            error.path as "email" | "password" | "root" | `root.${string}`,
+            {
+              message: error.message,
+            }
+          );
+        });
+      } else {
+        const supabaseError = getSupabaseErrorMessage(state.errors);
+        setErr(supabaseError);
+      }
+    }
+    if (state.status === "success") {
+      console.log(state.message);
+      alert(state.message);
+    }
+  }, [state, setError]);
 
   return (
     <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg">
       {/*  Sign in form */}
-      <form
-        onSubmit={handleSubmit(emailSignIn)}
-        className="flex flex-col gap-2"
-      >
+      <form action={formAction} className="flex flex-col gap-2">
         <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
           Sign in
         </h2>
@@ -120,6 +110,7 @@ const SignInForm = () => {
           textColor="text-white"
           hoverBgColor="hover:bg-blue-600"
           text="Sign In"
+          disabled={!isValid || pending}
         />
       </form>
 
@@ -127,14 +118,14 @@ const SignInForm = () => {
       <ForgotPassword />
 
       {/* Error message */}
-      {errMsg && <PrimaryErrorMessage errMsg={errMsg} />}
+      {err && <PrimaryErrorMessage errMsg={err} />}
       <OrDivider />
 
       {/* Sign Up with google or create account */}
-      <GoogleButton
+      {/* <GoogleButton
         handleFunction={googleSignIn}
         label={"Continue with Google"}
-      />
+      /> */}
 
       <Link
         href="/sign-up"

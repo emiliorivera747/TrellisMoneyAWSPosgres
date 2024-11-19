@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 
 // External libraries
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Components
@@ -15,7 +15,6 @@ import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
 import AlreadyHaveAccount from "@/features/auth/components/buttons/AlreadyHaveAccount";
-
 
 // Schema
 import { signUpSchema } from "@/features/auth/schemas/formSchemas";
@@ -65,6 +64,7 @@ export default function Signup() {
     // In case our form action returns `error` we can now `setError`s
     if (state.status === "error") {
       console.log(state.message);
+      console.log(state.errors);
       if (Array.isArray(state.errors)) {
         state.errors.forEach((error: unknown) => {
           setError(
@@ -74,11 +74,10 @@ export default function Signup() {
             }
           );
         });
-      } else if (state.errors instanceof Error) {
-        console.log(state.errors);
-        setErr(getSupabaseErrorMessage(state.errors));
+      } else {
+        const supabaseError = getSupabaseErrorMessage(state.errors);
+        setErr(supabaseError);
       }
-
     }
     if (state.status === "success") {
       console.log(state.message);

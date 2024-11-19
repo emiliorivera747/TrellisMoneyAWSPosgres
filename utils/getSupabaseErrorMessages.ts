@@ -1,6 +1,7 @@
 
-export function getSupabaseErrorMessage(error: unknown): string {
-    switch (error.code) {
+export function getSupabaseErrorMessage(errorCode: unknown): string {
+    console.log("ERROR CODE",errorCode);
+    switch (errorCode) {
         case 'anonymous_provider_disabled':
             return 'Anonymous sign-ins are disabled.';
         case 'bad_code_verifier':
@@ -24,7 +25,7 @@ export function getSupabaseErrorMessage(error: unknown): string {
         case 'email_exists':
             return 'Email address already exists in the system.';
         case 'email_not_confirmed':
-            return 'Signing in is not allowed for this user as the email address is not confirmed.';
+            return 'Please confirm your email address before signing in.';
         case 'email_provider_disabled':
             return 'Signups are disabled for email and password.';
         case 'flow_state_expired':
