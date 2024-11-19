@@ -4,6 +4,8 @@ import React, { useState, useActionState, useEffect } from "react";
 //External libraries
 import { useForm, setError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+
 
 // Next
 import Link from "next/link";
@@ -25,6 +27,7 @@ import { login, State } from "@/app/actions/actions";
 
 // Functions
 import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
+
 
 type Inputs = {
   email: string;
@@ -75,8 +78,8 @@ const SignInForm = () => {
       }
     }
     if (state.status === "success") {
-      console.log(state.message);
-      alert(state.message);
+      toast.success("Signed in successfully!", { theme: "colored" });
+      router.push("/dashboard");
     }
   }, [state, setError]);
 

@@ -8,6 +8,7 @@ import { useFormStatus } from "react-dom";
 // External libraries
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
 // Components
 import InputLabel from "@/components/form-components/InputLabel";
@@ -15,6 +16,7 @@ import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
 import AlreadyHaveAccount from "@/features/auth/components/buttons/AlreadyHaveAccount";
+import EmailVerification from "@/features/auth/components/email-verification/EmailVerification";
 
 // Schema
 import { signUpSchema } from "@/features/auth/schemas/formSchemas";
@@ -44,6 +46,7 @@ export default function Signup() {
   const { pending } = useFormStatus();
 
   const [state, formAction] = useActionState<State, FormData>(signUp, null);
+  const [email, setEmail] = useState<string | null>(null);
 
   const {
     register,
@@ -55,6 +58,7 @@ export default function Signup() {
   });
 
   const [err, setErr] = useState<string | null>(null);
+  const [userSuccess, setUserSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     if (!state) {
@@ -63,8 +67,6 @@ export default function Signup() {
 
     // In case our form action returns `error` we can now `setError`s
     if (state.status === "error") {
-      console.log(state.message);
-      console.log(state.errors);
       if (Array.isArray(state.errors)) {
         state.errors.forEach((error: unknown) => {
           setError(
@@ -80,51 +82,57 @@ export default function Signup() {
       }
     }
     if (state.status === "success") {
-      console.log(state.message);
-      alert(state.message);
+      toast.success("Signed up successfully!", { theme: "colored" });
+      setUserSuccess(true);
+      setEmail(state.user.email);
     }
   }, [state, setError]);
 
   return (
     <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg ">
       {/* Sign Up form*/}
-      <form action={formAction} className="space-y-6">
-        <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
-          Create Account
-        </h2>
-        <InputLabel
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Email"
-          errors={errors}
-          register={register}
-        />
-        <InputLabel
-          type="password"
-          id="password2"
-          placeholder="Password"
-          errors={errors}
-          register={register}
-          name="password"
-          passwordTooltip={true}
-        />
+      {!userSuccess && (
+        <form action={formAction} className="space-y-6">
+          <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
+            Create Account
+          </h2>
+          <InputLabel
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            errors={errors}
+            register={register}
+          />
+          <InputLabel
+            type="password"
+            id="password2"
+            placeholder="Password"
+            errors={errors}
+            register={register}
+            name="password"
+            passwordTooltip={true}
+          />
 
-        <PrimarySubmitButton
-          bgColor="bg-blue-500"
-          textColor="text-white"
-          hoverBgColor="hover:bg-blue-600"
-          text="Sign Up"
-          disabled={!isValid || pending}
-        />
-        {pending && <span>Loading...</span>}
-      </form>
+          <PrimarySubmitButton
+            bgColor="bg-blue-500"
+            textColor="text-white"
+            hoverBgColor="hover:bg-blue-600"
+            text="Sign Up"
+            disabled={!isValid || pending}
+          />
+          {pending && <span>Loading...</span>}
+        </form>
+      )}
+
+      {/* Email verification */}
+      {userSuccess && <EmailVerification email={email} />}
 
       {/* Already have and account? */}
-      <AlreadyHaveAccount />
+      {!userSuccess && <AlreadyHaveAccount />}
 
       {/* OR section */}
-      <OrDivider />
+      {!userSuccess && <OrDivider />}
       {err && <PrimaryErrorMessage errMsg={err} />}
 
       {/* Sign up with google button */}

@@ -42,6 +42,7 @@ const handleSuccess = (formData: FormData): State => {
   return {
     status: "success",
     message: `Welcome, ${formData.get("email")}!`,
+    user: { email: formData.get("email") as string },
   };
 };
 
@@ -49,6 +50,7 @@ export type State =
   | {
       status: "success";
       message: string;
+      user: { email: string };
     }
   | {
       status: "error";
@@ -82,9 +84,10 @@ export async function login(
 
     // type-casting here for convenience
     // in practice, you should validate your inputs
-    const { data, error } = await supabase.auth.signInWithPassword(
-      validatedFields
-    );
+    const {
+      data,
+      error,
+    } = await supabase.auth.signInWithPassword(validatedFields);
 
     if (error) return handleOtherErrors(error) as State;
 
@@ -93,7 +96,7 @@ export async function login(
   } catch (e) {
     console.log(e);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
-    return handleZodError(e) as State || handleOtherErrors(e) as State;
+    return (handleZodError(e) as State) || (handleOtherErrors(e) as State);
   }
 }
 
@@ -109,9 +112,7 @@ export async function signUp(
       password: formData.get("password") as string,
     });
 
-    const { data, error } = await supabase.auth.signUp(
-      validatedFields
-    );
+    const { data, error } = await supabase.auth.signUp(validatedFields);
 
     if (error) return handleOtherErrors(error) as State;
 
@@ -119,7 +120,7 @@ export async function signUp(
   } catch (e) {
     console.log("e: ", e);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
-    return handleZodError(e) as State || (handleOtherErrors(e) as State);
+    return (handleZodError(e) as State) || (handleOtherErrors(e) as State);
   }
 }
 
@@ -127,10 +128,10 @@ export async function signOut() {
   const supabase = await createClient();
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase.auth.getUser();
 
   if (user) {
-    await supabase.auth.signOut()
+    await supabase.auth.signOut();
   }
   revalidatePath("/", "layout");
   return redirect("/");
