@@ -2,11 +2,13 @@ import React from "react";
 import Image from "next/image";
 
 interface GoogleButtonProps {
-  handleFunction: () => void;
   label: string;
 }
 
-const GoogleButton = ({ handleFunction, label }: GoogleButtonProps) => {
+const GoogleButton = ({ label }: GoogleButtonProps) => {
+  const handleFunction = () => {
+    console.log("Google button clicked");
+  };
   return (
     <button
       onClick={handleFunction}

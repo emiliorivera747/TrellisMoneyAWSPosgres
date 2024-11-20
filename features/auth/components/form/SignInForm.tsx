@@ -18,6 +18,7 @@ import PrimarySubmitButton from "../../../../components/buttons/PrimarySubmitBut
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
 import ForgotPassword from "@/features/auth/components/buttons/ForgotPasswordButton";
+import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
 
 //Schema
 import { signInSchema } from "@/features/auth/schemas/formSchemas";
@@ -125,10 +126,9 @@ const SignInForm = () => {
       <OrDivider />
 
       {/* Sign Up with google or create account */}
-      {/* <GoogleButton
-        handleFunction={googleSignIn}
+      <GoogleButton
         label={"Continue with Google"}
-      /> */}
+      />
 
       <Link
         href="/sign-up"

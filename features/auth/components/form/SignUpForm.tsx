@@ -17,12 +17,15 @@ import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
 import AlreadyHaveAccount from "@/features/auth/components/buttons/AlreadyHaveAccount";
 import EmailVerification from "@/features/auth/components/email-verification/EmailVerification";
+import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
 
 // Schema
 import { signUpSchema } from "@/features/auth/schemas/formSchemas";
 
+//Functions
 import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
 
+// Server actions
 import { signUp, State } from "@/app/actions/actions";
 
 /**
@@ -89,31 +92,32 @@ export default function Signup() {
   }, [state, setError]);
 
   return (
-    <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg ">
+    <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg">
       {/* Sign Up form*/}
       {!userSuccess && (
-        <form action={formAction} className="space-y-6">
+        <form action={formAction} className="flex flex-col gap-2">
           <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
             Create Account
           </h2>
-          <InputLabel
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email"
-            errors={errors}
-            register={register}
-          />
-          <InputLabel
-            type="password"
-            id="password2"
-            placeholder="Password"
-            errors={errors}
-            register={register}
-            name="password"
-            passwordTooltip={true}
-          />
-
+          <div className="flex flex-col  mb-2">
+            <InputLabel
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              errors={errors}
+              register={register}
+            />
+            <InputLabel
+              type="password"
+              id="password2"
+              placeholder="Password"
+              errors={errors}
+              register={register}
+              name="password"
+              passwordTooltip={true}
+            />
+          </div>
           <PrimarySubmitButton
             bgColor="bg-primary-700"
             textColor="text-white"
@@ -126,7 +130,9 @@ export default function Signup() {
       )}
 
       {/* Email verification */}
-      {userSuccess && <EmailVerification email={email? email : "your email"} />}
+      {userSuccess && (
+        <EmailVerification email={email ? email : "your email"} />
+      )}
 
       {/* Already have and account? */}
       {!userSuccess && <AlreadyHaveAccount />}
@@ -136,10 +142,9 @@ export default function Signup() {
       {err && <PrimaryErrorMessage errMsg={err} />}
 
       {/* Sign up with google button */}
-      {/* <GoogleButton
-        handleFunction={handleGoogleSignupClick}
+      <GoogleButton
         label="Continue with Google"
-      /> */}
+      />
     </div>
   );
 }
