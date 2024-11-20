@@ -1,28 +1,61 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
+
+import { createClient } from "@/utils/supabase/client";
+
+import { useSearchParams } from "next/navigation";
 
 interface GoogleButtonProps {
   label: string;
 }
 
 const GoogleButton = ({ label }: GoogleButtonProps) => {
-  const handleFunction = () => {
-    console.log("Google button clicked");
-  };
+  const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
+  const supabase = createClient();
+  const searchParams = useSearchParams();
+
+  const next = searchParams.get("next");
+  async function signInWithGoogle() {
+    setIsGoogleLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.log(error);
+      setIsGoogleLoading(false);
+    }
+  }
   return (
     <button
-      onClick={handleFunction}
+      onClick={signInWithGoogle}
       className="mb-4 px-[.94118rem] py-[1.05882rem] rounded-[12px] w-full text-sm font-medium text-gray-700 bg-white border border-gray-300 shadow-sm hover:bg-[#f1f3f5] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4"
+      disabled={isGoogleLoading}
     >
-      <div className="flex-shrink-0">
-        <Image
-          src="/google_logo.png"
-          width={20}
-          height={20}
-          alt="google logo"
-        />
-      </div>
-      {label}
+      {isGoogleLoading ? (
+        <div className="w-5 h-5 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin"></div>
+      ) : (
+        <>
+          {" "}
+          <div className="flex-shrink-0">
+            <Image
+              src="/google_logo.png"
+              width={20}
+              height={20}
+              alt="google logo"
+            />
+          </div>
+          {label}
+        </>
+      )}
     </button>
   );
 };
