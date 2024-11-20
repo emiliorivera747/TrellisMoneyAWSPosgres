@@ -1,6 +1,5 @@
 
 export function getSupabaseErrorMessage(errorCode: unknown): string {
-    console.log("ERROR CODE",errorCode);
     switch (errorCode) {
         case 'anonymous_provider_disabled':
             return 'Anonymous sign-ins are disabled.';
@@ -47,7 +46,7 @@ export function getSupabaseErrorMessage(errorCode: unknown): string {
         case 'invite_not_found':
             return 'Invite is expired or already used.';
         case 'invalid_credentials':
-            return 'Login credentials or grant type not recognized.';
+            return 'Invalid Email or Password.';
         case 'manual_linking_disabled':
             return 'Calling the supabase.auth.linkUser() and related APIs is not enabled.';
         case 'mfa_challenge_expired':

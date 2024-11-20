@@ -50,16 +50,20 @@ const SignInForm = () => {
   const router = useRouter();
 
   const { pending } = useFormStatus();
+  console.log("PENDING", pending);
+  console.log("isValid", isValid);
 
   const [state, formAction] = useActionState<State, FormData>(login, null);
 
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log("STATE", state);
     if (!state) {
       return;
     }
 
+    console.log("SIGN IN");
     // In case our form action returns `error` we can now `setError`s
     if (state.status === "error") {
       console.log(state.message);
@@ -114,7 +118,6 @@ const SignInForm = () => {
           textColor="text-white"
           hoverBgColor="hover:bg-primary-900"
           text="Sign In"
-          disabled={!isValid || pending}
         />
       </form>
 

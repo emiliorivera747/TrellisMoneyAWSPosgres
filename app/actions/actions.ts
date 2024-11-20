@@ -17,17 +17,14 @@ import {
 import { AuthError } from "@supabase/supabase-js";
 
 const handleZodError = (e: unknown): State => {
-  if (e instanceof z.ZodError) {
-    return {
-      status: "error",
-      message: "Invalid form data",
-      errors: e.issues.map((issue) => ({
-        path: issue.path.join("."),
-        message: `${issue.message}`,
-      })),
-    };
-  }
-  return { status: "error", message: "Unknown error", errors: e };
+  return {
+    status: "error",
+    message: "Invalid form data",
+    errors: e.issues.map((issue) => ({
+      path: issue.path.join("."),
+      message: `${issue.message}`,
+    })),
+  };
 };
 
 const handleOtherErrors = (e: unknown): State => {
@@ -81,13 +78,13 @@ export async function login(
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     });
+    console.log("validatedFields: ", validatedFields);
 
     // type-casting here for convenience
     // in practice, you should validate your inputs
-    const {
-      data,
-      error,
-    } = await supabase.auth.signInWithPassword(validatedFields);
+    const { data, error } = await supabase.auth.signInWithPassword(
+      validatedFields
+    );
 
     if (error) return handleOtherErrors(error) as State;
 
@@ -96,7 +93,8 @@ export async function login(
   } catch (e) {
     console.log(e);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
-    return (handleZodError(e) as State) || (handleOtherErrors(e) as State);
+    if (e instanceof z.ZodError) return handleZodError(e) as State;
+    return handleOtherErrors(e) as State;
   }
 }
 
@@ -120,7 +118,8 @@ export async function signUp(
   } catch (e) {
     console.log("e: ", e);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
-    return (handleZodError(e) as State) || (handleOtherErrors(e) as State);
+    if (e instanceof z.ZodError) return handleZodError(e) as State;
+    return handleOtherErrors(e) as State;
   }
 }
 

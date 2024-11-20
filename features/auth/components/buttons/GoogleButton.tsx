@@ -6,6 +6,8 @@ import { createClient } from "@/utils/supabase/client";
 
 import { useSearchParams } from "next/navigation";
 
+import ButtonSpinner from "@/components/spinners/ButtonSpinner";
+
 interface GoogleButtonProps {
   label: string;
 }
@@ -41,7 +43,7 @@ const GoogleButton = ({ label }: GoogleButtonProps) => {
       disabled={isGoogleLoading}
     >
       {isGoogleLoading ? (
-        <div className="w-5 h-5 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin"></div>
+        <ButtonSpinner />
       ) : (
         <>
           {" "}

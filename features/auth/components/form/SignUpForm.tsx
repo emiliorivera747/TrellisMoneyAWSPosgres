@@ -61,6 +61,8 @@ export default function Signup() {
       return;
     }
 
+    console.log("STATE: ", state);
+
     // In case our form action returns `error` we can now `setError`s
     if (state.status === "error") {
       console.log("ERRORS: ",state.errors);
@@ -118,7 +120,6 @@ export default function Signup() {
             textColor="text-white"
             hoverBgColor="hover:bg-primary-900"
             text="Sign Up"
-            disabled={!isValid || pending}
           />
           {pending && <span>Loading...</span>}
         </form>
