@@ -9,26 +9,30 @@ export const GET = async (
   const { _id } = await params;
   
   try {
-    if (!_id) {
-      return NextResponse.json(
-        { message: "User ID not provided", status: "error" },
-        { status: 400 }
-      );
-    }
+    // if (!_id) {
+    //   return NextResponse.json(
+    //     { message: "User ID not provided", status: "error" },
+    //     { status: 400 }
+    //   );
+    // }
 
-    const user = await prisma.user.findUnique({
-      where: { userId: _id },
-    });
+    // const user = await prisma.user.findUnique({
+    //   where: { userId: _id },
+    // });
 
-    if (!user) {
-      return NextResponse.json(
-        { message: "User not found", status: "error" },
-        { status: 404 }
-      );
-    }
+    // if (!user) {
+    //   return NextResponse.json(
+    //     { message: "User not found", status: "error" },
+    //     { status: 404 }
+    //   );
+    // }
 
+    // return NextResponse.json(
+    //   { status: "success", data: user.userId },
+    //   { status: 200 }
+    // );
     return NextResponse.json(
-      { status: "success", data: user.userId },
+      { status: "success", data: _id },
       { status: 200 }
     );
   } catch (error) {

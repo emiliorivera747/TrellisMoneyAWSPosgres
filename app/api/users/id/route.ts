@@ -1,24 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { validateSession } from "@/utils/authHelper";
-import { authAdmin } from "@/config/firebaseAdmin";
-import { invalidateLogin } from "@/utils/invalidateLogin";
+import {authenticateUser} from "@/utils/api-helpers/authenticateUser";
+
 
 export async function GET() {
   try {
-    const sessionValidation = await validateSession();
-
-    if (!sessionValidation.isValid) {
-      return NextResponse.json(
-        { error: "Unauthorized", isLogged: sessionValidation.isValid },
-        { status: sessionValidation.status }
-      );
-    }
-    const userId = sessionValidation.decodedClaims?.uid;
-
+    const result = await authenticateUser();
+    if (result instanceof NextResponse) return result;
+    const userId = result?.id;
     const user = await prisma.user.findUnique({
       where: {
-        userId,
+        userId: userId,
       },
     });
 
@@ -32,19 +24,9 @@ export async function GET() {
 
 export async function DELETE() {
   try {
-    const sessionValidation = await validateSession();
-
-    if (!sessionValidation.isValid) {
-      return NextResponse.json(
-        { error: "Unauthorized", isLogged: sessionValidation.isValid },
-        { status: sessionValidation.status }
-      );
-    }
-    const userId = sessionValidation.decodedClaims?.uid;
-    await invalidateLogin(
-      sessionValidation.session ? sessionValidation.session : ""
-    );
-
+    const result = await authenticateUser();
+    if (result instanceof NextResponse) return result;
+    const userId = result?.id;
     const user = await prisma.user.findUnique({
       where: {
         userId,
@@ -57,27 +39,7 @@ export async function DELETE() {
         { status: 404 }
       );
     }
-
-    await authAdmin
-      .deleteUser(userId ? userId : "")
-      .then(async () => {
-        await prisma.user.delete({
-          where: {
-            userId,
-          },
-        });
-      })
-      .catch((error) => {
-        return NextResponse.json(
-          {
-            status: "error",
-            message: "Failed to delete user from Firebase",
-            error,
-          },
-          { status: 500 }
-        );
-      });
-
+    
     return NextResponse.json(
       { status: "success", message: "User deleted" },
       { status: 200 }

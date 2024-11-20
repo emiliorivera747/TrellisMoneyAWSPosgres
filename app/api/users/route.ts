@@ -1,10 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-
-import { authAdmin } from "@/config/firebaseAdmin";
 import { cookies, headers } from "next/headers";
-import { validateSession } from "@/utils/authHelper";
+import { createClient } from "@/utils/supabase/server";
+import { authenticateUser } from "@/utils/api-helpers/authenticateUser";
 
 const userSchema = z.object({
   name: z.string(),
@@ -14,14 +13,14 @@ const userSchema = z.object({
 
 /**
  *
+ * Register a new user
+ *
  * @param req
  * @returns
  */
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
-    // console.log(body);
 
     const { name, email, userId } = userSchema.parse(body);
 
@@ -92,36 +91,27 @@ export async function POST(req: Request) {
 }
 
 /**
- * 
- * @returns 
+ * Get users
+ * @returns
  */
 export async function GET() {
   try {
-    const sessionValidation = await validateSession();
-  
-    if (!sessionValidation.isValid) {
-      return NextResponse.json(
-        { error: "Unauthorized", isLogged: sessionValidation.isValid },
-        { status: sessionValidation.status }
-      );
-    }
+    const result = await authenticateUser();
+    if (result instanceof NextResponse) return result;
     const users = await prisma.user.findMany();
     return NextResponse.json({ status: "success", users }, { status: 200 });
   } catch (error: unknown) {
-    return NextResponse.json({ message: "Server Error", staus:"error"}, { status: 500 });
+    return NextResponse.json(
+      { message: "Server Error", staus: "error" },
+      { status: 500 }
+    );
   }
 }
 
 export async function PUT(req: Request) {
   try {
-    const sessionValidation = await validateSession();
-  
-    if (!sessionValidation.isValid) {
-      return NextResponse.json(
-        { error: "Unauthorized", isLogged: sessionValidation.isValid },
-        { status: sessionValidation.status }
-      );
-    }
+    const result = await authenticateUser();
+    if (result instanceof NextResponse) return result;
     const body = await req.json();
 
     const { name, email, userId } = userSchema.parse(body);
@@ -163,4 +153,3 @@ export async function PUT(req: Request) {
     return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 }
-
