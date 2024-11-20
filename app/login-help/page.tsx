@@ -9,9 +9,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-//Firebase
-import { auth } from "@/config/firebaseConfig";
-import { sendPasswordResetEmail } from "firebase/auth";
 
 //Compenents
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
@@ -45,7 +42,7 @@ export default function PasswordReset() {
     setErr(null);
 
     try {
-      await sendPasswordResetEmail(auth, data.email);
+      // await sendPasswordResetEmail(auth, data.email);
       setMessage("Password reset email sent! Check your inbox.");
       setEmailSent(true);
     } catch (error) {

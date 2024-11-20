@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 
 //Components
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
-import DeleteUserButton from "@/features/auth/components/buttons/DeleteUserButton";
+// import DeleteUserButton from "@/features/auth/components/buttons/DeleteUserButton";
 
 import { createClient } from "@/utils/supabase/client";
 
@@ -39,7 +39,7 @@ const Dashboard = () => {
         </div>
       )}
       <SignOutButton />
-      <DeleteUserButton />
+      {/* <DeleteUserButton /> */}
     </div>
   );
 };

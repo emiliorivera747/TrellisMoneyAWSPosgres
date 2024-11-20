@@ -2,7 +2,6 @@
 
 // Next and React
 import React, { useState, useEffect, useActionState } from "react";
-import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 
 // External libraries
@@ -42,12 +41,7 @@ type Inputs = {
  * @returns JSX.Element
  */
 export default function Signup() {
-  // const handleEmailSignUp = useHandleEmailSignUp();
-  // const handleGoogleSignUp = useHandleGoogleSignUp();
-  const router = useRouter();
-
   const { pending } = useFormStatus();
-
   const [state, formAction] = useActionState<State, FormData>(signUp, null);
   const [email, setEmail] = useState<string | null>(null);
 
@@ -55,7 +49,6 @@ export default function Signup() {
     register,
     formState: { isValid, errors },
     setError,
-    reset,
   } = useForm<Inputs>({
     resolver: zodResolver(signUpSchema),
   });
@@ -70,6 +63,8 @@ export default function Signup() {
 
     // In case our form action returns `error` we can now `setError`s
     if (state.status === "error") {
+      console.log("ERRORS: ",state.errors);
+
       if (Array.isArray(state.errors)) {
         state.errors.forEach((error: unknown) => {
           setError(
@@ -142,9 +137,7 @@ export default function Signup() {
       {err && <PrimaryErrorMessage errMsg={err} />}
 
       {/* Sign up with google button */}
-      <GoogleButton
-        label="Continue with Google"
-      />
+      {!userSuccess && <GoogleButton label="Continue with Google" />}
     </div>
   );
 }
