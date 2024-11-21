@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { UseFormRegister, FieldValues, FieldError } from "react-hook-form";
 
 //Components
 import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip";
 
+interface Input {
+  email: string;
+}
 interface InputLabelProps {
   type: string;
   id: string;
   name: string;
   placeholder: string;
-  errors: any;
-  register: any;
+  errors: FieldError;
+  register: UseFormRegister<Input>;
   passwordTooltip?: boolean;
 }
 
@@ -92,9 +96,7 @@ const InputLabel = ({
 
       {/* Error message */}
       {errors[name] && (
-        <p className="text-red-500 text-sm mt-1 ">
-          {errors[name].message}
-        </p>
+        <p className="text-red-500 text-sm mt-1 ">{errors[name].message}</p>
       )}
     </div>
   );

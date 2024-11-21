@@ -18,7 +18,13 @@ import {
 } from "@/features/auth/schemas/formSchemas";
 import { AuthError } from "@supabase/supabase-js";
 
-const handleZodError = (e: unknown): State => {
+/**
+ * Handles errors thrown by Zod schema validation.
+ *
+ * @param e - The error object, expected to be of type `unknown`.
+ * @returns An object representing the state with error details.
+ */
+const handleZodError = (e: z.ZodError): State => {
   return {
     status: "error",
     message: "Invalid form data",
@@ -29,11 +35,33 @@ const handleZodError = (e: unknown): State => {
   };
 };
 
+interface ErrorDetail {
+  path: string;
+  message: string;
+}
+
+interface SuccessState {
+  status: "success";
+  message: string;
+  user: { email: string };
+}
+
+interface ErrorState {
+  status: "error";
+  message: string | null;
+  errors?: Array<ErrorDetail> | AuthError | unknown;
+}
+export type State =
+  | SuccessState
+  | ErrorState
+  | null;
+
+
 const handleOtherErrors = (e: unknown): State => {
   return {
     status: "error",
     message: "Something went wrong. Please try again.",
-    errors: e.code,
+    errors: (e instanceof Error) ? e.message : e,
   };
 };
 
@@ -45,24 +73,6 @@ const handleSuccess = (formData: FormData): State => {
   };
 };
 
-export type State =
-  | {
-      status: "success";
-      message: string;
-      user: { email: string };
-    }
-  | {
-      status: "error";
-      message: string | null;
-      errors?:
-        | Array<{
-            path: string;
-            message: string;
-          }>
-        | AuthError
-        | unknown;
-    }
-  | null;
 
 export async function login(
   prevState: State | null,
@@ -84,9 +94,7 @@ export async function login(
 
     // type-casting here for convenience
     // in practice, you should validate your inputs
-    const { data, error } = await supabase.auth.signInWithPassword(
-      validatedFields
-    );
+    const { error } = await supabase.auth.signInWithPassword(validatedFields);
 
     if (error) return handleOtherErrors(error) as State;
 
@@ -120,7 +128,7 @@ export async function signUp(
     await prisma.user.create({
       data: {
         email: validatedFields.email,
-        userId: data.user?.id, 
+        userId: data.user?.id,
       },
     });
 

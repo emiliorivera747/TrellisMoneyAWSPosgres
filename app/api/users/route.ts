@@ -71,11 +71,13 @@ export async function GET() {
     if (result instanceof NextResponse) return result;
     const users = await prisma.user.findMany();
     return NextResponse.json({ status: "success", users }, { status: 200 });
-  } catch (error: unknown) {
-    return NextResponse.json(
-      { message: "Server Error", staus: "error" },
-      { status: 500 }
-    );
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { message: "Server Error", staus: "error", error: error },
+        { status: 500 }
+      );
+    }
   }
 }
 

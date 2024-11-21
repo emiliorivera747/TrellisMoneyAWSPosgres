@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import {UseFormRegister, FieldValues, FieldError } from 'react-hook-form'
 
 //Compenents
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
@@ -20,9 +20,10 @@ const schema = z.object({
   email: z.string().email("Invalid email format"),
 });
 
-type Input = {
+
+interface Input {
   email: string;
-};
+}
 
 export default function PasswordReset() {
   const {
@@ -38,6 +39,7 @@ export default function PasswordReset() {
   const [emailSent, setEmailSent] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
+    console.log(data);
     setMessage(null);
     setErr(null);
 
@@ -73,15 +75,14 @@ export default function PasswordReset() {
               name="email"
               type="email"
               placeholder="Email"
-              errors={errors}
-              register={register}
+              errors={errors as FieldError}
+              register={register as UseFormRegister<Input>}
             />
             <PrimarySubmitButton
               bgColor="bg-primary-700 "
               textColor="text-white"
               hoverBgColor="hover:bg-primary-900"
               text="Send Email"
-              disabled={false}
             />
           </form>
           {emailSent && (
