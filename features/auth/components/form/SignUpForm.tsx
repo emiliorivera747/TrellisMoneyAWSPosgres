@@ -10,13 +10,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 
 // Components
-import InputLabel from "@/components/form-components/InputLabel";
+import TextInput from "@/components/form-components/TextInput";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
 import AlreadyHaveAccount from "@/features/auth/components/buttons/AlreadyHaveAccount";
 import EmailVerification from "@/features/auth/components/email-verification/EmailVerification";
 import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
+import PasswordInput from "@/components/form-components/PasswordInput";
 
 // Schema
 import { signUpSchema } from "@/features/auth/schemas/formSchemas";
@@ -65,7 +66,7 @@ export default function Signup() {
 
     // In case our form action returns `error` we can now `setError`s
     if (state.status === "error") {
-      console.log("ERRORS: ",state.errors);
+      console.log("ERRORS: ", state.errors);
 
       if (Array.isArray(state.errors)) {
         state.errors.forEach((error: unknown) => {
@@ -97,22 +98,20 @@ export default function Signup() {
             Create Account
           </h2>
           <div className="flex flex-col  mb-2">
-            <InputLabel
+            <TextInput
               type="email"
-              id="email"
-              name="email"
+              id="email1"
+              fieldName="email"
               placeholder="Email"
               errors={errors}
               register={register}
             />
-            <InputLabel
-              type="password"
+            <PasswordInput
               id="password2"
+              fieldName="password"
               placeholder="Password"
               errors={errors}
               register={register}
-              name="password"
-              passwordTooltip={true}
             />
           </div>
           <PrimarySubmitButton

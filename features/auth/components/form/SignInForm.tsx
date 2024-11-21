@@ -6,19 +6,19 @@ import { useForm, setError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 
-
 // Next
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 
 // Components
-import InputLabel from "@/components/form-components/InputLabel";
 import PrimarySubmitButton from "../../../../components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
 import ForgotPassword from "@/features/auth/components/buttons/ForgotPasswordButton";
 import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
+import PasswordInput from "@/components/form-components/PasswordInput";
+import TextInput from "@/components/form-components/TextInput";
 
 //Schema
 import { signInSchema } from "@/features/auth/schemas/formSchemas";
@@ -29,7 +29,6 @@ import { login, State } from "@/app/actions/actions";
 // Functions
 import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
 
-
 type Inputs = {
   email: string;
   password: string;
@@ -38,7 +37,6 @@ type Inputs = {
 const SignInForm = () => {
   const {
     register,
-    reset,
     formState: { isValid, errors },
     setError,
   } = useForm<Inputs>({
@@ -96,21 +94,20 @@ const SignInForm = () => {
           Sign in
         </h2>
         <div className="flex flex-col  mb-2">
-          <InputLabel
+          <TextInput
             type="email"
             id="email"
             placeholder="Email"
             errors={errors}
             register={register}
-            name={"email"}
+            fieldName={"email"}
           />
-          <InputLabel
-            type="password"
-            id="password1"
+          <PasswordInput
+            id="password2"
+            fieldName="password"
             placeholder="Password"
             errors={errors}
             register={register}
-            name={"password"}
           />
         </div>
         <PrimarySubmitButton
@@ -129,9 +126,7 @@ const SignInForm = () => {
       <OrDivider />
 
       {/* Sign Up with google or create account */}
-      <GoogleButton
-        label={"Continue with Google"}
-      />
+      <GoogleButton label={"Continue with Google"} />
 
       <Link
         href="/sign-up"

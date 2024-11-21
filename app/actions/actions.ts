@@ -61,11 +61,12 @@ const handleOtherErrors = (e: unknown): State => {
   return {
     status: "error",
     message: "Something went wrong. Please try again.",
-    errors: (e instanceof Error) ? e.message : e,
+    errors: (e instanceof Error && 'code' in e) ? e.code: e,
   };
 };
 
 const handleSuccess = (formData: FormData): State => {
+
   return {
     status: "success",
     message: `Welcome, ${formData.get("email")}!`,
@@ -90,7 +91,6 @@ export async function login(
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     });
-    console.log("validatedFields: ", validatedFields);
 
     // type-casting here for convenience
     // in practice, you should validate your inputs
@@ -101,7 +101,6 @@ export async function login(
     // Add user to the database if they don't exist
     return handleSuccess(formData);
   } catch (e) {
-    console.log(e);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
     if (e instanceof z.ZodError) return handleZodError(e) as State;
     return handleOtherErrors(e) as State;
@@ -134,7 +133,6 @@ export async function signUp(
 
     return handleSuccess(formData);
   } catch (e) {
-    console.log("e: ", e);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
     if (e instanceof z.ZodError) return handleZodError(e) as State;
     return handleOtherErrors(e) as State;

@@ -8,11 +8,10 @@ import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {UseFormRegister, FieldValues, FieldError } from 'react-hook-form'
 
 //Compenents
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
-import InputLabel from "@/components/form-components/InputLabel";
+import TextInput from "@/components/form-components/TextInput";
 import NavBar from "@/components/nav-bars/NavBar";
 import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 
@@ -23,6 +22,7 @@ const schema = z.object({
 
 interface Input {
   email: string;
+  password1: string;
 }
 
 export default function PasswordReset() {
@@ -70,13 +70,13 @@ export default function PasswordReset() {
               Reset Your Password
             </h2>
             {message && <p style={{ color: "green" }}>{message}</p>}
-            <InputLabel
+            <TextInput
               id="email"
-              name="email"
+              fieldName="email"
               type="email"
               placeholder="Email"
-              errors={errors as FieldError}
-              register={register as UseFormRegister<Input>}
+              errors={errors}
+              register={register}
             />
             <PrimarySubmitButton
               bgColor="bg-primary-700 "

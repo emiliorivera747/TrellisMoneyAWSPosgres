@@ -1,32 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { UseFormRegister, FieldValues, FieldError } from "react-hook-form";
+
+import { FieldValues } from "react-hook-form";
 
 //Components
 import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip";
 
-interface Input {
-  email: string;
-}
-interface InputLabelProps {
-  type: string;
-  id: string;
-  name: string;
-  placeholder: string;
-  errors: FieldError;
-  register: UseFormRegister<Input>;
-  passwordTooltip?: boolean;
-}
+//Types
+import { PasswordInputProps } from "@/types/Forms";
 
-const InputLabel = ({
-  type,
+const PasswordInput = <TFieldValues extends FieldValues>({
   id,
-  name,
   placeholder,
+  fieldName,
   errors,
   register,
-  passwordTooltip,
-}: InputLabelProps) => {
+}: PasswordInputProps<TFieldValues>) => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -51,40 +40,36 @@ const InputLabel = ({
   return (
     <div className="relative my-1 ">
       <input
-        type={type === "password" && showPassword ? "text" : type}
+        type={"password"}
         id={id}
-        {...register(name, {
+        {...register(fieldName, {
           onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
             setPassword(e.target.value),
         })}
         className={`align-text-bottom w-full px-[.94118rem] pt-[1.05882rem] h-[3.29412rem] border ${
-          errors[name] ? "border-red-500" : "border-[#495057]"
+          errors[fieldName] ? "border-red-500" : "border-[#495057]"
         } rounded-[8px] focus:outline-none focus:ring-2 ${
-          errors[name] ? "focus:ring-red-500" : "focus:ring-blue-500"
+          errors[fieldName] ? "focus:ring-red-500" : "focus:ring-blue-500"
         } peer placeholder-transparent`}
         placeholder={placeholder}
         defaultValue=""
         onFocus={() => setIsFocused(true)}
       />
 
-      {/* Password visibility functionality */}
-      {type === "password" && (
-        <div
-          className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer  h-[3.29412rem]"
-          onClick={togglePasswordVisibility}
-        >
-          {showPassword ? (
-            <FaEyeSlash className="text-[#868e96]" />
-          ) : (
-            <FaEye className="text-[#868e96]" />
-          )}
-        </div>
-      )}
+      {/* Password Visibility */}
+      <div
+        className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer  h-[3.29412rem]"
+        onClick={togglePasswordVisibility}
+      >
+        {showPassword ? (
+          <FaEyeSlash className="text-[#868e96]" />
+        ) : (
+          <FaEye className="text-[#868e96]" />
+        )}
+      </div>
 
       {/* Password tooltip */}
-      {type === "password" && isFocused && password && passwordTooltip && (
-        <PasswordTooltip password={password} />
-      )}
+      {isFocused && password && <PasswordTooltip password={password} />}
 
       {/* Placeholder label*/}
       <label
@@ -95,10 +80,12 @@ const InputLabel = ({
       </label>
 
       {/* Error message */}
-      {errors[name] && (
-        <p className="text-red-500 text-sm mt-1 ">{errors[name].message}</p>
+      {errors[fieldName] && (
+        <p className="text-red-500 text-sm mt-1 ">
+          {errors[fieldName]?.message?.toString()}
+        </p>
       )}
     </div>
   );
 };
-export default InputLabel;
+export default PasswordInput;
