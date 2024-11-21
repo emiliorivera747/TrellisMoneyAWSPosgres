@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import {authenticateUser} from "@/utils/api-helpers/authenticateUser";
-
+import { fetchAllSupabaseUsers } from "@/utils/api-helpers/fetchAllSupabaseUsers";
 
 export async function GET() {
   try {
@@ -14,11 +14,13 @@ export async function GET() {
       },
     });
 
+    const users = await fetchAllSupabaseUsers();
+
     // Your protected logic here
-    return NextResponse.json({ message: "Protected data", user });
+    return NextResponse.json({ message: "Protected data", users });
   } catch (error: unknown) {
     // console.error("Token verification failed", error);
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Server error" }, { status: 500});
   }
 }
 

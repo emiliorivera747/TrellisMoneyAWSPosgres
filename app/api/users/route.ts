@@ -1,8 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { cookies, headers } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
 import { authenticateUser } from "@/utils/api-helpers/authenticateUser";
 
 const userSchema = z.object({
@@ -28,6 +26,7 @@ export async function POST(req: Request) {
     const user = await prisma.user.findUnique({
       where: {
         email,
+        userId,
       },
     });
 
@@ -47,34 +46,6 @@ export async function POST(req: Request) {
       },
     });
 
-    const cookieStore = await cookies();
-
-    // Get the Authorization header
-    const headersList = await headers();
-    const authorization = headersList.get("Authorization");
-
-    if (authorization?.startsWith("Bearer ")) {
-      const idToken = authorization.split("Bearer ")[1];
-      const decodedToken = await authAdmin.verifyIdToken(idToken);
-
-      if (decodedToken) {
-        // Generate session cookie
-        const expiresIn = 60 * 60 * 24 * 5 * 1000;
-        const sessionCookie = await authAdmin.createSessionCookie(idToken, {
-          expiresIn,
-        });
-        const options = {
-          name: "session",
-          value: sessionCookie,
-          maxAge: expiresIn,
-          httpOnly: true,
-          secure: true,
-        };
-
-        // Add the cookie to the browser
-        cookieStore.set(options);
-      }
-    }
     return NextResponse.json(
       { status: "success", message: "User created", user: newUser },
       { status: 201 }

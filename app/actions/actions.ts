@@ -9,6 +9,8 @@ import { z } from "zod";
 //Utils
 import { createClient } from "@/utils/supabase/server";
 
+import { prisma } from "@/lib/prisma";
+
 //Schema
 import {
   signUpSchema,
@@ -113,6 +115,14 @@ export async function signUp(
     const { data, error } = await supabase.auth.signUp(validatedFields);
 
     if (error) return handleOtherErrors(error) as State;
+
+    // Add the user to your own PostgreSQL database
+    await prisma.user.create({
+      data: {
+        email: validatedFields.email,
+        userId: data.user?.id, 
+      },
+    });
 
     return handleSuccess(formData);
   } catch (e) {

@@ -1,38 +1,36 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+
 export const GET = async (
   request: Request,
   { params }: { params: Promise<{ _id: string }> }
 ) => {
 
-  const { _id } = await params;
-  
   try {
-    // if (!_id) {
-    //   return NextResponse.json(
-    //     { message: "User ID not provided", status: "error" },
-    //     { status: 400 }
-    //   );
-    // }
 
-    // const user = await prisma.user.findUnique({
-    //   where: { userId: _id },
-    // });
+    const { _id } = await params;
 
-    // if (!user) {
-    //   return NextResponse.json(
-    //     { message: "User not found", status: "error" },
-    //     { status: 404 }
-    //   );
-    // }
+    if (!_id) {
+      return NextResponse.json(
+        { message: "User ID not provided", status: "error" },
+        { status: 400 }
+      );
+    }
 
-    // return NextResponse.json(
-    //   { status: "success", data: user.userId },
-    //   { status: 200 }
-    // );
+    const user = await prisma.user.findUnique({
+      where: { userId: _id },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "User not found", status: "error" },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json(
-      { status: "success", data: _id },
+      { status: "success", data: user.userId },
       { status: 200 }
     );
   } catch (error) {

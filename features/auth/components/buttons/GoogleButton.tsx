@@ -1,11 +1,13 @@
 "use client";
+
+// React & Next
 import React, { useState } from "react";
 import Image from "next/image";
 
+// Utils
 import { createClient } from "@/utils/supabase/client";
 
-import { useSearchParams } from "next/navigation";
-
+// Components
 import ButtonSpinner from "@/components/spinners/ButtonSpinner";
 
 interface GoogleButtonProps {
@@ -15,9 +17,7 @@ interface GoogleButtonProps {
 const GoogleButton = ({ label }: GoogleButtonProps) => {
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
-  const searchParams = useSearchParams();
 
-  const next = searchParams.get("next");
   async function signInWithGoogle() {
     setIsGoogleLoading(true);
     try {
