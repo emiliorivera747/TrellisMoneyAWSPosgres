@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 
+
 // Components
 import TextInput from "@/components/form-components/TextInput";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
@@ -48,7 +49,7 @@ export default function Signup() {
 
   const {
     register,
-    formState: { isValid, errors },
+    formState: { errors },
     setError,
   } = useForm<Inputs>({
     resolver: zodResolver(signUpSchema),
@@ -69,7 +70,7 @@ export default function Signup() {
       console.log("ERRORS: ", state.errors);
 
       if (Array.isArray(state.errors)) {
-        state.errors.forEach((error: unknown) => {
+        state.errors.forEach((error: { path: string; message: string }) => {
           setError(
             error.path as "email" | "password" | "root" | `root.${string}`,
             {

@@ -7,7 +7,7 @@ import { FieldValues } from "react-hook-form";
 import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip";
 
 //Types
-import { PasswordInputProps } from "@/types/Forms";
+import { PasswordInputProps } from "@/types/forms";
 
 const PasswordInput = <TFieldValues extends FieldValues>({
   id,

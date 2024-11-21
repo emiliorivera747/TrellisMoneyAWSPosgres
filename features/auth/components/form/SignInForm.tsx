@@ -2,7 +2,7 @@
 import React, { useState, useActionState, useEffect } from "react";
 
 //External libraries
-import { useForm, setError } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 
@@ -67,7 +67,7 @@ const SignInForm = () => {
       console.log(state.message);
       console.log(state.errors);
       if (Array.isArray(state.errors)) {
-        state.errors.forEach((error: unknown) => {
+        state.errors.forEach((error: { path: string; message: string }) => {
           setError(
             error.path as "email" | "password" | "root" | `root.${string}`,
             {

@@ -1,7 +1,7 @@
-import zxcvbn from "zxcvbn";
 import React from "react";
+import zxcvbn from "zxcvbn";
 
-function PasswordStrengthChecker({ password }: { password: String }) {
+function PasswordStrengthChecker({ password }: { password: string }) {
 
   if (!password) {
     return null;

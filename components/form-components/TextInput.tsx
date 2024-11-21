@@ -5,7 +5,7 @@ import {
 
 
 //Interface
-import {TextInputProps} from "@/types/Forms";
+import {TextInputProps} from "@/types/forms";
 
 const TextInput = <TFieldValues extends FieldValues> ({
   type,
