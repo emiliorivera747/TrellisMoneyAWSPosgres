@@ -24,7 +24,7 @@ const GoogleButton = ({ label }: GoogleButtonProps) => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
