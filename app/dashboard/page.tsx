@@ -23,8 +23,6 @@ const Dashboard = () => {
   const supabase = createClient();
   const [user, setUser] = useState<User | null>(null);
 
-  
-
   useEffect(() => {
     const fetchUser = async () => {
       const {

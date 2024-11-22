@@ -20,6 +20,7 @@ export async function POST(req: Request) {
   try {
 
     const body = await req.json();
+    console.log("WEB HOOK WORKING");
     console.log(body);
 
     // const { name, email, id } = userSchema.parse(body);
