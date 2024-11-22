@@ -6,7 +6,7 @@ import { authenticateUser } from "@/utils/api-helpers/authenticateUser";
 const userSchema = z.object({
   name: z.string(),
   email: z.string().min(1, "Email is required").email("Invalid email"),
-  id: z.string().min(1, "User ID is required"),
+  id: z.number().min(1, "User ID is required"),
 });
 
 /**
@@ -94,7 +94,7 @@ export async function PUT(req: Request) {
     if (result instanceof NextResponse) return result;
     const body = await req.json();
 
-    const { name, email, userId } = userSchema.parse(body);
+    const { name, email, id} = userSchema.parse(body);
 
     const user = await prisma.user.findUnique({
       where: {
@@ -115,7 +115,7 @@ export async function PUT(req: Request) {
       },
       data: {
         name,
-        userId,
+        id,
       },
     });
 
