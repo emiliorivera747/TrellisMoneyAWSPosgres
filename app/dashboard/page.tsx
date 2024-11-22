@@ -11,31 +11,42 @@ import { createClient } from "@/utils/supabase/client";
 
 interface User {
   email: string;
-  uid: string;
+  id: string;
+  created_at?: string;
+  last_sign_in_at?: string;
+  phone?: string;
+  role?: string;
+  updated_at?: string;
+  name?: string;
 }
 const Dashboard = () => {
   const supabase = createClient();
   const [user, setUser] = useState<User | null>(null);
+
+  
 
   useEffect(() => {
     const fetchUser = async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
+      console.log(user);
       if (user) {
-        setUser({ email: user.email ?? "", uid: user.id ?? "" });
+        setUser({ email: user.email ?? "", id: user.id ?? "" });
       }
     };
-
+    console.log(user);
     fetchUser();
   }, []);
+
 
   return (
     <div className="">
       {user && (
         <div>
           <p>Email: {user ? user?.email : "no name"}</p>
-          <p>UID: {user ? user?.uid : "no name"}</p>
+          <p>UID: {user ? user?.id : "no name"}</p>
+          {/* <p>Display Name: {user? user.:"No name"}</p> */}
         </div>
       )}
       <SignOutButton />

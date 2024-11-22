@@ -6,7 +6,7 @@ import { authenticateUser } from "@/utils/api-helpers/authenticateUser";
 const userSchema = z.object({
   name: z.string(),
   email: z.string().min(1, "Email is required").email("Invalid email"),
-  userId: z.string().min(1, "User ID is required"),
+  id: z.string().min(1, "User ID is required"),
 });
 
 /**
@@ -18,36 +18,43 @@ const userSchema = z.object({
  */
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
 
-    const { name, email, userId } = userSchema.parse(body);
+    const body = await req.json();
+    console.log(body);
+
+    // const { name, email, id } = userSchema.parse(body);
 
     //Check if user already exists
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-        userId,
-      },
-    });
+    // const user = await prisma.user.findUnique({
+    //   where: {
+    //     email,
+    //     id,
+    //   },
+    // });
 
     //If user exists, return error
-    if (user) {
-      return NextResponse.json(
-        { status: "error", message: "User already exists" },
-        { status: 409 }
-      );
-    }
+    // if (user) {
+    //   return NextResponse.json(
+    //     { status: "error", message: "User already exists" },
+    //     { status: 409 }
+    //   );
+    // }
 
-    const newUser = await prisma.user.create({
-      data: {
-        name,
-        email,
-        userId,
-      },
-    });
+    // const newUser = await prisma.user.create({
+    //   data: {
+    //     name,
+    //     email,
+    //     id,
+    //   },
+    // });
 
+    // return NextResponse.json(
+    //   { status: "success", message: "User created", user: newUser },
+    //   { status: 201 }
+    // );
+    
     return NextResponse.json(
-      { status: "success", message: "User created", user: newUser },
+      { status: "success", message: "WEB HOOK WORKING" },
       { status: 201 }
     );
   } catch (err) {
