@@ -18,42 +18,47 @@ const userSchema = z.object({
  */
 export async function POST(req: Request) {
   try {
-
     const body = await req.json();
-    console.log("WEB HOOK WORKING");
-    console.log(body);
+    const record = body.record;
+    const { email, id } = record;
+    const name = record.raw_user_meta_data?.name
+      ? record.raw_user_meta_data.name
+      : email;
+    const emailVerified = record?.raw_user_meta_data?.email_verified
+      ? record.raw_user_meta_data.email_verified
+      : false;
 
-    // const { name, email, id } = userSchema.parse(body);
 
     //Check if user already exists
-    // const user = await prisma.user.findUnique({
-    //   where: {
-    //     email,
-    //     id,
-    //   },
-    // });
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+        id,
+      },
+    });
 
     //If user exists, return error
-    // if (user) {
-    //   return NextResponse.json(
-    //     { status: "error", message: "User already exists" },
-    //     { status: 409 }
-    //   );
-    // }
+    if (user) {
+      return NextResponse.json(
+        { status: "error", message: "User already exists" },
+        { status: 409 }
+      );
+    }
 
-    // const newUser = await prisma.user.create({
-    //   data: {
-    //     name,
-    //     email,
-    //     id,
-    //   },
-    // });
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        id,
+        emailVerified,
+      },
+    });
 
-    // return NextResponse.json(
-    //   { status: "success", message: "User created", user: newUser },
-    //   { status: 201 }
-    // );
-    
+    return NextResponse.json(
+      { status: "success", message: "User created", user: newUser },
+      { status: 201 }
+    );
+
     return NextResponse.json(
       { status: "success", message: "WEB HOOK WORKING" },
       { status: 201 }
@@ -95,7 +100,7 @@ export async function PUT(req: Request) {
     if (result instanceof NextResponse) return result;
     const body = await req.json();
 
-    const { name, email, id} = userSchema.parse(body);
+    const { name, email, id } = userSchema.parse(body);
 
     const user = await prisma.user.findUnique({
       where: {

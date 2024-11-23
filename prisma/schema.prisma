@@ -29,4 +29,5 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
   userId    String?  @unique @default(uuid())
+  emailVerified Boolean @default(false)
 }
