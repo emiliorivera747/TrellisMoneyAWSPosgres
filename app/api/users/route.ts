@@ -6,7 +6,6 @@ import {
   recordSchema,
   RecordSchema,
 } from "@/features/auth/schemas/formSchemas";
-import { User } from "@/types/user";
 
 const getNameFromBody = (body: RecordSchema) => {
   if (body?.record?.raw_user_meta_data?.name) {
