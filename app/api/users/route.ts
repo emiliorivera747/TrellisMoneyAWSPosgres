@@ -65,7 +65,7 @@ export async function POST(req: Request) {
     //   { status: 201 }
     // );
     return NextResponse.json(
-      { status: "success", message: "User created", user: "WEB HOOK WORKING!" },
+      { status: "success", message: "User created", user: "WEB HOOK WORKING!", body: body },
       { status: 201 }
     );
   } catch (err) {
