@@ -19,7 +19,7 @@ const userSchema = z.object({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const record = body.record;
+    // const record = body.record;
     // const { email, id } = record;
     // const name = record.raw_user_meta_data?.name
     //   ? record.raw_user_meta_data.name
