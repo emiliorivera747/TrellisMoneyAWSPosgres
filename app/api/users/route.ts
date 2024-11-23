@@ -24,10 +24,12 @@ export async function POST(req: Request) {
     const name = record.raw_user_meta_data?.name
       ? record.raw_user_meta_data.name
       : email;
+
+    console.log("Name", name);
     const emailVerified = record?.raw_user_meta_data?.email_verified
       ? record.raw_user_meta_data.email_verified
       : false;
-
+    console.log(emailVerified);
 
     //Check if user already exists
     const user = await prisma.user.findUnique({
@@ -36,6 +38,8 @@ export async function POST(req: Request) {
         id,
       },
     });
+
+    console.log("user", user);
 
     //If user exists, return error
     if (user) {
@@ -54,16 +58,14 @@ export async function POST(req: Request) {
       },
     });
 
+    console.log("newUser", newUser);
+
     return NextResponse.json(
       { status: "success", message: "User created", user: newUser },
       { status: 201 }
     );
-
-    return NextResponse.json(
-      { status: "success", message: "WEB HOOK WORKING" },
-      { status: 201 }
-    );
   } catch (err) {
+    console.log(err);
     if (err instanceof z.ZodError) {
       return NextResponse.json(
         { status: "error", message: err.errors },
