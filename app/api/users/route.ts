@@ -2,12 +2,30 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { authenticateUser } from "@/utils/api-helpers/authenticateUser";
+import {
+  recordSchema,
+  RecordSchema,
+} from "@/features/auth/schemas/formSchemas";
+import { User } from "@/types/user";
 
-const userSchema = z.object({
-  name: z.string(),
-  email: z.string().min(1, "Email is required").email("Invalid email"),
-  id: z.number().min(1, "User ID is required"),
-});
+const getNameFromBody = (body: RecordSchema) => {
+  if (body?.record?.raw_user_meta_data?.name) {
+    return body.record.raw_user_meta_data.name;
+  } else if (body?.record?.email) {
+    return body.record.email;
+  } else {
+    return "none";
+  }
+};
+
+const getEmailVerifiedFromBody = (body: RecordSchema) => {
+  if (body?.record?.raw_user_meta_data?.email_verified) {
+    return body.record.raw_user_meta_data.email_verified;
+  } else {
+    return false;
+  }
+};
+
 
 /**
  *
@@ -18,58 +36,51 @@ const userSchema = z.object({
  */
 export async function POST(req: Request) {
   try {
+    //Parse the request body
     const body = await req.json();
-    // const record = body.record;
-    // const { email, id } = record;
-    // const name = record.raw_user_meta_data?.name
-    //   ? record.raw_user_meta_data.name
-    //   : email;
+    console.log("body", body);
 
-    // console.log("Name", name);
-    // const emailVerified = record?.raw_user_meta_data?.email_verified
-    //   ? record.raw_user_meta_data.email_verified
-    //   : false;
-    // console.log(emailVerified);
+    /**
+     * Validate the request body
+     * @throws {z.ZodError} if the request body is invalid
+     */
+    recordSchema.parse(body);
 
-    // //Check if user already exists
-    // const user = await prisma.user.findUnique({
-    //   where: {
-    //     email,
-    //     userId: id,
-    //   },
-    // });
+    //Extract the email, id, name and emailVerified from the request body
+    const { email, id } = body.record;
+    const name = getNameFromBody(body);
+    const emailVerified = getEmailVerifiedFromBody(body);
 
-    // console.log("user", user);
+    //Check if user already exists
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+        userId: id,
+      },
+    });
 
-    // //If user exists, return error
-    // if (user) {
-    //   return NextResponse.json(
-    //     { status: "error", message: "User already exists" },
-    //     { status: 409 }
-    //   );
-    // }
+    //If user exists, return error
+    if (user) {
+      return NextResponse.json(
+        { status: "error", message: "User already exists" },
+        { status: 409 }
+      );
+    }
 
-    // const newUser = await prisma.user.create({
-    //   data: {
-    //     name,
-    //     email,
-    //     id,
-    //     emailVerified,
-    //   },
-    // });
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        userId: id,
+        emailVerified,
+      },
+    });
 
-    // console.log("newUser", newUser);
-
-    // return NextResponse.json(
-    //   { status: "success", message: "User created", user: newUser },
-    //   { status: 201 }
-    // );
     return NextResponse.json(
-      { status: "success", message: "User created", user: "WEB HOOK WORKING!", body: body },
+      { status: "success", message: "User created", user: newUser },
       { status: 201 }
     );
   } catch (err) {
-    console.log(err);
     if (err instanceof z.ZodError) {
       return NextResponse.json(
         { status: "error", message: err.errors },

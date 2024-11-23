@@ -35,5 +35,19 @@ export const signInSchema = z.object({
 });
 
 
+export const recordSchema = z.object({
+  record: z.object({
+    email: z.string().email(),                // email should be a valid email address
+    id: z.string(),                    // id should be a valid UUID
+    raw_user_meta_data: z
+      .object({
+        name: z.string().optional(),           // name is optional
+        email_verified: z.boolean().optional(), // email_verified is optional, default will be false if not provided
+      })
+      .optional(),
+  }),
+});
+
 export type SignUpInputs = z.infer<typeof signUpSchema>;
 export type SignInInputs = z.infer<typeof signInSchema>;
+export type RecordSchema = z.infer<typeof recordSchema>;
