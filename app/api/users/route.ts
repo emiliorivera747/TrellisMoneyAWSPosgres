@@ -60,10 +60,10 @@ export async function POST(req: Request) {
 
     // console.log("newUser", newUser);
 
-    return NextResponse.json(
-      { status: "success", message: "User created", user: newUser },
-      { status: 201 }
-    );
+    // return NextResponse.json(
+    //   { status: "success", message: "User created", user: newUser },
+    //   { status: 201 }
+    // );
     return NextResponse.json(
       { status: "success", message: "User created", user: "WEB HOOK WORKING!" },
       { status: 201 }
