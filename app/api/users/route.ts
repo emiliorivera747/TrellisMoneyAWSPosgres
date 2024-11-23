@@ -20,48 +20,52 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const record = body.record;
-    const { email, id } = record;
-    const name = record.raw_user_meta_data?.name
-      ? record.raw_user_meta_data.name
-      : email;
+    // const { email, id } = record;
+    // const name = record.raw_user_meta_data?.name
+    //   ? record.raw_user_meta_data.name
+    //   : email;
 
-    console.log("Name", name);
-    const emailVerified = record?.raw_user_meta_data?.email_verified
-      ? record.raw_user_meta_data.email_verified
-      : false;
-    console.log(emailVerified);
+    // console.log("Name", name);
+    // const emailVerified = record?.raw_user_meta_data?.email_verified
+    //   ? record.raw_user_meta_data.email_verified
+    //   : false;
+    // console.log(emailVerified);
 
-    //Check if user already exists
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-        id,
-      },
-    });
+    // //Check if user already exists
+    // const user = await prisma.user.findUnique({
+    //   where: {
+    //     email,
+    //     userId: id,
+    //   },
+    // });
 
-    console.log("user", user);
+    // console.log("user", user);
 
-    //If user exists, return error
-    if (user) {
-      return NextResponse.json(
-        { status: "error", message: "User already exists" },
-        { status: 409 }
-      );
-    }
+    // //If user exists, return error
+    // if (user) {
+    //   return NextResponse.json(
+    //     { status: "error", message: "User already exists" },
+    //     { status: 409 }
+    //   );
+    // }
 
-    const newUser = await prisma.user.create({
-      data: {
-        name,
-        email,
-        id,
-        emailVerified,
-      },
-    });
+    // const newUser = await prisma.user.create({
+    //   data: {
+    //     name,
+    //     email,
+    //     id,
+    //     emailVerified,
+    //   },
+    // });
 
-    console.log("newUser", newUser);
+    // console.log("newUser", newUser);
 
     return NextResponse.json(
       { status: "success", message: "User created", user: newUser },
+      { status: 201 }
+    );
+    return NextResponse.json(
+      { status: "success", message: "User created", user: "WEB HOOK WORKING!" },
       { status: 201 }
     );
   } catch (err) {
