@@ -115,8 +115,12 @@ export async function PUT(req: Request) {
     const result = await authenticateUser();
     if (result instanceof NextResponse) return result;
     const body = await req.json();
+    recordSchema.parse(body);
 
-    const { name, email, id } = userSchema.parse(body);
+    const record = body.record;
+
+    const { email, id } = record;
+    const name = getNameFromBody(body);
 
     const user = await prisma.user.findUnique({
       where: {
