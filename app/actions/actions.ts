@@ -127,7 +127,7 @@ export async function signUp(
     await prisma.user.create({
       data: {
         email: validatedFields.email,
-        userId: data.user?.id,
+        user_id: data.user?.id,
       },
     });
 

@@ -79,6 +79,44 @@ export async function POST(req: Request) {
 }
 
 /**
+ * 
+ * @route POST /api/users
+ * @desc Register a new user
+ * @access Public
+ */
+export async function DELETE() {
+  try {
+    const result = await authenticateUser();
+    if (result instanceof NextResponse) return result;
+    const id = result?.id;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        user_id: id,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { status: "error", message: "User does not exist" },
+        { status: 404 }
+      );
+    }
+    
+    return NextResponse.json(
+      { status: "success", message: "User deleted" },
+      { status: 200 }
+    );
+  } catch (err) {
+    return NextResponse.json(
+      { message: "Server Error", error: err, status: "error" },
+      { status: 500 }
+    );
+  }
+}
+
+
+/**
  * Get users
  * @returns
  */

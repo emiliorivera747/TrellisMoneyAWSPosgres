@@ -26,10 +26,11 @@ export async function DELETE() {
   try {
     const result = await authenticateUser();
     if (result instanceof NextResponse) return result;
-    const userId = result?.id;
+    const id = result?.id;
+
     const user = await prisma.user.findUnique({
       where: {
-        userId,
+        user_id: id,
       },
     });
 
