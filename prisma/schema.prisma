@@ -30,5 +30,6 @@ model User {
   updated_at DateTime @updatedAt @default(now())
   user_id    String?  @unique @default(uuid())
   email_verified Boolean? @default(false)
+  phone_verified Boolean? @default(false)
   phone     String?
 }

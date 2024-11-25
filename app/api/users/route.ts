@@ -14,6 +14,9 @@ const getNameFromBody = (body: RecordSchema) =>
 const getEmailVerifiedFromBody = (body: RecordSchema) =>
   body?.record?.raw_user_meta_data?.email_verified || false;
 
+const getPhoneVerifiedFromBody = (body: RecordSchema) =>
+  body?.record?.raw_user_meta_data?.phone_verified || false;
+
 const userAlreadyExistsError = () =>
   NextResponse.json(
     { status: "error", message: "User already exists" },
@@ -21,15 +24,18 @@ const userAlreadyExistsError = () =>
   );
 
 const parseRecord = (body: RecordSchema) => {
-  const { email, id } = body?.record
+  const { email, id, phone } = body?.record
     ? body.record
     : { email: "none", id: "none" };
   const name = getNameFromBody(body);
   const email_verified = getEmailVerifiedFromBody(body);
-  return { email, id, name, email_verified };
+  const phone_verified = getPhoneVerifiedFromBody(body);
+  return { email, id, name, email_verified, phone, phone_verified };
 };
 
 /**
+ * Register a new user
+ *
  *
  * @route POST /api/users
  * @desc Register a new user
@@ -38,39 +44,35 @@ const parseRecord = (body: RecordSchema) => {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    if (!body) {
-      return NextResponse.json(
-        { status: "error", message: "Invalid request body" },
-        { status: 400 }
-      );
-    }
-    recordSchema.parse(body);
-    console.log("BODY:", body);
 
-    const { email, id, name, email_verified } = parseRecord(body);
-    console.log("PARSED RECORD:", email, id, name, email_verified);
+    // Validate the request body
+    recordSchema.parse(body);
+
+    const { email, id, name, email_verified, phone, phone_verified } =
+      parseRecord(body);
 
     const user = await prisma.user.findFirst({
       where: { OR: [{ email }, { user_id: id }] },
     });
 
-    console.log("USER:", user);
-
     if (user) return userAlreadyExistsError();
 
-    console.log("CREATING USER:", name, email, id, email_verified);
-
     const newUser = await prisma.user.create({
-      data: { name, email, user_id: id, email_verified },
+      data: {
+        name,
+        email,
+        user_id: id,
+        email_verified,
+        phone,
+        phone_verified,
+      },
     });
 
-    console.log("NEW USER:", newUser);
     return NextResponse.json(
       { status: "success", message: "User created", user: newUser },
       { status: 201 }
     );
   } catch (err) {
-    console.log(err);
     if (err instanceof z.ZodError) return handleZodError(err);
     return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
