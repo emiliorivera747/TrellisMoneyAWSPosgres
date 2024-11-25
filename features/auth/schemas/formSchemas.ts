@@ -51,6 +51,7 @@ export const recordSchema = z.object({
           .max(100, "Name cannot be longer than 100 characters")
           .optional(), // name is optional and cannot be longer than 100 characters
         email_verified: z.boolean().optional(), // email_verified is optional, default will be false if not provided
+        phone_verified: z.boolean().optional(), // phone_verified is optional, default will be false if not provided
       })
       .optional(),
     aud: z.string().optional(),
