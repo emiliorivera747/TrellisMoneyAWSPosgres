@@ -7,85 +7,71 @@ import {
   RecordSchema,
 } from "@/features/auth/schemas/formSchemas";
 
-const getNameFromBody = (body: RecordSchema) => {
-  if (body?.record?.raw_user_meta_data?.name) {
-    return body.record.raw_user_meta_data.name;
-  } else if (body?.record?.email) {
-    return body.record.email;
-  } else {
-    return "none";
-  }
-};
+import { handleZodError } from "@/utils/api-helpers/handleZodErrors";
+const getNameFromBody = (body: RecordSchema) =>
+  body?.record?.raw_user_meta_data?.name || body?.record?.email || "none";
 
-const getEmailVerifiedFromBody = (body: RecordSchema) => {
-  if (body?.record?.raw_user_meta_data?.email_verified) {
-    return body.record.raw_user_meta_data.email_verified;
-  } else {
-    return false;
-  }
-};
+const getEmailVerifiedFromBody = (body: RecordSchema) =>
+  body?.record?.raw_user_meta_data?.email_verified || false;
 
+const userAlreadyExistsError = () =>
+  NextResponse.json(
+    { status: "error", message: "User already exists" },
+    { status: 409 }
+  );
+
+const parseRecord = (body: RecordSchema) => {
+  const { email, id } = body?.record
+    ? body.record
+    : { email: "none", id: "none" };
+  const name = getNameFromBody(body);
+  const email_verified = getEmailVerifiedFromBody(body);
+  return { email, id, name, email_verified };
+};
 
 /**
  *
- * Register a new user
- *
- * @param req
- * @returns
+ * @route POST /api/users
+ * @desc Register a new user
+ * @access Public
  */
 export async function POST(req: Request) {
   try {
-    //Parse the request body
     const body = await req.json();
-    console.log("body", body);
-
-    /**
-     * Validate the request body
-     * @throws {z.ZodError} if the request body is invalid
-     */
-    recordSchema.parse(body);
-
-    //Extract the email, id, name and emailVerified from the request body
-    const { email, id } = body.record;
-    const name = getNameFromBody(body);
-    const emailVerified = getEmailVerifiedFromBody(body);
-
-    //Check if user already exists
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-        userId: id,
-      },
-    });
-
-    //If user exists, return error
-    if (user) {
+    if (!body) {
       return NextResponse.json(
-        { status: "error", message: "User already exists" },
-        { status: 409 }
+        { status: "error", message: "Invalid request body" },
+        { status: 400 }
       );
     }
+    recordSchema.parse(body);
+    console.log("BODY:", body);
 
-    const newUser = await prisma.user.create({
-      data: {
-        name,
-        email,
-        userId: id,
-        emailVerified,
-      },
+    const { email, id, name, email_verified } = parseRecord(body);
+    console.log("PARSED RECORD:", email, id, name, email_verified);
+
+    const user = await prisma.user.findFirst({
+      where: { OR: [{ email }, { user_id: id }] },
     });
 
+    console.log("USER:", user);
+
+    if (user) return userAlreadyExistsError();
+
+    console.log("CREATING USER:", name, email, id, email_verified);
+
+    const newUser = await prisma.user.create({
+      data: { name, email, user_id: id, email_verified },
+    });
+
+    console.log("NEW USER:", newUser);
     return NextResponse.json(
       { status: "success", message: "User created", user: newUser },
       { status: 201 }
     );
   } catch (err) {
-    if (err instanceof z.ZodError) {
-      return NextResponse.json(
-        { status: "error", message: err.errors },
-        { status: 400 }
-      );
-    }
+    console.log(err);
+    if (err instanceof z.ZodError) return handleZodError(err);
     return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 }

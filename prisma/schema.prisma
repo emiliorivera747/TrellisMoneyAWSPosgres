@@ -26,8 +26,9 @@ model User {
   email     String   @unique
   name      String?
   profile   Profile?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
-  userId    String  @unique @default(uuid())
-  emailVerified Boolean? @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+  user_id    String?  @unique @default(uuid())
+  email_verified Boolean? @default(false)
+  phone     String?
 }
