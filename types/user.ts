@@ -2,7 +2,7 @@
 export interface Profile {
   id: number;
   bio?: string;
-  userId: number;
+  user_id: number;
 }
 
 export interface User {
@@ -12,7 +12,7 @@ export interface User {
   profile?: Profile;
   createdAt: Date;
   updatedAt: Date;
-  userId: string;
+  user_id: string;
   emailVerified?: boolean;
 }
 

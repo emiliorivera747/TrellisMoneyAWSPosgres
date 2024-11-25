@@ -9,7 +9,7 @@ export async function GET() {
     const userId = result?.id;
     const user = await prisma.user.findUnique({
       where: {
-        userId: userId,
+        user_id: userId,
       },
     });
 

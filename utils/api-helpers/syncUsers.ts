@@ -6,14 +6,14 @@ export async function syncUsers() {
 
   for (const supabaseUser of supabase) {
     const existingUser = await prisma.user.findUnique({
-      where: { userId: supabaseUser.id },
+      where: { user_id: supabaseUser.id },
     });
 
     if (!existingUser) {
       await prisma.user.create({
         data: {
           email: supabaseUser.email? supabaseUser.email : "none",
-          userId: supabaseUser.id,
+          user_id: supabaseUser.id,
         },
       });
     }

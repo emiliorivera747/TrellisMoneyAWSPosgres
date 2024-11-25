@@ -19,7 +19,7 @@ export const GET = async (
     }
 
     const user = await prisma.user.findUnique({
-      where: { userId: _id },
+      where: { user_id: _id },
     });
 
     if (!user) {
@@ -30,7 +30,7 @@ export const GET = async (
     }
 
     return NextResponse.json(
-      { status: "success", data: user.userId },
+      { status: "success", data: user.user_id },
       { status: 200 }
     );
   } catch (error) {
