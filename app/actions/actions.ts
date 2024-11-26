@@ -51,29 +51,23 @@ interface ErrorState {
   message: string | null;
   errors?: Array<ErrorDetail> | AuthError | unknown;
 }
-export type State =
-  | SuccessState
-  | ErrorState
-  | null;
-
+export type State = SuccessState | ErrorState | null;
 
 const handleOtherErrors = (e: unknown): State => {
   return {
     status: "error",
     message: "Something went wrong. Please try again.",
-    errors: (e instanceof Error && 'code' in e) ? e.code: e,
+    errors: e instanceof Error && "code" in e ? e.code : e,
   };
 };
 
 const handleSuccess = (formData: FormData): State => {
-
   return {
     status: "success",
     message: `Welcome, ${formData.get("email")}!`,
     user: { email: formData.get("email") as string },
   };
 };
-
 
 export async function login(
   prevState: State | null,

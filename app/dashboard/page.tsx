@@ -5,9 +5,10 @@ import React, { useState, useEffect } from "react";
 
 //Components
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
-// import DeleteUserButton from "@/features/auth/components/buttons/DeleteUserButton";
+import DeleteUserButton from "@/features/auth/components/buttons/DeleteUserButton";
 
 import { createClient } from "@/utils/supabase/client";
+
 
 interface User {
   email: string;
@@ -20,6 +21,7 @@ interface User {
   name?: string;
 }
 const Dashboard = () => {
+  const cookies = document.cookie;  
   const supabase = createClient();
   const [user, setUser] = useState<User | null>(null);
 
@@ -37,18 +39,18 @@ const Dashboard = () => {
     fetchUser();
   }, []);
 
-
   return (
     <div className="">
       {user && (
         <div>
           <p>Email: {user ? user?.email : "no name"}</p>
           <p>UID: {user ? user?.id : "no name"}</p>
+          <p>AccessToken: {cookies ? cookies : "none"}</p>
           {/* <p>Display Name: {user? user.:"No name"}</p> */}
         </div>
       )}
       <SignOutButton />
-      {/* <DeleteUserButton /> */}
+      <DeleteUserButton />
     </div>
   );
 };
