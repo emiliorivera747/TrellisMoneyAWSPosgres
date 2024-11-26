@@ -19,6 +19,7 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.46.1",
     "bcrypt": "^5.1.1",
+    "crypto": "^1.0.1",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "next": "15.0.2",
