@@ -9,7 +9,6 @@ import DeleteUserButton from "@/features/auth/components/buttons/DeleteUserButto
 
 import { createClient } from "@/utils/supabase/client";
 
-
 interface User {
   email: string;
   id: string;
@@ -20,8 +19,8 @@ interface User {
   updated_at?: string;
   name?: string;
 }
+
 const Dashboard = () => {
-  const cookies = document.cookie;  
   const supabase = createClient();
   const [user, setUser] = useState<User | null>(null);
 
@@ -30,22 +29,19 @@ const Dashboard = () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      console.log(user);
       if (user) {
         setUser({ email: user.email ?? "", id: user.id ?? "" });
       }
     };
-    console.log(user);
     fetchUser();
   }, []);
 
   return (
-    <div className="">
+    <div>
       {user && (
         <div>
           <p>Email: {user ? user?.email : "no name"}</p>
           <p>UID: {user ? user?.id : "no name"}</p>
-          <p>AccessToken: {cookies ? cookies : "none"}</p>
           {/* <p>Display Name: {user? user.:"No name"}</p> */}
         </div>
       )}
