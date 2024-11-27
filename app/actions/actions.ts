@@ -15,6 +15,7 @@ import { prisma } from "@/lib/prisma";
 import {
   signUpSchema,
   signInSchema,
+  resetPasswordSchema,
 } from "@/features/auth/schemas/formSchemas";
 import { AuthError } from "@supabase/supabase-js";
 
@@ -145,3 +146,69 @@ export async function signOut() {
   revalidatePath("/", "layout");
   return redirect("/");
 }
+
+export const confirmReset = async (
+  prevState: State | null,
+  formData: FormData
+): Promise<State> => {
+  try {
+    const email = formData.get("email") as string;
+    const supabase = await createClient();
+
+    console.log("path:", ` ${process.env.NEXT_PUBLIC_DOMAIN}/reset-password`);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/reset-password`,
+    });
+
+    if (error) return handleOtherErrors(error) as State;
+
+    return {
+      status: "success",
+      message: "Password reset email sent successfully.",
+      user: { email },
+    };
+  } catch (e) {
+    if (e instanceof z.ZodError) return handleZodError(e) as State;
+    return handleOtherErrors(e) as State;
+  }
+};
+
+export const resetPassword = async (
+  prevState: State | null,
+  formData: FormData
+): Promise<State> => {
+  try {
+    const supabase = await createClient();
+
+    const validatedFields = resetPasswordSchema.parse({
+      password: formData.get("password") as string,
+      code: formData.get("code") as string,
+      message: formData.get("message") as string,
+    });
+
+    const { code} = validatedFields;
+
+    if (!code) {
+      return {
+        status: "error",
+        message: "Invalid code",
+        errors: [{ path: "code", message: "Invalid code" }],
+      };
+    }
+
+    const { error } = await supabase.auth.exchangeCodeForSession(
+      code ? code : ""
+    );
+
+    if (error) return handleOtherErrors(error) as State;
+
+    return {
+      status: "success",
+      message: "Password reset successfully.",
+      user: { email: formData.get("email") as string },
+    };
+  } catch (e) {
+    if (e instanceof z.ZodError) return handleZodError(e) as State;
+    return handleOtherErrors(e) as State;
+  }
+};

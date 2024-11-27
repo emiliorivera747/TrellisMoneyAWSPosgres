@@ -2,14 +2,13 @@
 import React, { useState, useActionState, useEffect } from "react";
 
 //External libraries
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 
 // Next
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
 
 // Components
 import PrimarySubmitButton from "../../../../components/buttons/PrimarySubmitButton";
@@ -19,7 +18,7 @@ import ForgotPassword from "@/features/auth/components/buttons/ForgotPasswordBut
 import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
 import PasswordInput from "@/components/form-components/PasswordInput";
 import TextInput from "@/components/form-components/TextInput";
-
+import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 //Schema
 import { signInSchema } from "@/features/auth/schemas/formSchemas";
 
@@ -37,19 +36,13 @@ type Inputs = {
 const SignInForm = () => {
   const {
     register,
-    formState: { isValid, errors },
+    formState: { errors },
     setError,
   } = useForm<Inputs>({
     resolver: zodResolver(signInSchema),
   });
 
-  // const handleEmailSignIn = useHandleEmailSignIn();
-  // const handleGoogleSignIn = useHandleGoogleSignIn();
   const router = useRouter();
-
-  const { pending } = useFormStatus();
-  console.log("PENDING", pending);
-  console.log("isValid", isValid);
 
   const [state, formAction] = useActionState<State, FormData>(login, null);
 

@@ -1,24 +1,31 @@
 "use client";
 
 // React & Next
-import React, { useState } from "react";
+import React, { useState, useActionState, useEffect } from "react";
 import Link from "next/link";
 
 //External Libraries
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 
 //Compenents
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import TextInput from "@/components/form-components/TextInput";
 import NavBar from "@/components/nav-bars/NavBar";
 import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
+import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
+
+//Server Actions
+import { confirmReset, State } from "../actions/actions";
+
+//Functions
+import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
 
 const schema = z.object({
   email: z.string().email("Invalid email format"),
 });
-
 
 interface Input {
   email: string;
@@ -28,32 +35,46 @@ interface Input {
 export default function PasswordReset() {
   const {
     register,
-    handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<Input>({
     resolver: zodResolver(schema),
   });
 
   const [message, setMessage] = useState<string | null>(null);
-  const [err, setErr] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState<boolean>(false);
+  const [state, formAction] = useActionState<State, FormData>(
+    confirmReset,
+    null
+  );
+  const [err, setErr] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<Input> = async (data) => {
-    console.log(data);
-    setMessage(null);
-    setErr(null);
-
-    try {
-      // await sendPasswordResetEmail(auth, data.email);
-      setMessage("Password reset email sent! Check your inbox.");
-      setEmailSent(true);
-    } catch (error) {
-      console.error("Error sending password reset email:", error);
-      setErr(
-        "Failed to send password reset email. Please check your email address and try again."
-      );
+  useEffect(() => {
+    if (!state) {
+      return;
     }
-  };
+
+    // In case our form action returns `error` we can now `setError`s
+    if (state.status === "error") {
+      console.log(state.message);
+      console.log(state.errors);
+      if (Array.isArray(state.errors)) {
+        state.errors.forEach((error: { path: string; message: string }) => {
+          setError(error.path as "email", {
+            message: error.message,
+          });
+        });
+      } else {
+        const supabaseError = getSupabaseErrorMessage(state.errors);
+        setErr(supabaseError);
+      }
+    }
+    if (state.status === "success") {
+      toast.success("Signed in successfully!", { theme: "colored" });
+      setEmailSent(true);
+      setMessage("Email sent successfully!");
+    }
+  }, [state]);
 
   return (
     <DashboardRedirect>
@@ -61,30 +82,28 @@ export default function PasswordReset() {
         <div className="w-full">
           <NavBar />
         </div>
-        <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg">
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-2 mb-2"
-          >
-            <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
-              Reset Your Password
-            </h2>
-            {message && <p style={{ color: "green" }}>{message}</p>}
-            <TextInput
-              id="email"
-              fieldName="email"
-              type="email"
-              placeholder="Email"
-              errors={errors}
-              register={register}
-            />
-            <PrimarySubmitButton
-              bgColor="bg-primary-700 "
-              textColor="text-white"
-              hoverBgColor="hover:bg-primary-900"
-              text="Send Email"
-            />
-          </form>
+        <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg"> 
+          {!emailSent && (
+            <form action={formAction} className="flex flex-col gap-2 mb-2">
+              <PrimaryAuthHeader label="Reset Your Password" />
+              {message && <p style={{ color: "green" }}>{message}</p>}
+              <TextInput
+                id="email"
+                fieldName="email"
+                type="email"
+                placeholder="Email"
+                errors={errors}
+                register={register}
+              />
+              <PrimarySubmitButton
+                bgColor="bg-primary-700 "
+                textColor="text-white"
+                hoverBgColor="hover:bg-primary-900"
+                text="Send Email"
+              />
+            </form>
+          )}
+          {emailSent && <p className='text-secondary-900 text-md mb-6'>Email sent successfully!</p>}
           {emailSent && (
             <Link
               href="/sign-in"

@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const PrimaryAuthHeader = () => {
+const PrimaryAuthHeader = ({ label }: { label: string }) => {
   return (
-    <div>PrimaryAuthHeader</div>
-  )
-}
+    <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
+      {label}
+    </h2>
+  );
+};
 
-export default PrimaryAuthHeader
+export default PrimaryAuthHeader;

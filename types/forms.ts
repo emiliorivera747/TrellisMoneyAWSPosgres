@@ -18,3 +18,8 @@ export interface TextInputProps<TFieldValues extends FieldValues> {
     errors: FieldErrors<TFieldValues>;
     register: UseFormRegister<TFieldValues>;
 }
+
+export interface Input {
+  email: string;
+  password1: string;
+}

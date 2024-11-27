@@ -33,6 +33,21 @@ export const signInSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
+export const resetPasswordSchema = z.object({
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(
+      /[^a-zA-Z0-9]/,
+      "Password must contain at least one special character"
+    ),
+  code: z.string().optional(),
+  message: z.string().optional(),
+});
+
 export const recordSchema = z.object({
   record: z.object({
     id: z.string().uuid(), // id should be a valid UUID
@@ -99,3 +114,4 @@ export const recordSchema = z.object({
 export type SignUpInputs = z.infer<typeof signUpSchema>;
 export type SignInInputs = z.infer<typeof signInSchema>;
 export type RecordSchema = z.infer<typeof recordSchema>;
+export type ResetPasswordInputs = z.infer<typeof resetPasswordSchema>;
