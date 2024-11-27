@@ -1,40 +1,20 @@
-"use client";
-
-//React
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 //Components
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 import DeleteUserButton from "@/features/auth/components/buttons/DeleteUserButton";
+import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
 
-import { createClient } from "@/utils/supabase/client";
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "View your financial forecast, net worth, and investment goals all in one place.",
+  keywords: ["dashboard", "net worth", "financial forecast", "investment goals", "financial information"],
+};
 
-interface User {
-  email: string;
-  id: string;
-  created_at?: string;
-  last_sign_in_at?: string;
-  phone?: string;
-  role?: string;
-  updated_at?: string;
-  name?: string;
-}
-
-const Dashboard = () => {
-  const supabase = createClient();
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        setUser({ email: user.email ?? "", id: user.id ?? "" });
-      }
-    };
-    fetchUser();
-  }, []);
+const Dashboard = async () => {
+  const supabase = await createClient();
+  const { data: {user}} = await supabase.auth.getUser();
 
   return (
     <div>
@@ -42,12 +22,12 @@ const Dashboard = () => {
         <div>
           <p>Email: {user ? user?.email : "no name"}</p>
           <p>UID: {user ? user?.id : "no name"}</p>
-          {/* <p>Display Name: {user? user.:"No name"}</p> */}
         </div>
       )}
       <SignOutButton />
       <DeleteUserButton />
     </div>
+   
   );
 };
 

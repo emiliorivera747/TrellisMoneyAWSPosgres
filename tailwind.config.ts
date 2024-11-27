@@ -50,6 +50,7 @@ const config: Config = {
         }
       },
     },
+    
   },
   plugins: [],
 };
