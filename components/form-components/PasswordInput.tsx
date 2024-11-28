@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { v4 as uuidv4 } from "uuid";
 
 import { FieldValues } from "react-hook-form";
 
@@ -10,10 +11,11 @@ import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip
 import { PasswordInputProps } from "@/types/forms";
 
 const PasswordInput = <TFieldValues extends FieldValues>({
-  id,
-  placeholder,
+  id = `password-input-${uuidv4()}`,
+  placeholder = "Password",
   fieldName,
   errors,
+  withPasswordTooltip = false,
   register,
 }: PasswordInputProps<TFieldValues>) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +42,7 @@ const PasswordInput = <TFieldValues extends FieldValues>({
   return (
     <div className="relative my-1 ">
       <input
-        type={"password"}
+        type={showPassword ? "text" : "password"}
         id={id}
         {...register(fieldName, {
           onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -69,7 +71,9 @@ const PasswordInput = <TFieldValues extends FieldValues>({
       </div>
 
       {/* Password tooltip */}
-      {isFocused && password && <PasswordTooltip password={password} />}
+      {withPasswordTooltip && isFocused && password && (
+        <PasswordTooltip password={password} />
+      )}
 
       {/* Placeholder label*/}
       <label

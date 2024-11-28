@@ -24,15 +24,12 @@ import {
 
 // Functions
 import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
+import { handleZodErrors } from "@/features/auth/utils/handleZodErrors";
 
 //Server Actions
 import { resetPassword, State } from "@/app/actions/actions";
 
-const ResetPasswordForm = ({
-  code,
-}: {
-  code?: string | null;
-}) => {
+const ResetPasswordForm = ({ code }: { code?: string | null }) => {
   const {
     register,
     formState: { errors },
@@ -40,34 +37,27 @@ const ResetPasswordForm = ({
   } = useForm<ResetPasswordInputs>({
     resolver: zodResolver(resetPasswordSchema),
   });
+
   const router = useRouter();
+
   const [state, formAction] = useActionState<State, FormData>(
     resetPassword,
     null
   );
+
   const [err, setErr] = useState<string | null>(null);
+
   useEffect(() => {
-    if (!state) {
-      return;
-    }
-    console.log(state);
 
-    // In case our form action returns `error` we can now `setError`s
-    if (state.status === "error") {
+    if (!state) return;
 
-      if (Array.isArray(state.errors)) {
-        state.errors.forEach((error: { path: string; message: string }) => {
-          setError(error.path as "password", {
-            message: error.message,
-          });
-        });
-      } else {
-        const supabaseError = getSupabaseErrorMessage(state.errors);
-        setErr(supabaseError);
-      }
-    }
+    handleZodErrors(state, setError);
+
+    if (state.status === "error" && !Array.isArray(state.errors))
+      setErr(getSupabaseErrorMessage(state.errors));
+
     if (state.status === "success") {
-      toast.success("Signed in successfully!", { theme: "colored" });
+      toast.success("Successfully updated password!", { theme: "colored" });
       router.push("/dashboard");
     }
   }, [state, setError]);
@@ -75,18 +65,17 @@ const ResetPasswordForm = ({
   return (
     <PrimaryAuthContainer>
       <form
-        action={(formData) => formAction(formData)}
+        action={formAction}
         className="flex flex-col gap-2"
       >
         <PrimaryAuthHeader label="Reset Password" />
         <div className="flex flex-col  mb-2">
           <input type="hidden" name="code" value={code || ""} />
           <PasswordInput
-            id="password"
             fieldName="password"
-            placeholder="Password"
             errors={errors}
             register={register}
+            withPasswordTooltip={true}
           />
         </div>
         {err && <PrimaryErrorMessage errMsg={err} />}

@@ -179,14 +179,18 @@ export const resetPassword = async (
 ): Promise<State> => {
   try {
     const supabase = await createClient();
+    console.log("formData", formData);
 
     const validatedFields = resetPasswordSchema.parse({
       password: formData.get("password") as string,
-      code: formData.get("code") as string,
-      message: formData.get("message") as string,
+      code: formData.get("code") as string | null,
+      message: formData.get("message") as string | null,
     });
 
+
     const { code} = validatedFields;
+
+    console.log("code", code);  
 
     if (!code) {
       return {

@@ -22,23 +22,21 @@ import { confirmReset, State } from "../actions/actions";
 
 //Functions
 import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
+import { setErrors } from "@/utils/form-helpers/setErrors";
 
-const schema = z.object({
-  email: z.string().email("Invalid email format"),
-});
-
-interface Input {
-  email: string;
-  password1: string;
-}
+//Schema
+import {
+  loginHelpSchema,
+  LoginHelpInputs,
+} from "@/features/auth/schemas/formSchemas";
 
 export default function PasswordReset() {
   const {
     register,
     setError,
     formState: { errors },
-  } = useForm<Input>({
-    resolver: zodResolver(schema),
+  } = useForm<LoginHelpInputs>({
+    resolver: zodResolver(loginHelpSchema),
   });
 
   const [message, setMessage] = useState<string | null>(null);
@@ -56,14 +54,8 @@ export default function PasswordReset() {
 
     // In case our form action returns `error` we can now `setError`s
     if (state.status === "error") {
-      console.log(state.message);
-      console.log(state.errors);
       if (Array.isArray(state.errors)) {
-        state.errors.forEach((error: { path: string; message: string }) => {
-          setError(error.path as "email", {
-            message: error.message,
-          });
-        });
+        setErrors(state.errors, setError);
       } else {
         const supabaseError = getSupabaseErrorMessage(state.errors);
         setErr(supabaseError);
@@ -82,19 +74,22 @@ export default function PasswordReset() {
         <div className="w-full">
           <NavBar />
         </div>
-        <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg"> 
+        <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg">
           {!emailSent && (
             <form action={formAction} className="flex flex-col gap-2 mb-2">
-              <PrimaryAuthHeader label="Reset Your Password" />
+              <PrimaryAuthHeader label="Password Reset" />
               {message && <p style={{ color: "green" }}>{message}</p>}
-              <TextInput
-                id="email"
-                fieldName="email"
-                type="email"
-                placeholder="Email"
-                errors={errors}
-                register={register}
-              />
+              <div className="flex flex-col  mb-2">
+                <TextInput
+                  id="email"
+                  fieldName="email"
+                  type="email"
+                  placeholder="Email"
+                  errors={errors}
+                  register={register}
+                />
+              </div>
+              {err && <p style={{ color: "red" }} className="text-red-500 text-sm mt-1 ">{err}</p>}
               <PrimarySubmitButton
                 bgColor="bg-primary-700 "
                 textColor="text-white"
@@ -103,7 +98,11 @@ export default function PasswordReset() {
               />
             </form>
           )}
-          {emailSent && <p className='text-secondary-900 text-md mb-6'>Email sent successfully!</p>}
+          {emailSent && (
+            <p className="text-secondary-900 text-md mb-6">
+              Email sent successfully!
+            </p>
+          )}
           {emailSent && (
             <Link
               href="/sign-in"
@@ -112,7 +111,6 @@ export default function PasswordReset() {
               Return to Sign In
             </Link>
           )}
-          {err && <p style={{ color: "red" }}>{err}</p>}
         </div>
       </div>
     </DashboardRedirect>
