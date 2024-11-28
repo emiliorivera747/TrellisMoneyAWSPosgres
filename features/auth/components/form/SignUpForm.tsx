@@ -18,6 +18,8 @@ import AlreadyHaveAccount from "@/features/auth/components/buttons/AlreadyHaveAc
 import EmailVerification from "@/features/auth/components/email-verification/EmailVerification";
 import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
 import PasswordInput from "@/components/form-components/PasswordInput";
+import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";
+import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 
 // Schema
 import { signUpSchema } from "@/features/auth/schemas/formSchemas";
@@ -90,13 +92,11 @@ export default function Signup() {
   }, [state, setError]);
 
   return (
-    <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg">
+    <PrimaryAuthContainer>
       {/* Sign Up form*/}
       {!userSuccess && (
-        <form action={formAction} className="flex flex-col gap-2">
-          <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
-            Create Account
-          </h2>
+        <form action={formAction} className="flex flex-col gap-2 w-[1/3]">
+          <PrimaryAuthHeader label="Create Account" />
           <div className="flex flex-col  mb-2">
             <TextInput
               type="email"
@@ -106,10 +106,9 @@ export default function Signup() {
               errors={errors}
               register={register}
             />
+            {/* {isFocused && <PasswordTooltip password={password} />} */}
             <PasswordInput
-              id="password2"
               fieldName="password"
-              placeholder="Password"
               errors={errors}
               register={register}
             />
@@ -118,7 +117,7 @@ export default function Signup() {
             bgColor="bg-primary-700"
             textColor="text-white"
             hoverBgColor="hover:bg-primary-900"
-            text="Sign Up"
+            text="Create Account"
           />
           {pending && <span>Loading...</span>}
         </form>
@@ -138,6 +137,6 @@ export default function Signup() {
 
       {/* Sign up with google button */}
       {!userSuccess && <GoogleButton label="Continue with Google" />}
-    </div>
+    </PrimaryAuthContainer>
   );
 }

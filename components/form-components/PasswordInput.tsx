@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { v4 as uuidv4 } from "uuid";
 
 import { FieldValues } from "react-hook-form";
+import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
 
 //Components
 import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip";
@@ -11,13 +11,14 @@ import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip
 import { PasswordInputProps } from "@/types/forms";
 
 const PasswordInput = <TFieldValues extends FieldValues>({
-  id = `password-input-${uuidv4()}`,
+  id = `password-input`,
   placeholder = "Password",
   fieldName,
   errors,
-  withPasswordTooltip = false,
+  // setIsFocused,
   register,
-}: PasswordInputProps<TFieldValues>) => {
+}: // setPassword,
+PasswordInputProps<TFieldValues>) => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -28,7 +29,7 @@ const PasswordInput = <TFieldValues extends FieldValues>({
 
   const handleClickOutside = (event: MouseEvent) => {
     if (event.target instanceof Element && !event.target.closest(`#${id}`)) {
-      setIsFocused(false);
+      if (setIsFocused) setIsFocused(false);
     }
   };
 
@@ -40,54 +41,61 @@ const PasswordInput = <TFieldValues extends FieldValues>({
   }, []);
 
   return (
-    <div className="relative my-1 ">
+    <div className="relative my-1">
       <input
-        type={showPassword ? "text" : "password"}
-        id={id}
-        {...register(fieldName, {
-          onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value),
-        })}
-        className={`align-text-bottom w-full px-[.94118rem] pt-[1.05882rem] h-[3.29412rem] border ${
-          errors[fieldName] ? "border-red-500" : "border-[#495057]"
-        } rounded-[8px] focus:outline-none focus:ring-2 ${
-          errors[fieldName] ? "focus:ring-red-500" : "focus:ring-blue-500"
-        } peer placeholder-transparent`}
-        placeholder={placeholder}
-        defaultValue=""
-        onFocus={() => setIsFocused(true)}
+      type={showPassword ? "text" : "password"}
+      id={id}
+      {...register(fieldName, {
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (setPassword) setPassword(e.target.value);
+        },
+      })}
+      className={`border-box rounded-[12px] align-text-bottom w-full px-[1rem] pt-[1.05882rem] h-[3.2941176471rem] border leading-[1.23536] ${
+        errors[fieldName] ? "border-red-500 bg-[#fff5f5] text-red-500" : "border-tertiary-600"
+      } rounded-[12px] focus:outline-none focus:ring-2 ${
+        errors[fieldName] ? "focus:ring-red-500" : "focus:ring-primary-500 focus:border-none"
+      } peer placeholder-transparent `}
+      placeholder={placeholder}
+      defaultValue=""
+      onFocus={() => {
+        if (setIsFocused) setIsFocused(true);
+      }}
       />
+      {isFocused && password && <PasswordTooltip password={password} />}
 
       {/* Password Visibility */}
       <div
-        className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer  h-[3.29412rem]"
-        onClick={togglePasswordVisibility}
+      className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer h-[3.2941176471rem]"
+      onClick={togglePasswordVisibility}
       >
-        {showPassword ? (
-          <FaEyeSlash className="text-[#868e96]" />
-        ) : (
-          <FaEye className="text-[#868e96]" />
-        )}
+      {showPassword ? (
+        <FaEyeSlash
+        className={`${
+          errors[fieldName] ? "text-red-500" : "text-[#868e96]"
+        }`}
+        />
+      ) : (
+        <FaEye
+        className={`${
+          errors[fieldName] ? "text-red-500" : "text-[#868e96]"
+        }`}
+        />
+      )}
       </div>
 
-      {/* Password tooltip */}
-      {withPasswordTooltip && isFocused && password && (
-        <PasswordTooltip password={password} />
-      )}
-
       {/* Placeholder label*/}
-      <label
-        htmlFor={id}
-        className="absolute text-sm left-4 top-2 peer-focus:top-2 peer-focus:left-4 peer-focus:text-sm pb-4 peer-focus:text-[#868e96] text-[#868e96] peer-focus:font-light font-light transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#868e96] peer-placeholder-shown:font-normal peer-autofill:top-2 peer-autofill:left-4 peer-autofill:text-sm"
-      >
-        {placeholder}
-      </label>
+      <PrimaryInputLabel
+      id={id}
+      fieldName={fieldName}
+      placeholder={placeholder}
+      errors={errors}
+      />
 
       {/* Error message */}
       {errors[fieldName] && (
-        <p className="text-red-500 text-sm mt-1 ">
-          {errors[fieldName]?.message?.toString()}
-        </p>
+      <p className="text-red-500 text-sm mt-1">
+        {errors[fieldName]?.message?.toString()}
+      </p>
       )}
     </div>
   );

@@ -15,6 +15,9 @@ import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import PasswordInput from "@/components/form-components/PasswordInput";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 import PrimaryAuthContainer from "../containers/PrimaryAuthContainer";
+import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip";
+
+
 
 //Schema
 import {
@@ -46,6 +49,8 @@ const ResetPasswordForm = ({ code }: { code?: string | null }) => {
   );
 
   const [err, setErr] = useState<string | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
+
 
   useEffect(() => {
 
@@ -68,14 +73,16 @@ const ResetPasswordForm = ({ code }: { code?: string | null }) => {
         action={formAction}
         className="flex flex-col gap-2"
       >
-        <PrimaryAuthHeader label="Reset Password" />
+        <PrimaryAuthHeader label="Reset Your Password" />
         <div className="flex flex-col  mb-2">
+          
           <input type="hidden" name="code" value={code || ""} />
           <PasswordInput
             fieldName="password"
             errors={errors}
             register={register}
             withPasswordTooltip={true}
+            setIsFocused={setIsFocused}
           />
         </div>
         {err && <PrimaryErrorMessage errMsg={err} />}

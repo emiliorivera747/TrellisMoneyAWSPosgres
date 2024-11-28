@@ -16,6 +16,8 @@ import TextInput from "@/components/form-components/TextInput";
 import NavBar from "@/components/nav-bars/NavBar";
 import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
+import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";
+
 
 //Server Actions
 import { confirmReset, State } from "../actions/actions";
@@ -74,7 +76,7 @@ export default function PasswordReset() {
         <div className="w-full">
           <NavBar />
         </div>
-        <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg">
+        <PrimaryAuthContainer>
           {!emailSent && (
             <form action={formAction} className="flex flex-col gap-2 mb-2">
               <PrimaryAuthHeader label="Password Reset" />
@@ -111,7 +113,7 @@ export default function PasswordReset() {
               Return to Sign In
             </Link>
           )}
-        </div>
+        </PrimaryAuthContainer>
       </div>
     </DashboardRedirect>
   );

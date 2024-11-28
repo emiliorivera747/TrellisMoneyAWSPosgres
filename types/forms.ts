@@ -7,6 +7,8 @@ export interface PasswordInputProps<TFieldValues extends FieldValues> {
   errors: FieldErrors<TFieldValues>;
   register: UseFormRegister<TFieldValues>;
   withPasswordTooltip?: boolean;
+  setIsFocused?: React.Dispatch<React.SetStateAction<boolean>>;
+  setPassword?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface TextInputProps<TFieldValues extends FieldValues> {
@@ -16,6 +18,13 @@ export interface TextInputProps<TFieldValues extends FieldValues> {
     fieldName: Path<TFieldValues>;
     errors: FieldErrors<TFieldValues>;
     register: UseFormRegister<TFieldValues>;
+}
+
+export interface PrimaryInputLabelProps<TFieldValues extends FieldValues> {
+  id: string;
+  fieldName: string;
+  placeholder: string;
+  errors: FieldErrors<TFieldValues>;
 }
 
 export interface Input {

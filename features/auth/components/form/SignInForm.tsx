@@ -18,6 +18,7 @@ import ForgotPassword from "@/features/auth/components/buttons/ForgotPasswordBut
 import GoogleButton from "@/features/auth/components/buttons/GoogleButton";
 import PasswordInput from "@/components/form-components/PasswordInput";
 import TextInput from "@/components/form-components/TextInput";
+import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 //Schema
 import { signInSchema } from "@/features/auth/schemas/formSchemas";
@@ -80,12 +81,10 @@ const SignInForm = () => {
   }, [state, setError]);
 
   return (
-    <div className="flex flex-col w-full max-w-md bg-white p-8 rounded-lg">
+    <PrimaryAuthContainer>
       {/*  Sign in form */}
       <form action={formAction} className="flex flex-col gap-2">
-        <h2 className="text-3xl text-[#495057] leading-6 tracking-[0.009em] mb-6 text-center font-semibold">
-          Sign in
-        </h2>
+        <PrimaryAuthHeader label="Sign in" />
         <div className="flex flex-col  mb-2">
           <TextInput
             type="email"
@@ -127,7 +126,7 @@ const SignInForm = () => {
       >
         <span>Create Account</span>
       </Link>
-    </div>
+    </PrimaryAuthContainer>
   );
 };
 

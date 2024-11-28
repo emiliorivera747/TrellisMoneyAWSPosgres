@@ -23,7 +23,7 @@ function PasswordStrengthChecker({ password }: { password: string }) {
   ];
 
   return (
-    <div className="mb-1 text-[0.8rem] mt-4">
+    <div className="text-[0.8rem] mb-2 ">
       <div className="flex flex-col items-start">
         <p className="text-[#343a40]">Password strength: {strengthLabel}</p>
         {feedback && <p className="mb-1 text-xs text-[#495057] font-light">{feedback}</p>}

@@ -1,13 +1,13 @@
 import React from "react";
-import {
-  FieldValues,
-} from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 
+//Components
+import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
 
 //Interface
-import {TextInputProps} from "@/types/forms";
+import { TextInputProps } from "@/types/forms";
 
-const TextInput = <TFieldValues extends FieldValues> ({
+const TextInput = <TFieldValues extends FieldValues>({
   type,
   id,
   fieldName,
@@ -15,29 +15,28 @@ const TextInput = <TFieldValues extends FieldValues> ({
   errors,
   register,
 }: TextInputProps<TFieldValues>) => {
-
   return (
-    <div className="relative my-1 ">
+    <div className="relative my-2">
       <input
         type={type}
         id={id}
         {...register(fieldName)}
-        className={`align-text-bottom w-full px-[.94118rem] pt-[1.05882rem] h-[3.29412rem] border ${
-          errors[fieldName] ? "border-red-500" : "border-[#495057]"
-        } rounded-[8px] focus:outline-none focus:ring-2 ${
-          errors[fieldName] ? "focus:ring-red-500" : "focus:ring-blue-500"
+        className={`border-box rounded-[12px] align-text-bottom w-full px-[1rem] pt-[1.05882rem]  h-[3.2941176471rem] border leading-[1.23536] ${
+          errors[fieldName] ? "border-red-500 bg-[#fff5f5] text-red-500" : "border-tertiary-600"
+        } rounded-[12px] focus:outline-none focus:ring-2 ${
+          errors[fieldName] ? "focus:ring-red-500" : "focus:ring-primary-500 focus:border-none"
         } peer placeholder-transparent`}
         placeholder={placeholder}
         defaultValue=""
       />
 
       {/* Placeholder label*/}
-      <label
-        htmlFor={id}
-        className="absolute text-sm left-4 top-2 peer-focus:top-2 peer-focus:left-4 peer-focus:text-sm pb-4 peer-focus:text-[#868e96] text-[#868e96] peer-focus:font-light font-light transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#868e96] peer-placeholder-shown:font-normal peer-autofill:top-2 peer-autofill:left-4 peer-autofill:text-sm"
-      >
-        {placeholder}
-      </label>
+      <PrimaryInputLabel
+        id={id}
+        fieldName={fieldName}
+        placeholder={placeholder}
+        errors={errors}
+      />
 
       {/* Error message */}
       {errors[fieldName] && (
