@@ -17,9 +17,8 @@ import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHea
 import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";
 
 //Server Actions
-import { confirmReset} from "../actions/actions";
+import { confirmReset } from "../actions/actions";
 import { State } from "@/types/serverActionState";
-
 
 //Schema
 import {

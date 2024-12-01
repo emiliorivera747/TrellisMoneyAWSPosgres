@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState} from "react";
 import { createClient } from "@/utils/supabase/client";
-import DashboardPageSkeleton from "@/components/skeletons/DashboardPageSkeleton";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -47,7 +46,7 @@ const DashboardRedirect= ({ children }: ProtectedRouteProps) => {
    * If the app is initializing, show a loading message
    */
   if (initializing) {
-    return <DashboardPageSkeleton />;
+    return <div>Loading...</div>;
   }
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import HomePageSkeleton from '@/components/skeletons/HomePageSkeleton';
+import HomePageSkeleton from '@/components/skeletons/pages/HomePageSkeleton';
 
 const Loading: React.FC = () => {
     return (

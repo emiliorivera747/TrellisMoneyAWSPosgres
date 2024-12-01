@@ -30,16 +30,7 @@ import { State } from "@/types/serverActionState";
 
 //Hooks
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
-
-
-/**
- * Declared type for the inputs
- */
-type Inputs = {
-  email: string;
-  password: string;
-};
-
+import { SignUpInputs } from "@/features/auth/schemas/formSchemas";
 /**
  * Sign up form
  *
@@ -54,7 +45,7 @@ export default function Signup() {
     register,
     formState: { errors },
     setError,
-  } = useForm<Inputs>({
+  } = useForm<SignUpInputs>({
     resolver: zodResolver(signUpSchema),
   });
 

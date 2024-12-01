@@ -1,6 +1,12 @@
-"use client";
+
 import React from "react";
+import { Metadata } from "next";
 import NavBar from "@/components/nav-bars/NavBar";
+
+export const metadata: Metadata = {
+  title: "Sign In",
+  description: "Sign in to your Trellis account",
+};
 
 //Forms
 import SignInForm from "@/features/auth/components/form/SignInForm";
