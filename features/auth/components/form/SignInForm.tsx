@@ -1,17 +1,16 @@
 "use client";
-import React, { useState, useActionState, useEffect } from "react";
+import React, { useActionState} from "react";
 
 //External libraries
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
 
 // Next
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 // Components
-import PrimarySubmitButton from "../../../../components/buttons/PrimarySubmitButton";
+import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import OrDivider from "@/components/form-components/OrDivider";
 import ForgotPassword from "@/features/auth/components/buttons/ForgotPasswordButton";
@@ -20,72 +19,52 @@ import PasswordInput from "@/components/form-components/PasswordInput";
 import TextInput from "@/components/form-components/TextInput";
 import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
+
 //Schema
-import { signInSchema } from "@/features/auth/schemas/formSchemas";
+import {
+  signInSchema,
+  SignInInputs,
+} from "@/features/auth/schemas/formSchemas";
 
 // Server actions
-import { login, State } from "@/app/actions/actions";
+import { login} from "@/app/actions/actions";
+import { State } from "@/types/serverActionState";
 
-// Functions
-import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
 
-type Inputs = {
-  email: string;
-  password: string;
-};
+//Hooks
+import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
 const SignInForm = () => {
+  
   const {
     register,
     formState: { errors },
     setError,
-  } = useForm<Inputs>({
+  } = useForm<SignInInputs>({
     resolver: zodResolver(signInSchema),
   });
 
   const router = useRouter();
 
+  const onSuccessFn = () => {
+    router.push("/dashboard");
+  };
+
   const [state, formAction] = useActionState<State, FormData>(login, null);
 
-  const [err, setErr] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log("STATE", state);
-    if (!state) {
-      return;
-    }
-
-    console.log("SIGN IN");
-    // In case our form action returns `error` we can now `setError`s
-    if (state.status === "error") {
-      console.log(state.message);
-      console.log(state.errors);
-      if (Array.isArray(state.errors)) {
-        state.errors.forEach((error: { path: string; message: string }) => {
-          setError(
-            error.path as "email" | "password" | "root" | `root.${string}`,
-            {
-              message: error.message,
-            }
-          );
-        });
-      } else {
-        const supabaseError = getSupabaseErrorMessage(state.errors);
-        setErr(supabaseError);
-      }
-    }
-    if (state.status === "success") {
-      toast.success("Signed in successfully!", { theme: "colored" });
-      router.push("/dashboard");
-    }
-  }, [state, setError]);
+  const { err } = useHandleActionState(
+    state,
+    setError,
+    onSuccessFn,
+    "Signed in successfully!"
+  );
 
   return (
     <PrimaryAuthContainer>
       {/*  Sign in form */}
       <form action={formAction} className="flex flex-col gap-2">
         <PrimaryAuthHeader label="Sign in" />
-        <div className="flex flex-col  mb-2">
+        <div className="flex flex-col mb-2">
           <TextInput
             type="email"
             id="email"
@@ -122,7 +101,7 @@ const SignInForm = () => {
 
       <Link
         href="/sign-up"
-        className="w-full px-[.94118rem] py-[1.05882rem] rounded-[12px] text-sm font-medium text-gray-700 bg-[#e9ecef] shadow-sm hover:bg-[#dee2e6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4 mb-4"
+        className="w-full px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] text-sm font-medium text-gray-700 bg-[#e9ecef] shadow-sm hover:bg-[#dee2e6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4 mb-4"
       >
         <span>Create Account</span>
       </Link>

@@ -1,13 +1,12 @@
 "use client";
 
 // Next and React
-import React, { useState, useEffect, useActionState } from "react";
+import React, { useState, useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
 // External libraries
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
 
 // Components
 import TextInput from "@/components/form-components/TextInput";
@@ -24,11 +23,14 @@ import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHea
 // Schema
 import { signUpSchema } from "@/features/auth/schemas/formSchemas";
 
-//Functions
-import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
 
 // Server actions
-import { signUp, State } from "@/app/actions/actions";
+import { signUp} from "@/app/actions/actions";
+import { State } from "@/types/serverActionState";
+
+//Hooks
+import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
+
 
 /**
  * Declared type for the inputs
@@ -56,40 +58,19 @@ export default function Signup() {
     resolver: zodResolver(signUpSchema),
   });
 
-  const [err, setErr] = useState<string | null>(null);
   const [userSuccess, setUserSuccess] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!state) {
-      return;
-    }
+  const onSuccessFn = () => {
+    setUserSuccess(true);
+    setEmail(state?.status === "success" && state.user ? state.user.email : null);
+  };
 
-    console.log("STATE: ", state);
-
-    // In case our form action returns `error` we can now `setError`s
-    if (state.status === "error") {
-      console.log("ERRORS: ", state.errors);
-
-      if (Array.isArray(state.errors)) {
-        state.errors.forEach((error: { path: string; message: string }) => {
-          setError(
-            error.path as "email" | "password" | "root" | `root.${string}`,
-            {
-              message: error.message,
-            }
-          );
-        });
-      } else {
-        const supabaseError = getSupabaseErrorMessage(state.errors);
-        setErr(supabaseError);
-      }
-    }
-    if (state.status === "success") {
-      toast.success("Signed up successfully!", { theme: "colored" });
-      setUserSuccess(true);
-      setEmail(state.user.email);
-    }
-  }, [state, setError]);
+  const { err } = useHandleActionState(
+    state,
+    setError,
+    onSuccessFn,
+    "Signed up successfully!"
+  );
 
   return (
     <PrimaryAuthContainer>

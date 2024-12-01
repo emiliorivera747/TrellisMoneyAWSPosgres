@@ -1,14 +1,12 @@
 "use client";
 
 // React & Next
-import React, { useState, useActionState, useEffect } from "react";
+import React, { useState, useActionState} from "react";
 import Link from "next/link";
 
 //External Libraries
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
 
 //Compenents
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
@@ -18,19 +16,19 @@ import DashboardRedirect from "@/features/auth/components/private-route/Dashboar
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";
 
-
 //Server Actions
-import { confirmReset, State } from "../actions/actions";
+import { confirmReset} from "../actions/actions";
+import { State } from "@/types/serverActionState";
 
-//Functions
-import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
-import { setErrors } from "@/utils/form-helpers/setErrors";
 
 //Schema
 import {
   loginHelpSchema,
   LoginHelpInputs,
 } from "@/features/auth/schemas/formSchemas";
+
+//Hooks
+import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
 export default function PasswordReset() {
   const {
@@ -47,28 +45,18 @@ export default function PasswordReset() {
     confirmReset,
     null
   );
-  const [err, setErr] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!state) {
-      return;
-    }
+  const onSuccessFn = () => {
+    setEmailSent(true);
+    setMessage("Email sent successfully!");
+  };
 
-    // In case our form action returns `error` we can now `setError`s
-    if (state.status === "error") {
-      if (Array.isArray(state.errors)) {
-        setErrors(state.errors, setError);
-      } else {
-        const supabaseError = getSupabaseErrorMessage(state.errors);
-        setErr(supabaseError);
-      }
-    }
-    if (state.status === "success") {
-      toast.success("Signed in successfully!", { theme: "colored" });
-      setEmailSent(true);
-      setMessage("Email sent successfully!");
-    }
-  }, [state]);
+  const { err } = useHandleActionState(
+    state,
+    setError,
+    onSuccessFn,
+    "Email sent successfully!"
+  );
 
   return (
     <DashboardRedirect>
@@ -91,7 +79,14 @@ export default function PasswordReset() {
                   register={register}
                 />
               </div>
-              {err && <p style={{ color: "red" }} className="text-red-500 text-sm mt-1 ">{err}</p>}
+              {err && (
+                <p
+                  style={{ color: "red" }}
+                  className="text-red-500 text-sm mt-1 "
+                >
+                  {err}
+                </p>
+              )}
               <PrimarySubmitButton
                 bgColor="bg-primary-700 "
                 textColor="text-white"

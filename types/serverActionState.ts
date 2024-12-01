@@ -17,6 +17,4 @@ export interface ErrorState {
     errors?: Array<ErrorDetail> | AuthError | unknown;
   }
 
-  
-
 export type State = SuccessState | ErrorState | null;

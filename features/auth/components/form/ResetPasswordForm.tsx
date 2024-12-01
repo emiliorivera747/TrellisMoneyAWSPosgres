@@ -1,13 +1,12 @@
 "use client";
 
 // React & Next
-import React, { useState, useActionState, useEffect } from "react";
+import React, { useActionState} from "react";
 import { useRouter } from "next/navigation";
 
 //External libraries
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
 
 // Components
 import PrimarySubmitButton from "../../../../components/buttons/PrimarySubmitButton";
@@ -15,9 +14,6 @@ import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import PasswordInput from "@/components/form-components/PasswordInput";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 import PrimaryAuthContainer from "../containers/PrimaryAuthContainer";
-import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip";
-
-
 
 //Schema
 import {
@@ -25,12 +21,13 @@ import {
   resetPasswordSchema,
 } from "../../schemas/formSchemas";
 
-// Functions
-import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
-import { handleZodErrors } from "@/features/auth/utils/handleZodErrors";
 
 //Server Actions
-import { resetPassword, State } from "@/app/actions/actions";
+import { resetPassword} from "@/app/actions/actions";
+import { State } from "@/types/serverActionState";
+
+//Hooks
+import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
 const ResetPasswordForm = ({ code }: { code?: string | null }) => {
   const {
@@ -48,24 +45,11 @@ const ResetPasswordForm = ({ code }: { code?: string | null }) => {
     null
   );
 
-  const [err, setErr] = useState<string | null>(null);
-  const [isFocused, setIsFocused] = useState(false);
+  const onSuccessFn = () => {
+    router.push("/dashboard");
+  };
 
-
-  useEffect(() => {
-
-    if (!state) return;
-
-    handleZodErrors(state, setError);
-
-    if (state.status === "error" && !Array.isArray(state.errors))
-      setErr(getSupabaseErrorMessage(state.errors));
-
-    if (state.status === "success") {
-      toast.success("Successfully updated password!", { theme: "colored" });
-      router.push("/dashboard");
-    }
-  }, [state, setError]);
+  const {err} = useHandleActionState(state, setError,onSuccessFn, "Successfully updated password!");
 
   return (
     <PrimaryAuthContainer>
@@ -75,14 +59,12 @@ const ResetPasswordForm = ({ code }: { code?: string | null }) => {
       >
         <PrimaryAuthHeader label="Reset Your Password" />
         <div className="flex flex-col  mb-2">
-          
           <input type="hidden" name="code" value={code || ""} />
           <PasswordInput
             fieldName="password"
             errors={errors}
             register={register}
             withPasswordTooltip={true}
-            setIsFocused={setIsFocused}
           />
         </div>
         {err && <PrimaryErrorMessage errMsg={err} />}

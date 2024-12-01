@@ -17,7 +17,7 @@ import {
   signInSchema,
   resetPasswordSchema,
 } from "@/features/auth/schemas/formSchemas";
-import { AuthError } from "@supabase/supabase-js";
+import { State } from "@/types/serverActionState";
 
 /**
  * Handles errors thrown by Zod schema validation.
@@ -36,23 +36,6 @@ const handleZodError = (e: z.ZodError): State => {
   };
 };
 
-interface ErrorDetail {
-  path: string;
-  message: string;
-}
-
-interface SuccessState {
-  status: "success";
-  message: string;
-  user: { email: string };
-}
-
-interface ErrorState {
-  status: "error";
-  message: string | null;
-  errors?: Array<ErrorDetail> | AuthError | unknown;
-}
-export type State = SuccessState | ErrorState | null;
 
 const handleOtherErrors = (e: unknown): State => {
   return {
@@ -102,6 +85,13 @@ export async function login(
   }
 }
 
+
+/**
+ * 
+ * @param prevState 
+ * @param formData 
+ * @returns 
+ */
 export async function signUp(
   prevState: State | null,
   formData: FormData
@@ -134,6 +124,10 @@ export async function signUp(
   }
 }
 
+/**
+ * 
+ * @returns 
+ */
 export async function signOut() {
   const supabase = await createClient();
   const {
@@ -147,6 +141,12 @@ export async function signOut() {
   return redirect("/");
 }
 
+/**
+ * 
+ * @param prevState 
+ * @param formData 
+ * @returns 
+ */
 export const confirmReset = async (
   prevState: State | null,
   formData: FormData
@@ -155,7 +155,7 @@ export const confirmReset = async (
     const email = formData.get("email") as string;
     const supabase = await createClient();
 
-    console.log("path:", ` ${process.env.NEXT_PUBLIC_DOMAIN}/reset-password`);
+    //("path:", ` ${process.env.NEXT_PUBLIC_DOMAIN}/reset-password`);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/reset-password`,
     });
@@ -173,13 +173,19 @@ export const confirmReset = async (
   }
 };
 
+/**
+ * 
+ * @param prevState 
+ * @param formData 
+ * @returns 
+ */
 export const resetPassword = async (
   prevState: State | null,
   formData: FormData
 ): Promise<State> => {
   try {
     const supabase = await createClient();
-    console.log("formData", formData);
+    //("formData", formData);
 
     const validatedFields = resetPasswordSchema.parse({
       password: formData.get("password") as string,
@@ -190,7 +196,7 @@ export const resetPassword = async (
 
     const { code} = validatedFields;
 
-    console.log("code", code);  
+    //("code", code);  
 
     if (!code) {
       return {
