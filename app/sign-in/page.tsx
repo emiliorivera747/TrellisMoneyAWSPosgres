@@ -13,6 +13,7 @@ import SignInForm from "@/features/auth/components/form/SignInForm";
 
 //Protected Route
 import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
+
 const LoginPage = () => {
   return (
     <DashboardRedirect>

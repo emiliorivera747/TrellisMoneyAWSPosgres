@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState} from "react";
 import { createClient } from "@/utils/supabase/client";
-
+import LoadingPage from "@/components/loading/LoadingPage";
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
@@ -46,7 +46,7 @@ const DashboardRedirect= ({ children }: ProtectedRouteProps) => {
    * If the app is initializing, show a loading message
    */
   if (initializing) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
 
