@@ -8,14 +8,14 @@ import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 
 // Components
-import ButtonSpinner from "@/components/spinners/ButtonSpinner";
 import DotLoader from "@/components/loading/DotLoader";
 
 interface GoogleButtonProps {
   label: string;
+  dataTestID?: string;
 }
 
-const GoogleButton = ({ label }: GoogleButtonProps) => {
+const GoogleButton = ({ label, dataTestID }: GoogleButtonProps) => {
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
 
@@ -28,14 +28,16 @@ const GoogleButton = ({ label }: GoogleButtonProps) => {
           redirectTo: `${window.location.origin}`,
         },
       });
-
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
     } catch (error) {
+      setIsGoogleLoading(false);
+
+      console.error("Error during Google sign-in:", error);
+    } finally {
       setIsGoogleLoading(false);
     }
   }
+
   return (
     <button
       onClick={signInWithGoogle}
@@ -43,7 +45,7 @@ const GoogleButton = ({ label }: GoogleButtonProps) => {
       disabled={isGoogleLoading}
     >
       {isGoogleLoading ? (
-        <DotLoader bgColor="bg-primary-200" />
+        <DotLoader bgColor="bg-primary-300" dataTestID={dataTestID} />
       ) : (
         <>
           {" "}
