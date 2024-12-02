@@ -12,7 +12,7 @@ const DotLoader = ({
     containerHeight?: string;
 }) => {
     return (
-        <div className={`loading-dots ${containerHeight}`}>
+        <div id="loading-dots" className={`loading-dots ${containerHeight}`}>
             <div className={`dot ${bgColor} ${dotWidth} ${dotHeight}`}></div>
             <div className={`dot ${bgColor} ${dotWidth} ${dotHeight}`}></div>
             <div className={`dot ${bgColor} ${dotWidth} ${dotHeight}`}></div>

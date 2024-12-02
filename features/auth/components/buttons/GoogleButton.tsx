@@ -9,6 +9,7 @@ import { createClient } from "@/utils/supabase/client";
 
 // Components
 import ButtonSpinner from "@/components/spinners/ButtonSpinner";
+import DotLoader from "@/components/loading/DotLoader";
 
 interface GoogleButtonProps {
   label: string;
@@ -27,13 +28,11 @@ const GoogleButton = ({ label }: GoogleButtonProps) => {
           redirectTo: `${window.location.origin}`,
         },
       });
-      console.log("window", window.location.origin);
 
       if (error) {
         throw error;
       }
     } catch (error) {
-      console.log(error);
       setIsGoogleLoading(false);
     }
   }
@@ -44,7 +43,7 @@ const GoogleButton = ({ label }: GoogleButtonProps) => {
       disabled={isGoogleLoading}
     >
       {isGoogleLoading ? (
-        <ButtonSpinner />
+        <DotLoader bgColor="bg-primary-200" />
       ) : (
         <>
           {" "}

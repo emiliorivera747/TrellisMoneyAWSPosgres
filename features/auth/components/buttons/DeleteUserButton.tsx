@@ -12,7 +12,6 @@ const DeleteUserButton = () => {
     try {
       const res = await userService.deleteUser();
       if (res.status === "error") {
-        console.log("Error deleting user:", res.message);
         return;
       }
       if (res.status === "success") {

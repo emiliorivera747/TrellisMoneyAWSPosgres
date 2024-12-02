@@ -52,6 +52,8 @@ const config: Config = {
     },
     
   },
+  types: ["node", "jest", "@testing-library/jest-dom"],
+
   plugins: [],
 };
 export default config;

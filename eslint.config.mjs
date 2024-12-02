@@ -11,4 +11,5 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  { extends: ["next/corew-web-vitals, plugin:testing-library/react, plugin:jest-dom/recommended"] },
 ];
