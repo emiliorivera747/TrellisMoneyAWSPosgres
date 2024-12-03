@@ -120,8 +120,20 @@ export const loginHelpSchema = z.object({
   }, "Email local part cannot be longer than 63 characters"),
 });
 
+export const emailVerificationSchema = z.object({
+  email: z
+    .string()
+    .email("Invalid email format")
+    .max(254, "Email cannot be longer than 254 characters")
+    .refine((email) => {
+      const [localPart] = email.split("@");
+      return localPart.length <= 63;
+    }, "Email local part cannot be longer than 63 characters"),
+});
+
 export type SignUpInputs = z.infer<typeof signUpSchema>;
 export type SignInInputs = z.infer<typeof signInSchema>;
 export type RecordSchema = z.infer<typeof recordSchema>;
 export type ResetPasswordInputs = z.infer<typeof resetPasswordSchema>;
 export type LoginHelpInputs = z.infer<typeof loginHelpSchema>;
+export type EmailVerificationInputs = z.infer<typeof emailVerificationSchema>;

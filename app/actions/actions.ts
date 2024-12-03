@@ -231,3 +231,37 @@ export const resetPassword = async (
     return handleOtherErrors(e) as State;
   }
 };
+
+export const resendConfirmation = async (
+  prevState: State | null,
+  formData: FormData
+): Promise<State> => {
+  try {
+    const supabase = await createClient();
+
+    const validatedFields = signUpSchema.parse({
+      email: formData.get("email") as string,
+    });
+
+    const {email} = validatedFields;
+
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: formData.get("email") as string,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/sign-in`,
+      },
+    });
+
+    if (error) return handleOtherErrors(error) as State;
+
+    return {
+      status: "success",
+      message: "Confirmation email sent successfully.",
+      user: { email: email},
+    };
+  } catch (error) {
+    if (error instanceof z.ZodError) return handleZodError(error) as State;
+    return handleOtherErrors(error) as State;
+  }
+};

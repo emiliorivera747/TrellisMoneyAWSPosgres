@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Components
-import PrimarySubmitButton from "../../../../components/buttons/PrimarySubmitButton";
+import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 import PasswordInput from "@/components/form-components/PasswordInput";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";

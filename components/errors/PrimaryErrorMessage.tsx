@@ -6,8 +6,8 @@ interface Props {
 }
 const PrimaryErrorMessage = ({ errMsg }: Props) => {
   return (
-    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4 flex flex-row gap-2 justify-center items-center">
-      <strong className="font-bold text-xl">
+    <div className="w-full font-medium p-4 py-6  rounded-[12px] bg-[#fff5f5] border border-red-500 text-red-500 flex flex-row gap-2 justify-center items-center mb-2">
+      <strong className="text-xl">
         <MdErrorOutline />
       </strong>
       <span className="block text-sm">{errMsg}</span>
