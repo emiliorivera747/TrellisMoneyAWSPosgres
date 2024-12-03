@@ -83,6 +83,7 @@ export default function Signup() {
               fieldName="password"
               errors={errors}
               register={register}
+              withPasswordTooltip={true}
             />
           </div>
           <PrimarySubmitButton

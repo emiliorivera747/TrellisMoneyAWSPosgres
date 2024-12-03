@@ -27,6 +27,11 @@ export interface PrimaryInputLabelProps<TFieldValues extends FieldValues> {
   errors: FieldErrors<TFieldValues>;
 }
 
+export interface ErrorForInputsProps<TFieldValues extends FieldValues> {
+  fieldName: string;
+  errors: FieldErrors<TFieldValues>;
+}
+
 export interface Input {
   email: string;
   password1: string;

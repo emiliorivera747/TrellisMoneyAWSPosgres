@@ -3,6 +3,7 @@ import { FieldValues } from "react-hook-form";
 
 //Components
 import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
+import ErrorForInputs from "@/components/errors/ErrorForInputs";
 
 //Interface
 import { TextInputProps } from "@/types/forms";
@@ -39,11 +40,7 @@ const TextInput = <TFieldValues extends FieldValues>({
       />
 
       {/* Error message */}
-      {errors[fieldName] && (
-        <p className="text-red-500 text-sm mt-1 ">
-          {errors[fieldName]?.message?.toString()}
-        </p>
-      )}
+      <ErrorForInputs fieldName={fieldName} errors={errors} />
     </div>
   );
 };

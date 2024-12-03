@@ -6,18 +6,21 @@ import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
 
 //Components
 import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip";
+import ErrorForInputs from "@/components/errors/ErrorForInputs";
+
 
 //Types
 import { PasswordInputProps } from "@/types/forms";
+
 
 const PasswordInput = <TFieldValues extends FieldValues>({
   id = `password-input`,
   placeholder = "Password",
   fieldName,
   errors,
-  // setIsFocused,
   register,
-}: // setPassword,
+  withPasswordTooltip = false,
+}: 
 PasswordInputProps<TFieldValues>) => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
@@ -61,7 +64,7 @@ PasswordInputProps<TFieldValues>) => {
         if (setIsFocused) setIsFocused(true);
       }}
       />
-      {isFocused && password && <PasswordTooltip password={password} />}
+      {withPasswordTooltip && isFocused && password && <PasswordTooltip password={password} />}
 
       {/* Password Visibility */}
       <div
@@ -92,11 +95,7 @@ PasswordInputProps<TFieldValues>) => {
       />
 
       {/* Error message */}
-      {errors[fieldName] && (
-      <p className="text-red-500 text-sm mt-1">
-        {errors[fieldName]?.message?.toString()}
-      </p>
-      )}
+      <ErrorForInputs fieldName={fieldName} errors={errors} />
     </div>
   );
 };
