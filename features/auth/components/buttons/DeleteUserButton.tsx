@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import userService from "@/features/user/services/userService";
 import { useRouter } from "next/navigation";
+import DotLoader from "@/components/loading/DotLoader";
 
 const DeleteUserButton = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +30,7 @@ const DeleteUserButton = () => {
       className="bg-red-600 text-white font-bold p-4 rounded-md"
       disabled={isLoading}
     >
-      {isLoading ? " Delete User..." : "Delete User"}
+      {isLoading ? <DotLoader /> : "Delete User"}
     </button>
   );
 };

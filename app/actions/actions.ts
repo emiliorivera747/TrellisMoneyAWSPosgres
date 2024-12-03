@@ -36,7 +36,6 @@ const handleZodError = (e: z.ZodError): State => {
   };
 };
 
-
 const handleOtherErrors = (e: unknown): State => {
   return {
     status: "error",
@@ -58,6 +57,7 @@ export async function login(
   formData: FormData
 ): Promise<State> {
   try {
+    console.log("login");
     const supabase = await createClient();
 
     /**
@@ -74,6 +74,17 @@ export async function login(
     // in practice, you should validate your inputs
     const { error } = await supabase.auth.signInWithPassword(validatedFields);
 
+    if (error?.code === "email_not_confirmed") {
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email: formData.get("email") as string,
+        options: {
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/sign-in`,
+        },
+      });
+
+      if (error) return handleOtherErrors(error) as State;
+    }
     if (error) return handleOtherErrors(error) as State;
 
     // Add user to the database if they don't exist
@@ -85,12 +96,11 @@ export async function login(
   }
 }
 
-
 /**
- * 
- * @param prevState 
- * @param formData 
- * @returns 
+ *
+ * @param prevState
+ * @param formData
+ * @returns
  */
 export async function signUp(
   prevState: State | null,
@@ -125,8 +135,8 @@ export async function signUp(
 }
 
 /**
- * 
- * @returns 
+ *
+ * @returns
  */
 export async function signOut() {
   const supabase = await createClient();
@@ -142,10 +152,10 @@ export async function signOut() {
 }
 
 /**
- * 
- * @param prevState 
- * @param formData 
- * @returns 
+ *
+ * @param prevState
+ * @param formData
+ * @returns
  */
 export const confirmReset = async (
   prevState: State | null,
@@ -174,10 +184,10 @@ export const confirmReset = async (
 };
 
 /**
- * 
- * @param prevState 
- * @param formData 
- * @returns 
+ *
+ * @param prevState
+ * @param formData
+ * @returns
  */
 export const resetPassword = async (
   prevState: State | null,
@@ -193,10 +203,9 @@ export const resetPassword = async (
       message: formData.get("message") as string | null,
     });
 
+    const { code } = validatedFields;
 
-    const { code} = validatedFields;
-
-    //("code", code);  
+    //("code", code);
 
     if (!code) {
       return {

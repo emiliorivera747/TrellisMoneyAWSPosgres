@@ -3,7 +3,7 @@ import { UseFormSetError, FieldValues } from "react-hook-form";
 import { toast } from "react-toastify";
 import { State } from "@/types/serverActionState";
 // Utility functions
-import { getSupabaseErrorMessage } from "@/utils/getSupabaseErrorMessages";
+import { getSupabaseErrorMessage } from "@/features/auth/utils/getSupabaseErrorMessages";
 import { handleZodErrors } from "@/features/auth/utils/handleZodErrors";
 
 // Define the hook
