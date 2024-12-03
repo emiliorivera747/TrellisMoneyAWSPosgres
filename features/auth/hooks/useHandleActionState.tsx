@@ -21,8 +21,11 @@ export function useHandleActionState<TFields extends FieldValues>(
     // Handle Zod validation errors
     handleZodErrors(state, setError);
 
-    if (state.status === "error" && !Array.isArray(state.errors)) {
+    if (state.status === "error" && !Array.isArray(state.errors) && state.errors instanceof Error && "code" in state.errors) {
       setErr(getSupabaseErrorMessage(state.errors));
+    }
+    else{
+      setErr(state.message);
     }
 
     if (state.status === "success") {

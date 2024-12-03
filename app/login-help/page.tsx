@@ -3,6 +3,7 @@
 // React & Next
 import React, { useState, useActionState} from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 //External Libraries
 import { useForm } from "react-hook-form";
@@ -15,6 +16,7 @@ import NavBar from "@/components/nav-bars/NavBar";
 import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";
+import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 
 //Server Actions
 import { confirmReset } from "../actions/actions";
@@ -37,6 +39,7 @@ export default function PasswordReset() {
   } = useForm<LoginHelpInputs>({
     resolver: zodResolver(loginHelpSchema),
   });
+  const router = useRouter();
 
   const [message, setMessage] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState<boolean>(false);
@@ -48,6 +51,7 @@ export default function PasswordReset() {
   const onSuccessFn = () => {
     setEmailSent(true);
     setMessage("Email sent successfully!");
+    router.push("/sign-in");
   };
 
   const { err } = useHandleActionState(
@@ -78,14 +82,6 @@ export default function PasswordReset() {
                   register={register}
                 />
               </div>
-              {err && (
-                <p
-                  style={{ color: "red" }}
-                  className="text-red-500 text-sm mt-1 "
-                >
-                  {err}
-                </p>
-              )}
               <PrimarySubmitButton
                 bgColor="bg-primary-700 "
                 textColor="text-white"
@@ -95,10 +91,11 @@ export default function PasswordReset() {
             </form>
           )}
           {emailSent && (
-            <p className="text-secondary-900 text-md mb-6">
+            <p className="success-message text-primary-900 text-md mb-6 font-semibold bg-primary-100 rounded-[12px] border border-primary-900 p-6 flex items-center justify-center">
               Email sent successfully!
             </p>
           )}
+          {err && <PrimaryErrorMessage errMsg={err} />}
           {emailSent && (
             <Link
               href="/sign-in"

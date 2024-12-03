@@ -16,6 +16,7 @@ import {
   signUpSchema,
   signInSchema,
   resetPasswordSchema,
+  emailVerificationSchema,
 } from "@/features/auth/schemas/formSchemas";
 import { State } from "@/types/serverActionState";
 
@@ -165,12 +166,35 @@ export const confirmReset = async (
     const email = formData.get("email") as string;
     const supabase = await createClient();
 
-    //("path:", ` ${process.env.NEXT_PUBLIC_DOMAIN}/reset-password`);
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/reset-password`,
+    emailVerificationSchema.parse({
+      email,
     });
 
+    const { data, error } = await supabase.auth.admin.listUsers();
+
     if (error) return handleOtherErrors(error) as State;
+
+    if (data) {
+      const user = data.users.find((user) => user.email === email);
+      if (!user) {
+        return {
+          status: "error",
+          message: "User not found",
+          errors: new Error("User not found"),
+        };
+      }
+      if (user.app_metadata.provider !== "email") {
+        return {
+          status: "error",
+          message: "Please sign in with Google or another provider.",
+          errors: new Error("User not registered with email."),
+        };
+      }
+    }
+
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/reset-password`,
+    });
 
     return {
       status: "success",
@@ -243,7 +267,7 @@ export const resendConfirmation = async (
       email: formData.get("email") as string,
     });
 
-    const {email} = validatedFields;
+    const { email } = validatedFields;
 
     const { error } = await supabase.auth.resend({
       type: "signup",
@@ -258,7 +282,7 @@ export const resendConfirmation = async (
     return {
       status: "success",
       message: "Confirmation email sent successfully.",
-      user: { email: email},
+      user: { email: email },
     };
   } catch (error) {
     if (error instanceof z.ZodError) return handleZodError(error) as State;
