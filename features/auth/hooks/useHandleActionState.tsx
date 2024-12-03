@@ -24,7 +24,7 @@ export function useHandleActionState<TFields extends FieldValues>(
     if (state.status === "error" && !Array.isArray(state.errors) && state.errors instanceof Error && "code" in state.errors) {
       setErr(getSupabaseErrorMessage(state.errors));
     }
-    else{
+    if (state.status === "error" && !Array.isArray(state.errors) && state.errors instanceof Error && !("code" in state.errors)) {
       setErr(state.message);
     }
 
