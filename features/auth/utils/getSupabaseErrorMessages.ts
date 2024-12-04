@@ -153,6 +153,6 @@ export function getSupabaseErrorMessage(errorCode: unknown): string {
     case "weak_password":
       return "Password is too weak.";
     default:
-      return "An unknown error occurred.";
+      return "Something went wrong. Please try again.";
   }
 }

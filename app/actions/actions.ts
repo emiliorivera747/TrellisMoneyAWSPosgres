@@ -41,7 +41,7 @@ const handleOtherErrors = (e: unknown): State => {
   return {
     status: "error",
     message: "Something went wrong. Please try again.",
-    errors: e instanceof Error && "code" in e ? e.code : e,
+    errors: e instanceof Error && "code" in e ? {code: e.code} : e,
   };
 };
 
@@ -58,7 +58,7 @@ export async function login(
   formData: FormData
 ): Promise<State> {
   try {
-    console.log("login");
+    
     const supabase = await createClient();
 
     /**
@@ -176,11 +176,12 @@ export const confirmReset = async (
 
     if (data) {
       const user = data.users.find((user) => user.email === email);
+      
       if (!user) {
         return {
           status: "error",
           message: "User not found",
-          errors: new Error("User not found"),
+          errors: new Error("user_not_found"),
         };
       }
       if (user.app_metadata.provider !== "email") {
@@ -219,7 +220,6 @@ export const resetPassword = async (
 ): Promise<State> => {
   try {
     const supabase = await createClient();
-    //("formData", formData);
 
     const validatedFields = resetPasswordSchema.parse({
       password: formData.get("password") as string,
@@ -228,8 +228,6 @@ export const resetPassword = async (
     });
 
     const { code } = validatedFields;
-
-    //("code", code);
 
     if (!code) {
       return {

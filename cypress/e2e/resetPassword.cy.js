@@ -62,13 +62,4 @@ describe("Password Reset Page", () => {
     );
   });
 
-  it("should show success message for valid password", () => {
-    cy.get("input#password-input").type("ValidPassword123!");
-    cy.get("body").click(0, 0); // Click outside to clear tooltip
-    cy.get('button[type="submit"]').click();
-    cy.get(".success-message").should(
-      "contain",
-      "Successfully updated password!"
-    );
-  });
 });

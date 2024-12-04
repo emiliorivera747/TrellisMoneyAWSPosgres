@@ -50,7 +50,7 @@ const EmailVerification = ({ email }: { email: string }) => {
       <PrimaryAuthHeader label="Verify your email address" />
         <div className="flex flex-col gap-4 text-center mb-10 mt-6 ">
           <p className="text-[#495057] text-[1rem] tracking-wide leading-6">
-        We have sent a verification link to{""}
+        We have sent a verification link to{" "}
         <b className="text-primary-800">{email}</b>. Please check your
         inbox.
           </p>

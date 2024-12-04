@@ -9,6 +9,7 @@ import { createClient } from "@/utils/supabase/client";
 
 // Components
 import DotLoader from "@/components/loading/DotLoader";
+import {useRouter} from "next/navigation"
 
 interface GoogleButtonProps {
   label: string;
@@ -18,6 +19,7 @@ interface GoogleButtonProps {
 const GoogleButton = ({ label, dataTestID }: GoogleButtonProps) => {
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
+  const router = useRouter();
 
   async function signInWithGoogle() {
     setIsGoogleLoading(true);
@@ -25,10 +27,12 @@ const GoogleButton = ({ label, dataTestID }: GoogleButtonProps) => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}`,
+          redirectTo: `${window.location.origin}/dashboard`,
         },
       });
       if (error) throw error;
+      router.push("/dashboard");
+
     } catch (error) {
       setIsGoogleLoading(false);
 
