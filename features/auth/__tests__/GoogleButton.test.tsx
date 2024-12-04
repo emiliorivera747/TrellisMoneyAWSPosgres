@@ -40,7 +40,7 @@ describe("GoogleButton", () => {
             expect(mockSignInWithOAuth).toHaveBeenCalledWith({
                 provider: "google",
                 options: {
-                    redirectTo: `${window.location.origin}`,
+                    redirectTo: `${window.location.origin}/dashboard`,
                 },
             });
         });

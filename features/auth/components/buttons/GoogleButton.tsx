@@ -19,7 +19,6 @@ interface GoogleButtonProps {
 const GoogleButton = ({ label, dataTestID }: GoogleButtonProps) => {
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
-  const router = useRouter();
 
   async function signInWithGoogle() {
     setIsGoogleLoading(true);
@@ -31,7 +30,7 @@ const GoogleButton = ({ label, dataTestID }: GoogleButtonProps) => {
         },
       });
       if (error) throw error;
-      router.push("/dashboard");
+ 
 
     } catch (error) {
       setIsGoogleLoading(false);
