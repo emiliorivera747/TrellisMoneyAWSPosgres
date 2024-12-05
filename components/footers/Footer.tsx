@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-zinc-800 py-4 border-t border-[#d1d7dc] mx-16">
+    <footer className="bg-white text-zinc-800 py-4 border-t mx-16 border-tertiary-300">
       <div className="container h-full  text-center ">
         <p className="text-sm">
           &copy; {new Date().getFullYear()} Trellis Money. All rights reserved.
