@@ -13,7 +13,7 @@ const TopPageNav: React.FC<TopPageNavProps> = ({
   avatarAlt,
 }) => {
   return (
-    <nav className="flex flex-row justify-between items-center py-4 border-b border-zinc-200 mx-6">
+    <nav className="flex flex-row justify-between items-center py-4 border-b border-tertiary-200 mx-6">
       <div className="text-md font-semibold">
         <h1 className="text-zinc-800">{title}</h1>
       </div>

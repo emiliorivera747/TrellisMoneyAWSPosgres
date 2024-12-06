@@ -111,8 +111,8 @@ const Dashboard = () => {
 
   return (
     <div className="bg-white h-full w-full">
-      <TopPageNav {...topNavigationBarData} />
-      <div className="grid-cols-10 grid-rows-8 grid gap-6 p-4">
+      {/* <TopPageNav {...topNavigationBarData} /> */}
+      <div className="grid-cols-10 grid-rows-8 grid gap-6 p-4 mt-[2%]">
         <ProjectedNetWorthGraph />
         <ProjectedHoldingsCard
           holdings={holdings}
