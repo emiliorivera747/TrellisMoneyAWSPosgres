@@ -23,7 +23,7 @@ const ProjectedHoldingsCard: React.FC<ProjectedHoldingsCardProps> = ({ numberOfY
                 border: "1px solid rgb(221, 221, 221)",
                 scrollbarWidth: "none",
             }}
-            className="col-span-3 row-span-6 rounded overflow-y-auto sticky h-[40rem]"
+            className="col-span-10 h-screen sm:col-span-3 sm:row-span-1 rounded overflow-y-auto sticky "
         >
             <div className="flex flex-col gap-1 absolute overflow-hidden w-full text-[#343a40] ">
                 <div className="font-bold text-zinc-800 flex items-center gap-1 justify-start p-4">

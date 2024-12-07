@@ -37,7 +37,7 @@ const ProjectedNetWorthGraph = () => {
   };
 
   return (
-    <div className="col-span-7 mx-2 border-b border-zinc-200">
+    <div className="sm:mx-2 border-b border-zinc-200">
       <div className="flex flex-col gap-1">
         <div className="font-medium text-zinc-800 flex items-center gap-1 justify-start">
           <span className="text-xl tracking-wider">Projected Net Worth</span>
@@ -58,7 +58,7 @@ const ProjectedNetWorthGraph = () => {
       </div>
       <div className="h-[20rem] w-full">
         <ParentSize>
-          {({ height, width }) => (
+          {({ height , width }:{height: number, width: number}) => (
             <LineGraph 
               key={selectedYear}
               data={filteredData}

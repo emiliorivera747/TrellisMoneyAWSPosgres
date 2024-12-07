@@ -110,18 +110,24 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="bg-white h-full w-full">
-      {/* <TopPageNav {...topNavigationBarData} /> */}
-      <div className="grid-cols-10 grid-rows-8 grid gap-6 p-4 mt-[2%]">
-        <ProjectedNetWorthGraph />
+    <div className="min-h-screen h-auto w-full border-box">
+      <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%] ">
+        <div className="col-span-10 sm:col-span-7 overflow-y-auto h-screen no-scrollbar">
+          <ProjectedNetWorthGraph />
+          <ProjectedNetWorthGraph />
+          <ProjectedNetWorthGraph />
+          <ProjectedNetWorthGraph />
+
+          
+        </div>
         <ProjectedHoldingsCard
           holdings={holdings}
           numberOfYears={numberOfYears}
         />
+        {/* {linkToken != null ? <Link linkToken={linkToken} /> : <></>} */}
+        <SignOutButton />
+        {/* <DeleteUserButton /> */}
       </div>
-      {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
-      <SignOutButton />
-      <DeleteUserButton />
     </div>
   );
 };
