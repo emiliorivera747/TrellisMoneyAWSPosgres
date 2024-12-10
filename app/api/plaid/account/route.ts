@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   };
 
   try {
-    console.log("Aceess Token ", access_token);
+    console.log("Acess Token ", access_token);
     const response = await client.authGet(request);
     console.log("Response Data ", response.data);
     const accountData = response.data.accounts;

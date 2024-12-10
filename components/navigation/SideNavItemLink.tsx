@@ -1,24 +1,7 @@
 import React from "react";
 import Link from "next/link";
-
-interface SideNavItemLinkProps {
-  href: string;
-  svg_d: string;
-  currentPath: string;
-  label: string;
-}
-const getIcon = (path: string, strokeWidth: number) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={strokeWidth}
-    stroke="currentColor"
-    className="size-7 sm:inline hidden"
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d={path} />
-  </svg>
-);
+import { SideNavItemLinkProps, TooltipProps } from "@/types/navigationbar";
+import { GetSvgWithPath } from "@/utils/helper-functions/getSvgWithPath";
 
 const SideNavItemLink: React.FC<SideNavItemLinkProps> = ({
   href,
@@ -38,7 +21,7 @@ const SideNavItemLink: React.FC<SideNavItemLinkProps> = ({
         }
         `}
       >
-        {getIcon(svg_d, currentPath === href ? 1.8 : 1)}
+        {GetSvgWithPath(svg_d, currentPath === href ? 1.8 : 1)}
         <span className="sm:hidden 2xl:inline text-[0.7rem] mt-1 2xl:w-3/4 ">
           {label}
         </span>
@@ -46,10 +29,7 @@ const SideNavItemLink: React.FC<SideNavItemLinkProps> = ({
     </CustomTooltip>
   );
 };
-interface TooltipProps {
-  title: string;
-  children: React.ReactNode;
-}
+
 const CustomTooltip: React.FC<TooltipProps> = ({ title, children }) => {
   return (
     <div className="relative group transition delay-300">
