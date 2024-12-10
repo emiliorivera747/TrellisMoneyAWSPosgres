@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     const response = await client.linkTokenCreate({
       user: { client_user_id: "123-test-user-id" },
       client_name: "Trellis Money",
-      products: [Products.Auth, Products.Transactions],
+      products: [Products.Auth, Products.Transactions, Products.Investments],
       country_codes: [CountryCode.Us],
       language: "en",
     });

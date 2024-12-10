@@ -28,7 +28,7 @@ const Link = (props: LinkProps) => {
     };
     const { open, ready } = usePlaidLink(config);
     return (
-      <button onClick={() => open()} disabled={!ready}>
+      <button className="bg-primary-600 text-white rounded-[12px] px-2 py-3" onClick={() => open()} disabled={!ready}>
         Link account
       </button>
     );

@@ -1,25 +1,8 @@
 import { NextResponse, NextRequest} from "next/server";
-import {
-  Configuration,
-  PlaidApi,
-  PlaidEnvironments,
-  Products,
-  CountryCode,
-} from "plaid";
-
 import { AuthGetRequest } from "plaid";
-const config = new Configuration({
-  basePath:
-    PlaidEnvironments[process.env.PLAID_ENV as keyof typeof PlaidEnvironments],
-  baseOptions: {
-    headers: {
-      "PLAID-CLIENT-ID": process.env.PLAID_CLIENT_ID || "",
-      "PLAID-SECRET": process.env.PLAID_SECRET || "",
-    },
-  },
-});
-const client = new PlaidApi(config);
-export async function POST(req: NextRequest) {
+import { plaidClient } from "@/config/plaidClient";
+
+export async function GET(req: NextRequest) {
   const { access_token } = await req.json();
 
   const request: AuthGetRequest = {
@@ -28,7 +11,7 @@ export async function POST(req: NextRequest) {
 
   try {
     console.log("Acess Token ", access_token);
-    const response = await client.authGet(request);
+    const response = await plaidClient.authGet(request);
     console.log("Response Data ", response.data);
     const accountData = response.data.accounts;
     console.log("Account Data ", accountData);

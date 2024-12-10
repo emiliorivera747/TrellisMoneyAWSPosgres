@@ -105,9 +105,9 @@ const Dashboard = () => {
   useEffect(() => {
     generateToken();
   }, []);
-  useEffect(() => {
-    getAccountInfo();
-  }, []);
+  // useEffect(() => {
+  //   getAccountInfo();
+  // }, []);
 
   return (
     <div className="min-h-screen h-auto w-full border-box">
@@ -124,7 +124,7 @@ const Dashboard = () => {
           holdings={holdings}
           numberOfYears={numberOfYears}
         />
-        {/* {linkToken != null ? <Link linkToken={linkToken} /> : <></>} */}
+        {linkToken != null ? <Link  linkToken={linkToken} /> : <></>}
         <SignOutButton />
         {/* <DeleteUserButton /> */}
       </div>
