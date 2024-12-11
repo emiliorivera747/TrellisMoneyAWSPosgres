@@ -12,9 +12,7 @@ import Link from "@/components/Plaid/Link";
 import plaidService from "@/features/plaid/services/plaidServices";
 
 // External Libraries
-import {
-  useQuery
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const Dashboard = () => {
   // Access the client
@@ -23,7 +21,7 @@ const Dashboard = () => {
     queryFn: plaidService.getIdentity,
   });
 
-  const { data: holdingsData,error: holdingError } = useQuery({
+  const { data: holdingsData, error: holdingError } = useQuery({
     queryKey: ["holdings"],
     queryFn: plaidService.getHoldings,
   });
@@ -56,27 +54,21 @@ const Dashboard = () => {
   console.log("Holdings Data ", holdingsData);
   // console.log("Account Data ", accountData);
   console.log("Balance Data ", balanceData);
-  
 
   return (
     <div className="min-h-screen h-auto w-full border-box">
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%] ">
         <div className="col-span-10 sm:col-span-7 overflow-y-auto h-screen no-scrollbar">
           <ProjectedNetWorthGraph />
+          {/* <p>Identity Data: {JSON.stringify(identityData, null, 2)}</p> */}
+          <p>Holdings Data: {JSON.stringify(holdingsData, null, 2)}</p>
+          {/* <p>Account Data: {JSON.stringify(accountData)}</p> */}
+          {/* <p>Balance Data: {JSON.stringify(balanceData, null, 2)}</p> */}
         </div>
-        <ProjectedHoldingsCard
-          holdings={[]}
-          numberOfYears={numberOfYears}
-        />
+        <ProjectedHoldingsCard holdings={[]} numberOfYears={numberOfYears} />
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
         <SignOutButton />
-        <p>Identity Data: {JSON.stringify(identityData)}</p>
-        <p>Holdings Data: {JSON.stringify(holdingsData)}</p>
-        {/* <p>Account Data: {JSON.stringify(accountData)}</p> */}
-        <p>Balance Data: {JSON.stringify(balanceData)}</p>
-        <p>Identity Error: {JSON.stringify(identityError)}</p>
-        <p>Holdings Error: {JSON.stringify(holdingError)}</p>
-        <p>Balance Error: {JSON.stringify(balanceError)}</p>
+
         {/* <DeleteUserButton /> */}
       </div>
     </div>

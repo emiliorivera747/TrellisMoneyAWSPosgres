@@ -29,6 +29,7 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.46.1",
     "@tanstack/react-query": "^5.62.7",
+    "@visx/responsive": "^3.12.0",
     "@visx/visx": "^3.12.0",
     "bcrypt": "^5.1.1",
     "crypto": "^1.0.1",

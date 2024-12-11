@@ -4,8 +4,10 @@ const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/plaid`;
  * Plaid service to get identity
  */
 const getIdentity = async () => {
+  console.log("IDENTITY");
   const response = await fetch(`${API_URL}/identity`);
-  return response;
+  console.log("RESPONSE", response);
+  return response.json();
 };
 
 /**
@@ -36,8 +38,8 @@ const exchangeToken = async (public_token: string) => {
  * Plaid service to get holdings
  */
 const getHoldings = async () => {
-  const response = await fetch(`${API_URL}/investment/holdings`);
-  return response;
+  const response = await fetch(`${API_URL}/investments/holdings`);
+  return response.json();
 };
 
 /**
@@ -45,8 +47,8 @@ const getHoldings = async () => {
  */
 const getAccount = async () => {
   const response = await fetch(`${API_URL}/account`);
-  console.log("Account Data ", response);
-  return response;
+  console.log("ACCOUNT DATA", response);
+  return response.json();
 };
 
 /**
@@ -54,7 +56,9 @@ const getAccount = async () => {
  */
 const getBalance = async () => {
   const response = await fetch(`${API_URL}/accounts/balance`);
-  return response;
+  console.log("ACCOUNT DATA", response);
+
+  return response.json();
 };
 
 const plaidService = {

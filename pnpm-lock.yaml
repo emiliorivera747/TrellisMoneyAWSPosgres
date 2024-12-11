@@ -26,6 +26,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.62.7
         version: 5.62.7(react@19.0.0-rc-02c0e824-20241028)
+      '@visx/responsive':
+        specifier: ^3.12.0
+        version: 3.12.0(react@19.0.0-rc-02c0e824-20241028)
       '@visx/visx':
         specifier: ^3.12.0
         version: 3.12.0(@react-spring/web@9.7.5(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028))(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
