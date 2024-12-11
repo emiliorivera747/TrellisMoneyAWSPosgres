@@ -26,9 +26,27 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.62.7
         version: 5.62.7(react@19.0.0-rc-02c0e824-20241028)
+      '@visx/curve':
+        specifier: ^3.12.0
+        version: 3.12.0
+      '@visx/event':
+        specifier: ^3.12.0
+        version: 3.12.0
       '@visx/responsive':
         specifier: ^3.12.0
         version: 3.12.0(react@19.0.0-rc-02c0e824-20241028)
+      '@visx/scale':
+        specifier: ^3.12.0
+        version: 3.12.0
+      '@visx/shape':
+        specifier: ^3.12.0
+        version: 3.12.0(react@19.0.0-rc-02c0e824-20241028)
+      '@visx/tooltip':
+        specifier: ^3.12.0
+        version: 3.12.0(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
+      '@visx/vendor':
+        specifier: ^3.12.0
+        version: 3.12.0
       '@visx/visx':
         specifier: ^3.12.0
         version: 3.12.0(@react-spring/web@9.7.5(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028))(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
@@ -38,6 +56,12 @@ importers:
       crypto:
         specifier: ^1.0.1
         version: 1.0.1
+      d3-array:
+        specifier: link:@visx/vendor/d3-array
+        version: link:@visx/vendor/d3-array
+      d3-time-format:
+        specifier: link:@visx/vendor/d3-time-format
+        version: link:@visx/vendor/d3-time-format
       husky:
         specifier: ^9.1.6
         version: 9.1.7
@@ -74,6 +98,9 @@ importers:
       uuid:
         specifier: ^11.0.3
         version: 11.0.3
+      withTooltip:
+        specifier: link:@visx/tooltip/lib/enhancers/withTooltip
+        version: link:@visx/tooltip/lib/enhancers/withTooltip
       zod:
         specifier: ^3.23.8
         version: 3.23.8

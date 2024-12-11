@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from "react";
 import { Line, Bar } from "@visx/shape";
-import appleStock, { AppleStock } from "@visx/mock-data/lib/mocks/appleStock";
+// import appleStock, { AppleStock } from "@visx/mock-data/lib/mocks/appleStock";
 import { curveMonotoneX } from "@visx/curve";
 import { scaleTime, scaleLinear } from "@visx/scale";
 import {
@@ -22,13 +22,6 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import {calculateRateOfChange} from "@/utils/helper-functions/calculateRateOfChange";
 import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
 
-type TooltipData = AppleStock;
-
-const stock = [
-  { date: "2024-01-01", close: 100 },
-  { date: "2030-01-01", close: 300 },
-  { date: "2035-01-01", close: 400 },
-];
 
 export const background = "white";
 export const background2 = "white";
@@ -41,15 +34,29 @@ const tooltipStyles = {
   color: "#343a40",
 };
 
+interface SecurityData {
+  date: string;
+  close: number;
+}
+
+type TooltipData = SecurityData;
+
 // util
 const formatDate = timeFormat("%b %d, %Y");
 
 // accessors
-const getDate = (d: AppleStock) => new Date(d.date);
-const getStockValue = (d: AppleStock) => d.close;
-const bisectDate = bisector<AppleStock, Date>((d) => new Date(d.date)).left;
+const getDate = (d: SecurityData) => new Date(d.date);
+const getStockValue = (d: SecurityData) => d.close;
+const bisectDate = bisector<SecurityData, Date>((d) => new Date(d.date)).left;
 
-export default withTooltip<TooltipData>(
+interface LineGraphProps {
+  width: number;
+  height: number;
+  data: SecurityData[];
+  margin?: { top: number; right: number; bottom: number; left: number };
+}
+
+export default withTooltip<LineGraphProps, TooltipData>(
   ({
     width,
     height,
@@ -60,7 +67,7 @@ export default withTooltip<TooltipData>(
     tooltipData,
     tooltipTop = 0,
     tooltipLeft = 0,
-  }: WithTooltipProvidedProps<TooltipData>) => {
+  }: LineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
 
     // bounds
@@ -232,8 +239,8 @@ export default withTooltip<TooltipData>(
 );
 
 const renderTooltipContent = (
-  tooltipData: TooltipData | null,
-  data: AppleStock[]
+  tooltipData: SecurityData | null,
+  data: SecurityData[]
 ) => {
   if (!tooltipData) {
     return "$500";
