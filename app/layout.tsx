@@ -10,6 +10,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
+//Components
+import { ReactQueryClientProvider } from "@/features/react-query/components/ReactQueryClientProvider";
+
 import "@/styles/globals.scss";
 
 const inter = Inter({
@@ -38,13 +41,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased ${inter.className}`}
-      >
-        {children}
-        <ToastContainer />
-      </body>
-    </html>
+    <ReactQueryClientProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased ${inter.className}`}
+        >
+          {children}
+          <ToastContainer />
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 }
