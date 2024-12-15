@@ -1,0 +1,10 @@
+-- AlterTable
+ALTER TABLE "Account" ALTER COLUMN "timestamp" DROP NOT NULL,
+ALTER COLUMN "timestamp" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "Balance" ALTER COLUMN "timestamp" DROP NOT NULL,
+ALTER COLUMN "timestamp" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "Security" ALTER COLUMN "timestamp" DROP NOT NULL;

@@ -10,16 +10,11 @@ export async function GET(req: NextRequest) {
   };
 
   try {
-    console.log("Acess Token ", access_token);
     const response = await plaidClient.authGet(request);
-    console.log("Response Data ", response.data);
     const accountData = response.data.accounts;
-    console.log("Account Data ", accountData);
     const numbers = response.data.numbers;
-    console.log("Numbers ", numbers);
     return NextResponse.json({ accountData, numbers }, { status: 200 });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { error: "Error fetching account data" },
       { status: 500 }

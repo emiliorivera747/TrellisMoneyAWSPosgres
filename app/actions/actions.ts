@@ -58,10 +58,9 @@ export async function login(
   formData: FormData
 ): Promise<State> {
   try {
-    
-    const supabase = await createClient();
 
     /**
+    const accessToken = session.access_token;
      * Validate the fields:
      *  - if the fields are invalid, we'll throw a ZodError
      *  - if the fields are valid, we'll return the validated fields

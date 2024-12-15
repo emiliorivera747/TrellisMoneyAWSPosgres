@@ -15,29 +15,28 @@ import { max, extent, bisector } from "@visx/vendor/d3-array";
 import { timeFormat } from "@visx/vendor/d3-time-format";
 import { LinePath } from "@visx/shape";
 
+//Components
+import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
+
 //Icons
 import { TiArrowSortedUp } from "react-icons/ti";
 
 //Functions
-import {calculateRateOfChange} from "@/utils/helper-functions/calculateRateOfChange";
+import { calculateRateOfChange } from "@/utils/helper-functions/calculateRateOfChange";
 import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
 
+//Hooks
+import useDateScale from "@/utils/hooks/useDateScale";
+import useStockValueScale from "@/utils/hooks/useStockvalueScale";
+import useHandleTooltip from "@/utils/hooks/useHanldeTooltip";
+
+//Types
+import { SecurityData, LineGraphProps } from "@/types/dashboardComponents";
 
 export const background = "white";
 export const background2 = "white";
 export const accentColor = "#94d82d";
 export const accentColorDark = "#495057";
-const tooltipStyles = {
-  ...defaultStyles,
-  background,
-  border: "1px solid #f1f3f5",
-  color: "#343a40",
-};
-
-interface SecurityData {
-  date: string;
-  close: number;
-}
 
 type TooltipData = SecurityData;
 
@@ -47,17 +46,10 @@ const formatDate = timeFormat("%b %d, %Y");
 // accessors
 const getDate = (d: SecurityData) => new Date(d.date);
 const getStockValue = (d: SecurityData) => d.close;
-const bisectDate = bisector<SecurityData, Date>((d) => new Date(d.date)).left;
-
-interface LineGraphProps {
-  width: number;
-  height: number;
-  data: SecurityData[];
-  margin?: { top: number; right: number; bottom: number; left: number };
-}
 
 export default withTooltip<LineGraphProps, TooltipData>(
   ({
+    selectedYear,
     width,
     height,
     data,
@@ -70,74 +62,45 @@ export default withTooltip<LineGraphProps, TooltipData>(
   }: LineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
 
-    // bounds
+    /**
+     * The innerWidth and innerHeight are the width and height of the graph
+     */
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
-    // scales
-    const dateScale = useMemo(
-      () =>
-        scaleTime({
-          range: [margin.left, innerWidth + margin.left],
-          domain: extent(data, getDate) as [Date, Date],
-        }),
-      [innerWidth, margin.left, data]
-    );
-
-    const stockValueScale = useMemo(
-      () =>
-        scaleLinear({
-          range: [innerHeight + margin.top, margin.top],
-          domain: [0, (max(data, getStockValue) || 0) + innerHeight / 3],
-          nice: true,
-        }),
-      [margin.top, innerHeight, data]
-    );
+    /**
+     * The scales for the x and y axis
+     */
+    const dateScale = useDateScale(data, margin, width);
+    const stockValueScale = useStockValueScale(data, margin, height);
 
     // tooltip handler
-    const handleTooltip = useCallback(
-      (
-        event:
-          | React.TouchEvent<SVGRectElement>
-          | React.MouseEvent<SVGRectElement>
-      ) => {
-        const { x } = localPoint(event) || { x: 0 };
-        const x0 = dateScale.invert(x);
-        const index = bisectDate(data, x0, 1);
-        const d0 = data[index - 1];
-        const d1 = data[index];
-        let d = d0;
-        if (d1 && getDate(d1)) {
-          d =
-            x0.valueOf() - getDate(d0).valueOf() >
-            getDate(d1).valueOf() - x0.valueOf()
-              ? d1
-              : d0;
-        }
-        showTooltip({
-          tooltipData: d,
-          tooltipLeft: x,
-          tooltipTop: stockValueScale(getStockValue(d)),
-        });
-      },
-      [showTooltip, stockValueScale, dateScale, data]
+    const handleTooltip = useHandleTooltip(
+      (args) => showTooltip(args),
+      stockValueScale,
+      dateScale,
+      data
     );
 
     return (
-      <div style={{ height: height, width: width }} className="">
+      <div style={{ height: height, width: width }}>
         {/* Stock value and price change */}
         <div className="flex flex-col">
           <span className="text-xl font-medium text-zinc-800 tracking-wider">
             {tooltipData
               ? `$${getStockValue(tooltipData).toFixed(2)}`
-              : "$1000"}
+              : `$${data[0].close}`}
           </span>
           <span
             style={{ color: "#74b816" }}
             className="flex-row flex items-center text-[0.7rem] font-semibold gap-1"
           >
             <TiArrowSortedUp />
-            {tooltipData ? renderTooltipContent(tooltipData, data) : "$500"}
+            {tooltipData ? (
+              <RenderTooltipContent tooltipData={tooltipData} data={data} />
+            ) : (
+              "$500"
+            )}
           </span>
         </div>
 
@@ -145,18 +108,16 @@ export default withTooltip<LineGraphProps, TooltipData>(
         <svg
           width="100%" // Make the SVG width responsive
           height="80%" // Make the SVG height responsive
-          viewBox={`0 0 ${width+6} ${height+6}`} // Use the viewBox to scale the content
+          viewBox={`0 0 ${width + 6} ${height + 6}`} // Use the viewBox to scale the content
           preserveAspectRatio="none" // Prevent aspect ratio issues if the div size changes
-
         >
           <rect
             x={0}
             y={0}
-            width="100%" 
+            width="100%"
             height="80%"
             fill="url(#area-background-gradient)"
             rx={14}
-        
           />
           <LinePath
             data={data}
@@ -237,31 +198,3 @@ export default withTooltip<LineGraphProps, TooltipData>(
     );
   }
 );
-
-const renderTooltipContent = (
-  tooltipData: SecurityData | null,
-  data: SecurityData[]
-) => {
-  if (!tooltipData) {
-    return "$500";
-  }
-
-  const stockValueDifference = getStockValue(tooltipData) - data[0].close;
-  const rateOfChange = calculateRateOfChange(
-    data[0].close,
-    getStockValue(tooltipData)
-  );
-  const yearsBetween = calculateYearsBetween(
-    new Date(data[0].date),
-    getDate(tooltipData)
-  );
-
-  return (
-    <>
-      {" $" + stockValueDifference.toFixed(2) + " (" + rateOfChange + "%) "}
-      <span className="text-zinc-600 font-normal ">
-        {yearsBetween + " years"}
-      </span>
-    </>
-  );
-};

@@ -33,6 +33,7 @@ model User {
   phone          String?
   accounts       Account[]
   profile        Profile?
+
 }
 
 model Account {
@@ -44,14 +45,14 @@ model Account {
   limit         Decimal
   iso_currency_code String
   unofficial_currency_code String
-  timestamp     DateTime
   balances      Balance[]
   holdings      Holding[]
   securities    Security[]
   items         Item[]
   owners        Owner[]
-  User          User?      @relation(fields: [userId], references: [id])
-  userId        Int?
+  User          User?      @relation(fields: [user_id], references: [user_id])
+  user_id        String?
+  timestamp     DateTime? @default(now())
 }
 
 model Item {
@@ -75,39 +76,65 @@ model Holding {
   institution_value   Decimal
   iso_currency_code   String
   unofficial_currency_code String
-  vested_quantity     Decimal
+  vested_quantity     Decimal?
   vested_value        Decimal
   quantity            Decimal
-  accountId           String
-  securityId          String
-  account             Account   @relation(fields: [accountId], references: [account_id])
-  Security            Security? @relation(fields: [securitySecurity_id], references: [security_id])
+  account_id           String
+  security_id          String
+  account             Account?   @relation(fields: [account_id], references: [account_id])
+  security            Security? @relation(fields: [security_id], references: [security_id])
   securitySecurity_id String?
+  timestamp           DateTime @default(now())
 }
 
 model Security {
-  security_id String    @unique
-  isin        String
-  cusip       String
-  sedol       String
-  institution_security_id String
-  institution_id String
-  proxy_security_id String
-  name        String
-  ticker_symbol String
-  is_cash_equivalent Boolean
-  type        String
-  close_price Decimal
-  close_price_as_of DateTime
-  iso_currency_code String
-  unofficial_currency_code String
-  market_identifier_code String
-  sector      String
-  industry    String
-  option_contract_id String
-  account     Account   @relation(fields: [accountId], references: [account_id])
-  accountId   String
-  holdings    Holding[]
+  security_id             String    @unique
+  isin                    String?
+  cusip                   String?
+  sedol                   String?
+  institution_security_id String?
+  institution_id          String?
+  proxy_security_id       String?
+  name                    String?
+  ticker_symbol           String?
+  is_cash_equivalent      Boolean?
+  type                    String?
+  close_price             Decimal?
+  close_price_as_of       DateTime?
+  update_datetime         DateTime?
+  iso_currency_code       String?
+  unofficial_currency_code String?
+  market_identifier_code  String?
+  sector                  String?
+  industry                String?
+  option_contract_id      String?
+  account                 Account?   @relation(fields: [account_id], references: [account_id])
+  account_id              String
+  holdings                Holding[]
+  timestamp               DateTime? @default(now())
+  option_contract         OptionContract?
+  fixed_income            FixedIncome?
+}
+
+model OptionContract {
+  id                        Int      @id @default(autoincrement())
+  contract_type             String
+  expiration_date           String
+  strike_price              Decimal
+  underlying_security_ticker String
+  security                  Security @relation(fields: [securityId], references: [security_id])
+  securityId                String @unique
+}
+
+model FixedIncome {
+  id                        Int      @id @default(autoincrement())
+  yield_rate_percentage     Decimal?
+  yield_rate_type           String?
+  maturity_date             String?
+  issue_date                String?
+  face_value                Decimal?
+  security                  Security @relation(fields: [securityId], references: [security_id])
+  securityId                String @unique
 }
 
 model Balance {
@@ -117,9 +144,9 @@ model Balance {
   limit         Decimal
   iso_currency_code String
   unofficial_currency_code String
-  timestamp     DateTime
   account       Account @relation(fields: [accountId], references: [account_id])
   accountId     String
+  timestamp     DateTime? @default(now())
 }
 
 model Owner {
@@ -141,4 +168,5 @@ model Owner {
   address_primary Boolean?
   account   Account @relation(fields: [accountId], references: [account_id])
   accountId String
+  timestamp     DateTime? @default(now())
 }

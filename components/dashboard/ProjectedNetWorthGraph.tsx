@@ -63,6 +63,7 @@ const ProjectedNetWorthGraph = () => {
             <LineGraph 
               key={selectedYear}
               data={filteredData}
+              selectedYear={selectedYear}
               width={width}
               height={height}
             />
