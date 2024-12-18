@@ -14,6 +14,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id             Int        @id @default(autoincrement())
+  email          String     @unique
+  name           String?
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @default(now()) @updatedAt
+  user_id        String?    @unique @default(uuid())
+  email_verified Boolean?   @default(false)
+  phone_verified Boolean?   @default(false)
+  phone          String?
+  accounts       Account[]
+  holdings       Holding[]
+  securities     Security[]
+  profile        Profile?
+}
+
 model Profile {
   id     Int     @id @default(autoincrement())
   bio    String?
@@ -21,152 +37,154 @@ model Profile {
   userId String  @unique
 }
 
-model User {
-  id             Int       @id @default(autoincrement())
-  email          String    @unique
-  name           String?
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @default(now()) @updatedAt
-  user_id        String?   @unique @default(uuid())
-  email_verified Boolean?  @default(false)
-  phone_verified Boolean?  @default(false)
-  phone          String?
-  accounts       Account[]
-  profile        Profile?
-
+model Account {
+  account_id               String           @unique
+  name                     String
+  type                     String
+  available                Decimal
+  current                  Decimal
+  limit                    Decimal
+  iso_currency_code        String
+  unofficial_currency_code String
+  mask                     String?
+  officail_name            String?
+  subtype                  String?
+  verification_status      String?
+  persistent_account_id    String?
+  holder_catergory         String?
+  balance                  Balance?         @relation(fields: [balance_id], references: [balance_id])
+  balance_id               String           @unique
+  User                     User             @relation(fields: [user_id], references: [user_id])
+  user_id                  String
+  timestamp                DateTime?        @default(now())
+  history                  AccountHistory[]
 }
 
-model Account {
-  account_id    String     @unique
-  name          String
-  type          String
-  available     Decimal
-  current       Decimal
-  limit         Decimal
-  iso_currency_code String
+
+
+model AccountHistory {
+  id                       Int      @id @default(autoincrement())
+  account_id               String
+  name                     String
+  type                     String
+  available                Decimal
+  current                  Decimal
+  limit                    Decimal
+  iso_currency_code        String
   unofficial_currency_code String
-  balances      Balance[]
-  holdings      Holding[]
-  securities    Security[]
-  items         Item[]
-  owners        Owner[]
-  User          User?      @relation(fields: [user_id], references: [user_id])
-  user_id        String?
-  timestamp     DateTime? @default(now())
+  user_id                  String?
+  timestamp                DateTime @default(now())
+  account                  Account  @relation(fields: [account_id], references: [account_id])
 }
 
 model Item {
-  item_id     String  @unique
-  institution_id String
-  institution_name String
-  webhook     String
-  request_id  String
-  update_type String
+  item_id                 String @unique
+  institution_id          String
+  institution_name        String
+  webhook                 String
+  request_id              String
+  update_type             String
   consent_expiration_time String
-  account     Account @relation(fields: [accountId], references: [account_id])
-  accountId   String
-}
-
-model Holding {
-  holding_id          String    @unique
-  cost_basis          Decimal
-  institution_price   Decimal
-  institution_price_as_of DateTime
-  institution_price_datetime DateTime
-  institution_value   Decimal
-  iso_currency_code   String
-  unofficial_currency_code String
-  vested_quantity     Decimal?
-  vested_value        Decimal
-  quantity            Decimal
-  account_id           String
-  security_id          String
-  account             Account?   @relation(fields: [account_id], references: [account_id])
-  security            Security? @relation(fields: [security_id], references: [security_id])
-  securitySecurity_id String?
-  timestamp           DateTime @default(now())
-}
-
-model Security {
-  security_id             String    @unique
-  isin                    String?
-  cusip                   String?
-  sedol                   String?
-  institution_security_id String?
-  institution_id          String?
-  proxy_security_id       String?
-  name                    String?
-  ticker_symbol           String?
-  is_cash_equivalent      Boolean?
-  type                    String?
-  close_price             Decimal?
-  close_price_as_of       DateTime?
-  update_datetime         DateTime?
-  iso_currency_code       String?
-  unofficial_currency_code String?
-  market_identifier_code  String?
-  sector                  String?
-  industry                String?
-  option_contract_id      String?
-  account                 Account?   @relation(fields: [account_id], references: [account_id])
-  account_id              String
-  holdings                Holding[]
-  timestamp               DateTime? @default(now())
-  option_contract         OptionContract?
-  fixed_income            FixedIncome?
-}
-
-model OptionContract {
-  id                        Int      @id @default(autoincrement())
-  contract_type             String
-  expiration_date           String
-  strike_price              Decimal
-  underlying_security_ticker String
-  security                  Security @relation(fields: [securityId], references: [security_id])
-  securityId                String @unique
-}
-
-model FixedIncome {
-  id                        Int      @id @default(autoincrement())
-  yield_rate_percentage     Decimal?
-  yield_rate_type           String?
-  maturity_date             String?
-  issue_date                String?
-  face_value                Decimal?
-  security                  Security @relation(fields: [securityId], references: [security_id])
-  securityId                String @unique
+  accountId               String
 }
 
 model Balance {
-  balance_id    String  @unique
-  available     Decimal
-  current       Decimal
-  limit         Decimal
+  balance_id        String    @unique
+  available         Decimal
+  current           Decimal
+  limit             Decimal
   iso_currency_code String
-  unofficial_currency_code String
-  account       Account @relation(fields: [accountId], references: [account_id])
-  accountId     String
-  timestamp     DateTime? @default(now())
+  unofficial_currency_code String?
+  last_updated      DateTime?
+  account           Account?
+  updated_at        DateTime? @default(now())
+  timestamp         DateTime? @default(now())
 }
 
 model Owner {
-  owner_id  String  @unique
-  name      String?
-  phone_number String?
-  phone_type String?
-  phone_primary Boolean?
-  email     String
-  email_type String?
-  email_primary Boolean?
-  street   String?
-  region   String?
-  address   String?
-  city      String?
-  state     String?
-  postal_code       String?
-  country   String?
+  owner_id        String    @unique
+  name            String?
+  phone_number    String?
+  phone_type      String?
+  phone_primary   Boolean?
+  email           String
+  email_type      String?
+  email_primary   Boolean?
+  street          String?
+  region          String?
+  address         String?
+  city            String?
+  state           String?
+  postal_code     String?
+  country         String?
   address_primary Boolean?
-  account   Account @relation(fields: [accountId], references: [account_id])
-  accountId String
-  timestamp     DateTime? @default(now())
+  accountId       String
+  timestamp       DateTime? @default(now())
+}
+
+model Holding {
+  holding_id                 Int       @id @default(autoincrement())
+  cost_basis                 Decimal
+  institution_price          Decimal
+  institution_price_as_of    DateTime
+  institution_price_datetime DateTime?
+  institution_value          Decimal
+  iso_currency_code          String
+  unofficial_currency_code   String?
+  vested_quantity            Decimal?
+  vested_value               Decimal
+  quantity                   Decimal
+  security                   Security  @relation(fields: [security_id], references: [security_id])
+  account_id                 String
+  security_id                String
+  timestamp                  DateTime  @default(now())
+  User                       User      @relation(fields: [user_id], references: [user_id])
+  user_id                    String
+}
+
+model Security {
+  security_id              String       @unique
+  isin                     String?
+  cusip                    String?
+  sedol                    String?
+  institution_security_id  String?
+  institution_id           String?
+  proxy_security_id        String?
+  name                     String?
+  ticker_symbol            String?
+  is_cash_equivalent       Boolean?
+  type                     String?
+  close_price              Decimal?
+  close_price_as_of        DateTime?
+  update_datetime          DateTime?
+  iso_currency_code        String?
+  unofficial_currency_code String?
+  market_identifier_code   String?
+  sector                   String?
+  industry                 String?
+  option_contract_id       Int?
+  holdings                 Holding[]
+  User                     User         @relation(fields: [user_id], references: [user_id])
+  user_id                  String
+  timestamp                DateTime?    @default(now())
+  fixed_income             FixedIncome?
+}
+
+model OptionContract {
+  id                         Int     @id @default(autoincrement())
+  contract_type              String
+  expiration_date            String
+  strike_price               Decimal
+  underlying_security_ticker String
+}
+
+model FixedIncome {
+  id                    Int      @id @default(autoincrement())
+  yield_rate_percentage Decimal?
+  yield_rate_type       String?
+  maturity_date         String?
+  issue_date            String?
+  face_value            Decimal?
+  security              Security @relation(fields: [securityId], references: [security_id])
+  securityId            String   @unique
 }

@@ -36,6 +36,7 @@ const holdingData: Holding[] = [
     quantity: 2,
     security_id: "NDVQrXQoqzt5v3bAe8qRt4A7mK7wvZCLEBBJk",
     unofficial_currency_code: null,
+
   },
   {
     account_id: "JqMLm4rJwpF6gMPJwBqdh9ZjjPvvpDcb7kDK1",
@@ -132,6 +133,7 @@ const securitiesData: Security[] = [
     market_identifier_code: "XNAS",
     sector: "Technology Services",
     industry: "Internet Software or Services",
+
     option_contract: {
       contract_type: "call",
       expiration_date: "2018-02-01",

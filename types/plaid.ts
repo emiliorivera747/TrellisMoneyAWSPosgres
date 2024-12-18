@@ -1,5 +1,7 @@
 // /Users/emiliorivera/Documents/React Applications/Trellis Money/TrellisMoneyAWSPosgres/types/plaid.ts
 
+import { off } from "process";
+
 export interface Profile {
   id: number;
   bio?: string;
@@ -21,23 +23,49 @@ export interface User {
   profile?: Profile;
 }
 
+export interface Balance {
+  available?: number | null;
+  current?: number | null;
+  limit?: number | null;
+  iso_currency_code?: string | null;
+  unofficial_currency_code?: string | null;
+  last_updated_datetime?: Date | null;
+  timestamp?: Date;
+}
+
+export interface network_status {
+  has_numbers_match: boolean;
+  is_numbers_match_verified: boolean;
+}
+
+export interface previous_returns {
+  has_previous_administrative_returns: boolean;
+}
+export interface verification_insights {
+  network_status: network_status;
+  previous_returns: previous_returns;
+  account_number_format: string;
+}
+
 export interface Account {
   account_id: string;
+  balances: Balance;
+  mask?: string | null;
+  official_name?: string | null;
+  subtype: string | null;
+  verification_status?: string | null;
   name: string;
   type: string;
-  available: number;
-  current: number;
-  limit: number;
-  iso_currency_code: string;
-  unofficial_currency_code: string;
-  balances: Balance[];
-  holdings: Holding[];
-  securities: Security[];
-  items: Item[];
-  owners: Owner[];
+  items?: Item;
+  owners?: Owner[];
   user_id?: number;
+  item_id?: string;
+  owner_id?: string;
   User?: User;
   timestamp?: Date;
+  verification_insights?: verification_insights;
+  persistent_account_id?: string;
+  holder_catergory?: string | null;
 }
 
 export interface Item {
@@ -53,8 +81,8 @@ export interface Item {
 }
 
 export interface Holding {
-  holding_id: string;
-  account_id: string;
+  account_id?: string;
+  holding_id?: string;
   cost_basis?: number | null;
   institution_price: number;
   institution_price_as_of?: Date | null;
@@ -66,7 +94,6 @@ export interface Holding {
   vested_value?: number | null;
   quantity?: number;
   security_id: string;
-  securitySecurity_id?: string;
   timestamp?: Date;
 }
 
@@ -107,18 +134,6 @@ export interface Security {
     issue_date?: string | null;
     face_value?: number | null;
   } | null;
-}
-
-export interface Balance {
-  balance_id: string;
-  available: number;
-  current: number;
-  limit: number;
-  iso_currency_code: string;
-  unofficial_currency_code: string;
-  accountId: string;
-  account: Account;
-  timestamp?: Date;
 }
 
 export interface Owner {
