@@ -123,7 +123,6 @@ model Owner {
 }
 
 model Holding {
-  holding_id                 Int       @id @default(autoincrement())
   cost_basis                 Decimal
   institution_price          Decimal
   institution_price_as_of    DateTime
@@ -140,6 +139,7 @@ model Holding {
   timestamp                  DateTime  @default(now())
   User                       User      @relation(fields: [user_id], references: [user_id])
   user_id                    String
+  @@id(name:"account_id_security_id", [account_id, security_id])
 }
 
 model Security {

@@ -12,9 +12,8 @@ import { updateAccounts } from "@/utils/api-helpers/plaid/updateAccounts";
 import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
 import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
 
-
 export async function GET(req: NextRequest) {
-  const userId = "52ab492d-a7d9-483d-a5ea-75ba048268a7";
+  const userId = "40d7224d-59f1-4e60-9433-6aa16c290dd2";
   const { searchParams } = new URL(req.url);
   const start_date = searchParams.get("start_date");
   const end_date = searchParams.get("end_date");
@@ -26,10 +25,21 @@ export async function GET(req: NextRequest) {
     const accounts = mockAccountBalanceData.accounts;
     const holdings = mockHoldingData.holdings;
     const securities = mockHoldingData.securities;
-    
-    await updateAccounts(accounts, userId);
-    await updateSecurities(securities, userId);
-    await updateHoldings(holdings, userId);
+
+    handleErrors(accounts, holdings, securities);
+
+    try {
+      await updateAccounts(accounts, userId);
+      await updateSecurities(securities, userId);
+      await updateHoldings(holdings, userId);
+    } catch (error) {
+      console.log("Error: ", error);
+      return NextResponse.json(
+        { error: error instanceof Error ? error.message : String(error) },
+        { status: 500 }
+      );
+      
+    }
 
     return NextResponse.json(
       {
@@ -39,16 +49,16 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    console.log("Error: ", error.message);
     return NextResponse.json(
-      { error: "Error fetching projected net worth data" },
+      { error: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }
 }
 
-
-
-
-
-
-
+function handleErrors(accounts: any, holdings: any, securities: any) {
+  if (!accounts) throw new Error("No accounts found");
+  if (!holdings) throw new Error("No holdings found");
+  if (!securities) throw new Error("No securities found");
+}

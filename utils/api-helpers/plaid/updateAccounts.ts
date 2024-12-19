@@ -7,7 +7,12 @@ import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultVal
 export async function updateAccounts(accounts: Account[], userId: string) {
   for (let account of accounts) {
     if (!account.balances) continue;
-    await updateBalance(account.balances, account.account_id);
+    const balanceRes = await updateBalance(account?.balances, account.account_id);
+
+    if (!balanceRes) {
+      throw new Error("Error updating balance");
+    }
+    console.log("Balance Response: ", balanceRes);
     await prisma.account.upsert({
       where: { account_id: account.account_id },
       update: {
