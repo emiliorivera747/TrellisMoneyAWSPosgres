@@ -12,14 +12,16 @@ import { updateAccounts } from "@/utils/api-helpers/plaid/updateAccounts";
 import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
 import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { timestamp } = body;
+
+  validateTimestamp(timestamp);
+
   const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
   const { searchParams } = new URL(req.url);
   const start_date = searchParams.get("start_date");
   const end_date = searchParams.get("end_date");
-
-  console.log("Start Date: ", start_date);
-  console.log("End Date: ", end_date);
 
   try {
     const accounts = mockAccountBalanceData.accounts;
@@ -28,18 +30,9 @@ export async function GET(req: NextRequest) {
 
     handleErrors(accounts, holdings, securities);
 
-    try {
-      await updateAccounts(accounts, userId);
-      await updateSecurities(securities, userId);
-      await updateHoldings(holdings, userId);
-    } catch (error) {
-      console.log("Error: ", error);
-      return NextResponse.json(
-        { error: error instanceof Error ? error.message : String(error) },
-        { status: 500 }
-      );
-      
-    }
+    await updateAccounts(accounts, userId);
+    await updateSecurities(securities, userId, timestamp);
+    await updateHoldings(holdings, userId, timestamp);
 
     return NextResponse.json(
       {
@@ -60,4 +53,10 @@ function handleErrors(accounts: any, holdings: any, securities: any) {
   if (!accounts) throw new Error("No accounts found");
   if (!holdings) throw new Error("No holdings found");
   if (!securities) throw new Error("No securities found");
+}
+
+function validateTimestamp(timestamp: any) {
+  if (!timestamp) {
+    throw new Error("Timestamp is required.");
+  }
 }

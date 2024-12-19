@@ -3,7 +3,7 @@ import { Holding } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/isoToUTC";
 
-export async function updateHoldings(holdings: Holding[], user_id: string) {
+export async function updateHoldings(holdings: Holding[], user_id: string, timestamp: string) {
   for (let holding of holdings) {
     try {
       await prisma.holding.upsert({
@@ -29,6 +29,7 @@ export async function updateHoldings(holdings: Holding[], user_id: string) {
             holding?.unofficial_currency_code,
             ""
           ),
+          timestamp: isoToUTC(timestamp),
         },
         create: {
           user_id: user_id,
@@ -49,6 +50,7 @@ export async function updateHoldings(holdings: Holding[], user_id: string) {
             holding?.unofficial_currency_code,
             ""
           ),
+          timestamp: isoToUTC(timestamp),
         },
       });
       await prisma.holdingHistory.create({
@@ -72,6 +74,7 @@ export async function updateHoldings(holdings: Holding[], user_id: string) {
           ),
           account_id: getValueOrDefault(holding?.account_id, ""),
           security_id: getValueOrDefault(holding?.security_id, ""),
+          timestamp: isoToUTC(timestamp),
         },
       });
     } catch (error: any) {

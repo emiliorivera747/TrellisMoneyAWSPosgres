@@ -19,7 +19,7 @@ model Account {
   balance_id               String           @unique
   User                     User             @relation(fields: [user_id], references: [user_id])
   user_id                  String
-  timestamp                DateTime?        @default(now())
+  timestamp                DateTime?        @default(now()) @db.Timestamptz(3)
   history                  AccountHistory[]
 }
 
@@ -34,7 +34,7 @@ model AccountHistory {
   iso_currency_code        String
   unofficial_currency_code String
   user_id                  String?
-  timestamp                DateTime @default(now())
+  timestamp                DateTime @default(now()) @db.Timestamptz(3)
   account                  Account  @relation(fields: [account_id], references: [account_id])
 }
 
@@ -45,8 +45,8 @@ model Balance {
   limit                    Decimal
   iso_currency_code        String
   unofficial_currency_code String?
-  last_updated             DateTime?
+  last_updated             DateTime? @db.Timestamptz(3)
   account                  Account?
-  updated_at               DateTime? @default(now())
-  timestamp                DateTime? @default(now())
+  updated_at               DateTime? @default(now()) @db.Timestamptz(3)
+  timestamp                DateTime? @default(now()) @db.Timestamptz(3)
 }

@@ -5,7 +5,8 @@ import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultVal
 
 export async function updateSecurities(
   securities: Security[],
-  user_id: string
+  user_id: string,
+  timestamp: string
 ) {
   for (let security of securities) {
     await prisma.security.upsert({
@@ -18,6 +19,7 @@ export async function updateSecurities(
         sector: getValueOrDefault(security?.sector, ""),
         industry: getValueOrDefault(security?.industry, ""),
         ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
+        timestamp: isoToUTC(timestamp),
       },
       create: {
         user_id: user_id,
@@ -52,6 +54,7 @@ export async function updateSecurities(
           security?.market_identifier_code,
           ""
         ),
+        timestamp: isoToUTC(timestamp),
       },
     });
 
@@ -86,6 +89,7 @@ export async function updateSecurities(
           security?.market_identifier_code,
           ""
         ),
+        timestamp: isoToUTC(timestamp),
         sector: getValueOrDefault(security?.sector, ""),
         industry: getValueOrDefault(security?.industry, ""),
       },
