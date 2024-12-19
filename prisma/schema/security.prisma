@@ -1,0 +1,55 @@
+
+model Security {
+  security_id              String            @unique
+  isin                     String?
+  cusip                    String?
+  sedol                    String?
+  institution_security_id  String?
+  institution_id           String?
+  proxy_security_id        String?
+  name                     String?
+  ticker_symbol            String?
+  is_cash_equivalent       Boolean?
+  type                     String?
+  close_price              Decimal?
+  close_price_as_of        DateTime?
+  update_datetime          DateTime?
+  iso_currency_code        String?
+  unofficial_currency_code String?
+  market_identifier_code   String?
+  sector                   String?
+  industry                 String?
+  option_contract_id       Int?
+  holdings                 Holding[]
+  User                     User              @relation(fields: [user_id], references: [user_id])
+  user_id                  String
+  timestamp                DateTime?         @default(now())
+  fixed_income             FixedIncome?
+  history                  SecurityHistory[]
+}
+
+model SecurityHistory {
+  id                       Int       @id @default(autoincrement())
+  security_id              String
+  isin                     String?
+  cusip                    String?
+  sedol                    String?
+  institution_security_id  String?
+  institution_id           String?
+  proxy_security_id        String?
+  name                     String?
+  ticker_symbol            String?
+  is_cash_equivalent       Boolean?
+  type                     String?
+  close_price              Decimal?
+  close_price_as_of        DateTime?
+  update_datetime          DateTime?
+  iso_currency_code        String?
+  unofficial_currency_code String?
+  market_identifier_code   String?
+  sector                   String?
+  industry                 String?
+  option_contract_id       Int?
+  timestamp                DateTime  @default(now())
+  security                 Security  @relation(fields: [security_id], references: [security_id])
+}

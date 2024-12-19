@@ -1,0 +1,42 @@
+model Holding {
+  cost_basis                 Decimal
+  institution_price          Decimal
+  institution_price_as_of    DateTime
+  institution_price_datetime DateTime?
+  institution_value          Decimal
+  iso_currency_code          String
+  unofficial_currency_code   String?
+  vested_quantity            Decimal?
+  vested_value               Decimal
+  quantity                   Decimal
+  security                   Security         @relation(fields: [security_id], references: [security_id])
+  account_id                 String
+  security_id                String
+  timestamp                  DateTime         @default(now())
+  User                       User             @relation(fields: [user_id], references: [user_id])
+  user_id                    String
+  history                    HoldingHistory[]
+
+  @@id(name: "account_id_security_id", [account_id, security_id])
+}
+
+model HoldingHistory {
+  id                         Int       @id @default(autoincrement())
+  holding_id                 Int
+  cost_basis                 Decimal
+  institution_price          Decimal
+  institution_price_as_of    DateTime
+  institution_price_datetime DateTime?
+  institution_value          Decimal
+  iso_currency_code          String
+  unofficial_currency_code   String?
+  vested_quantity            Decimal?
+  vested_value               Decimal
+  quantity                   Decimal
+  account_id                 String
+  security_id                String
+  timestamp                  DateTime  @default(now())
+  holding_account_id         String
+  holding_security_id        String
+  holding                    Holding   @relation(fields: [holding_account_id, holding_security_id], references: [account_id, security_id]) // Composite foreign key
+}

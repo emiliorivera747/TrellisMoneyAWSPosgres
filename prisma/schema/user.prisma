@@ -1,0 +1,45 @@
+model User {
+  id             Int        @id @default(autoincrement())
+  email          String     @unique
+  name           String?
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @default(now()) @updatedAt
+  user_id        String?    @unique @default(uuid())
+  email_verified Boolean?   @default(false)
+  phone_verified Boolean?   @default(false)
+  phone          String?
+  accounts       Account[]
+  holdings       Holding[]
+  securities     Security[]
+  profile        Profile?
+}
+
+model Item {
+  item_id                 String @unique
+  institution_id          String
+  institution_name        String
+  webhook                 String
+  request_id              String
+  update_type             String
+  consent_expiration_time String
+  accountId               String
+}
+
+model OptionContract {
+  id                         Int     @id @default(autoincrement())
+  contract_type              String
+  expiration_date            String
+  strike_price               Decimal
+  underlying_security_ticker String
+}
+
+model FixedIncome {
+  id                    Int      @id @default(autoincrement())
+  yield_rate_percentage Decimal?
+  yield_rate_type       String?
+  maturity_date         String?
+  issue_date            String?
+  face_value            Decimal?
+  security              Security @relation(fields: [securityId], references: [security_id])
+  securityId            String   @unique
+}

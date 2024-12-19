@@ -1,0 +1,52 @@
+
+
+model Account {
+  account_id               String           @unique
+  name                     String
+  type                     String
+  available                Decimal
+  current                  Decimal
+  limit                    Decimal
+  iso_currency_code        String
+  unofficial_currency_code String
+  mask                     String?
+  officail_name            String?
+  subtype                  String?
+  verification_status      String?
+  persistent_account_id    String?
+  holder_catergory         String?
+  balance                  Balance?         @relation(fields: [balance_id], references: [balance_id])
+  balance_id               String           @unique
+  User                     User             @relation(fields: [user_id], references: [user_id])
+  user_id                  String
+  timestamp                DateTime?        @default(now())
+  history                  AccountHistory[]
+}
+
+model AccountHistory {
+  id                       Int      @id @default(autoincrement())
+  account_id               String
+  name                     String
+  type                     String
+  available                Decimal
+  current                  Decimal
+  limit                    Decimal
+  iso_currency_code        String
+  unofficial_currency_code String
+  user_id                  String?
+  timestamp                DateTime @default(now())
+  account                  Account  @relation(fields: [account_id], references: [account_id])
+}
+
+model Balance {
+  balance_id               String    @unique
+  available                Decimal
+  current                  Decimal
+  limit                    Decimal
+  iso_currency_code        String
+  unofficial_currency_code String?
+  last_updated             DateTime?
+  account                  Account?
+  updated_at               DateTime? @default(now())
+  timestamp                DateTime? @default(now())
+}

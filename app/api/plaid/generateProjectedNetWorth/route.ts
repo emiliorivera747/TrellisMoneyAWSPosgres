@@ -13,7 +13,7 @@ import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
 import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
 
 export async function GET(req: NextRequest) {
-  const userId = "40d7224d-59f1-4e60-9433-6aa16c290dd2";
+  const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
   const { searchParams } = new URL(req.url);
   const start_date = searchParams.get("start_date");
   const end_date = searchParams.get("end_date");
