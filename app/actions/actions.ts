@@ -59,6 +59,8 @@ export async function login(
 ): Promise<State> {
   try {
 
+    const supabase = await createClient();
+
     /**
     const accessToken = session.access_token;
      * Validate the fields:
