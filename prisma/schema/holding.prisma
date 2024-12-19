@@ -16,13 +16,11 @@ model Holding {
   User                       User             @relation(fields: [user_id], references: [user_id])
   user_id                    String
   history                    HoldingHistory[]
-
   @@id(name: "account_id_security_id", [account_id, security_id])
 }
 
 model HoldingHistory {
   id                         Int       @id @default(autoincrement())
-  holding_id                 Int
   cost_basis                 Decimal
   institution_price          Decimal
   institution_price_as_of    DateTime

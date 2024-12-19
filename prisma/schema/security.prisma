@@ -1,4 +1,3 @@
-
 model Security {
   security_id              String            @unique
   isin                     String?
@@ -30,7 +29,6 @@ model Security {
 
 model SecurityHistory {
   id                       Int       @id @default(autoincrement())
-  security_id              String
   isin                     String?
   cusip                    String?
   sedol                    String?
@@ -52,4 +50,5 @@ model SecurityHistory {
   option_contract_id       Int?
   timestamp                DateTime  @default(now())
   security                 Security  @relation(fields: [security_id], references: [security_id])
+  security_id              String
 }
