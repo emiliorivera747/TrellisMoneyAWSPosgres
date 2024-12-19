@@ -14,7 +14,7 @@ import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
 
 
 export async function GET(req: NextRequest) {
-  const userId = "fbac251b-987c-4115-b294-5dce141a339f";
+  const userId = "52ab492d-a7d9-483d-a5ea-75ba048268a7";
   const { searchParams } = new URL(req.url);
   const start_date = searchParams.get("start_date");
   const end_date = searchParams.get("end_date");
@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
     const accounts = mockAccountBalanceData.accounts;
     const holdings = mockHoldingData.holdings;
     const securities = mockHoldingData.securities;
+    
     await updateAccounts(accounts, userId);
     await updateSecurities(securities, userId);
     await updateHoldings(holdings, userId);

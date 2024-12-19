@@ -29,7 +29,7 @@ export interface Balance {
   limit?: number | null;
   iso_currency_code?: string | null;
   unofficial_currency_code?: string | null;
-  last_updated_datetime?: Date | null;
+  last_updated_datetime?: string | null;
   timestamp?: Date;
 }
 
@@ -85,8 +85,8 @@ export interface Holding {
   holding_id?: string;
   cost_basis?: number | null;
   institution_price: number;
-  institution_price_as_of?: Date | null;
-  institution_price_datetime?: Date | null;
+  institution_price_as_of?: string | null;
+  institution_price_datetime?: string | null;
   institution_value?: number | null;
   iso_currency_code?: string | null;
   unofficial_currency_code?: string | null;
@@ -110,8 +110,8 @@ export interface Security {
   is_cash_equivalent?: boolean | null;
   type?: string | null;
   close_price: number | null;
-  close_price_as_of: Date | null;
-  update_datetime?: Date | null;
+  close_price_as_of: string | null;
+  update_datetime?: string | null;
   iso_currency_code?: string | null;
   unofficial_currency_code?: string | null;
   market_identifier_code?: string | null;
