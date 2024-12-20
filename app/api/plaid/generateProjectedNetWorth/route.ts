@@ -40,25 +40,43 @@ export async function POST(req: NextRequest) {
     handleMissingData(accounts, holdings, securities);
     handleErrors(accounts, holdings, securities);
 
+    // Update the user's accounts, securities, and holdings in the database
     await updateAccounts(accounts, userId);
     await updateSecurities(securities, userId, timestamp);
     await updateHoldings(holdings, userId, timestamp);
 
+    // Get the user's updated holdings and securities
+    const userHoldings = await getHoldingsAndSecurities(userId);
+
     return NextResponse.json(
       {
         message: "Accounts, holdings, and securities updated successfully.",
-        accounts,
+        data: userHoldings,
       },
       { status: 200 }
     );
   } catch (error) {
-    if (isPrismaErrorWithCode(error))
-      handlePrismaErrorWithCode(error);
-
-    if (isPrismaError(error))
-      handlePrismaErrorWithNoCode(error);
-
+    if (isPrismaErrorWithCode(error)) handlePrismaErrorWithCode(error);
+    if (isPrismaError(error)) handlePrismaErrorWithNoCode(error);
     handleOtherErrror(error);
   }
 }
 
+
+const getHoldingsAndSecurities = async (userId: string) => {
+  const prisma = new PrismaClient();
+  const userHoldings = await prisma.user.findMany({
+    where: {
+      user_id: userId,
+    },
+    select: {
+      holdings: {
+        include: {
+          security: true,
+        },
+      },
+    },
+  });
+
+  return userHoldings;
+}

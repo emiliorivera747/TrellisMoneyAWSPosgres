@@ -4,6 +4,7 @@ model Holding {
   institution_price_as_of    DateTime @db.Timestamptz(3)
   institution_price_datetime DateTime? @db.Timestamptz(3)
   institution_value          Decimal
+  annual_return_rate         Decimal? @default(0.06)
   iso_currency_code          String
   unofficial_currency_code   String?
   vested_quantity            Decimal?
@@ -23,6 +24,7 @@ model HoldingHistory {
   id                         Int       @id @default(autoincrement())
   cost_basis                 Decimal
   institution_price          Decimal
+  annual_return_rate         Decimal? @default(0.06)
   institution_price_as_of    DateTime @db.Timestamptz(3)
   institution_price_datetime DateTime? @db.Timestamptz(3)
   institution_value          Decimal
