@@ -1,6 +1,13 @@
 import { NextResponse, NextRequest } from "next/server";
 import { AccountsGetRequest } from "plaid";
 import { plaidClient } from "@/config/plaidClient";
+import { PrismaClient, Prisma } from "@prisma/client";
+
+//functions
+import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
+import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
+import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
+import { getPrismaError } from "@/utils/api-helpers/prisma/getPrismaErrorMessage";
 
 // Mock data
 import { mockHoldingData } from "@/utils/data/plaid-data/mockHoldingData";
@@ -11,6 +18,8 @@ import { authenticateUser } from "@/utils/api-helpers/authenticateUser";
 import { updateAccounts } from "@/utils/api-helpers/plaid/updateAccounts";
 import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
 import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
+import { handlePrismaErrorWithCode, isPrismaError, handlePrismaErrorWithNoCode, isPrismaErrorWithCode} from "@/utils/api-helpers/prisma/handlePrismaErrors";
+import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -28,6 +37,7 @@ export async function POST(req: NextRequest) {
     const holdings = mockHoldingData.holdings;
     const securities = mockHoldingData.securities;
 
+    handleMissingData(accounts, holdings, securities);
     handleErrors(accounts, holdings, securities);
 
     await updateAccounts(accounts, userId);
@@ -42,21 +52,13 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : String(error) },
-      { status: 500 }
-    );
+    if (isPrismaErrorWithCode(error))
+      handlePrismaErrorWithCode(error);
+
+    if (isPrismaError(error))
+      handlePrismaErrorWithNoCode(error);
+
+    handleOtherErrror(error);
   }
 }
 
-function handleErrors(accounts: any, holdings: any, securities: any) {
-  if (!accounts) throw new Error("No accounts found");
-  if (!holdings) throw new Error("No holdings found");
-  if (!securities) throw new Error("No securities found");
-}
-
-function validateTimestamp(timestamp: any) {
-  if (!timestamp) {
-    throw new Error("Timestamp is required.");
-  }
-}
