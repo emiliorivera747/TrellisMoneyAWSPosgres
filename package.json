@@ -41,6 +41,7 @@
     "crypto": "^1.0.1",
     "d3-array": "link:@visx/vendor/d3-array",
     "d3-time-format": "link:@visx/vendor/d3-time-format",
+    "decimal.js": "^10.4.3",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "next": "15.0.2",

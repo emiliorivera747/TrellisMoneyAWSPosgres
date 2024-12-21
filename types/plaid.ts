@@ -1,7 +1,4 @@
-// /Users/emiliorivera/Documents/React Applications/Trellis Money/TrellisMoneyAWSPosgres/types/plaid.ts
-
-import { off } from "process";
-
+import { Decimal } from "decimal.js";
 export interface Profile {
   id: number;
   bio?: string;
@@ -24,9 +21,9 @@ export interface User {
 }
 
 export interface Balance {
-  available?: number | null;
-  current?: number | null;
-  limit?: number | null;
+  available?: number | null | Decimal;
+  current?: number | null | Decimal;
+  limit?: number | null | Decimal;
   iso_currency_code?: string | null;
   unofficial_currency_code?: string | null;
   last_updated_datetime?: string | null;
@@ -83,18 +80,20 @@ export interface Item {
 export interface Holding {
   account_id?: string;
   holding_id?: string;
-  cost_basis?: number | null;
-  institution_price: number;
-  institution_price_as_of?: string | null;
-  institution_price_datetime?: string | null;
-  institution_value?: number | null;
+  cost_basis?: number | null | Decimal;
+  annual_return_rate?: number | null | Decimal;
+  institution_price?: number | Decimal;
+  institution_price_as_of?: string | null | Date;
+  institution_price_datetime?: string | null | Date;
+  institution_value?: number | Decimal | null;
   iso_currency_code?: string | null;
   unofficial_currency_code?: string | null;
-  vested_quantity?: number | null;
-  vested_value?: number | null;
-  quantity?: number;
-  security_id: string;
-  timestamp?: Date;
+  vested_quantity?: number | Decimal | null;
+  vested_value?: number | Decimal | null;
+  quantity?: number | Decimal;
+  security_id?: string;
+  security?: Security;
+  timestamp?: Date | null;
 }
 
 export interface Security {
@@ -109,30 +108,29 @@ export interface Security {
   ticker_symbol: string | null;
   is_cash_equivalent?: boolean | null;
   type?: string | null;
-  close_price: number | null;
-  close_price_as_of: string | null;
-  update_datetime?: string | null;
+  close_price: number | Decimal | null;
+  close_price_as_of: string | null | Date;
+  update_datetime?: string | null | Date;
   iso_currency_code?: string | null;
   unofficial_currency_code?: string | null;
   market_identifier_code?: string | null;
   sector?: string | null;
   industry?: string | null;
-  option_contract_id?: string | null;
-  timestamp?: Date;
+  timestamp?: Date | null;
   option_contract?: {
     contract_type: "put" | "call";
     expiration_date: string;
-    strike_price: number;
+    strike_price: number | Decimal;
     underlying_security_ticker: string;
   } | null;
   fixed_income?: {
     yield_rate?: {
-      percentage?: number;
+      percentage?: number | Decimal;
       type?: "coupon" | "coupon_equivalent" | "discount" | "yield" | null;
     } | null;
     maturity_date?: string | null;
     issue_date?: string | null;
-    face_value?: number | null;
+    face_value?: number | Decimal | null;
   } | null;
 }
 

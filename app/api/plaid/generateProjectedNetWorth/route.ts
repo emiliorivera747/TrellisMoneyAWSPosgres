@@ -8,6 +8,7 @@ import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/valid
 import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
 import { getPrismaError } from "@/utils/api-helpers/prisma/getPrismaErrorMessage";
+import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
 
 // Mock data
 import { mockHoldingData } from "@/utils/data/plaid-data/mockHoldingData";
@@ -18,21 +19,26 @@ import { authenticateUser } from "@/utils/api-helpers/authenticateUser";
 import { updateAccounts } from "@/utils/api-helpers/plaid/updateAccounts";
 import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
 import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
-import { handlePrismaErrorWithCode, isPrismaError, handlePrismaErrorWithNoCode, isPrismaErrorWithCode} from "@/utils/api-helpers/prisma/handlePrismaErrors";
+import {
+  handlePrismaErrorWithCode,
+  isPrismaError,
+  handlePrismaErrorWithNoCode,
+  isPrismaErrorWithCode,
+} from "@/utils/api-helpers/prisma/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 
+
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { timestamp } = body;
-
-  validateTimestamp(timestamp);
-
-  const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
-  const { searchParams } = new URL(req.url);
-  const start_date = searchParams.get("start_date");
-  const end_date = searchParams.get("end_date");
-
   try {
+    const body = await req.json();
+    const { timestamp } = body;
+  
+    validateTimestamp(timestamp);
+  
+    const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
+    const { searchParams } = new URL(req.url);
+    const start_date = searchParams.get("start_date");
+    const end_date = searchParams.get("end_date");
     const accounts = mockAccountBalanceData.accounts;
     const holdings = mockHoldingData.holdings;
     const securities = mockHoldingData.securities;
@@ -47,21 +53,25 @@ export async function POST(req: NextRequest) {
 
     // Get the user's updated holdings and securities
     const userHoldings = await getHoldingsAndSecurities(userId);
+    const start = start_date ? new Date(start_date) : new Date();
+    const end = end_date ? new Date(end_date) : new Date(new Date().setFullYear(new Date().getFullYear() + 40));
+
+    const projectedNetWorth = await generateProjectedNetWorth(userHoldings, start, end);
 
     return NextResponse.json(
       {
         message: "Accounts, holdings, and securities updated successfully.",
-        data: userHoldings,
+        data: projectedNetWorth,
+        holdings: userHoldings,
       },
       { status: 200 }
     );
   } catch (error) {
-    if (isPrismaErrorWithCode(error)) handlePrismaErrorWithCode(error);
-    if (isPrismaError(error)) handlePrismaErrorWithNoCode(error);
-    handleOtherErrror(error);
+    if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
+    if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
+    return handleOtherErrror(error);
   }
 }
-
 
 const getHoldingsAndSecurities = async (userId: string) => {
   const prisma = new PrismaClient();
@@ -78,5 +88,5 @@ const getHoldingsAndSecurities = async (userId: string) => {
     },
   });
 
-  return userHoldings;
-}
+  return userHoldings[0].holdings;
+};

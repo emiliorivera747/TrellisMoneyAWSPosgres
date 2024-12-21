@@ -35,7 +35,6 @@ const ProjectedNetWorthGraph = () => {
   const handleSelectedValue = (e: any) => {
     setSelectedYear(e.target.value);
   };
-  //
 
   return (
     <div className="sm:mx-2 border-b border-zinc-200">
