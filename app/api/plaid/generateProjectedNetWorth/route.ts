@@ -27,6 +27,13 @@ import {
 } from "@/utils/api-helpers/prisma/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 
+
+/**
+ * POST /api/plaid/generateProjectedNetWorth
+ * 
+ * @param {NextRequest} req
+ * @returns {Promise<NextResponse>}
+ */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -67,7 +74,6 @@ export async function POST(req: NextRequest) {
       {
         message: "Accounts, holdings, and securities updated successfully.",
         data: projectedNetWorth,
-        holdings: userHoldings,
       },
       { status: 200 }
     );
@@ -82,6 +88,8 @@ export async function POST(req: NextRequest) {
 
 /**
  *
+ * Gets the user's holdings and securities from the database.
+ * 
  * @param userId
  * @returns
  */

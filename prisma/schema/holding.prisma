@@ -37,7 +37,6 @@ model HoldingHistory {
   account_id                 String
   security_id                String
   timestamp                  DateTime  @default(now()) @db.Timestamptz(3)
-  holding_id                 Int
   user_id                    String
   holding                    Holding   @relation(fields: [security_id, user_id, account_id], references: [security_id, user_id, account_id], onDelete: Cascade) // Composite foreign key
 }

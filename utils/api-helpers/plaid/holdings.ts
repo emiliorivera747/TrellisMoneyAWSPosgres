@@ -5,6 +5,7 @@ import { Holding } from "@/types/plaid";
 
 
 /**
+ * Creates a new holding history record in the database
  * 
  * @param holding 
  * @param timestamp 
@@ -34,6 +35,8 @@ export const createHoldingHistory = async (holding: Holding, timestamp: string, 
 };
 
 /**
+ * 
+ * Will update or create a holding record in the database
  * 
  * @param holding 
  * @param timestamp 
@@ -86,6 +89,8 @@ await prisma.holding.upsert({
 };
 
 /**
+ * 
+ * Returns all holdings for a user
  * 
  * @param user_id 
  * @returns 

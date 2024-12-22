@@ -37,7 +37,7 @@ export const generateProjectedNetWorth = async (
      */
     for (const holding of holdings) {
       const { quantity, close_price, annual_return_rate } = getFormulaValues(holding);
-      let fv = future_value_fn(quantity, close_price, annual_return_rate, i + 1);
+      let fv = future_value_fn(quantity, close_price, annual_return_rate, i);
       total += fv;
     }
     

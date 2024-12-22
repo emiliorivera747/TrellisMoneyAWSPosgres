@@ -16,22 +16,11 @@ export async function updateHoldings(
 
   // // If the holdings are equal then delete all the holdings
   if (!areHoldingsEqual) {
-    for (let holding of userHoldings) {
-      await prisma.holding.delete({
-        where: {
-          holding_id: {
-            account_id: holding.account_id,
-            security_id: holding.security_id,
-            user_id: user_id,
-          },
-        },
-      });
-    }
-    // await prisma.holding.deleteMany({
-    //   where: {
-    //     user_id: user_id,
-    //   },
-    // });
+    await prisma.holding.deleteMany({
+      where: {
+        user_id: user_id,
+      },
+    });
   }
 
   // Update or create each holding

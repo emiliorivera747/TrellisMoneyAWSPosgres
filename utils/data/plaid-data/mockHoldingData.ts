@@ -130,7 +130,7 @@ const securitiesData: Security[] = [
     unofficial_currency_code: null,
     update_datetime: null,
     market_identifier_code: "XNAS",
-    sector: "Technology Services",
+    sector: "Techn18ology Services",
     industry: "Internet Software or Services",
 
     option_contract: {
@@ -165,7 +165,7 @@ const securitiesData: Security[] = [
     fixed_income: null,
   },
   {
-    close_price: 17.39,
+    close_price: 63.65,
     close_price_as_of: null,
     cusip: "00448Q201",
     institution_id: null,
