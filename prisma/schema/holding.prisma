@@ -1,31 +1,32 @@
 model Holding {
   cost_basis                 Decimal
   institution_price          Decimal
-  institution_price_as_of    DateTime @db.Timestamptz(3)
-  institution_price_datetime DateTime? @db.Timestamptz(3)
+  institution_price_as_of    DateTime         @db.Timestamptz(3)
+  institution_price_datetime DateTime?        @db.Timestamptz(3)
   institution_value          Decimal
-  annual_return_rate         Decimal? @default(0.06)
+  annual_return_rate         Decimal?         @default(0.06)
   iso_currency_code          String
   unofficial_currency_code   String?
   vested_quantity            Decimal?
   vested_value               Decimal
   quantity                   Decimal
   security                   Security         @relation(fields: [security_id], references: [security_id])
+  user                       User             @relation(fields: [user_id], references: [user_id])
   account_id                 String
   security_id                String
   timestamp                  DateTime         @default(now()) @db.Timestamptz(3)
-  User                       User             @relation(fields: [user_id], references: [user_id])
   user_id                    String
   history                    HoldingHistory[]
-  @@id(name: "account_id_security_id", [account_id, security_id])
+
+  @@id(name: "holding_id", [security_id, user_id, account_id])
 }
 
 model HoldingHistory {
   id                         Int       @id @default(autoincrement())
   cost_basis                 Decimal
   institution_price          Decimal
-  annual_return_rate         Decimal? @default(0.06)
-  institution_price_as_of    DateTime @db.Timestamptz(3)
+  annual_return_rate         Decimal?  @default(0.06)
+  institution_price_as_of    DateTime  @db.Timestamptz(3)
   institution_price_datetime DateTime? @db.Timestamptz(3)
   institution_value          Decimal
   iso_currency_code          String
@@ -36,7 +37,7 @@ model HoldingHistory {
   account_id                 String
   security_id                String
   timestamp                  DateTime  @default(now()) @db.Timestamptz(3)
-  holding_account_id         String
-  holding_security_id        String
-  holding                    Holding   @relation(fields: [holding_account_id, holding_security_id], references: [account_id, security_id]) // Composite foreign key
+  holding_id                 Int
+  user_id                    String
+  holding                    Holding   @relation(fields: [security_id, user_id, account_id], references: [security_id, user_id, account_id], onDelete: Cascade) // Composite foreign key
 }

@@ -1,28 +1,46 @@
 import { Prisma } from "@prisma/client";
-import { NextResponse } from "next/server"; 
+import { NextResponse } from "next/server";
 import { getPrismaError } from "@/utils/api-helpers/prisma/getPrismaErrorMessage";
+import meta from "@/stories/Button.stories";
 
+export const handlePrismaErrorWithCode = (
+  error: Prisma.PrismaClientKnownRequestError
+) => {
+  return NextResponse.json(
+    {
+      code: getPrismaError(error.code),
+      meta: error.meta,
+      message: error.message,
+    },
 
-export const handlePrismaErrorWithCode = (error: Prisma.PrismaClientKnownRequestError) => {
-    return NextResponse.json(
-      { message: getPrismaError(error.code) },
-      { status: 500 }
-    );
-  };
-  
+    { status: 500 }
+  );
+};
+
 export const isPrismaError = (error: unknown) => {
-    return (
-      error instanceof Prisma.PrismaClientKnownRequestError ||
-      error instanceof Prisma.PrismaClientUnknownRequestError ||
-      error instanceof Prisma.PrismaClientValidationError ||
-      error instanceof Prisma.PrismaClientInitializationError
+  return (
+    error instanceof Prisma.PrismaClientKnownRequestError ||
+    error instanceof Prisma.PrismaClientUnknownRequestError ||
+    error instanceof Prisma.PrismaClientValidationError ||
+    error instanceof Prisma.PrismaClientInitializationError
+  );
+};
+
+export const handlePrismaErrorWithNoCode = (
+  error:
+    | Prisma.PrismaClientUnknownRequestError
+    | Prisma.PrismaClientValidationError
+    | Prisma.PrismaClientInitializationError
+) => {
+  if (error instanceof Prisma.PrismaClientInitializationError) {
+    return NextResponse.json(
+      { message: error.message, code: error.errorCode },
+      { status: 400 }
     );
-  };
-  
-export const handlePrismaErrorWithNoCode = (error: Prisma.PrismaClientUnknownRequestError) => {
-    return NextResponse.json({ message: error.message }, { status: 500 });
   }
-  
+  return NextResponse.json({ message: error.message }, { status: 500 });
+};
+
 export const isPrismaErrorWithCode = (error: unknown) => {
-    return error instanceof Prisma.PrismaClientKnownRequestError;
-}
+  return error instanceof Prisma.PrismaClientKnownRequestError;
+};

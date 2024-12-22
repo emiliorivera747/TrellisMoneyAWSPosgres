@@ -27,14 +27,13 @@ import {
 } from "@/utils/api-helpers/prisma/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { timestamp } = body;
-  
+
     validateTimestamp(timestamp);
-  
+
     const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
     const { searchParams } = new URL(req.url);
     const start_date = searchParams.get("start_date");
@@ -54,9 +53,15 @@ export async function POST(req: NextRequest) {
     // Get the user's updated holdings and securities
     const userHoldings = await getHoldingsAndSecurities(userId);
     const start = start_date ? new Date(start_date) : new Date();
-    const end = end_date ? new Date(end_date) : new Date(new Date().setFullYear(new Date().getFullYear() + 40));
+    const end = end_date
+      ? new Date(end_date)
+      : new Date(new Date().setFullYear(new Date().getFullYear() + 40));
 
-    const projectedNetWorth = await generateProjectedNetWorth(userHoldings, start, end);
+    const projectedNetWorth = await generateProjectedNetWorth(
+      userHoldings,
+      start,
+      end
+    );
 
     return NextResponse.json(
       {
@@ -67,12 +72,19 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+
     if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
+  
     if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
     return handleOtherErrror(error);
   }
 }
 
+/**
+ *
+ * @param userId
+ * @returns
+ */
 const getHoldingsAndSecurities = async (userId: string) => {
   const prisma = new PrismaClient();
   const userHoldings = await prisma.user.findMany({

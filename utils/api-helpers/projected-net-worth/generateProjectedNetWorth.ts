@@ -27,7 +27,7 @@ export const generateProjectedNetWorth = async (
   }
 
   /**
-   * Calculate the projected net worth for each year in the range.
+   * Loop through each year in the range and calculate the projected net worth for that year.
    */
   for (let i = 0; i < n; i++) {
     let total = 0;
@@ -39,9 +39,7 @@ export const generateProjectedNetWorth = async (
       const { quantity, close_price, annual_return_rate } = getFormulaValues(holding);
       let fv = future_value_fn(quantity, close_price, annual_return_rate, i + 1);
       total += fv;
-      console.log(`Year: ${startYear + i}, Holding: ${holding.security?.ticker_symbol}, Future Value: ${fv}`);
     }
-
     
     projectedNetWorth.push({
       year: startYear + i,
