@@ -34,7 +34,7 @@ import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
  * @param {NextRequest} req
  * @returns {Promise<NextResponse>}
  */
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const body = await req.json();
     const { timestamp } = body;
@@ -43,8 +43,8 @@ export async function POST(req: NextRequest) {
 
     const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
     const { searchParams } = new URL(req.url);
-    const start_date = searchParams.get("start_date");
-    const end_date = searchParams.get("end_date");
+    const start_year = searchParams.get("start_date") ? parseInt(searchParams.get("start_date") as string, 10) : 2024;
+    const end_year = searchParams.get("end_date") ? parseInt(searchParams.get("end_date") as string, 10) : 2065;
     const accounts = mockAccountBalanceData.accounts;
     const holdings = mockHoldingData.holdings;
     const securities = mockHoldingData.securities;
@@ -59,15 +59,12 @@ export async function POST(req: NextRequest) {
 
     // Get the user's updated holdings and securities
     const userHoldings = await getHoldingsAndSecurities(userId);
-    const start = start_date ? new Date(start_date) : new Date();
-    const end = end_date
-      ? new Date(end_date)
-      : new Date(new Date().setFullYear(new Date().getFullYear() + 40));
+
 
     const projectedNetWorth = await generateProjectedNetWorth(
       userHoldings,
-      start,
-      end
+      start_year,
+      end_year
     );
 
     return NextResponse.json(

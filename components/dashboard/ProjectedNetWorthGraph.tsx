@@ -4,33 +4,50 @@ import { mockProjectionData } from "@/utils/data/mockProjectionData";
 
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 
+// Services
+import financialProjectionService from "@/features/plaid/financial-projections/financialProjectionService";
+
 //components
 import LineGraph from "./LineGraph";
 
+// External Libraries
+import { useQuery } from "@tanstack/react-query";
+import { filter } from "@visx/vendor/d3-array";
 
 /**
  * Projects the future net worth of the user based on the data provided
  *
  */
 const ProjectedNetWorthGraph = () => {
-  const yearsIntoFuture = 40;
-  const currentYear = new Date().getFullYear();
+  const defaultYearsIntoTheFuture = 40;
+
+  const currentYear = Number(new Date().getFullYear().toString());
 
   const [selectedYear, setSelectedYear] = useState(
-    currentYear + yearsIntoFuture
+    currentYear + defaultYearsIntoTheFuture
   );
 
-  const [filteredData, setFilteredData] = useState(mockProjectionData);
+  const { data: projectionData, error: projectionError } = useQuery({
+    queryKey: ["projectedNetWorth", currentYear, selectedYear],
+    queryFn: ({ queryKey }) => {
+      const [, startDate, endDate] = queryKey;
+      return financialProjectionService.generateProjectedNetWorth(
+        Number(startDate),
+        Number(endDate)
+      );
+    },
+  });
+  const [filteredData, setFilteredData] = useState(projectionData?.data);
+
 
   useEffect(() => {
-    const results = mockProjectionData.filter(
-      (data) => new Date(data.date).getFullYear() <= selectedYear
-    );
-    console.log(results);
-    setFilteredData([...results]);
-  }, [selectedYear]);
+    const results = projectionData?.data?.filter((data: { year: number }) => {
+      return data.year <= selectedYear;
+    });
+    setFilteredData(results);
+  }, [selectedYear, projectionData]);
 
-  const years = Array.from({ length: 77 }, (_, i) => 2024 + i);
+  const years = Array.from({ length: 41 }, (_, i) => 2024 + i);
 
   const handleSelectedValue = (e: any) => {
     setSelectedYear(e.target.value);
@@ -39,7 +56,7 @@ const ProjectedNetWorthGraph = () => {
   return (
     <div className="sm:mx-2 border-b border-zinc-200">
       <div className="flex flex-col gap-1">
-        <div className="font-medium text-zinc-800 flex items-center gap-1 justify-start">
+        <div className="font-medium text-tertiary-900 flex items-center gap-1 justify-start">
           <span className="text-xl tracking-wider">Projected Net Worth</span>
           <div className="">
             <select
@@ -58,10 +75,14 @@ const ProjectedNetWorthGraph = () => {
       </div>
       <div className="h-[20rem] w-full">
         <ParentSize>
-          {({ height , width }:{height: number, width: number}) => (
-            <LineGraph 
+          {({ height, width }: { height: number; width: number }) => (
+            <LineGraph
               key={selectedYear}
-              data={filteredData}
+              data={
+                filteredData?.length > 0
+                  ? filteredData
+                  : [{ date: 2024, netWorth: 0 }]
+              }
               selectedYear={selectedYear}
               width={width}
               height={height}

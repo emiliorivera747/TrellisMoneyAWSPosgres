@@ -12,13 +12,13 @@ import { createClient } from "@/utils/supabase/client";
 
 // services
 import plaidService from "@/features/plaid/services/plaidServices";
+import financialProjectionService from "@/features/plaid/financial-projections/financialProjectionService";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
 
 const Dashboard = () => {
   const client = createClient();
-
   useEffect(() => {
     const fetchUser = async () => {
       const { data: user, error } = await client.auth.getUser();
@@ -28,12 +28,8 @@ const Dashboard = () => {
         console.log("User data:", user);
       }
     };
-
-
     fetchUser();
   }, []);
-
-
 
   // Access the client
   const { data: identityData, error: identityError } = useQuery({
@@ -45,6 +41,7 @@ const Dashboard = () => {
     queryKey: ["holdings"],
     queryFn: plaidService.getHoldings,
   });
+
 
   // const { data: accountData } = useQuery({
   //   queryKey: ["account"],
@@ -75,10 +72,10 @@ const Dashboard = () => {
   useEffect(() => {
     generateToken();
   }, []);
-  console.log("Identity Data ", identityData);
-  console.log("Holdings Data ", holdingsData);
-  // console.log("Account Data ", accountData);
-  console.log("Balance Data ", balanceData);
+  // console.log("Identity Data ", identityData);
+  // console.log("Holdings Data ", holdingsData);
+  // // console.log("Account Data ", accountData);
+  // console.log("Balance Data ", balanceData);
 
   return (
     <div className="min-h-screen h-auto w-full border-box">

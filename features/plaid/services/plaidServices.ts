@@ -61,6 +61,8 @@ const getNetWorth = async () => {
   return response.json();
 };
 
+
+
 const plaidService = {
   getIdentity,
   createLinkToken,

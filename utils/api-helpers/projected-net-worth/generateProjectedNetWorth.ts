@@ -1,28 +1,26 @@
 import { Holding } from "@/types/plaid";
 import { Decimal } from "decimal.js";
+import { start } from "repl";
 
 /**
  * Generates the projected net worth over a range of years based on the provided holdings.
  *
  * @param {Holding[]} holdings - An array of holding objects, each containing quantity, security, and annual return rate.
- * @param {Date} start_date - The start date for the projection.
- * @param {Date} end_date - The end date for the projection.
+ * @param {Date} start_year - The start date for the projection.
+ * @param {Date} end_year - The end date for the projection.
  * @returns {Promise<{ year: number, close: number }[]>} - A promise that resolves to an array of objects, each representing the projected net worth for a specific year.
  */
 export const generateProjectedNetWorth = async (
   holdings: Holding[],
-  start_date: Date,
-  end_date: Date
+  start_year: number,
+  end_year: number
 ) => {
   const projectedNetWorth = [];
-
-  const startYear = start_date.getFullYear();
-  const endYear = end_date.getFullYear();
-
-  const n = endYear - startYear;
-
+ 
+  const n = (end_year +1) - start_year;
+  
   // Early return for empty holdings or invalid dates
-  if (!holdings.length || end_date <= start_date) {
+  if (!holdings.length || end_year <= start_year) {
     return [];
   }
 
@@ -36,13 +34,14 @@ export const generateProjectedNetWorth = async (
      * Loop through each holding and calculate the future value of the holding for the current year.
      */
     for (const holding of holdings) {
-      const { quantity, close_price, annual_return_rate } = getFormulaValues(holding);
+      const { quantity, close_price, annual_return_rate } =
+        getFormulaValues(holding);
       let fv = future_value_fn(quantity, close_price, annual_return_rate, i);
       total += fv;
     }
-    
+
     projectedNetWorth.push({
-      year: startYear + i,
+      year: start_year + i,
       close: total,
     });
   }
@@ -51,12 +50,12 @@ export const generateProjectedNetWorth = async (
 };
 
 /**
- * 
- * @param quantity 
- * @param close_price 
- * @param annual_return_rate 
- * @param growthFactor 
- * @returns 
+ *
+ * @param quantity
+ * @param close_price
+ * @param annual_return_rate
+ * @param growthFactor
+ * @returns
  */
 const future_value_fn = (
   quantity: number | Decimal,
@@ -65,11 +64,7 @@ const future_value_fn = (
   years: number
 ) => {
   const growthFactor = Math.pow(1 + Number(annual_return_rate), years);
-  return (
-    Number(quantity) *
-    Number(close_price) *
-    growthFactor
-  );
+  return Number(quantity) * Number(close_price) * growthFactor;
 };
 
 const getQuantity = (holding: Holding) => {
@@ -90,4 +85,4 @@ const getFormulaValues = (holding: Holding) => {
     close_price: getClosePrice(holding),
     annual_return_rate: getAnnualReturnRate(holding),
   };
-}
+};

@@ -17,6 +17,7 @@ import { LinePath } from "@visx/shape";
 
 //Components
 import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
+import StockValueAndPriceChange from "./StockValueAndPriceChange";
 
 //Icons
 import { TiArrowSortedUp } from "react-icons/ti";
@@ -44,8 +45,8 @@ type TooltipData = SecurityData;
 const formatDate = timeFormat("%b %d, %Y");
 
 // accessors
-const getDate = (d: SecurityData) => new Date(d.date);
-const getStockValue = (d: SecurityData) => d.close;
+const getDate = (d: SecurityData) => new Date(d?.date);
+const getStockValue = (d: SecurityData) => d?.close;
 
 export default withTooltip<LineGraphProps, TooltipData>(
   ({
@@ -82,28 +83,13 @@ export default withTooltip<LineGraphProps, TooltipData>(
       data
     );
 
-    return (
-      <div style={{ height: height, width: width }}>
-        {/* Stock value and price change */}
-        <div className="flex flex-col">
-          <span className="text-xl font-medium text-zinc-800 tracking-wider">
-            {tooltipData
-              ? `$${getStockValue(tooltipData).toFixed(2)}`
-              : `$${data[0].close}`}
-          </span>
-          <span
-            style={{ color: "#74b816" }}
-            className="flex-row flex items-center text-[0.7rem] font-semibold gap-1"
-          >
-            <TiArrowSortedUp />
-            {tooltipData ? (
-              <RenderTooltipContent tooltipData={tooltipData} data={data} />
-            ) : (
-              "$500"
-            )}
-          </span>
-        </div>
+    console.log("data", data);
+    console.log("dateScale", dateScale);
 
+  
+    return (
+      <>
+         <StockValueAndPriceChange tooltipData={tooltipData} data={data} />
         {/* The SVG for the graph */}
         <svg
           width="100%" // Make the SVG width responsive
@@ -194,7 +180,7 @@ export default withTooltip<LineGraphProps, TooltipData>(
             </Tooltip>
           </div>
         )}
-      </div>
+      </>
     );
   }
 );
