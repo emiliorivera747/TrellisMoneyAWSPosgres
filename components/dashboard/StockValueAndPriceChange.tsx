@@ -14,12 +14,14 @@ const StockValueAndPriceChange = ({
   data: SecurityData[];
 }) => {
   return (
+    console.log("Data In StockValueAndPriceChange:", tooltipData),
+
     <div className="flex flex-col">
-    <span className="text-xl font-medium text-zinc-800 tracking-wider">
-      {tooltipData
-        ? `${numberToMoneyFormat(getStockValue(tooltipData)) || "0.00"}`
-        : `${numberToMoneyFormat(data[data.length - 1]?.close)|| "0.00"}`}
-    </span>
+      <span className="text-xl font-medium text-zinc-800 tracking-wider">
+        {tooltipData
+          ? `${numberToMoneyFormat(getStockValue(tooltipData)) || "0.00"}`
+          : `${numberToMoneyFormat(data[data.length - 1]?.close) || "0.00"}`}
+      </span>
       <span
         style={{ color: "#74b816" }}
         className="flex-row flex items-center text-[0.7rem] font-semibold gap-1"
@@ -28,15 +30,11 @@ const StockValueAndPriceChange = ({
         {tooltipData ? (
           <RenderTooltipContent tooltipData={tooltipData} data={data} />
         ) : (
-          "$500"
+          `${numberToMoneyFormat(data[data.length - 1]?.close) || "0.00"}`
         )}
       </span>
     </div>
   );
 };
 
-
-
 export default StockValueAndPriceChange;
-
-

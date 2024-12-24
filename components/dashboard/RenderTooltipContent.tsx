@@ -15,7 +15,7 @@ const calculateYearsBetween = (startDate: Date, endDate: Date): number => {
 
 const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({ tooltipData, data }) => {
     if (!tooltipData) {
-        return <>$500</>;
+        return <>{data[data.length-1].year - data[0].year}</>;
     }
 
     const stockValueDifference = getStockValue(tooltipData) - data[0].close;

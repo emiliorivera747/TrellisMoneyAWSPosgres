@@ -2,9 +2,9 @@ import { useCallback } from "react";
 import { localPoint } from "@visx/event";
 import { bisector } from "@visx/vendor/d3-array";
 import { SecurityData } from "@/types/dashboardComponents";
+import { getDate } from "@/utils/helper-functions/accessors";
 
-const bisectDate = bisector<SecurityData, Date>((d) => new Date(d.date)).left;
-const getDate = (d: SecurityData) => new Date(d.date);
+const bisectDate = bisector<SecurityData, Date>((d) => d.year).left;
 const getStockValue = (d: SecurityData) => d.close;
 
 const useHandleTooltip = (
@@ -13,13 +13,23 @@ const useHandleTooltip = (
     dateScale: any,
     data: SecurityData[]
 ) => {
+    // console.log("Data In Handle Tooltip:", data); 
+    // console.log("StockValueScale In Handle Tooltip:", stockValueScale.domain());
+    // console.log("DateScale In Handle Tooltip:", dateScale.domain());
     return useCallback(
         (
             event: React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>
         ) => {
+
+            /**
+             * Get the x value of the mouse event
+             */
             const { x } = localPoint(event) || { x: 0 };
-            const x0 = dateScale.invert(x);
+            const x0 = dateScale.invert(x).getFullYear();
+
+            console.log("X0:", x0);
             const index = bisectDate(data, x0, 1);
+            console.log("Index:", index);
             const d0 = data[index - 1];
             const d1 = data[index];
             let d = d0;

@@ -20,7 +20,7 @@ export const generateProjectedNetWorth = async (
   const n = (end_year +1) - start_year;
   
   // Early return for empty holdings or invalid dates
-  if (!holdings.length || end_year <= start_year) {
+  if (!holdings.length || end_year < start_year) {
     return [];
   }
 
@@ -29,7 +29,7 @@ export const generateProjectedNetWorth = async (
    */
   for (let i = 0; i < n; i++) {
     let total = 0;
-
+  
     /**
      * Loop through each holding and calculate the future value of the holding for the current year.
      */

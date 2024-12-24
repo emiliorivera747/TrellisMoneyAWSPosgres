@@ -1,30 +1,17 @@
 import React, { useMemo, useCallback } from "react";
 import { Line, Bar } from "@visx/shape";
-// import appleStock, { AppleStock } from "@visx/mock-data/lib/mocks/appleStock";
 import { curveMonotoneX } from "@visx/curve";
-import { scaleTime, scaleLinear } from "@visx/scale";
+
 import {
   withTooltip,
-  Tooltip,
-  TooltipWithBounds,
   defaultStyles,
 } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
-import { localPoint } from "@visx/event";
-import { max, extent, bisector } from "@visx/vendor/d3-array";
-import { timeFormat } from "@visx/vendor/d3-time-format";
 import { LinePath } from "@visx/shape";
 
 //Components
-import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
 import StockValueAndPriceChange from "./StockValueAndPriceChange";
-
-//Icons
-import { TiArrowSortedUp } from "react-icons/ti";
-
-//Functions
-import { calculateRateOfChange } from "@/utils/helper-functions/calculateRateOfChange";
-import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
+import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
 
 //Hooks
 import useDateScale from "@/utils/hooks/useDateScale";
@@ -34,6 +21,9 @@ import useHandleTooltip from "@/utils/hooks/useHanldeTooltip";
 //Types
 import { SecurityData, LineGraphProps } from "@/types/dashboardComponents";
 
+//Accessors
+import { getDate, getStockValue } from "@/utils/helper-functions/accessors";
+
 export const background = "white";
 export const background2 = "white";
 export const accentColor = "#94d82d";
@@ -41,12 +31,6 @@ export const accentColorDark = "#495057";
 
 type TooltipData = SecurityData;
 
-// util
-const formatDate = timeFormat("%b %d, %Y");
-
-// accessors
-const getDate = (d: SecurityData) => new Date(d?.date);
-const getStockValue = (d: SecurityData) => d?.close;
 
 export default withTooltip<LineGraphProps, TooltipData>(
   ({
@@ -83,15 +67,12 @@ export default withTooltip<LineGraphProps, TooltipData>(
       data
     );
 
-    console.log("data", data);
-    console.log("dateScale", dateScale);
-
-  
     return (
       <>
-         <StockValueAndPriceChange tooltipData={tooltipData} data={data} />
+        <StockValueAndPriceChange tooltipData={tooltipData} data={data} />
         {/* The SVG for the graph */}
         <svg
+          className=""
           width="100%" // Make the SVG width responsive
           height="80%" // Make the SVG height responsive
           viewBox={`0 0 ${width + 6} ${height + 6}`} // Use the viewBox to scale the content
@@ -160,25 +141,12 @@ export default withTooltip<LineGraphProps, TooltipData>(
 
         {/* Tooltip div */}
         {tooltipData && (
-          <div>
-            <Tooltip
-              top={margin.top + 110}
-              left={tooltipLeft - 10}
-              style={{
-                ...defaultStyles,
-                minWidth: 72,
-                textAlign: "center",
-                transform: "translateX(-50%)",
-                fontSize: "0.6rem",
-                background: "none",
-                border: "none", // Remove the border
-                color: "#495057", // Change the text color to red
-                boxShadow: "none", // Ensure no box shadow is applied
-              }}
-            >
-              {formatDate(getDate(tooltipData))}
-            </Tooltip>
-          </div>
+          <LineGraphTooltip
+            margin={margin}
+            tooltipLeft={tooltipLeft}
+            defaultStyles={defaultStyles}
+            tooltipData={tooltipData}
+          />
         )}
       </>
     );

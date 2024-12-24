@@ -3,7 +3,7 @@ import { scaleLinear } from "@visx/scale";
 import { max } from "@visx/vendor/d3-array";
 
 interface SecurityData {
-    date: string;
+    year: number;
     close: number;
 }
 
@@ -14,7 +14,7 @@ const useStockValueScale = (
     margin: { top: number; right: number; bottom: number; left: number },
     innerHeight: number
 ) => {
-    return useMemo(
+    const scale = useMemo(
         () =>
             scaleLinear({
                 range: [innerHeight + margin.top, margin.top],
@@ -23,6 +23,8 @@ const useStockValueScale = (
             }),
         [margin.top, innerHeight, data]
     );
+    // console.log("Scale:", scale.domain());
+    return scale;
 };
 
 export default useStockValueScale;
