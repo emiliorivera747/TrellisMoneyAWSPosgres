@@ -2,10 +2,7 @@ import React, { useMemo, useCallback } from "react";
 import { Line, Bar } from "@visx/shape";
 import { curveMonotoneX } from "@visx/curve";
 
-import {
-  withTooltip,
-  defaultStyles,
-} from "@visx/tooltip";
+import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
 import { LinePath } from "@visx/shape";
 
@@ -30,7 +27,6 @@ export const accentColor = "#94d82d";
 export const accentColorDark = "#495057";
 
 type TooltipData = SecurityData;
-
 
 export default withTooltip<LineGraphProps, TooltipData>(
   ({
@@ -69,7 +65,10 @@ export default withTooltip<LineGraphProps, TooltipData>(
 
     return (
       <>
-        <StockValueAndPriceChange tooltipData={tooltipData} data={data} />
+        <StockValueAndPriceChange
+          tooltipData={tooltipData ?? null}
+          data={data}
+        />
         {/* The SVG for the graph */}
         <svg
           className=""
@@ -86,14 +85,16 @@ export default withTooltip<LineGraphProps, TooltipData>(
             fill="url(#area-background-gradient)"
             rx={14}
           />
-          <LinePath
-            data={data}
-            x={(d) => dateScale(getDate(d)) ?? 0}
-            y={(d) => stockValueScale(getStockValue(d)) ?? 0}
-            stroke="rgb(0, 200, 5)" // Use the stroke for the line color
-            strokeWidth={2}
-            curve={curveMonotoneX} // Keep the curve for smoothness if desired
-          />
+          <g>
+            <LinePath
+              data={data}
+              x={(d) => dateScale(getDate(d)) ?? 0}
+              y={(d) => stockValueScale(getStockValue(d)) ?? 0}
+              stroke="rgb(0, 200, 5)" // Use the stroke for the line color
+              strokeWidth={2}
+              curve={curveMonotoneX} // Keep the curve for smoothness if desired
+            />
+          </g>
           <Bar
             x={margin.left}
             y={margin.top}
@@ -109,7 +110,7 @@ export default withTooltip<LineGraphProps, TooltipData>(
           {tooltipData && (
             <g>
               <Line
-                from={{ x: tooltipLeft, y: margin.top + 120 }}
+                from={{ x: tooltipLeft, y: margin.top }}
                 to={{ x: tooltipLeft, y: innerHeight + margin.top }}
                 stroke={accentColorDark}
                 strokeWidth={0.6}

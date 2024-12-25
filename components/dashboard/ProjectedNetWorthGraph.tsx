@@ -10,16 +10,20 @@ import financialProjectionService from "@/features/plaid/financial-projections/f
 //components
 import LineGraph from "./LineGraph";
 
+// Skeletons
+import Skeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
+
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
 import { filter } from "@visx/vendor/d3-array";
+import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
 
 /**
  * Projects the future net worth of the user based on the data provided
  *
  */
 const ProjectedNetWorthGraph = () => {
-  const defaultYearsIntoTheFuture = 40;
+  const defaultYearsIntoTheFuture = 100;
 
   const currentYear = Number(new Date().getFullYear().toString());
 
@@ -27,7 +31,11 @@ const ProjectedNetWorthGraph = () => {
     currentYear + defaultYearsIntoTheFuture
   );
 
-  const { data: projectionData, error: projectionError } = useQuery({
+  const {
+    data: projectionData,
+    error: projectionError,
+    isLoading: projectionLoading,
+  } = useQuery({
     queryKey: ["projectedNetWorth", currentYear, selectedYear],
     queryFn: ({ queryKey }) => {
       const [, startDate, endDate] = queryKey;
@@ -39,24 +47,34 @@ const ProjectedNetWorthGraph = () => {
   });
   const [filteredData, setFilteredData] = useState(projectionData?.data);
 
-
   useEffect(() => {
-    const results = projectionData?.data?.filter((data: { year: number }) => {
+    const filter = projectionData?.data?.filter((data: { year: number }) => {
       return data.year <= selectedYear;
+    });
+    const results = filter?.map((data: { year: number; close: number }) => {
+      return {
+        year: new Date(data.year,0, 1),
+        close: data.close,
+      };
     });
     setFilteredData(results);
   }, [selectedYear, projectionData]);
 
-  const years = Array.from({ length: 41 }, (_, i) => 2024 + i);
+  const years = Array.from(
+    { length: defaultYearsIntoTheFuture },
+    (_, i) => 2024 + i
+  );
 
   const handleSelectedValue = (e: any) => {
     setSelectedYear(e.target.value);
   };
 
+  if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
+
   return (
     <div className="sm:mx-2 border-b border-zinc-200">
       <div className="flex flex-col gap-1">
-        <div className="font-medium text-tertiary-900 flex items-center gap-1 justify-start">
+        <div className="font-medium text-tertiary-900 flex items-center gap-2 justify-start">
           <span className="text-xl tracking-wider">Projected Net Worth</span>
           <div className="">
             <select
@@ -73,7 +91,7 @@ const ProjectedNetWorthGraph = () => {
           </div>
         </div>
       </div>
-      <div className="h-[20rem] w-full">
+      <div className="h-[25rem] w-full">
         <ParentSize>
           {({ height, width }: { height: number; width: number }) => (
             <LineGraph

@@ -1,5 +1,5 @@
 export interface SecurityData {
-  year: number;
+  year: Date;
   close: number;
 }
 

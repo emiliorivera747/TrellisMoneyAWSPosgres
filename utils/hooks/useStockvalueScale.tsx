@@ -1,11 +1,7 @@
 import { useMemo } from "react";
 import { scaleLinear } from "@visx/scale";
 import { max } from "@visx/vendor/d3-array";
-
-interface SecurityData {
-    year: number;
-    close: number;
-}
+import { SecurityData } from "@/types/dashboardComponents";
 
 const getStockValue = (d: SecurityData) => d.close;
 
