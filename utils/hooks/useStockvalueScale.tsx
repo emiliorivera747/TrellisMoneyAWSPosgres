@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import { scaleLinear } from "@visx/scale";
 import { max } from "@visx/vendor/d3-array";
 import { SecurityData } from "@/types/dashboardComponents";
+import { extent } from "@visx/vendor/d3-array";
+
 
 const getStockValue = (d: SecurityData) => d.close;
 
@@ -13,8 +15,8 @@ const useStockValueScale = (
     const scale = useMemo(
         () =>
             scaleLinear({
-                range: [innerHeight + margin.top, margin.top],
-                domain: [0, (max(data, getStockValue) || 0) + innerHeight / 3],
+                range: [innerHeight - margin.bottom, margin.top + 50],
+                domain: extent(data, getStockValue) as [number, number],
                 nice: true,
             }),
         [margin.top, innerHeight, data]

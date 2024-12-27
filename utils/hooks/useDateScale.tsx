@@ -5,10 +5,11 @@ import { SecurityData } from "@/types/dashboardComponents";
 import { getDate } from "@/utils/helper-functions/accessors";
 
 const useDateScale = (data: SecurityData[], margin: { left: number }, innerWidth: number) => {
+    console.log("Margin left", margin.left);
     const scale = useMemo(
         () =>
            scaleTime({
-                range: [margin.left, innerWidth + margin.left],
+                range: [margin.left, innerWidth],
                 domain: extent(data, getDate) as [Date, Date],
             }),
         [innerWidth, margin.left, data]

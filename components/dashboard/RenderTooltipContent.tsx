@@ -56,7 +56,7 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
 
   return (
     <>
-      {" $" +
+      {
         numberToMoneyFormat(stockValueDifference) +
         " (" +
         rateOfChange.toFixed(2) +

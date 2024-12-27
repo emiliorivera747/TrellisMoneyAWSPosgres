@@ -15,7 +15,7 @@ const StockValueAndPriceChange = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <span className="text-xl font-medium text-zinc-800 tracking-wider">
+      <span className="text-[1.4rem] font-medium text-zinc-800 tracking-wider">
         {tooltipData
           ? `${numberToMoneyFormat(getStockValue(tooltipData)) || "0.00"}`
           : `${numberToMoneyFormat(data[data.length - 1]?.close) || "0.00"}`}
