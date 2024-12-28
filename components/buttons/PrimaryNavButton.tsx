@@ -26,6 +26,7 @@ const PrimaryNavButton = ({
   href,
   label,
 }: PrimaryNavButtonProps) => {
+  
   const buttonClass = withLinearGradient
     ? `flex items-center justify-center w-full bg-gradient-to-r ${bgFrom} ${bgTo} ${textColor} px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] ${hoverBgFrom} ${hoverBgTo} transition duration-300`
     : `flex items-center justify-center w-full ${bgColor} ${textColor} px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] ${hoverBgColor} transition duration-300`;

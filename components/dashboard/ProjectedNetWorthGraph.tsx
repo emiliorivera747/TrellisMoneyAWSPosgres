@@ -73,7 +73,7 @@ const ProjectedNetWorthGraph = () => {
   if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
 
   return (
-    <div className="sm:mx-2 border-b border-tertiary-300">
+    <div className="sm:mx-2">
       <div className="flex flex-col gap-1">
         <div className="font-medium text-tertiary-900 flex items-center gap-2 justify-start">
           <h1 className="text-[1.4rem] tracking-wider font-medium">
@@ -112,63 +112,25 @@ const ProjectedNetWorthGraph = () => {
           )}
         </ParentSize>
       </div>
-      <div className="flex align-center gap-2 mb-8 border-box">
+      <div className=" gap-2 mb-8 grid grid-cols-6 items-center border-b border-tertiary-300 pb-6">
+
         <LineGraphFilterButton
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-              />
-            </svg>
-          }
+          isSelected={true}
+          svg_path="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
           label="No Inflation"
+          color="#343a40"
         />
         <LineGraphFilterButton
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
-              />
-            </svg>
-          }
+          isSelected={false}
+          svg_path="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
           label="With Inflation"
+          color="#343a40"
         />
         <LineGraphFilterButton
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
-              />
-            </svg>
-          }
+          isSelected={false}
+          svg_path="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
           label="Both"
+          color="#343a40"
         />
       </div>
     </div>

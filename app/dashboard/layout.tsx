@@ -3,7 +3,7 @@ import Footer from "@/components/footers/Footer";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-screen mx-[2%] sm:mx-[4%] 2xl:mx-[25%] border-box">
+    <div className="h-screen mx-[2%] sm:mx-[4%] 2xl:mx-[20%] border-box">
       <div className="flex sm:flex-row flex-col">
         <SideNavigationBar />
         <main className=" sm:w-full flex flex-col ">

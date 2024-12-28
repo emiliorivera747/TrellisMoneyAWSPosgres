@@ -82,10 +82,14 @@ const Dashboard = () => {
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%] ">
         <div className="col-span-10 sm:col-span-7 overflow-y-auto h-screen no-scrollbar">
           <ProjectedNetWorthGraph />
-          <p className="text-tertiary-1000 font-semibold mt-4 mx-4">
+          <ProjectedNetWorthGraph />
+
+          <ProjectedNetWorthGraph />
+
+          {/* <p className="text-tertiary-1000 font-semibold mt-4 mx-4">
             Net Worth: $
             {netWorthData?.netWorth ? netWorthData.netWorth : "None"}
-          </p>
+          </p> */}
           {/* <p>Identity Data: {JSON.stringify(identityData, null, 2)}</p> */}
           {/* <p>Holdings Data: {JSON.stringify(holdingsData, null, 2)}</p> */}
           {/* <p>Account Data: {JSON.stringify(accountData)}</p> */}
