@@ -82,9 +82,6 @@ const Dashboard = () => {
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%] ">
         <div className="col-span-10 sm:col-span-7 overflow-y-auto h-screen no-scrollbar">
           <ProjectedNetWorthGraph />
-          <ProjectedNetWorthGraph />
-
-          <ProjectedNetWorthGraph />
 
           {/* <p className="text-tertiary-1000 font-semibold mt-4 mx-4">
             Net Worth: $

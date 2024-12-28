@@ -16,8 +16,8 @@ import Skeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSke
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
-import { filter } from "@visx/vendor/d3-array";
 import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
+
 
 /**
  * Projects the future net worth of the user based on the data provided
@@ -48,6 +48,10 @@ const ProjectedNetWorthGraph = () => {
   });
   const [filteredData, setFilteredData] = useState(projectionData?.data);
 
+  const [isInflation, setIsInflation] = useState(false);
+  const [isNoInflation, setIsNoInflation] = useState(true);
+  const [isBoth, setIsBoth] = useState(false);
+
   useEffect(() => {
     const filter = projectionData?.data?.filter((data: { year: number }) => {
       return data.year <= selectedYear;
@@ -61,6 +65,24 @@ const ProjectedNetWorthGraph = () => {
     setFilteredData(results);
   }, [selectedYear, projectionData]);
 
+  const handleIsInflation = () => {
+    setIsInflation(true);
+    setIsNoInflation(false);
+    setIsBoth(false);
+  };
+
+  const handleIsNoInflation = () => {
+    setIsInflation(false);
+    setIsNoInflation(true);
+    setIsBoth(false);
+  };
+
+  const handleIsBoth = () => {
+    setIsInflation(false);
+    setIsNoInflation(false);
+    setIsBoth(true);
+  };
+
   const years = Array.from(
     { length: defaultYearsIntoTheFuture + 1 },
     (_, i) => 2024 + i
@@ -73,7 +95,7 @@ const ProjectedNetWorthGraph = () => {
   if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
 
   return (
-    <div className="sm:mx-2">
+    <div className="sm:mx-2 mb-8">
       <div className="flex flex-col gap-1">
         <div className="font-medium text-tertiary-900 flex items-center gap-2 justify-start">
           <h1 className="text-[1.4rem] tracking-wider font-medium">
@@ -83,14 +105,15 @@ const ProjectedNetWorthGraph = () => {
             <select
               value={selectedYear}
               onChange={handleSelectedValue}
-              className=" p-[0.2rem] border hover:border hover:border-zinc-200 border-white rounded font-normal text-zinc-800 text-xl self-end focus:outline-none"
+              className=" p-[0.2rem] border hover:border hover:border-tertiary-300 border-white rounded font-normal text-zinc-800 text-xl self-end focus:outline-none"
             >
-              {years.map((year) => (
+            {years.map((year) => (
                 <option key={year} value={year}>
                   {year}
                 </option>
-              ))}
-            </select>
+              ))} */}
+        
+           </select>
           </div>
         </div>
       </div>
@@ -112,25 +135,24 @@ const ProjectedNetWorthGraph = () => {
           )}
         </ParentSize>
       </div>
-      <div className=" gap-2 mb-8 grid grid-cols-6 items-center border-b border-tertiary-300 pb-6">
-
+      <div className=" gap-2 mt-4 grid grid-cols-6 items-center border-b border-tertiary-300 pb-6 ">
         <LineGraphFilterButton
-          isSelected={true}
+          isSelected={isNoInflation}
           svg_path="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
           label="No Inflation"
-          color="#343a40"
+          onClick={handleIsNoInflation}
         />
         <LineGraphFilterButton
-          isSelected={false}
+          isSelected={isInflation}
           svg_path="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
           label="With Inflation"
-          color="#343a40"
+          onClick={handleIsInflation}
         />
         <LineGraphFilterButton
-          isSelected={false}
+          isSelected={isBoth}
           svg_path="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
           label="Both"
-          color="#343a40"
+          onClick={handleIsBoth}
         />
       </div>
     </div>

@@ -63,7 +63,7 @@ export default withTooltip<LineGraphProps, TooltipData>(
       data
     );
     return (
-      <div className={` absolute h-[90%] w-full `}>
+      <div className={` absolute h-[100%] w-full `}>
         <StockValueAndPriceChange
           tooltipData={tooltipData ?? null}
           data={data}
