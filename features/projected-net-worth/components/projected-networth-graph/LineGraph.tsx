@@ -8,7 +8,7 @@ import { LinePath } from "@visx/shape";
 
 //Components
 import StockValueAndPriceChange from "./StockValueAndPriceChange";
-import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
+import LineGraphTooltip from "@/features/projected-net-worth/components/projected-networth-graph/LineGraphTooltip";
 
 //Hooks
 import useDateScale from "@/utils/hooks/useDateScale";

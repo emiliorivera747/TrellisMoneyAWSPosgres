@@ -10,10 +10,8 @@ import financialProjectionService from "@/features/plaid/financial-projections/f
 //components
 import LineGraph from "./LineGraph";
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
-import GroupedDateSelector from "@/components/dashboard/GroupedDateSelector";
+import GroupedDateSelector from "@/features/projected-net-worth/components/projected-networth-graph/GroupedDateSelector";
 
-// Skeletons
-import Skeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";

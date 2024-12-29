@@ -7,7 +7,7 @@ import { calculateProjectedAmount } from "@/utils/helper-functions/calculatetPro
 import {
   ProjectedHoldingCardHeader,
   ProjectedHoldingCardPrimaryHeader,
-} from "@/components/dashboard/ProjectedHoldingCardHeader";
+} from "@/features/projected-net-worth/components/projected-holdings/ProjectedHoldingCardHeader";
 
 //types
 import { Holding} from "@/types/plaid";

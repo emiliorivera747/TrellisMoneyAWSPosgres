@@ -9,7 +9,7 @@ import {
 import { getYearRanges } from "@/utils/helper-functions/getYearRanges";
 
 //Components
-import HeaderWithIcon from "@/components/dashboard/HeaderWithIcon";
+import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/HeaderWithIcon";
 
 //Types
 import { GroupedDateSelectorProps } from "@/types/dashboardComponents";
@@ -61,7 +61,7 @@ const GroupedDateSelector = ({
         </div>
       </div>
 
-      <div className=" mb-6">
+      <div className="mb-6">
         <HeaderWithIcon
           actionFunction={() => setShowBeforeRetirement(!showBeforeRetirement)}
           label="Before Retirement"
