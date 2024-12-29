@@ -5,7 +5,7 @@ export const GetSvgWithPath = (path: string, strokeWidth: number) => (
     viewBox="0 0 24 24"
     strokeWidth={strokeWidth}
     stroke="currentColor"
-    className="size-7 sm:inline hidden"
+    className={`${size} sm:inline hidden`}
   >
     <path strokeLinecap="round" strokeLinejoin="round" d={path} />
   </svg>

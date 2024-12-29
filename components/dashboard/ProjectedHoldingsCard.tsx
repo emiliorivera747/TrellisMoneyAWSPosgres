@@ -9,6 +9,9 @@ import {
   ProjectedHoldingCardPrimaryHeader,
 } from "@/components/dashboard/ProjectedHoldingCardHeader";
 
+//types
+import { Holding} from "@/types/plaid";
+
 interface ProjectedHoldingsCardProps {
   numberOfYears: Number;
   holdings: {
@@ -25,16 +28,16 @@ interface ProjectedHoldingsCardProps {
 const ProjectedHoldingsCard: React.FC<ProjectedHoldingsCardProps> = ({
   numberOfYears,
   holdings,
-}) => {
+}:  ProjectedHoldingsCardProps) => {
   return (
     <aside
       style={{
         border: "1px solid rgb(221, 221, 221)",
         scrollbarWidth: "none",
       }}
-      className="col-span-10 h-screen sm:col-span-3 sm:row-span-1 rounded overflow-y-auto sticky "
+      className={`${holdings?.length === 0 ? "h-[25rem]": "h-screen"} max-h-screen col-span-10 sm:col-span-3 sm:row-span-1 overflow-y-auto sticky rounded-[10px]`}
     >
-      <div className="flex flex-col gap-1 absolute overflow-hidden w-full text-[#343a40] ">
+      <div className="flex flex-col gap-1 absolute overflow-hidden w-full text-[#343a40]">
         <ProjectedHoldingCardPrimaryHeader />
         <table className="min-w-full divide-y divide-gray-200">
           <ProjectedHoldingCardHeader />

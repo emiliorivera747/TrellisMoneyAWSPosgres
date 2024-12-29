@@ -42,7 +42,6 @@ const Dashboard = () => {
     queryFn: plaidService.getHoldings,
   });
 
-
   // const { data: accountData } = useQuery({
   //   queryKey: ["account"],
   //   queryFn: plaidService.getAccount,

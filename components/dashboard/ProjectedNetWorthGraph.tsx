@@ -10,6 +10,7 @@ import financialProjectionService from "@/features/plaid/financial-projections/f
 //components
 import LineGraph from "./LineGraph";
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
+import GroupedDateSelector from "@/components/dashboard/GroupedDateSelector";
 
 // Skeletons
 import Skeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
@@ -18,6 +19,15 @@ import Skeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSke
 import { useQuery } from "@tanstack/react-query";
 import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
 
+// UI
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 /**
  * Projects the future net worth of the user based on the data provided
@@ -47,7 +57,6 @@ const ProjectedNetWorthGraph = () => {
     },
   });
   const [filteredData, setFilteredData] = useState(projectionData?.data);
-
   const [isInflation, setIsInflation] = useState(false);
   const [isNoInflation, setIsNoInflation] = useState(true);
   const [isBoth, setIsBoth] = useState(false);
@@ -102,18 +111,29 @@ const ProjectedNetWorthGraph = () => {
             Projected Net Worth
           </h1>
           <div className="">
-            <select
+            {/* <select
               value={selectedYear}
               onChange={handleSelectedValue}
               className=" p-[0.2rem] border hover:border hover:border-tertiary-300 border-white rounded font-normal text-zinc-800 text-xl self-end focus:outline-none"
             >
-            {years.map((year) => (
+              {years.map((year) => (
                 <option key={year} value={year}>
                   {year}
                 </option>
-              ))} */}
-        
-           </select>
+              ))}
+            </select> */}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger>{selectedYear}</DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="backdrop-blur bg-tertiary-300/60">
+              <GroupedDateSelector
+                years={years}
+                currentYear={currentYear}
+                retirementYear={2050}
+                setSelectedYear={setSelectedYear}
+              />
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>

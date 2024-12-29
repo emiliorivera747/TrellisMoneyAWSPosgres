@@ -22,3 +22,10 @@ export interface RenderTooltipContentProps {
   tooltipData: SecurityData | null;
   data: SecurityData[];
 }
+
+export interface GroupedDateSelectorProps {
+  years: number[];
+  currentYear: number;
+  retirementYear: number;
+  setSelectedYear: (year: number) => void;
+}
