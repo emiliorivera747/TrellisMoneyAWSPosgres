@@ -102,3 +102,9 @@ input:-webkit-autofill:active {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.year-selector{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+   appearance: none;
+}

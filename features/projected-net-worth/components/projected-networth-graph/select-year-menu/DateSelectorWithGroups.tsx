@@ -8,11 +8,11 @@ import {
 import { getYearRanges } from "@/utils/helper-functions/getYearRanges";
 
 //Components
-import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/HeaderWithIcon";
-import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/ListOfYears";
-import RetirementYearSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/RetirementYearSectionMenu";
-import BeforeRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/BeforeRetirementSectionMenu";
-import AfterRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/AfterRetirementSectionMenu";
+import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/HeaderWithIcon";
+import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYears";
+import RetirementYearSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/RetirementYearSectionMenu";
+import BeforeRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/BeforeRetirementSectionMenu";
+import AfterRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/AfterRetirementSectionMenu";
 
 //Types
 import { GroupedDateSelectorProps } from "@/types/dashboardComponents";
@@ -49,8 +49,6 @@ const DateSelectorWithGroups = ({
         selectRetirementYear={setRetirementYear}
         showYearSelector={showYearSelector}
         years={years}
-        register={register}
-        errors={errors}
       />
 
       <BeforeRetirementSectionMenu

@@ -1,5 +1,5 @@
 import React from "react";
-import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/ListOfYears";
+import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYears";
 interface ListOfYearsProps {
   actionFn: (year: number) => void;
   beforeRetirementRanges: Record<string, number[]>;
@@ -16,7 +16,7 @@ const ListOfYearsGroupedByRange = ({
           <h2 className="text-tertiary-800 text-[0.8rem] mb-1">
             {range} years until retirement
           </h2>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-x-4 gap-y-2">
             <ListOfYears
               years={beforeRetirementRanges[range]}
               actionFn={actionFn}

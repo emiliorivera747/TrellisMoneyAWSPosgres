@@ -10,14 +10,14 @@ const YearSelector = ({
 
   return (
     <select
-      className=" bg-tertiary-500 border-tertiary-500 font-semibold text-xs text-tertiary-800 border rounded-[12px] hover:bg-primary-800 hover:text-white hover:border-transparent hover:font-semibold transition duration-600 ease-in-out py-[0.6rem]p"
+      className="pointer year-selector rounded-[12px] border-2 border-tertiary-400 text-xs flex items-center justify-center p-[0.6rem] font-semibold text-teritary-800 bg-tertiary-400 hover:border-primary-400 hover:cursor-pointr focus:outline-none focus:border-primary-400 text-center"
       onChange={(e) => setSelectedYear(Number(e.target.value))}
       value={selectedYear}
     >
       {years.map((year) => (
-        <option key={year} value={year}>
-          {year}
-        </option>
+      <option key={year} value={year}>
+      {year}
+      </option>
       ))}
     </select>
   );

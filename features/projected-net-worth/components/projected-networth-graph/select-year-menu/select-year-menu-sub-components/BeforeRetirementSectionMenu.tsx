@@ -1,10 +1,10 @@
 import React from "react";
-import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/HeaderWithIcon";
+import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/HeaderWithIcon";
 import {
   cheveronUp,
   cheveronDown,
 } from "@/utils/helper-functions/getCheverons";
-import ListOfYearsGroupedByRange from "@/features/projected-net-worth/components/projected-networth-graph/ListOfYearsGroupedByRange";
+import ListOfYearsGroupedByRange from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYearsGroupedByRange";
 
 interface BeforeRetirementSectionMenuProps {
   beforeRetirementRanges: Record<string, number[]>;

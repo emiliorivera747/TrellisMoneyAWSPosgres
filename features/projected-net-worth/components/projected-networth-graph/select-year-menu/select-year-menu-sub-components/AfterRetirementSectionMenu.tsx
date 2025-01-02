@@ -1,11 +1,11 @@
 import React from "react";
-import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/HeaderWithIcon";
+import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/HeaderWithIcon";
 import {
   cheveronUp,
   cheveronDown,
 } from "@/utils/helper-functions/getCheverons";
 
-import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/ListOfYears";
+import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYears";
 
 interface AfterRetirementSectionMenuProps {
   afterRetirementYears: number[];

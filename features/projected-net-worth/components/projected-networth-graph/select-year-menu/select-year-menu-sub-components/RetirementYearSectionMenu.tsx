@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/HeaderWithIcon";
+import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/HeaderWithIcon";
 import PrimaryDropDownMenuButton from "@/features/projected-net-worth/components/buttons/PrimaryDropDownMenuButton";
 import { RetirementYearSectionMenuProps } from "@/types/dashboardComponents";
 import { getPencilSvg } from "@/utils/helper-functions/getPencilSvg";
 
 // Components
-import YearSelector from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/YearSelector";
+import YearSelector from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/YearSelector";
 
 const RetirementYearSectionMenu = ({
   retirementYear,
@@ -24,6 +24,10 @@ const RetirementYearSectionMenu = ({
         label="Retirement Year"
         icon={getPencilSvg}
       />
+      <h2 className="text-tertiary-800 text-[0.8rem] mb-2">
+        You are set to retire in {retirementYear - years[0]} years
+      </h2>
+
       {!showYearSelector && (
         <div className="grid grid-cols-3 gap-2">
           <PrimaryDropDownMenuButton
@@ -33,7 +37,7 @@ const RetirementYearSectionMenu = ({
         </div>
       )}
       {showYearSelector && (
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-3 gap-3 grid-rows-2">
           <YearSelector
             years={years}
             selectedYear={selectedYear}
@@ -41,7 +45,7 @@ const RetirementYearSectionMenu = ({
           />
           <button
             type="button"
-            className="bg-primary-800 text-white grid-column-start-1 col-span-1 rounded-[12px] py-[0.6rem] px-[1rem] font-semibold text-xs hover:bg-primary-900 transition duration-600 ease-in-out"
+            className="bg-primary-800 text-white col-span-1 rounded-[12px] py-[0.6rem] px-[1rem] font-semibold text-xs hover:bg-primary-900 transition duration-600 ease-in-out row-start-2"
             onClick={() => selectRetirementYear(selectedYear)}
           >
             Update
