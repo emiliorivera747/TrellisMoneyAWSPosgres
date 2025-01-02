@@ -1,3 +1,5 @@
+import { UseFormRegister, Path, FieldValues, FieldErrors} from "react-hook-form";
+
 export interface SecurityData {
   year: Date;
   close: number;
@@ -23,9 +25,27 @@ export interface RenderTooltipContentProps {
   data: SecurityData[];
 }
 
-export interface GroupedDateSelectorProps {
+export interface GroupedDateSelectorProps<TFieldValues extends FieldValues> {
   years: number[];
-  currentYear: number;
   retirementYear: number;
+  register: UseFormRegister<TFieldValues>;
+  errors: FieldErrors<TFieldValues>;
+  setSelectedYear: (year: number) => void;
+  setRetirementYear: (year: number) => void;
+}
+
+export interface RetirementYearSectionMenuProps{
+  retirementYear: number;
+  selectYear: () => void;
+  editRetirementYear: () => void;
+  selectRetirementYear: (year: number) => void;
+  showYearSelector: boolean;
+  years: number[];
+}
+
+
+export interface YearSelectorProps {
+  years: number[];
+  selectedYear: number;
   setSelectedYear: (year: number) => void;
 }

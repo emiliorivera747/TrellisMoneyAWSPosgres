@@ -11,6 +11,15 @@ export interface PasswordInputProps<TFieldValues extends FieldValues> {
   setPassword?: React.Dispatch<React.SetStateAction<string>>;
 }
 
+export interface NumberInputProps<TFieldValues extends FieldValues> {
+  type: "number";
+  id: string;
+  placeholder: string;
+  fieldName: Path<TFieldValues>;
+  errors: FieldErrors<TFieldValues>;
+  register: UseFormRegister<TFieldValues>;
+}
+
 export interface TextInputProps<TFieldValues extends FieldValues> {
     type: "email"| "text" | "url" | "search"| "tel" |"number"  ;
     id: string;

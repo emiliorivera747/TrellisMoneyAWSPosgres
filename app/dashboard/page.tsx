@@ -17,6 +17,8 @@ import financialProjectionService from "@/features/plaid/financial-projections/f
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
 
+
+
 const Dashboard = () => {
   const client = createClient();
   useEffect(() => {
@@ -71,6 +73,7 @@ const Dashboard = () => {
   useEffect(() => {
     generateToken();
   }, []);
+
   // console.log("Identity Data ", identityData);
   // console.log("Holdings Data ", holdingsData);
   // // console.log("Account Data ", accountData);

@@ -10,7 +10,7 @@ import financialProjectionService from "@/features/plaid/financial-projections/f
 //components
 import LineGraph from "./LineGraph";
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
-import GroupedDateSelector from "@/features/projected-net-worth/components/projected-networth-graph/GroupedDateSelector";
+import DateSelectorWithGroups from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/DateSelectorWithGroups";
 
 
 // External Libraries
@@ -21,17 +21,30 @@ import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/Pro
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+//React hook forms
+import { useForm } from "react-hook-form";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { RetirementYearInput, retirementYearInputSchema  } from "@/features/projected-net-worth/schema/ProjectedNetWorthGraphSchemas";
 
 /**
  * Projects the future net worth of the user based on the data provided
  *
  */
 const ProjectedNetWorthGraph = () => {
+  const {
+    register,
+    setError,
+    formState: { errors },
+  } = useForm<RetirementYearInput>({
+    resolver: zodResolver(retirementYearInputSchema),
+  });
+
+  
   const defaultYearsIntoTheFuture = 100;
 
   const currentYear = Number(new Date().getFullYear().toString());
@@ -54,6 +67,8 @@ const ProjectedNetWorthGraph = () => {
       );
     },
   });
+
+  const [retirementYear, setRetirementYear] = useState(2050);
   const [filteredData, setFilteredData] = useState(projectionData?.data);
   const [isInflation, setIsInflation] = useState(false);
   const [isNoInflation, setIsNoInflation] = useState(true);
@@ -95,8 +110,10 @@ const ProjectedNetWorthGraph = () => {
     (_, i) => 2024 + i
   );
 
-  const handleSelectedValue = (e: any) => {
-    setSelectedYear(e.target.value);
+
+  const editRetirementYear = (year: number) => {
+    setRetirementYear(year);
+    setSelectedYear(year);
   };
 
   if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
@@ -109,26 +126,16 @@ const ProjectedNetWorthGraph = () => {
             Projected Net Worth
           </h1>
           <div className="">
-            {/* <select
-              value={selectedYear}
-              onChange={handleSelectedValue}
-              className=" p-[0.2rem] border hover:border hover:border-tertiary-300 border-white rounded font-normal text-zinc-800 text-xl self-end focus:outline-none"
-            >
-              {years.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select> */}
-
             <DropdownMenu>
               <DropdownMenuTrigger>{selectedYear}</DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="backdrop-blur bg-tertiary-300/60">
-              <GroupedDateSelector
+              <DateSelectorWithGroups
                 years={years}
-                currentYear={currentYear}
-                retirementYear={2050}
+                retirementYear={retirementYear}
                 setSelectedYear={setSelectedYear}
+                setRetirementYear={editRetirementYear}
+                register={register}
+                errors={errors}
               />
               </DropdownMenuContent>
             </DropdownMenu>

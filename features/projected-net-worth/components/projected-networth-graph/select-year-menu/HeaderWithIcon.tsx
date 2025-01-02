@@ -17,7 +17,7 @@ const HeaderWithIcon = ({
   return (
     <button className={headerStyle} onClick={actionFunction}>
       <div className="block">{label}</div>
-      {icon}
+      <div className=" hover:bg-tertiary-400 flex items-center justify-center p-2 rounded-full hover:font-bold">{icon}</div>
     </button>
   );
 };
