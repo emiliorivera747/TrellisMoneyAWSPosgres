@@ -50,7 +50,6 @@ const DateSelectorWithGroups = ({
         showYearSelector={showYearSelector}
         years={years}
       />
-
       <BeforeRetirementSectionMenu
         beforeRetirementRanges={beforeRetirementRanges}
         setSelectedYear={setSelectedYear}
