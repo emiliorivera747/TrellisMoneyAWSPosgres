@@ -6,13 +6,7 @@ import {
 } from "@/utils/helper-functions/getCheverons";
 
 import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYears";
-
-interface AfterRetirementSectionMenuProps {
-  afterRetirementYears: number[];
-  setSelectedYear: (year: number) => void;
-  showAfterRetirement: boolean;
-  headerFn: () => void;
-}
+import { AfterRetirementSectionMenuProps } from "@/features/projected-net-worth/types/graphComponents";
 
 const AfterRetirementSectionMenu = ({
   afterRetirementYears,

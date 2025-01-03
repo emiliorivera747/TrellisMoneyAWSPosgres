@@ -1,14 +1,11 @@
 import React from "react";
 import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYears";
-interface ListOfYearsProps {
-  actionFn: (year: number) => void;
-  beforeRetirementRanges: Record<string, number[]>;
-}
+import { ListOfYearsGroupedByRangeProps } from "@/features/projected-net-worth/types/graphComponents";
 
 const ListOfYearsGroupedByRange = ({
   actionFn,
   beforeRetirementRanges,
-}: ListOfYearsProps) => {
+}: ListOfYearsGroupedByRangeProps) => {
   return (
     <div>
       {Object.keys(beforeRetirementRanges).map((range) => (

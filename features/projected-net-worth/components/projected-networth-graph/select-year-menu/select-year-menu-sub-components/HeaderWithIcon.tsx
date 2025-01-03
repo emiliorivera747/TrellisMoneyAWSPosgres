@@ -1,11 +1,6 @@
 import React from "react";
+import { HeaderWithIconProps } from "@/features/projected-net-worth/types/graphComponents";
 
-interface HeaderWithIconProps {
-  actionFunction: () => void;
-  label: string;
-  icon: React.ReactNode;
-  toolTipLabel: string;
-}
 import {
   Tooltip,
   TooltipContent,
@@ -14,7 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 
 const headerStyle =
-  "font-bold text-tertiary-900 text-[1rem] flex items-center gap-2 mb-1";
+  "font-bold text-tertiary-900 text-[1rem] flex items-center gap-2 mb-1 cursor-pointer";
 
 const HeaderWithIcon = ({
   actionFunction,
@@ -23,13 +18,12 @@ const HeaderWithIcon = ({
   toolTipLabel,
 }: HeaderWithIconProps) => {
   return (
-    <button className={headerStyle} onClick={actionFunction}>
+    <div className={headerStyle} onClick={actionFunction}>
       <div className="block">{label}</div>
-      <TooltipProvider >
+      <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            {" "}
-            <div className=" hover:bg-tertiary-400 flex items-center justify-center p-2 rounded-full hover:font-bold">
+            <div className="hover:bg-tertiary-400 flex items-center justify-center p-2 rounded-full hover:font-bold">
               {icon}
             </div>
           </TooltipTrigger>
@@ -38,7 +32,7 @@ const HeaderWithIcon = ({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-    </button>
+    </div>
   );
 };
 

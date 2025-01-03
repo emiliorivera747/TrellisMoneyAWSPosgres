@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 
 //Functions
-import {
-  cheveronUp,
-  cheveronDown,
-} from "@/utils/helper-functions/getCheverons";
 import { getYearRanges } from "@/utils/helper-functions/getYearRanges";
 
 //Components
-import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/HeaderWithIcon";
-import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYears";
 import RetirementYearSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/RetirementYearSectionMenu";
 import BeforeRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/BeforeRetirementSectionMenu";
 import AfterRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/AfterRetirementSectionMenu";
 
 //Types
-import { GroupedDateSelectorProps } from "@/types/dashboardComponents";
+import {GroupedDateSelectorProps} from "@/features/projected-net-worth/types/graphComponents";
 import { RetirementYearInput} from "@/features/projected-net-worth/schema/ProjectedNetWorthGraphSchemas";
 
 const DateSelectorWithGroups = ({

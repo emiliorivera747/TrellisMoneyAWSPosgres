@@ -2,10 +2,7 @@ import React from "react";
 
 import PrimaryDropDownMenuButton from "@/features/projected-net-worth/components/buttons/PrimaryDropDownMenuButton";
 
-interface ListOfYearsProps {
-  years: number[];
-  actionFn: (year: number) => void;
-}
+import { ListOfYearsProps } from "@/features/projected-net-worth/types/graphComponents";
 
 const ListOfYears = ({ years, actionFn }: ListOfYearsProps) => {
     return (

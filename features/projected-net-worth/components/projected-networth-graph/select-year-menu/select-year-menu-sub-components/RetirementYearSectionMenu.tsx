@@ -17,6 +17,13 @@ const RetirementYearSectionMenu = ({
 }: RetirementYearSectionMenuProps) => {
   const [selectedYear, setSelectedYear] = useState(retirementYear);
 
+  const getYearsToRetire = () => {
+    if (!years || years.length === 0 || !retirementYear) {
+      return 0;
+    }
+    return retirementYear - years[0];
+  };
+
   return (
     <div className="mb-6">
       <HeaderWithIcon
@@ -26,7 +33,7 @@ const RetirementYearSectionMenu = ({
         toolTipLabel="Edit"
       />
       <h2 className="text-tertiary-800 text-[0.8rem] mb-2">
-        You are set to retire in {retirementYear - years[0]} years
+        You are set to retire in {getYearsToRetire()} years
       </h2>
 
       <div
@@ -36,11 +43,10 @@ const RetirementYearSectionMenu = ({
         style={{ transitionProperty: "opacity, height" }}
       >
         {!showYearSelector && (
-            <button className="border-tertiary-500 font-semibold text-xs text-tertiary-800 border rounded-[12px] hover:bg-primary-800 hover:text-white hover:border-transparent hover:font-semibold transition duration-600 ease-in-out py-[0.6rem] ">{retirementYear}</button>
-          // <PrimaryDropDownMenuButton
-          //   actionFn={selectYear}
-          //   year={retirementYear}
-          // />
+          <PrimaryDropDownMenuButton
+            actionFn={selectYear}
+            year={retirementYear}
+          />
         )}
       </div>
 

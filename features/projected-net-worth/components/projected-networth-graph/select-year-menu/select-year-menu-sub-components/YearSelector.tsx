@@ -1,5 +1,5 @@
 import React from "react";
-import { YearSelectorProps } from "@/types/dashboardComponents";
+import { YearSelectorProps } from "@/features/projected-net-worth/types/graphComponents";
 
 const YearSelector = ({
   years,
@@ -14,7 +14,7 @@ const YearSelector = ({
       onChange={(e) => setSelectedYear(Number(e.target.value))}
       value={selectedYear}
     >
-      {years.map((year) => (
+      {years.map((year: number) => (
       <option key={year} value={year}>
       {year}
       </option>

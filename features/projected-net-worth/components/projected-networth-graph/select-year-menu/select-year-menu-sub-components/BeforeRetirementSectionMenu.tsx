@@ -5,13 +5,7 @@ import {
   cheveronDown,
 } from "@/utils/helper-functions/getCheverons";
 import ListOfYearsGroupedByRange from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYearsGroupedByRange";
-
-interface BeforeRetirementSectionMenuProps {
-  beforeRetirementRanges: Record<string, number[]>;
-  setSelectedYear: (year: number) => void;
-  headerFn: () => void;
-  showBeforeRetirement: boolean;
-}
+import { BeforeRetirementSectionMenuProps } from "@/features/projected-net-worth/types/graphComponents";
 
 const BeforeRetirementSectionMenu = ({
   showBeforeRetirement,
