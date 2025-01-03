@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { mockProjectionData } from "@/utils/data/mockProjectionData";
 
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 
@@ -12,6 +11,8 @@ import LineGraph from "./LineGraph";
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
 import DateSelectorWithGroups from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/DateSelectorWithGroups";
 
+//Functions
+import { GetSvgV2 } from "@/utils/helper-functions/GetSvgV2";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
@@ -29,7 +30,10 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { RetirementYearInput, retirementYearInputSchema  } from "@/features/projected-net-worth/schema/ProjectedNetWorthGraphSchemas";
+import {
+  RetirementYearInput,
+  retirementYearInputSchema,
+} from "@/features/projected-net-worth/schema/ProjectedNetWorthGraphSchemas";
 
 /**
  * Projects the future net worth of the user based on the data provided
@@ -44,7 +48,6 @@ const ProjectedNetWorthGraph = () => {
     resolver: zodResolver(retirementYearInputSchema),
   });
 
-  
   const defaultYearsIntoTheFuture = 100;
 
   const currentYear = Number(new Date().getFullYear().toString());
@@ -110,7 +113,6 @@ const ProjectedNetWorthGraph = () => {
     (_, i) => 2024 + i
   );
 
-
   const editRetirementYear = (year: number) => {
     setRetirementYear(year);
     setSelectedYear(year);
@@ -127,16 +129,26 @@ const ProjectedNetWorthGraph = () => {
           </h1>
           <div className="">
             <DropdownMenu>
-              <DropdownMenuTrigger>{selectedYear}</DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="backdrop-blur bg-tertiary-300/60">
-              <DateSelectorWithGroups
-                years={years}
-                retirementYear={retirementYear}
-                setSelectedYear={setSelectedYear}
-                setRetirementYear={editRetirementYear}
-                register={register}
-                errors={errors}
-              />
+                <DropdownMenuTrigger className="outline-none flex items-center justify-center gap-2 transition duration-500 ease-in-out border border-transparent border-tertiary-500 rounded-[6px] p-1 font-normal px-2 text-[1.2rem] hover:bg-tertiary-100 hover:border-tertiary-900">
+                {selectedYear}
+                {GetSvgV2({
+                  path: "m19.5 8.25-7.5 7.5-7.5-7.5",
+                  strokeWidth: 1.5,
+                  size: "size-4",
+                })}
+                </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="start"
+                className="backdrop-blur bg-tertiary-300/40"
+              >
+                <DateSelectorWithGroups
+                  years={years}
+                  retirementYear={retirementYear}
+                  setSelectedYear={setSelectedYear}
+                  setRetirementYear={editRetirementYear}
+                  register={register}
+                  errors={errors}
+                />
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

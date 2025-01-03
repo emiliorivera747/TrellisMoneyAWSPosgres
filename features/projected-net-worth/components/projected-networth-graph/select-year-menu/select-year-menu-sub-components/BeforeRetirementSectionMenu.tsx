@@ -20,11 +20,12 @@ const BeforeRetirementSectionMenu = ({
   beforeRetirementRanges,
 }: BeforeRetirementSectionMenuProps) => {
   return (
-    <div className="mb-6">
+    <div className="mb-6 transition-all duration-1000 ease-in-out">
       <HeaderWithIcon
         actionFunction={headerFn}
         label="Before Retirement"
         icon={showBeforeRetirement ? cheveronUp() : cheveronDown()}
+        toolTipLabel={showBeforeRetirement ? "Collapse" : "Expand"}
       />
       {showBeforeRetirement && (
         <ListOfYearsGroupedByRange

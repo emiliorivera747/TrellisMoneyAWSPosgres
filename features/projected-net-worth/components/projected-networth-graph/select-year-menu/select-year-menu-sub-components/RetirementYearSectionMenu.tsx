@@ -23,35 +23,50 @@ const RetirementYearSectionMenu = ({
         actionFunction={editRetirementYear}
         label="Retirement Year"
         icon={getPencilSvg}
+        toolTipLabel="Edit"
       />
       <h2 className="text-tertiary-800 text-[0.8rem] mb-2">
         You are set to retire in {retirementYear - years[0]} years
       </h2>
 
-      {!showYearSelector && (
-        <div className="grid grid-cols-3 gap-2">
-          <PrimaryDropDownMenuButton
-            actionFn={selectYear}
-            year={retirementYear}
-          />
-        </div>
-      )}
-      {showYearSelector && (
-        <div className="grid grid-cols-3 gap-3 grid-rows-2">
-          <YearSelector
-            years={years}
-            selectedYear={selectedYear}
-            setSelectedYear={setSelectedYear}
-          />
-          <button
-            type="button"
-            className="bg-primary-800 text-white col-span-1 rounded-[12px] py-[0.6rem] px-[1rem] font-semibold text-xs hover:bg-primary-900 transition duration-600 ease-in-out row-start-2"
-            onClick={() => selectRetirementYear(selectedYear)}
-          >
-            Update
-          </button>
-        </div>
-      )}
+      <div
+        className={`grid grid-cols-1 gap-y-2  transition-all duration-1000 ease-in-out ${
+          showYearSelector ? "opacity-0 h-0" : "opacity-100 h-auto"
+        }`}
+        style={{ transitionProperty: "opacity, height" }}
+      >
+        {!showYearSelector && (
+            <button className="border-tertiary-500 font-semibold text-xs text-tertiary-800 border rounded-[12px] hover:bg-primary-800 hover:text-white hover:border-transparent hover:font-semibold transition duration-600 ease-in-out py-[0.6rem] ">{retirementYear}</button>
+          // <PrimaryDropDownMenuButton
+          //   actionFn={selectYear}
+          //   year={retirementYear}
+          // />
+        )}
+      </div>
+
+      <div
+        className={`grid grid-cols-1 gap-x-4 gap-y-2 transition-all duration-1000 ease-in-out ${
+          showYearSelector ? "opacity-100 h-auto" : "opacity-0 h-0"
+        }`}
+        style={{ transitionProperty: "opacity, height" }}
+      >
+        {showYearSelector && (
+          <>
+            <YearSelector
+              years={years}
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+            />
+            <button
+              type="button"
+              className="bg-primary-800 text-white col-span-1 rounded-[12px] py-[0.6rem] px-[1rem] font-semibold text-xs hover:bg-primary-900 transition duration-600 ease-in-out "
+              onClick={() => selectRetirementYear(selectedYear)}
+            >
+              Update
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 };

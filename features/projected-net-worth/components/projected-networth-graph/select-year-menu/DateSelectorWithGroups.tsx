@@ -41,7 +41,7 @@ const DateSelectorWithGroups = ({
   );
 
   return (
-    <div className="w-[50rem] h-[28rem] py-6 px-10 overflow-scroll ">
+    <div className="w-[20rem] h-[28rem] py-4 px-6 overflow-scroll ">
       <RetirementYearSectionMenu
         retirementYear={retirementYear}
         selectYear={() => setSelectedYear(retirementYear)}

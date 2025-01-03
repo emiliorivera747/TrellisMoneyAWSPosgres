@@ -26,9 +26,10 @@ const AfterRetirementSectionMenu = ({
         actionFunction={headerFn}
         label="After Retirement"
         icon={showAfterRetirement ? cheveronUp() : cheveronDown()}
+        toolTipLabel={showAfterRetirement ? "Collapse" : "Expand"}
       />
       {showAfterRetirement && (
-        <div className="grid grid-cols-6 gap-2">
+        <div className="grid grid-cols-1 gap-2">
           <ListOfYears
             years={afterRetirementYears}
             actionFn={setSelectedYear}
