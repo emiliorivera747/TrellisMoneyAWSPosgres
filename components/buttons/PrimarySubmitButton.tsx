@@ -1,17 +1,7 @@
 import React from "react";
 import { useFormStatus } from "react-dom";
 import DotLoader from "@/components/loading/DotLoader";
-interface SubmitButtonProps {
-  bgColor?: string;
-  textColor?: string;
-  hoverBgColor?: string;
-  text?: string;
-  withLinearGradient?: boolean;
-  bgFrom?: string;
-  bgTo?: string;
-  hoverBgFrom?: string;
-  hoverBgTo?: string;
-}
+import { SubmitButtonProps } from "@/types/Buttons";
 
 const PrimarySubmitButton = ({
   bgColor = "bg-blue-500",

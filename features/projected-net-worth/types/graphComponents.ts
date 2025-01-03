@@ -30,11 +30,9 @@ export interface RenderTooltipContentProps {
   data: SecurityData[];
 }
 
-export interface GroupedDateSelectorProps<TFieldValues extends FieldValues> {
+export interface GroupedDateSelectorProps{
   years: number[];
   retirementYear: number;
-  register: UseFormRegister<TFieldValues>;
-  errors: FieldErrors<TFieldValues>;
   setSelectedYear: (year: number) => void;
   setRetirementYear: (year: number) => void;
 }
@@ -80,4 +78,17 @@ export interface ListOfYearsProps {
 export interface ListOfYearsGroupedByRangeProps {
   actionFn: (year: number) => void;
   beforeRetirementRanges: Record<string, number[]>;
+}
+export interface renderPrimaryDropDownMenuButtonProps {
+  showYearSelector: boolean;
+  selectYear: () => void;
+  retirementYear: number;
+}
+
+export interface renderYearSelectorProps {
+  showYearSelector: boolean;
+  years: number[];
+  selectedYear: number;
+  setSelectedYear: (year: number) => void;
+  selectRetirementYear: (year: number) => void;
 }

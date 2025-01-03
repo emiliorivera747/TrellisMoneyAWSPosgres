@@ -23,12 +23,12 @@ const HeaderWithIcon = ({
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            <div className="hover:bg-tertiary-400 flex items-center justify-center p-2 rounded-full hover:font-bold">
-              {icon}
-            </div>
+        <div className="hover:bg-tertiary-400 flex items-center justify-center p-2 rounded-full hover:font-bold">
+          {icon}
+        </div>
           </TooltipTrigger>
-          <TooltipContent side="right" className="bg-tertiary-800">
-            <div className="text-xs font-semibold">{toolTipLabel}</div>
+          <TooltipContent side="right" className="bg-tertiary-800 text-xs">
+        <div className="text-[0.6rem] font-semibold">{toolTipLabel}</div>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

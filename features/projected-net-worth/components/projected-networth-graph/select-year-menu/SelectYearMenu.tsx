@@ -4,22 +4,19 @@ import React, { useState } from "react";
 import { getYearRanges } from "@/utils/helper-functions/getYearRanges";
 
 //Components
-import RetirementYearSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/RetirementYearSectionMenu";
-import BeforeRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/BeforeRetirementSectionMenu";
-import AfterRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/AfterRetirementSectionMenu";
+import RetirementYearSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/retirement-year/RetirementYearSectionMenu";
+import BeforeRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/before-retirement/BeforeRetirementSectionMenu";
+import AfterRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/after-retirement/AfterRetirementSectionMenu";
 
 //Types
 import {GroupedDateSelectorProps} from "@/features/projected-net-worth/types/graphComponents";
-import { RetirementYearInput} from "@/features/projected-net-worth/schema/ProjectedNetWorthGraphSchemas";
 
-const DateSelectorWithGroups = ({
+const SelectYearMenu = ({
   years,
-  register,
-  errors,
   retirementYear,
   setSelectedYear,
   setRetirementYear,
-}: GroupedDateSelectorProps<RetirementYearInput>) => {
+}: GroupedDateSelectorProps) => {
 
   const [showBeforeRetirement, setShowBeforeRetirement] = useState(true);
   const [showAfterRetirement, setShowAfterRetirement] = useState(false);
@@ -35,7 +32,7 @@ const DateSelectorWithGroups = ({
   );
 
   return (
-    <div className="w-[20rem] h-[28rem] py-4 px-6 overflow-scroll ">
+    <div className="w-[20rem] h-[28rem] py-4 px-6 overflow-scroll">
       <RetirementYearSectionMenu
         retirementYear={retirementYear}
         selectYear={() => setSelectedYear(retirementYear)}
@@ -50,7 +47,6 @@ const DateSelectorWithGroups = ({
         headerFn={() => setShowBeforeRetirement(!showBeforeRetirement)}
         showBeforeRetirement={showBeforeRetirement}
       />
-
       <AfterRetirementSectionMenu
         afterRetirementYears={afterRetirementYears}
         showAfterRetirement={showAfterRetirement}
@@ -61,4 +57,4 @@ const DateSelectorWithGroups = ({
   );
 };
 
-export default DateSelectorWithGroups;
+export default SelectYearMenu;

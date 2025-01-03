@@ -1,17 +1,14 @@
-import React from "react";
-
 interface PrimaryDropDownMenuButtonProps {
   actionFn: () => void;
-  year: number;
+  label?: number | string ;
 }
 
-const PrimaryDropDownMenuButton = ({
+const PrimaryMenuButton = ({
   actionFn,
-  year,
+  label = "Default Label",
 }: PrimaryDropDownMenuButtonProps) => {
-  if (typeof actionFn !== "function") return null;
-
-  if (typeof year !== "number" || isNaN(year)) return null;
+  if (typeof actionFn !== "function") return <></>;
+  if (typeof label !== "number" && typeof label !== "string") return <></>;
 
   return (
     <button
@@ -20,9 +17,10 @@ const PrimaryDropDownMenuButton = ({
       }
       onClick={actionFn}
     >
-      {year}
+      {label}
     </button>
   );
 };
 
-export default PrimaryDropDownMenuButton;
+
+export default PrimaryMenuButton;

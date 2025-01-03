@@ -9,7 +9,7 @@ import financialProjectionService from "@/features/plaid/financial-projections/f
 //components
 import LineGraph from "./LineGraph";
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
-import DateSelectorWithGroups from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/DateSelectorWithGroups";
+import SelectYearMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenu";
 
 //Functions
 import { GetSvgV2 } from "@/utils/helper-functions/GetSvgV2";
@@ -141,13 +141,11 @@ const ProjectedNetWorthGraph = () => {
                 align="start"
                 className="backdrop-blur bg-tertiary-300/40"
               >
-                <DateSelectorWithGroups
+                <SelectYearMenu
                   years={years}
                   retirementYear={retirementYear}
                   setSelectedYear={setSelectedYear}
                   setRetirementYear={editRetirementYear}
-                  register={register}
-                  errors={errors}
                 />
               </DropdownMenuContent>
             </DropdownMenu>
