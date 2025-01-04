@@ -1,26 +1,41 @@
 import React from "react";
-import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/HeaderWithIcon";
+
+// Components
+import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/headers/HeaderWithIcon";
+import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/list/ListOfYears";
+
+//Icons
 import {
   cheveronUp,
   cheveronDown,
 } from "@/utils/helper-functions/getCheverons";
 
-import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYears";
 import { AfterRetirementSectionMenuProps } from "@/features/projected-net-worth/types/graphComponents";
 
+/**
+ * Component for displaying a section menu for after retirement years.
+ *
+ * @param {AfterRetirementSectionMenuProps} props - The properties for the component.
+ * @param {number[]} props.afterRetirementYears - An array of years after retirement.
+ * @param {boolean} props.showAfterRetirement - A flag indicating whether to show the after retirement section.
+ * @param {() => void} props.headerFn - A function to be called when the header is clicked.
+ * @param {(year: number) => void} props.setSelectedYear - A function to set the selected year.
+ *
+ * @returns {JSX.Element} The rendered component.
+ */
 const AfterRetirementSectionMenu = ({
   afterRetirementYears,
   showAfterRetirement,
   headerFn,
   setSelectedYear,
-}: AfterRetirementSectionMenuProps) => {
+}: AfterRetirementSectionMenuProps): JSX.Element => {
   return (
     <div className="mb-6">
       <HeaderWithIcon
         actionFunction={headerFn}
         label="After Retirement"
         icon={showAfterRetirement ? cheveronUp() : cheveronDown()}
-        toolTipLabel={showAfterRetirement ? "Collapse" : "Expand"}
+        toolTipLabel={showAfterRetirement ? "Hide years" : "View years"}
       />
       {showAfterRetirement && (
         <div className="grid grid-cols-1 gap-2">

@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormStatus } from "react-dom";
 import DotLoader from "@/components/loading/DotLoader";
-import { PrimaryButtonProps } from "@/types/Buttons";
+import { PrimaryButtonProps } from "@/types/buttons";
 
 const PrimaryButton = ({
   bgColor = "bg-blue-500",
@@ -17,6 +17,7 @@ const PrimaryButton = ({
   py = "py-[1.05882rem]",
   h = "h-[3.2941176471rem]",
   rounded = "rounded-[12px]",
+  w = "w-full",
   actionFunction,
 }: PrimaryButtonProps) => {
   const { pending } = useFormStatus();
@@ -26,8 +27,8 @@ const PrimaryButton = ({
       onClick={actionFunction}
       className={
         withLinearGradient
-          ? `flex items-center justify-center w-full bg-gradient-to-r ${bgFrom} ${bgTo} ${textColor} ${px} ${py} ${h} ${rounded} ${hoverBgFrom} ${hoverBgTo} transition duration-300`
-          : `flex items-center justify-center w-full ${bgColor} ${textColor} ${px} ${py} ${h} ${rounded} ${hoverBgColor} transition duration-300`
+          ? `flex items-center justify-center ${w} bg-gradient-to-r ${bgFrom} ${bgTo} ${textColor} ${px} ${py} ${h} ${rounded} ${hoverBgFrom} ${hoverBgTo} transition duration-300`
+          : `flex items-center justify-center ${w} ${bgColor} ${textColor} ${px} ${py} ${h} ${rounded} ${hoverBgColor} transition duration-300`
       }
       disabled={pending}
     >

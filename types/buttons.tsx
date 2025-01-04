@@ -12,6 +12,7 @@ export interface PrimaryButtonProps {
   px?: string;
   py?: string;
   h?: string;
+  w?: string;
   rounded?: string;
 }
 

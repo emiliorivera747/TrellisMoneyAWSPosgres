@@ -11,18 +11,32 @@ import AfterRetirementSectionMenu from "@/features/projected-net-worth/component
 //Types
 import {GroupedDateSelectorProps} from "@/features/projected-net-worth/types/graphComponents";
 
+/**
+ * Component for selecting a year from a list of years, categorized into 
+ * before and after retirement years. It also allows editing the retirement year.
+ *
+ * @param {Object} props - The component props.
+ * @param {number[]} props.years - Array of years to select from.
+ * @param {number} props.retirementYear - The year of retirement.
+ * @param {Function} props.setSelectedYear - Function to set the selected year.
+ * @param {Function} props.setRetirementYear - Function to set the retirement year.
+ *
+ * @returns {JSX.Element} The SelectYearMenu component.
+ */
 const SelectYearMenu = ({
-  years,
-  retirementYear,
-  setSelectedYear,
-  setRetirementYear,
-}: GroupedDateSelectorProps) => {
+  years = [],
+  retirementYear = new Date().getFullYear(),
+  setSelectedYear = () => {},
+  setRetirementYear = () => {},
+}: GroupedDateSelectorProps): JSX.Element => {
 
   const [showBeforeRetirement, setShowBeforeRetirement] = useState(true);
   const [showAfterRetirement, setShowAfterRetirement] = useState(false);
   const [showYearSelector, setShowYearSelector] = useState(false);
+
   const beforeRetirementYears = years.filter((year) => year < retirementYear);
   const afterRetirementYears = years.filter((year) => year > retirementYear);
+  
   const editRetirementYear = () => setShowYearSelector(!showYearSelector);
 
   const beforeRetirementRanges = getYearRanges(

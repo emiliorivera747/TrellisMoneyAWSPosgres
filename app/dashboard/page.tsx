@@ -17,8 +17,6 @@ import financialProjectionService from "@/features/plaid/financial-projections/f
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
 
-
-
 const Dashboard = () => {
   const client = createClient();
   useEffect(() => {
@@ -74,25 +72,12 @@ const Dashboard = () => {
     generateToken();
   }, []);
 
-  // console.log("Identity Data ", identityData);
-  // console.log("Holdings Data ", holdingsData);
-  // // console.log("Account Data ", accountData);
-  // console.log("Balance Data ", balanceData);
 
   return (
     <div className="min-h-screen h-auto w-full border-box">
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%] ">
         <div className="col-span-10 sm:col-span-7 overflow-y-auto h-screen no-scrollbar">
           <ProjectedNetWorthGraph />
-
-          {/* <p className="text-tertiary-1000 font-semibold mt-4 mx-4">
-            Net Worth: $
-            {netWorthData?.netWorth ? netWorthData.netWorth : "None"}
-          </p> */}
-          {/* <p>Identity Data: {JSON.stringify(identityData, null, 2)}</p> */}
-          {/* <p>Holdings Data: {JSON.stringify(holdingsData, null, 2)}</p> */}
-          {/* <p>Account Data: {JSON.stringify(accountData)}</p> */}
-          {/* <p>Balance Data: {JSON.stringify(balanceData, null, 2)}</p> */}
         </div>
         <ProjectedHoldingsCard holdings={[]} numberOfYears={numberOfYears} />
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}

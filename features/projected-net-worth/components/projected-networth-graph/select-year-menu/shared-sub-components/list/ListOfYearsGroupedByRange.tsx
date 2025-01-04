@@ -1,11 +1,26 @@
 import React from "react";
-import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/select-year-menu-sub-components/ListOfYears";
+import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/list/ListOfYears";
 import { ListOfYearsGroupedByRangeProps } from "@/features/projected-net-worth/types/graphComponents";
 
+/**
+ * Component that renders a list of years grouped by ranges before retirement.
+ *
+ * @param {Object} props - The component props.
+ * @param {Function} props.actionFn - The function to be called when an action is performed on a year.
+ * @param {Object} props.beforeRetirementRanges - An object where keys are ranges (e.g., "10-15") and values are arrays of years within those ranges.
+ *
+ * @returns {JSX.Element} The rendered component.
+ */
 const ListOfYearsGroupedByRange = ({
   actionFn,
   beforeRetirementRanges,
-}: ListOfYearsGroupedByRangeProps) => {
+}: ListOfYearsGroupedByRangeProps): JSX.Element => {
+
+  if (!beforeRetirementRanges || typeof beforeRetirementRanges !== 'object') {
+    console.error("Invalid beforeRetirementRanges prop");
+    return <div>Error: Invalid data</div>;
+  }
+
   return (
     <div>
       {Object.keys(beforeRetirementRanges).map((range) => (
