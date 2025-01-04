@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import ProjectedHoldingsCard from "@/features/projected-net-worth/components/projected-holdings/ProjectedHoldingsCard";
-import Link from "@/components/plaid/Link";
+import Link from "@/components/Plaid/Link";
 
 import { createClient } from "@/utils/supabase/client";
 
