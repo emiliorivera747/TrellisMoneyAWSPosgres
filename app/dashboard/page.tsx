@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 
 //Components
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
-import DeleteUserButton from "@/features/auth/components/buttons/DeleteUserButton";
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import ProjectedHoldingsCard from "@/features/projected-net-worth/components/projected-holdings/ProjectedHoldingsCard";
 import Link from "@/components/plaid/Link";
