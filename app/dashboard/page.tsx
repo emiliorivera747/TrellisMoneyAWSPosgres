@@ -12,7 +12,6 @@ import { createClient } from "@/utils/supabase/client";
 
 // services
 import plaidService from "@/features/plaid/services/plaidServices";
-import financialProjectionService from "@/features/plaid/financial-projections/financialProjectionService";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";

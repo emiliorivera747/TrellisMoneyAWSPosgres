@@ -17,8 +17,7 @@ const ListOfYearsGroupedByRange = ({
 }: ListOfYearsGroupedByRangeProps): JSX.Element => {
 
   if (!beforeRetirementRanges || typeof beforeRetirementRanges !== 'object') {
-    console.error("Invalid beforeRetirementRanges prop");
-    return <div>Error: Invalid data</div>;
+    return <div>No data available</div>;
   }
 
   return (
