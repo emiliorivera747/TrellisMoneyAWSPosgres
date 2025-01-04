@@ -1,7 +1,7 @@
 import React from "react";
 import { TiArrowSortedUp } from "react-icons/ti";
 import RenderTooltipContent from "@/features/projected-net-worth/components/projected-networth-graph/RenderTooltipContent";
-import { SecurityData } from "@/types/dashboardComponents";
+import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 
 // functions
 import { getStockValue } from "@/utils/helper-functions/accessors";

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { scaleTime } from "@visx/scale";
 import { extent } from "@visx/vendor/d3-array";
-import { SecurityData } from "@/types/dashboardComponents";
+import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 import { getDate } from "@/utils/helper-functions/accessors";
 
 const useDateScale = (data: SecurityData[], margin: { left: number }, innerWidth: number) => {

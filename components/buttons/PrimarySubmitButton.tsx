@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormStatus } from "react-dom";
 import DotLoader from "@/components/loading/DotLoader";
-import { SubmitButtonProps } from "@/types/Buttons";
+import { SubmitButtonProps } from "@/types/buttons";
 
 const PrimarySubmitButton = ({
   bgColor = "bg-blue-500",

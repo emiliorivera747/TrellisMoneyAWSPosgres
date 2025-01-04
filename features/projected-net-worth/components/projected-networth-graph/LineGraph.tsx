@@ -16,7 +16,7 @@ import useStockValueScale from "@/utils/hooks/useStockvalueScale";
 import useHandleTooltip from "@/utils/hooks/useHanldeTooltip";
 
 //Types
-import { SecurityData, LineGraphProps } from "@/types/dashboardComponents";
+import { SecurityData, LineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 //Accessors
 import { getDate, getStockValue } from "@/utils/helper-functions/accessors";

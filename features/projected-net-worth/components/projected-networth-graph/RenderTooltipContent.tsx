@@ -2,7 +2,7 @@ import React from "react";
 import {
   SecurityData,
   RenderTooltipContentProps,
-} from "@/types/dashboardComponents";
+} from "@/features/projected-net-worth/types/graphComponents";
 
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
 

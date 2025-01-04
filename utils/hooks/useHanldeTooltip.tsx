@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { localPoint } from "@visx/event";
 import { bisector } from "@visx/vendor/d3-array";
-import { SecurityData } from "@/types/dashboardComponents";
+import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 import { getDate } from "@/utils/helper-functions/accessors";
 
 const bisectDate = bisector<SecurityData, Date>((d) => d.year).left;
