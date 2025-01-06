@@ -165,7 +165,7 @@ const securitiesData: Security[] = [
     fixed_income: null,
   },
   {
-    close_price: 63.65,
+    close_price: 63.63,
     close_price_as_of: null,
     cusip: "00448Q201",
     institution_id: null,
@@ -188,7 +188,7 @@ const securitiesData: Security[] = [
     fixed_income: null,
   },
   {
-    close_price: 191.18,
+    close_price:191.81,
     close_price_as_of: null,
     cusip: "258620103",
     institution_id: null,
