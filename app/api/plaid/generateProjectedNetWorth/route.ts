@@ -9,6 +9,7 @@ import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handl
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
 import { getPrismaError } from "@/utils/api-helpers/prisma/getPrismaErrorMessage";
 import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
+import { generateProjectedNetWorthV2 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV2";
 
 // Mock data
 import { mockHoldingData } from "@/utils/data/plaid-data/mockHoldingData";
@@ -27,10 +28,9 @@ import {
 } from "@/utils/api-helpers/prisma/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 
-
 /**
  * POST /api/plaid/generateProjectedNetWorth
- * 
+ *
  * @param {NextRequest} req
  * @returns {Promise<NextResponse>}
  */
@@ -43,8 +43,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
     const { searchParams } = new URL(req.url);
-    const start_year = searchParams.get("start_date") ? parseInt(searchParams.get("start_date") as string, 10) : 2024;
-    const end_year = searchParams.get("end_date") ? parseInt(searchParams.get("end_date") as string, 10) : 2065;
+    const start_year = searchParams.get("start_date")
+      ? parseInt(searchParams.get("start_date") as string, 10)
+      : new Date().getFullYear();
+    const end_year = searchParams.get("end_date")
+      ? parseInt(searchParams.get("end_date") as string, 10)
+      : new Date().getFullYear() + 40;
+    const with_inflation = searchParams.get("with_inflation") === "true";
     const accounts = mockAccountBalanceData.accounts;
     const holdings = mockHoldingData.holdings;
     const securities = mockHoldingData.securities;
@@ -60,11 +65,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // Get the user's updated holdings and securities
     const userHoldings = await getHoldingsAndSecurities(userId);
 
+    console.log("With inflation: ", with_inflation);
 
-    const projectedNetWorth = await generateProjectedNetWorth(
+    const projectedNetWorth = await generateProjectedNetWorthV2(
       userHoldings,
       start_year,
-      end_year
+      end_year,
+      with_inflation
     );
 
     return NextResponse.json(
@@ -75,9 +82,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       { status: 200 }
     );
   } catch (error) {
-
     if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
-  
+
     if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
     return handleOtherErrror(error);
   }
@@ -86,7 +92,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 /**
  *
  * Gets the user's holdings and securities from the database.
- * 
+ *
  * @param userId
  * @returns
  */

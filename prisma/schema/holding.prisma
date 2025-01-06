@@ -5,6 +5,7 @@ model Holding {
   institution_price_datetime DateTime?        @db.Timestamptz(3)
   institution_value          Decimal
   annual_return_rate         Decimal?         @default(0.06)
+  annual_inflation_rate      Decimal?         @default(0.025)
   iso_currency_code          String
   unofficial_currency_code   String?
   vested_quantity            Decimal?

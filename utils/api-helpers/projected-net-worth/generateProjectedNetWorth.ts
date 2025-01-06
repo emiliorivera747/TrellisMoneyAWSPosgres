@@ -1,6 +1,5 @@
 import { Holding } from "@/types/plaid";
 import { Decimal } from "decimal.js";
-import { start } from "repl";
 
 /**
  * Generates the projected net worth over a range of years based on the provided holdings.
@@ -14,7 +13,7 @@ export const generateProjectedNetWorth = async (
   holdings: Holding[],
   start_year: number,
   end_year: number
-) => {
+): Promise<{ year: number; close: number; }[]> => {
   const projectedNetWorth = [];
  
   const n = (end_year +1) - start_year;
