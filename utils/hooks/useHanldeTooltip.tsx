@@ -4,7 +4,7 @@ import { bisector } from "@visx/vendor/d3-array";
 import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 import { getDate } from "@/utils/helper-functions/accessors";
 
-const bisectDate = bisector<SecurityData, Date>((d) => d.year).left;
+const bisectDate = bisector<SecurityData, Date>((d) => d.date).left;
 const getStockValue = (d: SecurityData) => d.close;
 
 const useHandleTooltip = (
@@ -26,7 +26,9 @@ const useHandleTooltip = (
              */
             const { x } = localPoint(event) || { x: 0 };
             const x0 = dateScale.invert(x);
+            console.log("X0:", x0);
             const index = bisectDate(data, x0, 1);
+            console.log("Index:", index); 
             const d0 = data[index - 1];
             const d1 = data[index];
             let d = d0;

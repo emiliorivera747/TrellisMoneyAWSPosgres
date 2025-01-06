@@ -51,12 +51,10 @@ const future_value_fn = (
   const growthFactor = Math.pow(1 + Number(annual_return_rate), year);
   const pv = Number(quantity) * Number(close_price);
 
-  console.log("YEAR: ", year);
-  console.log("growth factor: ", growthFactor);
-  console.log("quantity", quantity, "* close_price", close_price, "=", pv);
-  console.log("pv * growthFactor: ", pv * growthFactor);
-
-
+  // console.log("YEAR: ", year);
+  // console.log("growth factor: ", growthFactor);
+  // console.log("quantity", quantity, "* close_price", close_price, "=", pv);
+  // console.log("pv * growthFactor: ", pv * growthFactor);
   return pv * growthFactor;
 };
 

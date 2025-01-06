@@ -65,7 +65,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // Get the user's updated holdings and securities
     const userHoldings = await getHoldingsAndSecurities(userId);
 
-    console.log("With inflation: ", with_inflation);
+    // console.log("With inflation: ", with_inflation);
 
     const projectedNetWorth = await generateProjectedNetWorthV2(
       userHoldings,

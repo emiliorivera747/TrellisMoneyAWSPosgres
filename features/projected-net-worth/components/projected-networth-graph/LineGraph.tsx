@@ -52,8 +52,8 @@ export default withTooltip<LineGraphProps, TooltipData>(
     /**
      * The scales for the x and y axis
      */
-    const dateScale = useDateScale(data, margin, innerWidth);
-    const stockValueScale = useStockValueScale(data, margin, innerHeight);
+    const dateScale = useDateScale(data, margin, innerWidth); // x-axis
+    const stockValueScale = useStockValueScale(data, margin, innerHeight); // y-axis
 
     // tooltip handler
     const handleTooltip = useHandleTooltip(

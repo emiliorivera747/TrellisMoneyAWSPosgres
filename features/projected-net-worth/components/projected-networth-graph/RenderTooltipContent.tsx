@@ -18,7 +18,16 @@ const calculateRateOfChange = (
 };
 
 const calculateYearsBetween = (startDate: Date, endDate: Date): number => {
-  return endDate.getFullYear() - startDate.getFullYear();
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  let years = end.getFullYear() - start.getFullYear();
+
+  if (years < 0) {
+    years = new Date().getFullYear();
+  }
+
+  return years;
 };
 
 const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
@@ -27,10 +36,15 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
 }) => {
   const deafultStockValueDifference =
     data[data.length - 1].close - data[0].close;
+
   const defaultRateOfChange = calculateRateOfChange(
     data[0].close,
     data[data.length - 1].close
   );
+
+  /**
+   * If there is no tooltip data, return the default stock value difference and rate of change
+   */
   if (!tooltipData) {
     return (
       <>
@@ -39,7 +53,7 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
           defaultRateOfChange.toFixed(2) +
           "%)"}
         <span className="text-tertiary-800 font-normal ">
-          {calculateYearsBetween(data[0].year, data[data.length - 1].year) +
+          {calculateYearsBetween(data[0].date, data[data.length - 1].date) +
             " years"}
         </span>
       </>
@@ -47,17 +61,19 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
   }
 
   const stockValueDifference = getStockValue(tooltipData) - data[0].close;
+
   const rateOfChange = calculateRateOfChange(
     data[0].close,
     getStockValue(tooltipData)
   );
+
   const yearsBetween =
-    tooltipData.year.getFullYear() - data[0].year.getFullYear();
+    new Date(tooltipData.date).getFullYear() -
+    new Date(data[0].date).getFullYear();
 
   return (
     <>
-      {
-        numberToMoneyFormat(stockValueDifference) +
+      {numberToMoneyFormat(stockValueDifference) +
         " (" +
         rateOfChange.toFixed(2) +
         "%) "}

@@ -5,7 +5,7 @@ import { SecurityData } from "@/features/projected-net-worth/types/graphComponen
 import { getDate } from "@/utils/helper-functions/accessors";
 
 const useDateScale = (data: SecurityData[], margin: { left: number }, innerWidth: number) => {
-    console.log("Margin left", margin.left);
+
     const scale = useMemo(
         () =>
            scaleTime({
@@ -14,8 +14,6 @@ const useDateScale = (data: SecurityData[], margin: { left: number }, innerWidth
             }),
         [innerWidth, margin.left, data]
     );
-
-    // console.log("Domain:", scale.domain());
     return scale;
 };
 

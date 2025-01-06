@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { scaleLinear } from "@visx/scale";
-import { max } from "@visx/vendor/d3-array";
 import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 import { extent } from "@visx/vendor/d3-array";
 
@@ -21,7 +20,6 @@ const useStockValueScale = (
             }),
         [margin.top, innerHeight, data]
     );
-    // console.log("Scale:", scale.domain());
     return scale;
 };
 

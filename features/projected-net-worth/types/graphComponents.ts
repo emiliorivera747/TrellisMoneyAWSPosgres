@@ -6,7 +6,7 @@ import {
 } from "react-hook-form";
 
 export interface SecurityData {
-  year: Date;
+  date: Date;
   close: number;
 }
 

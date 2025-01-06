@@ -40,13 +40,6 @@ import {
  *
  */
 const ProjectedNetWorthGraph = () => {
-  const {
-    register,
-    setError,
-    formState: { errors },
-  } = useForm<RetirementYearInput>({
-    resolver: zodResolver(retirementYearInputSchema),
-  });
 
   const defaultYearsIntoTheFuture = 100;
 
@@ -71,6 +64,7 @@ const ProjectedNetWorthGraph = () => {
     },
   });
 
+
   const [retirementYear, setRetirementYear] = useState(2050);
   const [filteredData, setFilteredData] = useState(projectionData?.data);
   const [isInflation, setIsInflation] = useState(false);
@@ -78,12 +72,14 @@ const ProjectedNetWorthGraph = () => {
   const [isBoth, setIsBoth] = useState(false);
 
   useEffect(() => {
-    const filter = projectionData?.data?.filter((data: { year: number }) => {
-      return data.year <= selectedYear;
+
+    const filter = projectionData?.data?.filter((data: { date: Date }) => {
+      return new Date(data.date).getFullYear() <= selectedYear;
     });
-    const results = filter?.map((data: { year: number; close: number }) => {
+
+    const results = filter?.map((data: { date: Date; close: number }) => {
       return {
-        year: new Date(data.year, 0, 1),
+        date: new Date(data.date),
         close: data.close,
       };
     });
