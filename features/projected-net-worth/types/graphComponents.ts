@@ -92,3 +92,9 @@ export interface renderYearSelectorProps {
   setSelectedYear: (year: number) => void;
   selectRetirementYear: (year: number) => void;
 }
+
+export interface ResponsiveLineGraphProps {
+  selectedYear: number;
+  filteredData: { date: Date; close: number }[];
+  tailwindClasses: string;
+}
