@@ -26,9 +26,9 @@ const useHandleTooltip = (
              */
             const { x } = localPoint(event) || { x: 0 };
             const x0 = dateScale.invert(x);
-            console.log("X0:", x0);
+            // console.log("X0:", x0);
             const index = bisectDate(data, x0, 1);
-            console.log("Index:", index); 
+            // console.log("Index:", index); 
             const d0 = data[index - 1];
             const d1 = data[index];
             let d = d0;
@@ -39,7 +39,7 @@ const useHandleTooltip = (
                         ? d1
                         : d0;
 
-                console.log("Inside if statement D:", d);
+                // console.log("Inside if statement D:", d);
             }
             showTooltip({
                 tooltipData: d,

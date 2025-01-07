@@ -18,6 +18,15 @@ export interface LineGraphProps {
   margin?: { top: number; right: number; bottom: number; left: number };
 }
 
+export interface DoubleLineGraphProps {
+  width: number;
+  selectedYear: number;
+  height: number;
+  data1: SecurityData[];
+  data2: SecurityData[];
+  margin?: { top: number; right: number; bottom: number; left: number };
+}
+
 export interface LineGraphTooltipProps {
   margin: { top: number };
   tooltipLeft: number;
@@ -96,5 +105,12 @@ export interface renderYearSelectorProps {
 export interface ResponsiveLineGraphProps {
   selectedYear: number;
   filteredData: { date: Date; close: number }[];
+  tailwindClasses: string;
+}
+
+export interface ResponsiveDoubleLineGraphProps {
+  selectedYear: number;
+  filteredData1: { date: Date; close: number }[];
+  filteredData2: { date: Date; close: number }[];
   tailwindClasses: string;
 }

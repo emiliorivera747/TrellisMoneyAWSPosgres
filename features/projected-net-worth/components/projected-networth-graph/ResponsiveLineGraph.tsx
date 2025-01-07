@@ -18,7 +18,7 @@ const ResponsiveLineGraph = ({
             data={
               filteredData?.length > 0
                 ? filteredData
-                : [{ date: new Date(2024), close: 0 }]
+                : [{ date: new Date(), close: 0 }]
             }
             selectedYear={selectedYear}
             width={width}

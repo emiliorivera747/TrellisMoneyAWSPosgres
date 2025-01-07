@@ -1,14 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
-
-// Services
-import financialProjectionService from "@/features/plaid/financial-projections/financialProjectionService";
+import { useState } from "react";
 
 //components
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import GraphHeaders from "@/components/headers/GraphHeaders";
 import ResponsiveLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/ResponsiveLineGraph";
 import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/RenderFilters";
+import ResponsiveDoubleLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/ResponsiveDoubleLineGraph";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
@@ -16,9 +14,11 @@ import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/Pro
 
 //Functions
 import { generateYearsArray } from "@/features/projected-net-worth/utils/generateYearsArray";
+import { fetchProjectionData } from "@/features/projected-net-worth/utils/fetchProjectionData";
 
 // Hooks
 import useFilteredData from "@/features/projected-net-worth/utils/hooks/useFilteredData";
+import useFilteredArrays from "@/features/projected-net-worth/utils/hooks/useFilteredArrays";
 
 // Constants
 const defaultYearsIntoTheFuture = 100;
@@ -33,26 +33,32 @@ const ProjectedNetWorthGraph = () => {
     currentYear + defaultYearsIntoTheFuture
   );
 
+  const [retirementYear, setRetirementYear] = useState(2064);
+  const [selectedFilter, setSelectedFilter] = useState("isNoInflation");
+
   const {
     data: projectionData,
     error: projectionError,
     isLoading: projectionLoading,
   } = useQuery({
-    queryKey: ["projectedNetWorth", currentYear, selectedYear],
-    queryFn: ({ queryKey }) => {
-      const [, startDate, endDate] = queryKey;
-      return financialProjectionService.generateProjectedNetWorth(
-        Number(startDate),
-        Number(endDate)
-      );
-    },
+    queryKey: ["projectedNetWorth", currentYear, selectedYear, selectedFilter],
+    queryFn: () =>
+      fetchProjectionData(
+        Number(currentYear),
+        Number(selectedYear),
+        selectedFilter
+      ),
+    enabled: !!selectedYear,
   });
+
+  // console.log(projectionData);
 
   // Use custom hook for filtering
   const filteredData = useFilteredData(projectionData, selectedYear);
 
-  const [retirementYear, setRetirementYear] = useState(2064);
-  const [selectedFilter, setSelectedFilter] = useState("isNoInflation");
+  const { filteredDataNoInflation, filteredDataWithInflation } =
+    useFilteredArrays(projectionData, selectedYear);
+  // console.log("filtered data", filteredData);
 
   /**
    * Function to handle the change of the filter
@@ -83,7 +89,6 @@ const ProjectedNetWorthGraph = () => {
 
   return (
     <div className="sm:mx-2 mb-8">
-      
       {/* Graph Header with button */}
       <div className="flex flex-row items-center gap-2 font-medium text-tertiary-900 ">
         <GraphHeaders label="Projected Net Worth" />
@@ -97,11 +102,20 @@ const ProjectedNetWorthGraph = () => {
       </div>
 
       {/* Graph */}
-      <ResponsiveLineGraph
-        tailwindClasses="h-[24rem] w-full border-box"
-        filteredData={filteredData}
-        selectedYear={selectedYear}
-      />
+      {selectedFilter === "isBoth" ? (
+        <ResponsiveDoubleLineGraph
+          tailwindClasses="h-[24rem] w-full border-box"
+          filteredData1={filteredDataNoInflation}
+          filteredData2={filteredDataWithInflation}
+          selectedYear={selectedYear}
+        />
+      ) : (
+        <ResponsiveLineGraph
+          tailwindClasses="h-[24rem] w-full border-box"
+          filteredData={filteredData}
+          selectedYear={selectedYear}
+        />
+      )}
 
       {/* Filters */}
       <RenderFilters

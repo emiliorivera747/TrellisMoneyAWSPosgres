@@ -16,7 +16,10 @@ import useStockValueScale from "@/utils/hooks/useStockvalueScale";
 import useHandleTooltip from "@/utils/hooks/useHanldeTooltip";
 
 //Types
-import { SecurityData, LineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
+import {
+  SecurityData,
+  DoubleLineGraphProps,
+} from "@/features/projected-net-worth/types/graphComponents";
 
 //Accessors
 import { getDate, getStockValue } from "@/utils/helper-functions/accessors";
@@ -28,18 +31,19 @@ export const accentColorDark = "#495057";
 
 type TooltipData = SecurityData;
 
-export default withTooltip<LineGraphProps, TooltipData>(
+export default withTooltip<DoubleLineGraphProps, TooltipData>(
   ({
     width,
     height,
-    data,
+    data1,
+    data2,
     margin = { top: 0, right: 0, bottom: 0, left: 0 },
     showTooltip,
     hideTooltip,
     tooltipData,
     tooltipTop = 0,
     tooltipLeft = 0,
-  }: LineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
+  }: DoubleLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
 
     /**
@@ -51,21 +55,24 @@ export default withTooltip<LineGraphProps, TooltipData>(
     /**
      * The scales for the x and y axis
      */
-    const dateScale = useDateScale(data, margin, innerWidth); // x-axis
-    const stockValueScale = useStockValueScale(data, margin, innerHeight); // y-axis
+    const dateScale1 = useDateScale(data1, margin, innerWidth); // x-axis
+    const stockValueScale1 = useStockValueScale(data1, margin, innerHeight); // y-axis
+
+    const dateScale2 = useDateScale(data2, margin, innerWidth); // x-axis
+    const stockValueScale2 = useStockValueScale(data2, margin, innerHeight); // y-axis
 
     // tooltip handler
     const handleTooltip = useHandleTooltip(
       (args) => showTooltip(args),
-      stockValueScale,
-      dateScale,
-      data
+      stockValueScale1,
+      dateScale1,
+      data1
     );
     return (
       <div className={` absolute h-[100%] w-full `}>
         <StockValueAndPriceChange
           tooltipData={tooltipData ?? null}
-          data={data}
+          data={data1}
         />
         {/* The SVG for the graph */}
         <svg
@@ -83,11 +90,21 @@ export default withTooltip<LineGraphProps, TooltipData>(
             fill="url(#area-background-gradient)"
             rx={14}
           />
+
           <LinePath
-            data={data}
-            x={(d) => dateScale(getDate(d)) ?? 0}
-            y={(d) => stockValueScale(getStockValue(d)) ?? 0}
+            data={data1}
+            x={(d) => dateScale1(getDate(d)) ?? 0}
+            y={(d) => stockValueScale2(getStockValue(d)) ?? 0}
             stroke="#51cf66" // Use the stroke for the line color
+            strokeWidth={2}
+            curve={curveMonotoneX} // Keep the curve for smoothness if desired
+          />
+
+          <LinePath
+            data={data2}
+            x={(d) => dateScale2(getDate(d)) ?? 0}
+            y={(d) => stockValueScale2(getStockValue(d)) ?? 0}
+            stroke="#339af0" // Use the stroke for the line color
             strokeWidth={2}
             curve={curveMonotoneX} // Keep the curve for smoothness if desired
           />
