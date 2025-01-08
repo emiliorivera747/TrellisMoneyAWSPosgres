@@ -37,6 +37,7 @@ export interface LineGraphTooltipProps {
 export interface RenderTooltipContentProps {
   tooltipData: SecurityData | null;
   data: SecurityData[];
+  withYears?: boolean;
 }
 
 export interface GroupedDateSelectorProps{

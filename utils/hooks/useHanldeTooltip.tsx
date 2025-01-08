@@ -11,11 +11,8 @@ const useHandleTooltip = (
     showTooltip: (args: any) => void,
     stockValueScale: any,
     dateScale: any,
-    data: SecurityData[]
+    data1: SecurityData[],
 ) => {
-    // console.log("Data In Handle Tooltip:", data); 
-    // console.log("StockValueScale In Handle Tooltip:", stockValueScale.domain());
-    // console.log("DateScale In Handle Tooltip:", dateScale.domain());
     return useCallback(
         (
             event: React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>
@@ -26,11 +23,9 @@ const useHandleTooltip = (
              */
             const { x } = localPoint(event) || { x: 0 };
             const x0 = dateScale.invert(x);
-            // console.log("X0:", x0);
-            const index = bisectDate(data, x0, 1);
-            // console.log("Index:", index); 
-            const d0 = data[index - 1];
-            const d1 = data[index];
+            const index = bisectDate(data1, x0, 1);
+            const d0 = data1[index - 1];
+            const d1 = data1[index];
             let d = d0;
             if (d1 && getDate(d1)) {
                 d =
@@ -38,16 +33,15 @@ const useHandleTooltip = (
                     getDate(d1).valueOf() - x0.valueOf()
                         ? d1
                         : d0;
-
-                // console.log("Inside if statement D:", d);
             }
+    
             showTooltip({
                 tooltipData: d,
                 tooltipLeft: x,
                 tooltipTop: stockValueScale(getStockValue(d)),
             });
         },
-        [showTooltip, stockValueScale, dateScale, data]
+        [showTooltip, stockValueScale, dateScale, data1]
     );
 };
 

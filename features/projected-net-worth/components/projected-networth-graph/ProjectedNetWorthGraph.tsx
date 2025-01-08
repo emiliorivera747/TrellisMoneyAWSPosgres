@@ -22,6 +22,7 @@ import useFilteredArrays from "@/features/projected-net-worth/utils/hooks/useFil
 
 // Constants
 const defaultYearsIntoTheFuture = 100;
+const defaultYear = 2064;
 const currentYear = Number(new Date().getFullYear().toString());
 
 /**
@@ -30,7 +31,7 @@ const currentYear = Number(new Date().getFullYear().toString());
  */
 const ProjectedNetWorthGraph = () => {
   const [selectedYear, setSelectedYear] = useState(
-    currentYear + defaultYearsIntoTheFuture
+    currentYear + 40
   );
 
   const [retirementYear, setRetirementYear] = useState(2064);

@@ -24,7 +24,6 @@ const useFilteredArrays = (
   >([]);
 
   useEffect(() => {
-    console.log("projectionData", projectionData);
 
     if (projectionData?.noInflationData && projectionData?.inflationData) {
       const filteredNoInflation = filterProjectionData(
@@ -38,9 +37,6 @@ const useFilteredArrays = (
         selectedYear
       );
       setFilteredDataWithInflation(filteredWithInflation);
-
-      console.log("filteredDataNoInflation", filteredDataNoInflation);
-      console.log("filteredDataWithInflation", filteredDataWithInflation);
     }
   }, [projectionData, selectedYear]);
   return { filteredDataNoInflation, filteredDataWithInflation };
