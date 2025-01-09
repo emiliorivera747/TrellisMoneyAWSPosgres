@@ -75,15 +75,26 @@ export default withTooltip<DoubleLineGraphProps, TooltipData>(
             tooltipData={tooltipData?.data1 ? tooltipData.data1 : null}
             data={data1}
             withYears={false}
-            mainHeaderTailwindCss="text-[1.2rem] font-medium"
+            mainHeaderTailwindCss="text-[1.1rem] font-medium"
           />
+          {/* <div className="flex items-center justify-center">
+            <p>-</p>
+          </div> */}
           <StockValueAndPriceChange
             tooltipData={tooltipData?.data2 ? tooltipData.data2 : null}
             data={data2}
             withYears={false}
-            mainHeaderTailwindCss="text-[1.2rem] font-medium"
-            subHeaderTailwindCss="text-primary-900"
+            mainHeaderTailwindCss="text-[1.1rem] font-medium"
+            subHeaderTailwindCss={`            ${
+              getStockValue(data2[data2.length - 1]) - getStockValue(data2[0]) <
+              0
+                ? "text-red-500"
+                : "text-[#339af0]"
+            }`}
           />
+          {/* <div className="flex items-center justify-center">
+            <p>=</p>
+          </div> */}
         </div>
 
         {/* The SVG for the graph */}
@@ -107,7 +118,12 @@ export default withTooltip<DoubleLineGraphProps, TooltipData>(
             data={data1}
             x={(d) => dateScale1(getDate(d)) ?? 0}
             y={(d) => stockValueScale1(getStockValue(d)) ?? 0}
-            stroke="#51cf66" // Use the stroke for the line color
+            stroke={
+              getStockValue(data1[data1.length - 1]) - getStockValue(data1[0]) <
+              0
+                ? "rgb(239 68 68 / var(--tw-text-opacity, 1))"
+                : "#74b816"
+            } // Use red if value is negative
             strokeWidth={2}
             curve={curveMonotoneX} // Keep the curve for smoothness if desired
           />
@@ -116,7 +132,12 @@ export default withTooltip<DoubleLineGraphProps, TooltipData>(
             data={data2}
             x={(d) => dateScale1(getDate(d)) ?? 0}
             y={(d) => stockValueScale1(getStockValue(d)) ?? 0}
-            stroke="#4263eb" // Use the stroke for the line color
+            stroke={
+              getStockValue(data2[data2.length - 1]) - getStockValue(data2[0]) <
+              0
+                ? "rgb(239 68 68 / var(--tw-text-opacity, 1))"
+                : "#339af0"
+            } // Use red if value is negative
             strokeWidth={2}
             curve={curveMonotoneX} // Keep the curve for smoothness if desired
           />

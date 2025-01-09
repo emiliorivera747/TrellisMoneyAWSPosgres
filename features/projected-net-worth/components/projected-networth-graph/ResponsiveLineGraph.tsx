@@ -7,8 +7,8 @@ const ResponsiveLineGraph = ({
   selectedYear,
   filteredData,
   tailwindClasses,
+  withInflationTag = false,
 }: ResponsiveLineGraphProps) => {
-
   return (
     <div className={`${tailwindClasses}`}>
       <ParentSize>
@@ -24,6 +24,7 @@ const ResponsiveLineGraph = ({
             width={width}
             height={height}
             margin={{ top: 6, right: 6, bottom: 10, left: 6 }}
+            withInlfationTag={withInflationTag}
           />
         )}
       </ParentSize>

@@ -21,7 +21,7 @@ const StockValueAndPriceChange = ({
   subHeaderTailwindCss?: string;
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-[15rem]">
       <span className={`tracking-wider ${mainHeaderTailwindCss}`}>
         {tooltipData
           ? `${numberToMoneyFormat(getStockValue(tooltipData)) || "0.00"}`

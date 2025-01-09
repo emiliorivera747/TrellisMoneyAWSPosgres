@@ -9,6 +9,7 @@ import { LinePath } from "@visx/shape";
 //Components
 import StockValueAndPriceChange from "./StockValueAndPriceChange";
 import LineGraphTooltip from "@/features/projected-net-worth/components/projected-networth-graph/LineGraphTooltip";
+import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
 
 //Hooks
 import useDateScale from "@/utils/hooks/useDateScale";
@@ -16,14 +17,26 @@ import useStockValueScale from "@/utils/hooks/useStockvalueScale";
 import useHandleTooltip from "@/utils/hooks/useHanldeTooltip";
 
 //Types
-import { SecurityData, LineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
+import {
+  SecurityData,
+  LineGraphProps,
+} from "@/features/projected-net-worth/types/graphComponents";
 
 //Accessors
 import { getDate, getStockValue } from "@/utils/helper-functions/accessors";
 
+//Functions
+import { getColorBasedOnLineDirection } from "@/utils/helper-functions/getColorBasedOnLineDirection";
+import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
+import { getInflationCategory } from "@/features/projected-net-worth/utils/getInflationCategory";
+
+
 export const background = "white";
 export const background2 = "white";
 export const accentColor = "#94d82d";
+export const upColor = "#74b816";
+export const downColor = "rgb(239 68 68 / var(--tw-text-opacity, 1))";
+export const flatColor = "#495057";
 export const accentColorDark = "#495057";
 
 type TooltipData = SecurityData;
@@ -39,6 +52,7 @@ export default withTooltip<LineGraphProps, TooltipData>(
     tooltipData,
     tooltipTop = 0,
     tooltipLeft = 0,
+    withInlfationTag = false,
   }: LineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
 
@@ -61,12 +75,33 @@ export default withTooltip<LineGraphProps, TooltipData>(
       dateScale,
       data
     );
+
+    // Get the color based on the line direction
+    const direction= getLineDirection(data);
+    const lineColor = getColorBasedOnLineDirection({direction, upColor, downColor, flatColor});
+    const tailwindPrimaryTextColor = getColorBasedOnLineDirection({direction, upColor: "text-green-700", downColor: "text-red-700", flatColor: "text-secondary-900"});
+    const tailwindPrimaryBgColor = getColorBasedOnLineDirection({direction, upColor: "bg-green-100", downColor: "bg-red-100", flatColor: "bg-secondary-100"});
+
+
     return (
       <div className={` absolute h-[100%] w-full `}>
-        <StockValueAndPriceChange
-          tooltipData={tooltipData ?? null}
-          data={data}
-        />
+        <div className="grid grid-cols-3">
+          <StockValueAndPriceChange
+            tooltipData={tooltipData ?? null}
+            data={data}
+          />
+          {withInlfationTag && (
+            <div className="col-span-2 p-2 pt-4 flex items-start justify-end text-[0.7rem] text-tertiary-1000 gap-1 w-full">
+              <InflationTag
+                inflation_category={direction}
+                bg_color={tailwindPrimaryBgColor}
+                text_color={tailwindPrimaryTextColor}
+                svg_color="currentColor"
+              />
+            </div>
+          )}
+        </div>
+
         {/* The SVG for the graph */}
         <svg
           className="relative"
@@ -87,7 +122,7 @@ export default withTooltip<LineGraphProps, TooltipData>(
             data={data}
             x={(d) => dateScale(getDate(d)) ?? 0}
             y={(d) => stockValueScale(getStockValue(d)) ?? 0}
-            stroke="#51cf66" // Use the stroke for the line color
+            stroke={lineColor} // Use the stroke for the line color
             strokeWidth={2}
             curve={curveMonotoneX} // Keep the curve for smoothness if desired
           />
@@ -116,7 +151,7 @@ export default withTooltip<LineGraphProps, TooltipData>(
                 cx={tooltipLeft}
                 cy={tooltipTop}
                 r={4.5}
-                stroke="#40c057"
+                stroke={lineColor}
                 fill="white"
                 strokeWidth={2.5}
                 pointerEvents="none"

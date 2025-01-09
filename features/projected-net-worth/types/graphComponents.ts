@@ -16,6 +16,7 @@ export interface LineGraphProps {
   height: number;
   data: SecurityData[];
   margin?: { top: number; right: number; bottom: number; left: number };
+  withInlfationTag?: boolean;
 }
 
 export interface DoubleLineGraphProps {
@@ -107,6 +108,7 @@ export interface ResponsiveLineGraphProps {
   selectedYear: number;
   filteredData: { date: Date; close: number }[];
   tailwindClasses: string;
+  withInflationTag?: boolean;
 }
 
 export interface ResponsiveDoubleLineGraphProps {
@@ -114,4 +116,22 @@ export interface ResponsiveDoubleLineGraphProps {
   filteredData1: { date: Date; close: number }[];
   filteredData2: { date: Date; close: number }[];
   tailwindClasses: string;
+}
+
+export type InflationCategory = "Beats Inflation" | "Breaks Even With Inflation" | "Falling Behind Inflation";
+
+export interface InflationTagProps {
+  inflation_category: InflationCategory;
+  bg_color: string;
+  text_color: string;
+  svg_color: string;
+}
+
+export type Direction = "up" | "down" | "flat";
+
+export interface ColorBasedOnLineDirection {
+  upColor: string;
+  downColor: string;
+  flatColor: string;
+  direction: Direction;
 }

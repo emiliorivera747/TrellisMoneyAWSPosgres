@@ -41,10 +41,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     validateTimestamp(timestamp);
 
-
     const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
+    
     const { searchParams } = new URL(req.url);
-    console.log("With inflation: ", searchParams.get("with_inflation"));
     const start_year = searchParams.get("start_date")
       ? parseInt(searchParams.get("start_date") as string, 10)
       : new Date().getFullYear();

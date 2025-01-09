@@ -115,6 +115,7 @@ const ProjectedNetWorthGraph = () => {
           tailwindClasses="h-[24rem] w-full border-box"
           filteredData={filteredData}
           selectedYear={selectedYear}
+          withInflationTag={selectedFilter === "isInflation"}
         />
       )}
 
