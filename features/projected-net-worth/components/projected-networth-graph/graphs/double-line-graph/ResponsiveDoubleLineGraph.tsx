@@ -1,7 +1,7 @@
 import React from "react";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import { ResponsiveDoubleLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
-import DoubleLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/DoubleLineGraph";
+import DoubleLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/double-line-graph/DoubleLineGraph";
 
 const ResponsiveDoubleLineGraph = ({
   selectedYear,

@@ -1,6 +1,6 @@
 import React from "react";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import LineGraph from "@/features/projected-net-worth/components/projected-networth-graph/LineGraph";
+import LineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/one-line-graph/LineGraph";
 import { ResponsiveLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 const ResponsiveLineGraph = ({

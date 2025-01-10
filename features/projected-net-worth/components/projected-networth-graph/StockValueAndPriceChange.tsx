@@ -14,23 +14,23 @@ const StockValueAndPriceChange = ({
   mainHeaderTailwindCss = "text-zinc-800 text-[1.4rem] font-medium",
   subHeaderTailwindCss = "text-secondary-900",
 }: {
-  tooltipData: SecurityData | null;
+  tooltipData: SecurityData[] | null;
   data: SecurityData[];
   withYears?: boolean;
   mainHeaderTailwindCss?: string;
   subHeaderTailwindCss?: string;
 }) => {
   return (
-    <div className="flex flex-col w-[15rem]">
+    <div className="flex flex-col w-auto ">
       <span className={`tracking-wider ${mainHeaderTailwindCss}`}>
         {tooltipData
-          ? `${numberToMoneyFormat(getStockValue(tooltipData)) || "0.00"}`
+          ? `${numberToMoneyFormat(getStockValue(tooltipData[0])) || "0.00"}`
           : `${numberToMoneyFormat(data[data.length - 1]?.close) || "0.00"}`}
       </span>
       <span className={`flex-row flex items-center text-[0.7rem] font-semibold gap-1 ${subHeaderTailwindCss}`}>
         <TiArrowSortedUp />
         <RenderTooltipContent
-          tooltipData={tooltipData}
+          tooltipData={tooltipData ? tooltipData[0] : null}
           data={data}
           withYears={withYears}
         />

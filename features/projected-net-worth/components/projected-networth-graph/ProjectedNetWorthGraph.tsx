@@ -4,9 +4,9 @@ import { useState } from "react";
 //components
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import GraphHeaders from "@/components/headers/GraphHeaders";
-import ResponsiveLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/ResponsiveLineGraph";
+import ResponsiveLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/one-line-graph/ResponsiveLineGraph";
 import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/RenderFilters";
-import ResponsiveDoubleLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/ResponsiveDoubleLineGraph";
+import ResponsiveDoubleLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/double-line-graph/ResponsiveDoubleLineGraph";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";

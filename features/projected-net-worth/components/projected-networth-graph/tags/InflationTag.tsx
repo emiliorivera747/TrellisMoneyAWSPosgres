@@ -39,7 +39,7 @@ const InflationTag = ({
 }: InflationTagProps) => {
   return (
     <div
-      className={`flex items-center $ p-1 px-3 rounded-full font-semibold gap-2 text-[0.7rem] ${bg_color} ${text_color}`}
+      className={`flex items-center $ p-[0.3rem] px-3 rounded-full font-semibold gap-2 text-[0.6rem] ${bg_color} ${text_color}`}
     >
       {GetSvgV2({
         path: getSvgPath(inflation_category),

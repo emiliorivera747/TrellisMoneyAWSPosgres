@@ -1,9 +1,3 @@
-import {
-  UseFormRegister,
-  Path,
-  FieldValues,
-  FieldErrors,
-} from "react-hook-form";
 
 export interface SecurityData {
   date: Date;
@@ -128,6 +122,10 @@ export interface InflationTagProps {
 }
 
 export type Direction = "up" | "down" | "flat";
+export interface Directions {
+  directionLine1: Direction;
+  directionLine2: Direction;
+}
 
 export interface ColorBasedOnLineDirection {
   upColor: string;
