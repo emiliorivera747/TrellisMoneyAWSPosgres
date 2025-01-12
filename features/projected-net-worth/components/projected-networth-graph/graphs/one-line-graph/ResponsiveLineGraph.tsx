@@ -1,11 +1,11 @@
 import React from "react";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import LineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/one-line-graph/LineGraph";
+import LineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/one-line-graph/ProjectedLineGraph";
 import { ResponsiveLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 const ResponsiveLineGraph = ({
   selectedYear,
-  filteredData,
+  filteredDataForLines,
   tailwindClasses,
   withInflationTag = false,
 }: ResponsiveLineGraphProps) => {
@@ -15,12 +15,11 @@ const ResponsiveLineGraph = ({
         {({ height, width }: { height: number; width: number }) => (
           <LineGraph
             key={selectedYear}
-            data={
-              filteredData?.length > 0
-                ? filteredData
-                : [{ date: new Date(), close: 0 }]
+            dataForLines={
+              filteredDataForLines?.length > 0
+                ? filteredDataForLines
+                : [{ data: [], color: "" }]
             }
-            selectedYear={selectedYear}
             width={width}
             height={height}
             margin={{ top: 6, right: 6, bottom: 10, left: 6 }}

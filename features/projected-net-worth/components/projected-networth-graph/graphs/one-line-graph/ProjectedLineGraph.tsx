@@ -1,5 +1,6 @@
 import React from "react";
 
+//Visx
 import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
 
@@ -10,11 +11,9 @@ import InflationTag from "@/features/projected-net-worth/components/projected-ne
 import LineGraph from "@/components/dashboard/LineGraph";
 
 //Types
-import {
-  SecurityData,
-  LineGraphProps,
-  Direction,
-} from "@/features/projected-net-worth/types/graphComponents";
+import { Direction } from "@/features/projected-net-worth/types/graphComponents";
+import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
+import { LinePayload } from "@/types/graphs";
 
 //Functions
 import { getColorBasedOnLineDirection } from "@/utils/helper-functions/getColorBasedOnLineDirection";
@@ -27,17 +26,19 @@ import {
   flatColor,
 } from "@/features/projected-net-worth/utils/graphColors";
 
+import { TooltipPayload } from "@/types/graphs";
+
 //TooltipData
-type TooltipData = SecurityData;
+type TooltipData = TooltipPayload[];
 
 /**
  * Component for displaying a line graph.
  */
-export default withTooltip<LineGraphProps, TooltipData>(
+export default withTooltip<ProjectedLineGraphProps, TooltipData>(
   ({
     width,
     height,
-    data,
+    dataForLines,
     margin = { top: 0, right: 0, bottom: 0, left: 0 },
     showTooltip,
     hideTooltip,
@@ -45,33 +46,36 @@ export default withTooltip<LineGraphProps, TooltipData>(
     tooltipTop = 0,
     tooltipLeft = 0,
     withInlfationTag = false,
-  }: LineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
+  }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
 
-    // Get the color based on the line direction
-    const direction = getLineDirection(data);
-
-    // Get the colors for the line and the tags
+    // Get the directions for all of the lines
+    const directions = dataForLines.map((line) => getLineDirection(line.data));
     const {
       lineColor,
       tailwindTagTextColor,
       tailwindTagBgColor,
       tailwindPrimaryTextColor,
-    } = getTailwindColors(direction);
+    } = getTailwindColors(directions[0], dataForLines[0]);
+
+    // Update the dataForLines with the lineColor
+    const updatedDataForLines = dataForLines.map((line, index) => ({
+      ...line,
+      color: lineColor,
+    }));
 
     return (
       <div className={`absolute h-[100%] w-full `}>
-        
         <div className="grid grid-cols-3">
           <StockValueAndPriceChange
-            tooltipData={tooltipData ?? null}
-            data={data}
+            tooltipPayload={tooltipData ? tooltipData[0] : null}
+            data={dataForLines[0].data}
             subHeaderTailwindCss={`${tailwindPrimaryTextColor}`}
           />
-          {withInlfationTag && (
+          {withInlfationTag && dataForLines.length === 1 && (
             <div className="col-span-2 p-2 pt-4 flex items-start justify-end text-[0.7rem] text-tertiary-1000 gap-1 w-full">
               <InflationTag
-                inflation_category={direction}
+                inflation_category={directions[0]}
                 bg_color={tailwindTagBgColor}
                 text_color={tailwindTagTextColor}
                 svg_color="currentColor"
@@ -84,14 +88,13 @@ export default withTooltip<LineGraphProps, TooltipData>(
         <LineGraph
           width={width}
           height={height}
-          dataForLines={[{ data: data, color: lineColor }]}
+          dataForLines={updatedDataForLines}
           margin={margin}
           showTooltip={showTooltip}
           hideTooltip={hideTooltip}
           tooltipData={tooltipData}
           tooltipTop={tooltipTop}
           tooltipLeft={tooltipLeft}
-          lineColor={lineColor}
         />
 
         {/* Tooltip div */}
@@ -101,7 +104,6 @@ export default withTooltip<LineGraphProps, TooltipData>(
             tooltipLeft={tooltipLeft}
             defaultStyles={defaultStyles}
             tooltipData={tooltipData}
-            
           />
         )}
       </div>
@@ -116,7 +118,7 @@ export default withTooltip<LineGraphProps, TooltipData>(
  * @param direction
  * @returns
  */
-const getTailwindColors = (direction: Direction)=> {
+const getTailwindColors = (direction: Direction, dataForLines: LinePayload) => {
   return {
     lineColor: getColorBasedOnLineDirection({
       direction,
@@ -126,21 +128,21 @@ const getTailwindColors = (direction: Direction)=> {
     }),
     tailwindTagTextColor: getColorBasedOnLineDirection({
       direction,
-      upColor: "text-green-700",
-      downColor: "text-red-700",
-      flatColor: "text-secondary-900",
+      upColor: dataForLines.tagTextColor?.upColor ?? "text-green-700",
+      downColor: dataForLines.tagTextColor?.downColor ?? "text-red-700",
+      flatColor: dataForLines.tagTextColor?.flatColor ?? "text-secondary-900",
     }),
     tailwindTagBgColor: getColorBasedOnLineDirection({
       direction,
-      upColor: "bg-green-100",
-      downColor: "bg-red-100",
-      flatColor: "bg-green-100",
+      upColor: dataForLines.tagBgColor?.upColor ?? "bg-green-100",
+      downColor: dataForLines.tagBgColor?.downColor ?? "bg-red-100",
+      flatColor: dataForLines.tagBgColor?.flatColor ?? "bg-secondary-100",
     }),
     tailwindPrimaryTextColor: getColorBasedOnLineDirection({
       direction,
-      upColor: "text-secondary-900",
-      downColor: "text-red-500",
-      flatColor: "text-secondary-900",
+      upColor: dataForLines.subheaderColor?.upColor ?? "text-green-700",
+      downColor: dataForLines.subheaderColor?.downColor ?? "text-red-700",
+      flatColor: dataForLines.subheaderColor?.flatColor ?? "text-secondary-900",
     }),
   };
 };

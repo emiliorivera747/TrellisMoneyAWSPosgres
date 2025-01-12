@@ -50,11 +50,6 @@ const future_value_fn = (
 ) => {
   const growthFactor = Math.pow(1 + Number(annual_return_rate), year);
   const pv = Number(quantity) * Number(close_price);
-
-  // console.log("YEAR: ", year);
-  // console.log("growth factor: ", growthFactor);
-  // console.log("quantity", quantity, "* close_price", close_price, "=", pv);
-  // console.log("pv * growthFactor: ", pv * growthFactor);
   return pv * growthFactor;
 };
 
@@ -157,12 +152,22 @@ const pushProjectedNetWorthToEachMonth = (
   for (let i = 0; i <= months; i++) {
     const year = start_year + Math.floor(i / 12);
     const month = i % 12;
+
+    // Interpolate between the two values for this year and next year
+    let previousValue = hm[year] || 0;
+    let nextValue = hm[year + 1] || previousValue;
+
+    // Linearly interpolate between the current year's value and next year's value
+    const interpolationFactor = (i % 12) / 12;
+    const interpolatedValue = previousValue + (nextValue - previousValue) * interpolationFactor;
+
     projectedNetWorth.push({
       date: new Date(year, month, 1),
-      close: year in hm ? hm[year] : 0,
+      close: Math.round(interpolatedValue * 100) / 100,
     });
   }
 };
+
 
 /**
  *

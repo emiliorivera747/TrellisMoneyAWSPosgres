@@ -33,7 +33,7 @@ const handleMultipleDataPoints = (
               ? d1
               : d0;
         }
-        return { d: d, color: payload.color, strokeWidth: payload.strokeWidth };
+        return { d: d, color: payload.color, strokeWidth: payload.strokeWidth, data: payload.data };
       });
 
       showTooltip({

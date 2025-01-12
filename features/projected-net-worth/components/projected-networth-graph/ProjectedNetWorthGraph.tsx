@@ -25,14 +25,14 @@ const defaultYearsIntoTheFuture = 100;
 const defaultYear = 2064;
 const currentYear = Number(new Date().getFullYear().toString());
 
+import { upColor, downColor, flatColor, upColor2, downColor2, flatColor2} from "@/features/projected-net-worth/utils/graphColors";
+
 /**
  * Projects the future net worth of the user based on the data provided
  *
  */
 const ProjectedNetWorthGraph = () => {
-  const [selectedYear, setSelectedYear] = useState(
-    currentYear + 40
-  );
+  const [selectedYear, setSelectedYear] = useState(currentYear + 40);
 
   const [retirementYear, setRetirementYear] = useState(2064);
   const [selectedFilter, setSelectedFilter] = useState("isNoInflation");
@@ -113,7 +113,32 @@ const ProjectedNetWorthGraph = () => {
       ) : (
         <ResponsiveLineGraph
           tailwindClasses="h-[24rem] w-full border-box"
-          filteredData={filteredData}
+          filteredDataForLines={[
+            {
+              data: filteredData,
+              lineColor:{
+                upColor: upColor,
+                downColor: downColor,
+                flatColor: flatColor
+              },
+              tagTextColor:{
+                upColor: "text-green-700",
+                downColor: "text-red-700",
+                flatColor: "text-secondary-900",
+              },
+              tagBgColor:{
+                upColor: "bg-green-100",
+                downColor: "bg-red-100",
+                flatColor: "bg-secondary-100",
+              },
+              subheaderColor:{
+                upColor: "text-secondary-900",
+                downColor: "text-red-700",
+                flatColor: "text-secondary-900",
+              }
+              
+            },
+          ]}
           selectedYear={selectedYear}
           withInflationTag={selectedFilter === "isInflation"}
         />

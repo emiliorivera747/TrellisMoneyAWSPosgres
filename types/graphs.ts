@@ -5,26 +5,29 @@ export interface TooltipProps {
   innerHeight: number;
   // dataForLines: LineGraphData[];
   stockValueScale: (arg: number) => number; // y-axis
-  tooltipData: tooltipData[];
+  tooltipData: TooltipPayload[];
 }
 
-export interface tooltipData{
+export interface TooltipPayload {
   d: SecurityData;
   color: string;
   strokeWidth: number;
+  data: SecurityData[];
 }
 
-export interface LineGraphProp {
+export interface LineGraphProps {
   width: number;
   height: number;
   dataForLines: LinePayload[];
-  margin: any;
   showTooltip: (args: any) => void;
   hideTooltip: () => void;
   tooltipData: any;
   tooltipTop: number;
   tooltipLeft: number;
   lineColor?: string;
+  withInlfationTag?: boolean;
+  data?: SecurityData[];
+  margin: { top: number; right: number; bottom: number; left: number };
 }
 
 export interface SecurityData {
@@ -32,8 +35,40 @@ export interface SecurityData {
   close: number;
 }
 
-export interface LinePayload{
+export interface lineColor {
+  upColor: string;
+  downColor: string;
+  flatColor: string;
+}
+
+export interface tagTextColor {
+  upColor: string;
+  downColor: string;
+  flatColor: string;
+}
+
+export interface tagBgColor {
+  upColor: string;
+  downColor: string;
+  flatColor: string;
+}
+
+export interface subheaderColor {
+  upColor: string;
+  downColor: string;
+  flatColor: string;
+}
+
+export interface LinePayload {
   data: SecurityData[];
   color?: string;
+  tailwindTagTextColor?: string;
+  tailwindTagBgColor?: string;
+  tailwindPrimaryTextColor?: string;
   strokeWidth?: number;
+  lineColor?: lineColor;
+  tagTextColor?: tagTextColor;
+  tagBgColor?: tagBgColor;
+  subheaderColor?: subheaderColor;
 }
+

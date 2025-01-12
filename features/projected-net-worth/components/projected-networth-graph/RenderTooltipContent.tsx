@@ -1,5 +1,5 @@
 import React from "react";
-import { RenderTooltipContentProps } from "@/features/projected-net-worth/types/graphComponents";
+import { RenderTooltipContentProps } from "@/features/projected-net-worth/types/tooltips";
 
 // functions
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
@@ -14,7 +14,7 @@ import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBe
  * @returns
  */
 const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
-  tooltipData,
+  tooltipPayload,
   data,
   withYears = true,
 }) => {
@@ -29,7 +29,7 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
   /**
    * If there is no tooltip data, return the default stock value difference and rate of change
    */
-  if (!tooltipData) {
+  if (!tooltipPayload) {
     return (
       <>
         {numberToMoneyFormat(deafultStockValueDifference) +
@@ -46,14 +46,17 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
     );
   }
 
-  const stockValueDifference = getStockValue(tooltipData) - data[0].close;
+  const stockValueDifference = getStockValue(tooltipPayload.d) - data[0].close;
 
   const rateOfChange = calculateRateOfChange(
     data[0].close,
-    getStockValue(tooltipData)
+    getStockValue(tooltipPayload.d)
   );
-
-  const yearsBetween = calculateYearsBetween(data[0].date, tooltipData.date);
+  
+  const yearsBetween = calculateYearsBetween(
+    data[0].date,
+    tooltipPayload.d.date
+  );
 
   return (
     <>

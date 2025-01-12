@@ -2,7 +2,7 @@
 import React from "react";
 
 //Visx
-import { Bar, line, LinePath } from "@visx/shape";
+import { Bar,LinePath } from "@visx/shape";
 import useDateScale from "@/utils/hooks/useDateScale";
 import useStockValueScale from "@/utils/hooks/useStockvalueScale";
 import { curveMonotoneX } from "@visx/curve";
@@ -17,7 +17,7 @@ import TooltipBar from "@/components/dashboard/TooltipBar";
 import useHandleTooltipMultiple from "@/utils/hooks/useHandleTooltipMultiple";
 
 //Types
-import { LineGraphProp } from "@/types/graphs";
+import { LineGraphProps } from "@/types/graphs";
 import { SecurityData } from "@/types/graphs";
 
 const LineGraph = ({
@@ -30,7 +30,7 @@ const LineGraph = ({
   tooltipData,
   tooltipTop,
   tooltipLeft,
-}: LineGraphProp) => {
+}: LineGraphProps) => {
 
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
@@ -53,7 +53,6 @@ const LineGraph = ({
       viewBox={`0 0 ${width} ${height}`} // Use the viewBox to scale the content
       preserveAspectRatio="none" // Prevent aspect ratio issues if the div size changes
     >
-
       <rect
         x={0}
         y={0}
@@ -62,7 +61,6 @@ const LineGraph = ({
         fill="url(#area-background-gradient)"
         rx={14}
       />
-
       {dataForLines.map((linePayload, i) => (
         <LinePath
           key={i}
@@ -74,7 +72,6 @@ const LineGraph = ({
           curve={curveMonotoneX} 
         /> 
       ))}
-      
       <Bar
         x={margin.left}
         y={margin.top}
@@ -87,7 +84,6 @@ const LineGraph = ({
         onMouseMove={handleTooltip}
         onMouseLeave={() => hideTooltip()}
       />
-
       {tooltipData && (
         <TooltipBar
           tooltipLeft={tooltipLeft}

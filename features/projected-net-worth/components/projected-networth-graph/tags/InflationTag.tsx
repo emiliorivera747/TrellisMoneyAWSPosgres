@@ -32,14 +32,14 @@ const getLabel = (category: InflationCategory) => {
 };
 
 const InflationTag = ({
-  inflation_category,
-  bg_color,
-  text_color,
-  svg_color,
+  inflation_category = "flat",
+  bg_color = "bg-gray-200",
+  text_color = "text-black",
+  svg_color = "black",
 }: InflationTagProps) => {
   return (
     <div
-      className={`flex items-center $ p-[0.3rem] px-3 rounded-full font-semibold gap-2 text-[0.6rem] ${bg_color} ${text_color}`}
+      className={`flex items-center p-[0.3rem] px-3 rounded-full font-semibold gap-2 text-[0.6rem] ${bg_color} ${text_color}`}
     >
       {GetSvgV2({
         path: getSvgPath(inflation_category),

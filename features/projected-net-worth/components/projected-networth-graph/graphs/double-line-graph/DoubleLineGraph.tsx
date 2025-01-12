@@ -1,5 +1,5 @@
 import React from "react";
-import { Line, Bar} from "@visx/shape";
+import { Line, Bar } from "@visx/shape";
 import { curveMonotoneX } from "@visx/curve";
 
 import { withTooltip, defaultStyles } from "@visx/tooltip";
@@ -35,8 +35,8 @@ import {
   downColor2,
   flatColor2,
 } from "@/features/projected-net-worth/utils/graphColors";
-
-type TooltipData = { data1: SecurityData; data2: SecurityData };
+import { TooltipPayload } from "@/types/graphs";
+type TooltipData = TooltipPayload[];
 
 //Functions
 import { getLineDirections } from "@/utils/helper-functions/getLineDirections";
@@ -71,7 +71,7 @@ export default withTooltip<DoubleLineGraphProps, TooltipData>(
     const { lineColor1, lineColor2 } = getLineColorsForGraph({
       directionLine1,
       directionLine2,
-    }); 
+    });
 
     // Get the primary text color based on the line direction
     const tailwindPrimaryTextColor = getColorBasedOnLineDirection({
@@ -79,21 +79,20 @@ export default withTooltip<DoubleLineGraphProps, TooltipData>(
       upColor: "text-primary-900",
       downColor: "text-red-700",
       flatColor: "text-primary-900",
-    })
-
+    });
+    console.log("TOOLTIP DATA", tooltipData);
     return (
       <div className={` absolute h-[100%] w-full `}>
-
         {/* The stock value and price change components */}
         <div className="flex flex-row gap-4">
           <StockValueAndPriceChange
-            tooltipData={tooltipData ? tooltipData[0] : null}
+            tooltipPayload={tooltipData?.[0] ?? null}
             data={data1}
             withYears={false}
             mainHeaderTailwindCss="text-[1.1rem] font-medium"
           />
           <StockValueAndPriceChange
-            tooltipData={tooltipData ? tooltipData[2] : null}
+            tooltipPayload={tooltipData?.[1] ?? null}
             data={data2}
             withYears={false}
             mainHeaderTailwindCss="text-[1.1rem] font-medium"
@@ -104,7 +103,10 @@ export default withTooltip<DoubleLineGraphProps, TooltipData>(
         <LineGraph
           width={width}
           height={height}
-          dataForLines={[{ data: data1, color: lineColor1 }, { data: data2, color: lineColor2 }]}
+          dataForLines={[
+            { data: data1, color: lineColor1 },
+            { data: data2, color: lineColor2 },
+          ]}
           margin={margin}
           showTooltip={showTooltip}
           hideTooltip={hideTooltip}
@@ -112,7 +114,6 @@ export default withTooltip<DoubleLineGraphProps, TooltipData>(
           tooltipTop={tooltipTop}
           tooltipLeft={tooltipLeft}
         />
-
 
         {/* Tooltip div */}
         {tooltipData && (
@@ -128,12 +129,11 @@ export default withTooltip<DoubleLineGraphProps, TooltipData>(
   }
 );
 
-
 /**
  * Get the line colors for the graph
- * 
- * @param param0 
- * @returns 
+ *
+ * @param param0
+ * @returns
  */
 function getLineColorsForGraph({ directionLine1, directionLine2 }: Directions) {
   const lineColors = [
