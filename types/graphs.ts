@@ -1,3 +1,5 @@
+
+import { Direction } from "@/features/projected-net-worth/types/graphComponents";
 export interface TooltipProps {
   tooltipLeft: number;
   tooltipTop?: number;
@@ -6,6 +8,7 @@ export interface TooltipProps {
   // dataForLines: LineGraphData[];
   stockValueScale: (arg: number) => number; // y-axis
   tooltipData: TooltipPayload[];
+  directions: Direction[];
 }
 
 export interface TooltipPayload {
@@ -13,6 +16,7 @@ export interface TooltipPayload {
   color: string;
   strokeWidth: number;
   data: SecurityData[];
+  linePayload: LinePayload;
 }
 
 export interface LineGraphProps {

@@ -5,6 +5,10 @@ import {
   InflationTagProps,
 } from "@/features/projected-net-worth/types/inflationTagComponent";
 
+// Functions
+import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
+import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
+
 const getSvgPath = (category: InflationCategory) => {
   switch (category) {
     case "up":
@@ -32,22 +36,25 @@ const getLabel = (category: InflationCategory) => {
 };
 
 const InflationTag = ({
-  inflation_category = "flat",
-  bg_color = "bg-gray-200",
-  text_color = "text-black",
-  svg_color = "black",
+  dataForLine,
 }: InflationTagProps) => {
+  const lineDirection = getLineDirection(dataForLine.data);
+  const { tailwindTagTextColor, tailwindTagBgColor } = getTailwindColors(
+    lineDirection,
+    dataForLine
+  );
+
   return (
     <div
-      className={`flex items-center p-[0.3rem] px-3 rounded-full font-semibold gap-2 text-[0.6rem] ${bg_color} ${text_color}`}
+      className={`flex items-center p-[0.3rem] px-3 rounded-full font-semibold gap-2 text-[0.6rem] ${tailwindTagBgColor} ${tailwindTagTextColor}`}
     >
       {GetSvgV2({
-        path: getSvgPath(inflation_category),
+        path: getSvgPath(lineDirection),
         strokeWidth: 3,
         size: "size-3",
-        color: svg_color,
+        color: "currentColor",
       })}
-      {getLabel(inflation_category)}
+      {getLabel(lineDirection)}
     </div>
   );
 };

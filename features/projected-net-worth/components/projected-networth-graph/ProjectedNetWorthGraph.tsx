@@ -6,7 +6,6 @@ import SelectYearMenuButton from "@/features/projected-net-worth/components/proj
 import GraphHeaders from "@/components/headers/GraphHeaders";
 import ResponsiveLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/one-line-graph/ResponsiveLineGraph";
 import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/RenderFilters";
-import ResponsiveDoubleLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/double-line-graph/ResponsiveDoubleLineGraph";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
@@ -22,10 +21,13 @@ import useFilteredArrays from "@/features/projected-net-worth/utils/hooks/useFil
 
 // Constants
 const defaultYearsIntoTheFuture = 100;
-const defaultYear = 2064;
 const currentYear = Number(new Date().getFullYear().toString());
 
-import { upColor, downColor, flatColor, upColor2, downColor2, flatColor2} from "@/features/projected-net-worth/utils/graphColors";
+//Data
+import {
+  lineColors1,
+  lineColors2,
+} from "@/features/projected-net-worth/utils/data/lineColors";
 
 /**
  * Projects the future net worth of the user based on the data provided
@@ -34,7 +36,7 @@ import { upColor, downColor, flatColor, upColor2, downColor2, flatColor2} from "
 const ProjectedNetWorthGraph = () => {
   const [selectedYear, setSelectedYear] = useState(currentYear + 40);
 
-  const [retirementYear, setRetirementYear] = useState(2064);
+  const [retirementYear, setRetirementYear] = useState(currentYear + 40);
   const [selectedFilter, setSelectedFilter] = useState("isNoInflation");
 
   const {
@@ -52,14 +54,16 @@ const ProjectedNetWorthGraph = () => {
     enabled: !!selectedYear,
   });
 
-  // console.log(projectionData);
-
-  // Use custom hook for filtering
+  /**
+   * Filter the data based on the selected year
+   */
   const filteredData = useFilteredData(projectionData, selectedYear);
 
+  /**
+   * Filter the data based on the selected year without
+   */
   const { filteredDataNoInflation, filteredDataWithInflation } =
     useFilteredArrays(projectionData, selectedYear);
-  // console.log("filtered data", filteredData);
 
   /**
    * Function to handle the change of the filter
@@ -104,10 +108,25 @@ const ProjectedNetWorthGraph = () => {
 
       {/* Graph */}
       {selectedFilter === "isBoth" ? (
-        <ResponsiveDoubleLineGraph
+        <ResponsiveLineGraph
           tailwindClasses="h-[24rem] w-full border-box"
-          filteredData1={filteredDataNoInflation}
-          filteredData2={filteredDataWithInflation}
+          filteredDataForLines={[
+            {
+              data: filteredDataNoInflation,
+              lineColor: lineColors1.lineColor,
+              tagTextColor: lineColors1.tagTextColor,
+              tagBgColor: lineColors1.tagBgColor,
+              subheaderColor: lineColors1.subheaderColor,
+            },
+
+            {
+              data: filteredDataWithInflation,
+              lineColor: lineColors2.lineColor,
+              tagTextColor: lineColors2.tagTextColor,
+              tagBgColor: lineColors2.tagBgColor,
+              subheaderColor: lineColors2.subheaderColor,
+            },
+          ]}
           selectedYear={selectedYear}
         />
       ) : (
@@ -116,27 +135,10 @@ const ProjectedNetWorthGraph = () => {
           filteredDataForLines={[
             {
               data: filteredData,
-              lineColor:{
-                upColor: upColor,
-                downColor: downColor,
-                flatColor: flatColor
-              },
-              tagTextColor:{
-                upColor: "text-green-700",
-                downColor: "text-red-700",
-                flatColor: "text-secondary-900",
-              },
-              tagBgColor:{
-                upColor: "bg-green-100",
-                downColor: "bg-red-100",
-                flatColor: "bg-secondary-100",
-              },
-              subheaderColor:{
-                upColor: "text-secondary-900",
-                downColor: "text-red-700",
-                flatColor: "text-secondary-900",
-              }
-              
+              lineColor: lineColors1.lineColor,
+              tagTextColor: lineColors1.tagTextColor,
+              tagBgColor: lineColors1.tagBgColor,
+              subheaderColor: lineColors1.subheaderColor,
             },
           ]}
           selectedYear={selectedYear}

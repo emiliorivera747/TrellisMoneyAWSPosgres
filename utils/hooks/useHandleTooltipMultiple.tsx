@@ -33,7 +33,13 @@ const handleMultipleDataPoints = (
               ? d1
               : d0;
         }
-        return { d: d, color: payload.color, strokeWidth: payload.strokeWidth, data: payload.data };
+        console.log("Payload", payload);
+        return {
+          d: d,
+          strokeWidth: payload.strokeWidth,
+          data: payload.data,
+          linePayload: payload,
+        };
       });
 
       showTooltip({
@@ -42,7 +48,7 @@ const handleMultipleDataPoints = (
         tooltipTop: stockValueScale(getStockValue(tooltipData[0].d)),
       });
     },
-    [showTooltip, stockValueScale, dateScale, ...linePayloads]
+    [showTooltip, stockValueScale, dateScale, JSON.stringify(linePayloads)]
   );
 };
 

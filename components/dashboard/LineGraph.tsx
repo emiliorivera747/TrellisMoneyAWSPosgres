@@ -2,7 +2,7 @@
 import React from "react";
 
 //Visx
-import { Bar,LinePath } from "@visx/shape";
+import { Bar, line, LinePath } from "@visx/shape";
 import useDateScale from "@/utils/hooks/useDateScale";
 import useStockValueScale from "@/utils/hooks/useStockvalueScale";
 import { curveMonotoneX } from "@visx/curve";
@@ -20,6 +20,10 @@ import useHandleTooltipMultiple from "@/utils/hooks/useHandleTooltipMultiple";
 import { LineGraphProps } from "@/types/graphs";
 import { SecurityData } from "@/types/graphs";
 
+//Functions
+import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
+import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
+
 const LineGraph = ({
   width,
   height,
@@ -31,11 +35,12 @@ const LineGraph = ({
   tooltipTop,
   tooltipLeft,
 }: LineGraphProps) => {
-
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
   const dateScale = useDateScale(dataForLines[0].data, margin, innerWidth); // x-axis
-  const stockValueScale = useStockValueScale(dataForLines[0].data, margin, innerHeight); // y-axis
+  const allData = dataForLines.flatMap((line) => line.data);
+  const stockValueScale = useStockValueScale(allData, margin, innerHeight); // y-axis
+  const directions = dataForLines.map((line) => getLineDirection(line.data));
 
   // tooltip handler
   const handleTooltip = useHandleTooltipMultiple(
@@ -61,17 +66,20 @@ const LineGraph = ({
         fill="url(#area-background-gradient)"
         rx={14}
       />
-      {dataForLines.map((linePayload, i) => (
-        <LinePath
-          key={i}
-          data={linePayload.data}
-          x={(d: SecurityData) => dateScale(getDate(d)) ?? 0}
-          y={(d: SecurityData) => stockValueScale(getStockValue(d)) ?? 0}
-          stroke={linePayload.color} 
-          strokeWidth={linePayload.strokeWidth ?? 2} 
-          curve={curveMonotoneX} 
-        /> 
-      ))}
+      {dataForLines.map((linePayload, i) => {
+        const { lineColor } = getTailwindColors(directions[i], linePayload);
+        return (
+          <LinePath
+            key={i}
+            data={linePayload.data}
+            x={(d: SecurityData) => dateScale(getDate(d)) ?? 0}
+            y={(d: SecurityData) => stockValueScale(getStockValue(d)) ?? 0}
+            stroke={lineColor}
+            strokeWidth={linePayload.strokeWidth ?? 2}
+            curve={curveMonotoneX}
+          />
+        );
+      })}
       <Bar
         x={margin.left}
         y={margin.top}
@@ -92,6 +100,7 @@ const LineGraph = ({
           innerHeight={innerHeight}
           tooltipData={tooltipData}
           stockValueScale={stockValueScale}
+          directions={directions}
         />
       )}
     </svg>

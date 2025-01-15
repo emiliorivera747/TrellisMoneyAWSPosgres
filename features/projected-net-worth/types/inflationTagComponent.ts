@@ -1,3 +1,4 @@
+import { LinePayload } from "@/types/graphs";
 export type InflationCategory = "up" | "down" | "flat";
 
 export interface InflationTagProps {
@@ -5,4 +6,5 @@ export interface InflationTagProps {
   bg_color?: string;
   text_color?: string;
   svg_color?: string;
+  dataForLine: LinePayload;
 }

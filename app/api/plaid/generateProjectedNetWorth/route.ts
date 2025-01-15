@@ -72,7 +72,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       userHoldings,
       start_year,
       end_year,
-      with_inflation
+      with_inflation,
+      0.99
     );
 
     return NextResponse.json(
@@ -84,7 +85,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   } catch (error) {
     if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
-
     if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
     return handleOtherErrror(error);
   }

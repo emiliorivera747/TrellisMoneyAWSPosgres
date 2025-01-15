@@ -13,7 +13,8 @@ export const generateProjectedNetWorthV2 = async (
   holdings: Holding[],
   start_year: number,
   end_year: number,
-  with_inflation: boolean
+  with_inflation: boolean,
+  annual_inflation_rate:number
 ): Promise<{ date: Date; close: number }[]> => {
   const projectedNetWorth: { date: Date; close: number }[] = [];
 
@@ -26,7 +27,8 @@ export const generateProjectedNetWorthV2 = async (
     start_year,
     end_year,
     holdings,
-    with_inflation
+    with_inflation,
+    annual_inflation_rate
   );
 
   pushProjectedNetWorthToEachMonth(projectedNetWorth, start_year, end_year, hm);
@@ -77,9 +79,9 @@ const future_value_with_inflation_fn = (
 
 /**
  * Quantity getter function
- * 
- * @param holding 
- * @returns 
+ *
+ * @param holding
+ * @returns
  */
 const getQuantity = (holding: Holding) => {
   return holding?.quantity ? holding.quantity : 0;
@@ -87,9 +89,9 @@ const getQuantity = (holding: Holding) => {
 
 /**
  * Close price getter function
- * 
- * @param holding 
- * @returns 
+ *
+ * @param holding
+ * @returns
  */
 const getClosePrice = (holding: Holding) => {
   return holding?.security?.close_price ? holding.security.close_price : 0;
@@ -97,9 +99,9 @@ const getClosePrice = (holding: Holding) => {
 
 /**
  * Annual return rate getter function
- * 
- * @param holding 
- * @returns 
+ *
+ * @param holding
+ * @returns
  */
 const getAnnualReturnRate = (holding: Holding) => {
   return holding?.annual_return_rate ? holding.annual_return_rate : 0;
@@ -107,20 +109,20 @@ const getAnnualReturnRate = (holding: Holding) => {
 
 /**
  * annual inflation rate getter function
- * 
- * @param holding 
- * @returns 
+ *
+ * @param holding
+ * @returns
  */
 const getAnnualInflationRate = (holding: Holding) => {
   return holding?.annual_inflation_rate ? holding.annual_inflation_rate : 0;
 };
 
 /**
- * 
+ *
  * Returns the formula values for the future value calculation
- * 
- * @param holding 
- * @returns 
+ *
+ * @param holding
+ * @returns
  */
 const getFormulaValues = (holding: Holding) => {
   return {
@@ -159,7 +161,8 @@ const pushProjectedNetWorthToEachMonth = (
 
     // Linearly interpolate between the current year's value and next year's value
     const interpolationFactor = (i % 12) / 12;
-    const interpolatedValue = previousValue + (nextValue - previousValue) * interpolationFactor;
+    const interpolatedValue =
+      previousValue + (nextValue - previousValue) * interpolationFactor;
 
     projectedNetWorth.push({
       date: new Date(year, month, 1),
@@ -167,7 +170,6 @@ const pushProjectedNetWorthToEachMonth = (
     });
   }
 };
-
 
 /**
  *
@@ -185,18 +187,18 @@ const populateHashMapWithFv = (
   start_year: number,
   end_year: number,
   holdings: Holding[],
-  with_inflation: boolean
+  with_inflation: boolean,
+  annual_inflation_rate: number
 ) => {
   for (let i = 0; i < end_year - start_year + 1; i++) {
-    
     let total = 0;
 
     for (const holding of holdings) {
-
-      const { quantity, close_price, annual_return_rate, annual_inflation_rate} =
+      const { quantity, close_price, annual_return_rate } =
         getFormulaValues(holding);
 
       if (with_inflation) {
+
         let fv = future_value_with_inflation_fn(
           quantity,
           close_price,
@@ -204,9 +206,12 @@ const populateHashMapWithFv = (
           annual_inflation_rate,
           i
         );
+
         total += fv;
       } else if (!with_inflation) {
+
         let fv = future_value_fn(quantity, close_price, annual_return_rate, i);
+        
         total += fv;
       }
     }

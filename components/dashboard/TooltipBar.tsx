@@ -1,7 +1,13 @@
 import React from "react";
 import { Line } from "@visx/shape";
 import { TooltipProps } from "@/types/graphs";
+
+//Accessors
 import { getStockValue } from "@/utils/helper-functions/accessors";
+
+//Functions
+import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
+
 
 /**
  * Component for displaying a tooltip bar on a graph.
@@ -12,6 +18,7 @@ const TooltipBar = ({
   innerHeight,
   tooltipData,
   stockValueScale,
+  directions,
 }: TooltipProps) => {
 
   return (
@@ -25,13 +32,15 @@ const TooltipBar = ({
       />
 
       {tooltipData.map((linePayload, i) => {
+        const { lineColor } = getTailwindColors(directions[i], linePayload.linePayload);
+
         return (
           <circle
             key={i}
             cx={tooltipLeft}
             cy={stockValueScale(getStockValue(linePayload.d))}
             r={4.5}
-            stroke={linePayload.color}
+            stroke={lineColor}
             fill="white"
             strokeWidth={2.5}
             pointerEvents="none"

@@ -16,10 +16,9 @@ const LineGraphTooltip = ({
   defaultStyles,
   tooltipData,
 }: LineGraphTooltipProps) => {
-  console.log("tooltipData", tooltipData);
   if (!tooltipData) return null;
   return (
-    <div >
+    <div>
       <Tooltip
         top={margin.top + 50}
         left={tooltipLeft - 10}
@@ -30,7 +29,7 @@ const LineGraphTooltip = ({
           transform: "translateX(-50%)",
           fontSize: "0.7rem",
           background: "none",
-          border: "none", 
+          border: "none",
           color: "#495057", // Change the text color to red
           boxShadow: "none", // Ensure no box shadow is applied
         }}

@@ -7,7 +7,7 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 import { LinePath } from "@visx/shape";
 
 //Components
-import StockValueAndPriceChange from "../../StockValueAndPriceChange";
+import StockValueAndPriceChange from "../../../../../../components/dashboard/StockValueAndPriceChange";
 import LineGraphTooltip from "@/features/projected-net-worth/components/projected-networth-graph/graphs/one-line-graph/LineGraphTooltip";
 import LineGraph from "@/components/dashboard/LineGraph";
 

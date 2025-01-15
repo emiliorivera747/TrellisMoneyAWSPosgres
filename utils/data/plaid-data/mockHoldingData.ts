@@ -12,6 +12,7 @@ const holdingData: Holding[] = [
     quantity: 30,
     security_id: "d6ePmbPxgWCWmMVv66q9iPV94n91vMtov5Are",
     unofficial_currency_code: null,
+    annual_inflation_rate: 0.1,
   },
   {
     account_id: "k67E4xKvMlhmleEa4pg9hlwGGNnnEeixPolGm",
@@ -24,6 +25,7 @@ const holdingData: Holding[] = [
     quantity: 17.39,
     security_id: "KDwjlXj1Rqt58dVvmzRguxJybmyQL8FgeWWAy",
     unofficial_currency_code: null,
+    annual_inflation_rate: 0.1,
   },
   {
     account_id: "k67E4xKvMlhmleEa4pg9hlwGGNnnEeixPolGm",
@@ -36,6 +38,7 @@ const holdingData: Holding[] = [
     quantity: 2,
     security_id: "NDVQrXQoqzt5v3bAe8qRt4A7mK7wvZCLEBBJk",
     unofficial_currency_code: null,
+    annual_inflation_rate: 0.1,
   },
   // {
   //   account_id: "JqMLm4rJwpF6gMPJwBqdh9ZjjPvvpDcb7kDK1",
