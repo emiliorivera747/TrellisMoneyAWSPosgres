@@ -17,7 +17,7 @@ async function main() {
       name: 'Bob',
     },
   })
-  console.log({ alice, bob })
+  //({ alice, bob })
 }
 main()
   .then(async () => {

@@ -29,6 +29,7 @@ const SelectYearMenu = ({
   setSelectedYear = () => {},
   setRetirementYear = () => {},
 }: GroupedDateSelectorProps): JSX.Element => {
+  const groupsRange = 10;
   const [showBeforeRetirement, setShowBeforeRetirement] = useState(true);
   const [showAfterRetirement, setShowAfterRetirement] = useState(false);
   const [showYearSelector, setShowYearSelector] = useState(false);
@@ -36,15 +37,13 @@ const SelectYearMenu = ({
   const beforeRetirementYears = years.filter(
     (year: number) => year < retirementYear
   );
-  const afterRetirementYears = years.filter(
-    (year: number) => year > retirementYear
-  );
+  const afterRetirementYears = years.filter((year: number) => year > retirementYear);
 
   const editRetirementYear = () => setShowYearSelector(!showYearSelector);
 
   const beforeRetirementRanges = getYearRanges(
     beforeRetirementYears,
-    10,
+    groupsRange,
     retirementYear
   );
 

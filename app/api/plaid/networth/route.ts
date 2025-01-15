@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json({netWorth: netWorth}, { status: 200 });
     } catch (error) {
-        console.log(error);
+        //(error);
         return NextResponse.json(
             { error: "Error fetching account balance data" },
             { status: 500 }

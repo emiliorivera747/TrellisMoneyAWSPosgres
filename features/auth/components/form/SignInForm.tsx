@@ -58,7 +58,7 @@ const SignInForm = () => {
     "Signed in successfully!"
   );
 
-  console.log(err);
+  //(err);
 
   return (
     <PrimaryAuthContainer>

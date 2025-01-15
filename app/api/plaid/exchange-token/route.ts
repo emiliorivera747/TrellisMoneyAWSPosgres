@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   try {
     const response = await client.itemPublicTokenExchange({ public_token });
     const { access_token } = response.data;
-    console.log('Access token:', access_token);
+    //('Access token:', access_token);
     return NextResponse.json({ access_token });
   } catch (error) {
 

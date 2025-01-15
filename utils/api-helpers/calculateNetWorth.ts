@@ -50,7 +50,7 @@ export function calculateNetWorth(accounts: AccountBase[]): number {
                 // Assuming these accounts are assets
                 netWorth += balance;
             } else {
-                console.log(`Unknown account type: ${type}, subtype: ${subtype}`);
+                //(`Unknown account type: ${type}, subtype: ${subtype}`);
             }
         }
     });

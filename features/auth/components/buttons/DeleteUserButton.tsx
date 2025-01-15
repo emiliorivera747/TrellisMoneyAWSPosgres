@@ -21,7 +21,7 @@ const DeleteUserButton = () => {
         router.push("/"); // Redirect to the home page or login page
       }
     } catch (error: unknown) {
-      console.log("Error deleting user:", error);
+      //("Error deleting user:", error);
     }
   };
   return (

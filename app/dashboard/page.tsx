@@ -23,7 +23,7 @@ const Dashboard = () => {
       if (error) {
         console.error("Error fetching user:", error);
       } else {
-        console.log("User data:", user);
+        //("User data:", user);
       }
     };
     fetchUser();

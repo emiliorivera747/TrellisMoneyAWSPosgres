@@ -20,7 +20,7 @@ const Link = (props: LinkProps) => {
       body: JSON.stringify({ public_token }),
     });
     // Handle response ...
-    console.log(response);
+    //(response);
   }, []);
 
   const config: Parameters<typeof usePlaidLink>[0] = {

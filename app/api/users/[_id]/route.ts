@@ -34,7 +34,7 @@ export const GET = async (
       { status: 200 }
     );
   } catch (error) {
-    console.log("Error", error);
+    //("Error", error);
     return NextResponse.json(
       { message: "Server Error", status: "error" },
       { status: 500 }

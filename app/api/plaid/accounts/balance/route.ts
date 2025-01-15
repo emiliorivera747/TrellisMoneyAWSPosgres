@@ -11,14 +11,14 @@ export async function GET(req: NextRequest) {
   };
 
   try {
-    // console.log("Access Token ", access_token);
+    // //("Access Token ", access_token);
     const response = await plaidClient.accountsBalanceGet(request);
-    // console.log("Response Data ", response.data);
+    // //("Response Data ", response.data);
     const accounts = response.data.accounts;
-    // console.log("Accounts Data ", accounts);
+    // //("Accounts Data ", accounts);
     return NextResponse.json({ accounts }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    //(error);
     return NextResponse.json(
       { error: "Error fetching account balance data" },
       { status: 500 }

@@ -5,7 +5,7 @@ export function filterProjectionData(
   projectionData: SecurityData[],
   selectedYear: number
 ): SecurityData[] {
-  console.log("projectionData", projectionData);
+  //("projectionData", projectionData);
 
   return projectionData
     .filter((data) => new Date(data.date).getFullYear() <= selectedYear)

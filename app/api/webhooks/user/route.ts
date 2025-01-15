@@ -14,8 +14,8 @@ export async function DELETE(req: Request) {
     const headersList = await headers();
     const secret = headersList.get("x-supabase-secret");
     const timestamp = headersList.get("x-supabase-timestamp");
-    console.log("secret", secret);
-    console.log("timestamp", timestamp);
+    //("secret", secret);
+    //("timestamp", timestamp);
 
     // // Ensure timestamp is recent
     if (!timestamp) {
@@ -33,7 +33,7 @@ export async function DELETE(req: Request) {
      * Creates a HMAC object with the SHA256 algorithm using the private key
      */
     const hmac = crypto.createHmac("sha256", process.env.PRIVATE_SUPABASE_KEY || "");
-    console.log("HMAC", hmac);
+    //("HMAC", hmac);
 
     /**
      * Updates the HMAC object with the data to be hashed
@@ -41,7 +41,7 @@ export async function DELETE(req: Request) {
     const body = await req.text();
     hmac.update(`${timestamp}${body}`);
     const calculatedSignature = hmac.digest('hex');
-    console.log("calculatedSignature", calculatedSignature);
+    //("calculatedSignature", calculatedSignature);
 
     // Check if x-supabase-secret matches our PRIVATE_SUPABASE_KEY
     if (secret !== calculatedSignature) {

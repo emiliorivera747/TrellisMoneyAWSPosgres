@@ -80,7 +80,7 @@ export default withTooltip<DoubleLineGraphProps, TooltipData>(
       downColor: "text-red-700",
       flatColor: "text-primary-900",
     });
-    console.log("TOOLTIP DATA", tooltipData);
+    //("TOOLTIP DATA", tooltipData);
     return (
       <div className={` absolute h-[100%] w-full `}>
         {/* The stock value and price change components */}

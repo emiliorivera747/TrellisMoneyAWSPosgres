@@ -1,4 +1,6 @@
 "use client";
+
+//React
 import { useState } from "react";
 
 //components
@@ -39,6 +41,9 @@ const ProjectedNetWorthGraph = () => {
   const [retirementYear, setRetirementYear] = useState(currentYear + 40);
   const [selectedFilter, setSelectedFilter] = useState("isNoInflation");
 
+  /**
+   * Fetch the data for the projected net worth
+   */
   const {
     data: projectionData,
     error: projectionError,
@@ -105,37 +110,21 @@ const ProjectedNetWorthGraph = () => {
           editRetirementYear={editRetirementYear}
         />
       </div>
-
+  
       {/* Graph */}
-      {selectedFilter === "isBoth" ? (
-        <ResponsiveLineGraph
-          tailwindClasses="h-[24rem] w-full border-box"
-          filteredDataForLines={[
-            {
-              data: filteredDataNoInflation,
-              ...lineColors1,
-            },
-
-            {
-              data: filteredDataWithInflation,
-              ...lineColors2,
-            },
-          ]}
-          selectedYear={selectedYear}
-        />
-      ) : (
-        <ResponsiveLineGraph
-          tailwindClasses="h-[24rem] w-full border-box"
-          filteredDataForLines={[
-            {
-              data: filteredData,
-              ...lineColors1,
-            },
-          ]}
-          selectedYear={selectedYear}
-          withInflationTag={selectedFilter === "isInflation"}
-        />
-      )}
+      <ResponsiveLineGraph
+        tailwindClasses="h-[24rem] w-full border-box"
+        filteredDataForLines={
+          selectedFilter === "isBoth"
+            ? [
+                { data: filteredDataNoInflation, ...lineColors1 },
+                { data: filteredDataWithInflation, ...lineColors2 },
+              ]
+            : [{ data: filteredData, ...lineColors1 }]
+        }
+        selectedYear={selectedYear}
+        withInflationTag={selectedFilter === "isInflation"}
+      />
 
       {/* Filters */}
       <RenderFilters

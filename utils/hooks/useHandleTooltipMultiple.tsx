@@ -33,7 +33,7 @@ const handleMultipleDataPoints = (
               ? d1
               : d0;
         }
-        console.log("Payload", payload);
+        //("Payload", payload);
         return {
           d: d,
           strokeWidth: payload.strokeWidth,

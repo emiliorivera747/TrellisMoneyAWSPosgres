@@ -11,16 +11,16 @@ export async function GET(req: NextRequest) {
   };
 
   try {
-    // console.log("Access Token ", access_token);
+    // //("Access Token ", access_token);
     const response = await plaidClient.identityGet(request);
-    // console.log("Response Data ", response.data);
+    // //("Response Data ", response.data);
     const identities = response.data.accounts.flatMap(
       (account) => account.owners
     );
-    // console.log("Identities Data ", identities);
+    // //("Identities Data ", identities);
     return NextResponse.json({ identities }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    //(error);
     return NextResponse.json(
       { error: "Error fetching identity data" },
       { status: 500 }

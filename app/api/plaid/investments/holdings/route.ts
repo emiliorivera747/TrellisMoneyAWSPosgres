@@ -11,15 +11,15 @@ export async function GET(req: NextRequest) {
   };
 
   try {
-    console.log("Access Token ", access_token);
+    //("Access Token ", access_token);
 
     const response = await plaidClient.investmentsHoldingsGet(request);
-    // console.log("Response Data ", response.data);
-    // console.log("Response Data ", response.data);
+    // //("Response Data ", response.data);
+    // //("Response Data ", response.data);
     const holdings = response.data.holdings;
     const securities = response.data.securities;
-    // console.log("Holdings Data ", holdings);
-    // console.log("Securities Data ", securities);
+    // //("Holdings Data ", holdings);
+    // //("Securities Data ", securities);
     return NextResponse.json({ holdings, securities }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
