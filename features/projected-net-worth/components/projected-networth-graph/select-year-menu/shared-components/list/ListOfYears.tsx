@@ -1,7 +1,7 @@
 import React from "react";
 
 import PrimaryMenuButton from "@/components/buttons/PrimaryMenuButtons";
-import { ListOfYearsProps } from "@/features/projected-net-worth/types/graphComponents";
+import { ListOfYearsProps } from "@/features/projected-net-worth/types/selectYearMenu";
 
 /**
  * Component that renders a list of years as buttons.

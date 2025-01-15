@@ -5,11 +5,11 @@ import React, { useState } from "react";
 import { getPencilSvg } from "@/utils/helper-functions/getPencilSvg";
 
 // Components
-import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/headers/HeaderWithIcon";
-import SubHeader from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/headers/SubHeader";
-import YearSelectorContainer from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/containers/YearSelectorContainer";
-import RetirementYearButtonContainer from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/containers/RetirementYearButtonContainer";
-import { RetirementYearSectionMenuProps } from "@/features/projected-net-worth/types/graphComponents";
+import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/headers/HeaderWithIcon";
+import SubHeader from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/headers/SubHeader";
+import YearSelectorContainer from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/containers/YearSelectorContainer";
+import RetirementYearButtonContainer from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/containers/RetirementYearButtonContainer";
+import { RetirementYearSectionMenuProps } from "@/features/projected-net-worth/types/selectYearMenu";
 
 /**
  * Calculates total years until retirement
@@ -44,7 +44,7 @@ const RetirementYearSectionMenu = ({
 
   return (
     <div className="mb-6">
-      
+
       <HeaderWithIcon
         actionFunction={editRetirementYear}
         label="Retirement Year"

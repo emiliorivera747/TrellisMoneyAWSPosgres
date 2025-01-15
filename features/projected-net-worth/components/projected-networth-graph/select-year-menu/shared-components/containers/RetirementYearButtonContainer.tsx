@@ -1,5 +1,5 @@
 import React from "react";
-import { renderPrimaryDropDownMenuButtonProps } from "@/features/projected-net-worth/types/graphComponents";
+import { renderPrimaryDropDownMenuButtonProps } from "@/features/projected-net-worth/types/selectYearMenu";
 import PrimaryMenuButton from "@/components/buttons/PrimaryMenuButtons";
 
 /**

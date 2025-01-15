@@ -1,8 +1,8 @@
 import React from "react";
 
 // Components
-import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/headers/HeaderWithIcon";
-import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/list/ListOfYears";
+import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/headers/HeaderWithIcon";
+import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/list/ListOfYears";
 
 //Icons
 import {
@@ -10,7 +10,7 @@ import {
   cheveronDown,
 } from "@/utils/helper-functions/getCheverons";
 
-import { AfterRetirementSectionMenuProps } from "@/features/projected-net-worth/types/graphComponents";
+import { AfterRetirementSectionMenuProps } from "@/features/projected-net-worth/types/selectYearMenu";
 
 /**
  * Component for displaying a section menu for after retirement years.

@@ -113,18 +113,12 @@ const ProjectedNetWorthGraph = () => {
           filteredDataForLines={[
             {
               data: filteredDataNoInflation,
-              lineColor: lineColors1.lineColor,
-              tagTextColor: lineColors1.tagTextColor,
-              tagBgColor: lineColors1.tagBgColor,
-              subheaderColor: lineColors1.subheaderColor,
+              ...lineColors1,
             },
 
             {
               data: filteredDataWithInflation,
-              lineColor: lineColors2.lineColor,
-              tagTextColor: lineColors2.tagTextColor,
-              tagBgColor: lineColors2.tagBgColor,
-              subheaderColor: lineColors2.subheaderColor,
+              ...lineColors2,
             },
           ]}
           selectedYear={selectedYear}
@@ -135,10 +129,7 @@ const ProjectedNetWorthGraph = () => {
           filteredDataForLines={[
             {
               data: filteredData,
-              lineColor: lineColors1.lineColor,
-              tagTextColor: lineColors1.tagTextColor,
-              tagBgColor: lineColors1.tagBgColor,
-              subheaderColor: lineColors1.subheaderColor,
+              ...lineColors1,
             },
           ]}
           selectedYear={selectedYear}

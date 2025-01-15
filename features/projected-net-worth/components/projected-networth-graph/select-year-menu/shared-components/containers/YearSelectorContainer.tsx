@@ -1,6 +1,6 @@
 import React from "react";
-import { renderYearSelectorProps } from "@/features/projected-net-worth/types/graphComponents";
-import YearSelector from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/selectors/YearSelector";
+import { renderYearSelectorProps } from "@/features/projected-net-worth/types/selectYearMenu";
+import YearSelector from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/selectors/YearSelector";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 
 /**

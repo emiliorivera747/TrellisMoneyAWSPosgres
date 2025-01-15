@@ -1,11 +1,11 @@
 import React from "react";
-import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/headers/HeaderWithIcon";
+import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/headers/HeaderWithIcon";
 import {
   cheveronUp,
   cheveronDown,
 } from "@/utils/helper-functions/getCheverons";
-import ListOfYearsGroupedByRange from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/list/ListOfYearsGroupedByRange";
-import { BeforeRetirementSectionMenuProps } from "@/features/projected-net-worth/types/graphComponents";
+import ListOfYearsGroupedByRange from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/list/ListOfYearsGroupedByRange";
+import { BeforeRetirementSectionMenuProps } from "@/features/projected-net-worth/types/selectYearMenu";
 
 
 /**

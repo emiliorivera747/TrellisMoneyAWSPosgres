@@ -1,6 +1,6 @@
 import React from "react";
-import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-sub-components/list/ListOfYears";
-import { ListOfYearsGroupedByRangeProps } from "@/features/projected-net-worth/types/graphComponents";
+import ListOfYears from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/list/ListOfYears";
+import { ListOfYearsGroupedByRangeProps } from "@/features/projected-net-worth/types/selectYearMenu";
 
 /**
  * Component that renders a list of years grouped by ranges before retirement.

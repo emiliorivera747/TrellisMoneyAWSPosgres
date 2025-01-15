@@ -1,6 +1,6 @@
 
 import React from "react";
-import { YearSelectorProps } from "@/features/projected-net-worth/types/graphComponents";
+import { YearSelectorProps } from "@/features/projected-net-worth/types/selectYearMenu";
 
 
 /**
