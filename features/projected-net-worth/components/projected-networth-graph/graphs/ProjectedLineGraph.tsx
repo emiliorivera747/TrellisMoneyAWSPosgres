@@ -5,7 +5,7 @@ import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
 
 //Components
-import LineGraphTooltip from "@/features/projected-net-worth/components/projected-networth-graph/graphs/one-line-graph/LineGraphTooltip";
+import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
 import LineGraph from "@/components/dashboard/LineGraph";
 import MultipleValPriceChange from "@/components/dashboard/MultipleValPriceChange";

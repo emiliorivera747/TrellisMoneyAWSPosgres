@@ -8,7 +8,6 @@ import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/valid
 import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
 import { getPrismaError } from "@/utils/api-helpers/prisma/getPrismaErrorMessage";
-import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
 import { generateProjectedNetWorthV2 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV2";
 
 // Mock data
@@ -38,6 +37,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const body = await req.json();
     const { timestamp } = body;
+    const infaltionRate = 0.99;
 
     validateTimestamp(timestamp);
 
@@ -66,14 +66,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // Get the user's updated holdings and securities
     const userHoldings = await getHoldingsAndSecurities(userId);
 
-    // //("With inflation: ", with_inflation);
-
     const projectedNetWorth = await generateProjectedNetWorthV2(
       userHoldings,
       start_year,
       end_year,
       with_inflation,
-      0.99
+      infaltionRate
     );
 
     return NextResponse.json(

@@ -1,6 +1,6 @@
 import React from "react";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import LineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/one-line-graph/ProjectedLineGraph";
+import ProjectedLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";
 import { ResponsiveLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 const ResponsiveLineGraph = ({
@@ -13,7 +13,7 @@ const ResponsiveLineGraph = ({
     <div className={`${tailwindClasses}`}>
       <ParentSize>
         {({ height, width }: { height: number; width: number }) => (
-          <LineGraph
+          <ProjectedLineGraph
             key={selectedYear}
             dataForLines={
               filteredDataForLines?.length > 0

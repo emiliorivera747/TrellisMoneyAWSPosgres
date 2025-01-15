@@ -6,8 +6,8 @@ import { useState } from "react";
 //components
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import GraphHeaders from "@/components/headers/GraphHeaders";
-import ResponsiveLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/one-line-graph/ResponsiveLineGraph";
-import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/RenderFilters";
+import ResponsiveLineGraph from "@/components/dashboard/ResponsiveLineGraph";
+import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/filters/RenderFilters";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
@@ -110,8 +110,7 @@ const ProjectedNetWorthGraph = () => {
           editRetirementYear={editRetirementYear}
         />
       </div>
-  
-      {/* Graph */}
+
       <ResponsiveLineGraph
         tailwindClasses="h-[24rem] w-full border-box"
         filteredDataForLines={
