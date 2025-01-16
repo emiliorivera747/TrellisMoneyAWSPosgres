@@ -8,6 +8,8 @@ import SelectYearMenuButton from "@/features/projected-net-worth/components/proj
 import GraphHeaders from "@/components/headers/GraphHeaders";
 import ResponsiveLineGraph from "@/components/dashboard/ResponsiveLineGraph";
 import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/filters/RenderFilters";
+import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2";
+import ProjectedLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
@@ -37,7 +39,6 @@ import {
  */
 const ProjectedNetWorthGraph = () => {
   const [selectedYear, setSelectedYear] = useState(currentYear + 40);
-
   const [retirementYear, setRetirementYear] = useState(currentYear + 40);
   const [selectedFilter, setSelectedFilter] = useState("isNoInflation");
 
@@ -98,22 +99,13 @@ const ProjectedNetWorthGraph = () => {
   if (projectionError) throw new Error(projectionError.message);
 
   return (
-    <div className="sm:mx-2 mb-8">
-      {/* Graph Header with button */}
-      <div className="flex flex-row items-center gap-2 font-medium text-tertiary-900 ">
-        <GraphHeaders label="Projected Net Worth" />
-        <SelectYearMenuButton
-          selectedYear={selectedYear}
-          years={years}
-          retirementYear={retirementYear}
-          setSelectedYear={setSelectedYear}
-          editRetirementYear={editRetirementYear}
-        />
-      </div>
-
-      <ResponsiveLineGraph
-        tailwindClasses="h-[24rem] w-full border-box"
-        filteredDataForLines={
+    <div className=" grid-rows-[26rem_6rem] grid ">
+      {/* Graph */}
+      <ResponsiveLineGraphV2
+        margin={{ top: 6, right: 6, bottom: 10, left: 6 }}
+        tailwindClasses="h-[25rem] w-full border-box"
+        GraphComponent={ProjectedLineGraph}
+        dataForLines={
           selectedFilter === "isBoth"
             ? [
                 { data: filteredDataNoInflation, ...lineColors1 },
@@ -121,8 +113,12 @@ const ProjectedNetWorthGraph = () => {
               ]
             : [{ data: filteredData, ...lineColors1 }]
         }
+        withInlfationTag={selectedFilter === "isInflation"}
+        years={years}
         selectedYear={selectedYear}
-        withInflationTag={selectedFilter === "isInflation"}
+        retirementYear={retirementYear}
+        setSelectedYear={setSelectedYear}
+        editRetirementYear={editRetirementYear}
       />
 
       {/* Filters */}

@@ -20,17 +20,17 @@ const LineGraphTooltip = ({
   return (
     <div>
       <Tooltip
-        top={margin.top + 50}
+        top={margin.top + 95}
         left={tooltipLeft - 10}
         style={{
           ...defaultStyles,
-          minWidth: 72,
+          minWidth: 82,
           textAlign: "center",
           transform: "translateX(-50%)",
-          fontSize: "0.7rem",
+          fontSize: "0.68rem",
           background: "none",
           border: "none",
-          color: "#495057", // Change the text color to red
+          color: "#868e96", // Change the text color to red
           boxShadow: "none", // Ensure no box shadow is applied
         }}
       >

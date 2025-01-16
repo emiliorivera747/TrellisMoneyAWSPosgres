@@ -65,4 +65,9 @@ export interface ProjectedLineGraphProps {
   tooltipTop?: number;
   tooltipLeft?: number;
   withInlfationTag?: boolean;
+  years: number[];
+  selectedYear: number;
+  setSelectedYear: (year: number) => void;
+  retirementYear: number;
+  editRetirementYear: (year: number) => void;
 }

@@ -1,5 +1,6 @@
 
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
+import { withInflation } from "@/features/projected-net-worth/utils/data/inflationInfo";
 export interface TooltipProps {
   tooltipLeft: number;
   tooltipTop?: number;
@@ -74,5 +75,7 @@ export interface LinePayload {
   tagTextColor?: tagTextColor;
   tagBgColor?: tagBgColor;
   subheaderColor?: subheaderColor;
+  withMessage?: boolean;
+  infoMessage?: string;
 }
 

@@ -31,7 +31,7 @@ export const generateProjectedNetWorthV2 = async (
     annual_inflation_rate
   );
 
-  pushProjectedNetWorthToEachMonth(projectedNetWorth, start_year, end_year, hm);
+  pushProjectedNetWorthToEachDay(projectedNetWorth, start_year, end_year, hm);
 
   return projectedNetWorth;
 };
@@ -135,7 +135,7 @@ const getFormulaValues = (holding: Holding) => {
 
 /**
  *
- * populates the projected net worth for each year
+ * populates the projected net worth for each day
  *
  *
  * @param projectedNetWorth
@@ -143,29 +143,35 @@ const getFormulaValues = (holding: Holding) => {
  * @param end_year
  * @param hm
  */
-const pushProjectedNetWorthToEachMonth = (
+const pushProjectedNetWorthToEachDay = (
   projectedNetWorth: { date: Date; close: number }[],
   start_year: number,
   end_year: number,
   hm: { [key: number]: number }
 ) => {
-  const months = (end_year - start_year) * 12;
+  const days = (end_year - start_year) * 365 ; // Only include the first month of the last year
 
-  for (let i = 0; i <= months; i++) {
-    const year = start_year + Math.floor(i / 12);
-    const month = i % 12;
+  for (let i = 0; i <= days; i++) {
+    const year = start_year + Math.floor(i / 365);
+    const dayOfYear = i % 365;
 
     // Interpolate between the two values for this year and next year
     let previousValue = hm[year] || 0;
     let nextValue = hm[year + 1] || previousValue;
 
     // Linearly interpolate between the current year's value and next year's value
-    const interpolationFactor = (i % 12) / 12;
+    const interpolationFactor = (i % 365) / 365;
     const interpolatedValue =
       previousValue + (nextValue - previousValue) * interpolationFactor;
 
+    const date = new Date(year, 0, 1);
+    date.setDate(date.getDate() + dayOfYear);
+
+    // Only push dates within the first month of the last year
+    if (year === end_year && date.getMonth() > 0) break;
+
     projectedNetWorth.push({
-      date: new Date(year, month, 1),
+      date: date,
       close: Math.round(interpolatedValue * 100) / 100,
     });
   }

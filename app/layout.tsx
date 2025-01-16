@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 //Styles
 import localFont from "next/font/local";
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Rubik, Inter } from "next/font/google";
 
 //Components
 import { ReactQueryClientProvider } from "@/features/react-query/components/ReactQueryClientProvider";
@@ -17,6 +17,7 @@ import "@/styles/globals.scss";
 
 const inter = Inter({
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // Load all weights
 });
 
 const geistSans = localFont({
@@ -24,6 +25,7 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",

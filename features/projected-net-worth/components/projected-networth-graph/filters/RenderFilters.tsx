@@ -10,7 +10,7 @@ interface LineGraphFilterButtonProps {
 
 const RenderFilters = ({selectedFilter, handleFilterChange}: LineGraphFilterButtonProps) => {
   return (
-    <div className="gap-2 mt-4 grid grid-cols-6 items-center border-b border-tertiary-300 pb-6">
+    <div className="gap-2 mt-4 grid grid-cols-6 items-center border-b border-tertiary-100 pb-6">
     {filterConfig.map(
       (filter: { key: string; label: string; svg_path: string }) => (
         <LineGraphFilterButton

@@ -1,7 +1,13 @@
 import React from "react";
 
 const GraphHeaders = ({ label }: { label: string }) => {
-  return <h1 className="text-[1.4rem] tracking-wider font-medium">{label}</h1>;
+  return (
+    <div className="flex items-center">
+      <span className="tracking-wider font-medium text-tertiary-900 not-italic ">
+        {label}
+      </span>
+    </div>
+  );
 };
 
 export default GraphHeaders;

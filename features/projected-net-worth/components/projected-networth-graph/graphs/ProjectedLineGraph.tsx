@@ -6,13 +6,11 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 
 //Components
 import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
-import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
 import LineGraph from "@/components/dashboard/LineGraph";
-import MultipleValPriceChange from "@/components/dashboard/MultipleValPriceChange";
+import PrimaryGraphHeader from "@/features/projected-net-worth/components/projected-networth-graph/headers/PrimaryGraphHeader";
 
 //Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
-
 import { TooltipPayload } from "@/types/graphs";
 
 //TooltipData
@@ -33,24 +31,26 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     tooltipTop = 0,
     tooltipLeft = 0,
     withInlfationTag = false,
+    years,
+    selectedYear,
+    retirementYear,
+    setSelectedYear,
+    editRetirementYear,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
 
     return (
-      <div className={`absolute h-[100%] w-full`}>
-        {/* Stock Value and Price Change */}
-        <div className="grid grid-cols-3">
-          <MultipleValPriceChange
-            dataForLines={dataForLines}
-            tooltipData={tooltipData}
-          />
-          {withInlfationTag && dataForLines.length === 1 && (
-            <div className="col-span-2 p-2 pt-4 flex items-start justify-end text-[0.7rem] text-tertiary-1000 gap-1 w-full">
-              <InflationTag dataForLine={dataForLines[0]} />
-            </div>
-          )}
-        </div>
-
+      <div className={`h-full w-full`}>
+        <PrimaryGraphHeader
+          dataForLines={dataForLines}
+          tooltipData={tooltipData}
+          withInflationTag={withInlfationTag}
+          years={years}
+          selectedYear={selectedYear}
+          retirementYear={retirementYear}
+          setSelectedYear={setSelectedYear}
+          editRetirementYear={editRetirementYear}
+        />
         {/* The SVG for the graph */}
         <LineGraph
           width={width}
