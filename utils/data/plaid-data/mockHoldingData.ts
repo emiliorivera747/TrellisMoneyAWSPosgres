@@ -1,4 +1,4 @@
-import {Holding, Security} from "@/types/plaid";
+import { Holding, Security } from "@/types/plaid";
 
 const holdingData: Holding[] = [
   {
@@ -176,11 +176,11 @@ const securitiesData: Security[] = [
     is_cash_equivalent: false,
     isin: "US00448Q2012",
     iso_currency_code: "USD",
-    name: "Achillion Pharmaceuticals Inc.",
+    name: "KO",
     proxy_security_id: null,
     security_id: "KDwjlXj1Rqt58dVvmzRguxJybmyQL8FgeWWAy",
     sedol: null,
-    ticker_symbol: "ACHN",
+    ticker_symbol: "KO",
     type: "equity",
     unofficial_currency_code: null,
     update_datetime: null,
@@ -191,7 +191,7 @@ const securitiesData: Security[] = [
     fixed_income: null,
   },
   {
-    close_price:191.81,
+    close_price: 191.81,
     close_price_as_of: null,
     cusip: "258620103",
     institution_id: null,
@@ -199,11 +199,11 @@ const securitiesData: Security[] = [
     is_cash_equivalent: false,
     isin: "US2586201038",
     iso_currency_code: "USD",
-    name: "DoubleLine Total Return Bond Fund",
+    name: "GOOG",
     proxy_security_id: null,
     security_id: "NDVQrXQoqzt5v3bAe8qRt4A7mK7wvZCLEBBJk",
     sedol: null,
-    ticker_symbol: "DBLTX",
+    ticker_symbol: "GOOG",
     type: "mutual fund",
     unofficial_currency_code: null,
     update_datetime: null,
@@ -222,7 +222,7 @@ const securitiesData: Security[] = [
     is_cash_equivalent: true,
     isin: null,
     iso_currency_code: "USD",
-    name: "U S Dollar",
+    name: "TSLA",
     proxy_security_id: null,
     security_id: "d6ePmbPxgWCWmMVv66q9iPV94n91vMtov5Are",
     sedol: null,
@@ -314,7 +314,6 @@ const securitiesData: Security[] = [
     fixed_income: null,
   },
 ];
-
 
 export const mockHoldingData = {
   accounts: [

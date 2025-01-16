@@ -8,7 +8,7 @@ export const ProjectedHoldingCardHeader = () => {
           scope="col"
           className="px-4 py-3 text-left text-xs font-medium text-[#343a40] tracking-wider"
         >
-          Holding
+          Assets
         </th>
         <th
           scope="col"
@@ -20,7 +20,7 @@ export const ProjectedHoldingCardHeader = () => {
           scope="col"
           className="px-4 py-3 text-left text-xs font-medium text-[#343a40] tracking-wider"
         >
-          Proj
+          Projection
         </th>
       </tr>
     </thead>
@@ -30,7 +30,7 @@ export const ProjectedHoldingCardHeader = () => {
 export const ProjectedHoldingCardPrimaryHeader = () => {
   return (
     <div className="font-bold text-zinc-800 flex items-center gap-1 justify-start p-4">
-      <span className="text-sm tracking-wider">Projected Holdings</span>
+      <span className="text-sm tracking-wider">Financial Projections</span>
     </div>
   );
 };

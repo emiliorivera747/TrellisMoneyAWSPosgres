@@ -3,14 +3,16 @@ import StockValueAndPriceChange from "@/components/dashboard/StockValueAndPriceC
 
 //Types
 import { LinePayload } from "@/types/graphs";
+import { TooltipPayload } from "@/types/graphs";
 
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
+
 interface MultipleValPriceChangeProps {
     dataForLines: LinePayload[]; 
-    tooltipData: any;
+    tooltipData: TooltipPayload[];
 }
 
 /**

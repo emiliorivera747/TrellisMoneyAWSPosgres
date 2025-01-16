@@ -1,5 +1,6 @@
 import { Holding } from "@/types/plaid";
-import { Decimal } from "decimal.js";
+import { getQuantity, getClosePrice, getAnnualReturnRate } from "@/utils/api-helpers/holdingAccessors";
+import { future_value_with_inflation_fn, future_value_fn, getFormulaValues } from "@/utils/api-helpers/futureValueFormulas";
 
 /**
  * Generates the projected net worth over a range of years based on the provided holdings.
@@ -36,102 +37,6 @@ export const generateProjectedNetWorthV2 = async (
   return projectedNetWorth;
 };
 
-/**
- *
- * @param quantity
- * @param close_price
- * @param annual_return_rate
- * @param growthFactor
- * @returns
- */
-const future_value_fn = (
-  quantity: number | Decimal,
-  close_price: number | Decimal,
-  annual_return_rate: number | Decimal,
-  year: number
-) => {
-  const growthFactor = Math.pow(1 + Number(annual_return_rate), year);
-  const pv = Number(quantity) * Number(close_price);
-  return pv * growthFactor;
-};
-
-/**
- *
- * @param quantity
- * @param close_price
- * @param annual_return_rate
- * @param growthFactor
- * @returns
- */
-const future_value_with_inflation_fn = (
-  quantity: number | Decimal,
-  close_price: number | Decimal,
-  annual_return_rate: number | Decimal,
-  annual_inflation_rate: number | Decimal,
-  years: number
-) => {
-  const growthFactor = Math.pow(1 + Number(annual_return_rate), years);
-  const inflationFactor = Math.pow(1 + Number(annual_inflation_rate), years);
-  const pv = Number(quantity) * Number(close_price);
-  const fv = pv * growthFactor;
-  return fv / inflationFactor;
-};
-
-/**
- * Quantity getter function
- *
- * @param holding
- * @returns
- */
-const getQuantity = (holding: Holding) => {
-  return holding?.quantity ? holding.quantity : 0;
-};
-
-/**
- * Close price getter function
- *
- * @param holding
- * @returns
- */
-const getClosePrice = (holding: Holding) => {
-  return holding?.security?.close_price ? holding.security.close_price : 0;
-};
-
-/**
- * Annual return rate getter function
- *
- * @param holding
- * @returns
- */
-const getAnnualReturnRate = (holding: Holding) => {
-  return holding?.annual_return_rate ? holding.annual_return_rate : 0;
-};
-
-/**
- * annual inflation rate getter function
- *
- * @param holding
- * @returns
- */
-const getAnnualInflationRate = (holding: Holding) => {
-  return holding?.annual_inflation_rate ? holding.annual_inflation_rate : 0;
-};
-
-/**
- *
- * Returns the formula values for the future value calculation
- *
- * @param holding
- * @returns
- */
-const getFormulaValues = (holding: Holding) => {
-  return {
-    quantity: getQuantity(holding),
-    close_price: getClosePrice(holding),
-    annual_return_rate: getAnnualReturnRate(holding),
-    annual_inflation_rate: getAnnualInflationRate(holding),
-  };
-};
 
 /**
  *
@@ -204,7 +109,6 @@ const populateHashMapWithFv = (
         getFormulaValues(holding);
 
       if (with_inflation) {
-
         let fv = future_value_with_inflation_fn(
           quantity,
           close_price,

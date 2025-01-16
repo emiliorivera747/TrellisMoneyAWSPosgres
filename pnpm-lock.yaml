@@ -135,6 +135,15 @@ importers:
         specifier: ^4.4.2
         version: 4.4.2
     devDependencies:
+      '@babel/core':
+        specifier: ^7.26.0
+        version: 7.26.0
+      '@babel/preset-env':
+        specifier: ^7.26.0
+        version: 7.26.0(@babel/core@7.26.0)
+      '@babel/preset-typescript':
+        specifier: ^7.26.0
+        version: 7.26.0(@babel/core@7.26.0)
       '@chromatic-com/storybook':
         specifier: 3.2.2
         version: 3.2.2(react@19.0.0-rc-02c0e824-20241028)(storybook@8.4.3)
@@ -189,6 +198,9 @@ importers:
       '@types/zxcvbn':
         specifier: ^4.4.5
         version: 4.4.5
+      babel-jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@babel/core@7.26.0)
       cypress:
         specifier: ^13.16.0
         version: 13.16.0
