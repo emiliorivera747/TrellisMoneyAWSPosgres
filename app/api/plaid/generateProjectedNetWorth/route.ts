@@ -37,7 +37,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const body = await req.json();
     const { timestamp } = body;
-    const infaltionRate = 0.99;
+    const infaltionRate = 0.025;
 
     validateTimestamp(timestamp);
 

@@ -27,10 +27,10 @@ export const ProjectedHoldingCardHeader = () => {
   );
 };
 
-export const ProjectedHoldingCardPrimaryHeader = () => {
+export const ProjectedHoldingCardPrimaryHeader = ({ year }: { year: number }) => {
   return (
     <div className="font-bold text-zinc-800 flex items-center gap-1 justify-start p-4">
-      <span className="text-sm tracking-wider">Financial Projections</span>
+      <span className="text-sm tracking-wider">Financial Projections </span> <span className="font-normal ml-2 text-[0.9rem]">{year}</span>
     </div>
   );
 };

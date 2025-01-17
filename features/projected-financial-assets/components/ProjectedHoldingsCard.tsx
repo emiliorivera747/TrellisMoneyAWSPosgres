@@ -7,10 +7,19 @@ import { calculateProjectedAmount } from "@/utils/helper-functions/calculatetPro
 import {
   ProjectedHoldingCardHeader,
   ProjectedHoldingCardPrimaryHeader,
-} from "@/features/projected-net-worth/components/projected-holdings/ProjectedHoldingCardHeader";
+} from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
+import NoAssets from "@/features/projected-financial-assets/components/NoAssets";
 
-//types
-import { Holding} from "@/types/plaid";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
 
 interface ProjectedHoldingsCardProps {
   numberOfYears: Number;
@@ -28,18 +37,20 @@ interface ProjectedHoldingsCardProps {
 const ProjectedHoldingsCard: React.FC<ProjectedHoldingsCardProps> = ({
   numberOfYears,
   holdings,
-}:  ProjectedHoldingsCardProps) => {
+}: ProjectedHoldingsCardProps) => {
   return (
     <aside
       style={{
         border: "1px solid rgb(221, 221, 221)",
         scrollbarWidth: "none",
       }}
-      className={`${holdings?.length === 0 ? "h-[25rem]": "h-screen"} max-h-screen col-span-10 sm:col-span-3 sm:row-span-1 overflow-y-auto sticky rounded-[10px]`}
+      className={`${
+        holdings?.length === 0 ? "h-[25rem]" : "h-screen"
+      } max-h-screen col-span-10 sm:col-span-3 sm:row-span-1 overflow-y-auto sticky rounded-[10px]`}
     >
       <div className="flex flex-col gap-1 absolute overflow-hidden w-full text-[#343a40]">
         <ProjectedHoldingCardPrimaryHeader />
-        <table className="min-w-full divide-y divide-gray-200">
+        {/* <table className="min-w-full divide-y divide-gray-200">
           <ProjectedHoldingCardHeader />
           {holdings?.length > 0 ? (
             <tbody className="bg-white">
@@ -96,15 +107,9 @@ const ProjectedHoldingsCard: React.FC<ProjectedHoldingsCardProps> = ({
               ))}
             </tbody>
           ) : (
-            <tbody className="bg-white">
-              <tr className="">
-                <td colSpan={3} rowSpan={3} className="px-4 py-3 whitespace-nowrap  text-gray-800 text-center text-sm h-64">
-                  You currently do not have any holdings
-                </td>
-              </tr>
-            </tbody>
+            <NoAssets />
           )}
-        </table>
+        </table> */}
       </div>
     </aside>
   );

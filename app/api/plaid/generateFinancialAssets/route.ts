@@ -21,7 +21,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const body = await req.json();
     const { timestamp } = body;
-    const infaltionRate = 0.99;
+    const infaltionRate = 0.025;
     const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
 
     const { searchParams } = new URL(req.url);
@@ -55,8 +55,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       infaltionRate,
       userHoldings
     );
-
-    console.log(projectedFinancialAssets);
 
     return NextResponse.json(
       {
