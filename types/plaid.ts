@@ -78,6 +78,7 @@ export interface Item {
 }
 
 export interface Holding {
+  user_id?: string;
   account_id?: string;
   holding_id?: string;
   cost_basis?: number | null | Decimal;

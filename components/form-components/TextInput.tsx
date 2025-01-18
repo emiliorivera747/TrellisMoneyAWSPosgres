@@ -14,6 +14,10 @@ const TextInput = <TFieldValues extends FieldValues>({
   fieldName,
   placeholder,
   errors,
+  defaultValue = "",
+  pt = "pt-[1.05882rem]",
+  px = "px-[1rem]",
+  h = "h-[3.2941176471rem]",
   register,
 }: TextInputProps<TFieldValues>) => {
   return (
@@ -22,13 +26,13 @@ const TextInput = <TFieldValues extends FieldValues>({
         type={type}
         id={id}
         {...register(fieldName)}
-        className={`border-box rounded-[12px] align-text-bottom w-full px-[1rem] pt-[1.05882rem]  h-[3.2941176471rem] border leading-[1.23536] ${
+        className={`border-box rounded-[12px] align-text-bottom w-full ${px} ${pt} ${h} h-[3.2941176471rem] border leading-[1.23536] ${
           errors[fieldName] ? "border-red-500 bg-[#fff5f5] text-red-500" : "border-tertiary-600"
         } rounded-[12px] focus:outline-none focus:ring-2 ${
           errors[fieldName] ? "focus:ring-red-500" : "focus:ring-primary-500 focus:border-none"
         } peer placeholder-transparent`}
         placeholder={placeholder}
-        defaultValue=""
+        defaultValue={defaultValue}
       />
 
       {/* Placeholder label*/}

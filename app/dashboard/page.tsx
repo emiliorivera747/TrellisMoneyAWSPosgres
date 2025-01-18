@@ -1,6 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
+// External Libraries
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 //Components
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
@@ -16,9 +20,15 @@ import plaidService from "@/features/plaid/services/plaidServices";
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
 
+// API 
+import { fetchFinancialAssets } from "@/features/projected-financial-assets/utils/fetchFinancialAssets";
+
 const currentYear = Number(new Date().getFullYear().toString());
 
+
+
 const Dashboard = () => {
+  
   const [selectedYear, setSelectedYear] = useState(currentYear + 40);
 
   const client = createClient();
@@ -60,6 +70,11 @@ const Dashboard = () => {
     queryFn: plaidService.getNetWorth,
   });
 
+  const { data: financialAssetsData, error: financialAssetsError } = useQuery({
+    queryKey: ["financialAssets"],
+    queryFn: () => fetchFinancialAssets(currentYear, selectedYear, "isNoInflation"),
+  });
+
   const [linkToken, setLinkToken] = useState(null);
   const [numberOfYears, setNumberOfYears] = useState<Number>(40);
 
@@ -70,6 +85,7 @@ const Dashboard = () => {
     const data = await response.json();
     setLinkToken(data.link_token);
   };
+
 
   useEffect(() => {
     generateToken();
@@ -89,17 +105,7 @@ const Dashboard = () => {
           />
         </div>
         <ProjectedAssetsCard
-          assets={[
-            {
-              name: "TSLA",
-              annual_growth_rate: 0.2,
-              shares: 30,
-              projection: 10000,
-              security_id: "1",
-              account_id: "1",
-              type: "Investment",
-            },
-          ]}
+          assets={financialAssetsData ? financialAssetsData.data : []}
           selectedYear={selectedYear}
         />
         {/* <ProjectedHoldingsCard holdings={[{asset_name:"TSLA", annual_growth_rate:"0.2", projection:"1000", }]} numberOfYears={numberOfYears} /> */}

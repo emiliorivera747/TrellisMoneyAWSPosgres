@@ -1,6 +1,9 @@
 import { Holding } from "@/types/plaid";
 
 import { getHoldingName } from "@/utils/api-helpers/holdingAccessors";
+import { AccountType
+
+ } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 import {
   future_value_with_inflation_fn,
@@ -10,11 +13,12 @@ import {
 import Decimal from "decimal.js";
 
 interface financialAssests {
-    asset_name: string;
+    name: string;
     annual_growth_rate: Decimal;
     projection: Decimal;
     security_id: string | undefined;
     account_id: string | undefined;
+    type: AccountType;
 }
 
 export const generateProjectedFinancialAssets = async (
@@ -24,6 +28,7 @@ export const generateProjectedFinancialAssets = async (
     annual_inflation_rate: number,
     holdings: Holding[]
 ): Promise<financialAssests[] | []> => {
+
     // Early return for empty holdings or invalid dates
     if (!holdings.length || end_year < start_year) return [];
 
@@ -47,11 +52,12 @@ export const generateProjectedFinancialAssets = async (
         }
 
         assets.push({
-            asset_name: getHoldingName(holding),
-            annual_growth_rate: new Decimal(annual_return_rate),
-            projection: new Decimal(fv),
+            name: getHoldingName(holding),
+            annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
+            projection: new Decimal(fv).toDecimalPlaces(2),
             security_id: holding.security_id,
             account_id: holding.account_id,
+            type: "Investment",
         });
     }
 

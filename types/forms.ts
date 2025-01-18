@@ -21,12 +21,16 @@ export interface NumberInputProps<TFieldValues extends FieldValues> {
 }
 
 export interface TextInputProps<TFieldValues extends FieldValues> {
-    type: "email"| "text" | "url" | "search"| "tel" |"number"  ;
+    type: "email"| "text" | "url" | "search"| "tel" | "number"  ;
     id: string;
     placeholder: string;
+    defaultValue?: string; 
     fieldName: Path<TFieldValues>;
     errors: FieldErrors<TFieldValues>;
     register: UseFormRegister<TFieldValues>;
+    pt?: string;
+    px?: string;
+    h?: string;
 }
 
 export interface PrimaryInputLabelProps<TFieldValues extends FieldValues> {
@@ -45,3 +49,5 @@ export interface Input {
   email: string;
   password1: string;
 }
+
+

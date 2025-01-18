@@ -1,3 +1,5 @@
+import { UseFormRegister, Path, FieldValues, FieldErrors} from "react-hook-form";
+
 export type AccountType =
   | "Depository"
   | "Investment"
@@ -17,7 +19,7 @@ export interface Assets {
   type: AccountType;
 }
 
-export interface ProjectedAssetsCardProps {
+export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
   assets: Assets[];
   selectedYear: number;
 }

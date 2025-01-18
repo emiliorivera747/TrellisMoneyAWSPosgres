@@ -1,5 +1,7 @@
 import React from "react";
 
+import { FieldValues } from "react-hook-form";
+
 // Types
 import { ProjectedAssetsCardProps } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
@@ -18,19 +20,36 @@ import {
 } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
 import NoAssets from "@/features/projected-financial-assets/components/NoAssets";
 
-const ProjectedAssetsCard = ({
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { annualGrowthRateSchema, AnnualGrowthRate } from "@/features/projected-financial-assets/schemas/formSchemas";
+
+
+const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   assets,
   selectedYear,
-}: ProjectedAssetsCardProps) => {
+}: ProjectedAssetsCardProps<TFieldValues>) => {
+  const {
+    register,
+    formState: { errors },
+    setError,
+  } = useForm<AnnualGrowthRate>({
+    resolver: zodResolver(annualGrowthRateSchema),
+  });
   return (
     <ProjectedAssetsContainer assets={assets}>
       <div className="flex flex-col gap-1 absolute overflow-hidden w-full text-[#343a40]">
         <ProjectedHoldingCardPrimaryHeader year={selectedYear} />
         <Table>
           <ProjectedAssetsTableHeader />
-          <TableBodyForAssets assets={assets} />
+          <TableBodyForAssets
+            assets={assets}
+            fieldName={"annualGrowthRate"}
+            errors={errors}
+            register={register}
+            // defaultValue={10}
+          />
         </Table>
-
         {/* If there are not assets */}
         {assets?.length === 0 && <NoAssets />}
       </div>
