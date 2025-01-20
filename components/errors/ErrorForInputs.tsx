@@ -5,11 +5,12 @@ import { ErrorForInputsProps } from "@/types/forms";
 const ErrorForInputs = <TFieldValues extends FieldValues>({
   fieldName,
   errors,
+  textSize = "text-sm", 
 }: ErrorForInputsProps<TFieldValues>) => {
   return (
     <>
       {errors[fieldName] && (
-        <p className="text-red-500 text-sm mt-1 input-error">
+        <p className={`text-red-500 ${textSize} mt-1 input-error`}>
           {errors[fieldName]?.message?.toString()}
         </p>
       )}

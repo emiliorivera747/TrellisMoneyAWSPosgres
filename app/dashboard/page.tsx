@@ -8,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 //Components
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
-// import ProjectedHoldingsCard from "@/features/projected-net-worth/components/projected-holdings/ProjectedHoldingsCard";
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import Link from "@/components/Plaid/Link";
 
@@ -16,63 +15,33 @@ import { createClient } from "@/utils/supabase/client";
 
 // services
 import plaidService from "@/features/plaid/services/plaidServices";
+import assetsService from "@/services/assetsService";
 
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
 
-// API 
+// API
 import { fetchFinancialAssets } from "@/features/projected-financial-assets/utils/fetchFinancialAssets";
+
+// Hooks
+import useFetchUser from "@/utils/hooks/useFetchUser";
 
 const currentYear = Number(new Date().getFullYear().toString());
 
-
-
 const Dashboard = () => {
-  
   const [selectedYear, setSelectedYear] = useState(currentYear + 40);
 
-  const client = createClient();
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data: user, error } = await client.auth.getUser();
-      if (error) {
-        console.error("Error fetching user:", error);
-      } else {
-        //("User data:", user);
-      }
-    };
-    fetchUser();
-  }, []);
+  const { user, error } = useFetchUser();
 
-  // Access the client
-  const { data: identityData, error: identityError } = useQuery({
-    queryKey: ["identity"],
-    queryFn: plaidService.getIdentity,
-  });
-
-  const { data: holdingsData, error: holdingError } = useQuery({
-    queryKey: ["holdings"],
-    queryFn: plaidService.getHoldings,
-  });
-
-  // const { data: accountData } = useQuery({
-  //   queryKey: ["account"],
-  //   queryFn: plaidService.getAccount,
+  // const { data: netWorthData, error: netWorthError } = useQuery({
+  //   queryKey: ["netWorth"],
+  //   queryFn: plaidService.getNetWorth,
   // });
-
-  const { data: balanceData, error: balanceError } = useQuery({
-    queryKey: ["balance"],
-    queryFn: plaidService.getBalance,
-  });
-
-  const { data: netWorthData, error: netWorthError } = useQuery({
-    queryKey: ["netWorth"],
-    queryFn: plaidService.getNetWorth,
-  });
 
   const { data: financialAssetsData, error: financialAssetsError } = useQuery({
     queryKey: ["financialAssets"],
-    queryFn: () => fetchFinancialAssets(currentYear, selectedYear, "isNoInflation"),
+    queryFn: () =>
+      fetchFinancialAssets(currentYear, selectedYear, "isNoInflation"),
   });
 
   const [linkToken, setLinkToken] = useState(null);
@@ -85,7 +54,6 @@ const Dashboard = () => {
     const data = await response.json();
     setLinkToken(data.link_token);
   };
-
 
   useEffect(() => {
     generateToken();
@@ -108,7 +76,6 @@ const Dashboard = () => {
           assets={financialAssetsData ? financialAssetsData.data : []}
           selectedYear={selectedYear}
         />
-        {/* <ProjectedHoldingsCard holdings={[{asset_name:"TSLA", annual_growth_rate:"0.2", projection:"1000", }]} numberOfYears={numberOfYears} /> */}
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
         <SignOutButton />
       </div>

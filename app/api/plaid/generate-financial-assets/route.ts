@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient} from "@prisma/client";
+
 
 //functions
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";

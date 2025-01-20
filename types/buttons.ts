@@ -27,4 +27,9 @@ export interface SubmitButtonProps {
     bgTo?: string;
     hoverBgFrom?: string;
     hoverBgTo?: string;
+    w?: string;
+    px?: string;
+    py?: string;
+    h?: string;
+    rounded?: string;
   }

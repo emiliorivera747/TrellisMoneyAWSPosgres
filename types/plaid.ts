@@ -1,4 +1,5 @@
 import { Decimal } from "decimal.js";
+
 export interface Profile {
   id: number;
   bio?: string;
@@ -96,6 +97,12 @@ export interface Holding {
   security_id?: string;
   security?: Security;
   timestamp?: Date | null;
+}
+
+export interface HoldingId{
+  security_id: string;
+  user_id: string;
+  account_id: string;
 }
 
 export interface Security {

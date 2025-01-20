@@ -100,7 +100,7 @@ const ProjectedNetWorthGraph = ({selectedYear, handleYearSelection}: ProjectedNe
   );
 
   if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
-  if (projectionError) throw new Error(projectionError.message);
+  if (projectionError) return <div>Error fetching data</div>;
 
   return (
     <div className=" grid-rows-[26rem_6rem] grid ">

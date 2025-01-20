@@ -8,7 +8,8 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
   try {
 
     const body = await req.json();
-    const { account_id, security_id, user_id } = body;
+    const { account_id, security_id, user_id, annual_growth_rate } = body;
+    console.log("annual_growth", annual_growth_rate);
 
     const updatedHolding = await prisma.holding.update({
       where: {
@@ -18,7 +19,9 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
           user_id: user_id,
         },
       },
-      data: body,
+      data: {
+        annual_return_rate: annual_growth_rate
+      },
     });
 
     return NextResponse.json(
@@ -30,6 +33,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
     );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.log(errorMessage)
     return NextResponse.json(
       {
         message: errorMessage,

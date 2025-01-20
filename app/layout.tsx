@@ -13,7 +13,7 @@ import { Rubik, Inter } from "next/font/google";
 //Components
 import { ReactQueryClientProvider } from "@/features/react-query/components/ReactQueryClientProvider";
 
-import "@/styles/globals.scss";
+// import "@/styles/globals.scss";
 
 const inter = Inter({
   subsets: ["latin"],

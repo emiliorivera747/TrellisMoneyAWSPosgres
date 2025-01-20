@@ -28,3 +28,4 @@ export interface ProjectedAssetsContainerProps {
   assets: Assets[];
   children: React.ReactNode;
 }
+
