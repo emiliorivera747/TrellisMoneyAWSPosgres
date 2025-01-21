@@ -1,40 +1,30 @@
-import React, { useState } from "react";
+// React
+import React from "react";
 
-//External Library
+// External Library
 import { FieldValues } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 // Types
 import { ProjectedAssetsCardProps } from "@/features/projected-financial-assets/types/projectedAssetsCard";
-import { HoldingId } from "@/types/plaid";
+import { AnnualGrowthRate } from "@/features/projected-financial-assets/schemas/formSchemas";
 
-//Containers
+// Containers
 import ProjectedAssetsContainer from "@/features/projected-financial-assets/components/containers/ProjectedAssetsContainer";
 
-//Components
-import ProjectedAssetsTableHeader from "@/features/projected-financial-assets/components/table-headers/ProjectedAssetsTableHeader";
-import TableBodyForAssets from "@/features/projected-financial-assets/components/table-body/TableBodyForAssets";
+// Components
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
-
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-
-import {
-  ProjectedHoldingCardHeader,
-  ProjectedHoldingCardPrimaryHeader,
-} from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
-import NoAssets from "@/features/projected-financial-assets/components/NoAssets";
-
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  annualGrowthRateSchema,
-  AnnualGrowthRate,
-} from "@/features/projected-financial-assets/schemas/formSchemas";
-
-import assetService from "@/services/assets/assetsServices";
+import AssetsTable from "@/features/projected-financial-assets/components/tables/AssetsTable";
+import { ProjectedHoldingCardPrimaryHeader } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
+import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
 
 // Hooks
 import useFetchUser from "@/utils/hooks/user/useFetchUser";
+import useUpdateAssets from "@/utils/hooks/financial-assets/useUpdateAssets";
+
+// Funcitons
+import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
+import mutateAllAssets from "@/features/projected-financial-assets/utils/mutateAllAssets";
 
 const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   assets,
@@ -45,36 +35,15 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
     formState: { errors },
     setError,
     handleSubmit,
-  } = useForm();
-
-  const queryClient = useQueryClient();
+  } = useForm<AnnualGrowthRate>();
 
   const { user, error } = useFetchUser();
 
-
-  const { mutate } = useMutation({
-    mutationFn: assetService.updateUserAssets,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projectedNetWorth"] });
-      queryClient.invalidateQueries({ queryKey: ["financialAssets"] });
-    },
-  });
+  const { mutate } = useUpdateAssets();
 
   const onSubmit: SubmitHandler<AnnualGrowthRate> = (data) => {
-    const updatedAssets = assets.map((asset) => {
-      const growthRate = data[asset.name];
-      return {
-        ...asset,
-        user_id: user?.id ?? "",
-        annual_growth_rate:
-          growthRate !== undefined
-            ? growthRate / 100
-            : asset.annual_growth_rate,
-      };
-    });
-    updatedAssets.forEach((asset) => {
-      mutate(asset);
-    });
+    const updatedAssets = updateAssets(assets, data, user);
+    mutateAllAssets(updatedAssets, mutate);
   };
 
   return (
@@ -85,24 +54,17 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
           className="flex flex-col items-center gap-6"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Table>
-            <ProjectedAssetsTableHeader />
-            <TableBodyForAssets
-              assets={assets}
-              fieldName={"annualGrowthRate"}
-              errors={errors}
-              register={register}
-            />
-          </Table>
+          <AssetsTable
+            assets={assets}
+            fieldName={"annualGrowthRate"}
+            errors={errors}
+            register={register}
+          />
           <PrimarySubmitButton text={"Calculate"} w={"w-[8rem]"} />
         </form>
 
         {/* If there are not assets */}
-        {assets?.length === 0 && (
-          <Table>
-            <NoAssets />
-          </Table>
-        )}
+        {assets?.length === 0 && <NoAssetsTable />}
       </div>
     </ProjectedAssetsContainer>
   );

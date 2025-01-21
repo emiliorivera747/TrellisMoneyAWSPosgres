@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import React from "react";
+import {TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { FieldValues, Path } from "react-hook-form";
 
 //Types
 import { TableBodyForAssetsProps } from "@/features/projected-financial-assets/types/table";
 
 //Components
-import TextInput from "@/components/form-components/TextInput";
 import NumberInput from "@/components/form-components/NumberInput";
+
 const TableBodyForAssets = <TFieldValues extends FieldValues>({
   assets,
   defaultValue,
@@ -19,9 +19,12 @@ const TableBodyForAssets = <TFieldValues extends FieldValues>({
       {assets.map((asset, index) => {
         return (
           <TableRow key={index}>
+            {/* Asset Name */}
             <TableCell className="font-bold uppercase pl-4">
               {asset.name}
             </TableCell>
+
+            {/* Annual Return Rate */}
             <TableCell className="flex flex-row align-center justify-center text-center">
                 <NumberInput
                   id={`asset-${index}`}
@@ -39,6 +42,8 @@ const TableBodyForAssets = <TFieldValues extends FieldValues>({
                   %
                 </span>
             </TableCell>
+
+            {/* Projection */}
             <TableCell className="font-medium text-secondary-1000 text-center">
               ${asset.projection}
             </TableCell>

@@ -29,3 +29,7 @@ export interface ProjectedAssetsContainerProps {
   children: React.ReactNode;
 }
 
+export interface AssetName{
+  name: string;
+}
+
