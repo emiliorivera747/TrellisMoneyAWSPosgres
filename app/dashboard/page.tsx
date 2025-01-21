@@ -1,9 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
 
-// External Libraries
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+//React
+import React, { useState, useEffect } from "react";
 
 //Components
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
@@ -11,38 +9,41 @@ import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/pr
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import Link from "@/components/Plaid/Link";
 
-import { createClient } from "@/utils/supabase/client";
-
-// services
-import plaidService from "@/features/plaid/services/plaidServices";
-import assetsService from "@/services/assetsService";
-
 // External Libraries
 import { useQuery } from "@tanstack/react-query";
 
 // API
 import { fetchFinancialAssets } from "@/features/projected-financial-assets/utils/fetchFinancialAssets";
 
-// Hooks
-import useFetchUser from "@/utils/hooks/useFetchUser";
+// Types
+import { InflationFilters } from "@/features/projected-net-worth/types/filters";
+import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+
+//Hooks
+import useAssets from "@/utils/hooks/apis/useAssets";
 
 const currentYear = Number(new Date().getFullYear().toString());
 
 const Dashboard = () => {
-  const [selectedYear, setSelectedYear] = useState(currentYear + 40);
 
-  const { user, error } = useFetchUser();
+  // States
+  const [selectedYear, setSelectedYear] = useState<number>(currentYear + 40);
+  const [filteredAssets, setFilteredAssets] = useState<Assets[]>([]);
+  const [selectedFilter, setSelectedFilter] =
+    useState<InflationFilters>("isNoInflation");
 
-  // const { data: netWorthData, error: netWorthError } = useQuery({
-  //   queryKey: ["netWorth"],
-  //   queryFn: plaidService.getNetWorth,
-  // });
+  const { financialAssetsData, financialAssetsError } = useAssets(
+    currentYear,
+    selectedYear,
+    selectedFilter
+  );
 
-  const { data: financialAssetsData, error: financialAssetsError } = useQuery({
-    queryKey: ["financialAssets"],
-    queryFn: () =>
-      fetchFinancialAssets(currentYear, selectedYear, "isNoInflation"),
-  });
+  useEffect(() => {
+    const sortedAssets = financialAssetsData?.data?.sort(
+      (a, b) => b.projection - a.projection
+    );
+    setFilteredAssets(sortedAssets);
+  }, [financialAssetsData]);
 
   const [linkToken, setLinkToken] = useState(null);
   const [numberOfYears, setNumberOfYears] = useState<Number>(40);
@@ -63,6 +64,10 @@ const Dashboard = () => {
     setSelectedYear(year);
   };
 
+  const handleFilterChange = (filter: InflationFilters) => {
+    setSelectedFilter(filter);
+  };
+
   return (
     <div className="min-h-screen h-auto w-full border-box">
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%] ">
@@ -70,10 +75,12 @@ const Dashboard = () => {
           <ProjectedNetWorthGraph
             handleYearSelection={handleYearSelection}
             selectedYear={selectedYear}
+            selectedFilter={selectedFilter}
+            handleFilterChange={handleFilterChange}
           />
         </div>
         <ProjectedAssetsCard
-          assets={financialAssetsData ? financialAssetsData.data : []}
+          assets={filteredAssets ? filteredAssets : []}
           selectedYear={selectedYear}
         />
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}

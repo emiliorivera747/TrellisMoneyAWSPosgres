@@ -7,5 +7,4 @@ export interface TableBodyForAssetsProps<TFieldValues extends FieldValues> {
   fieldName: Path<TFieldValues>;
   errors: FieldErrors<TFieldValues>;
   register: UseFormRegister<TFieldValues>;
-  handleHoldingId: (holdingId: HoldingId) => void;
 }

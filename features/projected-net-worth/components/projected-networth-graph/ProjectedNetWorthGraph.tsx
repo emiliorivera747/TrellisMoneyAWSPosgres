@@ -33,18 +33,14 @@ import {
   lineColors2,
 } from "@/features/projected-net-worth/utils/data/lineColors";
 
-interface ProjectedNetWorthGraphProps {
-  selectedYear: number;
-  handleYearSelection: (year: number) => void;
-}
-
+//Types
+import {ProjectedNetWorthGraphProps} from "@/features/projected-net-worth/types/graphComponents"
 /**
  * Projects the future net worth of the user based on the data provided
  *
  */
-const ProjectedNetWorthGraph = ({selectedYear, handleYearSelection}: ProjectedNetWorthGraphProps) => {
+const ProjectedNetWorthGraph = ({selectedYear, handleYearSelection, handleFilterChange, selectedFilter}: ProjectedNetWorthGraphProps) => {
   const [retirementYear, setRetirementYear] = useState(currentYear + 40);
-  const [selectedFilter, setSelectedFilter] = useState("isNoInflation");
 
   /**
    * Fetch the data for the projected net worth
@@ -74,15 +70,6 @@ const ProjectedNetWorthGraph = ({selectedYear, handleYearSelection}: ProjectedNe
    */
   const { filteredDataNoInflation, filteredDataWithInflation } =
     useFilteredArrays(projectionData, selectedYear);
-
-  /**
-   * Function to handle the change of the filter
-   *
-   * @param filterType
-   */
-  const handleFilterChange = (filterType: string) => {
-    setSelectedFilter(filterType);
-  };
 
   /**
    * Function to edit the retirement year

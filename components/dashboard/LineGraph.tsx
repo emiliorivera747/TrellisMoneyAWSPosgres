@@ -3,8 +3,8 @@ import React from "react";
 
 //Visx
 import { Bar, line, LinePath } from "@visx/shape";
-import useDateScale from "@/utils/hooks/useDateScale";
-import useStockValueScale from "@/utils/hooks/useStockvalueScale";
+import useDateScale from "@/utils/hooks/graphs/useDateScale";
+import useStockValueScale from "@/utils/hooks/graphs/useStockvalueScale";
 import { curveMonotoneX } from "@visx/curve";
 
 //Accessors
@@ -14,7 +14,7 @@ import { getDate, getStockValue } from "@/utils/helper-functions/accessors";
 import TooltipBar from "@/components/dashboard/TooltipBar";
 
 //Hooks
-import useHandleTooltipMultiple from "@/utils/hooks/useHandleTooltipMultiple";
+import useHandleTooltipMultiple from "@/utils/hooks/graphs/useHandleTooltipMultiple";
 
 //Types
 import { LineGraphProps } from "@/types/graphs";

@@ -1,20 +1,23 @@
+// React
 import React from 'react'
 
+//Config
 import { filterConfig } from '@/features/projected-net-worth/config/filterConfig'
+
+//Components
 import LineGraphFilterButton from '@/components/buttons/LineGraphFilterButton'
 
-interface LineGraphFilterButtonProps {
-    selectedFilter: string
-    handleFilterChange: (key: string) => void
-}
+//Types
+import { LineGraphFilterButtonsProps } from '@/features/projected-net-worth/types/filters'
+import { InflationFilters } from '@/features/projected-net-worth/types/filters'
 
-const RenderFilters = ({selectedFilter, handleFilterChange}: LineGraphFilterButtonProps) => {
+const RenderFilters = ({selectedFilter, handleFilterChange}: LineGraphFilterButtonsProps) => {
   return (
-    <div className="gap-2 mt-4 grid grid-cols-6 items-center border-b border-tertiary-100 pb-6">
+    <div className="gap-2 mt-4 grid grid-cols-5 items-center border-b border-tertiary-100 pb-6">
     {filterConfig.map(
-      (filter: { key: string; label: string; svg_path: string }) => (
+      (filter: { key: InflationFilters; label: string; svg_path: string }, index) => (
         <LineGraphFilterButton
-          key={filter.key}
+          key={index}
           isSelected={selectedFilter === filter.key}
           svg_path={filter.svg_path}
           label={filter.label}

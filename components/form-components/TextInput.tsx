@@ -14,7 +14,7 @@ const TextInput = <TFieldValues extends FieldValues>({
   fieldName,
   placeholder,
   errors,
-  defaultValue = 0,
+  defaultValue = "",
   pt = "pt-[1.05882rem]",
   px = "px-[1rem]",
   h = "h-[3.2941176471rem]",

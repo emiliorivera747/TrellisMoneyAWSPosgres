@@ -1,5 +1,5 @@
-
 import { LinePayload } from "@/types/graphs";
+import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 export interface SecurityData {
   date: Date;
   close: number;
@@ -55,7 +55,7 @@ export interface ColorBasedOnLineDirection {
 }
 
 export interface ProjectedLineGraphProps {
-  width: number;  
+  width: number;
   height: number;
   dataForLines: LinePayload[];
   margin: any;
@@ -70,4 +70,11 @@ export interface ProjectedLineGraphProps {
   setSelectedYear: (year: number) => void;
   retirementYear: number;
   editRetirementYear: (year: number) => void;
+}
+
+export interface ProjectedNetWorthGraphProps {
+  selectedYear: number;
+  handleYearSelection: (year: number) => void;
+  handleFilterChange: (key: InflationFilters) => void;
+  selectedFilter: InflationFilters;
 }

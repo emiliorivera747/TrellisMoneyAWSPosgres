@@ -33,7 +33,8 @@ import {
 
 import assetService from "@/services/assets/assetsServices";
 
-import useFetchUser from "@/utils/hooks/useFetchUser";
+// Hooks
+import useFetchUser from "@/utils/hooks/user/useFetchUser";
 
 const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   assets,
@@ -48,13 +49,9 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
 
   const queryClient = useQueryClient();
 
-  const [holdingId, setHoldingId] = useState<HoldingId | []>([]);
-
-  const hanldeHoldingId = (holdingId: HoldingId) => {
-    setHoldingId(holdingId);
-  };
-
   const { user, error } = useFetchUser();
+
+
   const { mutate } = useMutation({
     mutationFn: assetService.updateUserAssets,
     onSuccess: () => {
@@ -75,9 +72,7 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
             : asset.annual_growth_rate,
       };
     });
-    console.log(updatedAssets);
     updatedAssets.forEach((asset) => {
-      // assetService.updateUserAssets(asset);
       mutate(asset);
     });
   };
@@ -97,7 +92,6 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
               fieldName={"annualGrowthRate"}
               errors={errors}
               register={register}
-              handleHoldingId={hanldeHoldingId}
             />
           </Table>
           <PrimarySubmitButton text={"Calculate"} w={"w-[8rem]"} />

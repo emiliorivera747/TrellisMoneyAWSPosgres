@@ -1,12 +1,7 @@
 import React from "react";
 
-interface LineGraphFilterButtonProps {
-  label: string;
-  isSelected: boolean;
-  svg_path?: string;
-  color?: string;
-  onClick?: () => void;
-}
+//types
+import {LineGraphFilterButtonProps} from '@/features/projected-net-worth/types/filters'
 
 const LineGraphFilterButton = ({
   label,

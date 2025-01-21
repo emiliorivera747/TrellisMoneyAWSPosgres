@@ -13,7 +13,6 @@ const TableBodyForAssets = <TFieldValues extends FieldValues>({
   defaultValue,
   errors,
   register,
-  handleHoldingId
 }: TableBodyForAssetsProps<TFieldValues>) => {
   return (
     <TableBody>
