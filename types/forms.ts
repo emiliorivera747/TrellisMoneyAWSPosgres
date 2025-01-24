@@ -35,6 +35,12 @@ export interface NumberInputProps<TFieldValues extends FieldValues> {
   max?:number;
 }
 
+export interface NumberInputV2Props {
+  type?: "number";
+  className?: string;
+  ref: React.Ref<HTMLInputElement>;
+}
+
 export interface TextInputProps<TFieldValues extends FieldValues> {
   type: "email" | "text" | "url" | "search" | "tel";
   id: string;

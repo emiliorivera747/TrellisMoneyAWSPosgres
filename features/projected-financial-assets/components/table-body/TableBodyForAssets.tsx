@@ -1,5 +1,5 @@
 import React from "react";
-import {TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { FieldValues, Path } from "react-hook-form";
 
 //Types
@@ -7,44 +7,51 @@ import { TableBodyForAssetsProps } from "@/features/projected-financial-assets/t
 
 //Components
 import NumberInput from "@/components/form-components/NumberInput";
+import NumberInputV2 from "@/components/form-components/NumberInputV2";
 
-const TableBodyForAssets = <TFieldValues extends FieldValues>({
-  assets,
-  defaultValue,
-  errors,
-  register,
-}: TableBodyForAssetsProps<TFieldValues>) => {
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
   return (
-    <TableBody>
+    <TableBody className="border-b">
       {assets.map((asset, index) => {
         return (
-          <TableRow key={index}>
+          <TableRow key={index} className="border-none">
             {/* Asset Name */}
-            <TableCell className="font-bold uppercase pl-4">
+            <TableCell className="font-bold uppercase pl-4 text-xs">
               {asset.name}
             </TableCell>
 
             {/* Annual Return Rate */}
             <TableCell className="flex flex-row align-center justify-center text-center">
-                <NumberInput
-                  id={`asset-${index}`}
-                  fieldName={asset.name}
-                  errors={errors}
-                  register={register}
-                  defaultValue={0}
-                  errTextSize={"text-[0.7rem]"}
-                  h={"h-[2.2rem]"}
-                  pt={"pt-0"}
-                  px={"px-2"}
-                />
-                
-                <span className="w-[2rem] flex flex-col text-md  text-tertiary-800 align-center justify-center font-normal">
-                  %
-                </span>
+              <FormField
+                control={form.control}
+                name={asset.name}
+                render={({ field }) => (
+                  <FormItem className={" flex items-center justify-center"}>
+                    <FormControl>
+                      <NumberInputV2 className="" min={-100} max={100} {...field} />
+                    </FormControl>
+                    <FormLabel />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <span className="w-[2rem] flex flex-col text-md  text-tertiary-800 align-center justify-center font-normal">
+                %
+              </span>
             </TableCell>
 
             {/* Projection */}
-            <TableCell className="font-medium text-secondary-1000 text-center">
+            <TableCell className="font-medium text-secondary-1000 text-center text-xs">
               ${asset.projection}
             </TableCell>
           </TableRow>

@@ -20,6 +20,8 @@ import useAssets from "@/utils/hooks/react-query/useAssets";
 import useSortAssets from "@/utils/hooks/financial-assets/useSortAssets";
 import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
 
+import TestForm from '@/components/form-components/TestForm'
+
 const currentYear = Number(new Date().getFullYear().toString());
 
 const Dashboard = () => {
@@ -58,6 +60,7 @@ const Dashboard = () => {
     <div className="min-h-screen h-auto w-full border-box">
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%]">
 
+        {/* Dashboard Prominent Section */}
         <PrimaryDashboardSection>
           <ProjectedNetWorthGraph
             handleYearSelection={handleYearSelection}
@@ -65,15 +68,16 @@ const Dashboard = () => {
             selectedFilter={selectedFilter}
             handleFilterChange={handleFilterChange}
           />
+          {/* <TestForm/> */}
         </PrimaryDashboardSection>
+        
 
+        {/* Seconday Section */}
         <ProjectedAssetsCard
           assets={filteredAssets ? filteredAssets : []}
           selectedYear={selectedYear}
         />
-
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
-
         <SignOutButton />
       </div>
     </div>
