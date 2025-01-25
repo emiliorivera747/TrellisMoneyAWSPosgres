@@ -1,6 +1,7 @@
-import React from "react";
+
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { FieldValues, Path } from "react-hook-form";
+import React, { useRef } from "react";
 
 //Types
 import { TableBodyForAssetsProps } from "@/features/projected-financial-assets/types/table";
@@ -21,8 +22,10 @@ import {
 } from "@/components/ui/form";
 
 const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
+  const ref = useRef(null);
+
   return (
-    <TableBody className="border-b">
+    <TableBody className="">
       {assets.map((asset, index) => {
         return (
           <TableRow key={index} className="border-none">
@@ -58,10 +61,10 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
                   />
                 </LabelOrInput.Input>
                 <LabelOrInput.Label
+                  ref={ref}
                   text={`${(asset.annual_growth_rate * 100).toFixed(0)}`}
                 />
               </LabelOrInput>
-
               <span className="w-[2rem] flex flex-col text-md  text-tertiary-800 align-center justify-center font-normal">
                 %
               </span>

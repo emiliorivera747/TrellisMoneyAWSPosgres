@@ -3,6 +3,10 @@
 //React
 import React, { useState } from "react";
 
+// External Library
+import { FieldValues } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+
 //Components
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
@@ -19,10 +23,27 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 import useAssets from "@/utils/hooks/react-query/useAssets";
 import useSortAssets from "@/utils/hooks/financial-assets/useSortAssets";
 import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
+import useUpdateAssets from "@/utils/hooks/financial-assets/useUpdateAssets";
+import useFetchUser from "@/utils/hooks/user/useFetchUser";
 
+//Shadcn
+import { Form } from "@/components/ui/form";
+
+//Functions
+import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
+import mutateAllAssets from "@/features/projected-financial-assets/utils/mutateAllAssets";
 
 const currentYear = Number(new Date().getFullYear().toString());
 
+
+/**
+ * 
+ * Dashboard page is in charge of retrieving all of the financial data and displaying sending the 
+ * data to a variety of components.
+ * 
+ * 
+ * @returns 
+ */
 const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState<number>(currentYear + 40);
   const [selectedFilter, setSelectedFilter] =
@@ -36,6 +57,11 @@ const Dashboard = () => {
     selectedYear,
     selectedFilter
   );
+
+
+  const form = useForm();
+  const { mutate } = useUpdateAssets();
+  const { user, error } = useFetchUser();
 
   /**
    * Filter Assets
@@ -54,11 +80,19 @@ const Dashboard = () => {
   const handleFilterChange = (filter: InflationFilters) => {
     setSelectedFilter(filter);
   };
+  interface FormData extends FieldValues {
+    // Define the structure of your form data here
+  }
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log("Data: ", data);
+    const updatedAssets = updateAssets(filteredAssets, data, user);
+    mutateAllAssets(updatedAssets, mutate);
+  };
 
   return (
     <div className="min-h-screen h-auto w-full border-box">
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%]">
-
         {/* Dashboard Prominent Section */}
         <PrimaryDashboardSection>
           <ProjectedNetWorthGraph
@@ -69,13 +103,20 @@ const Dashboard = () => {
           />
           {/* <TestForm/> */}
         </PrimaryDashboardSection>
-        
 
         {/* Seconday Section */}
-        <ProjectedAssetsCard
-          assets={filteredAssets ? filteredAssets : []}
-          selectedYear={selectedYear}
-        />
+        <Form {...form} >
+          <form
+            className="grid grid-rows-[1fr_6rem] gap-6 h-full col-span-10 sm:col-span-3 sm:row-span-1"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <ProjectedAssetsCard
+              assets={filteredAssets ? filteredAssets : []}
+              selectedYear={selectedYear}
+              form={form}
+            />
+          </form>
+        </Form>
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
         <SignOutButton />
       </div>
