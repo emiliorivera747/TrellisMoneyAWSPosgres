@@ -6,8 +6,8 @@ const useSortAssets = (financialAssetsData: { data: Assets[] }) => {
 
   useEffect(() => {
     if (financialAssetsData?.data) {
-      const sortedAssets = financialAssetsData.data.sort(
-        (a, b) => b.projection - a.projection
+      const sortedAssets = financialAssetsData.data.sort((a, b) =>
+        a.name.localeCompare(b.name)
       );
       setFilteredAssets(sortedAssets);
     }

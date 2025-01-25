@@ -9,8 +9,6 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
     const body = await req.json();
     const { account_id, security_id, user_id, annual_growth_rate } = body;
 
-    console.log("account_id", account_id, "security_id", security_id, "user_id", user_id);
-
     const updatedHolding = await prisma.holding.update({
       where: {
         holding_id: {

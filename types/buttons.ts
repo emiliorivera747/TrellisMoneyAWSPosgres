@@ -16,20 +16,20 @@ export interface PrimaryButtonProps {
   rounded?: string;
 }
 
-
 export interface SubmitButtonProps {
-    bgColor?: string;
-    textColor?: string;
-    hoverBgColor?: string;
-    text?: string;
-    withLinearGradient?: boolean;
-    bgFrom?: string;
-    bgTo?: string;
-    hoverBgFrom?: string;
-    hoverBgTo?: string;
-    w?: string;
-    px?: string;
-    py?: string;
-    h?: string;
-    rounded?: string;
-  }
+  className?: string;
+  bgColor?: string;
+  textColor?: string;
+  hoverBgColor?: string;
+  text?: string;
+  withLinearGradient?: boolean;
+  bgFrom?: string;
+  bgTo?: string;
+  hoverBgFrom?: string;
+  hoverBgTo?: string;
+  w?: string;
+  px?: string;
+  py?: string;
+  h?: string;
+  rounded?: string;
+}

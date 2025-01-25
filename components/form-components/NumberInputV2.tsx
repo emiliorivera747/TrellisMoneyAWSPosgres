@@ -33,7 +33,6 @@ const NumberInputV2 = ({
       type="number"
       className={cn(defaultClassName, className)}
       ref={ref}
-      value={value !== undefined ? value : ''}
       {...props}
       onChange={handleChange}
     />

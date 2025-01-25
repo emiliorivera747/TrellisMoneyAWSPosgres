@@ -13,7 +13,7 @@ import { AnnualGrowthRate } from "@/features/projected-financial-assets/schemas/
 import ProjectedAssetsContainer from "@/features/projected-financial-assets/components/containers/ProjectedAssetsContainer";
 
 // Components
-import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
+import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButtonV2";
 import AssetsTable from "@/features/projected-financial-assets/components/tables/AssetsTable";
 import { ProjectedHoldingCardPrimaryHeader } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
 import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
@@ -52,16 +52,19 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
 
   return (
     <ProjectedAssetsContainer assets={assets}>
-      <div className="flex flex-col gap-1 absolute overflow-hidden w-full text-[#343a40]">
+      <div className="grid grid-rows-[4rem_1fr] absolute overflow-hidden w-full text-[#343a40] h-full">
         <ProjectedHoldingCardPrimaryHeader year={selectedYear} />
         <Form {...form}>
-          <form
-            className="flex flex-col items-center gap-6"
+            <form
+            className="grid grid-rows-[1fr_6rem] gap-6 h-full"
             onSubmit={form.handleSubmit(onSubmit)}
-          >
+            >
             <AssetsTable assets={assets} form={form} />
-            <PrimarySubmitButton text={"Calculate"} w={"w-[8rem]"} />
-          </form>
+            
+            <div className="flex justify-center">
+              <PrimarySubmitButton text={"Calculate"} className="w-[8rem]" />
+            </div>
+            </form>
         </Form>
 
         {/* If there are not assets */}

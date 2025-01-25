@@ -8,6 +8,7 @@ import { TableBodyForAssetsProps } from "@/features/projected-financial-assets/t
 //Components
 import NumberInput from "@/components/form-components/NumberInput";
 import NumberInputV2 from "@/components/form-components/NumberInputV2";
+import LabelOrInput from "@/components/form-components/LabelOrInput";
 
 import {
   Form,
@@ -32,19 +33,35 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
 
             {/* Annual Return Rate */}
             <TableCell className="flex flex-row align-center justify-center text-center">
-              <FormField
-                control={form.control}
-                name={asset.name}
-                render={({ field }) => (
-                  <FormItem className={" flex items-center justify-center"}>
-                    <FormControl>
-                      <NumberInputV2 className="" min={-100} max={100} {...field} />
-                    </FormControl>
-                    <FormLabel />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <LabelOrInput>
+                <LabelOrInput.Input>
+                  <FormField
+                    control={form.control}
+                    name={asset.name}
+                    render={({ field }) => (
+                      <FormItem className={" flex items-center justify-center"}>
+                        <FormControl>
+                          <NumberInputV2
+                            defaultValue={(
+                              asset.annual_growth_rate * 100
+                            ).toFixed(0)}
+                            className="text-xs pl-[1rem]"
+                            min={-100}
+                            max={100}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormLabel />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </LabelOrInput.Input>
+                <LabelOrInput.Label
+                  text={`${(asset.annual_growth_rate * 100).toFixed(0)}`}
+                />
+              </LabelOrInput>
+
               <span className="w-[2rem] flex flex-col text-md  text-tertiary-800 align-center justify-center font-normal">
                 %
               </span>
