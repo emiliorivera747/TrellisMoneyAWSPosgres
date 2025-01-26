@@ -2,7 +2,7 @@ import React from "react";
 
 export const ProjectedHoldingCardHeader = () => {
   return (
-    <thead className="border-y border-[#e9ecef]">
+    <thead className="border-y border-[#e9ecef] bg-yellow-400">
       <tr>
         <th
           scope="col"
@@ -18,7 +18,7 @@ export const ProjectedHoldingCardHeader = () => {
         </th>
         <th
           scope="col"
-          className="px-4 py-3 text-left text-xs font-medium text-[#343a40] tracking-wider"
+          className="px-4 py-3 text-left bg-yellow-100 text-xs font-medium text-[#343a40] tracking-wider"
         >
           Projection
         </th>

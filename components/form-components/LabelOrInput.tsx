@@ -40,7 +40,7 @@ function Label({
 
   const { handleIsLabel, isLabel } = context;
   const defaultClassName =
-    "h-[2rem] border-box rounded-[6px] align-text-bottom w-[4rem] px-[1rem]   border leading-[1.23536] flex items-center justify-start text-xs hover:border-tertiary-900 hover:bg-tertiary-100 hover:text-bold";
+    "h-[2rem] border-box rounded-[6px] align-text-bottom w-[4rem] px-[1rem] border leading-[1.23536] flex items-center justify-start text-xs hover:border-tertiary-900 hover:bg-tertiary-100 hover:text-bold";
 
   if (isLabel)
     return (

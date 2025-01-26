@@ -12,7 +12,7 @@ const ProjectedAssetsContainer = ({ assets, children }: ProjectedAssetsContainer
             }}
             className={`${
                 assets?.length === 0 ? "h-[25rem]" : "h-[34rem]"
-            } max-h-screen overflow-y-auto sticky rounded-[10px]`}
+            } max-h-screen overflow-y-auto sticky rounded-[12px]`}
         >
             {children}
         </aside>
