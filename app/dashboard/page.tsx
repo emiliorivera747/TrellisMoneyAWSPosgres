@@ -13,6 +13,7 @@ import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/pr
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import Link from "@/components/Plaid/Link";
 import LoadingToast from "@/components/toast/LoadingToast";
+import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
 
 //Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
@@ -35,14 +36,13 @@ import updateAssets from "@/features/projected-financial-assets/utils/updateAsse
 import mutateAllAssets from "@/features/projected-financial-assets/utils/mutateAllAssets";
 
 const currentYear = Number(new Date().getFullYear().toString());
-
 /**
- * 
- * Dashboard page is in charge of retrieving all of the financial data and displaying sending the 
+ *
+ * Dashboard page is in charge of retrieving all of the financial data and displaying sending the
  * data to a variety of components.
- * 
- * 
- * @returns 
+ *
+ *
+ * @returns
  */
 const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState<number>(currentYear + 40);
@@ -52,12 +52,8 @@ const Dashboard = () => {
   /**
    * Retrieve Assests
    */
-  const { financialAssetsData, financialAssetsError } = useAssets(
-    currentYear,
-    selectedYear,
-    selectedFilter
-  );
-
+  const { financialAssetsData, financialAssetsError, isPendingAssets } =
+    useAssets(currentYear, selectedYear, selectedFilter);
 
   const form = useForm();
   const { mutate, isPending } = useUpdateAssets();
@@ -85,15 +81,14 @@ const Dashboard = () => {
   }
 
   /**
-   * 
+   *
    * Update annual return rate
-   * 
-   * @param data 
+   *
+   * @param data
    */
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const updatedAssets = updateAssets(filteredAssets, data, user);
     mutateAllAssets(updatedAssets, mutate);
-    
   };
 
   return (
@@ -111,17 +106,21 @@ const Dashboard = () => {
         </PrimaryDashboardSection>
 
         {/* Seconday Section */}
-        <Form {...form} >
+        <Form {...form}>
           <form
             className="grid grid-rows-[1fr_6rem] gap-6 h-full col-span-10 sm:col-span-3 sm:row-span-1"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <ProjectedAssetsCard
-              assets={filteredAssets ? filteredAssets : []}
-              selectedYear={selectedYear}
-              form={form}
-              isLoading={isPending}
-            />
+            {isPendingAssets ? (
+              <ProjectedAssetsCardSkeleton />
+            ) : (
+              <ProjectedAssetsCard
+                assets={filteredAssets ? filteredAssets : []}
+                selectedYear={selectedYear}
+                form={form}
+                isLoading={isPending}
+              />
+            )}
           </form>
         </Form>
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}

@@ -16,6 +16,7 @@ import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButtonV2";
 import AssetsTable from "@/features/projected-financial-assets/components/tables/AssetsTable";
 import { ProjectedHoldingCardPrimaryHeader } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
 import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
+import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
 
 
 const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
@@ -26,6 +27,7 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
 }: ProjectedAssetsCardProps<TFieldValues>) => {
 
   const ref = useRef<HTMLButtonElement>(null)
+
 
   return (
     <ProjectedAssetsContainer assets={assets}>

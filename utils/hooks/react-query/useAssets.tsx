@@ -7,11 +7,11 @@ const useAssets  = (
   selectedYear: number,
   filter: InflationFilters
 ) => {
-  const { data: financialAssetsData, error: financialAssetsError } = useQuery({
+  const { data: financialAssetsData, error: financialAssetsError, isPending: isPendingAssets } = useQuery({
     queryKey: ["financialAssets", currentYear, selectedYear],
     queryFn: () => fetchFinancialAssets(currentYear, selectedYear, filter),
   });
-  return { financialAssetsData, financialAssetsError };
+  return { financialAssetsData, financialAssetsError, isPendingAssets};
 };
 
 export default useAssets;

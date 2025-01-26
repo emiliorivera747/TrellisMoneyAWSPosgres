@@ -34,7 +34,9 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
             <TableCell className=" pl-4 text-xs w-[1/3] ">
               <div className="flex flex-col">
                 <span className="font-bold uppercase">{asset.name}</span>
-                <span className="font-normal text-tertiary-800">{asset.shares ? asset.shares + " Shares" : null}</span>
+                <span className="font-normal text-tertiary-800">
+                  {asset.shares ? asset.shares + " Shares" : null}
+                </span>
               </div>
             </TableCell>
 
@@ -49,12 +51,11 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
                       <FormItem className={" flex items-center justify-center"}>
                         <FormControl>
                           <NumberInputV2
-                            defaultValue={(
-                              asset.annual_growth_rate * 100
-                            ).toFixed(0)}
-                            className="text-xs pl-[1rem]"
+                            defaultValue={asset.annual_growth_rate * 100}
+                            className="text-xs pl-[0.5rem]"
                             min={-100}
                             max={100}
+                            step={0.01}
                             {...field}
                           />
                         </FormControl>
@@ -65,6 +66,7 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
                   />
                 </LabelOrInput.Input>
                 <LabelOrInput.Label
+                  className="pl-[0.5rem]"
                   ref={ref}
                   text={`${(asset.annual_growth_rate * 100).toFixed(0)}`}
                 />
