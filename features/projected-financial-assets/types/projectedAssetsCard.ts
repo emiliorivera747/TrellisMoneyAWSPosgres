@@ -1,4 +1,10 @@
-import {UseFormReturn,  UseFormRegister, Path, FieldValues, FieldErrors} from "react-hook-form";
+import {
+  UseFormReturn,
+  UseFormRegister,
+  Path,
+  FieldValues,
+  FieldErrors,
+} from "react-hook-form";
 
 export type AccountType =
   | "Depository"
@@ -22,7 +28,8 @@ export interface Assets {
 export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
   assets: Assets[];
   selectedYear: number;
-  form:UseFormReturn<FieldValues, any, undefined>
+  form: UseFormReturn<FieldValues, any, undefined>;
+  isLoading: boolean;
 }
 
 export interface ProjectedAssetsContainerProps {
@@ -30,7 +37,6 @@ export interface ProjectedAssetsContainerProps {
   children: React.ReactNode;
 }
 
-export interface AssetName{
+export interface AssetName {
   name: string;
 }
-

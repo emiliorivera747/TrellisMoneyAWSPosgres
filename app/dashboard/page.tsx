@@ -60,7 +60,7 @@ const Dashboard = () => {
 
 
   const form = useForm();
-  const { mutate } = useUpdateAssets();
+  const { mutate, isPending } = useUpdateAssets();
   const { user, error } = useFetchUser();
 
   /**
@@ -120,6 +120,7 @@ const Dashboard = () => {
               assets={filteredAssets ? filteredAssets : []}
               selectedYear={selectedYear}
               form={form}
+              isLoading={isPending}
             />
           </form>
         </Form>

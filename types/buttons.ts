@@ -34,3 +34,11 @@ export interface SubmitButtonProps {
   h?: string;
   rounded?: string;
 }
+
+
+export interface SubmitButtonPropsV2 {
+  ref: React.ButtonHTMLAttributes<HTMLButtonElement>;
+  className?: string;
+  text?: string;
+  isLoading?: boolean;
+}

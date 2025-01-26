@@ -12,7 +12,7 @@ const useUpdateAssets = () => {
   const { toast } = useToast()
 
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: assetService.updateUserAssets,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projectedNetWorth"] });
@@ -30,7 +30,7 @@ const useUpdateAssets = () => {
       })
     }
   });
-  return { mutate };
+  return { mutate , isPending};
 };
 
 export default useUpdateAssets;
