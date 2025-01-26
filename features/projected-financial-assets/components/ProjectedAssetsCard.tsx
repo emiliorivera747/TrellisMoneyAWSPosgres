@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React, {useRef} from "react";
 
 // External Library
 import { FieldValues } from "react-hook-form";
@@ -24,6 +24,8 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   form,
 }: ProjectedAssetsCardProps<TFieldValues>) => {
 
+  const ref = useRef<HTMLButtonElement>(null)
+
   return (
     <ProjectedAssetsContainer assets={assets}>
       <div className="grid grid-rows-[4rem_1fr_6rem] absolute w-full text-[#343a40] h-full">
@@ -32,7 +34,7 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
         <AssetsTable assets={assets} form={form} />
 
         <div className="flex justify-center">
-          <PrimarySubmitButton text={"Calculate"} className="w-[8rem]" />
+          <PrimarySubmitButton text={"Calculate"} className="w-[8rem]" ref={ref}/>
         </div>
 
         {/* If there are not assets */}

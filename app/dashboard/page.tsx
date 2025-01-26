@@ -12,6 +12,7 @@ import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import Link from "@/components/Plaid/Link";
+import LoadingToast from "@/components/toast/LoadingToast";
 
 //Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
@@ -34,7 +35,6 @@ import updateAssets from "@/features/projected-financial-assets/utils/updateAsse
 import mutateAllAssets from "@/features/projected-financial-assets/utils/mutateAllAssets";
 
 const currentYear = Number(new Date().getFullYear().toString());
-
 
 /**
  * 
@@ -84,10 +84,16 @@ const Dashboard = () => {
     // Define the structure of your form data here
   }
 
+  /**
+   * 
+   * Update annual return rate
+   * 
+   * @param data 
+   */
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log("Data: ", data);
     const updatedAssets = updateAssets(filteredAssets, data, user);
     mutateAllAssets(updatedAssets, mutate);
+    
   };
 
   return (
