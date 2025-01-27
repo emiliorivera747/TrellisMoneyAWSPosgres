@@ -35,6 +35,7 @@ import {
 
 //Types
 import {ProjectedNetWorthGraphProps} from "@/features/projected-net-worth/types/graphComponents"
+
 /**
  * Projects the future net worth of the user based on the data provided
  *

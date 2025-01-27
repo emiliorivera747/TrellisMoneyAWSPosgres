@@ -14,6 +14,7 @@ import ProjectedAssetsCard from "@/features/projected-financial-assets/component
 import Link from "@/components/Plaid/Link";
 import LoadingToast from "@/components/toast/LoadingToast";
 import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
+import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
 
 //Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
@@ -96,12 +97,16 @@ const Dashboard = () => {
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%]">
         {/* Dashboard Prominent Section */}
         <PrimaryDashboardSection>
-          <ProjectedNetWorthGraph
-            handleYearSelection={handleYearSelection}
-            selectedYear={selectedYear}
-            selectedFilter={selectedFilter}
-            handleFilterChange={handleFilterChange}
-          />
+          {isPending ? (
+            <ProjectedNetWorthGraphSkeleton />
+          ) : (
+            <ProjectedNetWorthGraph
+              handleYearSelection={handleYearSelection}
+              selectedYear={selectedYear}
+              selectedFilter={selectedFilter}
+              handleFilterChange={handleFilterChange}
+            />
+          )}
           {/* <TestForm/> */}
         </PrimaryDashboardSection>
 

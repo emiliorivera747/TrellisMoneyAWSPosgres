@@ -18,6 +18,12 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
   data,
   withYears = true,
 }) => {
+
+  console.log("DATA: ", data);
+  if (!data || data.length === 0) {
+    return null;
+  }
+
   const deafultStockValueDifference =
     data[data.length - 1].close - data[0].close;
 
@@ -47,7 +53,6 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
   }
 
   const stockValueDifference = getStockValue(tooltipPayload.d) - data[0].close;
-  //("DATA",data)
   const rateOfChange = calculateRateOfChange(
     data[0].close,
     getStockValue(tooltipPayload.d)

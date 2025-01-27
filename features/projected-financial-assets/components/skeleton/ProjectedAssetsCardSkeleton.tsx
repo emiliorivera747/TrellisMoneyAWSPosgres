@@ -28,8 +28,8 @@ const SkeletonLoader = () => {
       </div>
 
       {/* Submit Button Skeleton */}
-      <div className="flex justify-center mt-10">
-        <div className="w-32 h-14 bg-gray-300 rounded-md"></div>
+      <div className="flex justify-center mt-6">
+        <div className="w-32 h-14 bg-tertiary-300 rounded-md"></div>
       </div>
     </div>
   );

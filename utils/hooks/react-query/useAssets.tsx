@@ -8,7 +8,7 @@ const useAssets  = (
   filter: InflationFilters
 ) => {
   const { data: financialAssetsData, error: financialAssetsError, isPending: isPendingAssets } = useQuery({
-    queryKey: ["financialAssets", currentYear, selectedYear],
+    queryKey: ["financialAssets", currentYear, selectedYear, filter],
     queryFn: () => fetchFinancialAssets(currentYear, selectedYear, filter),
   });
   return { financialAssetsData, financialAssetsError, isPendingAssets};
