@@ -2,12 +2,11 @@ import { NextResponse, NextRequest } from "next/server";
 
 import { PrismaClient} from "@prisma/client";
 
-
 //functions
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
-import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssets";
+import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
 
 // Mock data
 import { mockHoldingData } from "@/utils/data/plaid-data/mockHoldingData";

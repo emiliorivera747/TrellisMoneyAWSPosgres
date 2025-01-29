@@ -18,8 +18,7 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
   data,
   withYears = true,
 }) => {
-
-  console.log("DATA: ", data);
+  
   if (!data || data.length === 0) {
     return null;
   }

@@ -59,7 +59,7 @@ export const generateProjectedFinancialAssets = async (
             security_id: holding.security_id,
             account_id: holding.account_id,
             type: "Investment",
-            shares: new Decimal(holding.quantity ?? 0).toDecimalPlaces(2),
+            shares: new Decimal(holding.quantity || 0),
         });
     }
 

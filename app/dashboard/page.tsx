@@ -61,11 +61,6 @@ const Dashboard = () => {
   const { user, error } = useFetchUser();
 
   /**
-   * Filter Assets
-   */
-  const filteredAssets = useSortAssets(financialAssetsData);
-
-  /**
    * Generate Plaid link token
    */
   const linkToken = useGenerateToken();
@@ -88,9 +83,11 @@ const Dashboard = () => {
    * @param data
    */
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    const updatedAssets = updateAssets(filteredAssets, data, user);
+    const updatedAssets = updateAssets(financialAssetsData.data, data, user);
     mutateAllAssets(updatedAssets, mutate);
   };
+
+  console.log("Financial Data", financialAssetsData);
 
   return (
     <div className="min-h-screen h-auto w-full border-box">
@@ -120,10 +117,14 @@ const Dashboard = () => {
               <ProjectedAssetsCardSkeleton />
             ) : (
               <ProjectedAssetsCard
-                assets={filteredAssets ? filteredAssets : []}
-                selectedYear={selectedYear}
-                form={form}
-                isLoading={isPending}
+              assets={
+                selectedFilter === "isBoth"
+                ? financialAssetsData?.noInflationData?.data || []
+                : financialAssetsData?.data || []
+              }
+              selectedYear={selectedYear}
+              form={form}
+              isLoading={isPending}
               />
             )}
           </form>
