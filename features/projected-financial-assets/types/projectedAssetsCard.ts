@@ -6,6 +6,8 @@ import {
   FieldErrors,
 } from "react-hook-form";
 
+import { AssetsWithType } from "@/types/assets";
+
 export type AccountType =
   | "Depository"
   | "Investment"
@@ -26,14 +28,14 @@ export interface Assets {
 }
 
 export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
-  assets: Assets[];
+  assets: AssetsWithType[];
   selectedYear: number;
   form: UseFormReturn<FieldValues, any, undefined>;
   isLoading: boolean;
 }
 
 export interface ProjectedAssetsContainerProps {
-  assets: Assets[];
+  assets: AssetsWithType[];
   children: React.ReactNode;
 }
 

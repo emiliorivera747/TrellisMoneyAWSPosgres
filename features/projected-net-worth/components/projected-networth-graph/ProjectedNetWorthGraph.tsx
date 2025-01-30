@@ -4,9 +4,6 @@
 import { useState } from "react";
 
 //components
-import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
-import GraphHeaders from "@/components/headers/GraphHeaders";
-import ResponsiveLineGraph from "@/components/dashboard/ResponsiveLineGraph";
 import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/filters/RenderFilters";
 import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2";
 import ProjectedLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";

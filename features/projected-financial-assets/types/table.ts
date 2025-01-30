@@ -1,11 +1,11 @@
 import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
-import { UseFormRegister, Path, FieldValues, FieldErrors, SubmitHandler, UseFormHandleSubmit} from "react-hook-form";
+import { AssetsWithType } from "@/types/assets";
 export interface TableBodyForAssetsProps {
-  assets: Assets[];
+  assets: AssetsWithType[];
   form: any;
 }
 
 export interface AssetsTableProps{
-  assets: Assets[];
+  assets: AssetsWithType[];
   form: any;
 }

@@ -17,7 +17,7 @@ export interface PrimaryButtonProps {
 }
 
 export interface SubmitButtonProps {
-  ref: React.ButtonHTMLAttributes<HTMLButtonElement>;
+  ref?: React.ButtonHTMLAttributes<HTMLButtonElement>;
   className?: string;
   bgColor?: string;
   textColor?: string;

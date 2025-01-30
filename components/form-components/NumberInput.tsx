@@ -28,7 +28,7 @@ const NumberInput = <TFieldValues extends FieldValues>({
 }: NumberInputProps<TFieldValues>) => {
   return (
     <div className="relative my-2">
-      <input
+      {/* <input
         type={type}
         id={id}
         min={min}
@@ -43,7 +43,7 @@ const NumberInput = <TFieldValues extends FieldValues>({
             ? "focus:ring-red-500"
             : "focus:ring-primary-500 focus:border-none"
         }`}
-      />
+      /> */}
 
       {/* Placeholder label*/}
       {withPlaceholder && (

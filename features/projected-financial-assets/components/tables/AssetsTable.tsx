@@ -12,7 +12,6 @@ const AssetsTable = ({
 }: AssetsTableProps) => {
   return (
     <Table>
-      {/* <ProjectedAssetsTableHeader /> */}
       <TableBodyForAssets
         assets={assets}
         form={form}
