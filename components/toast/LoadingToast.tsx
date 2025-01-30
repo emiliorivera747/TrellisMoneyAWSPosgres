@@ -1,5 +1,5 @@
 'use client'
-import React, {useState, useEffect} from "React";
+import React, {useState, useEffect} from "react";
 import { Toast, ToastAction, ToastDescription, ToastTitle } from '@/components/ui/toast';
 
 function LoadingToast() {
