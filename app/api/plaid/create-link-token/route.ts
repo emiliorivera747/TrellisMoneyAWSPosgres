@@ -29,7 +29,6 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json({ link_token: response.data.link_token });
   } catch (error) {
-    // //(error);
     return NextResponse.json(
       { error: "Error generating link token" },
       { status: 500 }
