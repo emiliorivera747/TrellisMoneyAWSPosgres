@@ -27,8 +27,8 @@ const PrimaryGraphHeader = ({
 }: PrimaryGraphHeaderProps) => {
   return (
     <header className="flex flex-col w-full h-auto">
-      <div className="flex flex-row text-[1.4rem] gap-2">
-        <GraphHeaders label="Projected Net Worth" />
+      <div className="flex flex-row text-[1.4rem] gap-1">
+        <GraphHeaders label="Net Worth" />
         <SelectYearMenuButton
           selectedYear={selectedYear}
           years={years}
