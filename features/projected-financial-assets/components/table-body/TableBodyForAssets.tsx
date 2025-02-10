@@ -4,19 +4,20 @@ import {
   TableRow,
   TableHead,
 } from "@/components/ui/table";
-import { FieldValues, Path } from "react-hook-form";
 import React, { useRef } from "react";
 
 //Functions
 import { convertToMoney } from "@/utils/helper-functions/convertToMoney";
 import { getTypeLabel } from "@/features/projected-financial-assets/utils/getTypeLabel";
+
 //Types
 import { TableBodyForAssetsProps } from "@/features/projected-financial-assets/types/table";
 
 //Components
-import NumberInput from "@/components/form-components/NumberInput";
 import NumberInputV2 from "@/components/form-components/NumberInputV2";
 import LabelOrInput from "@/components/form-components/LabelOrInput";
+import InvestmentTypeSubHeader from "@/features/projected-financial-assets/components/headers/InvestmentTypeSubHeader";
+import InvestmentTypeHeader from "@/features/projected-financial-assets/components/headers/InvestmentTypeHeader";
 
 import {
   Form,
@@ -35,21 +36,8 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
     <TableBody className="">
       {assets.map((assetGroup, groupIndex) => (
         <React.Fragment key={groupIndex}>
-          <TableRow className="text-xs border-none">
-            <TableCell
-              colSpan={3}
-              className="p-0 w-full text-tertiary-900 text-[0.86rem] font-semibold px-4 border-t border-b border-tertiary-200 py-3"
-            >
-    
-                {getTypeLabel(assetGroup.type)}
-
-            </TableCell>
-          </TableRow>
-          <TableRow className="text-xs border-none text-tertiary-700">
-            <TableCell className="pl-4" >Asset</TableCell>
-            <TableCell>Annual Return Rate</TableCell>
-            <TableCell>Projection</TableCell>
-          </TableRow>
+          <InvestmentTypeHeader assetGroup={assetGroup} />
+          <InvestmentTypeSubHeader />
           {assetGroup.assets.map((asset, index) => (
             <TableRow
               key={index}
