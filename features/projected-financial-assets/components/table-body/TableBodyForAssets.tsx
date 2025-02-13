@@ -66,9 +66,10 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
                     </FormItem>
                   )}
                 />
-                <span className="w-[2rem] flex flex-col text-md  text-tertiary-800 align-center justify-center font-normal">
+                {/* <span className="te">{asset.annual_growth_rate *100} % </span> */}
+                {/* <span className="w-[2rem] flex flex-col text-md  text-tertiary-800 align-center justify-center font-normal">
                   %
-                </span>
+                </span> */}
               </TableCell>
 
               {/* Projection */}
