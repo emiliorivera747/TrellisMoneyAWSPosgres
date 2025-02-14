@@ -23,6 +23,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@apollo/server": "^4.11.3",
     "@hookform/resolvers": "^3.9.1",
     "@jest/types": "^29.6.3",
     "@prisma/client": "5.21.1",
@@ -52,6 +53,7 @@
     "d3-array": "link:@visx/vendor/d3-array",
     "d3-time-format": "link:@visx/vendor/d3-time-format",
     "decimal.js": "^10.4.3",
+    "graphql": "^16.10.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "lucide-react": "^0.469.0",
