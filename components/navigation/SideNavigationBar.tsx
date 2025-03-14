@@ -18,7 +18,7 @@ const SideNavigationBar: React.FC = () => {
       <nav className=" flex flex-row sm:flex-col  pb-4 ">
         <ul className="flex flex-row sm:flex-col w-full sm:justify-normal sm:items-start items-center ">
           <li className="h-[3rem] w-[3rem] sm:mb-4 hover:bg-tertiary-300 rounded-[100%] flex items-center justify-center ">
-            <AiFillApple className="text-4xl text-tertiary-1000" />
+            <div className="text-tertiary-900 font-bold text-3xl">T</div>
           </li>
           {navigationItems.map((item, index) => (
             <li
