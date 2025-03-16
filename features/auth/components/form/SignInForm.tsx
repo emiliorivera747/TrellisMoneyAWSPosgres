@@ -58,8 +58,6 @@ const SignInForm = () => {
     "Signed in successfully!"
   );
 
-  //(err);
-
   return (
     <PrimaryAuthContainer>
       {/*  Sign in form */}

@@ -120,6 +120,22 @@ export async function signUp(
 
     if (error) return handleOtherErrors(error) as State;
 
+
+    // Before adding the user to your own database, you should check if the user already exists
+    const user = await prisma.user.findUnique({
+      where: {
+        email: validatedFields.email,
+      },
+    });
+
+    if (user) {
+      return {
+        status: "error",
+        message: "User already exists",
+        errors: new Error("user_already_exists"),
+      };
+    }
+
     // Add the user to your own PostgreSQL database
     await prisma.user.create({
       data: {

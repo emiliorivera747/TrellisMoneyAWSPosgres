@@ -37,6 +37,7 @@ import { SignUpInputs } from "@/features/auth/schemas/formSchemas";
  * @returns JSX.Element
  */
 export default function Signup() {
+  
   const { pending } = useFormStatus();
   const [state, formAction] = useActionState<State, FormData>(signUp, null);
   const [email, setEmail] = useState<string | null>(null);
