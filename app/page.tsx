@@ -20,17 +20,17 @@ export default async function Home() {
 
   return (
     <div className="bg-white h-screen">
-      <nav className="flex items-center justify-between p-4 border-b border-gray-200 mx-10 py-5">
+      <nav className=" p-2 py-5 flex items-center justify-between sm:p-4 border-b border-gray-200 mx-10 sm:py-5">
         <div className="flex items-center">
-          <span className="text-xl font-bold text-tertiary-1000">
+          <span className="sm:text-xl font-bold text-tertiary-1000">
             Trellis Money
           </span>
         </div>
         {user ? <SignOutButton /> : <SignInButton />}
       </nav>
       <header className="text-center h-full items-center justify-center flex flex-col">
-        <div className="translate-y-[-80%]">
-          <h1 className="text-[2.5rem] font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent">
+        <div className="translate-y-[-50%] sm:translate-y-[-80%] mx-4">
+          <h1 className="text-[2rem] sm:text-[2.5rem] font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent">
             Welcome to Trellis Money
           </h1>
             <p className="mt-2 mb-4 pb-10 bg-gradient-to-r from-tertiary-900 to-tertiary-700 bg-clip-text text-transparent">
