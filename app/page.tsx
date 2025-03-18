@@ -13,7 +13,7 @@ import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Trellis Money",
+  title: "Trellis Money - Seeing value where others don't",
   description: "Trellis Money is a personal finance management tool. Track investments across all accounts. Set goals and budgets. Get insights into your spending.",
 };
 
