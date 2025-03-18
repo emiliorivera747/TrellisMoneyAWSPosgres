@@ -87,6 +87,7 @@ export async function login(
 
       if (error) return handleOtherErrors(error) as State;
     }
+
     if (error) return handleOtherErrors(error) as State;
 
     // Add user to the database if they don't exist
