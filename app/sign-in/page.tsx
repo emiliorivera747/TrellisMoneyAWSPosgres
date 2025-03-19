@@ -4,8 +4,8 @@ import { Metadata } from "next";
 import NavBar from "@/components/nav-bars/NavBar";
 
 export const metadata: Metadata = {
-  title: "Sign In",
-  description: "Sign in to your Trellis account",
+  title: "Sign In | Trellis Money",
+  description: "Sign in to your Trellis Money account",
 };
 
 //Forms

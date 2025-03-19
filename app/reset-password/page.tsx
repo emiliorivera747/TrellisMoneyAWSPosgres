@@ -4,7 +4,12 @@ import Head from "next/head";
 import NavBar from "@/components/nav-bars/NavBar";
 import { useSearchParams } from "next/navigation";
 import ResetPasswordForm from "@/features/auth/components/form/ResetPasswordForm";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Reset Password | Trellis Money",
+  description: "Create a new account on Trellis Money",
+};
 const page = () => {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");

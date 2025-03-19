@@ -7,7 +7,7 @@ import DashboardRedirect from "@/features/auth/components/private-route/Dashboar
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign Up - Trellis Money",
+  title: "Sign Up | Trellis Money",
   description: "Create a new account on Trellis Money",
 };
 
