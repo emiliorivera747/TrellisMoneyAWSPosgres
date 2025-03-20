@@ -2,6 +2,12 @@ import SideNavigationBar from "@/components/navigation/SideNavigationBar";
 import Footer from "@/components/footers/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard | Trellis Money",
+  description: "Dashboard for Trellis Money gives you insights into your investments, goals, budgets, Networth and other key financial metrics.",
+};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 

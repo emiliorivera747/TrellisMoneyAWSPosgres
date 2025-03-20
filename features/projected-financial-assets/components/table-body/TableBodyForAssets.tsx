@@ -57,7 +57,7 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
                           className="text-xs pl-[0.5rem]"
                           min={-100}
                           max={100}
-                          step={0.01}
+                          step={1}
                           {...field}
                         />
                       </FormControl>

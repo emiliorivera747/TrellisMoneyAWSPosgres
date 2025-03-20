@@ -1,5 +1,11 @@
 import SideNavigationBar from "@/components/navigation/SideNavigationBar";
 import Footer from "@/components/footers/Footer";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+  title: "Accounts | Trellis Money",
+  description: "Keep track of all your bank accounts across different platforms and accounts with Trellis Money.",
+};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
