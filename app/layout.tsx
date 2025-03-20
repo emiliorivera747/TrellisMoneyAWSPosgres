@@ -9,6 +9,8 @@ import { ToastContainer } from "react-toastify";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Rubik, Inter } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react"
 
 //Components
 import { ReactQueryClientProvider } from "@/features/react-query/components/ReactQueryClientProvider";
@@ -51,6 +53,8 @@ export default function RootLayout({
           {children}
           <ToastContainer />
         </body>
+        <SpeedInsights/>
+        <Analytics/>
       </html>
     </ReactQueryClientProvider>
   );
