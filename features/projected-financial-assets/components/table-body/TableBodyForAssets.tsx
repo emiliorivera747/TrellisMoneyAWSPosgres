@@ -53,7 +53,7 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
                     <FormItem className={"flex items-center justify-center"}>
                       <FormControl>
                         <NumberInputV2
-                          defaultValue={asset.annual_growth_rate * 100}
+                          defaultValue={(asset.annual_growth_rate * 100).toFixed(2)}
                           className="text-xs pl-[0.5rem]"
                           min={-100}
                           max={100}
