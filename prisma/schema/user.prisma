@@ -19,7 +19,7 @@ model Item {
   item_id                 String   @unique
   institution_id          String
   institution_name        String
-  webhook                 String
+  webhook                 String?
   auth_method             String?
   request_id              String
   update_type             String
