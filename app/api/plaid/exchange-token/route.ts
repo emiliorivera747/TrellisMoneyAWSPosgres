@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'; 
 import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode } from 'plaid';
+
 const config = new Configuration({
     basePath: PlaidEnvironments[process.env.PLAID_ENV as keyof typeof PlaidEnvironments],
     baseOptions: {
@@ -9,13 +10,15 @@ const config = new Configuration({
       },
     },
   });
+
 const client = new PlaidApi(config);
+
 export async function POST(req: NextRequest) {
   const { public_token } = await req.json();
   try {
     const response = await client.itemPublicTokenExchange({ public_token });
     const { access_token } = response.data;
-    //('Access token:', access_token);
+
     return NextResponse.json({ access_token });
   } catch (error) {
 

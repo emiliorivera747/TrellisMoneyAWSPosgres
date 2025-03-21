@@ -15,14 +15,35 @@ model User {
 }
 
 model Item {
-  item_id                 String @unique
+  item_id                 String   @unique
   institution_id          String
   institution_name        String
   webhook                 String
+  auth_method             String?
   request_id              String
   update_type             String
   consent_expiration_time String
-  accountId               String
+  created_at              DateTime @default(now()) @db.Timestamptz(3)
+  available_products      String[]
+  billed_products         String[]
+  products                String[]
+  error                   String?
+  consented_products      String[]
+  consented_data_scopes   String[]
+  consented_use_cases     String[]
+  access_token            String
+}
+
+model TransactionStatus {
+  id                      Int      @id @default(autoincrement())
+  last_successful_update  DateTime @db.Timestamptz(3)
+  last_failed_update      DateTime @db.Timestamptz(3)
+}
+
+model WebhookStatus {
+  id                      Int      @id @default(autoincrement())
+  sent_at                 DateTime @db.Timestamptz(3)
+  code_sent               String
 }
 
 model OptionContract {
