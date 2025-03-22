@@ -33,16 +33,17 @@ export async function POST(req: NextRequest) {
     if (itemFound) await client.itemRemove({ access_token });
 
     // Add the new item
-    // await prisma.item.create({
-    //   data: {
-    //     item_id: item.data.item.item_id,
-    //     institution_id: item.data.item.institution_id || '',
-    //     institution_name: item.data.item.institution_name || '',
-    //     user_id: '88aaaacc-8638-4de3-b20b-5408377596be',
-    //     access_token,
-    //     request_id: item.data.request_id,
-    //   }
-    // });
+    await prisma.item.create({
+      data: {
+        item_id: item.data.item.item_id,
+        institution_id: item.data.item.institution_id || '',
+        user_id: '88aaaacc-8638-4de3-b20b-5408377596be',
+        access_token,
+        request_id: item.data.request_id,
+        update_type: item.data.item.update_type,
+        consent_expiration_time: item.data.item.consent_expiration_time || '',
+      }
+    });
 
     return NextResponse.json({ access_token });
   } catch (error) {
