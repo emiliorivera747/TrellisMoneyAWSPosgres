@@ -30,8 +30,9 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
       { status: 200 }
     );
   } catch (error) {
+
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    console.log(errorMessage)
+
     return NextResponse.json(
       {
         message: errorMessage,

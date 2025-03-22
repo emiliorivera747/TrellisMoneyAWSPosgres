@@ -137,6 +137,7 @@ export async function signUp(
       };
     }
 
+    console.log(data);
     // Add the user to your own PostgreSQL database
     await prisma.user.create({
       data: {

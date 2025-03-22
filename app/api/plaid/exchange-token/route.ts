@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'; 
 import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode } from 'plaid';
 import { prisma } from "@/lib/prisma";
+import { createClient } from "@/utils/supabase/server";
 
 const config = new Configuration({
     basePath: PlaidEnvironments[process.env.PLAID_ENV as keyof typeof PlaidEnvironments],
@@ -17,6 +18,10 @@ const client = new PlaidApi(config);
 export async function POST(req: NextRequest) {
   const { public_token } = await req.json();
   try {
+    const supabase = await createClient();
+
+    const { user } = await supabase.auth.getUser();
+;
     const response = await client.itemPublicTokenExchange({ public_token });
     const { access_token } = response.data;
 
@@ -37,7 +42,7 @@ export async function POST(req: NextRequest) {
       data: {
         item_id: item.data.item.item_id,
         institution_id: item.data.item.institution_id || '',
-        user_id: '88aaaacc-8638-4de3-b20b-5408377596be',
+        user_id: user.id,
         access_token,
         request_id: item.data.request_id,
         update_type: item.data.item.update_type,
