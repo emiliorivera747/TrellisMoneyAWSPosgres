@@ -20,7 +20,11 @@ export async function POST(req: NextRequest) {
   try {
     const supabase = await createClient();
 
-    const { user } = await supabase.auth.getUser();
+    const { data : {user} } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 ;
     const response = await client.itemPublicTokenExchange({ public_token });
     const { access_token } = response.data;
