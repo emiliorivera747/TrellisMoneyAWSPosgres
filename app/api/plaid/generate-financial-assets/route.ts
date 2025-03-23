@@ -7,6 +7,7 @@ import { PrismaClient} from "@prisma/client";
 import { createClient } from "@/utils/supabase/server";
 
 //functions
+import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
 import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
@@ -50,6 +51,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
      */
     const { searchParams } = new URL(req.url);
     const { start_year, end_year } = getDates(searchParams);
+
+    validateTimestamp(timestamp);
 
     const accounts = mockAccountBalanceData.accounts;
     const holdings = mockHoldingData.holdings;

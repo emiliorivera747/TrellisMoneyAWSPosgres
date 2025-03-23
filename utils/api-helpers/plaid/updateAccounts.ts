@@ -2,17 +2,23 @@ import { updateBalance } from "@/utils/api-helpers/plaid/updateBalance";
 import { prisma } from "@/lib/prisma";
 import { Account } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
-import { NextResponse, NextRequest } from "next/server";
-import { error } from "console";
+import { NextResponse} from "next/server";
+
+const hasAccountBalance = (account: Account) => {
+  if (!account.balances){
+    return NextResponse.json(
+      { message: "Account balances are missing" },
+      { status: 500 }
+    );
+  }
+}
 
 export async function updateAccounts(accounts: Account[], userId: string) {
+  
+  
   for (let account of accounts) {
-    if (!account.balances){
-      return NextResponse.json(
-        { message: "Account balances are missing" },
-        { status: 500 }
-      );
-    }
+    hasAccountBalance(account);
+    
     await updateBalance(
       account?.balances,
       account?.account_id
@@ -33,7 +39,7 @@ export async function updateAccounts(accounts: Account[], userId: string) {
           account?.balances?.iso_currency_code,
           ""
         ),
-        timestamp: new Date(),
+      
       },
       create: {
         account_id: getValueOrDefault(account?.account_id, ""),

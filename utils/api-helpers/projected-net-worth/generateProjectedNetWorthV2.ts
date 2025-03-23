@@ -1,5 +1,4 @@
 import { Holding } from "@/types/plaid";
-import { getQuantity, getClosePrice, getAnnualReturnRate } from "@/utils/api-helpers/holdingAccessors";
 import { future_value_with_inflation_fn, future_value_fn, getFormulaValues } from "@/utils/api-helpers/futureValueFormulas";
 
 /**
@@ -31,9 +30,7 @@ export const generateProjectedNetWorthV2 = async (
     with_inflation,
     annual_inflation_rate
   );
-
   pushProjectedNetWorthToEachDay(projectedNetWorth, start_year, end_year, hm);
-
   return projectedNetWorth;
 };
 
@@ -68,13 +65,11 @@ const pushProjectedNetWorthToEachDay = (
     const interpolationFactor = (i % 365) / 365;
     const interpolatedValue =
       previousValue + (nextValue - previousValue) * interpolationFactor;
-
     const date = new Date(year, 0, 1);
     date.setDate(date.getDate() + dayOfYear);
 
     // Only push dates within the first month of the last year
     if (year === end_year && date.getMonth() > 0) break;
-
     projectedNetWorth.push({
       date: date,
       close: Math.round(interpolatedValue * 100) / 100,
@@ -103,7 +98,6 @@ const populateHashMapWithFv = (
 ) => {
   for (let i = 0; i < end_year - start_year + 1; i++) {
     let total = 0;
-
     for (const holding of holdings) {
       const { quantity, close_price, annual_return_rate } =
         getFormulaValues(holding);
@@ -116,17 +110,13 @@ const populateHashMapWithFv = (
           annual_inflation_rate,
           i
         );
-
         total += fv;
       } else if (!with_inflation) {
-
         let fv = future_value_fn(quantity, close_price, annual_return_rate, i);
-        
         total += fv;
       }
     }
     hm[start_year + i] = total;
   }
-
   return hm;
 };
