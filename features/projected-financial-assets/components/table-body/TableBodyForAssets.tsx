@@ -32,13 +32,15 @@ import {
 const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
   const ref = useRef(null);
 
+  console.log("Assets ",assets);
+
   return (
     <TableBody className="">
-      {assets.map((assetGroup, groupIndex) => (
+      {assets?.map((assetGroup, groupIndex) => (
         <React.Fragment key={groupIndex}>
           <InvestmentTypeHeader assetGroup={assetGroup} />
           <InvestmentTypeSubHeader />
-          {assetGroup.assets.map((asset, index) => (
+          {assetGroup?.assets?.map((asset, index) => (
             <TableRow
               key={index}
               className="border-none hover:bg-tertiary-100 "
@@ -66,10 +68,6 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
                     </FormItem>
                   )}
                 />
-                {/* <span className="te">{asset.annual_growth_rate *100} % </span> */}
-                {/* <span className="w-[2rem] flex flex-col text-md  text-tertiary-800 align-center justify-center font-normal">
-                  %
-                </span> */}
               </TableCell>
 
               {/* Projection */}

@@ -131,7 +131,6 @@ const Dashboard = () => {
           </form>
         </Form>
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
-        <SignOutButton />
       </div>
     </div>
   );

@@ -28,7 +28,6 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
     <ProjectedAssetsContainer assets={assets}>
       <div className="grid grid-rows-[4rem_1fr_6rem] absolute w-full text-[#343a40] h-full">
         <ProjectedHoldingCardPrimaryHeader year={selectedYear} />
-
         <AssetsTable assets={assets} form={form} />
         <div className="flex justify-center">
           <PrimarySubmitButton text={"Calculate"} className="w-[8rem]" ref={ref} isLoading={isLoading}/>

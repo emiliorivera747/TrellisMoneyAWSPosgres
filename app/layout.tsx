@@ -52,9 +52,9 @@ export default function RootLayout({
         >
           {children}
           <ToastContainer />
+          <SpeedInsights/>
+          <Analytics/>
         </body>
-        <SpeedInsights/>
-        <Analytics/>
       </html>
     </ReactQueryClientProvider>
   );

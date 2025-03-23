@@ -1,6 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 
 import { PrismaClient} from "@prisma/client";
+import { createClient } from "@/utils/supabase/server";
+
 
 //functions
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
@@ -19,10 +21,11 @@ import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
+    const supabase = await createClient();
     const body = await req.json();
     const { timestamp } = body;
     const infaltionRate = 0.025;
-    const userId = "88aaaacc-8638-4de3-b20b-5408377596be";
+    const { data : {user} } = await supabase.auth.getUser();
 
     const { searchParams } = new URL(req.url);
     const start_year = searchParams.get("start_date")
@@ -41,11 +44,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     handleErrors(accounts, holdings, securities);
 
     // Update the user's accounts, securities, and holdings in the database
-    await updateAccounts(accounts, userId);
-    await updateSecurities(securities, userId, timestamp);
-    await updateHoldings(holdings, userId, timestamp);
-
-    const userHoldings = await getHoldingsAndSecurities(userId);
+    if (!user?.id) {
+      throw new Error("User ID is missing");
+    }
+    await updateAccounts(accounts, user.id);
+    await updateSecurities(securities, user.id, timestamp);
+    await updateHoldings(holdings, user.id, timestamp);
+    const userHoldings = await getHoldingsAndSecurities(user.id);
+    console.log(userHoldings);
 
     // Generate the projected financial assets
     const projectedFinancialAssets = await generateProjectedFinancialAssets(
@@ -63,8 +69,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       },
       { status: 200 }
     );
-  } catch (error) {
-    console.log(error);
+
+  } 
+  catch (error) 
+  {
     return NextResponse.json(
       {
         message: error,
@@ -97,6 +105,5 @@ const getHoldingsAndSecurities = async (userId: string) => {
         },
       },
     });
-  
     return userHoldings[0].holdings;
   };
