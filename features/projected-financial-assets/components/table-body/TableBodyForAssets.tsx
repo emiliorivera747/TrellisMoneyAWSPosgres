@@ -32,8 +32,6 @@ import {
 const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
   const ref = useRef(null);
 
-  console.log("Assets ",assets);
-
   return (
     <TableBody className="">
       {assets?.map((assetGroup, groupIndex) => (

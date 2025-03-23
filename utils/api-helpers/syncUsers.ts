@@ -2,12 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { fetchAllSupabaseUsers } from "@/utils/api-helpers/fetchAllSupabaseUsers";
 
 export async function syncUsers() {
-  console.log("Syncing users...");
   const supabaseUsers = await fetchAllSupabaseUsers();
   const existingUsers = await prisma.user.findMany();
-
-  console.log("supabaseUsers", supabaseUsers);
-  console.log("existingUsers", existingUsers);
 
   // If the user exists in our database but not in Supabase, we delete it
   for (const existingUser of existingUsers) {

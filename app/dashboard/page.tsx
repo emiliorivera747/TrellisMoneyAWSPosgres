@@ -88,8 +88,6 @@ const Dashboard = () => {
     mutateAllAssets(updatedAssets, mutate);
   };
 
-  console.log("Financial Data", financialAssetsData);
-
   return (
     <div className="min-h-screen h-auto w-full border-box">
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%]">

@@ -1,11 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
 
+//prisma
 import { PrismaClient} from "@prisma/client";
+
+//supabase
 import { createClient } from "@/utils/supabase/server";
 
-
 //functions
-import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
 import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
@@ -18,23 +19,37 @@ import { mockAccountBalanceData } from "@/utils/data/plaid-data/mockAccountBalan
 import { updateAccounts } from "@/utils/api-helpers/plaid/updateAccounts";
 import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
 import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
+import { getDates } from "@/utils/api-helpers/getDates";
 
+const default_infaltion_rate = 0.025;
+
+/**
+ * POST /api/plaid/generate-financial-assets
+ * 
+ * Updates the user's accounts, securities, and holdings in the database and generates the projected financial assets.
+ * 
+ * @param req 
+ * @returns 
+ */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const supabase = await createClient();
-    const body = await req.json();
-    const { timestamp } = body;
-    const infaltionRate = 0.025;
-    const { data : {user} } = await supabase.auth.getUser();
 
+    /**
+     * Get the timestamp from the request body
+     */
+    const { timestamp } = await req.json();
+
+    /**
+     * Get the user's information
+     */
+    const supabase = await createClient();  
+    const { data : { user } } = await supabase.auth.getUser();
+
+    /**
+     * Get the start and end years from the request URL
+     */
     const { searchParams } = new URL(req.url);
-    const start_year = searchParams.get("start_date")
-      ? parseInt(searchParams.get("start_date") as string, 10)
-      : new Date().getFullYear();
-    const end_year = searchParams.get("end_date")
-      ? parseInt(searchParams.get("end_date") as string, 10)
-      : new Date().getFullYear() + 40;
-    const with_inflation = searchParams.get("with_inflation") === "true";
+    const { start_year, end_year } = getDates(searchParams);
 
     const accounts = mockAccountBalanceData.accounts;
     const holdings = mockHoldingData.holdings;
@@ -44,21 +59,18 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     handleErrors(accounts, holdings, securities);
 
     // Update the user's accounts, securities, and holdings in the database
-    if (!user?.id) {
-      throw new Error("User ID is missing");
-    }
+    if (!user?.id)  throw new Error("User ID is missing");
     await updateAccounts(accounts, user.id);
     await updateSecurities(securities, user.id, timestamp);
     await updateHoldings(holdings, user.id, timestamp);
     const userHoldings = await getHoldingsAndSecurities(user.id);
-    console.log(userHoldings);
 
     // Generate the projected financial assets
     const projectedFinancialAssets = await generateProjectedFinancialAssets(
       start_year,
       end_year,
-      with_inflation,
-      infaltionRate,
+      searchParams.get("with_inflation") === "true",
+      default_infaltion_rate,
       userHoldings
     );
 

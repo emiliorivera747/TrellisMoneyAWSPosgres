@@ -12,21 +12,6 @@ export async function updateHoldings(
   timestamp: string
 ) {
 
-  // Get all the user's holdings
-  // const userHoldings = await getAllHoldingsWithIds(user_id);
-
-  // // Check whether userHoldings and holdings have the same number of holdings with matching account_id, security_id, and user_id
-  // const areHoldingsEqual = areHoldingTablesEqual(userHoldings, holdings);
-
-  // // If the holdings are not equal then delete all the holdings
-  // if (!areHoldingsEqual) {
-  //   await prisma.holding.deleteMany({
-  //     where: {
-  //       user_id: user_id,
-  //     },
-  //   });
-  // }
-
   // Update or create each holding
   for (let holding of holdings) {
     await updateOrCreateHolding(holding, timestamp, user_id);
