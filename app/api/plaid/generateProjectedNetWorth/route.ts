@@ -60,6 +60,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const userId = user?.id || '';
 
+
+    /**
+     *  Get all of the items
+     */
+    const items = pri
+
     const accounts = mockAccountBalanceData.accounts;
     const holdings = mockHoldingData.holdings;
     const securities = mockHoldingData.securities;

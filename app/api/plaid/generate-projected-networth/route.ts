@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { PrismaClient} from "@prisma/client";
+import {prisma} from "@/lib/prisma";
 
 //functions
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
@@ -23,6 +24,7 @@ import {
 } from "@/utils/api-helpers/prisma/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/getDates";
+import { getItemsWithId } from "@/utils/api-helpers/prisma/getItemsWithId";
 
 //supabase
 import { createClient } from "@/utils/supabase/server";
@@ -58,7 +60,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     validateTimestamp(timestamp);
 
-    const userId = user?.id || '';
+    /**
+     *  Get all of th user's items
+     */
+    const items = await getItemsWithId(user?.id || '');
+
+    items.map((item) => {
+      return item.access_token;
+    });
+
 
     const accounts = mockAccountBalanceData.accounts;
     const holdings = mockHoldingData.holdings;
@@ -68,12 +78,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     handleErrors(accounts, holdings, securities);
 
     // Update the user's accounts, securities, and holdings in the database
-    await updateAccounts(accounts, userId);
-    await updateSecurities(securities, userId, timestamp);
-    await updateHoldings(holdings, userId, timestamp);
+    await updateAccounts(accounts, user?.id || '');
+    await updateSecurities(securities, user?.id || '', timestamp);
+    await updateHoldings(holdings, user?.id || '', timestamp);
 
     // Get the user's updated holdings and securities
-    const userHoldings = await getHoldingsAndSecurities(userId);
+    const userHoldings = await getHoldingsAndSecurities(user?.id || '');
 
     const projectedNetWorth = await generateProjectedNetWorthV2(
       userHoldings,
