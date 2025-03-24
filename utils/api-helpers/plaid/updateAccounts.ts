@@ -2,17 +2,17 @@ import { updateBalance } from "@/utils/api-helpers/plaid/updateBalance";
 import { prisma } from "@/lib/prisma";
 import { Account } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
-import { NextResponse} from "next/server";
 
-const hasAccountBalance = (account: Account) => {
-  if (!account.balances){
-    return NextResponse.json(
-      { message: "Account balances are missing" },
-      { status: 500 }
-    );
-  }
-}
+//helpers
+import { hasAccountBalance } from "@/utils/api-helpers/hasAccountBalance";
 
+
+/**
+ * 
+ * 
+ * @param accounts 
+ * @param userId 
+ */
 export async function updateAccounts(accounts: Account[], userId: string) {
   
   
@@ -25,7 +25,11 @@ export async function updateAccounts(accounts: Account[], userId: string) {
     );
 
     /**
-     * Upsert account
+     *  Upsert account:
+     * 
+     *  Upsert is a combination of insert and update. If the record exists, 
+     *  it will update it. If it doesn't exist, it will insert it.
+     * 
      */
     await prisma.account.upsert({
       where: { account_id: account.account_id },
@@ -39,7 +43,7 @@ export async function updateAccounts(accounts: Account[], userId: string) {
           account?.balances?.iso_currency_code,
           ""
         ),
-      
+        updated_at: new Date(),
       },
       create: {
         account_id: getValueOrDefault(account?.account_id, ""),
