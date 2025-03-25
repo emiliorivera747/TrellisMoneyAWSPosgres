@@ -62,6 +62,7 @@ export async function updateAccounts(accounts: Account[], userId: string) {
           account?.balances?.unofficial_currency_code,
           ""
         ),
+        item_id: getValueOrDefault(account?.item_id, ""),
       },
     });
 

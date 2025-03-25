@@ -57,7 +57,7 @@ export interface Account {
   items?: Item;
   owners?: Owner[];
   user_id?: number;
-  item_id?: string;
+  item_id?: string | null;
   owner_id?: string;
   User?: User;
   timestamp?: Date;
@@ -69,13 +69,14 @@ export interface Account {
 export interface Item {
   item_id: string;
   institution_id: string;
-  institution_name: string;
-  webhook: string;
-  request_id: string;
-  update_type: string;
-  consent_expiration_time: string;
-  accountId: string;
-  account: Account;
+  institution_name?: string | null;
+  webhook?: string | null;
+  request_id?: string | null;
+  update_type?: string | null;
+  consent_expiration_time?: string | null;
+  accountId?: string | null;
+  account?: Account | null;
+  access_token?: string | null;
 }
 
 export interface Holding {
