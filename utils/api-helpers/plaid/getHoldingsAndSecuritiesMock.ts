@@ -181,12 +181,13 @@ const account = {
   is_investments_fallback_item: false,
 };
 
-export const getHoldingsAndSecuritiesMock = async (items: Item[]) => {
-  // Get all access tokens in items
-  const accessTokens = items.map((item) => item.access_token);
+export const getHoldingsAndSecuritiesMock = async (access_token: string) => {
 
-  // Get all accounts associated with the access tokens
-  const accounts = accessTokens.filter((account) => accessTokens.includes(account?.accounts?.access_token));
+  const defualt_access_token  = 'access-production-7b9e2f4d-8c1a-4e5b-a2d3-f6e7890c3d2b';
 
-  return {holdings: [], securities: []};
+  if (defualt_access_token === access_token){
+    return account
+  }
+
+  return null;
 };

@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
-import { PrismaClient} from "@prisma/client";
-import {prisma} from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
 //functions
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
@@ -36,7 +36,6 @@ import { Item } from "@/types/plaid";
 
 const default_inftaltion_rate = 0.025;
 
-
 /**
  * POST /api/plaid/generateProjectedNetWorth
  *
@@ -45,7 +44,6 @@ const default_inftaltion_rate = 0.025;
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-   
     /**
      * Get the timestamp from the request body
      */
@@ -54,8 +52,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     /**
      * Get the user's information
      */
-    const supabase = await createClient();  
-    const { data : { user } } = await supabase.auth.getUser();
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     /**
      * Get the start and end years from the request URL
@@ -67,45 +67,50 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     /**
      * Get the user's accounts
      */
-    const items: Item[] = await getItemsById(user?.id || '');
+    const items: Item[] = await getItemsById(user?.id || "");
     const accounts = await getAccounts(items);
 
-    // const {holdings, securities} = getHoldingsAndSecuritiesMock(items);
+    /**
+     *  Get the user's holdings and securities
+     */
+    const res = await getHoldingsAndSecuritiesMock(
+      "access-production-7b9e2f4d-8c1a-4e5b-a2d3-f6e7890c3d2b"
+    );
 
-    // /**
-    //  * Handle missing data and errors
-    //  */
-    // handleMissingData(accounts, holdings, securities);
-    // handleErrors(accounts, holdings, securities);
+    if (res) {
+      /**
+       * Handle missing data and errors
+       */
+      handleMissingData(accounts, res.holdings, res.securities);
+      handleErrors(accounts, res.holdings, res.securities);
 
-    // /**
-    //  * Update the user's accounts, securities, and holdings
-    //  */
-    await updateAccounts(accounts, user?.id || '');
-    // await updateSecurities(securities, user?.id || '', timestamp);
-    // await updateHoldings(holdings, user?.id || '', timestamp);
+      /**
+       * Update the user's accounts, securities, and holdings
+       */
+      await updateAccounts(accounts, user?.id || "");
+      await updateSecurities(res?.securities, user?.id || "", timestamp);
+      await updateHoldings(res?.holdings, user?.id || "", timestamp);
+    }
 
     // Get the user's updated holdings and securities
-    // const userHoldings = await getHoldingsAndSecurities(user?.id || '');
+    const userHoldings = await getHoldingsAndSecurities(user?.id || "");
 
-    // const projectedNetWorth = await generateProjectedNetWorthV2(
-    //   userHoldings,
-    //   start_year,
-    //   end_year,
-    //   searchParams.get("with_inflation") === "true",
-    //   default_inftaltion_rate
-    // );
+    const projectedNetWorth = await generateProjectedNetWorthV2(
+      userHoldings,
+      start_year,
+      end_year,
+      searchParams.get("with_inflation") === "true",
+      default_inftaltion_rate
+    );
 
     return NextResponse.json(
       {
         message: "Accounts, holdings, and securities updated successfully.",
-        data: [],
+        data: projectedNetWorth,
       },
       { status: 200 }
     );
-
   } catch (error) {
-    console.log(error.message);
     if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
     if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
     return handleOtherErrror(error);

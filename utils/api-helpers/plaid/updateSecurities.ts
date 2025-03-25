@@ -4,7 +4,7 @@ import isoToUTC from "@/utils/api-helpers/isoToUTC";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
 
 export async function updateSecurities(
-  securities: Security[],
+  securities: Security[] ,
   user_id: string,
   timestamp: string
 ) {
