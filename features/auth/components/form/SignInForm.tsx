@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState} from "react";
+import React, { useActionState, useRef} from "react";
 
 //External libraries
 import { useForm } from "react-hook-form";
@@ -34,6 +34,8 @@ import { State } from "@/types/serverActionState";
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
 const SignInForm = () => {
+
+  const buttonRef = useRef(null);
   
   const {
     register,
@@ -96,7 +98,7 @@ const SignInForm = () => {
       <OrDivider />
 
       {/* Sign Up with google or create account */}
-      <GoogleButton label={"Continue with Google"} />
+      <GoogleButton label={"Continue with Google"} ref={buttonRef} />
 
       <Link
         href="/sign-up"

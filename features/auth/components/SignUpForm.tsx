@@ -1,7 +1,7 @@
 "use client";
 
 // Next and React
-import React, { useState, useActionState } from "react";
+import React, { useState, useActionState, useRef } from "react";
 import { useFormStatus } from "react-dom";
 
 // External libraries
@@ -31,15 +31,18 @@ import { State } from "@/types/serverActionState";
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 import { SignUpInputs } from "@/features/auth/schemas/formSchemas";
 
+
 /**
  * Sign up form
  *
  * @returns JSX.Element
  */
 export default function Signup() {
+  const buttonRef = useRef(null)
   const { pending } = useFormStatus();
   const [state, formAction] = useActionState<State, FormData>(signUp, null);
   const [email, setEmail] = useState<string | null>(null);
+
 
   const {
     register,
@@ -108,7 +111,7 @@ export default function Signup() {
       {err && <PrimaryErrorMessage errMsg={err} />}
 
       {/* Sign up with google button */}
-      {!userSuccess && <GoogleButton label="Continue with Google" />}
+      {!userSuccess && <GoogleButton ref={buttonRef} label="Continue with Google" />}
     </PrimaryAuthContainer>
   );
 }
