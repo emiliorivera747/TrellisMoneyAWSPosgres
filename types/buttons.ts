@@ -37,7 +37,7 @@ export interface SubmitButtonProps {
 
 
 export interface SubmitButtonPropsV2 {
-  ref: React.ButtonHTMLAttributes<HTMLButtonElement>;
+  ref: React.Ref<HTMLButtonElement>;
   className?: string;
   text?: string;
   isLoading?: boolean;
