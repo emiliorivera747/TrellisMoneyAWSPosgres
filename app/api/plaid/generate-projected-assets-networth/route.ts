@@ -113,7 +113,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json(
       {
         message: "Accounts, holdings, and securities updated successfully.",
-        data: {projected_net_worth, projected_assets},
+        data: {projected_net_worth: projected_net_worth, projected_assets: projected_assets},
       },
       { status: 200 }
     );

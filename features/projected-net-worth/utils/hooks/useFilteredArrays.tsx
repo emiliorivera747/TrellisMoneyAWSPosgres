@@ -16,29 +16,31 @@ const useFilteredArrays = (
   projectionData: projectionData,
   selectedYear: number
 ) => {
+  
   const [filteredDataNoInflation, setFilteredDataNoInflation] = useState<
     SecurityData[]
   >([]);
+
   const [filteredDataWithInflation, setFilteredDataWithInflation] = useState<
     SecurityData[]
   >([]);
 
   useEffect(() => {
-
     if (projectionData?.noInflationData && projectionData?.inflationData) {
       const filteredNoInflation = filterProjectionData(
-        projectionData.noInflationData.data,
+        projectionData.noInflationData.data.projected_net_worth,
         selectedYear
       );
       setFilteredDataNoInflation(filteredNoInflation);
 
       const filteredWithInflation = filterProjectionData(
-        projectionData.inflationData.data,
+        projectionData.inflationData.data.projected_net_worth,
         selectedYear
       );
       setFilteredDataWithInflation(filteredWithInflation);
     }
   }, [projectionData, selectedYear]);
+
   return { filteredDataNoInflation, filteredDataWithInflation };
 };
 

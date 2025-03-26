@@ -31,43 +31,28 @@ import {
 } from "@/features/projected-net-worth/utils/data/lineColors";
 
 //Types
-import {ProjectedNetWorthGraphProps} from "@/features/projected-net-worth/types/graphComponents"
+import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 /**
  * Projects the future net worth of the user based on the data provided
  *
  */
-const ProjectedNetWorthGraph = ({selectedYear, handleYearSelection, handleFilterChange, selectedFilter}: ProjectedNetWorthGraphProps) => {
-  const [retirementYear, setRetirementYear] = useState(currentYear + 40);
+const ProjectedNetWorthGraph = ({
+  selectedYear,
+  handleYearSelection,
+  handleFilterChange,
+  selectedFilter,
+  projectionData,
+  projectionLoading,
+  projectionError,
+}: ProjectedNetWorthGraphProps) => {
 
-  /**
-   * Fetch the data for the projected net worth
-   */
-  const {
-    data: projectionData,
-    error: projectionError,
-    isLoading: projectionLoading,
-  } = useQuery({
-    queryKey: ["projectedNetWorth", currentYear, selectedYear, selectedFilter],
-    queryFn: () =>
-      fetchProjectionData(
-        Number(currentYear),
-        Number(selectedYear),
-        selectedFilter
-      ),
-    enabled: !!selectedYear,
-  });
+  const [retirementYear, setRetirementYear] = useState(currentYear + 40);
 
   /**
    * Filter the data based on the selected year
    */
   const filteredData = useFilteredData(projectionData, selectedYear);
-
-  /**
-   * Filter the data based on the selected year without
-   */
-  const { filteredDataNoInflation, filteredDataWithInflation } =
-    useFilteredArrays(projectionData, selectedYear);
 
   /**
    * Function to edit the retirement year
@@ -97,10 +82,10 @@ const ProjectedNetWorthGraph = ({selectedYear, handleYearSelection, handleFilter
         dataForLines={
           selectedFilter === "isBoth"
             ? [
-                { data: filteredDataNoInflation, ...lineColors1 },
-                { data: filteredDataWithInflation, ...lineColors2 },
+                { data: filteredData? filteredData[0]?.data : [], ...lineColors1 },
+                { data: filteredData? filteredData[1]?.data : [], ...lineColors2 },
               ]
-            : [{ data: filteredData, ...lineColors1 }]
+            : [{ data: filteredData? filteredData[0]?.data : [], ...lineColors1 }]
         }
         withInlfationTag={selectedFilter === "isInflation"}
         years={years}
@@ -114,7 +99,7 @@ const ProjectedNetWorthGraph = ({selectedYear, handleYearSelection, handleFilter
       <RenderFilters
         selectedFilter={selectedFilter}
         handleFilterChange={handleFilterChange}
-      />
+      /> 
     </div>
   );
 };

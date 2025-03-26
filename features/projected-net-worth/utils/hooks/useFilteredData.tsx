@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 
 // Functions
-import {filterProjectionData} from '@/features/projected-net-worth/utils/filterData'
+import { filterProjectionData } from "@/features/projected-net-worth/utils/filterData";
+
+type projectedNetWorth = {
+  value: String;
+  data: SecurityData[];
+};
 
 /**
  * Custom hook to filter the projection data based on the selected year.
@@ -11,16 +16,17 @@ import {filterProjectionData} from '@/features/projected-net-worth/utils/filterD
  * @returns The filtered data.
  */
 const useFilteredData = (
-  projectionData: {data: SecurityData[]},
-  selectedYear: number,
+  projectionData: projectedNetWorth[],
+  selectedYear: number
 ) => {
-  const [filteredData, setFilteredData] = useState<SecurityData[]>([]);
+  const [filteredData, setFilteredData] = useState<projectedNetWorth[]>();
 
   useEffect(() => {
-    if (!projectionData?.data) {
-      return;
-    }
-    const filtered = filterProjectionData(projectionData?.data, selectedYear);
+    if (!projectionData) return;
+    const filtered = projectionData?.map((item) => {
+      const filtered = filterProjectionData(item.data, selectedYear);
+      return { value: item.value, data: filtered };
+    });
     setFilteredData(filtered);
   }, [projectionData, selectedYear]);
 

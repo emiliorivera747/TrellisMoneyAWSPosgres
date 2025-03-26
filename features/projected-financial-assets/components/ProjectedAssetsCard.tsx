@@ -30,7 +30,7 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
         <ProjectedHoldingCardPrimaryHeader year={selectedYear} />
         <AssetsTable assets={assets} form={form} />
         <div className="flex justify-center">
-          <PrimarySubmitButton text={"Calculate"} className="w-[8rem]" ref={ref} isLoading={isLoading}/>
+          <PrimarySubmitButton text={"Update"} className="w-[8rem]" ref={ref} isLoading={isLoading}/>
         </div>
         {/* If there are not assets */}
         {assets?.length === 0 && <NoAssetsTable />}

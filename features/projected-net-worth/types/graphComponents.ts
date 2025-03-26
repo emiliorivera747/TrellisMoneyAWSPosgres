@@ -73,8 +73,24 @@ export interface ProjectedLineGraphProps {
 }
 
 export interface ProjectedNetWorthGraphProps {
+  projectionData?: projectedNetWorth[] | null;
+  projectionLoading: boolean;
+  projectionError: Error | null;
   selectedYear: number;
   handleYearSelection: (year: number) => void;
   handleFilterChange: (key: InflationFilters) => void;
   selectedFilter: InflationFilters;
+
 }
+
+export interface projectionData {
+  noInflationData: { data: SecurityData[] };
+  inflationData: { data: SecurityData[] };
+  data: SecurityData[];
+}
+
+export interface projectedNetWorth  {
+  value: String,
+  data: SecurityData[]
+}
+

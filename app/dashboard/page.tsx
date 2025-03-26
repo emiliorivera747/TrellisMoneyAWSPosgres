@@ -4,8 +4,9 @@
 import React, { useState } from "react";
 
 // External Library
-import { FieldValues } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 
 //Components
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
@@ -32,12 +33,14 @@ import useFetchUser from "@/utils/hooks/user/useFetchUser";
 //Shadcn
 import { Form } from "@/components/ui/form";
 
-
 //Functions
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
 import mutateAllAssets from "@/features/projected-financial-assets/utils/mutateAllAssets";
+import { fetchProjectionData } from "@/features/projected-net-worth/utils/fetchProjectionData";
+import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
 
 const currentYear = Number(new Date().getFullYear().toString());
+
 /**
  *
  * Dashboard page is in charge of retrieving all of the financial data and displaying sending the
@@ -51,11 +54,31 @@ const Dashboard = () => {
   const [selectedFilter, setSelectedFilter] =
     useState<InflationFilters>("isNoInflation");
 
-  /**
-   * Retrieve Assests
-   */
-  const { financialAssetsData, financialAssetsError, isPendingAssets } =
-    useAssets(currentYear, selectedYear, selectedFilter);
+  // /**
+  //  * Retrieve Assests
+  //  */
+  // const { financialAssetsData, financialAssetsError, isPendingAssets } =
+  //   useAssets(currentYear, selectedYear, selectedFilter);
+
+  const {
+    data: projectionData,
+    error: projectionError,
+    isLoading: projectionLoading,
+  } = useQuery({
+    queryKey: [
+      "projectedAssetsAndNetworth",
+      currentYear,
+      selectedYear,
+      selectedFilter,
+    ],
+    queryFn: () =>
+      fetchProjections(
+        Number(currentYear),
+        Number(selectedYear),
+        selectedFilter
+      ),
+    enabled: !!selectedYear,
+  });
 
   const form = useForm();
   const { mutate, isPending } = useUpdateAssets();
@@ -73,9 +96,10 @@ const Dashboard = () => {
   const handleFilterChange = (filter: InflationFilters) => {
     setSelectedFilter(filter);
   };
-  interface FormData extends FieldValues {
-   
-  }
+
+  interface FormData extends FieldValues {}
+
+  console.log("ProjectionData", projectionData);
 
   /**
    *
@@ -84,7 +108,8 @@ const Dashboard = () => {
    * @param data
    */
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    const updatedAssets = updateAssets(financialAssetsData.data, data, user);
+    console.log("DATA", data);
+    const updatedAssets = updateAssets(projectionData?.projected_assets[0].data, data, user);
     mutateAllAssets(updatedAssets, mutate);
   };
 
@@ -101,9 +126,11 @@ const Dashboard = () => {
               selectedYear={selectedYear}
               selectedFilter={selectedFilter}
               handleFilterChange={handleFilterChange}
+              projectionData={projectionData?.projected_net_worth}
+              projectionError={projectionError}
+              projectionLoading={projectionLoading}
             />
           )}
-      
         </PrimaryDashboardSection>
         {/* Seconday Section */}
         <Form {...form}>
@@ -111,18 +138,18 @@ const Dashboard = () => {
             className="grid grid-rows-[1fr_6rem] gap-6 h-full col-span-10 sm:col-span-3 sm:row-span-1"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            {isPendingAssets ? (
+            {projectionLoading ? (
               <ProjectedAssetsCardSkeleton />
             ) : (
               <ProjectedAssetsCard
-              assets={
-                selectedFilter === "isBoth"
-                ? financialAssetsData?.noInflationData?.data || []
-                : financialAssetsData?.data || []
-              }
-              selectedYear={selectedYear}
-              form={form}
-              isLoading={isPending}
+                assets={
+                  selectedFilter === "isBoth"
+                    ? projectionData?.projected_assets[0]?.data
+                    : projectionData?.projected_assets[0]?.data
+                }
+                selectedYear={selectedYear}
+                form={form}
+                isLoading={isPending}
               />
             )}
           </form>

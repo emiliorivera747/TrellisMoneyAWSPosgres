@@ -25,6 +25,15 @@ interface GroupedAssets {
   assets: financialAssests[];
 }
 
+/**
+ * 
+ * @param start_year 
+ * @param end_year 
+ * @param with_inflation 
+ * @param annual_inflation_rate 
+ * @param holdings 
+ * @returns 
+ */
 export const generateProjectedFinancialAssets = async (
   start_year: number,
   end_year: number,
