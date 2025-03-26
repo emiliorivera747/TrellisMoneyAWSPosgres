@@ -34,10 +34,11 @@ import useFetchUser from "@/utils/hooks/user/useFetchUser";
 import { Form } from "@/components/ui/form";
 
 //Functions
-import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
 import mutateAllAssets from "@/features/projected-financial-assets/utils/mutateAllAssets";
 import { fetchProjectionData } from "@/features/projected-net-worth/utils/fetchProjectionData";
 import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
+import { extractAllAssetsFromAssetWithType } from "@/utils/helper-functions/extractAllAssetsFromAssetsWithType";
+import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
 
 const currentYear = Number(new Date().getFullYear().toString());
 
@@ -54,11 +55,6 @@ const Dashboard = () => {
   const [selectedFilter, setSelectedFilter] =
     useState<InflationFilters>("isNoInflation");
 
-  // /**
-  //  * Retrieve Assests
-  //  */
-  // const { financialAssetsData, financialAssetsError, isPendingAssets } =
-  //   useAssets(currentYear, selectedYear, selectedFilter);
 
   const {
     data: projectionData,
@@ -99,8 +95,6 @@ const Dashboard = () => {
 
   interface FormData extends FieldValues {}
 
-  console.log("ProjectionData", projectionData);
-
   /**
    *
    * Update annual return rate
@@ -108,9 +102,20 @@ const Dashboard = () => {
    * @param data
    */
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log("DATA", data);
-    const updatedAssets = updateAssets(projectionData?.projected_assets[0].data, data, user);
-    mutateAllAssets(updatedAssets, mutate);
+    const projectedAssets = projectionData?.projected_assets;
+
+    const currentProjectedAsset = projectedAssets?.filter(
+      (payload) => payload.value === selectedFilter
+    );
+
+    const assets =
+      currentProjectedAsset && currentProjectedAsset.length > 0
+        ? extractAllAssetsFromAssetWithType(currentProjectedAsset[0].data)
+        : [];
+
+    const updatedAssets = updateAssets(assets, data, user);
+    if (updatedAssets) mutateAllAssets(updatedAssets, mutate);
+
   };
 
   return (

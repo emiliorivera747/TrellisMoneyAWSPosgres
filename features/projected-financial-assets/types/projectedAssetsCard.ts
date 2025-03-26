@@ -21,8 +21,8 @@ export interface Assets {
   annual_growth_rate: number;
   shares?: number;
   amount?: number;
-  security_id: string;
-  account_id: string;
+  security_id?: string;
+  account_id?: string;
   projection: number;
   type: AccountType;
 }

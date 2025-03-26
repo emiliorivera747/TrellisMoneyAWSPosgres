@@ -3,22 +3,20 @@ import { Assets } from "@/features/projected-financial-assets/types/projectedAss
 
 import { AssetsWithType } from "@/types/assets";
 function updateAssets(
-  assetsWithType: AssetsWithType[],
+  assets: Assets[],
   data: Record<string, number>,
   user?: User | null
-): Assets[] {
-  return assetsWithType.flatMap((assetGroup) =>
-    assetGroup.assets.map((asset) => ({
-      ...asset,
-      user_id: user?.id ?? "",
-      annual_growth_rate:
-        data[asset.name] !== undefined
-          ? data[asset.name] / 100
-          : asset.annual_growth_rate,
-      security_id: asset.security_id ?? "",
-      account_id: asset.account_id ?? "",
-    }))
-  );
+): Assets[] | null {
+
+  const res = assets.map((asset) => {
+    const newVal = data[asset.name];
+    if (newVal !== undefined) {
+      asset.annual_growth_rate = newVal / 100; 
+    }
+    return { ...asset, user_id: user?.id ?? "", security_id: asset.security_id ?? ""};
+  });
+
+  return res;
 }
 
 export default updateAssets;

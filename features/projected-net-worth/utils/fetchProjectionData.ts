@@ -54,9 +54,9 @@ export const fetchProjections = async (
 
     return {
       projected_net_worth: [
-        { value: "inNoInflation", data: projected_net_worth },
+        { value: "isNoInflation", data: projected_net_worth },
       ],
-      projected_assets: [{ value: "inNoInflation", data: projected_assets }],
+      projected_assets: [{ value: "isNoInflation", data: projected_assets }],
     };
   } else if (filter === "isInflation") {
 
@@ -71,9 +71,9 @@ export const fetchProjections = async (
 
     return {
       projected_net_worth: [
-        { value: "inInflation", data: projected_net_worth },
+        { value: "isInflation", data: projected_net_worth },
       ],
-      projected_assets: [{ value: "inInflation", data: projected_assets }],
+      projected_assets: [{ value: "isInflation", data: projected_assets }],
     };
   } else if (filter === "isBoth") {
     
