@@ -106,7 +106,7 @@ const Dashboard = () => {
       
         </PrimaryDashboardSection>
         {/* Seconday Section */}
-        {/* <Form {...form}>
+        <Form {...form}>
           <form
             className="grid grid-rows-[1fr_6rem] gap-6 h-full col-span-10 sm:col-span-3 sm:row-span-1"
             onSubmit={form.handleSubmit(onSubmit)}
@@ -126,7 +126,7 @@ const Dashboard = () => {
               />
             )}
           </form>
-        </Form> */}
+        </Form>
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
       </div>
     </div>
