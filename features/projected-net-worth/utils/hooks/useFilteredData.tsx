@@ -16,7 +16,7 @@ type projectedNetWorth = {
  * @returns The filtered data.
  */
 const useFilteredData = (
-  projectionData: projectedNetWorth[],
+  projectionData: projectedNetWorth[] | undefined | null,
   selectedYear: number
 ) => {
   const [filteredData, setFilteredData] = useState<projectedNetWorth[]>();

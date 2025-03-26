@@ -17,31 +17,33 @@ const useFilteredArrays = (
   selectedYear: number
 ) => {
   
-  const [filteredDataNoInflation, setFilteredDataNoInflation] = useState<
-    SecurityData[]
-  >([]);
+  // const [filteredDataNoInflation, setFilteredDataNoInflation] = useState<
+  //   SecurityData[]
+  // >([]);
 
-  const [filteredDataWithInflation, setFilteredDataWithInflation] = useState<
-    SecurityData[]
-  >([]);
+  // const [filteredDataWithInflation, setFilteredDataWithInflation] = useState<
+  //   SecurityData[]
+  // >([]);
 
-  useEffect(() => {
-    if (projectionData?.noInflationData && projectionData?.inflationData) {
-      const filteredNoInflation = filterProjectionData(
-        projectionData.noInflationData.data.projected_net_worth,
-        selectedYear
-      );
-      setFilteredDataNoInflation(filteredNoInflation);
+  // useEffect(() => {
+  //   if (projectionData?.noInflationData && projectionData?.inflationData) {
+  //     const filteredNoInflation = filterProjectionData(
+  //       projectionData.noInflationData.data.projected_net_worth,
+  //       selectedYear
+  //     );
+  //     setFilteredDataNoInflation(filteredNoInflation);
 
-      const filteredWithInflation = filterProjectionData(
-        projectionData.inflationData.data.projected_net_worth,
-        selectedYear
-      );
-      setFilteredDataWithInflation(filteredWithInflation);
-    }
-  }, [projectionData, selectedYear]);
+  //     const filteredWithInflation = filterProjectionData(
+  //       projectionData.inflationData.data.projected_net_worth,
+  //       selectedYear
+  //     );
+  //     setFilteredDataWithInflation(filteredWithInflation);
+  //   }
+  // }, [projectionData, selectedYear]);
 
-  return { filteredDataNoInflation, filteredDataWithInflation };
+  // const res = { filteredDataNoInflation, filteredDataWithInflation };
+  let res = null;
+  return res;
 };
 
 export default useFilteredArrays;
