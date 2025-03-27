@@ -42,6 +42,7 @@ export const createHoldingHistory = async (holding: Holding, timestamp: string, 
  * @param timestamp 
  */
 export const updateOrCreateHolding = async (holding: Holding, timestamp: string, user_id: string) => {
+
 await prisma.holding.upsert({
     where: {
         holding_id: {

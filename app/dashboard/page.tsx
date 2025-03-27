@@ -4,16 +4,13 @@
 import React, { useState } from "react";
 
 // External Library
-import { useQuery } from "@tanstack/react-query";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FieldValues } from "react-hook-form";
 
 //Components
-import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import Link from "@/components/Plaid/Link";
-import LoadingToast from "@/components/toast/LoadingToast";
 import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
 import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
 
@@ -24,8 +21,6 @@ import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSect
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 //Hooks
-import useAssets from "@/utils/hooks/react-query/useAssets";
-import useSortAssets from "@/utils/hooks/financial-assets/useSortAssets";
 import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
 import useUpdateAssets from "@/utils/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/utils/hooks/user/useFetchUser";
@@ -36,8 +31,6 @@ import { Form } from "@/components/ui/form";
 
 //Functions
 import mutateAllAssets from "@/features/projected-financial-assets/utils/mutateAllAssets";
-import { fetchProjectionData } from "@/features/projected-net-worth/utils/fetchProjectionData";
-import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
 import { extractAllAssetsFromAssetWithType } from "@/utils/helper-functions/extractAllAssetsFromAssetsWithType";
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
 const currentYear = Number(new Date().getFullYear().toString());

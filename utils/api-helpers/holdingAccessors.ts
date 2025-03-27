@@ -14,7 +14,10 @@ export const getQuantity = (holding: Holding) => {
  * Get the holding name
  */
 export const getHoldingName = (holding: Holding) => {
-  return holding?.security?.name ? holding.security.name : "";
+  if(holding?.security?.ticker_symbol){
+    return holding?.security?.ticker_symbol? holding.security.ticker_symbol : "";
+  }
+  return holding?.security?.name? holding.security.name : "";
 };
 
 /**

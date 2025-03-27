@@ -69,6 +69,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const items: Item[] = await getItemsById(user?.id || "");
     const accounts = await getAccounts(items);
 
+    console.log(accounts);
+
     /**
      *  Get the user's holdings and securities
      */
