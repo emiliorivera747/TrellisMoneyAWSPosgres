@@ -29,6 +29,7 @@ import useSortAssets from "@/utils/hooks/financial-assets/useSortAssets";
 import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
 import useUpdateAssets from "@/utils/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/utils/hooks/user/useFetchUser";
+import useFetchProjections from "@/utils/hooks/financial-projections/useFetchProjections";
 
 //Shadcn
 import { Form } from "@/components/ui/form";
@@ -39,7 +40,6 @@ import { fetchProjectionData } from "@/features/projected-net-worth/utils/fetchP
 import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
 import { extractAllAssetsFromAssetWithType } from "@/utils/helper-functions/extractAllAssetsFromAssetsWithType";
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
-
 const currentYear = Number(new Date().getFullYear().toString());
 
 /**
@@ -55,29 +55,22 @@ const Dashboard = () => {
   const [selectedFilter, setSelectedFilter] =
     useState<InflationFilters>("isNoInflation");
 
-
-  const {
-    data: projectionData,
-    error: projectionError,
-    isLoading: projectionLoading,
-  } = useQuery({
-    queryKey: [
-      "projectedAssetsAndNetworth",
-      currentYear,
-      selectedYear,
-      selectedFilter,
-    ],
-    queryFn: () =>
-      fetchProjections(
-        Number(currentYear),
-        Number(selectedYear),
-        selectedFilter
-      ),
-    enabled: !!selectedYear,
-  });
+  /**
+   *  The hook fetches our projection data
+   */
+  const { projectionData, projectionError, projectionLoading } =
+    useFetchProjections({ selectedYear, selectedFilter });
 
   const form = useForm();
+
+  /**
+   * The hook updates the assets
+   */
   const { mutate, isPending } = useUpdateAssets();
+
+  /**
+   * The hook fetches the user
+   */
   const { user, error } = useFetchUser();
 
   /**
@@ -115,7 +108,6 @@ const Dashboard = () => {
 
     const updatedAssets = updateAssets(assets, data, user);
     if (updatedAssets) mutateAllAssets(updatedAssets, mutate);
-
   };
 
   return (
