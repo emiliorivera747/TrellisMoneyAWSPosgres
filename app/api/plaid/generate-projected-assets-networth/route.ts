@@ -5,6 +5,7 @@ import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/valid
 import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
 import { generateProjectedNetWorthV2 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV2";
+import { generateProjectedFinancialAssetsV2 } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
 
 
 // Helpers
@@ -24,6 +25,7 @@ import { getAccounts } from "@/utils/api-helpers/plaid/getAccounts";
 import { getHoldingsAndSecuritiesMock } from "@/utils/api-helpers/plaid/getHoldingsAndSecuritiesMock";
 import { getHoldingsAndSecurities } from "@/utils/api-helpers/prisma/getHoldingsAndSecurities";
 import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
+import { getAccountsHoldingsSecurities} from '@/utils/api-helpers/prisma/getAccountsHoldingsSecurities';
 
 
 
@@ -93,7 +95,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     // Get the user's updated holdings and securities
     const userHoldings = await getHoldingsAndSecurities(user?.id || "");
-
+    const account_holdings_securities = await getAccountsHoldingsSecurities(user?.id || "");
     const projected_net_worth = await generateProjectedNetWorthV2(
       userHoldings,
       start_year,
@@ -102,12 +104,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       default_inflation_rate
     );
 
-    const projected_assets = await generateProjectedFinancialAssets(
+    const projected_assets = await generateProjectedFinancialAssetsV2(
         start_year,
         end_year,
         searchParams.get("with_inflation") === "true",
         default_inflation_rate,
-        userHoldings
+        account_holdings_securities[0].accounts
       );
 
     return NextResponse.json(

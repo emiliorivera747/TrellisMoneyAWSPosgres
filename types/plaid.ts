@@ -47,23 +47,24 @@ export interface verification_insights {
 
 export interface Account {
   account_id: string;
-  balances: Balance;
-  mask?: string | null;
-  official_name?: string | null;
-  subtype: string | null;
-  verification_status?: string | null;
+  balances?: Balance;
+  mask?: string | undefined | null;
+  official_name?: string | undefined | null;
+  subtype: string | undefined | null;
+  verification_status?: string | undefined | null;
   name: string;
   type: string;
   items?: Item;
   owners?: Owner[];
-  user_id?: number;
-  item_id?: string | null;
+  user_id?: string;
+  item_id?: string | undefined | null;
   owner_id?: string;
   User?: User;
-  timestamp?: Date;
+  timestamp?: Date | undefined | null;
   verification_insights?: verification_insights;
-  persistent_account_id?: string;
-  holder_catergory?: string | null;
+  persistent_account_id?: string | undefined | null;
+  holder_catergory?: string | undefined | null;
+  holdings?: Holding[]
 }
 
 export interface Item {
@@ -98,6 +99,7 @@ export interface Holding {
   security_id?: string;
   security?: Security;
   timestamp?: Date | null;
+  securities?: Security[];
 }
 
 export interface HoldingId{

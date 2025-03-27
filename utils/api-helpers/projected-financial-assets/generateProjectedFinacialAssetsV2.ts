@@ -1,4 +1,4 @@
-import { Holding } from "@/types/plaid";
+import { Holding, Account } from "@/types/plaid";
 
 import { getHoldingName } from "@/utils/api-helpers/holdingAccessors";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
@@ -20,6 +20,8 @@ interface financialAssests {
   shares: Decimal;
 }
 
+
+
 interface GroupedAssets {
   type: AccountType;
   assets: financialAssests[];
@@ -31,57 +33,18 @@ interface GroupedAssets {
  * @param end_year 
  * @param with_inflation 
  * @param annual_inflation_rate 
- * @param holdings 
+ * @param accounts
  * @returns 
  */
-export const generateProjectedFinancialAssets = async (
+export const generateProjectedFinancialAssetsV2 = async (
   start_year: number,
   end_year: number,
   with_inflation: boolean = false,
   annual_inflation_rate: number,
-  holdings: Holding[]
+  accounts: Account[]
 ): Promise<GroupedAssets[] | []> => {
-  // Early return for empty holdings or invalid dates
-  if (!holdings.length || end_year < start_year) return [];
 
-  let assets: financialAssests[] = [];
+  console.log("accounts", accounts);
 
-  // Loop through the holdings and calculate the projected net worth for the end year
-  for (const holding of holdings) {
-    const { quantity, close_price, annual_return_rate } =
-      getFormulaValues(holding);
-
-    let fv;
-    if (with_inflation) {
-      fv = future_value_with_inflation_fn(
-        quantity,
-        close_price,
-        annual_return_rate,
-        annual_inflation_rate,
-        end_year - start_year
-      );
-    } else {
-      fv = future_value_fn(
-        quantity,
-        close_price,
-        annual_return_rate,
-        end_year - start_year
-      );
-    }
-
-    assets.push({
-      name: getHoldingName(holding),
-      annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
-      projection: new Decimal(fv).toDecimalPlaces(2),
-      security_id: holding.security_id,
-      account_id: holding.account_id,
-      type: "Investment",
-      shares: new Decimal(holding.quantity || 0),
-    });
-  }
-
-  // Sort assets in alphabetical order by name
-  assets.sort((a, b) => a.name.localeCompare(b.name));
-
-  return [{ type: "Investment", assets }];
+  return [{ type: "Investment", assets: []}];
 };
