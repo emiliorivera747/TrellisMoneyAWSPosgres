@@ -17,6 +17,7 @@ model Holding {
   timestamp                  DateTime         @default(now()) @db.Timestamptz(3)
   user_id                    String
   history                    HoldingHistory[]
+  account                    Account          @relation(fields: [account_id], references: [account_id])
   @@id(name: "holding_id", [security_id, user_id, account_id])
 }
 

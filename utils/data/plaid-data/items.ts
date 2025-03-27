@@ -133,7 +133,6 @@ const items = [
             "code_sent": "DEFAULT_UPDATE"
           }
         },
-        "request_id": "LmPxJnK5HJmQwR"
       }, 
       {
         "item": {
@@ -150,18 +149,7 @@ const items = [
             "auth",
             "balance"
           ],
-          "error": {
-            "error_type": "INSTITUTION_ERROR",
-            "error_code": "INSTITUTION_DOWN",
-            "error_code_reason": null,
-            "error_message": "Institution is temporarily unavailable.",
-            "display_message": "Bank of America is down; please try again later.",
-            "request_id": "BoA9KpM7QwRtYv",
-            "causes": [],
-            "status": 503,
-            "documentation_url": "https://plaid.com/docs/errors/institution/#institution_down",
-            "suggested_action": "Retry the connection later."
-          },
+          "error": null,
           "institution_id": "ins_100001",
           "institution_name": "Bank of America",
           "item_id": "BoA9KpM7nQwJRxZ8vLmPqTxwoNz67B8D34hjGt",
@@ -180,7 +168,8 @@ const items = [
             "Verify your account",
             "Track and manage your finances"
           ],
-          "consent_expiration_time": "2025-12-15T13:10:00Z"
+          "consent_expiration_time": "2025-12-15T13:10:00Z",
+          "access_token": 'access-production-123e4567-e89b-12d3-a456-426614174000',
         },
         "status": {
           "transactions": {
