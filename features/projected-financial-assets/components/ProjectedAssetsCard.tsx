@@ -24,7 +24,6 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   form,
   isLoading,
 }: ProjectedAssetsCardProps<TFieldValues>) => {
-  console.log(assets)
   const buttonRef = useRef<HTMLButtonElement>(null);
   return (
     <ProjectedAssetsContainer assets={assets}>

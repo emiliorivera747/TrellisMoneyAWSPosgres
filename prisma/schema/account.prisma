@@ -14,6 +14,7 @@ model Account {
   subtype                  String?
   verification_status      String?
   persistent_account_id    String?
+  annual_return_rate       Decimal?         @default(0.00)
   holder_category          String?
   balance                  Balance?         @relation(fields: [balance_id], references: [balance_id])
   balance_id               String           @unique

@@ -52,6 +52,8 @@ export interface Account {
   official_name?: string | undefined | null;
   subtype: string | undefined | null;
   verification_status?: string | undefined | null;
+  annual_return_rate?: number | null | Decimal;
+  current?: number | null | Decimal;
   name: string;
   type: string;
   items?: Item;

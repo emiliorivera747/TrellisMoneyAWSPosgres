@@ -6,6 +6,6 @@ export interface TableBodyForAssetsProps {
 }
 
 export interface AssetsTableProps{
-  assets: AssetsWithType[];
+  assets: Assets[];
   form: any;
 }

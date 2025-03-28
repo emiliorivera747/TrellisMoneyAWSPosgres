@@ -40,12 +40,12 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
 
   return (
     <TableBody className="">
-      {Object.entries(groups).map(([key, value], i) => {
+      {Object.entries(groups).map(([key, assets], i) => {
         return (
           <React.Fragment key={i}>
-            <InvestmentTypeHeader assetGroup={key} />{" "}
+            <InvestmentTypeHeader assetGroup={key} />
             <InvestmentTypeSubHeader />
-            {value?.map((asset, index) => (
+            {assets?.map((asset, index) => (
               <TableRow
                 key={index}
                 className="border-none hover:bg-tertiary-100 "
