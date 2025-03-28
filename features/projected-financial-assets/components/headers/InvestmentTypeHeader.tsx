@@ -10,7 +10,7 @@ const InvestmentTypeHeader = ({ assetGroup }: any) => {
         colSpan={3}
         className="p-0 w-full text-tertiary-900 text-[0.86rem] font-semibold px-4 border-t border-b border-tertiary-200 py-3"
       >
-        {getTypeLabel(assetGroup.type)}
+        {getTypeLabel(assetGroup)}
       </TableCell>
     </TableRow>
   );

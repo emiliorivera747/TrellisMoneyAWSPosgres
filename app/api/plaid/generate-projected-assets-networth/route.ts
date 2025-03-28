@@ -24,7 +24,6 @@ import { getItemsById } from "@/utils/api-helpers/prisma/getItemsById";
 import { getAccounts } from "@/utils/api-helpers/plaid/getAccounts";
 import { getHoldingsAndSecuritiesMock } from "@/utils/api-helpers/plaid/getHoldingsAndSecuritiesMock";
 import { getHoldingsAndSecurities } from "@/utils/api-helpers/prisma/getHoldingsAndSecurities";
-import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
 import { getAccountsHoldingsSecurities} from '@/utils/api-helpers/prisma/getAccountsHoldingsSecurities';
 
 

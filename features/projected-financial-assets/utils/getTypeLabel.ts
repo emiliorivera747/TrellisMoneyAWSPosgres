@@ -1,16 +1,16 @@
 export const getTypeLabel = (type: string) => {
   switch (type) {
-    case "Investment":
+    case "investment":
       return "Investments";
-    case "Depository":
+    case "depository":
       return "Depository";
-    case "Retirement":
+    case "retirement":
       return "Retirement Accounts";
-    case "Credit":
+    case "credit":
       return "Credit Accounts";
-    case "Loan":
+    case "loan":
       return "Loan Accounts";
-    case "Other":
+    case "other":
       return "Other Accounts";
     default:
       return "Unknown Type";

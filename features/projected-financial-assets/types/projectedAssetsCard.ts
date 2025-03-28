@@ -9,11 +9,10 @@ import {
 import { AssetsWithType } from "@/types/assets";
 
 export type AccountType =
-  | "Depository"
-  | "Investment"
-  | "Retirement"
-  | "Credit"
-  | "Loan"
+  | "depository"
+  | "investment"
+  | "credit"
+  | "loan"
   | "Other";
 
 export interface Assets {

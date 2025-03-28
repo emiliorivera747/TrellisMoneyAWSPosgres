@@ -16,13 +16,15 @@ import AssetsTable from "@/features/projected-financial-assets/components/tables
 import { ProjectedHoldingCardPrimaryHeader } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
 import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
 
-//test
+
+
 const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   assets,
   selectedYear,
   form,
   isLoading,
 }: ProjectedAssetsCardProps<TFieldValues>) => {
+  console.log(assets)
   const buttonRef = useRef<HTMLButtonElement>(null);
   return (
     <ProjectedAssetsContainer assets={assets}>
