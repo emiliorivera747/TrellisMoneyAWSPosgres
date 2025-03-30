@@ -10,7 +10,7 @@ import { createClient } from "@/utils/supabase/server";
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
-import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
+import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssets";
 
 // Mock data
 import { mockHoldingData } from "@/utils/data/plaid-data/mockHoldingData";
