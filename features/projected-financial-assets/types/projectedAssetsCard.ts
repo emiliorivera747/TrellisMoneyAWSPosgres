@@ -41,3 +41,24 @@ export interface ProjectedAssetsContainerProps {
 export interface AssetName {
   name: string;
 }
+
+
+export interface AssetRowProps {
+  asset: Assets; 
+  form: any; 
+}
+
+export interface AssetGroupProps {
+  assetType: string;
+  assets: Assets[]; 
+  form: any; 
+}
+
+export interface ProjectionCellProps {
+  value: number;
+}
+
+export interface GrowthRateCellProps {
+  asset: Assets;
+  form: any;
+}
