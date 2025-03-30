@@ -6,7 +6,7 @@ import {
 
 const InvestmentTypeSubHeader = () => {
   return (
-    <TableRow className="text-[0.7rem] border-none text-tertiary-700">
+    <TableRow className="text-[0.68rem] border-none text-tertiary-700">
       <TableCell className="pl-4">Asset</TableCell>
       <TableCell>Annual Return Rate</TableCell>
       <TableCell>Projection</TableCell>

@@ -40,49 +40,51 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
 
   return (
     <TableBody className="">
-      {Object.entries(groups).map(([key, assets], i) => {
-        return (
-          <React.Fragment key={i}>
-            <InvestmentTypeHeader assetGroup={key} />
-            <InvestmentTypeSubHeader />
-            {assets?.map((asset, index) => (
-              <TableRow
-                key={index}
-                className="border-none hover:bg-tertiary-100 "
-              >
-                <AssetName asset={asset} />
-                <TableCell className="flex flex-row align-center items-center justify-center text-center h-[3.6rem] w-[1/3]">
-                  <FormField
-                    control={form.control}
-                    name={asset.name}
-                    render={({ field }) => (
-                      <FormItem className={"flex items-center justify-center"}>
-                        <FormControl>
-                          <NumberInputV2
-                            defaultValue={(
-                              asset.annual_growth_rate * 100
-                            ).toFixed(2)}
-                            className="text-xs pl-[0.5rem]"
-                            min={-100}
-                            max={100}
-                            step={1}
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormLabel />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </TableCell>
-                <TableCell className=" text-secondary-1000 text-start text-[0.75rem] font-semibold w-[6rem] overflow-x-auto ">
-                  {convertToMoney(Number(asset.projection))}
-                </TableCell>
-              </TableRow>
-            ))}
-          </React.Fragment>
-        );
-      })}
+      {Object.entries(groups)
+        .sort(([typeA], [typeB]) => typeB.localeCompare(typeA))
+        .map(([key, assets], i) => {
+          return (
+            <React.Fragment key={i}>
+              <InvestmentTypeHeader assetGroup={key} />
+              <InvestmentTypeSubHeader />
+              {assets?.map((asset, index) => (
+                <TableRow
+                  key={index}
+                  className="border-none hover:bg-tertiary-100 "
+                >
+                  <AssetName asset={asset} />
+                  <TableCell className="flex flex-row align-center items-center justify-center text-center h-[3.6rem] w-[1/3]">
+                    <FormField
+                      control={form.control}
+                      name={asset.name}
+                      render={({ field }) => (
+                        <FormItem className={"flex items-center justify-center"}>
+                          <FormControl>
+                            <NumberInputV2
+                              defaultValue={(
+                                asset.annual_growth_rate * 100
+                              ).toFixed(2)}
+                              className="text-xs pl-[0.5rem]"
+                              min={-100}
+                              max={100}
+                              step={1}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormLabel />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell className=" text-secondary-1000 text-start text-[0.75rem] font-semibold w-[6rem] overflow-x-auto ">
+                    {convertToMoney(Number(asset.projection))}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </React.Fragment>
+          );
+        })}
     </TableBody>
   );
 };
