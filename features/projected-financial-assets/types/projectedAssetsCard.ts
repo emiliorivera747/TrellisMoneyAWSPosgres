@@ -27,14 +27,14 @@ export interface Assets {
 }
 
 export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
-  assets: AssetsWithType[];
+  assets: Assets[];
   selectedYear: number;
   form: UseFormReturn<FieldValues, any, undefined>;
   isLoading: boolean;
 }
 
 export interface ProjectedAssetsContainerProps {
-  assets: AssetsWithType[];
+  assets: Assets[];
   children: React.ReactNode;
 }
 

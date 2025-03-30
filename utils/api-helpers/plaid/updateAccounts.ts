@@ -20,7 +20,7 @@ export async function updateAccounts(accounts: Account[], userId: string) {
     hasAccountBalance(account);
     
     await updateBalance(
-      account?.balances,
+      account?.balances ?? { available: 0, current: 0, limit: 0, iso_currency_code: "", unofficial_currency_code: "" },
       account?.account_id
     );
 

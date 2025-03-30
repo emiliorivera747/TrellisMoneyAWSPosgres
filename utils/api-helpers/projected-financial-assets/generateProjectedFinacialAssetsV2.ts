@@ -133,7 +133,7 @@ const calculate_fv_accounts = (
       security_id: null,
       account_id: account.account_id,
       type: type,
-      shares: 0,
+      shares: new Decimal(0),
     });
   }
 
