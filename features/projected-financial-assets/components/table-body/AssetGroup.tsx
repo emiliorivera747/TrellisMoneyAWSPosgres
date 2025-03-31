@@ -1,7 +1,6 @@
 import React from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { FormField, FormItem } from "@/components/ui/form";
-import { convertToMoney } from "@/utils/helper-functions/convertToMoney";
 import NumberInputV2 from "@/components/form-components/NumberInputV2";
 import InvestmentTypeHeader from "../headers/InvestmentTypeHeader";
 import AssetName from "../column-items/AssetName";
@@ -13,7 +12,8 @@ import {
   GrowthRateCellPropsText,
 } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
-import Link from "next/link";
+// Utils
+import { formatToMoney } from "@/utils/helper-functions/formatToMoney";
 
 /**
  *
@@ -41,8 +41,16 @@ const AssetGroup = ({ assetType, assets, form, mode }: AssetGroupProps) => {
  * @returns assets in the group
  */
 const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
+  const handleRowClick = () => {
+    if (mode === "edit") return;
+    window.location.href = "/#";
+  };
+
   return (
-    <TableRow className="border-none hover:bg-tertiary-100 cursor-pointer">
+    <TableRow
+      className="border-none hover:bg-tertiary-100 cursor-pointer"
+      onClick={handleRowClick}
+    >
       <AssetName asset={asset} />
       {mode === "edit" && <GrowthRateCellInput asset={asset} form={form} />}
       {mode === "view" && <GrowthRateCellText asset={asset} />}
@@ -83,7 +91,7 @@ const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
  * Display the growth rate cell text
  */
 const GrowthRateCellText = ({ asset }: GrowthRateCellPropsText) => (
-  <TableCell className="flex items-center justify-center h-[3.6rem] w-[1/3] text-center uppercase">
+  <TableCell className="flex items-center ml-[20%] h-[3.6rem] w-[1/3] text-center uppercase">
     <p className="text-[0.8rem] pl-2 text-tertiary-900 font-light">
       {(asset.annual_growth_rate * 100).toFixed(0)}%
     </p>
@@ -102,21 +110,6 @@ const ProjectionCell = ({ value }: ProjectionCellProps) => (
     {formatToMoney(Number(value))}
   </TableCell>
 );
-/**
- * Converts a number to a money format (e.g., 1000 -> $1k, 10000 -> $10k).
- *
- * @param value - The number to be converted.
- * @returns The formatted money string.
- */
-const formatToMoney = (value: number): string => {
-  if (value >= 1_000_000_000) {
-    return `$${(value / 1_000_000_000).toFixed(1)}B`;
-  } else if (value >= 1_000_000) {
-    return `$${(value / 1_000_000).toFixed(1)}M`;
-  } else if (value >= 1_000) {
-    return `$${(value / 1_000).toFixed(1)}k`;
-  }
-  return `$${value.toFixed(0)}`;
-};
+
 
 export default AssetGroup;

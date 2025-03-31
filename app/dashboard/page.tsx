@@ -25,6 +25,7 @@ import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
 import useUpdateAssets from "@/utils/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/utils/hooks/user/useFetchUser";
 import useFetchProjections from "@/utils/hooks/financial-projections/useFetchProjections";
+import useUpdateAccount from "@/utils/hooks/financial-assets/useUpdateAccount";
 
 //Shadcn
 import { Form } from "@/components/ui/form";
@@ -60,7 +61,8 @@ const Dashboard = () => {
   /**
    * The hook updates the assets
    */
-  const { mutate, isPending } = useUpdateAssets();
+  const { mutate: mutateAsset, isPending } = useUpdateAssets();
+  const {mutate: mutateAccount} = useUpdateAccount();
 
   /**
    * The hook fetches the user
@@ -91,17 +93,15 @@ const Dashboard = () => {
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const projectedAssets = projectionData?.projected_assets;
 
-    const currentProjectedAsset = projectedAssets?.filter(
+    const currentProjectedAsset = projectedAssets?.find(
       (payload) => payload.value === selectedFilter
     );
 
-    const assets =
-      currentProjectedAsset && currentProjectedAsset.length > 0
-        ? extractAllAssetsFromAssetWithType(currentProjectedAsset[0].data)
-        : [];
+    if (!currentProjectedAsset) return;
+    
+    const updatedAssets = updateAssets(currentProjectedAsset.data, data, user);
 
-    const updatedAssets = updateAssets(assets, data, user);
-    if (updatedAssets) mutateAllAssets(updatedAssets, mutate);
+    if (updatedAssets) mutateAllAssets(updatedAssets, mutateAsset, mutateAccount);
   };
 
   return (

@@ -8,12 +8,12 @@ import { useToast } from "@/hooks/use-toast"
  *
  * @returns
  */
-const useUpdateAssets = () => {
+const useUpdateAccount = () => {
   const { toast } = useToast()
 
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
-    mutationFn: assetService.updateUserAssets,
+    mutationFn: assetService.updateAccount,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projectedAssetsAndNetworth"] });
       toast({
@@ -32,4 +32,4 @@ const useUpdateAssets = () => {
   return { mutate , isPending};
 };
 
-export default useUpdateAssets;
+export default useUpdateAccount;

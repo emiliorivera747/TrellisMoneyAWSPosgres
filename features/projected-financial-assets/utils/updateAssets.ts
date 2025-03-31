@@ -13,7 +13,7 @@ function updateAssets(
     if (newVal !== undefined) {
       asset.annual_growth_rate = newVal / 100; 
     }
-    return { ...asset, user_id: user?.id ?? "", security_id: asset.security_id ?? ""};
+    return { ...asset, user_id: user?.id ?? "", security_id: asset.security_id ?? "", account_id: asset.account_id ?? "" };
   });
 
   return res;
