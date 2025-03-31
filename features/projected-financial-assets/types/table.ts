@@ -3,9 +3,11 @@ import { AssetsWithType } from "@/types/assets";
 export interface TableBodyForAssetsProps {
   assets: Assets[];
   form: any;
+  mode: "edit" | "view";
 }
 
 export interface AssetsTableProps{
   assets: Assets[];
   form: any;
+  mode: "edit" | "view";
 }

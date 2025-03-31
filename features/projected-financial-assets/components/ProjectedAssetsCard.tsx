@@ -1,5 +1,5 @@
 // React
-import React, {useRef} from "react";
+import React, { useRef, useState } from "react";
 
 // External Library
 import { FieldValues } from "react-hook-form";
@@ -16,8 +16,13 @@ import AssetsTable from "@/features/projected-financial-assets/components/tables
 import { ProjectedHoldingCardPrimaryHeader } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
 import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
 
-
-
+/**
+ *
+ * Displays the projected assets card showing the projected year, asset groups, and assets.
+ *
+ * @param param0
+ * @returns projected assets card
+ */
 const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   assets,
   selectedYear,
@@ -25,14 +30,34 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   isLoading,
 }: ProjectedAssetsCardProps<TFieldValues>) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [mode, setMode] = useState<"edit" | "view">("view");
+  const handleModeChange = () => {
+    console.log("HERE");
+    setMode((prevMode) => (prevMode === "edit" ? "view" : "edit"));
+  };
   return (
     <ProjectedAssetsContainer assets={assets}>
-      <div className="grid grid-rows-[4rem_1fr_6rem] absolute w-full text-[#343a40] h-full">
-        <ProjectedHoldingCardPrimaryHeader year={selectedYear} />
-        <AssetsTable assets={assets} form={form} />
-        <div className="flex justify-center  items-center">
-          <PrimarySubmitButton text={"Update"} className="w-[8rem] font-semibold text-sm h-[3rem]" ref={buttonRef} isLoading={isLoading}/>
-        </div>
+      <div
+        className={`grid ${
+          mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
+        } absolute w-full text-[#343a40] h-full`}
+      >
+        <ProjectedHoldingCardPrimaryHeader
+          year={selectedYear}
+          mode={mode}
+          setMode={handleModeChange}
+        />
+        <AssetsTable assets={assets} form={form} mode={mode} />
+        {mode === "edit" && (
+          <div className="flex justify-center  items-center">
+            <PrimarySubmitButton
+              text={"Update"}
+              className="w-[8rem] font-semibold text-sm h-[3rem]"
+              ref={buttonRef}
+              isLoading={isLoading}
+            />
+          </div>
+        )}
         {/* If there are not assets */}
         {assets?.length === 0 && <NoAssetsTable />}
       </div>

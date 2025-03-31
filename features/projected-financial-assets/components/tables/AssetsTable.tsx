@@ -8,12 +8,14 @@ import { AssetsTableProps } from "@/features/projected-financial-assets/types/ta
 const AssetsTable = ({
   assets,
   form, 
+  mode,
 }: AssetsTableProps) => {
   return (
     <Table>
       <TableBodyForAssets
         assets={assets}
         form={form}
+        mode={mode}
       />
     </Table>
   );

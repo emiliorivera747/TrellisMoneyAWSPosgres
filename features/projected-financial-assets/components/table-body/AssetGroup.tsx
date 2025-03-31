@@ -1,61 +1,70 @@
 import React from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
-import { FormField, FormItem, FormControl, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  FormField,
+  FormItem,
+  FormControl,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { convertToMoney } from "@/utils/helper-functions/convertToMoney";
 import NumberInputV2 from "@/components/form-components/NumberInputV2";
 import InvestmentTypeSubHeader from "../headers/InvestmentTypeSubHeader";
 import InvestmentTypeHeader from "../headers/InvestmentTypeHeader";
 import AssetName from "../column-items/AssetName";
-import { AssetRowProps, AssetGroupProps, ProjectionCellProps, GrowthRateCellProps } from "@/features/projected-financial-assets/types/projectedAssetsCard";
-
-
-
- /**
-  * 
-  * Displays the group of assets as well as the assets in each group.
-  * 
-  * @param param0 
-  * @returns group of assets
-  */ 
-const AssetGroup = ({ assetType, assets, form }: AssetGroupProps) => {
-    return (
-      <React.Fragment>
-        <InvestmentTypeHeader assetGroup={assetType} />
-        <InvestmentTypeSubHeader />
-        {assets?.map((asset, index) => (
-          <AssetRow key={index} asset={asset} form={form} />
-        ))}
-      </React.Fragment>
-    );
-};
- 
+import {
+  AssetRowProps,
+  AssetGroupProps,
+  ProjectionCellProps,
+  GrowthRateCellPropsInput,
+  GrowthRateCellPropsText
+} from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 /**
- * 
+ *
+ * Displays the group of assets as well as the assets in each group.
+ *
+ * @param param0
+ * @returns group of assets
+ */
+const AssetGroup = ({ assetType, assets, form, mode }: AssetGroupProps) => {
+  return (
+    <React.Fragment>
+      <InvestmentTypeHeader assetGroup={assetType} />
+      <InvestmentTypeSubHeader />
+      {assets?.map((asset, index) => (
+        <AssetRow key={index} asset={asset} form={form} mode={mode} />
+      ))}
+    </React.Fragment>
+  );
+};
+
+/**
+ *
  * Displays the asset name, growth rate, and projection.
- * 
- * @param param0 
+ *
+ * @param param0
  * @returns assets in the group
  */
-const AssetRow = ({ asset, form }: AssetRowProps) => {
+const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
   return (
     <TableRow className="border-none hover:bg-tertiary-100">
       <AssetName asset={asset} />
-      <GrowthRateCell asset={asset} form={form} />
+      {mode === "edit" && <GrowthRateCellInput asset={asset} form={form} />}
+      {mode === "view" && <GrowthRateCellText asset={asset} />}
       <ProjectionCell value={asset.projection} />
     </TableRow>
   );
 };
 
-
 /**
- * 
- * Displays the growth rate cell.
- * 
- * @param param0 
+ *
+ * Displays the growth rate cell with input
+ *
+ * @param param0
  * @returns growth rate cell
  */
-const GrowthRateCell = ({ asset, form }: GrowthRateCellProps) => (
+const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
   <TableCell className="flex items-center justify-center h-[3.6rem] w-[1/3]">
     <FormField
       control={form.control}
@@ -77,10 +86,21 @@ const GrowthRateCell = ({ asset, form }: GrowthRateCellProps) => (
 );
 
 /**
- * 
+ * Display the growth rate cell text
+ */
+const GrowthRateCellText = ({ asset }: GrowthRateCellPropsText) => (
+  <TableCell className="flex items-center justify-center h-[3.6rem] w-[1/3] text-center ">
+    <p className="text-xs pl-2 text-tertiary-700">
+      {(asset.annual_growth_rate * 100).toFixed(1)} %
+    </p>
+  </TableCell>
+);
+
+/**
+ *
  * Displays the projection cell.
- * 
- * @param param0 
+ *
+ * @param param0
  * @returns projection cell
  */
 const ProjectionCell = ({ value }: ProjectionCellProps) => (

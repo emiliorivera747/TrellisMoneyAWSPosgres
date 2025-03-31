@@ -46,19 +46,26 @@ export interface AssetName {
 export interface AssetRowProps {
   asset: Assets; 
   form: any; 
+  mode: "edit" | "view";
 }
 
 export interface AssetGroupProps {
   assetType: string;
   assets: Assets[]; 
   form: any; 
+  mode: "edit" | "view";
 }
 
 export interface ProjectionCellProps {
   value: number;
 }
 
-export interface GrowthRateCellProps {
+export interface GrowthRateCellPropsInput {
   asset: Assets;
   form: any;
 }
+
+export interface GrowthRateCellPropsText {
+  asset: Assets;
+}
+

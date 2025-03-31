@@ -10,14 +10,13 @@ import { TableBodyForAssetsProps } from "@/features/projected-financial-assets/t
 //Components
 import AssetGroup from "@/features/projected-financial-assets/components/table-body/AssetGroup";
 
-
 /**
  *  Displays the groups of assets as well as the assets in each group.
  * 
  * @param param0 
  * @returns table body for assets
  */
-const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
+const TableBodyForAssets = ({ assets, form, mode }: TableBodyForAssetsProps) => {
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const TableBodyForAssets = ({ assets, form }: TableBodyForAssetsProps) => {
         .sort(([typeA], [typeB]) => typeB.localeCompare(typeA))
         .map(([key, assets], i) => {
           return (
-            <AssetGroup key={i} assetType={key} assets={assets} form={form} />
+            <AssetGroup key={i} assetType={key} assets={assets} form={form} mode={mode} />
           );
         })}
     </TableBody>
