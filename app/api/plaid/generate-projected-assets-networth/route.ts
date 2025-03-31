@@ -7,7 +7,6 @@ import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErro
 import { generateProjectedNetWorthV2 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV2";
 import { generateProjectedFinancialAssetsV2 } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
 
-
 // Helpers
 import { updateAccounts } from "@/utils/api-helpers/plaid/updateAccounts";
 import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
@@ -24,9 +23,8 @@ import { getItemsById } from "@/utils/api-helpers/prisma/getItemsById";
 import { getAccounts } from "@/utils/api-helpers/plaid/getAccounts";
 import { getHoldingsAndSecuritiesMock } from "@/utils/api-helpers/plaid/getHoldingsAndSecuritiesMock";
 import { getHoldingsAndSecurities } from "@/utils/api-helpers/prisma/getHoldingsAndSecurities";
-import { getAccountsHoldingsSecurities} from '@/utils/api-helpers/prisma/getAccountsHoldingsSecurities';
-
-
+import { getAccountsHoldingsSecurities } from "@/utils/api-helpers/prisma/getAccountsHoldingsSecurities";
+import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV3";
 
 //supabase
 import { createClient } from "@/utils/supabase/server";
@@ -94,9 +92,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     // Get the user's updated holdings and securities
     const userHoldings = await getHoldingsAndSecurities(user?.id || "");
-    const account_holdings_securities = await getAccountsHoldingsSecurities(user?.id || "");
-    const projected_net_worth = await generateProjectedNetWorthV2(
-      userHoldings,
+    const account_holdings_securities = await getAccountsHoldingsSecurities(
+      user?.id || ""
+    );
+    const projected_net_worth = await generateProjectedNetWorthV3(
+      account_holdings_securities[0].accounts,
       start_year,
       end_year,
       searchParams.get("with_inflation") === "true",
@@ -104,17 +104,20 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
 
     const projected_assets = await generateProjectedFinancialAssetsV2(
-        start_year,
-        end_year,
-        searchParams.get("with_inflation") === "true",
-        default_inflation_rate,
-        account_holdings_securities[0].accounts
-      );
+      start_year,
+      end_year,
+      searchParams.get("with_inflation") === "true",
+      default_inflation_rate,
+      account_holdings_securities[0].accounts
+    );
 
     return NextResponse.json(
       {
         message: "Accounts, holdings, and securities updated successfully.",
-        data: {projected_net_worth: projected_net_worth, projected_assets: projected_assets},
+        data: {
+          projected_net_worth: projected_net_worth,
+          projected_assets: projected_assets,
+        },
       },
       { status: 200 }
     );

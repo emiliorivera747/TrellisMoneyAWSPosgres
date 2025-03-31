@@ -1,5 +1,9 @@
 import { Holding } from "@/types/plaid";
-import { future_value_with_inflation_fn, future_value_fn, getFormulaValues } from "@/utils/api-helpers/futureValueFormulas";
+import {
+  future_value_with_inflation_fn,
+  future_value_fn,
+  getFormulaValues,
+} from "@/utils/api-helpers/futureValueFormulas";
 
 /**
  * Generates the projected net worth over a range of years based on the provided holdings.
@@ -14,7 +18,7 @@ export const generateProjectedNetWorthV2 = async (
   start_year: number,
   end_year: number,
   with_inflation: boolean,
-  annual_inflation_rate:number
+  annual_inflation_rate: number
 ): Promise<{ date: Date; close: number }[]> => {
   const projectedNetWorth: { date: Date; close: number }[] = [];
 
@@ -34,7 +38,6 @@ export const generateProjectedNetWorthV2 = async (
   return projectedNetWorth;
 };
 
-
 /**
  *
  * populates the projected net worth for each day
@@ -51,7 +54,7 @@ const pushProjectedNetWorthToEachDay = (
   end_year: number,
   hm: { [key: number]: number }
 ) => {
-  const days = (end_year - start_year) * 365 ; // Only include the first month of the last year
+  const days = (end_year - start_year) * 365; // Only include the first month of the last year
 
   for (let i = 0; i <= days; i++) {
     const year = start_year + Math.floor(i / 365);
@@ -79,8 +82,8 @@ const pushProjectedNetWorthToEachDay = (
 
 /**
  *
- * populates the hashmap with the projected net worth for each year
- *
+ * populates the hashmap with the projected net worth 
+ * for each year
  *
  * @param hm
  * @param start_year
