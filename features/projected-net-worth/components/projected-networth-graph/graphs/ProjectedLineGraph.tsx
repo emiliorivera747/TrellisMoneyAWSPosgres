@@ -38,7 +38,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     editRetirementYear,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
-
+    
     return (
       <div className={`h-full w-full`}>
         <PrimaryGraphHeader

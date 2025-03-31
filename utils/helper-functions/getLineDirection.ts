@@ -1,17 +1,26 @@
 import { getStockValue } from "@/utils/helper-functions/accessors";
 import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
+
+/**
+ * Get the direction of the line by comparing the first and last stock value
+ * - If initial stock value is less than the last stock value, return "up" (increasing)
+ * - If initial stock value is greater than the last stock value, return "down" (decreasing)
+ * - If initial stock value is equal to the last stock value, return "flat" (no change)
+ * 
+ * @param data 
+ * @returns 
+ */
 export const getLineDirection = (data: SecurityData[]): Direction => {
-  if (data.length < 2) {
-    return "flat";
-  }
+  
+  if (!data || data?.length < 2 ) return "flat";
+  
+  const initialStockValue = getStockValue(data[0]);
+  const lastStockValue = getStockValue(data[data.length - 1]);
 
-  const firstValue = getStockValue(data[0]);
-  const lastValue = getStockValue(data[data.length - 1]);
-
-  if (firstValue < lastValue) {
+  if (initialStockValue < lastStockValue) {
     return "up";
-  } else if (firstValue > lastValue) {
+  } else if (initialStockValue > lastStockValue) {
     return "down";
   }
   return "flat";

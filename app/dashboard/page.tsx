@@ -55,7 +55,6 @@ const Dashboard = () => {
   const { projectionData, projectionError, projectionLoading } =
     useFetchProjections({ selectedYear, selectedFilter });
 
-
   const form = useForm();
 
   /**

@@ -17,18 +17,25 @@ type projectedNetWorth = {
  */
 const useFilteredData = (
   projectionData: projectedNetWorth[] | undefined | null,
-  selectedYear: number
+  selectedYear: number,
+  selectedFilter: string
 ) => {
-  const [filteredData, setFilteredData] = useState<projectedNetWorth[]>();
+  const [filteredData, setFilteredData] = useState<projectedNetWorth[]>([]);
 
   useEffect(() => {
-    if (!projectionData) return;
+
+    if (!projectionData || projectionData.length === 0) {
+      setFilteredData([]); // Reset to empty array if no data
+      return;
+    }
+
     const filtered = projectionData?.map((item) => {
       const filtered = filterProjectionData(item.data, selectedYear);
       return { value: item.value, data: filtered };
     });
+
     setFilteredData(filtered);
-  }, [projectionData, selectedYear]);
+  }, [projectionData, selectedYear, selectedFilter]);
 
   return filteredData;
 };

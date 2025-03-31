@@ -1,7 +1,7 @@
 "use client";
 
 //React
-import { useState } from "react";
+import React, { useState } from "react";
 
 //components
 import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/filters/RenderFilters";
@@ -46,14 +46,14 @@ const ProjectedNetWorthGraph = ({
   projectionLoading,
   projectionError,
 }: ProjectedNetWorthGraphProps) => {
-
   const [retirementYear, setRetirementYear] = useState(currentYear + 40);
 
-  /**
-   * Filter the data based on the selected year
-   */
-  const filteredData = useFilteredData(projectionData, selectedYear);
-
+  const filteredData = useFilteredData(
+    projectionData,
+    selectedYear,
+    selectedFilter
+  );
+  console.log("ProjectedNetWorthGraph - filteredData:", filteredData);
   /**
    * Function to edit the retirement year
    *
@@ -72,6 +72,14 @@ const ProjectedNetWorthGraph = ({
   if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
   if (projectionError) return <div>Error fetching data</div>;
 
+  const dataForLines =
+    selectedFilter === "isBoth"
+      ? [
+          { data: filteredData?.[1]?.data || [], ...lineColors1 }, 
+          { data: filteredData?.[0]?.data || [], ...lineColors2 },
+        ]
+      : [{ data: filteredData?.[0]?.data || [], ...lineColors1 }];
+
   return (
     <div className=" grid-rows-[26rem_6rem] grid ">
       {/* Graph */}
@@ -79,14 +87,7 @@ const ProjectedNetWorthGraph = ({
         margin={{ top: 6, right: 6, bottom: 10, left: 6 }}
         tailwindClasses="h-[25rem] w-full border-box"
         GraphComponent={ProjectedLineGraph}
-        dataForLines={
-          selectedFilter === "isBoth"
-            ? [
-                { data: filteredData? filteredData[0]?.data : [], ...lineColors1 },
-                { data: filteredData? filteredData[1]?.data : [], ...lineColors2 },
-              ]
-            : [{ data: filteredData? filteredData[0]?.data : [], ...lineColors1 }]
-        }
+        dataForLines={dataForLines}
         withInlfationTag={selectedFilter === "isInflation"}
         years={years}
         selectedYear={selectedYear}
@@ -99,7 +100,7 @@ const ProjectedNetWorthGraph = ({
       <RenderFilters
         selectedFilter={selectedFilter}
         handleFilterChange={handleFilterChange}
-      /> 
+      />
     </div>
   );
 };
