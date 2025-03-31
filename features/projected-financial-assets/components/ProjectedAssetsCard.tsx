@@ -32,7 +32,6 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [mode, setMode] = useState<"edit" | "view">("view");
   const handleModeChange = () => {
-    console.log("HERE");
     setMode((prevMode) => (prevMode === "edit" ? "view" : "edit"));
   };
   return (

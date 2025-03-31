@@ -1,15 +1,8 @@
 import React from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
-import {
-  FormField,
-  FormItem,
-  FormControl,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormField, FormItem } from "@/components/ui/form";
 import { convertToMoney } from "@/utils/helper-functions/convertToMoney";
 import NumberInputV2 from "@/components/form-components/NumberInputV2";
-import InvestmentTypeSubHeader from "../headers/InvestmentTypeSubHeader";
 import InvestmentTypeHeader from "../headers/InvestmentTypeHeader";
 import AssetName from "../column-items/AssetName";
 import {
@@ -17,8 +10,10 @@ import {
   AssetGroupProps,
   ProjectionCellProps,
   GrowthRateCellPropsInput,
-  GrowthRateCellPropsText
+  GrowthRateCellPropsText,
 } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+
+import Link from "next/link";
 
 /**
  *
@@ -31,7 +26,6 @@ const AssetGroup = ({ assetType, assets, form, mode }: AssetGroupProps) => {
   return (
     <React.Fragment>
       <InvestmentTypeHeader assetGroup={assetType} />
-      <InvestmentTypeSubHeader />
       {assets?.map((asset, index) => (
         <AssetRow key={index} asset={asset} form={form} mode={mode} />
       ))}
@@ -48,7 +42,7 @@ const AssetGroup = ({ assetType, assets, form, mode }: AssetGroupProps) => {
  */
 const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
   return (
-    <TableRow className="border-none hover:bg-tertiary-100">
+    <TableRow className="border-none hover:bg-tertiary-100 cursor-pointer">
       <AssetName asset={asset} />
       {mode === "edit" && <GrowthRateCellInput asset={asset} form={form} />}
       {mode === "view" && <GrowthRateCellText asset={asset} />}
@@ -72,7 +66,7 @@ const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
       render={({ field }) => (
         <FormItem>
           <NumberInputV2
-            defaultValue={(asset.annual_growth_rate * 100).toFixed(2)}
+            defaultValue={(asset.annual_growth_rate * 100).toFixed(0)}
             className="text-xs pl-2"
             min={-100}
             max={100}
@@ -89,9 +83,9 @@ const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
  * Display the growth rate cell text
  */
 const GrowthRateCellText = ({ asset }: GrowthRateCellPropsText) => (
-  <TableCell className="flex items-center justify-center h-[3.6rem] w-[1/3] text-center ">
-    <p className="text-xs pl-2 text-tertiary-700">
-      {(asset.annual_growth_rate * 100).toFixed(1)} %
+  <TableCell className="flex items-center justify-center h-[3.6rem] w-[1/3] text-center uppercase">
+    <p className="text-[0.8rem] pl-2 text-tertiary-900 font-light">
+      {(asset.annual_growth_rate * 100).toFixed(0)}%
     </p>
   </TableCell>
 );
@@ -105,8 +99,24 @@ const GrowthRateCellText = ({ asset }: GrowthRateCellPropsText) => (
  */
 const ProjectionCell = ({ value }: ProjectionCellProps) => (
   <TableCell className="text-secondary-1000 text-start text-xs font-semibold w-24 overflow-x-auto">
-    {convertToMoney(Number(value))}
+    {formatToMoney(Number(value))}
   </TableCell>
 );
+/**
+ * Converts a number to a money format (e.g., 1000 -> $1k, 10000 -> $10k).
+ *
+ * @param value - The number to be converted.
+ * @returns The formatted money string.
+ */
+const formatToMoney = (value: number): string => {
+  if (value >= 1_000_000_000) {
+    return `$${(value / 1_000_000_000).toFixed(1)}B`;
+  } else if (value >= 1_000_000) {
+    return `$${(value / 1_000_000).toFixed(1)}M`;
+  } else if (value >= 1_000) {
+    return `$${(value / 1_000).toFixed(1)}k`;
+  }
+  return `$${value.toFixed(0)}`;
+};
 
 export default AssetGroup;

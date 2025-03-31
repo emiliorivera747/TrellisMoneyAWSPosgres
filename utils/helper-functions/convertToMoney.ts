@@ -4,3 +4,5 @@ export function convertToMoney(amount: number, numberOfDecimals: number = 2): st
     }
     return `$${amount.toFixed(numberOfDecimals).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
 }
+
+
