@@ -25,7 +25,7 @@ const useFilteredData = (
   useEffect(() => {
 
     if (!projectionData || projectionData.length === 0) {
-      setFilteredData([]); // Reset to empty array if no data
+      setFilteredData([]); 
       return;
     }
 

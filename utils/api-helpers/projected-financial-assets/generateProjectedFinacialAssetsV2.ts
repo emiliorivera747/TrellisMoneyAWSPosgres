@@ -1,5 +1,5 @@
-import { Holding, Account } from "@/types/plaid";
-
+import { Account } from "@/types/plaid";
+import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 import { getHoldingName } from "@/utils/api-helpers/holdingAccessors";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
@@ -9,21 +9,6 @@ import {
   getFormulaValues,
 } from "@/utils/api-helpers/futureValueFormulas";
 import Decimal from "decimal.js";
-
-interface financialAssests {
-  name: string;
-  annual_growth_rate: Decimal;
-  projection: Decimal;
-  security_id: string | undefined | null;
-  account_id: string | undefined;
-  type: AccountType;
-  shares: Decimal;
-}
-
-interface GroupedAssets {
-  type: AccountType;
-  assets: financialAssests[];
-}
 
 /**
  *
@@ -40,7 +25,7 @@ export const generateProjectedFinancialAssetsV2 = async (
   with_inflation: boolean = false,
   annual_inflation_rate: number,
   accounts: Account[]
-): Promise<financialAssests[] | []> => {
+): Promise<FinancialAssets[] | []> => {
   const groups = Object.groupBy(accounts, (account) => account.type);
 
   const assets = [];
@@ -57,7 +42,7 @@ export const generateProjectedFinancialAssetsV2 = async (
         key as AccountType
       );
       assets.push(...res);
-    } else if (key === "depository") {
+    } else  {
       let res = calculate_fv_accounts(
         accounts ?? [],
         start_year,
@@ -67,28 +52,7 @@ export const generateProjectedFinancialAssetsV2 = async (
         key as AccountType
       );
       assets.push(...res);
-    } else if (key === "credit") {
-      let res = calculate_fv_accounts(
-        accounts ?? [],
-        start_year,
-        end_year,
-        with_inflation,
-        annual_inflation_rate,
-        key as AccountType
-      );
-      assets.push(...res);
-    } else if (key === "loan") {
-      let res = calculate_fv_accounts(
-        accounts ?? [],
-        start_year,
-        end_year,
-        with_inflation,
-        annual_inflation_rate,
-        key as AccountType
-      );
-      assets.push(...res);
-    } else {
-    }
+    } 
   }
   return assets;
 };

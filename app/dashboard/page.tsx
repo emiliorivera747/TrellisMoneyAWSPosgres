@@ -19,6 +19,7 @@ import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSect
 
 // Types
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
+import { ProjectionData } from "@/features/projected-financial-assets/types/projectionData";
 
 //Hooks
 import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
@@ -31,9 +32,7 @@ import useUpdateAccount from "@/utils/hooks/financial-assets/useUpdateAccount";
 import { Form } from "@/components/ui/form";
 
 //Functions
-import mutateAllAssets from "@/features/projected-financial-assets/utils/mutateAllAssets";
-import { extractAllAssetsFromAssetWithType } from "@/utils/helper-functions/extractAllAssetsFromAssetsWithType";
-import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
+import { handleFormSubmission } from "@/features/projected-financial-assets/utils/handleAssetFormSubmission";
 const currentYear = Number(new Date().getFullYear().toString());
 
 /**
@@ -58,9 +57,13 @@ const Dashboard = () => {
   const form = useForm();
 
   /**
-   * The hook updates the assets
+   * The hook updates assets
    */
   const { mutate: mutateAsset, isPending } = useUpdateAssets();
+
+  /**
+   *  The hook updates accounts
+   */
   const {mutate: mutateAccount} = useUpdateAccount();
 
   /**
@@ -84,23 +87,19 @@ const Dashboard = () => {
   interface FormData extends FieldValues {}
 
   /**
+   * Handles form submission to update the annual return rate.
    *
-   * Update annual return rate
-   *
-   * @param data
+   * @param data - Form data submitted by the user.
    */
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    const projectedAssets = projectionData?.projected_assets;
-
-    const currentProjectedAsset = projectedAssets?.find(
-      (payload) => payload.value === selectedFilter
+    handleFormSubmission(
+      data,
+      projectionData,
+      selectedFilter,
+      user,
+      mutateAsset,
+      mutateAccount
     );
-
-    if (!currentProjectedAsset) return;
-    
-    const updatedAssets = updateAssets(currentProjectedAsset.data, data, user);
-
-    if (updatedAssets) mutateAllAssets(updatedAssets, mutateAsset, mutateAccount);
   };
 
   return (

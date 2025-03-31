@@ -82,6 +82,7 @@ const ProjectedNetWorthGraph = ({
 
   return (
     <div className=" grid-rows-[26rem_6rem] grid ">
+      
       {/* Graph */}
       <ResponsiveLineGraphV2
         margin={{ top: 6, right: 6, bottom: 10, left: 6 }}
