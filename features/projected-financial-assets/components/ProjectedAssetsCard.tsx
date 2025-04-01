@@ -29,12 +29,14 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   selectedYear,
   form,
   isLoading,
+  mode,
+  handleModeChange,
 }: ProjectedAssetsCardProps<TFieldValues>) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [mode, setMode] = useState<"edit" | "view">("view");
-  const handleModeChange = () => {
-    setMode((prevMode) => (prevMode === "edit" ? "view" : "edit"));
-  };
+  // const [mode, setMode] = useState<"edit" | "view">("view");
+  // const handleModeChange = () => {
+  //   setMode((prevMode) => (prevMode === "edit" ? "view" : "edit"));
+  // };
 
   if (isLoading) return <ProjectedAssetsCardSkeleton />;
   return (

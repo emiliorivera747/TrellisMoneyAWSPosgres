@@ -28,6 +28,8 @@ export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
   selectedYear: number;
   form :any; 
   isLoading: boolean;
+  mode: "edit" | "view";
+  handleModeChange: () => void;
 }
 
 export interface ProjectedAssetsContainerProps {

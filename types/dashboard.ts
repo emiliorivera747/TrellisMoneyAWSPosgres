@@ -13,6 +13,8 @@ export interface DashboardState {
   userError: any;
   linkToken: string | null;
   isPending: boolean;
+  mode: "edit" | "view";
+  handleModeChange: () => void;
   form: ReturnType<typeof useForm>;
   mutateAsset: (asset: any) => void;
 }

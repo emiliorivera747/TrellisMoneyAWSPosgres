@@ -37,19 +37,6 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
       }
     });
 
-    // const updatedHolding = await prisma.holding.update({
-    //   where: {
-    //     holding_id: {
-    //       security_id: security_id,
-    //       account_id: account_id,
-    //       user_id: user_id,
-    //     },
-    //   },
-    //   data: {
-    //     annual_return_rate: annual_growth_rate
-    //   },
-    // });
-
     return NextResponse.json(
       {
         message: "Success",

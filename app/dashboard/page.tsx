@@ -32,6 +32,8 @@ const Dashboard = () => {
     projectionLoading,
     linkToken,
     form,
+    mode,
+    handleModeChange,
     handleYearSelection,
     handleFilterChange,
     onSubmit,
@@ -61,6 +63,8 @@ const Dashboard = () => {
           selectedYear={selectedYear}
           isLoading={projectionLoading}
           onSubmit={onSubmit}
+          mode={mode}
+          handleModeChange={handleModeChange}
         />
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
       </div>

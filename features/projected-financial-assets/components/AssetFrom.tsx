@@ -16,6 +16,8 @@ interface AssetsFormProps {
   selectedYear: number | string;
   isLoading: boolean;
   onSubmit: (data: any) => void;
+  mode: "edit" | "view";
+  handleModeChange: () => void;
 }
 
 
@@ -32,6 +34,8 @@ const AssetsForm: React.FC<AssetsFormProps> = ({
   selectedYear,
   isLoading,
   onSubmit,
+  mode,
+  handleModeChange
 }) => {
   return (
     <Form {...form}>
@@ -44,6 +48,8 @@ const AssetsForm: React.FC<AssetsFormProps> = ({
           selectedYear={Number(selectedYear)}
           form={form}
           isLoading={isLoading}
+          mode={mode}
+          handleModeChange={handleModeChange}
         />
       </form>
     </Form>

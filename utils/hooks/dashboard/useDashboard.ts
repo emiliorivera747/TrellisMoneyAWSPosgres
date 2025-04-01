@@ -36,7 +36,6 @@ export const useDashboard = (): DashboardState & {
   });
 
   const { mutate: mutateAsset, isPending } = useUpdateAssets();
-  // const { mutate: mutateAccount } = useUpdateAccount();
   const { user, error: userError } = useFetchUser();
   const linkToken = useGenerateToken();
 
@@ -44,11 +43,17 @@ export const useDashboard = (): DashboardState & {
     defaultValues: {}, 
   }) as UseFormReturn<FormData, any, undefined>;
 
+  const [mode, setMode] = useState<"edit" | "view">("view");
+  const handleModeChange = () => {
+    setMode((prevMode) => (prevMode === "edit" ? "view" : "edit"));
+  };
+
   const handleYearSelection = (year: number) => setSelectedYear(year);
   const handleFilterChange = (filter: InflationFilters) => setSelectedFilter(filter);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     handleFormSubmission(data, projectionData, selectedFilter, user, mutateAsset);
+    setMode("view");
   };
 
   return {
@@ -62,6 +67,8 @@ export const useDashboard = (): DashboardState & {
     linkToken,
     isPending,
     form,
+    mode,
+    handleModeChange,
     mutateAsset,
     handleYearSelection,
     handleFilterChange,
