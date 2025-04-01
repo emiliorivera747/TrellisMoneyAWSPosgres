@@ -53,7 +53,7 @@ const ProjectedNetWorthGraph = ({
     selectedYear,
     selectedFilter
   );
-  console.log("ProjectedNetWorthGraph - filteredData:", filteredData);
+  
   /**
    * Function to edit the retirement year
    *
@@ -82,7 +82,6 @@ const ProjectedNetWorthGraph = ({
 
   return (
     <div className=" grid-rows-[26rem_6rem] grid ">
-      
       {/* Graph */}
       <ResponsiveLineGraphV2
         margin={{ top: 6, right: 6, bottom: 10, left: 6 }}
@@ -96,7 +95,6 @@ const ProjectedNetWorthGraph = ({
         setSelectedYear={handleYearSelection}
         editRetirementYear={editRetirementYear}
       />
-
       {/* Filters */}
       <RenderFilters
         selectedFilter={selectedFilter}

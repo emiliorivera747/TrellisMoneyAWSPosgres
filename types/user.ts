@@ -6,13 +6,13 @@ export interface Profile {
 }
 
 export interface User {
-  id: number;
-  email: string;
-  name: string;
+  id: string;
+  email?: string;
+  name?: string;
   profile?: Profile;
-  createdAt: Date;
-  updatedAt: Date;
-  user_id: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  user_id?: string;
   emailVerified?: boolean;
 }
 

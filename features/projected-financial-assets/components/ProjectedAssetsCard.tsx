@@ -15,6 +15,7 @@ import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButtonV2";
 import AssetsTable from "@/features/projected-financial-assets/components/tables/AssetsTable";
 import { ProjectedHoldingCardPrimaryHeader } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
 import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
+import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
 
 /**
  *
@@ -34,6 +35,8 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   const handleModeChange = () => {
     setMode((prevMode) => (prevMode === "edit" ? "view" : "edit"));
   };
+
+  if (isLoading) return <ProjectedAssetsCardSkeleton />;
   return (
     <ProjectedAssetsContainer assets={assets}>
       <div

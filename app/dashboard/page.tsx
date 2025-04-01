@@ -1,39 +1,19 @@
 "use client";
 
 //React
-import React, { useState } from "react";
-
-// External Library
-import { useForm, SubmitHandler } from "react-hook-form";
-import { FieldValues } from "react-hook-form";
+import React from "react";
 
 //Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import Link from "@/components/Plaid/Link";
-import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
-import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
+import AssetsForm from "@/features/projected-financial-assets/components/AssetFrom";
 
 //Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
 
-// Types
-import { InflationFilters } from "@/features/projected-net-worth/types/filters";
-import { ProjectionData } from "@/features/projected-financial-assets/types/projectionData";
-
 //Hooks
-import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
-import useUpdateAssets from "@/utils/hooks/financial-assets/useUpdateAssets";
-import useFetchUser from "@/utils/hooks/user/useFetchUser";
-import useFetchProjections from "@/utils/hooks/financial-projections/useFetchProjections";
-import useUpdateAccount from "@/utils/hooks/financial-assets/useUpdateAccount";
-
-//Shadcn
-import { Form } from "@/components/ui/form";
-
-//Functions
-import { handleFormSubmission } from "@/features/projected-financial-assets/utils/handleAssetFormSubmission";
-const currentYear = Number(new Date().getFullYear().toString());
+import { useDashboard } from "@/utils/hooks/dashboard/useDashboard";
 
 /**
  *
@@ -44,105 +24,44 @@ const currentYear = Number(new Date().getFullYear().toString());
  * @returns
  */
 const Dashboard = () => {
-  const [selectedYear, setSelectedYear] = useState<number>(currentYear + 40);
-  const [selectedFilter, setSelectedFilter] =
-    useState<InflationFilters>("isNoInflation");
+  const {
+    selectedYear,
+    selectedFilter,
+    projectionData,
+    projectionError,
+    projectionLoading,
+    linkToken,
+    form,
+    handleYearSelection,
+    handleFilterChange,
+    onSubmit,
+  } = useDashboard();
 
-  /**
-   *  The hook fetches our projection data
-   */
-  const { projectionData, projectionError, projectionLoading } =
-    useFetchProjections({ selectedYear, selectedFilter });
-
-  const form = useForm();
-
-  /**
-   * The hook updates assets
-   */
-  const { mutate: mutateAsset, isPending } = useUpdateAssets();
-
-  /**
-   *  The hook updates accounts
-   */
-  const {mutate: mutateAccount} = useUpdateAccount();
-
-  /**
-   * The hook fetches the user
-   */
-  const { user, error } = useFetchUser();
-
-  /**
-   * Generate Plaid link token
-   */
-  const linkToken = useGenerateToken();
-
-  const handleYearSelection = (year: number) => {
-    setSelectedYear(year);
-  };
-
-  const handleFilterChange = (filter: InflationFilters) => {
-    setSelectedFilter(filter);
-  };
-
-  interface FormData extends FieldValues {}
-
-  /**
-   * Handles form submission to update the annual return rate.
-   *
-   * @param data - Form data submitted by the user.
-   */
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    handleFormSubmission(
-      data,
-      projectionData,
-      selectedFilter,
-      user,
-      mutateAsset,
-      mutateAccount
-    );
-  };
+  const getAssetsData = () => projectionData?.projected_assets[0]?.data || [];
 
   return (
     <div className="min-h-screen h-auto w-full border-box">
       <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%]">
         {/* Dashboard Prominent Section */}
         <PrimaryDashboardSection>
-          {isPending ? (
-            <ProjectedNetWorthGraphSkeleton />
-          ) : (
-            <ProjectedNetWorthGraph
-              handleYearSelection={handleYearSelection}
-              selectedYear={selectedYear}
-              selectedFilter={selectedFilter}
-              handleFilterChange={handleFilterChange}
-              projectionData={projectionData?.projected_net_worth}
-              projectionError={projectionError}
-              projectionLoading={projectionLoading}
-            />
-          )}
+          <ProjectedNetWorthGraph
+            handleYearSelection={handleYearSelection}
+            selectedYear={selectedYear}
+            selectedFilter={selectedFilter}
+            handleFilterChange={handleFilterChange}
+            projectionData={projectionData?.projected_net_worth}
+            projectionError={projectionError}
+            projectionLoading={projectionLoading}
+          />
         </PrimaryDashboardSection>
-        {/* Seconday Section */}
-        <Form {...form}>
-          <form
-            className="grid grid-rows-[1fr_6rem] gap-6 h-full col-span-10 sm:col-span-3 sm:row-span-1"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
-            {projectionLoading ? (
-              <ProjectedAssetsCardSkeleton />
-            ) : (
-              <ProjectedAssetsCard
-                assets={
-                  selectedFilter === "isBoth"
-                    ? projectionData?.projected_assets[0]?.data
-                    : projectionData?.projected_assets[0]?.data
-                }
-                selectedYear={selectedYear}
-                form={form}
-                isLoading={isPending}
-              />
-            )}
-          </form>
-        </Form>
+        {/* Assets Form Section */}
+        <AssetsForm
+          form={form}
+          assets={getAssetsData()}
+          selectedYear={selectedYear}
+          isLoading={projectionLoading}
+          onSubmit={onSubmit}
+        />
         {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
       </div>
     </div>

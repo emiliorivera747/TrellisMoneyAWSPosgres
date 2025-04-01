@@ -1,12 +1,9 @@
 import {
   UseFormReturn,
-  UseFormRegister,
-  Path,
   FieldValues,
-  FieldErrors,
 } from "react-hook-form";
 
-import { AssetsWithType } from "@/types/assets";
+import { FinancialAssets } from "@/features/projected-financial-assets/types/financialAssets";
 
 export type AccountType =
   | "depository"
@@ -17,7 +14,7 @@ export type AccountType =
 
 export interface Assets {
   name: string;
-  annual_growth_rate: number;
+  annual_growth_rate?: number | null;
   shares?: number;
   amount?: number;
   security_id?: string;
@@ -27,9 +24,9 @@ export interface Assets {
 }
 
 export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
-  assets: Assets[];
+  assets: FinancialAssets[];
   selectedYear: number;
-  form: UseFormReturn<FieldValues, any, undefined>;
+  form :any; 
   isLoading: boolean;
 }
 
