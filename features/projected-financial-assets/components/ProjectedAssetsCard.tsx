@@ -34,6 +34,7 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
 }: ProjectedAssetsCardProps<TFieldValues>) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+
   if (isLoading) return <ProjectedAssetsCardSkeleton />;
   return (
     <ProjectedAssetsContainer assets={assets}>
@@ -49,7 +50,7 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
         />
         <AssetsTable assets={assets} form={form} mode={mode} />
         {mode === "edit" && (
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center  items-center">
             <PrimarySubmitButton
               text={"Update"}
               className="w-[8rem] font-semibold text-sm h-[3rem]"
