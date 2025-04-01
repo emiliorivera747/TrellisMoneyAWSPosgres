@@ -1,3 +1,4 @@
+import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,7 +7,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React from "react";
 
 import { CreateSvgV3 } from "@/utils/helper-functions/CreateSvg";
 const d_1 =
@@ -36,7 +36,7 @@ const HeaderDropdown = ({
   mode: "edit" | "view";
   setMode: () => void;
 }) => (
-  <DropdownMenu>
+  <DropdownMenu >
     <DropdownMenuTrigger asChild>
       <span className="flex justify-end pr-6 text-tertiary-700 hover:text-tertiary-800">
         {CreateSvgV3({
@@ -46,20 +46,28 @@ const HeaderDropdown = ({
         })}
       </span>
     </DropdownMenuTrigger>
-    <DropdownMenuContent align="end">
-      <DropdownMenuLabel>
-        {mode === "edit" ? "Edit Mode" : "View Mode"}
+    <DropdownMenuContent align="end" className="backdrop-blur bg-tertiary-300/40 px-2 py-2">
+      <DropdownMenuLabel className="text-tertiary-800 font-bold text-xs">
+      {mode === "edit" ? "Edit Mode" : "View Mode"}
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       {mode === "view" && (
-        <DropdownMenuItem onClick={() => setMode()}>Edit</DropdownMenuItem>
+      <DropdownMenuItem className="focus:bg-tertiary-400/50 rounded transition-all duration-300 focus:font-semibold">
+        <MenuButton setMode={setMode}>Edit</MenuButton>
+      </DropdownMenuItem>
       )}
       {mode === "edit" && (
-        <DropdownMenuItem onClick={() => setMode()}>View</DropdownMenuItem>
+      <DropdownMenuItem className="focus:bg-tertiary-400/50 rounded transition-all duration-300 focus:font-semibold">
+        <MenuButton setMode={setMode}>View</MenuButton>
+      </DropdownMenuItem>
       )}
     </DropdownMenuContent>
   </DropdownMenu>
 );
+
+const MenuButton = ({ setMode, children }: { setMode: () => void; children: React.ReactNode }) => {
+  return <button className=" rounded h-full w-full text-[0.8rem] text-tertiary-800 items-start flex justify-start " onClick={() => setMode()}>{children}</button>;
+};
 
 export const ProjectedHoldingCardPrimaryHeader = ({
   year,
