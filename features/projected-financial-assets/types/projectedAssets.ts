@@ -30,4 +30,5 @@ export interface FinancialAssets {
   account_id: string | undefined;
   type: AccountType;
   shares: number | null | Decimal;
+  user_id?: string | undefined;
 }

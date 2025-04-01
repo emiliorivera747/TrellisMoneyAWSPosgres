@@ -20,8 +20,7 @@ export const handleFormSubmission = (
   projectionData: ProjectionData | undefined | null,
   selectedFilter: string,
   user: any,
-  mutateAsset: (asset: any) => void,
-  mutateAccount: (asset: any) => void
+  mutate: (asset: any) => void,
 ) => {
 
   if (!projectionData) return;
@@ -29,12 +28,12 @@ export const handleFormSubmission = (
   const currentProjectedAsset = getCurrentProjectedAsset(
     projectionData,
     selectedFilter
-  );
+  ) || projectionData.projected_assets[0];
 
   if (!currentProjectedAsset) return;
 
   const updatedAssets = updateAssets(currentProjectedAsset?.data, data, user);
-  if (updatedAssets) mutateAllAssets(updatedAssets, mutateAsset, mutateAccount);
+  mutate(updatedAssets);
 };
 
 

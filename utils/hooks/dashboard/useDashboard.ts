@@ -36,7 +36,7 @@ export const useDashboard = (): DashboardState & {
   });
 
   const { mutate: mutateAsset, isPending } = useUpdateAssets();
-  const { mutate: mutateAccount } = useUpdateAccount();
+  // const { mutate: mutateAccount } = useUpdateAccount();
   const { user, error: userError } = useFetchUser();
   const linkToken = useGenerateToken();
 
@@ -48,7 +48,7 @@ export const useDashboard = (): DashboardState & {
   const handleFilterChange = (filter: InflationFilters) => setSelectedFilter(filter);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    handleFormSubmission(data, projectionData, selectedFilter, user, mutateAsset, mutateAccount);
+    handleFormSubmission(data, projectionData, selectedFilter, user, mutateAsset);
   };
 
   return {
@@ -63,7 +63,6 @@ export const useDashboard = (): DashboardState & {
     isPending,
     form,
     mutateAsset,
-    mutateAccount,
     handleYearSelection,
     handleFilterChange,
     onSubmit,

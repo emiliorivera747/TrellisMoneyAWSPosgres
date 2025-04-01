@@ -13,8 +13,9 @@ const useUpdateAssets = () => {
 
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
-    mutationFn: assetService.updateUserAssets,
+    mutationFn: assetService.updateAllAssets,
     onSuccess: () => {
+      console.log("onSuccess triggered");
       queryClient.invalidateQueries({ queryKey: ["projectedAssetsAndNetworth"] });
       toast({
         title: "Projections",
@@ -25,7 +26,7 @@ const useUpdateAssets = () => {
     onError: ()=>{
       toast({
         variant: "destructive",
-        title:"Something went wrong when upating Financial Projections"
+        title:"Something went wrong when upating Projections"
       })
     }
   });

@@ -22,7 +22,7 @@ const useUpdateAccount = () => {
         variant: "success",
       })
     },
-    onError: ()=>{
+    onError: () =>{
       toast({
         variant: "destructive",
         title:"Something went wrong when upating Financial Projections"

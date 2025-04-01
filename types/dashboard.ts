@@ -15,5 +15,4 @@ export interface DashboardState {
   isPending: boolean;
   form: ReturnType<typeof useForm>;
   mutateAsset: (asset: any) => void;
-  mutateAccount: (asset: any) => void;
 }

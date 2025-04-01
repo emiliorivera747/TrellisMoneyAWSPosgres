@@ -11,7 +11,6 @@ export async function PATCH(
     const body = await req.json();
     const { user_id, annual_growth_rate } = body;
     const {_id} = await params;
-    console.log("account_id", _id);
 
     // Validate inputs
     if (!_id || !user_id) {
