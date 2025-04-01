@@ -13,7 +13,7 @@ import { InflationFilters } from '@/features/projected-net-worth/types/filters'
 
 const RenderFilters = ({selectedFilter, handleFilterChange}: LineGraphFilterButtonsProps) => {
   return (
-    <div className="gap-2 mt-4 grid grid-cols-5 items-center border-b border-tertiary-100 pb-6">
+    <div className="gap-2 mt-4 grid grid-cols-5 items-center border-b border-tertiary-300 pb-6">
     {filterConfig.map(
       (filter: { key: InflationFilters; label: string; svg_path: string }, index) => (
         <LineGraphFilterButton

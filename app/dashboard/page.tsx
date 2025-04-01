@@ -5,15 +5,16 @@ import React from "react";
 
 //Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
-import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import Link from "@/components/Plaid/Link";
 import AssetsForm from "@/features/projected-financial-assets/components/AssetFrom";
+import KeyStatContainer from "@/features/key-statistics/components/KeyStatContainer";
 
 //Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
 
 //Hooks
 import { useDashboard } from "@/utils/hooks/dashboard/useDashboard";
+import { Key } from "lucide-react";
 
 /**
  *
@@ -55,6 +56,7 @@ const Dashboard = () => {
             projectionError={projectionError}
             projectionLoading={projectionLoading}
           />
+          <KeyStatContainer />
         </PrimaryDashboardSection>
         {/* Assets Form Section */}
         <AssetsForm
