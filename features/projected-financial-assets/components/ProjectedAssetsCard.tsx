@@ -33,10 +33,6 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
   handleModeChange,
 }: ProjectedAssetsCardProps<TFieldValues>) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  // const [mode, setMode] = useState<"edit" | "view">("view");
-  // const handleModeChange = () => {
-  //   setMode((prevMode) => (prevMode === "edit" ? "view" : "edit"));
-  // };
 
   if (isLoading) return <ProjectedAssetsCardSkeleton />;
   return (
@@ -53,7 +49,7 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
         />
         <AssetsTable assets={assets} form={form} mode={mode} />
         {mode === "edit" && (
-          <div className="flex justify-center  items-center">
+          <div className="flex justify-center items-center">
             <PrimarySubmitButton
               text={"Update"}
               className="w-[8rem] font-semibold text-sm h-[3rem]"

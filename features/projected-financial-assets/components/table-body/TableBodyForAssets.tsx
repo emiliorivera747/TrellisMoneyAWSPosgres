@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  TableBody,
-} from "@/components/ui/table";
-
+import { TableBody } from "@/components/ui/table";
 
 //Types
 import { TableBodyForAssetsProps } from "@/features/projected-financial-assets/types/table";
@@ -12,16 +9,33 @@ import AssetGroup from "@/features/projected-financial-assets/components/table-b
 
 /**
  *  Displays the groups of assets as well as the assets in each group.
- * 
- * @param param0 
+ *
+ * @param param0
  * @returns table body for assets
  */
-const TableBodyForAssets = ({ assets, form, mode }: TableBodyForAssetsProps) => {
+const TableBodyForAssets = ({
+  assets,
+  form,
+  mode,
+}: TableBodyForAssetsProps) => {
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
-
   useEffect(() => {
-    const res = Object.groupBy(assets, (assets) => assets.type);
-    setGroups(res);
+    // Group assets by type
+    const grouped = Object.groupBy(assets, (asset) => asset.type);
+
+    // Sort assets within each group (e.g., by name or value)
+    const sortedGroups = Object.fromEntries(
+      Object.entries(grouped).map(([type, groupAssets]) => {
+        const sortedAssets = [...groupAssets].sort((a, b) => {
+          if (a.name && b.name) {
+            return a.name.localeCompare(b.name);
+          }
+          return 0;
+        });
+        return [type, sortedAssets];
+      })
+    );
+    setGroups(sortedGroups);
   }, [assets]);
 
   return (
@@ -30,7 +44,13 @@ const TableBodyForAssets = ({ assets, form, mode }: TableBodyForAssetsProps) => 
         .sort(([typeA], [typeB]) => typeB.localeCompare(typeA))
         .map(([key, assets], i) => {
           return (
-            <AssetGroup key={i} assetType={key} assets={assets} form={form} mode={mode} />
+            <AssetGroup
+              key={i}
+              assetType={key}
+              assets={assets}
+              form={form}
+              mode={mode}
+            />
           );
         })}
     </TableBody>
