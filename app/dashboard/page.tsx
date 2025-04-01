@@ -7,6 +7,7 @@ import React from "react";
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import Link from "@/components/Plaid/Link";
 import AssetsForm from "@/features/projected-financial-assets/components/AssetFrom";
+import NetWorthCard from "@/features/net-worth/components/NetWorthCard";
 import KeyStatContainer from "@/features/key-statistics/components/KeyStatContainer";
 
 //Sections
@@ -14,7 +15,6 @@ import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSect
 
 //Hooks
 import { useDashboard } from "@/utils/hooks/dashboard/useDashboard";
-import { Key } from "lucide-react";
 
 /**
  *
@@ -56,7 +56,12 @@ const Dashboard = () => {
             projectionError={projectionError}
             projectionLoading={projectionLoading}
           />
-          {/* <KeyStatContainer /> */}
+          <div className="grid grid-cols-2 gap-4">
+            <NetWorthCard />
+            <NetWorthCard />
+          </div>
+
+          <KeyStatContainer />
         </PrimaryDashboardSection>
         {/* Assets Form Section */}
         <AssetsForm
@@ -68,7 +73,7 @@ const Dashboard = () => {
           mode={mode}
           handleModeChange={handleModeChange}
         />
-        {linkToken != null ? <Link linkToken={linkToken} /> : <></>}
+        {/* {linkToken != null ? <Link linkToken={linkToken} /> : <></>} */}
       </div>
     </div>
   );

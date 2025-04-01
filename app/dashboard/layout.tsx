@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex sm:flex-row flex-col">
           <SideNavigationBar />
           <main className=" sm:w-full flex flex-col ">{children}
-          <SignOutButton />
+          {/* <SignOutButton /> */}
           </main>
           <Toaster />
         </div>
