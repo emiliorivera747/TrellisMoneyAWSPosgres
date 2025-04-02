@@ -41,7 +41,25 @@ export const generateProjectedNetWorthV3 = async (
         with_inflation,
         annual_inflation_rate
       );
-    } else {
+    } else if (key === "depository") {
+      populateHashMapWithFvAccounts(
+        hm,
+        start_year,
+        end_year,
+        accounts ?? [],
+        with_inflation,
+        annual_inflation_rate
+      );
+    } else if (key === "loan") {
+      populateHashMapWithFvAccounts(
+        hm,
+        start_year,
+        end_year,
+        accounts ?? [],
+        with_inflation,
+        annual_inflation_rate
+      );
+    } else if (key === "credit") {
       populateHashMapWithFvAccounts(
         hm,
         start_year,
@@ -136,6 +154,7 @@ const populateHashMapWithFvHoldings = (
             annual_inflation_rate,
             i
           );
+
           total += fv;
         } else if (!with_inflation) {
           let fv = future_value_fn(
@@ -144,6 +163,7 @@ const populateHashMapWithFvHoldings = (
             annual_return_rate,
             i
           );
+
           total += fv;
         }
       }
@@ -191,6 +211,7 @@ const populateHashMapWithFvAccounts = (
           annual_inflation_rate,
           i
         );
+        if (account.type === "loan" || account.type === "credit") fv = -fv;
         total += fv;
       } else if (!with_inflation) {
         let fv = future_value_fn(
@@ -199,6 +220,7 @@ const populateHashMapWithFvAccounts = (
           annual_return_rate ?? 0,
           i
         );
+        if (account.type === "loan" || account.type === "credit") fv = -fv;
         total += fv;
       }
 

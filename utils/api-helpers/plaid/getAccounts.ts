@@ -5,7 +5,7 @@ const accountsData = [
         "account_id": "Rh7KpM9nQwJRxZ8vLmPqTxwoNz12B4D56hjGt",
         "balances": {
           "available": 2500.75,
-          "current": 2750.20,
+          "current": 8500.2,
           "iso_currency_code": "USD",
           "limit": null,
           "unofficial_currency_code": null
