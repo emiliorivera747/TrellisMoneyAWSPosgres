@@ -8,6 +8,7 @@ import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/pr
 import Link from "@/components/Plaid/Link";
 import AssetsForm from "@/features/projected-financial-assets/components/AssetFrom";
 import NetWorthCard from "@/features/net-worth/components/NetWorthCard";
+import NetValueDisplay from "@/components/dashboard/NetValueDisplay";
 import KeyStatContainer from "@/features/key-statistics/components/KeyStatContainer";
 
 //Sections
@@ -56,9 +57,29 @@ const Dashboard = () => {
             projectionError={projectionError}
             projectionLoading={projectionLoading}
           />
-          <div className="grid grid-cols-2 gap-4">
-            <NetWorthCard />
-            <NetWorthCard />
+          <div className="grid grid-cols-2 gap-4 border-b pb-8 border-tertiary-300">
+            <NetValueDisplay
+              title={"Net worth"}
+              linkLabel="Accounts"
+              linkUrl="/accounts"
+              primaryValue={10000}
+              secondaryValue={20000}
+              tertiaryValue={10000}
+              secondaryLabel="Assets"
+              tertiaryLabel="Liabilities"
+            />
+            <NetValueDisplay
+              title={"Money left over this year"}
+              linkLabel="Accounts"
+              linkUrl="/accounts"
+              primaryValue={10000}
+              secondaryValue={20000}
+              tertiaryValue={10000}
+              secondaryLabel="Money going in"
+              tertiaryLabel="Money going out"
+            />
+            
+            {/* <NetWorthCard /> */}
           </div>
 
           <KeyStatContainer />

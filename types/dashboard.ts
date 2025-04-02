@@ -18,3 +18,14 @@ export interface DashboardState {
   form: ReturnType<typeof useForm>;
   mutateAsset: (asset: any) => void;
 }
+
+export interface NetValueDisplayCardProps {
+  title: string;
+  linkLabel: string;
+  linkUrl: string;
+  primaryValue: number;
+  secondaryValue: number;
+  secondaryLabel: string;
+  tertiaryLabel: string;
+  tertiaryValue: number;
+}

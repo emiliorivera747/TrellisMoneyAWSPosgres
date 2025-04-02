@@ -1,18 +1,19 @@
 import React from "react";
 import Link from "next/link";
 
-interface NetWorthCardProps {
-  title: string;
-  linkLabel: string;
-  linkUrl: string;
-  primaryValue: number;
-  secondaryValue: number;
-  secondaryLabel: string;
-  tertiaryLabel: string;
-  tertiaryValue: number;
-}
+// Types
+import { NetValueDisplayCardProps } from "@/types/dashboard";
 
-const NetWorthCard = ({
+
+
+/**
+ * 
+ * Displays the net value of the user's assets and liabilities.
+ * 
+ * @param param0 
+ * @returns 
+ */
+const NetValueDisplay = ({
   title,
   linkLabel,
   linkUrl,
@@ -21,7 +22,7 @@ const NetWorthCard = ({
   tertiaryValue,
   secondaryLabel,
   tertiaryLabel,
-}: NetWorthCardProps) => {
+}: NetValueDisplayCardProps) => {
   return (
     <div className="border border-tertiary-300 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-4 rounded-[12px]">
       <div className="flex flex-col justify-between  w-full">
@@ -31,15 +32,27 @@ const NetWorthCard = ({
       </div>
       <p className="font-medium text-tertiary-900 text-2xl">${primaryValue}</p>
       <div className="flex gap-4">
-        <Section amount={secondaryValue} color="#74c0fc" label={secondaryLabel} />
+        <Section
+          amount={secondaryValue}
+          color="#74c0fc"
+          label={secondaryLabel}
+        />
         <p className="flex items-center text-tertiary-800">-</p>
         <Section amount={tertiaryValue} color="#e03131" label={tertiaryLabel} />
       </div>
     </div>
   );
 };
-export default NetWorthCard;
+export default NetValueDisplay;
 
+
+
+/**
+ *  Displays a link with an icon.
+ * 
+ * @param param0 
+ * @returns 
+ */
 const LinkWithIcon = ({
   linkLabel,
   linkUrl,
@@ -71,6 +84,13 @@ const LinkWithIcon = ({
   );
 };
 
+
+/**
+ * Displays a section of the net value display.
+ * 
+ * @param param0 
+ * @returns 
+ */
 const Section = ({
   amount,
   color,
