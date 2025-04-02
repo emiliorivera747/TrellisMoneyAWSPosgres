@@ -13,7 +13,7 @@ export interface DashboardState {
   userError: any;
   linkToken: string | null;
   isPending: boolean;
-  netWorthData:number,
+  netWorthData: {data: {netWorth: number, assets: number, liabilities: number}} | null;,
   netWorthError: any,
   netWorthLoading: boolean;
   mode: "edit" | "view";

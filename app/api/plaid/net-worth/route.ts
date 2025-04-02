@@ -24,9 +24,9 @@ export async function GET(req: NextRequest) {
                     user_id: user?.id || "",
                 }
             });
-        const netWorth = calculateNetWorth(accounts);
-        console.log("NET WORTH: ", netWorth);
-        return NextResponse.json({net_worth: netWorth}, { status: 200 });
+        const data = calculateNetWorth(accounts);
+
+        return NextResponse.json({data}, { status: 200 });
     } catch (error) {
         return NextResponse.json(
             { error: "Error fetching account balance data" },

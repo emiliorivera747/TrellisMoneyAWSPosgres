@@ -66,9 +66,9 @@ const Dashboard = () => {
               title={"Net worth"}
               linkLabel="Accounts"
               linkUrl="/accounts"
-              primaryValue={netWorthData?.net_worth}
-              secondaryValue={20000000}
-              tertiaryValue={10000000}
+              primaryValue={netWorthData?.data?.netWorth ?? 0}
+              secondaryValue={netWorthData?.data?.assets ?? 0}
+              tertiaryValue={netWorthData?.data?.liabilities ?? 0}
               secondaryLabel="Assets"
               tertiaryLabel="Liabilities"
             />
