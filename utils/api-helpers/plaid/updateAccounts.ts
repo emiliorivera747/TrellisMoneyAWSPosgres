@@ -36,6 +36,7 @@ export async function updateAccounts(accounts: Account[], userId: string) {
       update: {
         name: getValueOrDefault(account?.name, ""),
         type: getValueOrDefault(account?.type, ""),
+        subtype: getValueOrDefault(account?.subtype, ""),
         available: getValueOrDefault(account?.balances?.available, 0),
         current: getValueOrDefault(account?.balances?.current, 0),
         limit: getValueOrDefault(account?.balances?.limit, 0),
@@ -50,6 +51,7 @@ export async function updateAccounts(accounts: Account[], userId: string) {
         balance_id: account.account_id,
         name: getValueOrDefault(account?.name, ""),
         type: getValueOrDefault(account?.type, ""),
+        subtype: getValueOrDefault(account?.subtype, ""),
         available: getValueOrDefault(account?.balances?.available, 0),
         current: getValueOrDefault(account?.balances?.current, 0),
         iso_currency_code: getValueOrDefault(

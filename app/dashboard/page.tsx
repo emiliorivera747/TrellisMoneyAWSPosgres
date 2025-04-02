@@ -7,7 +7,6 @@ import React from "react";
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import Link from "@/components/Plaid/Link";
 import AssetsForm from "@/features/projected-financial-assets/components/AssetFrom";
-import NetWorthCard from "@/features/net-worth/components/NetWorthCard";
 import NetValueDisplay from "@/components/dashboard/NetValueDisplay";
 import KeyStatContainer from "@/features/key-statistics/components/KeyStatContainer";
 
@@ -35,11 +34,16 @@ const Dashboard = () => {
     linkToken,
     form,
     mode,
+    netWorthData,
+    netWorthError,
+    netWorthLoading,
     handleModeChange,
     handleYearSelection,
     handleFilterChange,
     onSubmit,
   } = useDashboard();
+
+  console.log(netWorthData);
 
   const getAssetsData = () => projectionData?.projected_assets[0]?.data || [];
 
@@ -62,7 +66,7 @@ const Dashboard = () => {
               title={"Net worth"}
               linkLabel="Accounts"
               linkUrl="/accounts"
-              primaryValue={10000000}
+              primaryValue={netWorthData?.net_worth}
               secondaryValue={20000000}
               tertiaryValue={10000000}
               secondaryLabel="Assets"

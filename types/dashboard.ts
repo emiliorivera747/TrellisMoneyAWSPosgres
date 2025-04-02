@@ -13,6 +13,9 @@ export interface DashboardState {
   userError: any;
   linkToken: string | null;
   isPending: boolean;
+  netWorthData:number,
+  netWorthError: any,
+  netWorthLoading: boolean;
   mode: "edit" | "view";
   handleModeChange: () => void;
   form: ReturnType<typeof useForm>;
