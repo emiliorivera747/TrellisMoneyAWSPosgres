@@ -4,7 +4,8 @@ import Link from "next/link";
 // Types
 import { NetValueDisplayCardProps } from "@/types/dashboard";
 
-
+// Helpers
+import { convertToMoney } from "@/utils/helper-functions/convertToMoney";
 
 /**
  * 
@@ -24,13 +25,13 @@ const NetValueDisplay = ({
   tertiaryLabel,
 }: NetValueDisplayCardProps) => {
   return (
-    <div className="border border-tertiary-300 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-4 rounded-[12px]">
+    <div className="border border-tertiary-200 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-4 rounded-[12px]">
       <div className="flex flex-col justify-between  w-full">
         {" "}
         <h1 className="text-md justify-start text-tertiary-900">{title}</h1>
         <LinkWithIcon linkLabel={linkLabel} linkUrl={linkUrl} />
       </div>
-      <p className="font-medium text-tertiary-900 text-2xl">${primaryValue}</p>
+      <p className="font-medium text-tertiary-900 text-2xl">{convertToMoney(primaryValue)}</p>
       <div className="flex gap-4">
         <Section
           amount={secondaryValue}
@@ -103,7 +104,7 @@ const Section = ({
   return (
     <div className="flex flex-col items-start text-xs">
       <h1 className="font-normal text-tertiary-800 text-[0.8rem] ">
-        ${amount}
+        {convertToMoney(amount)}
       </h1>
       <div className="flex items-center gap-1">
         <span
