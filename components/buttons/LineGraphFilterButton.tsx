@@ -13,7 +13,7 @@ const LineGraphFilterButton = ({
   return (
     <button
       onClick={onClick}
-      className={`transition duration-300 p-1 px-2 rounded-[12px] text-xs hover:text-tertiary-1000 hover:border-tertiary-700 hover:font-extrabold border flex flex-row justify-center items-center text-center gap-2 ${
+      className={`transition duration-300 py-[0.3rem] px-2 rounded-full text-xs hover:text-tertiary-1000 hover:border-tertiary-700 hover:font-extrabold border flex flex-row justify-center items-center text-center gap-2 ${
         isSelected
           ? ` text-tertiary-1000 font-extrabold border-tertiary-600`
           : "text-tertiary-800 border-tertiary-400 "

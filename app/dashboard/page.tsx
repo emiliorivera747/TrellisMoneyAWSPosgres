@@ -73,14 +73,14 @@ const Dashboard = () => {
               tertiaryLabel="Liabilities"
             />
             <NetValueDisplay
-              title={"Money left over this year"}
+              title={"Cash Flow"}
               linkLabel="Accounts"
               linkUrl="/accounts"
               primaryValue={10000}
               secondaryValue={20000}
               tertiaryValue={10000}
-              secondaryLabel="Money going in"
-              tertiaryLabel="Money going out"
+              secondaryLabel="All income"
+              tertiaryLabel="All spending"
             />
             
             {/* <NetWorthCard /> */}

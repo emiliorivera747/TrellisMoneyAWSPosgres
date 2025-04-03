@@ -8,7 +8,7 @@ const ProjectedAssetsContainer = ({ assets, children }: ProjectedAssetsContainer
         <aside
             style={{
                 border: "1px solid rgb(221, 221, 221)",
-                boxShadow:'rgba(0, 0, 0, 0.09) 0px 3px 12px',
+                // boxShadow:'rgba(0, 0, 0, 0.09) 0px 3px 12px',
                 scrollbarWidth: "none",
             }}
             className={`${

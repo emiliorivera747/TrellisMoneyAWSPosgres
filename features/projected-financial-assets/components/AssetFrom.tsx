@@ -40,7 +40,7 @@ const AssetsForm: React.FC<AssetsFormProps> = ({
   return (
     <Form {...form}>
       <form
-        className="grid grid-rows-[1fr_6rem] gap-6 h-full col-span-10 sm:col-span-3 sm:row-span-1 "
+        className="grid grid-rows-[1fr_6rem] gap-6 h-full col-span-10 sm:col-span-3 sm:row-span-1"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <ProjectedAssetsCard
