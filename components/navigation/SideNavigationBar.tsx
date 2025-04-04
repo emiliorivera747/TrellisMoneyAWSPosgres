@@ -1,6 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 
+import Link from "next/link";
 
 // Icons
 import SideNavItemLink from "@/components/navigation/SideNavItemLink";
@@ -9,7 +10,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 //Data
 import { navigationItems } from "@/utils/data/navigation-bar-data/navigationItems";
 
+// Hooks
+import useFetchUser from "@/utils/hooks/user/useFetchUser";
+
+import UserProfileAvatarMenu from "@/features/user-profile/components/UserProfileAvatarMenu";
+
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { User } from "lucide-react";
+
 const SideNavigationBar: React.FC = () => {
+  const { user } = useFetchUser();
+
   const pathname = usePathname();
   const currentPath = pathname;
 
@@ -34,10 +49,7 @@ const SideNavigationBar: React.FC = () => {
             </li>
           ))}
         </ul>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <UserProfileAvatarMenu />
       </nav>
     </aside>
   );
