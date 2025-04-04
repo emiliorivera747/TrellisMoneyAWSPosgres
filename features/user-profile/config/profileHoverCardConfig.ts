@@ -1,21 +1,14 @@
-export const profileHoverCardConfig = [
+export const getProfileHoverCardConfig = (userId: string) => [
     {
-        label: 'Account Details',
+        label: 'Account details',
         icon: 'UserIcon',
         description: 'View and edit your profile information.',
-        url: '/profile',
+        url: `/profile/${userId}`,
     },
     {
         label: 'Settings',
         icon: 'CogIcon',
         description: 'Adjust your account settings.',
-        url: '/settings',
+        url: `/settings`,
     },
-    {
-        label: 'Logout',
-        icon: 'LogoutIcon',
-        description: 'Sign out of your account.',
-        url: '/logout',
-    },
-  
-]
+];
