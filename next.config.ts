@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   compilerOptions: {
     esModuleInterop: true,
   },
+  images: {
+    domains: ['res.cloudinary.com'], 
+  },
   async headers() {
     return [
       {
