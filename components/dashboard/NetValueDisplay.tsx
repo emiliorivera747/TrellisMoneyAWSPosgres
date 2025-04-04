@@ -25,7 +25,7 @@ const NetValueDisplay = ({
   tertiaryLabel,
 }: NetValueDisplayCardProps) => {
   return (
-    <div className="border border-tertiary-200 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-4 rounded-[12px]">
+    <div className="border border-tertiary-300 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-4 rounded-[12px]">
       <div className="flex flex-col justify-between  w-full">
         {" "}
         <h1 className="text-md justify-start text-tertiary-900">{title}</h1>
