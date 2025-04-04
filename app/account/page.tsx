@@ -7,7 +7,6 @@ const page = () => {
   const params = useParams();
   const { user } = useFetchUser();
 
-  const { id } = params;
   return (
     <div className="p-4 mt-[2%]">
       <h1>{user?.email}</h1>

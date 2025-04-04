@@ -24,8 +24,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex sm:flex-row flex-col">
           <SideNavigationBar />
           <main className=" sm:w-full flex flex-row">
-            <AccountSideNav />
-            {children}
+            <div className="mt-[2%] flex flex-row">
+              <AccountSideNav />
+              {children}
+            </div>
           </main>
           <Toaster />
         </div>
