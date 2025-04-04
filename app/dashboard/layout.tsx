@@ -21,14 +21,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         enableSystem
         disableTransitionOnChange
       >
-        <div className="flex sm:flex-row flex-col">
+        <div className="flex sm:flex-row flex-col h-screen">
           <SideNavigationBar />
           <main className=" sm:w-full flex flex-col ">{children}
           {/* <SignOutButton /> */}
           </main>
           <Toaster />
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </ThemeProvider>
     </div>
   );
