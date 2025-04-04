@@ -5,7 +5,7 @@ interface MainDashboardSectionProps {
 }
 const PrimaryDashboardSection = ({ children }: MainDashboardSectionProps) => {
   return (
-    <section className="col-span-10 sm:col-span-7 overflow-y-auto h-screen no-scrollbar">
+    <section className="col-span-10 sm:col-span-7">
       {children}
     </section>
   );

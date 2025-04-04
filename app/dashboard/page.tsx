@@ -9,6 +9,7 @@ import Link from "@/components/Plaid/Link";
 import AssetsForm from "@/features/projected-financial-assets/components/AssetFrom";
 import NetValueDisplay from "@/components/dashboard/NetValueDisplay";
 import KeyStatContainer from "@/features/key-statistics/components/KeyStatContainer";
+import Footer from "@/components/footers/Footer";
 
 //Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
@@ -43,14 +44,11 @@ const Dashboard = () => {
     onSubmit,
   } = useDashboard();
 
-  console.log(netWorthData);
-
   const getAssetsData = () => projectionData?.projected_assets[0]?.data || [];
 
   return (
-    <div className="min-h-screen h-auto w-full border-box">
-      <div className="grid-cols-10 grid-rows-1 grid gap-6 p-4 mt-[2%]">
-        {/* Dashboard Prominent Section */}
+    <div className="w-full border-box max-h-screen overflow-y-scroll flex flex-row">
+      <div className="p-4 w-[70%] mt-[2%] max-h-screen">
         <PrimaryDashboardSection>
           <ProjectedNetWorthGraph
             handleYearSelection={handleYearSelection}
@@ -82,13 +80,12 @@ const Dashboard = () => {
               secondaryLabel="All income"
               tertiaryLabel="All spending"
             />
-            
-            {/* <NetWorthCard /> */}
           </div>
-
           <KeyStatContainer />
+          <Footer />
         </PrimaryDashboardSection>
-        {/* Assets Form Section */}
+      </div>
+      <div className="h-full w-[30%]  sticky top-0 pt-[2%]">
         <AssetsForm
           form={form}
           assets={getAssetsData()}
@@ -98,7 +95,6 @@ const Dashboard = () => {
           mode={mode}
           handleModeChange={handleModeChange}
         />
-        {/* {linkToken != null ? <Link linkToken={linkToken} /> : <></>} */}
       </div>
     </div>
   );

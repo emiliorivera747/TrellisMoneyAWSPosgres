@@ -14,21 +14,20 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-screen mx-[2%] sm:mx-[4%] 2xl:mx-[20%] border-box">
+    <div className="max-h-screen ml-[2%] sm:ml-[2%] 2xl:ml-[10%] border-box">
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange
       >
-        <div className="flex sm:flex-row flex-col h-screen">
+        <div className="flex sm:flex-row flex-col">
           <SideNavigationBar />
-          <main className=" sm:w-full flex flex-col ">{children}
-          {/* <SignOutButton /> */}
+          <main className=" sm:w-full flex flex-col">
+            {children}
           </main>
           <Toaster />
         </div>
-        {/* <Footer /> */}
       </ThemeProvider>
     </div>
   );
