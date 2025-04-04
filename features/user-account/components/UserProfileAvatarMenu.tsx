@@ -13,7 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import useFetchUser from "@/utils/hooks/user/useFetchUser";
 
-import { getProfileHoverCardConfig } from "@/features/user-profile/config/profileHoverCardConfig";
+import { getProfileHoverCardConfig } from "@/features/user-account/config/profileHoverCardConfig";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 
 const UserProfileAvatarMenu = () => {
@@ -40,7 +40,7 @@ const UserProfileAvatarMenu = () => {
               Trellis Money {`Premium`}
             </p>
           </div>
-          {getProfileHoverCardConfig(user?.id ? user.id : "").map(
+          {getProfileHoverCardConfig.map(
             ({ url, label }, index) => {
               return (
                 <Link
