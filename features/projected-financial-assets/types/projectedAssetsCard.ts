@@ -3,7 +3,7 @@ import {
   FieldValues,
 } from "react-hook-form";
 
-import { FinancialAssets } from "@/features/projected-financial-assets/types/financialAssets";
+import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 
 export type AccountType =
   | "depository"
@@ -24,7 +24,7 @@ export interface Assets {
 }
 
 export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
-  assets: FinancialAssets[];
+  assets: Assets[];
   selectedYear: number;
   form :any; 
   isLoading: boolean;

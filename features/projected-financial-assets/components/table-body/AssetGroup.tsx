@@ -74,7 +74,7 @@ const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
       render={({ field }) => (
         <FormItem>
           <NumberInputV2
-            defaultValue={(asset.annual_growth_rate * 100).toFixed(0)}
+            defaultValue={((asset.annual_growth_rate ?? 0) * 100).toFixed(0)}
             className="text-xs pl-2"
             min={-100}
             max={100}
@@ -93,7 +93,7 @@ const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
 const GrowthRateCellText = ({ asset }: GrowthRateCellPropsText) => (
   <TableCell className="flex items-center ml-[20%] h-[3.6rem] w-[1/3] text-center uppercase">
     <p className="text-[0.8rem] pl-2 text-tertiary-900 font-light">
-      {(asset.annual_growth_rate * 100).toFixed(0)}%
+      {((asset.annual_growth_rate ?? 0) * 100).toFixed(0)}%
     </p>
   </TableCell>
 );
