@@ -1,4 +1,5 @@
 // Next and React
+import { useRef } from "react";
 import Link from "next/link";
 import React from "react";
 
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+  const signOutButtonRef = useRef<HTMLButtonElement>(null);
   const supabase = await createClient();
 
   const {
@@ -32,7 +34,7 @@ export default async function Home() {
             Trellis Money
           </span>
         </div>
-        {user ? <SignOutButton /> : <SignInButton />}
+        {user ? <SignOutButton ref={signOutButtonRef}/> : <SignInButton />}
       </nav>
       <header className="text-center h-full items-center justify-center flex flex-col">
         <div className="translate-y-[-70%] sm:translate-y-[-80%] mx-4">
