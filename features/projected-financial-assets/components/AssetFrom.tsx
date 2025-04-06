@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { UseFormReturn } from "react-hook-form";
+import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 import { Form } from "@/components/ui/form";
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 interface AssetsFormProps {
   form: any;
-  assets: Assets[];
+  assets: Assets[] ;
   selectedYear: number | string;
   isLoading: boolean;
   onSubmit: (data: any) => void;

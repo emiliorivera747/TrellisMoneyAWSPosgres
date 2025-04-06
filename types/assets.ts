@@ -8,9 +8,12 @@ export interface Assets {
   account_id: string | undefined;
   type: AccountType;
   shares: number;
+  user_id?: string | undefined;
 }
 
 export interface AssetsWithType{
   type: AccountType;
   assets: Assets[];
 }
+
+

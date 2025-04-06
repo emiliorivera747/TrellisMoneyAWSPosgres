@@ -1,9 +1,4 @@
-import {
-  UseFormReturn,
-  FieldValues,
-} from "react-hook-form";
-
-import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
+import { UseFormReturn, FieldValues } from "react-hook-form";
 
 export type AccountType =
   | "depository"
@@ -26,7 +21,7 @@ export interface Assets {
 export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
   assets: Assets[];
   selectedYear: number;
-  form :any; 
+  form: any;
   isLoading: boolean;
   mode: "edit" | "view";
   handleModeChange: () => void;
@@ -41,17 +36,16 @@ export interface AssetName {
   name: string;
 }
 
-
 export interface AssetRowProps {
-  asset: Assets; 
-  form: any; 
+  asset: Assets;
+  form: any;
   mode: "edit" | "view";
 }
 
 export interface AssetGroupProps {
   assetType: string;
-  assets: Assets[]; 
-  form: any; 
+  assets: Assets[];
+  form: any;
   mode: "edit" | "view";
 }
 
@@ -67,4 +61,3 @@ export interface GrowthRateCellPropsInput {
 export interface GrowthRateCellPropsText {
   asset: Assets;
 }
-

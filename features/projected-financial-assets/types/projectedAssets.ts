@@ -3,7 +3,7 @@ import { AccountType } from "@/features/projected-financial-assets/types/project
 import Decimal from "decimal.js";
 
 export interface ProjectedAssets {
-  data: FinancialAssets[];
+  data: Assets[];
   value: string;
 }
 
@@ -32,3 +32,7 @@ export interface FinancialAssets {
   shares: number | null | Decimal;
   user_id?: string | undefined;
 }
+
+
+
+

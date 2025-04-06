@@ -35,6 +35,7 @@ const generateProjectedAssetsAndNetworth = async (
   );
   return response.json();
 }
+
 const financialProjectionService = {
   generateProjectedNetWorth,
   generateProjectedAssetsAndNetworth
