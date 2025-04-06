@@ -1,6 +1,5 @@
 import SideNavigationBar from "@/components/navigation/SideNavigationBar";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from "@/components/theme-provider";
 
 import AccountSideNav from "@/features/user-account/components/AccountSideNav";
 
@@ -15,23 +14,16 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="max-h-screen ml-[2%] sm:ml-[2%] 2xl:ml-[10%] border-box">
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <div className="flex sm:flex-row flex-col">
-          <SideNavigationBar />
-          <main className=" sm:w-full flex flex-row">
-            <div className="mt-[2%] flex flex-row">
-              <AccountSideNav />
-              {children}
-            </div>
-          </main>
-          <Toaster />
-        </div>
-      </ThemeProvider>
+      <div className="flex sm:flex-row flex-col">
+        <SideNavigationBar />
+        <main className=" sm:w-full flex flex-row">
+          <div className="mt-[2%] flex flex-row">
+            <AccountSideNav />
+            {children}
+          </div>
+        </main>
+        <Toaster />
+      </div>
     </div>
   );
 }

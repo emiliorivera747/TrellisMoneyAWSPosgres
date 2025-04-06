@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
+import { ThemeProvider } from "@/components/theme-provider";
 
 //External Libraries
 import "react-toastify/dist/ReactToastify.css";
@@ -10,12 +11,11 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Rubik, Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 
 //Components
 import { ReactQueryClientProvider } from "@/features/react-query/components/ReactQueryClientProvider";
 
-// import "@/styles/globals.scss";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -50,10 +50,17 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased ${inter.className}`}
         >
-          {children}
-          <ToastContainer />
-          <SpeedInsights/>
-          <Analytics/>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <ToastContainer />
+            <SpeedInsights />
+            <Analytics />
+          </ThemeProvider>
         </body>
       </html>
     </ReactQueryClientProvider>

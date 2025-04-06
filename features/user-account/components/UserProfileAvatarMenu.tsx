@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useTheme } from "next-themes"
 
 // Next Js
 import Link from "next/link";
@@ -17,6 +18,7 @@ import { getProfileHoverCardConfig } from "@/features/user-account/config/profil
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 
 const UserProfileAvatarMenu = () => {
+  const { theme, setTheme } = useTheme();
   const { user } = useFetchUser();
   const signOutButtonRef = useRef<HTMLButtonElement>(null);
   return (
@@ -53,6 +55,15 @@ const UserProfileAvatarMenu = () => {
               );
             }
           )}
+
+            <button onClick={() => {
+            theme === "dark" ? setTheme("light") : setTheme("dark");
+            }}
+            className="hover:backdrop-blur hover:bg-tertiary-600/40 px-2 py-2 rounded-md transition-all ease-in-out duration-300 w-full border-none items-start flex justify-start text-left"
+            >
+            {(theme ? theme.charAt(0).toUpperCase() + theme.slice(1) : "Light")} mode
+            </button>
+
           <SignOutButton
             ref={signOutButtonRef}
             className="hover:backdrop-blur hover:bg-tertiary-600/40 px-2 py-2 rounded-md transition-all ease-in-out duration-300 w-full border-none items-start flex justify-start text-left"
