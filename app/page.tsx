@@ -1,6 +1,4 @@
 // Next and React
-'use client';
-import { useRef } from "react";
 import Link from "next/link";
 import React from "react";
 
@@ -12,9 +10,14 @@ import Footer from "@/components/footers/Footer";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 
 import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Trellis Money - Seeing value where others don't",
+  description: "Trellis Money is a personal finance management tool. Track investments across all accounts. Set goals and budgets. Get insights into your spending.",
+};
 
 export default async function Home() {
-  const signOutButtonRef = useRef<HTMLButtonElement>(null);
   const supabase = await createClient();
 
   const {
@@ -29,7 +32,7 @@ export default async function Home() {
             Trellis Money
           </span>
         </div>
-        {user ? <SignOutButton ref={signOutButtonRef}/> : <SignInButton />}
+        {user ? <SignOutButton/> : <SignInButton />}
       </nav>
       <header className="text-center h-full items-center justify-center flex flex-col">
         <div className="translate-y-[-70%] sm:translate-y-[-80%] mx-4">

@@ -9,7 +9,7 @@ export default function SignOutButton({
   ref,
   className,
 }: {
-  ref: React.RefObject<HTMLButtonElement>;
+  ref?: React.RefObject<HTMLButtonElement>;
   className?: string;
 }) {
   const default_className =
