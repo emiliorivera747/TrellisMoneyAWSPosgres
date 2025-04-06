@@ -69,6 +69,8 @@ const Dashboard = () => {
               tertiaryValue={netWorthData?.data?.liabilities ?? 0}
               secondaryLabel="Assets"
               tertiaryLabel="Liabilities"
+              modalTitle="Net worth"
+              modalDescription="Net worth reflects your financial position. A positive value means your assets exceed debts, while a negative value indicates more debt than assets."
             />
             <NetValueDisplay
               title={"Cash Flow"}
@@ -79,6 +81,8 @@ const Dashboard = () => {
               tertiaryValue={10000}
               secondaryLabel="All income"
               tertiaryLabel="All spending"
+              modalTitle="Cash flow"
+              modalDescription="Cash flow shows how money moves in and out. A positive value means you’re earning more than you spend, while a negative value suggests you’re spending beyond your income."
             />
           </div>
           <KeyStatContainer />
