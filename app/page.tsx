@@ -1,4 +1,5 @@
 // Next and React
+'use client';
 import { useRef } from "react";
 import Link from "next/link";
 import React from "react";
