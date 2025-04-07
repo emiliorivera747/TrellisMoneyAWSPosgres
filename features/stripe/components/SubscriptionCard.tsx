@@ -1,16 +1,19 @@
+import PaymentLink from "@/features/stripe/components/PaymentLink";
 interface SubscriptionCardProps {
   title: string;
   price: string;
   features: string[];
-  onSubscribe: () => void;
+  payment_link: string;
 }
 
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   title,
   price,
   features,
-  onSubscribe,
+  payment_link,
 }) => {
+
+  console.log("Payment Link: ", payment_link);
   return (
     <div className="subscription-card border rounded-[12px] shadow-md p-6 flex flex-col items-center">
       <h2 className="text-xl font-bold mb-2">{title}</h2>
@@ -38,12 +41,11 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
           </li>
         ))}
       </ul>
-      <button
-        onClick={onSubscribe}
-        className="flex items-center justify-center w-full bg-gradient-to-r from-primary-700 to-primary-800 text-white px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] hover:bg-blue-700 hover:to-blue-700 transition duration-300"
-      >
-        Subscribe
-      </button>
+      <PaymentLink
+        paymentLink={payment_link}
+        href={"/sign-up"}
+        text={"Subscribe"}
+      />
     </div>
   );
 };

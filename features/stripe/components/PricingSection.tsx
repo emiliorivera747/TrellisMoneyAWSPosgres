@@ -23,7 +23,7 @@ const PricingSection = () => {
             "Get alerts and notifications",
             "Set projections and forecasts",
           ]}
-          onSubscribe={() => alert("Subscribed!")}
+          payment_link={process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PLAN_LINK as string}
         />
         <SubscriptionCard
           title="Premium Plus Yearly"
@@ -35,7 +35,7 @@ const PricingSection = () => {
             "Get alerts and notifications",
             "Set projections and forecasts",
           ]}
-          onSubscribe={() => alert("Subscribed!")}
+          payment_link={process.env.NEXT_PUBLIC_STRIPE_YEARLY_PLAN_LINK as string}
         />
       </div>
     </section>
