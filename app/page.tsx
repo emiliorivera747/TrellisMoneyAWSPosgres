@@ -8,13 +8,15 @@ export const dynamic = "force-dynamic";
 import SignInButton from "@/features/auth/components/buttons/SignInButton";
 import Footer from "@/components/footers/Footer";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
+import PricingSection from "@/features/stripe/components/PricingSection";
 
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Trellis Money - Seeing value where others don't",
-  description: "Trellis Money is a personal finance management tool. Track investments across all accounts. Set goals and budgets. Get insights into your spending.",
+  description:
+    "Trellis Money is a personal finance management tool. Track investments across all accounts. Set goals and budgets. Get insights into your spending.",
 };
 
 export default async function Home() {
@@ -32,17 +34,17 @@ export default async function Home() {
             Trellis Money
           </span>
         </div>
-        {user ? <SignOutButton/> : <SignInButton />}
+        {user ? <SignOutButton /> : <SignInButton />}
       </nav>
       <header className="text-center h-full items-center justify-center flex flex-col">
         <div className="translate-y-[-70%] sm:translate-y-[-80%] mx-4">
           <h1 className="text-[2rem] sm:text-[2.5rem] font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent">
             Welcome to Trellis Money
           </h1>
-            <p className="mt-2 mb-4 pb-10 bg-gradient-to-r from-tertiary-900 to-tertiary-700 bg-clip-text text-transparent text-[0.9rem] sm:text-[1rem]">
+          <p className="mt-2 mb-4 pb-10 bg-gradient-to-r from-tertiary-900 to-tertiary-700 bg-clip-text text-transparent text-[0.9rem] sm:text-[1rem]">
             Your personal finance management tool to track investments across
             all accounts.
-            </p>
+          </p>
 
           {user ? (
             <Link
@@ -61,6 +63,7 @@ export default async function Home() {
           )}
         </div>
       </header>
+      <PricingSection />
       <Footer />
     </div>
   );
