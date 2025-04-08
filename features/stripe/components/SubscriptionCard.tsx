@@ -42,7 +42,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         ))}
       </ul>
       <PaymentLink
-        paymentLink={payment_link}
+        paymentLink={"#"}
         href={"/sign-up"}
         text={"Subscribe"}
       />
