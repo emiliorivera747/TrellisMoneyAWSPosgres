@@ -67,6 +67,7 @@ const InformationIcon = ({
             </div>
           </div>
         </AlertDialogHeader>
+        <AlertDialogCancel className="bg-tertiary-1000 hover:bg-tertiary-900 text-white hover:text-white p-[1.2rem] rounded-[12px]">Cancel</AlertDialogCancel>
       </AlertDialogContent>
     </AlertDialog>
   );
