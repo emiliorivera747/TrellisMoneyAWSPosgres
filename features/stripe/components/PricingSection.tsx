@@ -4,15 +4,15 @@ import SubscriptionCard from "@/features/stripe/components/SubscriptionCard";
 
 const PricingSection = () => {
   return (
-    <section className="h-screen w-full flex flex-col ">
-      <h1 className="text-center text-4xl font-bold text-tertiary-900 mt-10">
+    <section className="h-screen w-full flex flex-col border-t border-tertiary-300">
+      <h1 className="text-center text-3xl font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent mt-[5rem]">
         {" "}
         Start your Trellis Money membership
       </h1>
-      <p className="text-center text-lg text-tertiary-700 mt-4">
+      <p className="text-center text-md bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-transparent  mt-4">
         Manage your finances. Cancel anytime.
       </p>
-      <div className="flex flex-row gap-6 items-center justify-center pt-8">
+      <div className="flex flex-row gap-6 items-center justify-center  p-8 ">
         <SubscriptionCard
           title="Premium Plus Monthly"
           price="$5/mo"
@@ -23,7 +23,10 @@ const PricingSection = () => {
             "Get alerts and notifications",
             "Set projections and forecasts",
           ]}
-          payment_link={process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PLAN_LINK as string}
+          payment_link={
+            process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PLAN_LINK as string
+          }
+          footerDescription="Auto-renews at $5/mo. Switch plans or cancel anytime."
         />
         <SubscriptionCard
           title="Premium Plus Yearly"
@@ -35,7 +38,10 @@ const PricingSection = () => {
             "Get alerts and notifications",
             "Set projections and forecasts",
           ]}
-          payment_link={process.env.NEXT_PUBLIC_STRIPE_YEARLY_PLAN_LINK as string}
+          payment_link={
+            process.env.NEXT_PUBLIC_STRIPE_YEARLY_PLAN_LINK as string
+          }
+          footerDescription="Auto-renews at $50/yr. Switch plans or cancel anytime."
         />
       </div>
     </section>
