@@ -37,29 +37,33 @@ export default async function Home() {
         {user ? <SignOutButton /> : <SignInButton />}
       </nav>
       <header className="text-center h-full items-center justify-center flex flex-col">
-        <div className="translate-y-[-70%] sm:translate-y-[-80%] mx-4">
-          <h1 className="text-[2rem] sm:text-[2.5rem] font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent">
-            Welcome to Trellis Money
+        <div className="translate-y-[-70%] sm:translate-y-[-50%] mx-4 sm:w-[50rem]">
+          <h1 className="text-[2rem] sm:text-[3rem] font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-700 bg-clip-text text-transparent">
+            Seeing value where others don't
           </h1>
-          <p className="mt-2 mb-4 pb-10 bg-gradient-to-r from-tertiary-900 to-tertiary-700 bg-clip-text text-transparent text-[0.9rem] sm:text-[1rem]">
-            Your personal finance management tool to track investments across
-            all accounts.
+          <p className=" mt-2 mb-3 bg-gradient-to-r from-tertiary-700 to-tertiary-700 bg-clip-text text-transparent text-[0.9rem] sm:text-[1.1rem]">
+            Take control of your finances with Trellis Money.
           </p>
 
           {user ? (
             <Link
               href="/dashboard"
-              className="mt-4 px-8 py-4 bg-secondary-700 hover:bg-secondary-900 transition duration-300 text-white border-none rounded cursor-pointer"
+              className="block mt-4 px-8 py-4 bg-gradient-to-r from-primary-900 to-primary-700 transition duration-300 text-white border-none rounded cursor-pointer"
             >
               Go to Dashboard
             </Link>
           ) : (
-            <Link
-              href="/sign-up"
-              className="mt-4 px-8 py-4  transition duration-300 rounded-lg bg-primary-700 hover:bg-primary-900 text-white border-none cursor-pointer "
-            >
-              Get Started
-            </Link>
+            <>
+              <Link
+                href="/sign-up"
+                className=" inline-block  rounded-full mt-4 px-8 py-5  transition duration-300  bg-gradient-to-r from-primary-900 to-primary-700 hover:from-primary-1000 hover:to-primary-800 text-white border-none cursor-pointer font-bold"
+              >
+                Try for $0.00
+              </Link>
+              <p className="pt-4 text-tertiary-600 text-[0.8rem] ">
+                $4.99 a month after 30 days. Cancel anytime.
+              </p>
+            </>
           )}
         </div>
       </header>
