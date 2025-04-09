@@ -23,10 +23,16 @@ const GoogleButton = ({ label, dataTestID, className , ref }: GoogleButtonProps)
   async function signInWithGoogle() {
     setIsGoogleLoading(true);
     try {
+      const stripePaymentLink = localStorage.getItem("stripePaymentLink");
+      const redirectTo = stripePaymentLink
+        ? `${window.location.origin}/auth/callback?stripePaymentLink=${encodeURIComponent(stripePaymentLink)}`
+        : `${window.location.origin}/auth/callback`;
+
+      // Sign in with Google
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/dashboard`,
+          redirectTo,
         },
       });
       if (error) throw error;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { UseFormSetError, FieldValues } from "react-hook-form";
 import { toast } from "react-toastify";
 import { State } from "@/types/serverActionState";
@@ -7,14 +8,14 @@ import { State } from "@/types/serverActionState";
 import { getSupabaseErrorMessage } from "@/features/auth/utils/getSupabaseErrorMessages";
 import { handleZodErrors } from "@/features/auth/utils/handleZodErrors";
 
-// Define the hook
 export function useHandleActionState<TFields extends FieldValues>(
   state: State,
-  setError: UseFormSetError<TFields>, // replace `any` with your form type if needed
-  onSuccessFn?: () => void, // optional callback for success handling
-  successMessage?: string // optional success message
+  setError: UseFormSetError<TFields>,
+  onSuccessFn?: () => void,
+  successMessage?: string
 ) {
   const [err, setErr] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!state) return;
@@ -36,7 +37,15 @@ export function useHandleActionState<TFields extends FieldValues>(
 
     if (state.status === "success") {
       if (successMessage) toast.success(successMessage, { theme: "colored" });
-      if (onSuccessFn) onSuccessFn();
+      const stripePaymentLink = localStorage.getItem("stripePaymentLink");
+      if (stripePaymentLink && state?.user?.email) {
+        localStorage.removeItem("stripePaymentLink");
+        router.push(
+          stripePaymentLink + `?prefilled_email=${state?.user.email}`
+        );
+      } else {
+        if (onSuccessFn) onSuccessFn();
+      }
     }
   }, [state, setError]);
 
