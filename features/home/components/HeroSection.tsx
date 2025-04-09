@@ -14,8 +14,7 @@ export default function HeroSection({ isAuthenticated }: HeroSectionProps) {
           Seeing value where others don&apos;t
         </h1>
         <p className="mt-2 mb-3 bg-gradient-to-r from-tertiary-800 to-tertiary-700 bg-clip-text text-[0.9rem] text-transparent sm:text-[1.4rem]">
-          Take control of your finances with{" "}
-          <strong className="text-tertiary-800">Trellis Money</strong>.
+          Take control of your finances with Trellis Money
         </p>
         {isAuthenticated ? <AuthenticatedCTA /> : <UnauthenticatedCTA />}
       </div>
