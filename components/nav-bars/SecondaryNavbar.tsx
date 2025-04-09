@@ -6,7 +6,7 @@ interface NavbarProps {
   isAuthenticated?: boolean | null;
 }
 
-const NavBar = ({ isAuthenticated }: NavbarProps) => {
+const NavBar = () => {
   return (
     <nav className="flex items-center justify-between border-b border-gray-200 px-4 py-5 mx-10 sm:px-4 sm:py-5">
       <div className="flex items-center">
@@ -16,7 +16,6 @@ const NavBar = ({ isAuthenticated }: NavbarProps) => {
           </span>
         </Link>
       </div>
-      {isAuthenticated ? <SignOutButton /> : <SignInButton />}
     </nav>
   );
 };

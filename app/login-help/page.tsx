@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 //Compenents
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import TextInput from "@/components/form-components/TextInput";
-import NavBar from "@/components/nav-bars/NavBar";
+import NavBar from "@/components/nav-bars/SecondaryNavbar";
 import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";

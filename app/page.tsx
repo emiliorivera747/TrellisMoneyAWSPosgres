@@ -1,11 +1,12 @@
 // Next and React
-import Link from "next/link";
 import React from "react";
 
 export const dynamic = "force-dynamic";
 
 // Components
 import SignInButton from "@/features/auth/components/buttons/SignInButton";
+import HeroSection from "@/features/home/components/HeroSection";
+import Navbar from "@/components/nav-bars/NavBar";
 import Footer from "@/components/footers/Footer";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 import PricingSection from "@/features/stripe/components/PricingSection";
@@ -27,46 +28,9 @@ export default async function Home() {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="bg-white h-screen">
-      <nav className=" p-2 py-5 flex items-center justify-between sm:p-4 border-b border-gray-200 mx-10 sm:py-5">
-        <div className="flex items-center">
-          <span className="text-xl font-bold text-tertiary-1000">
-            Trellis Money
-          </span>
-        </div>
-        {user ? <SignOutButton /> : <SignInButton />}
-      </nav>
-      <header className="text-center h-full items-center justify-center flex flex-col">
-        <div className="translate-y-[-70%] sm:translate-y-[-50%] mx-4 sm:w-[50rem]">
-          <h1 className="text-[2rem] sm:text-[2.8rem] font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent">
-            Seeing value where others don't
-          </h1>
-          <p className=" mt-2 mb-3 bg-gradient-to-r from-tertiary-700 to-tertiary-700 bg-clip-text text-transparent text-[0.9rem] sm:text-[1.1rem]">
-            Take control of your finances with Trellis Money.
-          </p>
-
-          {user ? (
-            <Link
-              href="/dashboard"
-              className="block mt-4 px-8 py-4 bg-gradient-to-r from-primary-900 to-primary-700 transition duration-300 text-white border-none rounded cursor-pointer"
-            >
-              Go to Dashboard
-            </Link>
-          ) : (
-            <div className="flex items-center flex-col mt-4">
-              <Link
-                href="/sign-up"
-                className="  flex items-center justify-center mt-4 bg-gradient-to-r from-primary-700 to-primary-800 text-white px-[2rem] py-[1.05882rem] h-[3.5rem] rounded-full hover:bg-blue-700 hover:to-blue-700 transition duration-300 border-none cursor-pointer font-semibold"
-              >
-                Try for $0.00
-              </Link>
-              <p className="pt-4 text-tertiary-600 text-[0.8rem] mt-2">
-                $5 a month after 30 days. Cancel anytime.
-              </p>
-            </div>
-          )}
-        </div>
-      </header>
+    <div className="bg-white h-auto">
+      <Navbar isAuthenticated={!!user} />
+      <HeroSection isAuthenticated={!!user} />
       <PricingSection />
       <Footer />
     </div>

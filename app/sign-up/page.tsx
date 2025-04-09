@@ -2,7 +2,7 @@ import React from "react";
 
 // Components
 import SignUpForm from "@/features/auth/components/form/SignUpForm";
-import NavBar from "@/components/nav-bars/NavBar";
+import NavBar from "@/components/nav-bars/SecondaryNavbar";
 import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 import { Metadata } from "next";
 

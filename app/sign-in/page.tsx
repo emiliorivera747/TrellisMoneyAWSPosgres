@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Metadata } from "next";
-import NavBar from "@/components/nav-bars/NavBar";
+import NavBar from "@/components/nav-bars/SecondaryNavbar";
 
 export const metadata: Metadata = {
   title: "Sign In | Trellis Money",

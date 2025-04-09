@@ -1,7 +1,7 @@
 'use client'
 import React from "react";
 import Head from "next/head";
-import NavBar from "@/components/nav-bars/NavBar";
+import NavBar from "@/components/nav-bars/SecondaryNavbar";
 import { useSearchParams } from "next/navigation";
 import ResetPasswordForm from "@/features/auth/components/form/ResetPasswordForm";
 
