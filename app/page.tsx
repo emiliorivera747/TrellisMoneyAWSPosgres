@@ -41,7 +41,7 @@ export default async function Home() {
           <h1 className="text-[2rem] sm:text-[2.8rem] font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent">
             Seeing value where others don't
           </h1>
-          <p className=" mt-2 mb-3 bg-gradient-to-r from-tertiary-700 to-tertiary-700 bg-clip-text text-transparent text-[0.9rem] sm:text-[1.1rem]">
+          <p className=" mt-2 mb-3 bg-gradient-to-r from-tertiary-900 to-tertiary-700 bg-clip-text text-transparent text-[0.9rem] sm:text-[1.1rem]">
             Take control of your finances with Trellis Money.
           </p>
 
@@ -56,7 +56,7 @@ export default async function Home() {
             <>
               <Link
                 href="/sign-up"
-                className=" inline-block  rounded-full mt-4 px-8 py-5  transition duration-300  bg-gradient-to-r from-primary-700 to-primary-600 hover:from-primary-800 hover:to-primary-900 text-white border-none cursor-pointer font-bold"
+                className=" inline-block  rounded-full mt-4 px-8 py-5  transition duration-300  bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-800 text-white border-none cursor-pointer font-bold"
               >
                 Try for $0.00
               </Link>
