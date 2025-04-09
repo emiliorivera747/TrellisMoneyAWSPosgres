@@ -4,7 +4,7 @@ import SubscriptionCard from "@/features/stripe/components/SubscriptionCard";
 
 const PricingSection = () => {
   return (
-    <section className="h-screen w-full flex flex-col border-t border-tertiary-300">
+    <section className=" h-auto sm:h-screen w-full flex flex-col border-t border-tertiary-300">
       <h1 className="text-center text-3xl font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent mt-[5rem]">
         {" "}
         Start your Trellis Money membership
@@ -12,7 +12,7 @@ const PricingSection = () => {
       <p className="text-center text-md bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-transparent  mt-4">
         Manage your finances. Cancel anytime.
       </p>
-      <div className="flex flex-row gap-6 items-center justify-center  p-8 ">
+      <div className="flex flex-col sm:flex-row gap-6 items-center justify-center  p-8 ">
         <SubscriptionCard
           title="Premium Plus Monthly"
           price="$5/mo"
