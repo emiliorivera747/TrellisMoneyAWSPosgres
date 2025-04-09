@@ -4,11 +4,9 @@ import React from "react";
 export const dynamic = "force-dynamic";
 
 // Components
-import SignInButton from "@/features/auth/components/buttons/SignInButton";
 import HeroSection from "@/features/home/components/HeroSection";
 import Navbar from "@/components/nav-bars/NavBar";
 import Footer from "@/components/footers/Footer";
-import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 import PricingSection from "@/features/stripe/components/PricingSection";
 
 import { createClient } from "@/utils/supabase/server";

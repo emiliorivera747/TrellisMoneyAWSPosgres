@@ -1,22 +1,6 @@
-model User {
-  id             Int        @id @default(autoincrement())
-  email          String     @unique
-  name           String?
-  created_at     DateTime   @default(now()) @db.Timestamptz(3)
-  updated_at     DateTime   @default(now()) @updatedAt @db.Timestamptz(3)
-  user_id        String     @unique @default(uuid())
-  email_verified Boolean?   @default(false)
-  phone_verified Boolean?   @default(false)
-  phone          String?
-  accounts       Account[]
-  holdings       Holding[]
-  securities     Security[]
-  items          Item[]
-  profile        Profile?
-}
 
 model Item {
-  item_id                 String   @unique
+  item_id                 String    @unique
   institution_id          String
   institution_name        String?
   webhook                 String?
@@ -24,7 +8,7 @@ model Item {
   request_id              String
   update_type             String
   consent_expiration_time String
-  created_at              DateTime @default(now()) @db.Timestamptz(3)
+  created_at              DateTime  @default(now()) @db.Timestamptz(3)
   available_products      String[]
   billed_products         String[]
   products                String[]
@@ -33,21 +17,21 @@ model Item {
   consented_data_scopes   String[]
   consented_use_cases     String[]
   access_token            String
-  User                    User     @relation(fields: [user_id], references: [user_id])
+  User                    User      @relation(fields: [user_id], references: [user_id])
   user_id                 String
   account                 Account[]
 }
 
 model TransactionStatus {
-  id                      Int      @id @default(autoincrement())
-  last_successful_update  DateTime @db.Timestamptz(3)
-  last_failed_update      DateTime @db.Timestamptz(3)
+  id                     Int      @id @default(autoincrement())
+  last_successful_update DateTime @db.Timestamptz(3)
+  last_failed_update     DateTime @db.Timestamptz(3)
 }
 
 model WebhookStatus {
-  id                      Int      @id @default(autoincrement())
-  sent_at                 DateTime @db.Timestamptz(3)
-  code_sent               String
+  id        Int      @id @default(autoincrement())
+  sent_at   DateTime @db.Timestamptz(3)
+  code_sent String
 }
 
 model OptionContract {

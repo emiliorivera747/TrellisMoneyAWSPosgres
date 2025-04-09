@@ -14,3 +14,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id             Int           @id @default(autoincrement())
+  email          String        @unique
+  name           String?
+  created_at     DateTime      @default(now()) @db.Timestamptz(3)
+  updated_at     DateTime      @default(now()) @updatedAt @db.Timestamptz(3)
+  user_id        String        @unique @default(uuid())
+  email_verified Boolean?      @default(false)
+  phone_verified Boolean?      @default(false)
+  phone          String?
+  Subscription   Subscription?
+  customer_id    String?       @unique
+  accounts       Account[]
+  holdings       Holding[]
+  securities     Security[]
+  items          Item[]
+  profile        Profile?
+}
