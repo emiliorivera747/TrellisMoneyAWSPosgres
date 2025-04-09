@@ -10,7 +10,7 @@ export default function HeroSection({ isAuthenticated }: HeroSectionProps) {
   return (
     <header className="flex h-[90vh] flex-col items-center justify-center text-center">
       <div className="mx-4 -translate-y-[40%] sm:-translate-y-[40%] sm:w-[50rem]">
-        <h1 className="bg-gradient-to-r from-tertiary-1000 to-tertiary-700 bg-clip-text text-[1.5rem] font-bold text-transparent sm:text-[2.6rem]">
+        <h1 className="bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-[1.5rem] font-bold text-transparent sm:text-[2.6rem]">
           Seeing value where others don&apos;t
         </h1>
         <p className="mt-2 mb-3 bg-gradient-to-r from-tertiary-800 to-tertiary-700 bg-clip-text text-[0.9rem] text-transparent sm:text-[1.4rem]">
