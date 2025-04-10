@@ -83,7 +83,7 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   // Update customer ID if not present
   if (!user.customer_id) {
     await prisma.user.update({
-      where: { id: user.id },
+      where: { user_id: user.user_id },
       data: { customer_id: customerId },
     });
   }
@@ -99,17 +99,17 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
     // Update or create subscription
     const subscriptionData = getSubscriptionData(priceId);
     await prisma.subscription.upsert({
-      where: { user_id: user.id },
+      where: { user_id: user.user_id },
       update: subscriptionData,
       create: {
         ...subscriptionData,
-        user_id: user.id,
+        user_id: user.user_id,
       },
     });
 
     // Update user plan
     await prisma.user.update({
-      where: { id: user.id },
+      where: { user_id: user.user_id },
       data: { plan: "premium" },
     });
   }

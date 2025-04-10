@@ -1,4 +1,5 @@
 enum Plan {
+  free
   premium
 }
 
@@ -13,7 +14,7 @@ model Subscription {
   plan    Plan
   period  SubscriptionPeriod
   start_date DateTime @default(now())
-  endDate   DateTime
+  end_date   DateTime
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   User User @relation(fields: [user_id], references: [user_id])

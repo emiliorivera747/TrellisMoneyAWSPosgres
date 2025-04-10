@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Plan" AS ENUM ('premium');
+CREATE TYPE "Plan" AS ENUM ('free', 'premium');
 
 -- CreateEnum
 CREATE TYPE "SubscriptionPeriod" AS ENUM ('monthly', 'yearly');
@@ -145,6 +145,7 @@ CREATE TABLE "User" (
     "phone_verified" BOOLEAN DEFAULT false,
     "phone" TEXT,
     "customer_id" TEXT,
+    "plan" "Plan" NOT NULL DEFAULT 'free',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -210,7 +211,7 @@ CREATE TABLE "Subscription" (
     "plan" "Plan" NOT NULL,
     "period" "SubscriptionPeriod" NOT NULL,
     "start_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "endDate" TIMESTAMP(3) NOT NULL,
+    "end_date" TIMESTAMP(3) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 

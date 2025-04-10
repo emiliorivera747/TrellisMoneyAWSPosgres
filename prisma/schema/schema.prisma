@@ -31,4 +31,5 @@ model User {
   securities     Security[]
   items          Item[]
   profile        Profile?
+  plan           Plan          @default(free)
 }
