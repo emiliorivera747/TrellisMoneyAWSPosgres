@@ -9,11 +9,11 @@ interface HeroSectionProps {
 export default function HeroSection({ isAuthenticated }: HeroSectionProps) {
   return (
     <header className="flex h-[90vh] flex-col items-center justify-center text-center">
-      <div className="mx-4 -translate-y-[40%] sm:-translate-y-[40%] sm:w-[60rem]">
-        <h1 className="bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-[1.5rem] font-bold text-transparent sm:text-[2.6rem] mx-4">
-          See the bigger picture of your finances
+      <div className=" -translate-y-[40%] sm:-translate-y-[40%] sm:w-[90%]">
+        <h1 className="bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-[2rem]  text-transparent sm:text-[3rem] tracking-wide font-bold ">
+          See the bigger picture
         </h1>
-        <p className="mt-2 mb-3 bg-gradient-to-r from-tertiary-800 to-tertiary-700 bg-clip-text text-[0.9rem] text-transparent sm:text-[1.4rem]">
+        <p className="mt-2 mb-3 bg-gradient-to-r from-tertiary-800 to-tertiary-700 bg-clip-text text-[0.9rem] text-transparent sm:text-[1.2rem]">
           Take control of your finances with Trellis Money
         </p>
         {isAuthenticated ? <AuthenticatedCTA /> : <UnauthenticatedCTA />}

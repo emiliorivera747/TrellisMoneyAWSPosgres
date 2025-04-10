@@ -46,6 +46,7 @@ const calculateEndDate = (priceId: string): Date => {
 };
 
 const getSubscriptionData = (priceId: string): SubscriptionData => {
+  console.log("Price ID:", priceId);
   const endDate = calculateEndDate(priceId);
   const period = priceId === PRICE_IDS.YEARLY ? "yearly" : "monthly";
   
