@@ -53,7 +53,7 @@ const ProjectedNetWorthGraph = ({
     selectedYear,
     selectedFilter
   );
-  
+
   /**
    * Function to edit the retirement year
    *
@@ -70,12 +70,17 @@ const ProjectedNetWorthGraph = ({
   );
 
   if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
-  if (projectionError) return <div>Error fetching data</div>;
+  if (projectionError)
+    return (
+      <div className="h-[30rem] border border-tertiary-400 p-4 rounded-xl font-semibold flex items-center justify-center text-lg">
+        There was an error fetching the data
+      </div>
+    );
 
   const dataForLines =
     selectedFilter === "isBoth"
       ? [
-          { data: filteredData?.[1]?.data || [], ...lineColors1 }, 
+          { data: filteredData?.[1]?.data || [], ...lineColors1 },
           { data: filteredData?.[0]?.data || [], ...lineColors2 },
         ]
       : [{ data: filteredData?.[0]?.data || [], ...lineColors1 }];
