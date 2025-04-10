@@ -9,6 +9,6 @@ export const accountSideNavConfig = [
   },
   {
     label: "Billing History",
-    url: "/account/billing-history",
+    url: process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_LINK! ?? "#",
   },
 ];

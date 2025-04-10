@@ -17,14 +17,13 @@ interface SubscriptionData {
   status: "active";
 }
 
-
 /**
  *  Verifies the Stripe webhook signature.
- * 
- * 
- * @param body 
- * @param signature 
- * @returns 
+ *
+ *
+ * @param body
+ * @param signature
+ * @returns
  */
 export const verifyWebhookSignature = (
   body: string,
@@ -52,13 +51,12 @@ export const calculateEndDate = (priceId: string): Date => {
   return endDate;
 };
 
-
 /**
- * 
+ *
  * Calculates the subscription data based on the price ID.
- * 
- * @param priceId 
- * @returns 
+ *
+ * @param priceId
+ * @returns
  */
 export const getSubscriptionData = (priceId: string): SubscriptionData => {
   const endDate = calculateEndDate(priceId);
@@ -73,11 +71,10 @@ export const getSubscriptionData = (priceId: string): SubscriptionData => {
   };
 };
 
-
 /**
  * Handles the checkout session completed event from Stripe.
- * 
- * @param event 
+ *
+ * @param event
  */
 export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   const session = await stripe.checkout.sessions.retrieve(
@@ -131,5 +128,41 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
       where: { user_id: user.user_id },
       data: { plan: "premium" },
     });
+  }
+};
+
+export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
+  const subscription = await stripe.subscriptions.retrieve(
+    (event.data.object as Stripe.Subscription).id
+  );
+
+
+  const user = await prisma.user.findUnique({
+    where: { customer_id: subscription.customer as string },
+  });
+
+  if (user) {
+
+    /** Update the user plan */
+    await prisma.user.update({
+      where: { user_id: user.user_id },
+      data: { plan: "free"},
+    });
+
+    /**
+     * Update the users subscription
+     */
+    await prisma.subscription.update({
+      where: { user_id: user.user_id },
+      data: {
+        plan: "free",
+        status: "inactive",
+        end_date: new Date(),
+      },
+    });
+  }
+  else{
+    throw new Error("User not found for the subscription deleted event.");
+
   }
 };
