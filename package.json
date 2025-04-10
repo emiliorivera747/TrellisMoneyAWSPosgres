@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate --schema ./prisma/schema && next build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
@@ -19,7 +19,10 @@
     "test-all": "npm run check-types && npm run check-format && npm run check-lint && npm run build",
     "cypress:open": "cypress open"
   },
-  "prisma": {},
+  "prisma": {
+    "seed": "ts-node --esm prisma/seed.ts",
+    "migrate": "prisma migrate dev --name init"
+  },
   "dependencies": {
     "@apollo/server": "^4.11.3",
     "@hookform/resolvers": "^3.9.1",

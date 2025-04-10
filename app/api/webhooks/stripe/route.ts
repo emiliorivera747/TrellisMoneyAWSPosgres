@@ -1,69 +1,144 @@
 import { prisma } from "@/lib/prisma";
-import {stripe} from '@/lib/stripe';
-import Stripe from 'stripe';
+import { stripe } from "@/lib/stripe";
+import Stripe from "stripe";
+import { NextRequest } from "next/server"; // Assuming Next.js 13+ App Router
 
+// Constants
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
+const PRICE_IDS = {
+  YEARLY: process.env.STRIPE_YEARLY_SUBSCRIPTION_PRICE_ID as string,
+  MONTHLY: process.env.STRIPE_MONTHLY_SUBSCRIPTION_PRICE_ID as string,
+};
 
-export async function POST(req: Request) {
+// Types
+interface SubscriptionData {
+  plan: "premium";
+  period: "monthly" | "yearly";
+  start_date: Date;
+  end_date: Date;
+  status: "active";
+}
+
+// Utility Functions
+const verifyWebhookSignature = (body: string, signature: string): Stripe.Event => {
+  try {
+    return stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET);
+  } catch (err) {
+    throw new Error(`Signature verification failed: ${(err as Error).message}`);
+  }
+};
+
+const calculateEndDate = (priceId: string): Date => {
+  const endDate = new Date();
+  
+  switch (priceId) {
+    case PRICE_IDS.YEARLY:
+      endDate.setFullYear(endDate.getFullYear() + 1);
+      break;
+    case PRICE_IDS.MONTHLY:
+      endDate.setMonth(endDate.getMonth() + 1);
+      break;
+    default:
+      throw new Error(`Invalid price ID: ${priceId}`);
+  }
+  
+  return endDate;
+};
+
+const getSubscriptionData = (priceId: string): SubscriptionData => {
+  const endDate = calculateEndDate(priceId);
+  const period = priceId === PRICE_IDS.YEARLY ? "yearly" : "monthly";
+  
+  return {
+    plan: "premium",
+    period,
+    start_date: new Date(),
+    end_date: endDate,
+    status: "active",
+  };
+};
+
+// Handler Functions
+const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
+  const session = await stripe.checkout.sessions.retrieve(
+    (event.data.object as Stripe.Checkout.Session).id,
+    { expand: ["line_items"] }
+  );
+  
+  const customerId = session.customer as string;
+  const { email } = session.customer_details ?? {};
+  
+  if (!email) throw new Error("Customer email not found in session");
+  
+
+  // Get or create user
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+  
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  // Update customer ID if not present
+  if (!user.customer_id) {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { customer_id: customerId },
+    });
+  }
+
+  // Process line items
+  const lineItems = session.line_items?.data ?? [];
+  for (const item of lineItems) {
+    const priceId = item.price?.id;
+    const isSubscription = !!item.price?.recurring;
+    
+    if (!priceId || !isSubscription) continue;
+
+    // Update or create subscription
+    const subscriptionData = getSubscriptionData(priceId);
+    await prisma.subscription.upsert({
+      where: { user_id: user.id },
+      update: subscriptionData,
+      create: {
+        ...subscriptionData,
+        user_id: user.id,
+      },
+    });
+
+    // Update user plan
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { plan: "premium" },
+    });
+  }
+};
+
+// Main Handler
+export async function POST(req: NextRequest) {
+  try {
     const body = await req.text();
+    const signature = req.headers.get("Stripe-Signature");
+    
+    if (!signature) return new Response("Missing Stripe-Signature header", { status: 400 });
+    
+    // Verify webhook
+    const event = verifyWebhookSignature(body, signature);
 
-    const sig = req.headers.get('Stripe-Signature') as string;
-    let event: Stripe.Event;
-
-    // Verify the webhook signature
-    try {
-        event = stripe.webhooks.constructEvent(body, sig, WEBHOOK_SECRET);
-    } catch (err: any) {
-        console.error('Error verifying webhook signature:', err);
-        return new Response(`Webhook Error: ${err.message}`, {status: 400});
+    // Handle events
+    switch (event.type) {
+      case "checkout.session.completed":
+        await handleCheckoutSessionCompleted(event);
+        break;
+      default:
+        console.log(`Unhandled event type: ${event.type}`);
     }
 
-    // Handle the event
-    try {
-        switch (event.type) {
-            case 'checkout.session.completed':
-                const session = await stripe.checkout.sessions.retrieve(
-                    (event.data.object as Stripe.Checkout.Session).id,
-                    {
-                        expand: ['line_items'],
-                    }
-                );
-                const customer_id = session.customer as string;
-                const customerDetails = session.customer_details;
-
-                if(customerDetails?.email) {
-                    const user = await prisma.user.findUnique({
-                        where: {
-                            email : customerDetails.email,
-                        },
-                    });
-                    if (!user) throw new Error('User not found');
-
-                    if(!user.customer_id) {
-                        await prisma.user.update({
-                            where: {
-                                id: user.id,
-                            },
-                            data: {
-                                customer_id: customer_id,
-                            },
-                        });
-                    }
-
-                    const lineItems = session.line_items?.data || [];
-
-                    for (const item of lineItems) {
-                 
-                    }
-                }
-
-
-            // Handle other event types as needed
-            default:
-                console.log(`Unhandled event type ${event.type}`);
-        }
-        
-    } catch (error) {
-        
-    }
+    return new Response("Webhook processed successfully", { status: 200 });
+  } catch (error) {
+    console.error("Webhook processing error:", error);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return new Response(`Webhook Error: ${message}`, { status: 400 });
+  }
 }
