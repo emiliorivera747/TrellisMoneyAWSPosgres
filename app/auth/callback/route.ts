@@ -26,31 +26,30 @@ async function upsertUser(user: {
 }) {
   try {
     await prisma.user.upsert({
-      where: { user_id: user.id }, 
+      where: { user_id: user.id },
       update: {
         email: user.email,
         name: user.user_metadata.full_name || "Unknown",
       },
       create: {
         user_id: user.id,
-        email: user.email ?? "", 
+        email: user.email ?? "",
         name: user.user_metadata.full_name || "Unknown",
       },
     });
   } catch (dbError) {
     console.error("Failed to upsert user in database:", dbError);
-
   }
 }
 
 /**
  *  Checks whether the user already exists in the database.
  */
-async function userExists(userId: string): Promise<boolean> {
+async function getUser(userId: string): Promise<boolean> {
   const user = await prisma.user.findUnique({
     where: { user_id: userId },
   });
-  return !!user;
+  return user;
 }
 
 /**
@@ -65,18 +64,19 @@ export async function GET(request: Request) {
 
   // If no code is provided, redirect to error page
   if (!code) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-  
+
   const supabase = await createClient();
 
   try {
     // Exchange OAuth code for a session
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
     if (error) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-    
+
     const user = data.user;
 
     // Check if user exists in the database
-    const exists = await userExists(user.id);
+    const userDB = await getUser(user.id);
+    const exists = !!userDB;
 
     // If user data is available, update the database
     if (user && !exists) {
@@ -88,7 +88,7 @@ export async function GET(request: Request) {
     // Determine redirect URL
     const redirectBase = getRedirectBase(request, origin);
 
-    if (stripePaymentLink && user?.email) {
+    if (stripePaymentLink && user?.email && !exists) {
       const redirectUrl = `${stripePaymentLink}?prefilled_email=${encodeURIComponent(
         user.email
       )}`;
