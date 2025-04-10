@@ -45,7 +45,7 @@ async function upsertUser(user: {
 /**
  *  Checks whether the user already exists in the database.
  */
-async function getUser(userId: string): Promise<boolean> {
+async function getUser(userId: string) {
   const user = await prisma.user.findUnique({
     where: { user_id: userId },
   });
