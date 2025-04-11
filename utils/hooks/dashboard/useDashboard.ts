@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useForm, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
