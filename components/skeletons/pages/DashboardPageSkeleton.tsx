@@ -2,7 +2,7 @@ import React from 'react';
 
 const DashboardPageSkeleton: React.FC = () => {
     return (
-        <div className="flex h-screen">
+        <div className="flex h-screen ">
             {/* Side Navigation Bar */}
             <div className=" animate-pulse w-1/4 p-4">
                 <div className="animate-pulse h-12 bg-gray-300 mb-4 rounded"></div>
@@ -16,10 +16,10 @@ const DashboardPageSkeleton: React.FC = () => {
             </div>
 
             {/* Main Content Area */}
-            <div className="animate-pulse flex-1 p-4">
-                <div className="animate-pulse h-12 bg-gray-300 mb-4 rounded"></div>
-                <div className="animate-pulse h-64 bg-gray-300 mb-4 rounded"></div>
-                <div className="animate-pulse h-64 bg-gray-300 mb-4 rounded"></div>
+            <div className="animate-pulse flex-1 p-4 ">
+                <div className="animate-pulse h-12 bg-gray-300 mb-4 rounded-full"></div>
+                <div className="animate-pulse h-64 bg-gray-300 mb-4 rounded-full"></div>
+                <div className="animate-pulse h-64 bg-gray-300 mb-4 rounded-full"></div>
             </div>
         </div>
     );

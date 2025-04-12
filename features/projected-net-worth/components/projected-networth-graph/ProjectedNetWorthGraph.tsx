@@ -46,6 +46,7 @@ const ProjectedNetWorthGraph = ({
   projectionLoading,
   projectionError,
 }: ProjectedNetWorthGraphProps) => {
+  
   const [retirementYear, setRetirementYear] = useState(currentYear + 40);
 
   const filteredData = useFilteredData(
