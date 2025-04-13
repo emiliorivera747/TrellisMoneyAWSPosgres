@@ -1,6 +1,6 @@
 import { Item } from "@/types/plaid";
 import { client } from "@/config/plaidClient";
-import { AccountBase } from "plaid";
+import { AccountBaseWithItemId } from "@/types/plaid";
 
 /**
  * Fetch all of the accounts associated with the access tokens
@@ -9,7 +9,7 @@ import { AccountBase } from "plaid";
  * @param items
  * @returns
  */
-export const getAccounts = async (items: Item[]): Promise<AccountBase[][]> => {
+export const getAccounts = async (items: Item[]): Promise<AccountBaseWithItemId[][]> => {
 
   // Get all access tokens from items
   const accessTokens = await getAllAccessTokens(items); 

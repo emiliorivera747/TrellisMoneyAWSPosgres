@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
     await updateAccounts(accounts, user?.id || "");
 
     return NextResponse.json(
-      { message: "Retrieve accounts", data: accounts },
+      { message: "Retrieved accounts", data: accounts },
       { status: 200 }
     );
   } catch (error) {

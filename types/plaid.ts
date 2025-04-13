@@ -1,5 +1,12 @@
 import { Decimal } from "decimal.js";
-
+import {
+  AccountBalance,
+  AccountType,
+  AccountSubtype,
+  AccountBaseVerificationStatusEnum,
+  AccountVerificationInsights,
+  AccountHolderCategory,
+} from "plaid";
 export interface Profile {
   id: number;
   bio?: string;
@@ -63,10 +70,84 @@ export interface Account {
   owner_id?: string;
   User?: User;
   timestamp?: Date | undefined | null;
-  verification_insights?: verification_insights;
+  verification_insights?: verification_insights | null | undefined;
   persistent_account_id?: string | undefined | null;
   holder_catergory?: string | undefined | null;
-  holdings?: Holding[]
+  holdings?: Holding[];
+}
+
+export interface AccountBaseWithItemId {
+  /**
+   * Plaid’s unique identifier for the account. This value will not change unless Plaid can\'t reconcile the account with the data returned by the financial institution. This may occur, for example, when the name of the account changes. If this happens a new `account_id` will be assigned to the account.  The `account_id` can also change if the `access_token` is deleted and the same credentials that were used to generate that `access_token` are used to generate a new `access_token` on a later date. In that case, the new `account_id` will be different from the old `account_id`.  If an account with a specific `account_id` disappears instead of changing, the account is likely closed. Closed accounts are not returned by the Plaid API.  Like all Plaid identifiers, the `account_id` is case sensitive.
+   * @type {string}
+   * @memberof AccountBase
+   */
+  account_id: string;
+  /**
+   *
+   * @type {AccountBalance}
+   * @memberof AccountBase
+   */
+  balances: AccountBalance;
+  /**
+   * The last 2-4 alphanumeric characters of an account\'s official account number. Note that the mask may be non-unique between an Item\'s accounts, and it may also not match the mask that the bank displays to the user.
+   * @type {string}
+   * @memberof AccountBase
+   */
+  mask: string | null;
+  /**
+   * The name of the account, either assigned by the user or by the financial institution itself
+   * @type {string}
+   * @memberof AccountBase
+   */
+  name: string;
+  /**
+   * The official name of the account as given by the financial institution
+   * @type {string}
+   * @memberof AccountBase
+   */
+  official_name: string | null;
+  /**
+   *
+   * @type {AccountType}
+   * @memberof AccountBase
+   */
+  type: AccountType;
+  /**
+   *
+   * @type {AccountSubtype}
+   * @memberof AccountBase
+   */
+  subtype: AccountSubtype | null;
+  /**
+   * The current verification status of an Auth Item initiated through micro-deposits or database verification. Returned for Auth Items only.  `pending_automatic_verification`: The Item is pending automatic verification  `pending_manual_verification`: The Item is pending manual micro-deposit verification. Items remain in this state until the user successfully verifies the micro-deposit.  `automatically_verified`: The Item has successfully been automatically verified   `manually_verified`: The Item has successfully been manually verified  `verification_expired`: Plaid was unable to automatically verify the deposit within 7 calendar days and will no longer attempt to validate the Item. Users may retry by submitting their information again through Link.  `verification_failed`: The Item failed manual micro-deposit verification because the user exhausted all 3 verification attempts. Users may retry by submitting their information again through Link.  `database_matched`: The Item has successfully been verified using Plaid\'s data sources. Only returned for Auth Items created via Database Match.  `database_insights_pass`: The Item\'s numbers have been verified using Plaid\'s data sources and have strong signal for being valid. Only returned for Auth Items created via Database Insights. Note: Database Insights is currently a beta feature, please contact your account manager for more information.  `database_insights_pass_with_caution`: The Item\'s numbers have been verified using Plaid\'s data sources and have some signal for being valid. Only returned for Auth Items created via Database Insights. Note: Database Insights is currently a beta feature, please contact your account manager for more information.  `database_insights_fail`:  The Item\'s numbers have been verified using Plaid\'s data sources and have signal for being invalid and/or have no signal for being valid. Only returned for Auth Items created via Database Insights. Note: Database Insights is currently a beta feature, please contact your account manager for more information.
+   * @type {string}
+   * @memberof AccountBase
+   */
+  verification_status?: AccountBaseVerificationStatusEnum;
+  /**
+   *
+   * @type {AccountVerificationInsights}
+   * @memberof AccountBase
+   */
+  verification_insights?: AccountVerificationInsights;
+  /**
+   * A unique and persistent identifier for accounts that can be used to trace multiple instances of the same account across different Items for depository accounts. This field is currently supported only for Items at institutions that use Tokenized Account Numbers (i.e., Chase and PNC). Because these accounts have a different account number each time they are linked, this field may be used instead of the account number to uniquely identify an account across multiple Items for payments use cases, helping to reduce duplicate Items or attempted fraud. In Sandbox, this field may be populated for any account; in Production, it will only be populated for accounts at applicable institutions.
+   * @type {string}
+   * @memberof AccountBase
+   */
+  persistent_account_id?: string;
+  /**
+   *
+   * @type {AccountHolderCategory}
+   * @memberof AccountBase
+   */
+  holder_category?: AccountHolderCategory | null;
+
+  /**
+   * The Item ID associated with the account. This field is only returned if the `include` query parameter is set to `item` in the request.
+   */
+  item_id?: string | null;
 }
 
 export interface Item {
@@ -104,7 +185,7 @@ export interface Holding {
   securities?: Security[];
 }
 
-export interface HoldingId{
+export interface HoldingId {
   security_id: string;
   user_id: string;
   account_id: string;

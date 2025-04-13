@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { Account } from "@/types/plaid";
-import { AccountBase } from "plaid";
+import { AccountBaseWithItemId } from "@/types/plaid";
 
-export const hasAccountBalance = (account: AccountBase) => {
+export const hasAccountBalance = (account: AccountBaseWithItemId) => {
   if (!account.balances) {
     return NextResponse.json(
       { message: "Account balances are missing" },
