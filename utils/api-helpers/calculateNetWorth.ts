@@ -9,8 +9,6 @@ export function calculateNetWorth(accounts: Account[]): { netWorth: number, asse
         const { type, subtype } = account;
         const balance = account?.current ?? 0;
 
-        console.log("ACCOUNT: ", balance);
-
         // Handle DEPOSITORY account types (cash holding)
         if (type === 'depository') {
             if (['checking', 'savings', 'hsa', 'cd', 'money market', 'paypal', 'prepaid', 'cash management', 'ebt'].includes(subtype || '')) {

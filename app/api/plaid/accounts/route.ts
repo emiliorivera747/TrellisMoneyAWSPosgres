@@ -1,11 +1,13 @@
 import { NextResponse, NextRequest } from "next/server";
-import { AccountsGetRequest } from "plaid";
-import { prisma } from "@/lib/prisma";
-import { createClient } from "@/utils/supabase/server";
+import { getItemsByUserId } from "@/utils/api-helpers/prisma/itemsService";
+import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getAccounts } from "@/utils/api-helpers/plaid/getAccountV2";
+import { noAccountsError } from "@/utils/api-helpers/errors/accountErrors";
+import { updateAccounts } from "@/utils/api-helpers/plaid/updateAccountsV2";
 
 /**
  *
- * Fetch all of the users accounts from Plaid and 
+ * Fetch all of the users accounts from Plaid and
  * store them in the database.
  *
  * @param req
@@ -13,38 +15,27 @@ import { createClient } from "@/utils/supabase/server";
  */
 export async function GET(req: NextRequest) {
   try {
-    const supabase = await createClient();
+    const user = await getUser();
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const items = await getItemsByUserId(user?.id || "");
 
-    // Get all of the users Items
-    const items = await prisma.user.findMany({
-      where: {
-        id: user?.id || "",
-      },
-      include: {
-        items: true,
-      },
-    });
+    /**
+     *  Go through each item and fetch the accounts
+     */
+    const accounts = await getAccounts(items);
 
-    console.log(items);
+    noAccountsError(accounts);
 
+    console.log("Accounts: ", accounts);
+    /**
+     *  Store the accounts in the database
+     */
+    // await updateAccounts(accounts, user?.id);
 
-    
-    // const request: AccountsGetRequest = {
-    //   access_token: process.env.PLAID_ACCESS_TOKEN || "",
-    // };
-
-    // const accounts = await prisma.account.findMany({
-    //   where: {
-    //     user_id: user?.id || "",
-    //   },
-    // });
-    const accounts = [];
-
-    return NextResponse.json({ accounts }, { status: 200 });
+    return NextResponse.json(
+      { message: "Retrieve accounts", data: accounts },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       { error: "Error fetching account balance data" },

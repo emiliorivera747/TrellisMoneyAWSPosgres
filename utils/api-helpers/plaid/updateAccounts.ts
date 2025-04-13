@@ -6,7 +6,6 @@ import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultVal
 //helpers
 import { hasAccountBalance } from "@/utils/api-helpers/hasAccountBalance";
 
-
 /**
  * 
  * 
@@ -14,7 +13,6 @@ import { hasAccountBalance } from "@/utils/api-helpers/hasAccountBalance";
  * @param userId 
  */
 export async function updateAccounts(accounts: Account[], userId: string) {
-  
   
   for (let account of accounts) {
     hasAccountBalance(account);
