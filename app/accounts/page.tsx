@@ -8,7 +8,8 @@ import { useAccounts } from "@/utils/hooks/accounts/useAccounts";
 
 const page = () => {
   const linkToken = useGenerateToken();
-  const { accounts, isErrorAccounts, isLoadingAccounts } = useAccounts();
+  const { accountsResponse, isErrorAccounts, isLoadingAccounts } =
+    useAccounts();
 
   return (
     <section className="h-screen">
@@ -20,11 +21,12 @@ const page = () => {
         <div className="flex flex-col gap-4 mt-8">
           {isLoadingAccounts && <p>Loading...</p>}
           {isErrorAccounts && <p>Error</p>}
-          {accounts &&
-            accounts.map((account) => (
-              <div key={account.id} className="border p-4 rounded">
-                <h2 className="text-lg">{account.name}</h2>
-                <p>Balance: ${account.balances.current}</p>
+          {accountsResponse &&
+            accountsResponse.data.map((account, i) => (
+              <div key={i} className="border p-4 rounded">
+                <h2 className="text-sm text-tertiary-1000 mb-2">
+                  {JSON.stringify(account, null, 3)}
+                </h2>
               </div>
             ))}
         </div>

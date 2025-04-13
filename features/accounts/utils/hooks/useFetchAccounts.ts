@@ -8,7 +8,7 @@ import { accountServices } from "@/features/accounts/services/accountServices";
  */
 export const useFetchAccounts = () => {
   const {
-    data: accounts,
+    data: accountsResponse,
     isLoading: isLoadingAccounts,
     isError: isErrorAccounts,
   } = useQuery({
@@ -19,5 +19,5 @@ export const useFetchAccounts = () => {
     retry: 1,
   });
 
-  return { accounts, isLoadingAccounts, isErrorAccounts };
+  return { accountsResponse, isLoadingAccounts, isErrorAccounts };
 };

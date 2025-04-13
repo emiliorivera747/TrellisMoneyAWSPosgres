@@ -26,11 +26,10 @@ export async function GET(req: NextRequest) {
 
     noAccountsError(accounts);
 
-    console.log("Accounts: ", accounts);
     /**
      *  Store the accounts in the database
      */
-    // await updateAccounts(accounts, user?.id);
+    await updateAccounts(accounts, user?.id || "");
 
     return NextResponse.json(
       { message: "Retrieve accounts", data: accounts },
