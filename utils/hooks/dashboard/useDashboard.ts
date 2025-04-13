@@ -4,7 +4,6 @@ import { useForm, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 import useFetchProjections from "@/utils/hooks/financial-projections/useFetchProjections";
 import useUpdateAssets from "@/utils/hooks/financial-assets/useUpdateAssets";
-import useUpdateAccount from "@/utils/hooks/financial-assets/useUpdateAccount";
 import useFetchUser from "@/utils/hooks/user/useFetchUser";
 import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
 import { handleFormSubmission } from "@/features/projected-financial-assets/utils/handleAssetFormSubmission";
