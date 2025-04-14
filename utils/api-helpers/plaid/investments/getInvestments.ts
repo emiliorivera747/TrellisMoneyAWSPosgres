@@ -27,7 +27,6 @@ export const getInvestments = async (items: Item[], timestamp: string) => {
       return response.data;
     })
   );
-  console.log("Investments for each item", investmentsForEachItem);
 
   /**
    *  Store Holdings and Securities in the database

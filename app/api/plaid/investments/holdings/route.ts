@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
     const items = await getItemsByUserId(user?.id || "");
     noItemsError(items);
 
-    // const investments = await getInvestments(items, timestamp);
+    const investments = await getInvestments(items, timestamp || "");
 
     return NextResponse.json({ data: "" }, { status: 200 });
   } catch (error) {

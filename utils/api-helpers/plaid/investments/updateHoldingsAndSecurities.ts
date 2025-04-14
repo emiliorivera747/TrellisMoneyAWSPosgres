@@ -1,5 +1,4 @@
-import { Security } from "@/types/plaid";
-import { Holding } from "@/types/plaid";
+import { Security, Holding } from "plaid";
 import { prisma } from "@/lib/prisma";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
 import { getExistingSecurities } from "@/utils/api-helpers/plaid/investments/securityService";
