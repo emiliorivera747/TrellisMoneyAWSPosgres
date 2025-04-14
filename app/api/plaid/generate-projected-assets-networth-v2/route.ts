@@ -9,7 +9,7 @@ import { generateProjectedNetWorthV2 } from "@/utils/api-helpers/projected-net-w
 import { generateProjectedFinancialAssetsV2 } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
 
 // Helpers
-import { updateAccounts } from "@/utils/api-helpers/plaid/updateAccounts";
+import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccounts";
 import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
 import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
 import {
@@ -21,7 +21,7 @@ import {
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/getDates";
 import { getItemsById } from "@/utils/api-helpers/prisma/getItemsById";
-import { getAccounts } from "@/utils/api-helpers/plaid/getAccounts";
+import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccounts";
 import { getHoldingsAndSecuritiesMock } from "@/utils/api-helpers/plaid/getHoldingsAndSecuritiesMock";
 import { getHoldingsAndSecurities } from "@/utils/api-helpers/prisma/getHoldingsAndSecurities";
 import { getAccountsHoldingsSecurities } from "@/utils/api-helpers/prisma/getAccountsHoldingsSecurities";

@@ -12,7 +12,7 @@ import { mockHoldingData } from "@/utils/data/plaid-data/mockHoldingData";
 import { mockAccountBalanceData } from "@/utils/data/plaid-data/mockAccountBalanceData";
 
 // Helpers
-import { updateAccounts } from "@/utils/api-helpers/plaid/updateAccounts";
+import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccounts";
 import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
 import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
 import {

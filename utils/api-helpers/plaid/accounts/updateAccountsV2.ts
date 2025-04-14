@@ -8,7 +8,7 @@ import { AccountBaseWithItemId } from "@/types/plaid";
 
 // Helpers
 import { hasAccountBalance } from "@/utils/api-helpers/hasAccountBalance";
-import { updateBalance } from "@/utils/api-helpers/plaid/updateBalance";
+import { updateBalance } from "@/utils/api-helpers/plaid/accounts/updateBalance";
 import { NextResponse } from "next/server";
 
 /**

@@ -1,4 +1,4 @@
-import { updateBalance } from "@/utils/api-helpers/plaid/updateBalance";
+import { updateBalance } from "@/utils/api-helpers/plaid/accounts/updateBalance";
 import { prisma } from "@/lib/prisma";
 import { Account } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";

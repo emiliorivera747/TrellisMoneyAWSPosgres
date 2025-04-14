@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { client } from "@/config/plaidClient";
 import { ItemGetResponse } from "plaid";
 import { AxiosResponse } from "axios";
-import { getItem } from "@/utils/api-helpers/plaid/getItem";
+import { getItem } from "@/utils/api-helpers/plaid/items/getItem";
 
 /**
  * Handles the POST request to exchange a public token for an access token

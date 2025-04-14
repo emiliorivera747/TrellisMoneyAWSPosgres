@@ -1,18 +1,20 @@
 import { NextResponse, NextRequest } from "next/server";
-import { InvestmentsHoldingsGetRequest } from "plaid";
-import { plaidClient } from "@/config/plaidClient";
+import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getItemsByUserId } from "@/utils/api-helpers/prisma/itemsService";
+import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
+import { getInvestments } from "@/utils/api-helpers/plaid/investments/getInvestments";
 
 export async function GET(req: NextRequest) {
-
-  const request: InvestmentsHoldingsGetRequest = {
-    access_token: process.env.PLAID_ACCESS_TOKEN || "",
-  };
-
   try {
-    const response = await plaidClient.investmentsHoldingsGet(request);
-    const holdings = response.data.holdings;
-    const securities = response.data.securities;
-    return NextResponse.json({ holdings, securities }, { status: 200 });
+    const user = await getUser();
+    const items = await getItemsByUserId(user?.id || "");
+    noItemsError(items);
+
+    const investments = await getInvestments(items);
+
+    console.log(investments);
+
+    return NextResponse.json({}, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Error fetching investment holdings data" },
