@@ -18,8 +18,8 @@ import { mockAccountBalanceData } from "@/utils/data/plaid-data/mockAccountBalan
 
 // Helpers
 import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccounts";
-import { updateSecurities } from "@/utils/api-helpers/plaid/updateSecurities";
-import { updateHoldings } from "@/utils/api-helpers/plaid/updateHoldings";
+import { updateSecurities } from "@/utils/api-helpers/plaid/investments/updateSecurities";
+import { updateHoldings } from "@/utils/api-helpers/plaid/investments/updateHoldings";
 import { getDates } from "@/utils/api-helpers/getDates";
 import { getItemsById } from "@/utils/api-helpers/prisma/getItemsById";
 import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccounts";
