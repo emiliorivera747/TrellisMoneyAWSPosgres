@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 
     console.log(investments);
 
-    return NextResponse.json({}, { status: 200 });
+    return NextResponse.json({ data: investments }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Error fetching investment holdings data" },
