@@ -30,6 +30,8 @@ import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-w
 //supabase
 import { createClient } from "@/utils/supabase/server";
 
+import { getUser } from "@/utils/api-helpers/supabase/getUser";
+
 //types
 import { Item } from "@/types/plaid";
 
@@ -51,10 +53,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     /**
      * Get the user's information
      */
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getUser();
 
     /**
      * Get the start and end years from the request URL
@@ -88,7 +87,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
        */
       await updateAccounts(accounts, user?.id || "");
       await updateSecurities(res?.securities, user?.id || "", timestamp);
-      await updateHoldings(res?.holdings, user?.id || "", timestamp);
+      await updateHoldings(res?.holdings,  timestamp);
     }
 
     // Get the user's updated holdings and securities

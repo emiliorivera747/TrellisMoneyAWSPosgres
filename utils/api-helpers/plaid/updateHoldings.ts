@@ -6,11 +6,16 @@ import {
   getAllHoldingsWithIds,
 } from "@/utils/api-helpers/plaid/holdings";
 
+import { getUser } from "@/utils/api-helpers/supabase/getUser";
+
+
+
 export async function updateHoldings(
   holdings: Holding[],
-  user_id: string,
   timestamp: string
 ) {
+  const user = await getUser();
+  const user_id = user?.id || "";
 
   // Update or create each holding
   for (let holding of holdings) {

@@ -18,6 +18,7 @@ model Holding {
   user_id                    String
   history                    HoldingHistory[]
   account                    Account          @relation(fields: [account_id], references: [account_id])
+
   @@id(name: "holding_id", [security_id, user_id, account_id])
 }
 
@@ -36,7 +37,8 @@ model HoldingHistory {
   quantity                   Decimal
   account_id                 String
   security_id                String
-  timestamp                  DateTime  @default(now()) @db.Timestamptz(3)
+  created_at                 DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at                 DateTime  @default(now()) @db.Timestamptz(3)
   user_id                    String
   holding                    Holding   @relation(fields: [security_id, user_id, account_id], references: [security_id, user_id, account_id], onDelete: Cascade) // Composite foreign key
 }

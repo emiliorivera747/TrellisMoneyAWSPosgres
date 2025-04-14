@@ -2,12 +2,14 @@ import { prisma } from "@/lib/prisma";
 import { Security } from "@/types/plaid";
 import isoToUTC from "@/utils/api-helpers/isoToUTC";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
+import { getUser } from "@/utils/api-helpers/supabase/getUser";
 
 export async function updateSecurities(
   securities: Security[] ,
-  user_id: string,
   timestamp: string
 ) {
+  const user = await getUser();
+  const user_id = user?.id || "";
   for (let security of securities) {
     await prisma.security.upsert({
       where: { security_id: security.security_id },
