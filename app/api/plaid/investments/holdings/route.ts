@@ -6,17 +6,17 @@ import { getInvestments } from "@/utils/api-helpers/plaid/investments/getInvestm
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 
 /**
- * 
- * @param req 
- * @returns 
+ *
+ * @param req
+ * @returns
  */
 export async function GET(req: NextRequest) {
   try {
-
     /**
-     *  Timestamp 
+     *  Timestamp
      */
-    const { timestamp } = await req.json();
+    const { searchParams } = new URL(req.url);
+    const timestamp = searchParams.get("timestamp");
     validateTimestamp(timestamp);
 
     const user = await getUser();
@@ -27,10 +27,9 @@ export async function GET(req: NextRequest) {
     const items = await getItemsByUserId(user?.id || "");
     noItemsError(items);
 
-    
-    const investments = await getInvestments(items, timestamp);
+    // const investments = await getInvestments(items, timestamp);
 
-    return NextResponse.json({ data: investments }, { status: 200 });
+    return NextResponse.json({ data: "" }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Error fetching investment holdings data" },
