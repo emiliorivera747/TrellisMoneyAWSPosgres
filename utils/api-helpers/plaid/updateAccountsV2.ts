@@ -9,14 +9,7 @@ import { AccountBaseWithItemId } from "@/types/plaid";
 // Helpers
 import { hasAccountBalance } from "@/utils/api-helpers/hasAccountBalance";
 import { updateBalance } from "@/utils/api-helpers/plaid/updateBalance";
-
-const default_balance = {
-  available: 0,
-  current: 0,
-  limit: 0,
-  iso_currency_code: "",
-  unofficial_currency_code: "",
-};
+import { NextResponse } from "next/server";
 
 /**
  * Update the accounts in the database
@@ -28,12 +21,20 @@ export async function updateAccounts(
   const accounts = accountBase.flat();
 
   for (const account of accounts) {
+    
     hasAccountBalance(account);
 
     const balances = account?.balances ?? default_balance;
 
-    await updateBalance(balances, account?.account_id);
+    const balanceRes = await updateBalance(balances, account?.account_id);
+    
+    if (!balanceRes)
+      return NextResponse.json(
+        { message: "Failed to update Balance" },
+        { status: 500 }
+      );
 
+    // Check if the balance was updated successfully
     const accountData = extractAccountData(account, balances);
 
     await prisma.account.upsert({
@@ -49,15 +50,27 @@ export async function updateAccounts(
           connect: { user_id }, // Connect to existing User
         },
         item: {
-          connect: { item_id: account?.item_id ?? "" }, // Connect to existing Item
+          connect: { item_id: account?.item_id ?? "" },
         },
         balance: {
-          connect: { balance_id: account?.account_id ?? "" }, // Connect to existing Balance
+          connect: { balance_id: account?.account_id ?? "" },
         },
       },
     });
   }
 }
+
+
+/**
+ * Default balance object
+ */
+const default_balance = {
+  available: 0,
+  current: 0,
+  limit: 0,
+  iso_currency_code: "",
+  unofficial_currency_code: "",
+};
 
 /**
  *
