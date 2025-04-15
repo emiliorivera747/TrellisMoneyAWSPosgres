@@ -1,4 +1,5 @@
 import { Decimal } from "decimal.js";
+
 import {
   AccountBalance,
   AccountType,
@@ -6,6 +7,9 @@ import {
   AccountBaseVerificationStatusEnum,
   AccountVerificationInsights,
   AccountHolderCategory,
+  PlaidError,
+  Products,
+  ItemUpdateTypeEnum
 } from "plaid";
 export interface Profile {
   id: number;
@@ -155,12 +159,18 @@ export interface Item {
   institution_id: string;
   institution_name?: string | null;
   webhook?: string | null;
+  error: PlaidError | null;
+  available_products?: Array<Products>;
+  billed_products?: Array<Products>;
+  products?: Array<Products>;
+  consented_products?: Array<Products>;
   request_id?: string | null;
   update_type?: string | null;
   consent_expiration_time?: string | null;
   accountId?: string | null;
   account?: Account | null;
   access_token?: string | null;
+  update_time?: ItemUpdateTypeEnum;
 }
 
 export interface Holding {

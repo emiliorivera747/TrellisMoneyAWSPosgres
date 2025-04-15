@@ -84,7 +84,7 @@ const Dashboard = () => {
               modalDescription="Cash flow shows how money moves in and out. A positive value means you’re earning more than you spend, while a negative value suggests you’re spending beyond your income."
             />
           </div>
-          <KeyStatContainer />
+          {/* <KeyStatContainer /> */}
           <Footer />
         </PrimaryDashboardSection>
       </div>

@@ -74,14 +74,20 @@ const addItem = async (
     data: {
       item_id: item.data.item.item_id,
       institution_id: item.data.item.institution_id || "",
+      webhook: item.data.item.webhook || "",
+      available_products: item.data.item.available_products,
+      billed_products: item.data.item.billed_products,
+      products: item.data.item.products,
+      consented_products: item.data.item.consented_products,
+      consent_expiration_time: item.data.item.consent_expiration_time || "",
+      update_type: item.data.item.update_type,
+      created_at: item.data.item.created_at,
+      consented_use_cases: item.data.item.consented_use_cases,
+      consented_data_scopes: item.data.item.consented_data_scopes,
       user_id: user_id,
       access_token,
       request_id: item.data.request_id,
-      update_type: item.data.item.update_type,
-      consent_expiration_time: item.data.item.consent_expiration_time || "",
     },
   });
   return res;
 };
-
-

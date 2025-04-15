@@ -2,6 +2,8 @@ import { client } from "@/config/plaidClient";
 import { getAllAccessTokens } from "@/utils/api-helpers/plaid/getAccessTokensFromItems";
 import { Item } from "@/types/plaid";
 import { updateHoldingsAndSecurities } from "@/utils/api-helpers/plaid/investments/updateHoldingsAndSecurities";
+import {updateItem} from "@/utils/api-helpers/plaid/items/updateItems";
+
 
 /**
  *
@@ -33,6 +35,7 @@ export const getInvestments = async (items: Item[], timestamp: string) => {
    *  Store Holdings and Securities in the database
    */
   investmentsForEachItem.forEach(async (item) => {
+    await updateItem(item.item);
     await updateHoldingsAndSecurities(item.holdings, item.securities, timestamp);
   });
 
