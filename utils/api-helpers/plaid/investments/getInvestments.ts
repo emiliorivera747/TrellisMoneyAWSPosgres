@@ -4,7 +4,6 @@ import { ItemPrisma } from "@/types/prisma";
 import { updateHoldingsAndSecurities } from "@/utils/api-helpers/plaid/investments/updateHoldingsAndSecurities";
 import { updateItem } from "@/utils/api-helpers/plaid/items/updateItems";
 import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
-import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
 
 /**
  *
@@ -35,25 +34,18 @@ export const getInvestments = async (
   );
 
   /**
-   *  Go through each item and fetch the accounts
-   */
-  const accounts = await getAccounts(items);
-
-  /**
    *  Store Holdings and Securities in the database
    */
   investmentsForEachItem.forEach(async (item) => {
     await updateItem(item.item);
+    await updateAccounts([item.accounts]);
     await updateHoldingsAndSecurities(
       item.holdings,
       item.securities,
       timestamp
     );
   });
-  /**
-   *  Store the accounts in the database
-   */
-  await updateAccounts(accounts);
+
 
   return investmentsForEachItem;
 };

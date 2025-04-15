@@ -25,6 +25,7 @@ export const updateHoldingsAndSecurities = async (
   securities: Security[],
   timestamp: string
 ) => {
+  
   /**
    * User Information
    */
