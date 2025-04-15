@@ -46,7 +46,6 @@ const ProjectedNetWorthGraph = ({
   projectionLoading,
   projectionError,
 }: ProjectedNetWorthGraphProps) => {
-  
   const [retirementYear, setRetirementYear] = useState(currentYear + 40);
 
   const filteredData = useFilteredData(
@@ -87,7 +86,7 @@ const ProjectedNetWorthGraph = ({
       : [{ data: filteredData?.[0]?.data || [], ...lineColors1 }];
 
   return (
-    <div className="grid-rows-[26rem_6rem] grid">
+    <div className="grid-rows-[22rem_6rem] grid border-b border-tertiary-300">
       {/* Graph */}
       <ResponsiveLineGraphV2
         margin={{ top: 6, right: 6, bottom: 10, left: 6 }}
@@ -102,10 +101,10 @@ const ProjectedNetWorthGraph = ({
         editRetirementYear={editRetirementYear}
       />
       {/* Filters */}
-      <RenderFilters
+      {/* <RenderFilters
         selectedFilter={selectedFilter}
         handleFilterChange={handleFilterChange}
-      />
+      /> */}
     </div>
   );
 };

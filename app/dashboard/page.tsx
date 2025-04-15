@@ -58,7 +58,7 @@ const Dashboard = () => {
             projectionError={projectionError}
             projectionLoading={projectionLoading}
           />
-          <div className="grid grid-cols-2 gap-4 border-b pb-8 border-tertiary-300">
+          <div className="grid grid-cols-2 gap-6 border-b pb-8 border-tertiary-300">
             <NetValueDisplay
               title={"Net worth"}
               linkLabel="Accounts"
@@ -88,7 +88,7 @@ const Dashboard = () => {
           <Footer />
         </PrimaryDashboardSection>
       </div>
-      <div className="h-full w-[30%]  sticky top-0 pt-[2%]">
+      <div className="h-full w-[30%]  sticky top-0 pt-[3%]">
         <AssetsForm
           form={form}
           assets={getAssetsData()}

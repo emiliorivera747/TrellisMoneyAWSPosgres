@@ -29,10 +29,10 @@ const NetValueDisplay = ({
   modalTitle,
 }: NetValueDisplayCardProps) => {
   return (
-    <div className="border border-tertiary-300 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-4 rounded-[12px]">
-      <div className="flex flex-col justify-between  w-full">
+    <div className="border border-tertiary-400 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-3 rounded-[12px]">
+      <div className="flex flex-row justify-between  w-full">
         {" "}
-        <h1 className="text-md justify-start text-tertiary-900 display flex flex-row items-center gap-2">
+        <h1 className="text-md justify-start text-tertiary-800 display flex flex-row items-center gap-2">
           {title}{" "}
           <InformationIcon
             modalDescription={modalDescription}
@@ -41,16 +41,16 @@ const NetValueDisplay = ({
         </h1>
         <LinkWithIcon linkLabel={linkLabel} linkUrl={linkUrl} />
       </div>
-      <p className="font-medium text-tertiary-900 text-2xl">
+      <p className="font-medium text-tertiary-1000 text-2xl">
         {convertToMoney(primaryValue)}
       </p>
       <div className="flex gap-4">
         <Section
           amount={secondaryValue}
-          color="#74c0fc"
+          color="#40c057"
           label={secondaryLabel}
         />
-        <p className="flex items-center text-tertiary-800">-</p>
+        <p className="flex items-center text-tertiary-600">-</p>
         <Section amount={tertiaryValue} color="#e03131" label={tertiaryLabel} />
       </div>
     </div>
@@ -74,7 +74,7 @@ const LinkWithIcon = ({
   return (
     <Link
       href={linkUrl}
-      className="text-tertiary-600 text-xs flex gap-1 items-center hover:underline"
+      className="text-tertiary-700 text-xs flex gap-1 items-center hover:underline"
     >
       {linkLabel}
       <svg
@@ -111,16 +111,16 @@ const Section = ({
   label: string;
 }) => {
   return (
-    <div className="flex flex-col items-start text-xs">
-      <h1 className="font-normal text-tertiary-800 text-[0.8rem] ">
+    <div className="flex flex-col items-start text-[0.7rem]">
+      <h1 className=" text-tertiary-700 text-[0.8rem] font-light">
         {convertToMoney(amount)}
       </h1>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 ">
         <span
           className={`w-2 h-2 rounded-full`}
           style={{ backgroundColor: color }}
         ></span>
-        <p className="text-tertiary-600 text-[0.7rem]">{label}</p>
+        <p className="text-tertiary-600 text-[0.7rem] font-light">{label}</p>
       </div>
     </div>
   );

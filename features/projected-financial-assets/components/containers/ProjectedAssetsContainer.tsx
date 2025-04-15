@@ -15,7 +15,7 @@ const ProjectedAssetsContainer = ({
         scrollbarWidth: "none",
       }}
       className={`${
-        assets?.length === 0 ? "h-[25rem]" : "h-[34rem]"
+        assets?.length === 0 ? "h-[25rem]" : "h-[95vh]"
       } max-h-screen overflow-y-auto sticky rounded-[12px]`}
     >
       {children}

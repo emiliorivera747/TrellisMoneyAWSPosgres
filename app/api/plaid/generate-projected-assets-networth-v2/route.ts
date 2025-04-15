@@ -59,12 +59,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const { start_year, end_year } = getDates(searchParams);
     validateTimestamp(timestamp);
 
-    /**
-     * Get the user's accounts
-     */
-    const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
-    await getAccounts(items);
-    await getInvestments(items, timestamp || "");
+    // /**
+    //  * Get the user's accounts
+    //  */
+    // const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
+    // await getAccounts(items);
+    // await getInvestments(items, timestamp || "");
 
     //Get the user's updated holdings and securities
     const account_holdings_securities = await getAccountsHoldingsSecurities(

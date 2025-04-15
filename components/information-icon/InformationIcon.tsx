@@ -20,7 +20,7 @@ interface InformationIconProps {
 
 const InformationIcon = ({
   size = "size-6",
-  color = "text-tertiary-700",
+  color = "text-tertiary-800",
   strokeWidth = 1.5,
   ref,
   modalTitle = "Are you sure?",
