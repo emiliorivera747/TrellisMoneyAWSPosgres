@@ -9,20 +9,22 @@ import { TooltipPayload } from "@/types/graphs";
 import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
-
 interface MultipleValPriceChangeProps {
-    dataForLines: LinePayload[]; 
-    tooltipData: TooltipPayload[];
+  dataForLines: LinePayload[];
+  tooltipData: TooltipPayload[];
 }
 
 /**
- * 
+ *
  * Component for displaying multiple stock value and price change components
- * 
- * @param param0 
- * @returns 
+ *
+ * @param param0
+ * @returns
  */
-const MultipleValPriceChange = ({dataForLines, tooltipData}: MultipleValPriceChangeProps) => {
+const MultipleValPriceChange = ({
+  dataForLines,
+  tooltipData,
+}: MultipleValPriceChangeProps) => {
   const directions = dataForLines.map((line) => getLineDirection(line.data));
   const isMultipleLines = dataForLines.length >= 2;
 
@@ -38,7 +40,9 @@ const MultipleValPriceChange = ({dataForLines, tooltipData}: MultipleValPriceCha
             key={index}
             tooltipPayload={tooltipData ? tooltipData[index] : null}
             data={line.data}
-            mainHeaderTailwindCss={`${isMultipleLines ? 'text-[1.1rem]' : 'text-[1.4rem]'}  text-tertiary-1000 font-medium `}
+            mainHeaderTailwindCss={`${
+              isMultipleLines ? "text-[1.1rem]" : "text-[1.4rem]"
+            }  text-tertiary-1000 font-medium `}
             subHeaderTailwindCss={`${tailwindPrimaryTextColor} font-semibold text-[0.7rem]`}
           />
         );

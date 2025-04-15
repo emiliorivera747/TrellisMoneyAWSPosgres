@@ -31,13 +31,12 @@ const NetValueDisplay = ({
   return (
     <div className="border border-tertiary-400 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-3 rounded-[12px]">
       <div className="flex flex-row justify-between  w-full">
-        {" "}
         <h1 className="text-md justify-start text-tertiary-800 display flex flex-row items-center gap-2">
-          {title}{" "}
+          {title}
           <InformationIcon
             modalDescription={modalDescription}
             modalTitle={modalTitle}
-          />{" "}
+          />
         </h1>
         <LinkWithIcon linkLabel={linkLabel} linkUrl={linkUrl} />
       </div>
