@@ -8,3 +8,5 @@ export interface SecurityHistory {
   iso_currency_code?: string | null;
   unofficial_currency_code?: string | null;
 }
+
+

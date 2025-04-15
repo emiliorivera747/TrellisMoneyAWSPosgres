@@ -1,8 +1,9 @@
 import { Security, Holding } from "plaid";
-import { prisma } from "@/lib/prisma";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
-import { getExistingSecurities } from "@/utils/api-helpers/plaid/investments/securityService";
-import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
+import {
+  getExistingSecurities,
+  upsertSecurities,
+} from "@/utils/api-helpers/plaid/investments/securityService";
 
 const PRICE_CHANGE_THRESHOLD = 0.01; // 1% price change
 /**
@@ -37,9 +38,12 @@ export const updateHoldingsAndSecurities = async (
   );
 
   /**
-   * Go through each security and check if it exists in the database
+   * Upsert securities and return security history
    */
-
+  const { securityHistory, securityUpserts } = await upsertSecurities(
+    securities,
+    user_id,
+    timestamp,
+    securitiesMap
+  );
 };
-
-

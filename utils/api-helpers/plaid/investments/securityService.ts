@@ -1,8 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { Security } from "plaid";
 import { SecurityHistory } from "@/types/prisma";
+import { Security as SecurityPrisma} from '@/types/plaid';
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/isoToUTC";
+import { Decimal } from "decimal.js";
 
 /**
  * Compares the securities from plaid with the securities in the database
@@ -27,28 +29,33 @@ export const upsertSecurities = async (
   securities: Security[],
   user_id: string,
   timestamp: string,
-  securitiesMap: Map<string, Security>
-): Promise<Security[] | []> => {
+  securitiesMap: Map<
+    string,
+    { security_id: string; close_price: number | Decimal | null }
+  >
+): Promise<{ securityHistory: SecurityHistory[]; securityUpserts: SecurityPrisma[] }> => {
   const securityHistory: SecurityHistory[] | [] = [];
 
-  securities.map(async (security) => {
-    addSecurityHistory(securityHistory, securitiesMap, security);
+  const securityUpserts = await Promise.all(
+    securities.map(async (security) => {
+      addSecurityHistory(securityHistory, securitiesMap, security);
 
-    await prisma.security.upsert({
-      where: { security_id: security.security_id },
-      update: {
-        ...getSecurityUpdateFields(security),
-        timestamp: isoToUTC(timestamp),
-      },
-      create: {
-        ...getSecurirtyCreateFields(security),
-        timestamp: isoToUTC(timestamp),
-        user_id: user_id,
-      },
-    });
-  });
+      return prisma.security.upsert({
+        where: { security_id: security.security_id },
+        update: {
+          ...getSecurityUpdateFields(security),
+          timestamp: isoToUTC(timestamp),
+        },
+        create: {
+          ...getSecurirtyCreateFields(security),
+          timestamp: isoToUTC(timestamp),
+          user_id: user_id,
+        },
+      });
+    })
+  );
 
-  return securityHistory;
+  return { securityHistory, securityUpserts };
 };
 
 /**
@@ -132,7 +139,10 @@ const getSecurityUpdateFields = (security: Security) => ({
  */
 const addSecurityHistory = async (
   securityHistory: SecurityHistory[],
-  securitiesMap: Map<string, Security>,
+  securitiesMap: Map<
+    string,
+    { security_id: string; close_price: number | Decimal | null }
+  >,
   security: Security
 ) => {
   const existing = securitiesMap.get(security.security_id);
