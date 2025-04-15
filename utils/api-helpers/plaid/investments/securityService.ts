@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import { Security } from "@/types/plaid";
+import { Security } from "plaid";
+import { SecurityHistory } from "@/types/prisma";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/isoToUTC";
 
@@ -28,7 +29,7 @@ export const upsertSecurities = async (
   timestamp: string,
   securitiesMap: Map<string, Security>
 ): Promise<Security[] | []> => {
-  const securityHistory: Security[] | [] = [];
+  const securityHistory: SecurityHistory[] | [] = [];
 
   securities.map(async (security) => {
     addSecurityHistory(securityHistory, securitiesMap, security);
@@ -121,7 +122,6 @@ const getSecurityUpdateFields = (security: Security) => ({
   ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
 });
 
-
 /**
  * Adds the security history to the security history array
  * if the security does not exist in the database or if the price has changed
@@ -131,7 +131,7 @@ const getSecurityUpdateFields = (security: Security) => ({
  * @param security
  */
 const addSecurityHistory = async (
-  securityHistory: Security[],
+  securityHistory: SecurityHistory[],
   securitiesMap: Map<string, Security>,
   security: Security
 ) => {
