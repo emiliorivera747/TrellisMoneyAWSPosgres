@@ -18,7 +18,6 @@ model Holding {
   user_id                    String
   history                    HoldingHistory[]
   account                    Account          @relation(fields: [account_id], references: [account_id])
-
   @@id(name: "holding_id", [security_id, user_id, account_id])
 }
 
@@ -30,7 +29,7 @@ model HoldingHistory {
   institution_price_as_of    DateTime  @db.Timestamptz(3)
   institution_price_datetime DateTime? @db.Timestamptz(3)
   institution_value          Decimal
-  iso_currency_code          String
+  iso_currency_code          String?
   unofficial_currency_code   String?
   vested_quantity            Decimal?
   vested_value               Decimal

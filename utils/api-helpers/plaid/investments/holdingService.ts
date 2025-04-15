@@ -43,11 +43,9 @@ export const upsertHoldings = async (
       },
       update: {
         ...getHoldingUpdateFields(holding),
-        timestamp: isoToUTC(timestamp),
       },
       create: {
         ...getHoldingCreateFields(holding),
-        timestamp: isoToUTC(timestamp),
         user_id: user_id,
       },
     })
@@ -98,10 +96,9 @@ const addHoldingHistory = (
   const existing = holdingsMap.get(key);
   const newQuantity = holding.quantity;
 
-  if (
-    !existing ||
-    Math.abs(Number(existing?.quantity) - Number(newQuantity)) > 0.01
-  ) {
+  const diff = Math.abs(Number(existing?.quantity) - Number(newQuantity));
+
+  if (!existing || diff > 0.01) {
     const historyFields = getHoldingHistoryFields(holding, user_id);
     holdingHistory.push(historyFields);
   }
@@ -112,19 +109,19 @@ const addHoldingHistory = (
  */
 const getHoldingHistoryFields = (holding: Holding, user_id: string) => ({
   user_id,
-  security_id: holding.security_id,
-  account_id: holding.account_id,
   cost_basis: getValueOrDefault(holding?.cost_basis, 0),
   institution_price: getValueOrDefault(holding?.institution_price, 0),
+  annual_return_rate: 0.06,
   institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
   institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
   institution_value: getValueOrDefault(holding?.institution_value, 0),
+  iso_currency_code: holding.iso_currency_code || "USD",
+  unofficial_currency_code: getValueOrDefault(holding?.unofficial_currency_code, "USD"),
   vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
   vested_value: getValueOrDefault(holding?.vested_value, 0),
   quantity: getValueOrDefault(holding?.quantity, 0),
-  annual_return_rate: 0.06,
-  annual_inflation_rate: 0.03,
-  iso_currency_code: holding.iso_currency_code || "USD",
+  security_id: holding.security_id,
+  account_id: holding.account_id,
 });
 
 /**

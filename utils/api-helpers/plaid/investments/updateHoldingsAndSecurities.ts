@@ -10,6 +10,7 @@ import {
 } from "@/utils/api-helpers/plaid/investments/holdingService";
 
 import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
 /**
  *
@@ -70,9 +71,30 @@ export const updateHoldingsAndSecurities = async (
   const hLen = holdings.length;
 
   await prisma.$transaction([...securityUpserts, ...holdingUpserts]);
-  if (sLen > 0)
-    await prisma.securityHistory.createMany({ data: securityHistory });
+  if (sLen > 0) {
+    try {
+      await prisma.securityHistory.createMany({ data: securityHistory });
+    } catch (error) {
+      return NextResponse.json(
+        { error: "Error creating securities" },
+        { status: 500 }
+      );
+    }
+  }
 
-  if (hLen > 0)
-    await prisma.holdingHistory.createMany({ data: holdingHistory });
+  if (hLen > 0) {
+    try {
+      await prisma.holdingHistory.createMany({ data: holdingHistory });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log("An unknown error occurred");
+      }
+      return NextResponse.json(
+        { error: "Error creating holding history" },
+        { status: 500 }
+      );
+    }
+  }
 };

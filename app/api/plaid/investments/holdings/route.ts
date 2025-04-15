@@ -11,7 +11,8 @@ import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/valid
  * @returns
  */
 export async function GET(req: NextRequest) {
-  try {
+  try { 
+    
     /**
      *  Timestamp
      */

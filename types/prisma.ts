@@ -16,7 +16,7 @@ export interface HoldingHistory {
   quantity: number | Decimal;
   cost_basis: number | Decimal;
   annual_return_rate: number |  Decimal;
-  annual_inflation_rate: number | null | Decimal;
+  annual_inflation_rate?: number | null | Decimal;
   institution_price: number | Decimal;
   institution_price_as_of: string | Date;
   institution_price_datetime: string | Date;

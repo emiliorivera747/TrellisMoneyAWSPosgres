@@ -11,6 +11,7 @@ import { updateHoldingsAndSecurities } from "@/utils/api-helpers/plaid/investmen
  * @returns
  */
 export const getInvestments = async (items: Item[], timestamp: string) => {
+  
   /**
    *  Get all of the access tokens from the items
    */

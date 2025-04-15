@@ -63,6 +63,33 @@ export const upsertSecurities = async (
 };
 
 /**
+ * Adds the security history to the security history array
+ * if the security does not exist in the database or if the price has changed
+ *
+ * @param securityHistory
+ * @param securitiesMap
+ * @param security
+ */
+const addSecurityHistory = async (
+  securityHistory: SecurityHistory[],
+  securitiesMap: Map<
+    string,
+    { security_id: string; close_price: number | Decimal | null }
+  >,
+  security: Security
+) => {
+  const existing = securitiesMap.get(security.security_id);
+  const newPrice = getValueOrDefault(security.close_price, 0);
+  if (
+    !existing ||
+    Math.abs(Number(existing?.close_price) - Number(newPrice)) > 0.01
+  ) {
+    const historyFields = getSecurityHistoryFields(security);
+    securityHistory.push(historyFields);
+  }
+};
+
+/**
  *
  * Get the security history create fields
  *
@@ -132,30 +159,3 @@ const getSecurityUpdateFields = (security: Security) => ({
   industry: getValueOrDefault(security?.industry, ""),
   ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
 });
-
-/**
- * Adds the security history to the security history array
- * if the security does not exist in the database or if the price has changed
- *
- * @param securityHistory
- * @param securitiesMap
- * @param security
- */
-const addSecurityHistory = async (
-  securityHistory: SecurityHistory[],
-  securitiesMap: Map<
-    string,
-    { security_id: string; close_price: number | Decimal | null }
-  >,
-  security: Security
-) => {
-  const existing = securitiesMap.get(security.security_id);
-  const newPrice = getValueOrDefault(security.close_price, 0);
-  if (
-    !existing ||
-    Math.abs(Number(existing?.close_price) || 0 - Number(newPrice)) > 0.01
-  ) {
-    const historyFields = getSecurityHistoryFields(security);
-    securityHistory.push(historyFields);
-  }
-};
