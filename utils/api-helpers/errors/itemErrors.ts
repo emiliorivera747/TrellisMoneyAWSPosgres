@@ -1,4 +1,5 @@
-import { Item } from "@/types/plaid";
+
+import {ItemPrisma} from "@/types/prisma";
 import { NextResponse } from "next/server";
 
 /**
@@ -7,7 +8,7 @@ import { NextResponse } from "next/server";
  * @param item
  * @returns
  */
-export const noItemsError = (item: Item[]) => {
+export const noItemsError = (item: ItemPrisma[]) => {
   if (!item || item.length === 0)
     return NextResponse.json({ message: "No items found" }, { status: 404 });
 };

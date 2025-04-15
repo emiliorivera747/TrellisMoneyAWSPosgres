@@ -1,4 +1,4 @@
-import { Item } from "@/types/plaid";
+import { ItemPrisma } from "@/types/prisma";
 
 /**
  *
@@ -7,7 +7,7 @@ import { Item } from "@/types/plaid";
  * @param items
  * @returns
  */
-export const getAllAccessTokens = async (items: Item[]) => {
+export const getAllAccessTokens = async (items: ItemPrisma[]) => {
   const accessTokens = items
     .map((item) => item.access_token)
     .filter((token): token is string => token !== null && token !== undefined);

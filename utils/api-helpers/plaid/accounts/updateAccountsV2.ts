@@ -10,15 +10,17 @@ import { AccountBaseWithItemId } from "@/types/plaid";
 import { hasAccountBalance } from "@/utils/api-helpers/hasAccountBalance";
 import { updateBalance } from "@/utils/api-helpers/plaid/accounts/updateBalance";
 import { NextResponse } from "next/server";
+import { getUser} from "@/utils/api-helpers/supabase/getUser";
 
 /**
  * Update the accounts in the database
  */
 export async function updateAccounts(
   accountBase: AccountBaseWithItemId[][],
-  user_id: string
 ) {
   const accounts = accountBase.flat();
+  const user = await getUser();
+  const user_id = user?.id || "";
 
   for (const account of accounts) {
     

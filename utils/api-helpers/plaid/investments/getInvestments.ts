@@ -1,9 +1,10 @@
 import { client } from "@/config/plaidClient";
 import { getAllAccessTokens } from "@/utils/api-helpers/plaid/getAccessTokensFromItems";
-import { Item } from "@/types/plaid";
+import { ItemPrisma } from "@/types/prisma";
 import { updateHoldingsAndSecurities } from "@/utils/api-helpers/plaid/investments/updateHoldingsAndSecurities";
-import {updateItem} from "@/utils/api-helpers/plaid/items/updateItems";
-
+import { updateItem } from "@/utils/api-helpers/plaid/items/updateItems";
+import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
+import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
 
 /**
  *
@@ -12,8 +13,10 @@ import {updateItem} from "@/utils/api-helpers/plaid/items/updateItems";
  * @param items
  * @returns
  */
-export const getInvestments = async (items: Item[], timestamp: string) => {
-  
+export const getInvestments = async (
+  items: ItemPrisma[],
+  timestamp: string
+) => {
   /**
    *  Get all of the access tokens from the items
    */
@@ -32,12 +35,25 @@ export const getInvestments = async (items: Item[], timestamp: string) => {
   );
 
   /**
+   *  Go through each item and fetch the accounts
+   */
+  const accounts = await getAccounts(items);
+
+  /**
    *  Store Holdings and Securities in the database
    */
   investmentsForEachItem.forEach(async (item) => {
     await updateItem(item.item);
-    await updateHoldingsAndSecurities(item.holdings, item.securities, timestamp);
+    await updateHoldingsAndSecurities(
+      item.holdings,
+      item.securities,
+      timestamp
+    );
   });
+  /**
+   *  Store the accounts in the database
+   */
+  await updateAccounts(accounts);
 
   return investmentsForEachItem;
 };
