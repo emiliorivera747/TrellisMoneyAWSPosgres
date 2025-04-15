@@ -1,15 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
-//
 
 //functions
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
-import { generateProjectedNetWorthV2 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV2";
 import { generateProjectedFinancialAssetsV2 } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
 
 // Helpers
-import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccounts";
 import { updateSecurities } from "@/utils/api-helpers/plaid/investments/updateSecurities";
 import { updateHoldings } from "@/utils/api-helpers/plaid/investments/updateHoldings";
 import {
@@ -21,19 +18,19 @@ import {
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/getDates";
 import { getItemsById } from "@/utils/api-helpers/prisma/getItemsById";
-import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccounts";
 import { getHoldingsAndSecuritiesMock } from "@/utils/api-helpers/plaid/getHoldingsAndSecuritiesMock";
 import { getHoldingsAndSecurities } from "@/utils/api-helpers/prisma/getHoldingsAndSecurities";
 import { getAccountsHoldingsSecurities } from "@/utils/api-helpers/prisma/getAccountsHoldingsSecurities";
 import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV3";
-
-//supabase
-import { createClient } from "@/utils/supabase/server";
-
+import { getItemsByUserId } from "@/utils/api-helpers/prisma/itemsService";
+import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
+import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
+import { updateHoldingsAndSecurities } from "@/utils/api-helpers/plaid/investments/updateHoldingsAndSecurities";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getInvestments } from "@/utils/api-helpers/plaid/investments/getInvestments";
 
 //types
-import { Item } from "@/types/plaid";
+import { ItemPrisma } from "@/types/prisma";
 
 const default_inflation_rate = 0.025;
 
@@ -65,33 +62,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     /**
      * Get the user's accounts
      */
-    const items: Item[] = await getItemsById(user?.id || "");
-    const accounts = await getAccounts(items);
+    const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
+    await getAccounts(items);
+    await getInvestments(items, timestamp || "");
 
-    /**
-     *  Get the user's holdings and securities
-     */
-    const res = await getHoldingsAndSecuritiesMock(
-      "access-production-7b9e2f4d-8c1a-4e5b-a2d3-f6e7890c3d2b"
-    );
-
-    if (res) {
-      /**
-       * Handle missing data and errors
-       */
-      handleMissingData(accounts, res.holdings, res.securities);
-      handleErrors(accounts, res.holdings, res.securities);
-
-      /**
-       * Update the user's accounts, securities, and holdings
-       */
-      await updateAccounts(accounts, user?.id || "");
-      await updateSecurities(res?.securities, user?.id || "", timestamp);
-      await updateHoldings(res?.holdings,  timestamp);
-    }
-
-    // Get the user's updated holdings and securities
-    const userHoldings = await getHoldingsAndSecurities(user?.id || "");
+    //Get the user's updated holdings and securities
     const account_holdings_securities = await getAccountsHoldingsSecurities(
       user?.id || ""
     );

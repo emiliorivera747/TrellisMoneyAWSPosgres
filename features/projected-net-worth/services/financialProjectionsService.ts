@@ -24,7 +24,7 @@ const generateProjectedAssetsAndNetworth = async (
   with_inflation: boolean
 ) => {
   const response = await fetch(
-    `${API_URL}/generate-projected-assets-networth?start_date=${start_year}&end_date=${end_year}&with_inflation=${with_inflation}`,
+    `${API_URL}/generate-projected-assets-networth-v2?start_date=${start_year}&end_date=${end_year}&with_inflation=${with_inflation}`,
     {
       method: "POST",
       headers: {
