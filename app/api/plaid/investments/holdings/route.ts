@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
 
     const investments = await getInvestments(items, timestamp || "");
 
-    return NextResponse.json({ data: "" }, { status: 200 });
+    return NextResponse.json({ data: investments }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Error fetching investment holdings data" },

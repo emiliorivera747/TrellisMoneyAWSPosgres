@@ -1,35 +1,160 @@
 import { prisma } from "@/lib/prisma";
-import { Holding, Security} from "plaid";
-import { SecurityHistory } from "@/types/prisma";
+import { Holding } from "plaid";
+import { Holding as HoldingPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/isoToUTC";
 import { Decimal } from "decimal.js";
-import { HoldingHistory } from "@prisma/client";
-
-
+import { HoldingHistory } from "@/types/prisma";
+import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { PrismaPromise } from "@prisma/client";
 
 /**
- * 
+ *
  * Upserts the holdings into the database and returns the holding history
- * 
- * @param holdings 
- * @param securities 
- * @param timestamp 
- * @param user_id 
- * @returns 
+ *
+ * @param holdings
+ * @param securities
+ * @param timestamp
+ * @param user_id
+ * @returns
  */
-const upserHoldings = async (
-    holdings: Holding[],
-    securities: Security[],
-    timestamp: string,
-    user_id: string
-): Promise<HoldingHistory[] | []> => {
+export const upsertHoldings = async (
+  holdings: Holding[],
+  user_id: string,
+  timestamp: string,
+  holdingsMap: Map<
+    string,
+    { security_id: string; account_id: string; quantity: Decimal }
+  >
+): Promise<{
+  holdingHistory: HoldingHistory[];
+  holdingUpserts: PrismaPromise<HoldingPrisma>[];
+}> => {
+  const holdingHistory: HoldingHistory[] = [];
 
-    const holdingHistory: HoldingHistory[] | [] = [];
+  const holdingUpserts = holdings.map((holding) =>
+    prisma.holding.upsert({
+      where: {
+        holding_id: {
+          security_id: holding.security_id,
+          account_id: holding.account_id,
+          user_id: user_id,
+        },
+      },
+      update: {
+        ...getHoldingUpdateFields(holding),
+        timestamp: isoToUTC(timestamp),
+      },
+      create: {
+        ...getHoldingCreateFields(holding),
+        timestamp: isoToUTC(timestamp),
+        user_id: user_id,
+      },
+    })
+  );
 
+  holdings.forEach((holding) => {
+    addHoldingHistory(holdingHistory, holdingsMap, holding, user_id);
+  });
 
+  return { holdingHistory, holdingUpserts };
+};
 
+/**
+ *
+ * Get all of the holdings with the security_id, account_id and user_id
+ *
+ * @param holdings
+ * @returns
+ */
+export const getExistingHoldings = async (holdings: Holding[]) => {
+  const user = await getUser();
+  const user_id = user?.id || "";
+  const res = await prisma.holding.findMany({
+    where: {
+      security_id: { in: holdings.map((h) => h.security_id) },
+      user_id,
+      account_id: { in: holdings.map((h) => h.account_id) },
+    },
+    select: { security_id: true, account_id: true, quantity: true },
+  });
+  return res;
+};
 
+/**
+ * Adds the holding history to the holding history array
+ *
+ */
+const addHoldingHistory = (
+  holdingHistory: HoldingHistory[],
+  holdingsMap: Map<
+    string,
+    { security_id: string; account_id: string; quantity: Decimal }
+  >,
+  holding: Holding,
+  user_id: string
+) => {
+  const key = `${holding.security_id}:${holding.account_id}`;
+  const existing = holdingsMap.get(key);
+  const newQuantity = holding.quantity;
 
-    return holdingHistory;
-}
+  if (
+    !existing ||
+    Math.abs(Number(existing?.quantity) - Number(newQuantity)) > 0.01
+  ) {
+    const historyFields = getHoldingHistoryFields(holding, user_id);
+    holdingHistory.push(historyFields);
+  }
+};
+
+/**
+ * Get the holding history create fields
+ */
+const getHoldingHistoryFields = (holding: Holding, user_id: string) => ({
+  user_id,
+  security_id: holding.security_id,
+  account_id: holding.account_id,
+  cost_basis: getValueOrDefault(holding?.cost_basis, 0),
+  institution_price: getValueOrDefault(holding?.institution_price, 0),
+  institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
+  institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
+  institution_value: getValueOrDefault(holding?.institution_value, 0),
+  vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
+  vested_value: getValueOrDefault(holding?.vested_value, 0),
+  quantity: getValueOrDefault(holding?.quantity, 0),
+  annual_return_rate: 0.06,
+  annual_inflation_rate: 0.03,
+  iso_currency_code: holding.iso_currency_code || "USD",
+});
+
+/**
+ * Get the holding update fields
+ */
+const getHoldingUpdateFields = (holding: Holding) => ({
+  cost_basis: getValueOrDefault(holding?.cost_basis, 0),
+  institution_price: getValueOrDefault(holding?.institution_price, 0),
+  institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
+  institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
+  institution_value: getValueOrDefault(holding?.institution_value, 0),
+  vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
+  vested_value: getValueOrDefault(holding?.vested_value, 0),
+  quantity: getValueOrDefault(holding?.quantity, 0),
+  iso_currency_code: holding.iso_currency_code || "USD",
+});
+
+/**
+ * Get the holding create fields
+ */
+const getHoldingCreateFields = (holding: Holding) => ({
+  security_id: holding.security_id,
+  account_id: holding.account_id,
+  cost_basis: getValueOrDefault(holding?.cost_basis, 0),
+  institution_price: getValueOrDefault(holding?.institution_price, 0),
+  institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
+  institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
+  institution_value: getValueOrDefault(holding?.institution_value, 0),
+  vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
+  vested_value: getValueOrDefault(holding?.vested_value, 0),
+  quantity: getValueOrDefault(holding?.quantity, 0),
+  iso_currency_code: holding.iso_currency_code || "USD",
+});

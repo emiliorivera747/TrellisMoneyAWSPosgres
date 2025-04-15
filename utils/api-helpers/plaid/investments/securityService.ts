@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { Security } from "plaid";
 import { SecurityHistory } from "@/types/prisma";
-import { Security as SecurityPrisma} from '@/types/plaid';
+import { Security as SecurityPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/isoToUTC";
 import { Decimal } from "decimal.js";
+import { PrismaPromise } from "@prisma/client";
 
 /**
  * Compares the securities from plaid with the securities in the database
@@ -33,27 +34,30 @@ export const upsertSecurities = async (
     string,
     { security_id: string; close_price: number | Decimal | null }
   >
-): Promise<{ securityHistory: SecurityHistory[]; securityUpserts: SecurityPrisma[] }> => {
-  const securityHistory: SecurityHistory[] | [] = [];
+): Promise<{
+  securityHistory: SecurityHistory[];
+  securityUpserts: PrismaPromise<SecurityPrisma>[];
+}> => {
+  const securityHistory: SecurityHistory[] = [];
 
-  const securityUpserts = await Promise.all(
-    securities.map(async (security) => {
-      addSecurityHistory(securityHistory, securitiesMap, security);
-
-      return prisma.security.upsert({
-        where: { security_id: security.security_id },
-        update: {
-          ...getSecurityUpdateFields(security),
-          timestamp: isoToUTC(timestamp),
-        },
-        create: {
-          ...getSecurirtyCreateFields(security),
-          timestamp: isoToUTC(timestamp),
-          user_id: user_id,
-        },
-      });
+  const securityUpserts = securities.map((security) =>
+    prisma.security.upsert({
+      where: { security_id: security.security_id },
+      update: {
+        ...getSecurityUpdateFields(security),
+        timestamp: isoToUTC(timestamp),
+      },
+      create: {
+        ...getSecurityCreateFields(security),
+        timestamp: isoToUTC(timestamp),
+        user_id: user_id,
+      },
     })
   );
+
+  securities.forEach((security) => {
+    addSecurityHistory(securityHistory, securitiesMap, security);
+  });
 
   return { securityHistory, securityUpserts };
 };
@@ -83,7 +87,7 @@ const getSecurityHistoryFields = (security: Security) => ({
  * @param security
  * @returns
  */
-const getSecurirtyCreateFields = (security: Security) => ({
+const getSecurityCreateFields = (security: Security) => ({
   security_id: security.security_id,
   isin: getValueOrDefault(security?.isin, ""),
   cusip: getValueOrDefault(security?.cusip, ""),

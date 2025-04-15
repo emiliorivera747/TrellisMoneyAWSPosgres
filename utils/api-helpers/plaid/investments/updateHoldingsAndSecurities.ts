@@ -4,8 +4,13 @@ import {
   getExistingSecurities,
   upsertSecurities,
 } from "@/utils/api-helpers/plaid/investments/securityService";
+import {
+  upsertHoldings,
+  getExistingHoldings,
+} from "@/utils/api-helpers/plaid/investments/holdingService";
 
-const PRICE_CHANGE_THRESHOLD = 0.01; // 1% price change
+import { prisma } from "@/lib/prisma";
+
 /**
  *
  * Updates the holdings and securities in the database.
@@ -29,12 +34,16 @@ export const updateHoldingsAndSecurities = async (
    * Retrieve all existing Securities
    */
   const existingSecurities = await getExistingSecurities(securities);
+  const existingHoldings = await getExistingHoldings(holdings);
 
   /**
-   * Create a map of the securities
+   * Create a map of the securities and holdings
    */
   const securitiesMap = new Map(
     existingSecurities.map((security) => [security.security_id, security])
+  );
+  const holdingMap = new Map(
+    existingHoldings.map((h) => [`${h.security_id}:${h.account_id}`, h])
   );
 
   /**
@@ -46,4 +55,24 @@ export const updateHoldingsAndSecurities = async (
     timestamp,
     securitiesMap
   );
+
+  /**
+   * Upsert holdings and return holding history
+   */
+  const { holdingHistory, holdingUpserts } = await upsertHoldings(
+    holdings,
+    user_id,
+    timestamp,
+    holdingMap
+  );
+
+  const sLen = securities.length;
+  const hLen = holdings.length;
+
+  await prisma.$transaction([...securityUpserts, ...holdingUpserts]);
+  if (sLen > 0)
+    await prisma.securityHistory.createMany({ data: securityHistory });
+
+  if (hLen > 0)
+    await prisma.holdingHistory.createMany({ data: holdingHistory });
 };
