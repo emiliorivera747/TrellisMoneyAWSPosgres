@@ -16,7 +16,7 @@ const AssetName = ({asset}: {asset: Assets}) => {
   }
 
   return (
-    <TableCell className=" pl-4 text-xs w-[8rem] ">
+    <TableCell className=" pl-6 text-xs w-[8rem] ">
       <div className="flex flex-col">
         {nameElement}
         {(asset?.shares ?? 0) > 0 && <span className="font-normal text-tertiary-800">
