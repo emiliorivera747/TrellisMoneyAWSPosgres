@@ -4,8 +4,8 @@ import { getTypeLabel } from "@/features/projected-financial-assets/utils/getTyp
 
 const InvestmentTypeHeader = ({ assetGroup }: any) => {
   return (
-    <TableRow className="text-[0.7rem] border-b border-t border-tertiary-200  text-tertiary-800 p-0 hover:bg-white">
-      <TableCell className="pl-6 text-[0.8rem] text-tertiary-900 font-bold">{getTypeLabel(assetGroup)}</TableCell>
+    <TableRow className="text-[0.8rem] border-b border-t border-tertiary-300  text-tertiary-800 hover:bg-white h-10 font-light">
+      <TableCell className="pl-6 ">{getTypeLabel(assetGroup)}</TableCell>
       <TableCell>Annual Return Rate</TableCell>
       <TableCell>Projection</TableCell>
     </TableRow>

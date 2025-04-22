@@ -36,12 +36,13 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
 
 
   if (isLoading) return <ProjectedAssetsCardSkeleton />;
+  
   return (
     <ProjectedAssetsContainer assets={assets}>
       <div
-        className={`grid  ${
+        className={`grid ${
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
-        } absolute w-full text-[#343a40] h-full`}
+        } absolute overflow-y-hidden w-full text-[#343a40] h-full`}
       >
         <ProjectedHoldingCardPrimaryHeader
           year={selectedYear}
@@ -50,7 +51,7 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
         />
         <AssetsTable assets={assets} form={form} mode={mode} />
         {mode === "edit" && (
-          <div className="flex justify-center  items-center">
+          <div className="flex justify-center items-center">
             <PrimarySubmitButton
               text={"Update"}
               className="w-[8rem] font-semibold text-sm h-[3rem]"

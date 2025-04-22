@@ -11,12 +11,11 @@ const ProjectedAssetsContainer = ({
     <aside
       style={{
         border: "1px solid rgb(221, 221, 221)",
-        // boxShadow:'rgba(0, 0, 0, 0.09) 0px 3px 12px',
-        scrollbarWidth: "none",
+
       }}
       className={`${
-        assets?.length === 0 ? "h-[25rem]" : "h-[95vh]"
-      } max-h-screen overflow-y-auto sticky rounded-[12px]`}
+        assets?.length === 0 ? "h-[25rem]" : "h-[90vh]"
+      } max-h-screen sticky rounded-[12px]`}
     >
       {children}
     </aside>

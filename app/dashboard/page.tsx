@@ -88,7 +88,7 @@ const Dashboard = () => {
           <Footer />
         </PrimaryDashboardSection>
       </div>
-      <div className="h-full w-[30%]  sticky top-0 pt-[3%]">
+      <div className="h-full w-[30%] sticky top-0 pt-[3%]">
         <AssetsForm
           form={form}
           assets={getAssetsData()}
