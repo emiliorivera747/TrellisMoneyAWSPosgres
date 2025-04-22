@@ -173,6 +173,16 @@ input:-webkit-autofill:active {
   scrollbar-width: none; /* Firefox */
 }
 
+.no-scrollbars {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: transparent transparent; /* For Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+
+  &::-webkit-scrollbar { /* Chrome, Safari, Opera */
+    display: none;
+  }
+}
+
 .year-selector{
   -webkit-appearance: none;
   -moz-appearance: none;

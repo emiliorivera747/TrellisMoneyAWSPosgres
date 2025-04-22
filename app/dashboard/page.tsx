@@ -46,7 +46,7 @@ const Dashboard = () => {
   const getAssetsData = () => projectionData?.projected_assets[0]?.data || [];
 
   return (
-    <div className="w-full border-box max-h-screen overflow-y-scroll flex flex-row">
+    <div className="w-full border-box max-h-screen overflow-y-scroll flex flex-row gap-4">
       <div className="p-4 w-[70%] mt-[2%] max-h-screen">
         <PrimaryDashboardSection>
           <ProjectedNetWorthGraph
