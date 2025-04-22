@@ -11,7 +11,7 @@ const AssetsTable = ({
   mode,
 }: AssetsTableProps) => {
   return (
-    <Table>
+    <Table className="">
       <TableBodyForAssets
         assets={assets}
         form={form}

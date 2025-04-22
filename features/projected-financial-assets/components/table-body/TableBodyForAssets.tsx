@@ -39,7 +39,7 @@ const TableBodyForAssets = ({
   }, [assets]);
 
   return (
-    <TableBody>
+    <TableBody className="">
       {Object.entries(groups)
         .sort(([typeA], [typeB]) => typeB.localeCompare(typeA))
         .map(([key, assets], i) => {

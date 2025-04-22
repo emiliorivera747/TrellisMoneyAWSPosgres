@@ -42,7 +42,7 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
       <div
         className={`grid ${
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
-        } absolute overflow-y-hidden w-full text-[#343a40] h-full`}
+        } absolute w-full text-[#343a40] h-full overflow-y-hidden`}
       >
         <ProjectedHoldingCardPrimaryHeader
           year={selectedYear}
