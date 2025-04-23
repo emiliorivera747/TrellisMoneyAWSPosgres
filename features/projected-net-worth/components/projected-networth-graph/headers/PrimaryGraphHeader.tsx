@@ -4,7 +4,7 @@ import MultipleValPriceChange from "@/components/dashboard/MultipleValPriceChang
 import { LinePayload } from "@/types/graphs";
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
-import InformationIcon from "@/components/information-icon/InformationIcon";
+
 interface PrimaryGraphHeaderProps {
   dataForLines: LinePayload[];
   tooltipData: any;
@@ -15,6 +15,9 @@ interface PrimaryGraphHeaderProps {
   setSelectedYear: (year: number) => void;
   editRetirementYear: (year: number) => void;
 }
+
+
+
 const PrimaryGraphHeader = ({
   dataForLines,
   tooltipData,
