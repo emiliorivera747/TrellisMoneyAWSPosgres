@@ -11,7 +11,7 @@ import ProjectedNetWorthGraphError from "@/components/errors/ProjectedNetWorthGr
 // External Libraries
 import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
 
-//Functions
+// Functions
 import { generateYearsArray } from "@/features/projected-net-worth/utils/generateYearsArray";
 import { getDataForLines } from "@/features/projected-net-worth/utils/getDataForLines";
 
@@ -23,30 +23,30 @@ const defaultYearsIntoTheFuture = 100;
 const currentYear = Number(new Date().getFullYear().toString());
 const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
 
-//Types
-import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
+// Context
+import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 
 /**
  * Projects the future net worth of the user based on the data provided
  *
  */
-const ProjectedNetWorthGraph = ({
-  selectedYear,
-  handleYearSelection,
-  handleFilterChange,
-  selectedFilter,
-  projectionData,
-  projectionLoading,
-  projectionError,
-}: ProjectedNetWorthGraphProps) => {
+const ProjectedNetWorthGraph = ({}) => {
   const containerRef = useRef(null);
   const [retirementYear, setRetirementYear] = useState(DEFAULT_RETIREMENT_YEAR);
-
+  const {
+    selectedYear,
+    handleYearSelection,
+    hanldeFilterChange,
+    selectedFilter,
+    projectionData,
+    projectionLoading,
+    projectionError,
+  } = useDashboardContext();
   /**
    *  Returns the filtered data based on the projectionData and selected filter.
    */
   const filteredData = useFilteredData(
-    projectionData,
+    projectionData?.projected_net_worth,
     selectedYear,
     selectedFilter
   );

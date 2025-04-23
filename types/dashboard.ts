@@ -1,5 +1,5 @@
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler} from "react-hook-form";
 import { ProjectionData } from "@/features/projected-financial-assets/types/projectedAssets";
 import { User } from "@/types/user";
 
