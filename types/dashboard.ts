@@ -24,6 +24,27 @@ export interface DashboardState {
   mutateAsset: (asset: any) => void;
 }
 
+export interface DashboardContextProps {
+  selectedYear: number;
+  selectedFilter: InflationFilters;
+  projectionData: ProjectionData | null | undefined;
+  projectionError: any;
+  projectionLoading: boolean;
+  user: User | null;
+  userError: any;
+  linkToken: string | null;
+  isPending: boolean;
+  netWorthData: {
+    data: { netWorth: number; assets: number; liabilities: number };
+  } | null;
+  netWorthError: any;
+  netWorthLoading: boolean;
+  mode: "edit" | "view";
+  handleModeChange: () => void;
+  form: ReturnType<typeof useForm>;
+  mutateAsset: (asset: any) => void;
+}
+
 export interface NetValueDisplayCardProps {
   title: string;
   linkLabel: string;
