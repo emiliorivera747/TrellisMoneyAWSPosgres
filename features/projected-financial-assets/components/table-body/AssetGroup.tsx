@@ -48,7 +48,7 @@ const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
 
   return (
     <TableRow
-      className="border-none hover:bg-tertiary-100 cursor-pointer"
+      className="border-none hover:bg-tertiary-100 cursor-pointer h-[4.5rem]"
       onClick={handleRowClick}
     >
       <AssetName asset={asset} />
@@ -67,7 +67,7 @@ const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
  * @returns growth rate cell
  */
 const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
-  <TableCell className="flex items-center justify-center h-[3.6rem] w-[1/3]">
+  <TableCell className="flex items-center justify-center  w-[1/3] bg-yellow-50">
     <FormField
       control={form.control}
       name={asset.name}
@@ -91,8 +91,8 @@ const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
  * Display the growth rate cell text
  */
 const GrowthRateCellText = ({ asset }: GrowthRateCellPropsText) => (
-  <TableCell className="flex items-center ml-[20%] h-[3.6rem] w-[1/3] text-center uppercase">
-    <p className="text-[0.8rem] pl-2 text-tertiary-900 font-light">
+  <TableCell className="flex items-center w-[1/3] text-center uppercase justify-center h-[4.5rem] ">
+    <p className="text-[0.85rem] pl-2 text-tertiary-900 font-light">
       {((asset.annual_growth_rate ?? 0) * 100).toFixed(0)}%
     </p>
   </TableCell>
@@ -106,7 +106,7 @@ const GrowthRateCellText = ({ asset }: GrowthRateCellPropsText) => (
  * @returns projection cell
  */
 const ProjectionCell = ({ value }: ProjectionCellProps) => (
-  <TableCell className="text-secondary-1000 text-start text-xs font-semibold w-24 overflow-x-auto">
+  <TableCell className="text-secondary-1000 text-start text-[0.85rem] font-semibold w-24 overflow-x-auto h-[4.5rem]">
     {formatToMoney(Number(value))}
   </TableCell>
 );

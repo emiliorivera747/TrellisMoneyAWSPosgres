@@ -16,11 +16,11 @@ const AssetName = ({asset}: {asset: Assets}) => {
   }
 
   return (
-    <TableCell className=" pl-6 text-xs w-[8rem] ">
-      <div className="flex flex-col">
+    <TableCell className=" pl-6 text-[0.8rem] w-[8rem]">
+      <div className="flex flex-col text-tertiary-1000 font-bold">
         {nameElement}
-        {(asset?.shares ?? 0) > 0 && <span className="font-normal text-tertiary-800">
-          {asset.shares ? asset.shares + " Shares" : null}
+        {(asset?.shares ?? 0) > 0 && <span className="font-normal text-tertiary-1000">
+          {asset.shares ? Number(asset.shares).toFixed(2) + " Shares" : null}
         </span>}
       </div>
     </TableCell>
