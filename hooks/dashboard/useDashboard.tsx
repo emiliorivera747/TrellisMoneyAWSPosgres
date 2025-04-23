@@ -9,7 +9,6 @@ import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 import { handleFormSubmission } from "@/features/projected-financial-assets/utils/handleAssetFormSubmission";
 import { DashboardState } from "@/types/dashboard";
 
-
 // Hooks
 import useFetchNetWorth from "@/features/net-worth/hooks/useFetchNetWorth";
 
@@ -30,21 +29,28 @@ export const useDashboard = (): DashboardState & {
   onSubmit: SubmitHandler<FormData>;
 } => {
   const [selectedYear, setSelectedYear] = useState<number>(currentYear + 40);
-  const [selectedFilter, setSelectedFilter] = useState<InflationFilters>("isNoInflation");
+  const [selectedFilter, setSelectedFilter] =
+    useState<InflationFilters>("isNoInflation");
 
-  const { projectionData, projectionError, projectionLoading } = useFetchProjections({
-    selectedYear,
-    selectedFilter,
-  });
+  const { projectionData, projectionError, projectionLoading } =
+    useFetchProjections({
+      selectedYear,
+      selectedFilter,
+    });
 
-  const {netWorthData, netWorthError, netWorthLoading} = useFetchNetWorth();
+  const { netWorthData, netWorthError, netWorthLoading } = useFetchNetWorth();
 
-  const { mutate: mutateAsset, isPending } = useUpdateAssets();
+  const {
+    mutate: mutateAsset,
+    isPending: isPendingAssets,
+    isError: isErrorAssets,
+  } = useUpdateAssets();
+
   const { user, error: userError } = useFetchUser();
   const linkToken = useGenerateToken();
 
   const form = useForm<FormData, any, undefined>({
-    defaultValues: {}, 
+    defaultValues: {},
   }) as UseFormReturn<FormData, any, undefined>;
 
   const [mode, setMode] = useState<"edit" | "view">("view");
@@ -53,12 +59,21 @@ export const useDashboard = (): DashboardState & {
   };
 
   const handleYearSelection = (year: number) => setSelectedYear(year);
-  const handleFilterChange = (filter: InflationFilters) => setSelectedFilter(filter);
+  const handleFilterChange = (filter: InflationFilters) =>
+    setSelectedFilter(filter);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    handleFormSubmission(data, projectionData, selectedFilter, user, mutateAsset);
+    handleFormSubmission(
+      data,
+      projectionData,
+      selectedFilter,
+      user,
+      mutateAsset
+    );
     setMode("view");
   };
+
+  const assets = projectionData?.projected_assets?.[0]?.data || []
 
   return {
     selectedYear,
@@ -69,12 +84,13 @@ export const useDashboard = (): DashboardState & {
     user,
     userError,
     linkToken,
-    isPending,
+    isPendingAssets,
     form,
     mode,
     netWorthData,
     netWorthError,
     netWorthLoading,
+    assets, 
     handleModeChange,
     mutateAsset,
     handleYearSelection,

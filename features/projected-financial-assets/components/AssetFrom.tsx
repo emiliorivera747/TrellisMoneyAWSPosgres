@@ -8,12 +8,7 @@ import { Assets } from "@/features/projected-financial-assets/types/projectedAss
 
 interface AssetsFormProps {
   form: any;
-  assets: Assets[] ;
-  selectedYear: number | string;
-  isLoading: boolean;
   onSubmit: (data: any) => void;
-  mode: "edit" | "view";
-  handleModeChange: () => void;
 }
 
 /**
@@ -23,29 +18,14 @@ interface AssetsFormProps {
  * @param param0
  * @returns
  */
-const AssetsForm: React.FC<AssetsFormProps> = ({
-  form,
-  assets,
-  selectedYear,
-  isLoading,
-  onSubmit,
-  mode,
-  handleModeChange,
-}) => {
+const AssetsForm: React.FC<AssetsFormProps> = ({ form, onSubmit }) => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-rows-[1fr_6rem] gap-6 col-span-10 sm:col-span-3 sm:row-span-1 w-[23rem] border-box overflow-hidden no-scrollbars"
+        className="grid grid-rows-[1fr_6rem] gap-6 col-span-10 sm:col-span-3 sm:row-span-1 w-[23rem] border-box overflow-hidden"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <ProjectedAssetsCard
-          assets={assets}
-          selectedYear={Number(selectedYear)}
-          form={form}
-          isLoading={isLoading}
-          mode={mode}
-          handleModeChange={handleModeChange}
-        />
+        <ProjectedAssetsCard />
       </form>
     </Form>
   );

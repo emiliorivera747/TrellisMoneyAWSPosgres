@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import assetService from "@/services/assets/assetsServices";
-import { useToast } from "@/hooks/toast/use-toast"
+import { useToast } from "@/hooks/toast/use-toast";
 
 /**
  *
@@ -9,28 +9,30 @@ import { useToast } from "@/hooks/toast/use-toast"
  * @returns
  */
 const useUpdateAssets = () => {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, isError } = useMutation({
     mutationFn: assetService.updateAllAssets,
     onSuccess: () => {
       console.log("onSuccess triggered");
-      queryClient.invalidateQueries({ queryKey: ["projectedAssetsAndNetworth"] });
+      queryClient.invalidateQueries({
+        queryKey: ["projectedAssetsAndNetworth"],
+      });
       toast({
         title: "Projections",
         description: "Successfully updated assets",
         variant: "success",
-      })
+      });
     },
-    onError: ()=>{
+    onError: () => {
       toast({
         variant: "destructive",
-        title:"Something went wrong when upating Projections"
-      })
-    }
+        title: "Something went wrong when upating Projections",
+      });
+    },
   });
-  return { mutate , isPending};
+  return { mutate, isPending, isError };
 };
 
 export default useUpdateAssets;

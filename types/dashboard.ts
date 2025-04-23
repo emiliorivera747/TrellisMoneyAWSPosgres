@@ -2,6 +2,8 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 import { useForm, SubmitHandler} from "react-hook-form";
 import { ProjectionData } from "@/features/projected-financial-assets/types/projectedAssets";
 import { User } from "@/types/user";
+import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+
 
 export interface DashboardState {
   selectedYear: number;
@@ -12,10 +14,11 @@ export interface DashboardState {
   user: User | null;
   userError: any;
   linkToken: string | null;
-  isPending: boolean;
+  isPendingAssets: boolean;
   netWorthData: {
     data: { netWorth: number; assets: number; liabilities: number };
   } | null;
+  assets: Assets[];
   netWorthError: any;
   netWorthLoading: boolean;
   mode: "edit" | "view";
@@ -33,7 +36,8 @@ export interface DashboardContextProps {
   user: User | null;
   userError: any;
   linkToken: string | null;
-  isPending: boolean;
+  isPendingAssets: boolean;
+  assets: Assets[];
   netWorthData: {
     data: { netWorth: number; assets: number; liabilities: number };
   } | null;

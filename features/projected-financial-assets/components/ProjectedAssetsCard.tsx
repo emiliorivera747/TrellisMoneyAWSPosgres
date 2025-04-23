@@ -17,6 +17,9 @@ import { ProjectedHoldingCardPrimaryHeader } from "@/features/projected-financia
 import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
 import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
 
+// Context hook
+import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
+
 /**
  *
  * Displays the projected assets card showing the projected year, asset groups, and assets.
@@ -24,19 +27,15 @@ import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/c
  * @param param0
  * @returns projected assets card
  */
-const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
-  assets,
-  selectedYear,
-  form,
-  isLoading,
-  mode,
-  handleModeChange,
-}: ProjectedAssetsCardProps<TFieldValues>) => {
+const ProjectedAssetsCard = () => {
+  
+  const { isPendingAssets, selectedYear, mode, handleModeChange, assets } =
+    useDashboardContext();
+
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  if (isPendingAssets) return <ProjectedAssetsCardSkeleton />;
 
-  if (isLoading) return <ProjectedAssetsCardSkeleton />;
-  
   return (
     <ProjectedAssetsContainer assets={assets}>
       <div
@@ -49,14 +48,14 @@ const ProjectedAssetsCard = <TFieldValues extends FieldValues>({
           mode={mode}
           setMode={handleModeChange}
         />
-        <AssetsTable assets={assets} form={form} mode={mode} />
+        <AssetsTable />
         {mode === "edit" && (
           <div className="flex justify-center items-center">
             <PrimarySubmitButton
               text={"Update"}
               className="w-[8rem] font-semibold text-sm h-[3rem]"
               ref={buttonRef}
-              isLoading={isLoading}
+              isLoading={isPendingAssets}
             />
           </div>
         )}

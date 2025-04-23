@@ -7,17 +7,20 @@ import { TableBodyForAssetsProps } from "@/features/projected-financial-assets/t
 //Components
 import AssetGroup from "@/features/projected-financial-assets/components/table-body/AssetGroup";
 
+// Context
+import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
+
+//Hooks
+import { useAssetsData } from "@/features/projected-financial-assets/hooks/useAssetsData";
+
 /**
  *  Displays the groups of assets as well as the assets in each group.
  *
  * @param param0
  * @returns table body for assets
  */
-const TableBodyForAssets = ({
-  assets,
-  form,
-  mode,
-}: TableBodyForAssetsProps) => {
+const TableBodyForAssets = () => {
+  const {assets, form, mode } = useDashboardContext();
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
   useEffect(() => {
     // Group assets by type
@@ -39,7 +42,7 @@ const TableBodyForAssets = ({
   }, [assets]);
 
   return (
-    <TableBody className="">
+    <TableBody>
       {Object.entries(groups)
         .sort(([typeA], [typeB]) => typeB.localeCompare(typeA))
         .map(([key, assets], i) => {
