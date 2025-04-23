@@ -21,6 +21,7 @@ import useFilteredData from "@/features/projected-net-worth/utils/hooks/useFilte
 // Constants
 const defaultYearsIntoTheFuture = 100;
 const currentYear = Number(new Date().getFullYear().toString());
+const totalYearsRange = currentYear + defaultYearsIntoTheFuture;
 const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
 
 // Context
@@ -30,9 +31,10 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
  * Projects the future net worth of the user based on the data provided
  *
  */
-const ProjectedNetWorthGraph = ({}) => {
+const ProjectedNetWorthGraph = () => {
   const containerRef = useRef(null);
   const [retirementYear, setRetirementYear] = useState(DEFAULT_RETIREMENT_YEAR);
+  
   const {
     selectedYear,
     handleYearSelection,
@@ -51,20 +53,7 @@ const ProjectedNetWorthGraph = ({}) => {
     selectedFilter
   );
 
-  /**
-   * Function to edit the retirement year
-   *
-   * @param year
-   */
-  const editRetirementYear = (year: number) => {
-    setRetirementYear(year);
-    handleYearSelection(year);
-  };
-
-  const years = generateYearsArray(
-    currentYear,
-    currentYear + defaultYearsIntoTheFuture
-  );
+  const years = generateYearsArray(currentYear, totalYearsRange);
 
   if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
   if (projectionError) return <ProjectedNetWorthGraphError />;
@@ -81,10 +70,6 @@ const ProjectedNetWorthGraph = ({}) => {
         dataForLines={dataForLines}
         withInlfationTag={selectedFilter === "isInflation"}
         years={years}
-        selectedYear={selectedYear}
-        retirementYear={retirementYear}
-        setSelectedYear={handleYearSelection}
-        editRetirementYear={editRetirementYear}
       />
     </div>
   );

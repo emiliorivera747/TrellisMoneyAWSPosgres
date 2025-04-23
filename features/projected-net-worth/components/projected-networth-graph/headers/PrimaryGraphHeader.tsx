@@ -5,29 +5,23 @@ import { LinePayload } from "@/types/graphs";
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
 
+import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
+
 interface PrimaryGraphHeaderProps {
   dataForLines: LinePayload[];
   tooltipData: any;
   withInflationTag: boolean;
   years: number[];
-  selectedYear: number;
-  retirementYear: number;
-  setSelectedYear: (year: number) => void;
-  editRetirementYear: (year: number) => void;
 }
-
-
 
 const PrimaryGraphHeader = ({
   dataForLines,
   tooltipData,
   withInflationTag,
   years,
-  selectedYear,
-  retirementYear,
-  setSelectedYear,
-  editRetirementYear,
 }: PrimaryGraphHeaderProps) => {
+
+  const {selectedYear, retirementYear, handleYearSelection,  editRetirementYear} = useDashboardContext();
   return (
     <header className="flex flex-col w-full h-auto">
       <div className="flex flex-row text-[1.4rem] gap-2 w-full justify-between">
@@ -37,7 +31,7 @@ const PrimaryGraphHeader = ({
             selectedYear={selectedYear}
             years={years}
             retirementYear={retirementYear}
-            setSelectedYear={setSelectedYear}
+            setSelectedYear={handleYearSelection}
             editRetirementYear={editRetirementYear}
           />
         </div>

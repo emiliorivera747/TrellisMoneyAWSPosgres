@@ -16,6 +16,7 @@ import { useDashboard } from "@/hooks/dashboard/useDashboard";
 const DashboardContext = createContext<DashboardContextProps & {
     handleYearSelection: (year: number) => void;
     handleFilterChange: (filter: InflationFilters) => void;
+    editRetirementYear: (year: number) => void;
     onSubmit: SubmitHandler<CustomFormData>;
   } | null>(null);
  

@@ -32,10 +32,6 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     tooltipLeft = 0,
     withInlfationTag = false,
     years,
-    selectedYear,
-    retirementYear,
-    setSelectedYear,
-    editRetirementYear,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
     
@@ -46,10 +42,6 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           tooltipData={tooltipData}
           withInflationTag={withInlfationTag}
           years={years}
-          selectedYear={selectedYear}
-          retirementYear={retirementYear}
-          setSelectedYear={setSelectedYear}
-          editRetirementYear={editRetirementYear}
         />
         {/* The SVG for the graph */}
         <LineGraph

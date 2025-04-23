@@ -1,9 +1,8 @@
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { ProjectionData } from "@/features/projected-financial-assets/types/projectedAssets";
 import { User } from "@/types/user";
 import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
-
 
 export interface DashboardState {
   selectedYear: number;
@@ -22,6 +21,7 @@ export interface DashboardState {
   netWorthError: any;
   netWorthLoading: boolean;
   mode: "edit" | "view";
+  retirementYear: number;
   handleModeChange: () => void;
   form: ReturnType<typeof useForm>;
   mutateAsset: (asset: any) => void;
@@ -29,6 +29,7 @@ export interface DashboardState {
 
 export interface DashboardContextProps {
   selectedYear: number;
+  retirementYear: number;
   selectedFilter: InflationFilters;
   projectionData: ProjectionData | null | undefined;
   projectionError: any;
