@@ -12,7 +12,7 @@ const AssetName = ({asset}: {asset: Assets}) => {
     nameElement = <span className="font-bold uppercase">{(asset.name).substring(0, 5)}</span>;
   }
   else{
-    nameElement = <span className="font-bold text-xs">{(asset.name).substring(0, 15)}...</span>;
+    nameElement = <span className="font-bold  text-[0.8rem]">{(asset.name).substring(0, 15)}...</span>;
   }
 
   return (

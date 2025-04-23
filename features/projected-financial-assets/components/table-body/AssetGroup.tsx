@@ -67,7 +67,7 @@ const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
  * @returns growth rate cell
  */
 const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
-  <TableCell className="flex items-center justify-center  w-[1/3] bg-yellow-50">
+  <TableCell className="flex justify-center items-end mt-3 w-[1/3]">
     <FormField
       control={form.control}
       name={asset.name}
@@ -75,10 +75,10 @@ const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
         <FormItem>
           <NumberInputV2
             defaultValue={((asset.annual_growth_rate ?? 0) * 100).toFixed(0)}
-            className="text-xs pl-2"
+            className="text-[0.85rem] pl-2"
             min={-100}
             max={100}
-            step={1}
+            step={0.1}
             {...field}
           />
         </FormItem>
