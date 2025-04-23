@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { TableBody } from "@/components/ui/table";
 
-//Types
-import { TableBodyForAssetsProps } from "@/features/projected-financial-assets/types/table";
-
 //Components
 import AssetGroup from "@/features/projected-financial-assets/components/table-body/AssetGroup";
 
 // Context
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
-
-//Hooks
-import { useAssetsData } from "@/features/projected-financial-assets/hooks/useAssetsData";
 
 /**
  *  Displays the groups of assets as well as the assets in each group.

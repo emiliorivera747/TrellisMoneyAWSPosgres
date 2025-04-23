@@ -13,7 +13,52 @@ import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSect
 // Context
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 
+// Constants
+const NET_VALUE_ITEMS = [
+  {
+    title: "Net worth",
+    linkLabel: "Accounts",
+    linkUrl: "/accounts",
+    values: (netWorthData: any) => ({
+      primary: netWorthData?.data?.netWorth ?? 0,
+      secondary: netWorthData?.data?.assets ?? 0,
+      tertiary: netWorthData?.data?.liabilities ?? 0,
+    }),
+    labels: {
+      secondary: "Assets",
+      tertiary: "Liabilities",
+    },
+    modal: {
+      title: "Net worth",
+      description:
+        "Net worth reflects your financial position. A positive value means your assets exceed debts, while a negative value indicates more debt than assets.",
+    },
+  },
+  {
+    title: "Cash Flow",
+    linkLabel: "Accounts",
+    linkUrl: "/accounts",
+    values: () => ({
+      primary: 10000,
+      secondary: 20000,
+      tertiary: 10000,
+    }),
+    labels: {
+      secondary: "All income",
+      tertiary: "All spending",
+    },
+    modal: {
+      title: "Cash flow",
+      description:
+        "Cash flow shows how money moves in and out. A positive value means you’re earning more than you spend, while a negative value suggests you’re spending beyond your income.",
+    },
+  },
+];
 
+/**
+ * Displays all of the components in the dashboard
+ * @returns JSX.Element
+ */
 export const DashboardContent = () => {
   const { netWorthData, form, onSubmit } = useDashboardContext();
 
@@ -23,32 +68,22 @@ export const DashboardContent = () => {
         <PrimaryDashboardSection>
           <ProjectedNetWorthGraph />
           <div className="grid grid-cols-2 gap-6 border-b pb-8 border-tertiary-300">
-            <NetValueDisplay
-              title="Net worth"
-              linkLabel="Accounts"
-              linkUrl="/accounts"
-              primaryValue={netWorthData?.data?.netWorth ?? 0}
-              secondaryValue={netWorthData?.data?.assets ?? 0}
-              tertiaryValue={netWorthData?.data?.liabilities ?? 0}
-              secondaryLabel="Assets"
-              tertiaryLabel="Liabilities"
-              modalTitle="Net worth"
-              modalDescription="Net worth reflects your financial position. A positive value means your assets exceed debts, while a negative value indicates more debt than assets."
-            />
-            <NetValueDisplay
-              title="Cash Flow"
-              linkLabel="Accounts"
-              linkUrl="/accounts"
-              primaryValue={10000}
-              secondaryValue={20000}
-              tertiaryValue={10000}
-              secondaryLabel="All income"
-              tertiaryLabel="All spending"
-              modalTitle="Cash flow"
-              modalDescription="Cash flow shows how money moves in and out. A positive value means you’re earning more than you spend, while a negative value suggests you’re spending beyond your income."
-            />
+            {NET_VALUE_ITEMS.map((item, index) => (
+              <NetValueDisplay
+                key={index}
+                title={item.title}
+                linkLabel={item.linkLabel}
+                linkUrl={item.linkUrl}
+                primaryValue={item.values(netWorthData).primary}
+                secondaryValue={item.values(netWorthData).secondary}
+                tertiaryValue={item.values(netWorthData).tertiary}
+                secondaryLabel={item.labels.secondary}
+                tertiaryLabel={item.labels.tertiary}
+                modalTitle={item.modal.title}
+                modalDescription={item.modal.description}
+              />
+            ))}
           </div>
-          {/* <KeyStatContainer/> */}
           <Footer />
         </PrimaryDashboardSection>
       </div>

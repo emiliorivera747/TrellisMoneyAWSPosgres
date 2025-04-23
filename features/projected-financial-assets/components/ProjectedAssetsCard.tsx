@@ -1,11 +1,5 @@
 // React
-import React, { useRef, useState } from "react";
-
-// External Library
-import { FieldValues } from "react-hook-form";
-
-// Types
-import { ProjectedAssetsCardProps } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import React, { useRef} from "react";
 
 // Containers
 import ProjectedAssetsContainer from "@/features/projected-financial-assets/components/containers/ProjectedAssetsContainer";
