@@ -1,10 +1,10 @@
 "use client";
 
 //React
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 //components
-import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2";
+import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphV2";
 import ProjectedLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";
 import ProjectedNetWorthGraphError from "@/components/errors/ProjectedNetWorthGraphError";
 
@@ -23,12 +23,6 @@ const defaultYearsIntoTheFuture = 100;
 const currentYear = Number(new Date().getFullYear().toString());
 const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
 
-//Data
-import {
-  lineColors1,
-  lineColors2,
-} from "@/features/projected-net-worth/utils/data/lineColors";
-
 //Types
 import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
@@ -45,6 +39,7 @@ const ProjectedNetWorthGraph = ({
   projectionLoading,
   projectionError,
 }: ProjectedNetWorthGraphProps) => {
+  const containerRef = useRef(null);
   const [retirementYear, setRetirementYear] = useState(DEFAULT_RETIREMENT_YEAR);
 
   /**
@@ -78,9 +73,10 @@ const ProjectedNetWorthGraph = ({
 
   return (
     <div className="grid-rows-[22rem_6rem] grid border-b border-tertiary-300">
-      <ResponsiveLineGraphV2
+      <ResponsiveLineGraphContainer
         margin={{ top: 6, right: 6, bottom: 10, left: 6 }}
-        tailwindClasses="h-[25rem] w-full border-box"
+        className={"h-[25rem] w-full border-box"}
+        ref={containerRef}
         GraphComponent={ProjectedLineGraph}
         dataForLines={dataForLines}
         withInlfationTag={selectedFilter === "isInflation"}

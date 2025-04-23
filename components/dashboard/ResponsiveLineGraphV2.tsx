@@ -1,20 +1,22 @@
-import React from "react";
+
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 
 // Define props for ResponsiveLineGraphV2
 interface ResponsiveLineGraphV2Props {
-  tailwindClasses: string;
+  className: string;
   GraphComponent: React.ComponentType<any>; // Define GraphComponent type
+  ref: React.Ref<HTMLButtonElement>;
   [key: string]: any; // Catch-all for any other props
 }
 
-const ResponsiveLineGraphV2 = ({
-  tailwindClasses,
+const ResponsiveLineGraphContainer = ({
+  className,
   GraphComponent,
+  ref,
   ...props
 }: ResponsiveLineGraphV2Props) => {
   return (
-    <div className={`${tailwindClasses}`}>
+    <div className={className}>
       <ParentSize>
         {({ height, width }: { height: number; width: number }) => (
           <GraphComponent width={width} height={height} {...props} />
@@ -24,4 +26,4 @@ const ResponsiveLineGraphV2 = ({
   );
 };
 
-export default ResponsiveLineGraphV2;
+export default ResponsiveLineGraphContainer;

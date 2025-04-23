@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/hover-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import useFetchUser from "@/utils/hooks/user/useFetchUser";
+import useFetchUser from "@/hooks/user/useFetchUser";
 
 import { getProfileHoverCardConfig } from "@/features/user-account/config/profileHoverCardConfig";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";

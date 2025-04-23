@@ -2,9 +2,9 @@
 
 import React from "react";
 import Link from "@/components/Plaid/Link";
-import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
+import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 
-import { useAccounts } from "@/utils/hooks/accounts/useAccounts";
+import { useAccounts } from "@/hooks/accounts/useAccounts";
 
 const page = () => {
   const linkToken = useGenerateToken();

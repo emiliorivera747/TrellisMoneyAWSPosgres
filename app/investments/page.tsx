@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useInvestments } from "@/utils/hooks/investments/useInvestments";
+import { useInvestments } from "@/hooks/investments/useInvestments";
 
 const page = () => {
   // const { investmentsResponse, isLoadingInvestments, isErrorInvestments } =

@@ -2,10 +2,10 @@
 import { useState } from "react";
 import { useForm, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
-import useFetchProjections from "@/utils/hooks/financial-projections/useFetchProjections";
-import useUpdateAssets from "@/utils/hooks/financial-assets/useUpdateAssets";
-import useFetchUser from "@/utils/hooks/user/useFetchUser";
-import useGenerateToken from "@/utils/hooks/plaid/useGenerateToken";
+import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
+import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
+import useFetchUser from "@/hooks/user/useFetchUser";
+import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 import { handleFormSubmission } from "@/features/projected-financial-assets/utils/handleAssetFormSubmission";
 import { DashboardState } from "@/types/dashboard";
 

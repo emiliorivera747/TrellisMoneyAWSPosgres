@@ -14,7 +14,7 @@ import Footer from "@/components/footers/Footer";
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
 
 //Hooks
-import { useDashboard } from "@/utils/hooks/dashboard/useDashboard";
+import { useDashboard } from "@/hooks/dashboard/useDashboard";
 
 /**
  *

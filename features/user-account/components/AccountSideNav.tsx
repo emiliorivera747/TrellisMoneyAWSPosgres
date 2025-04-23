@@ -2,7 +2,7 @@
 import React from "react";
 import { accountSideNavConfig } from "@/features/user-account/config/accountSideNavConfig";
 import Link from "next/link";
-import useFetchUser from "@/utils/hooks/user/useFetchUser";
+import useFetchUser from "@/hooks/user/useFetchUser";
 
 const AccountSideNav = () => {
   const { user } = useFetchUser();
