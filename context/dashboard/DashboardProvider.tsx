@@ -27,6 +27,7 @@ const DashboardContext = createContext<
 export const DashboardProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  
   const dashboardState = useDashboard();
 
   return (

@@ -42,6 +42,20 @@ export const getHoldingNameV2 = (holding: Holding, accountName: string) => {
 };
 
 /**
+ *
+ * Calculates the holdings total amount
+ *
+ * @param holding
+ * @returns
+ */
+export const getTotal = (holding: Holding) => {
+  const p = getClosePrice(holding);
+  const q = getQuantity(holding);
+
+  return Number(p) * Number(q);
+};
+
+/**
  * Close price getter function
  *
  * @param holding

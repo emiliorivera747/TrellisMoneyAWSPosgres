@@ -1,6 +1,9 @@
 import { Account } from "@/types/plaid";
 import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
-import { getHoldingNameV2 } from "@/utils/api-helpers/holdingAccessors";
+import {
+  getHoldingNameV2,
+  getTotal,
+} from "@/utils/api-helpers/holdingAccessors";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 import {
@@ -97,6 +100,8 @@ const calculate_fv_accounts = (
       security_id: null,
       account_id: account.account_id,
       type: type,
+      sub_type: "cash",
+      total: account.balances?.current,
       shares: new Decimal(0),
     });
   }
@@ -157,6 +162,8 @@ const calculate_fv_holdings = (
         security_id: holding.security_id,
         account_id: holding.account_id,
         type: type,
+        sub_type: holding?.security?.type,
+        total: getTotal(holding),
         shares: new Decimal(holding.quantity || 0),
       });
     }
