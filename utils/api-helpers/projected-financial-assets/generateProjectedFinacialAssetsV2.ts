@@ -150,7 +150,6 @@ const calculate_fv_holdings = (
         );
       }
 
-      
       res.push({
         name: getHoldingNameV2(holding, account.name),
         annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),

@@ -31,7 +31,7 @@ export const getHoldingName = (holding: Holding) => {
 export const getHoldingNameV2 = (holding: Holding, accountName: string) => {
   const security = holding?.security;
 
-  if (security?.type === "cash") return accountName.slice(0, 5) + ":cash";
+  if (security?.type === "cash") return accountName.slice(0, 8) + " - cash";
 
   if (security?.ticker_symbol) {
     return holding?.security?.ticker_symbol
