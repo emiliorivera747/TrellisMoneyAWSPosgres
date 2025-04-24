@@ -1,7 +1,7 @@
 "use client";
 
 //React
-import React, { useState, useRef } from "react";
+import React, {useRef } from "react";
 
 //components
 import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphV2";
@@ -22,7 +22,7 @@ import useFilteredData from "@/features/projected-net-worth/utils/hooks/useFilte
 const defaultYearsIntoTheFuture = 100;
 const currentYear = Number(new Date().getFullYear().toString());
 const totalYearsRange = currentYear + defaultYearsIntoTheFuture;
-const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
+
 
 // Context
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
@@ -33,12 +33,9 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
  */
 const ProjectedNetWorthGraph = () => {
   const containerRef = useRef(null);
-  const [retirementYear, setRetirementYear] = useState(DEFAULT_RETIREMENT_YEAR);
   
   const {
     selectedYear,
-    handleYearSelection,
-    hanldeFilterChange,
     selectedFilter,
     projectionData,
     projectionLoading,
