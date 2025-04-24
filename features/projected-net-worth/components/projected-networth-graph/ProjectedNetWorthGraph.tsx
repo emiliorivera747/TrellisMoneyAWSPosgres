@@ -61,7 +61,7 @@ const ProjectedNetWorthGraph = () => {
     <div className="grid-rows-[22rem_6rem] grid border-b border-tertiary-300">
       <ResponsiveLineGraphContainer
         margin={{ top: 6, right: 6, bottom: 10, left: 6 }}
-        className={"h-[25rem] w-full border-box"}
+        className={"h-[25rem] w-full border-box "}
         ref={containerRef}
         GraphComponent={ProjectedLineGraph}
         dataForLines={dataForLines}

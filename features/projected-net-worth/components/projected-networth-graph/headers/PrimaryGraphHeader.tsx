@@ -108,13 +108,13 @@ const PrimaryGraphHeader = ({
         </AlertDialog>
       </div>
 
-      <div className="flex flex-row">
+      <div className="flex flex-row ">
         <MultipleValPriceChange
           dataForLines={dataForLines}
           tooltipData={tooltipData}
         />
         {withInflationTag && dataForLines.length === 1 && (
-          <div className="pt-2 text-[0.7rem] text-tertiary-1000 gap-1 w-[25%] flex items-start justify-end ">
+          <div className="text-[0.7rem] text-tertiary-1000 gap-1 w-[25%] flex items-start justify-end pt-5">
             <InflationTag dataForLine={dataForLines[0]} />
           </div>
         )}

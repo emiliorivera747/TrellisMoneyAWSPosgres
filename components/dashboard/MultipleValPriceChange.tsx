@@ -25,6 +25,7 @@ const MultipleValPriceChange = ({
   dataForLines,
   tooltipData,
 }: MultipleValPriceChangeProps) => {
+  
   const directions = dataForLines.map((line) => getLineDirection(line.data));
   const isMultipleLines = dataForLines.length >= 2;
 
