@@ -33,7 +33,7 @@ export const updateHoldingsAndSecurities = async (
   const user_id = user?.id || "";
 
   /**
-   * Retrieve all existing Securities
+   * Retrieve all existing Securities and Holdings
    */
   const existingSecurities = await getExistingSecurities(securities);
   const existingHoldings = await getExistingHoldings(holdings);

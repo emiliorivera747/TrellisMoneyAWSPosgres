@@ -14,10 +14,31 @@ export const getQuantity = (holding: Holding) => {
  * Get the holding name
  */
 export const getHoldingName = (holding: Holding) => {
-  if(holding?.security?.ticker_symbol){
-    return holding?.security?.ticker_symbol? holding.security.ticker_symbol : "";
+  const security = holding?.security;
+
+  if (security?.type === "cash") return "cash";
+  if (security?.ticker_symbol) {
+    return holding?.security?.ticker_symbol
+      ? holding.security.ticker_symbol
+      : "";
   }
-  return holding?.security?.name? holding.security.name : "";
+  return holding?.security?.name ? holding.security.name : "";
+};
+
+/**
+ * Get the holding name based on the account name and holding
+ */
+export const getHoldingNameV2 = (holding: Holding, accountName: string) => {
+  const security = holding?.security;
+
+  if (security?.type === "cash") return accountName.slice(0, 5) + ":cash";
+
+  if (security?.ticker_symbol) {
+    return holding?.security?.ticker_symbol
+      ? holding.security.ticker_symbol
+      : "";
+  }
+  return holding?.security?.name ? holding.security.name : "";
 };
 
 /**

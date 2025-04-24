@@ -19,7 +19,6 @@ interface FormData {
   [key: string]: number; // Example: adjust based on your actual form fields
 }
 
-const defaultYearsIntoTheFuture = 100;
 const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
 
 /**

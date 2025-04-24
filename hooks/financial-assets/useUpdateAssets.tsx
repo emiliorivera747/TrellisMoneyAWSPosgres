@@ -15,7 +15,6 @@ const useUpdateAssets = () => {
   const { mutate, isPending, isError } = useMutation({
     mutationFn: assetService.updateAllAssets,
     onSuccess: () => {
-      console.log("onSuccess triggered");
       queryClient.invalidateQueries({
         queryKey: ["projectedAssetsAndNetworth"],
       });

@@ -1,6 +1,6 @@
 import { Account } from "@/types/plaid";
 import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
-import { getHoldingName } from "@/utils/api-helpers/holdingAccessors";
+import { getHoldingNameV2 } from "@/utils/api-helpers/holdingAccessors";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 import {
@@ -42,7 +42,7 @@ export const generateProjectedFinancialAssetsV2 = async (
         key as AccountType
       );
       assets.push(...res);
-    } else  {
+    } else {
       let res = calculate_fv_accounts(
         accounts ?? [],
         start_year,
@@ -52,7 +52,7 @@ export const generateProjectedFinancialAssetsV2 = async (
         key as AccountType
       );
       assets.push(...res);
-    } 
+    }
   }
   return assets;
 };
@@ -127,6 +127,7 @@ const calculate_fv_holdings = (
   const res = [];
   for (const account of accounts) {
     const holdings = account.holdings ?? [];
+
     for (const holding of holdings) {
       const { quantity, close_price, annual_return_rate } =
         getFormulaValues(holding);
@@ -149,8 +150,9 @@ const calculate_fv_holdings = (
         );
       }
 
+      
       res.push({
-        name: getHoldingName(holding),
+        name: getHoldingNameV2(holding, account.name),
         annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
         projection: new Decimal(fv).toDecimalPlaces(2),
         security_id: holding.security_id,
