@@ -7,6 +7,8 @@ export type AccountType =
   | "loan"
   | "Other";
 
+
+export type SecurityType = 'cash' | 'cryptocurrency' | 'derivative' | 'equity' | 'etf' | 'fixed income' | 'loan' | 'mutual fund' | 'other';
 export interface Assets {
   name: string;
   annual_growth_rate?: number | null;
@@ -16,6 +18,8 @@ export interface Assets {
   account_id?: string;
   projection: number;
   type: AccountType;
+  total: number | null;
+  subtype: string;
 }
 
 export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
@@ -61,3 +65,5 @@ export interface GrowthRateCellPropsInput {
 export interface GrowthRateCellPropsText {
   asset: Assets;
 }
+
+

@@ -16,7 +16,9 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 const TableBodyForAssets = () => {
   const {assets, form, mode } = useDashboardContext();
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
+  
   useEffect(() => {
+
     // Group assets by type
     const grouped = Object.groupBy(assets, (asset) => asset.type);
 

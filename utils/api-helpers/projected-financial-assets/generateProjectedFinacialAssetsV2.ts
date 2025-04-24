@@ -13,6 +13,7 @@ import {
 } from "@/utils/api-helpers/futureValueFormulas";
 import Decimal from "decimal.js";
 
+
 /**
  *
  * @param start_year
@@ -100,7 +101,7 @@ const calculate_fv_accounts = (
       security_id: null,
       account_id: account.account_id,
       type: type,
-      sub_type: "cash",
+      subtype: "cash",
       total: account.balances?.current,
       shares: new Decimal(0),
     });
@@ -162,7 +163,7 @@ const calculate_fv_holdings = (
         security_id: holding.security_id,
         account_id: holding.account_id,
         type: type,
-        sub_type: holding?.security?.type,
+        subtype: holding?.security?.type,
         total: getTotal(holding),
         shares: new Decimal(holding.quantity || 0),
       });
