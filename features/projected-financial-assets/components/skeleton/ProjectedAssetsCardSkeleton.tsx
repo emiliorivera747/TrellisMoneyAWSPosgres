@@ -5,26 +5,26 @@ const SkeletonLoader = () => {
         border: "1px solid rgb(221, 221, 221)",
         scrollbarWidth: "none",
       }}
-      className="max-h-screen overflow-y-auto sticky rounded-[12px] h-[35rem] "
+      className="max-h-screen overflow-y-auto sticky rounded-[12px] h-[92vh] "
     >
       {/* Header Skeleton */}
       <div className="font-bold text-zinc-800 flex items-center gap-1 justify-start p-4 ">
         <span className="text-sm tracking-wider h-8">
-          Financial Projections{" "}
+          Projections{" "}
         </span>{" "}
         <div className="w-[5rem] bg-tertiary-400 rounded mb-2 h-8 animate-pulse"></div>
       </div>
 
       {/* Assets Table Skeleton */}
       <div className="w-full px-4 py-2 rounded-md animate-pulse">
-        <div className="h-10 w-full bg-tertiary-300 rounded mb-2"></div>
-        <div className="h-10 w-full bg-tertiary-300 rounded mb-2"></div>
-        <div className="h-10 w-full bg-tertiary-300 rounded mb-2"></div>
-        <div className="h-10 w-full bg-tertiary-300 rounded mb-2"></div>
-        <div className="h-10 w-full bg-tertiary-300 rounded mb-2"></div>
-        <div className="h-10 w-full bg-tertiary-300 rounded mb-2"></div>
-        <div className="h-10 w-full bg-tertiary-300 rounded mb-2"></div>
-        <div className="h-10 w-full bg-tertiary-300 rounded mb-2"></div>
+        {Array.from({ length: 20 }).map((_, i) => {
+          return (
+            <div
+              className="h-10 w-full bg-tertiary-300 rounded mb-2"
+              key={i}
+            ></div>
+          );
+        })}
       </div>
 
       {/* Submit Button Skeleton */}

@@ -23,12 +23,12 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
  */
 const ProjectedAssetsCard = () => {
   
-  const { isPendingAssets, selectedYear, mode, handleModeChange, assets } =
+  const {projectionLoading, isPendingAssets, selectedYear, mode, handleModeChange, assets } =
     useDashboardContext();
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  if (isPendingAssets) return <ProjectedAssetsCardSkeleton />;
+  if (isPendingAssets || projectionLoading) return <ProjectedAssetsCardSkeleton />;
 
   return (
     <ProjectedAssetsContainer assets={assets}>
