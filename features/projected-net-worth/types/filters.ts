@@ -17,4 +17,5 @@ export interface FilterConfig {
   key: InflationFilters;
   label: string;
   svg_path: string;
+  color: string;
 }

@@ -12,7 +12,7 @@ import { LineGraphFilterButtonsProps } from "@/features/projected-net-worth/type
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 /**
- * 
+ *
  * Render filter
  *
  *
@@ -24,10 +24,15 @@ const RenderFilters = ({
   handleFilterChange,
 }: LineGraphFilterButtonsProps) => {
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid grid-cols-3 gap-3 py-2">
       {filterConfig.map(
         (
-          filter: { key: InflationFilters; label: string; svg_path: string },
+          filter: {
+            key: InflationFilters;
+            label: string;
+            svg_path: string;
+            color: string;
+          },
           index
         ) => (
           <LineGraphFilterButton
@@ -36,6 +41,7 @@ const RenderFilters = ({
             svg_path={filter.svg_path}
             label={filter.label}
             onClick={() => handleFilterChange(filter.key)}
+            color={filter.color}
           />
         )
       )}
