@@ -33,7 +33,7 @@ const ProjectedAssetsCard = () => {
   return (
     <ProjectedAssetsContainer assets={assets}>
       <div
-        className={`grid ${
+        className={`grid  no-scrollbars ${
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
         } absolute w-full text-[#343a40] h-full overflow-y-hidden`}
       >
