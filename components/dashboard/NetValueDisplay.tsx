@@ -9,6 +9,8 @@ import { NetValueDisplayCardProps } from "@/types/dashboard";
 // Helpers
 import { convertToMoney } from "@/utils/helper-functions/convertToMoney";
 
+import NetValueDisplayCardSkeleton from "@/components/skeletons/dashboard/NetValueDisplayCardSkeleton";
+
 /**
  *
  * Displays the net value of the user's assets and liabilities.
@@ -27,7 +29,9 @@ const NetValueDisplay = ({
   tertiaryLabel,
   modalDescription,
   modalTitle,
+  isLoading,
 }: NetValueDisplayCardProps) => {
+  if (isLoading) return <NetValueDisplayCardSkeleton />;
   return (
     <div className="border border-tertiary-400 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-3 rounded-[12px]">
       <div className="flex flex-row justify-between  w-full">

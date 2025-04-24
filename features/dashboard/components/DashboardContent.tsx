@@ -60,7 +60,8 @@ const NET_VALUE_ITEMS = [
  * @returns JSX.Element
  */
 export const DashboardContent = () => {
-  const { netWorthData, form, onSubmit } = useDashboardContext();
+  const { netWorthData, netWorthLoading, form, onSubmit } =
+    useDashboardContext();
 
   return (
     <div className="w-full box-border max-h-screen overflow-y-scroll flex flex-row gap-4">
@@ -81,6 +82,7 @@ export const DashboardContent = () => {
                 tertiaryLabel={item.labels.tertiary}
                 modalTitle={item.modal.title}
                 modalDescription={item.modal.description}
+                isLoading={netWorthLoading}
               />
             ))}
           </div>

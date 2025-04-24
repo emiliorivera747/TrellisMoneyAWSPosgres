@@ -61,4 +61,5 @@ export interface NetValueDisplayCardProps {
   tertiaryValue: number;
   modalDescription: string;
   modalTitle: string;
+  isLoading: boolean;
 }
