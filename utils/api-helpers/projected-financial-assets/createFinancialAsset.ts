@@ -5,7 +5,7 @@ import { AccountType } from "@/features/projected-financial-assets/types/project
 
 interface createFinancialAssetParams {
   name: string;
-  annual_return_rate: number;
+  annual_return_rate: number | Decimal;
   projection: number;
   security_id: string | null;
   account_id: string;

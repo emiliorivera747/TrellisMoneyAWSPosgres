@@ -2,7 +2,7 @@ import React from "react";
 
 const ProjectedNetWorthGraphSkeleton = () => {
   return (
-    <div className="">
+    <div className="h-full pb-8">
       <div className="flex flex-col gap-1">
         <div className="font-medium text-tertiary-900 flex items-center gap-2 justify-start">
           <h1 className="text-[1.4rem] tracking-wider font-medium">
