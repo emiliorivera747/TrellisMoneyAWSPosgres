@@ -2,7 +2,14 @@ import { API_URL } from "@/utils/global-variables/globals";
 import { Holding} from "@/types/plaid";
 import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 
-const updateUserAssets = async (data: Holding) => {
+
+/**
+ * Function to update user asset.
+ * 
+ * @param data - The data to be sent in the request body.
+ * @returns 
+ */
+const updateUserAsset = async (data: Holding) => {
   const response = await fetch(`${API_URL}/assets`, {
     method: "PATCH",
     headers: {
@@ -13,7 +20,13 @@ const updateUserAssets = async (data: Holding) => {
   return response.json();
 };
 
-
+/**
+ * 
+ * Function to update account.
+ * 
+ * @param data 
+ * @returns 
+ */
 const updateAccount = async (data: Holding) => {
   const response = await fetch(`${API_URL}/accounts/${data.account_id}`, {
     method: "PATCH",
@@ -25,6 +38,12 @@ const updateAccount = async (data: Holding) => {
   return response.json();
 };
 
+/**
+ * Function to update all assets.
+ * 
+ * @param data - The data to be sent in the request body.
+ * @returns 
+ */
 const updateAllAssets = async (data: FinancialAssets[]) => {
   const response = await fetch(`${API_URL}/assets`, {
     method: "PATCH",
@@ -37,8 +56,10 @@ const updateAllAssets = async (data: FinancialAssets[]) => {
 };
 
 const assetService = {
-  updateUserAssets,
+  updateUserAsset,
   updateAccount,
   updateAllAssets,
 };
+
+
 export default assetService;

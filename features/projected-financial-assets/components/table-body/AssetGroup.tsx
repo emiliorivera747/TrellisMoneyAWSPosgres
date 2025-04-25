@@ -70,7 +70,7 @@ const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
   <TableCell className="flex justify-center items-end mt-3 w-[1/3]">
     <FormField
       control={form.control}
-      name={asset.name}
+      name={`${asset.name}-${asset.account_id}-${asset.security_id}`}
       render={({ field }) => (
         <FormItem>
           <NumberInputV2
@@ -110,6 +110,5 @@ const ProjectionCell = ({ value }: ProjectionCellProps) => (
     {formatToMoney(Number(value))}
   </TableCell>
 );
-
 
 export default AssetGroup;

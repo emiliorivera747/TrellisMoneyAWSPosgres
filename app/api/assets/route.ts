@@ -6,25 +6,56 @@ const prisma = new PrismaClient();
 
 export async function PATCH(req: NextRequest): Promise<NextResponse> {
   try {
-    const body = await req.json();
+    const assets = await req.json();
 
-    const res = body.map(async (asset: FinancialAssets) => {
-      if (asset.type === "investment") {
-        const { security_id, account_id, user_id, annual_growth_rate } = asset;
+    /**
+     * Get all of the holdings associated with the user
+     */
+    const holdings = await prisma.holding.findMany({
+      where: {
+        user_id: assets[0].user_id,
+      },
+    });
+
+    const hashmap = new Map<string, FinancialAssets>();
+
+    /**
+     * Create a hashmap of all the assets associated with the user
+     */
+    assets.forEach((asset: FinancialAssets) => {
+      const key = `${asset.security_id}-${asset.account_id}`;
+      if (!hashmap.has(key)) {
+        hashmap.set(key, asset);
+      }
+    });
+
+    /**
+     * Update all holdings associated with the user
+     */
+    holdings.map(async (holding) => {
+      const asset = hashmap.get(holding.security_id + "-" + holding.account_id);
+
+      if (asset) {
         await prisma.holding.update({
           where: {
             holding_id: {
-              security_id: security_id ?? "",
-              account_id: account_id ?? "",
-              user_id: user_id ?? "",
+              security_id: holding.security_id,
+              account_id: holding.account_id,
+              user_id: holding.user_id,
             },
           },
           data: {
-            annual_return_rate: annual_growth_rate,
+            annual_return_rate: asset.annual_growth_rate,
           },
         });
-      } else {
-        const { account_id, user_id, annual_growth_rate } = asset;
+      }
+    });
+
+    const res = assets.map(async (asset: FinancialAssets) => {
+      const { account_id, user_id, annual_growth_rate, type } = asset;
+
+      // Only update if the asset is not an investment type
+      if (type !== "investment") {
         await prisma.account.update({
           where: {
             account_id: account_id ?? "",

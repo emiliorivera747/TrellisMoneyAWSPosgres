@@ -29,8 +29,8 @@ export interface FinancialAssets {
   security_id: string | undefined | null;
   account_id: string | undefined;
   type: AccountType;
-  subtype: string;
-  total: number | null | Decimal;
+  subtype?: string;
+  total?: number | null | Decimal;
   shares: number | null | Decimal;
   user_id?: string | undefined;
 }

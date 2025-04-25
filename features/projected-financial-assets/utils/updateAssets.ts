@@ -1,5 +1,4 @@
 import { User } from "@supabase/supabase-js";
-import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import { FinancialAssets } from "../types/projectedAssets";
 function updateAssets(
   assets: FinancialAssets[],
@@ -7,7 +6,7 @@ function updateAssets(
   user?: User | null
 ): FinancialAssets[] | null {
   const res = assets.map((asset) => {
-    const newVal = data[asset.name];
+    const newVal = data[`${asset.name}-${asset.account_id}-${asset.security_id}`];
     if (newVal !== undefined) {
       asset.annual_growth_rate = newVal / 100;
     }
