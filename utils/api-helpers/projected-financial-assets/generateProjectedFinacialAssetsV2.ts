@@ -2,6 +2,7 @@ import { Account } from "@/types/plaid";
 import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 import {
   getHoldingNameV2,
+  getInstitutionalValue,
   getTotal,
 } from "@/utils/api-helpers/holdingAccessors";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
@@ -9,10 +10,11 @@ import { AccountType } from "@/features/projected-financial-assets/types/project
 import {
   future_value_with_inflation_fn,
   future_value_fn,
+  future_value_fn_v2,
+  future_value_with_inflation_fn_v2,
   getFormulaValues,
 } from "@/utils/api-helpers/futureValueFormulas";
 import Decimal from "decimal.js";
-
 
 /**
  *
@@ -130,44 +132,114 @@ const calculate_fv_holdings = (
   annual_inflation_rate: number,
   type: AccountType
 ) => {
-  const res = [];
+  // Step 1: Group holdings by security_id
+  const holdingMap: {
+    [ticker_symbol: string]: {
+      name: string;
+      quantity: Decimal;
+      total: Decimal;
+      institution_value: Decimal | number;
+      close_price: Decimal | number;
+      annual_return_rate: number;
+      subtype: string;
+      account_id: string; // Keep first account_id for simplicity
+    };
+  } = {};
+
+  /**
+   * Go through all of the accounts
+   */
   for (const account of accounts) {
+    /**
+     * Get all of the holdings for the account
+     */
     const holdings = account.holdings ?? [];
 
+    /**
+     * Go through all of the holdings
+     */
     for (const holding of holdings) {
-      const { quantity, close_price, annual_return_rate } =
+      const { quantity, annual_return_rate, institutional_value, close_price } =
         getFormulaValues(holding);
 
-      let fv;
-      if (with_inflation) {
-        fv = future_value_with_inflation_fn(
-          quantity,
-          close_price,
-          annual_return_rate,
-          annual_inflation_rate,
-          end_year - start_year
-        );
-      } else {
-        fv = future_value_fn(
-          quantity,
-          close_price,
-          annual_return_rate,
-          end_year - start_year
-        );
+      const ticker_symbol = holding?.security?.ticker_symbol ?? "";
+
+      if (!holdingMap[ticker_symbol]) {
+        holdingMap[ticker_symbol] = {
+          name: getHoldingNameV2(holding, account.name),
+          quantity: new Decimal(0),
+          close_price: close_price,
+          total: new Decimal(0),
+          institution_value: new Decimal(0),
+          annual_return_rate:
+            annual_return_rate instanceof Decimal
+              ? annual_return_rate.toNumber()
+              : annual_return_rate ?? 0,
+          subtype: holding?.security?.type ?? "unknown",
+          account_id: holding.account_id ?? "unknown",
+        };
       }
 
-      res.push({
-        name: getHoldingNameV2(holding, account.name),
-        annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
-        projection: new Decimal(fv).toDecimalPlaces(2),
-        security_id: holding.security_id,
-        account_id: holding.account_id,
-        type: type,
-        subtype: holding?.security?.type,
-        total: getTotal(holding),
-        shares: new Decimal(holding.quantity || 0),
-      });
+      // Accumulate quantity and total
+      holdingMap[ticker_symbol].quantity = holdingMap[
+        ticker_symbol
+      ].quantity.plus(new Decimal(quantity || 0));
+
+      holdingMap[ticker_symbol].total = holdingMap[ticker_symbol].total.plus(
+        new Decimal(getInstitutionalValue(holding))
+      );
+
+      holdingMap[ticker_symbol].institution_value = holdingMap[
+        ticker_symbol
+      ].institution_value = new Decimal(
+        holdingMap[ticker_symbol].institution_value
+      ).plus(new Decimal(institutional_value || 0));
     }
   }
+
+  // Step 2: Calculate future value for each unique security
+  const res = [];
+
+  for (const security_id in holdingMap) {
+    const {
+      name,
+      quantity,
+      total,
+      annual_return_rate,
+      subtype,
+      account_id,
+      institution_value,
+    } = holdingMap[security_id];
+
+    // Calculate future value based on total quantity and close price
+    let fv;
+    if (with_inflation) {
+      fv = future_value_with_inflation_fn_v2(
+        institution_value,
+        annual_return_rate,
+        annual_inflation_rate,
+        end_year - start_year
+      );
+    } else {
+      fv = future_value_fn_v2(
+        institution_value,
+        annual_return_rate,
+        end_year - start_year
+      );
+    }
+
+    res.push({
+      name,
+      annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
+      projection: new Decimal(fv).toDecimalPlaces(2),
+      security_id,
+      account_id,
+      type,
+      subtype,
+      total: total.toDecimalPlaces(2),
+      shares: quantity.toDecimalPlaces(2),
+    });
+  }
+
   return res;
 };

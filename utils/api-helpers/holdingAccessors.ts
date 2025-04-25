@@ -74,3 +74,14 @@ export const getClosePrice = (holding: Holding) => {
 export const getAnnualReturnRate = (holding: Holding) => {
   return holding?.annual_return_rate ? holding.annual_return_rate : 0;
 };
+
+/**
+ * 
+ * Get the institutional value
+ * 
+ * @param holding 
+ * @returns 
+ */
+export const getInstitutionalValue = (holding: Holding) => {
+  return holding?.institution_value ? holding.institution_value : 0;
+};

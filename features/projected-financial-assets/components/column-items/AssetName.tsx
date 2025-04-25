@@ -1,6 +1,11 @@
 import React from "react";
 import { TableCell } from "@/components/ui/table";
 import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 const investmentTypes = ["cryptocurrency", "equity", "etf", "mutual fund"];
 
@@ -14,13 +19,21 @@ const AssetName = ({ asset }: { asset: Assets }) => {
     );
   } else {
     nameElement = (
-      <span className="font-bold  text-[0.7rem] uppercase ">
-        {asset.name.substring(0, 10)}...
-      </span>
+      <HoverCard>
+        <HoverCardTrigger>
+          {" "}
+          <span className="font-bold  text-[0.7rem] uppercase ">
+            {asset.name.substring(0, 10)}...
+          </span>
+        </HoverCardTrigger>
+        <HoverCardContent className="backdrop-blur bg-tertiary-300/40  text-tertiary-900 text-sm">
+          <span className="font-semibold text-[0.85rem]">
+            {asset.name}
+          </span>{" "}
+        </HoverCardContent>
+      </HoverCard>
     );
   }
-
-  console.log("ASSET", asset);
 
   return (
     <TableCell className=" pl-6 text-[0.8rem] w-[8rem]">
