@@ -1,7 +1,10 @@
 import { Account } from "@/types/plaid";
 import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 import { getHoldingNameV2 } from "@/utils/api-helpers/holdingAccessors";
-import { AccountType, HoldingAggregate } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import {
+  AccountType,
+  HoldingAggregate,
+} from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import {
   calculateFutureValue,
   getFormulaValues,
@@ -18,9 +21,9 @@ export const generateProjectedFinancialAssets = async (
   annual_inflation_rate: number,
   accounts: Account[] = []
 ): Promise<FinancialAssets[]> => {
-  
   // Validate inputs
-  if (start_year > end_year || !Number.isFinite(annual_inflation_rate)) return [];
+  if (start_year > end_year || !Number.isFinite(annual_inflation_rate))
+    return [];
 
   const years = end_year - start_year;
 
@@ -55,9 +58,7 @@ const calculateFvAccounts = (
   annual_inflation_rate: number,
   type: AccountType
 ): FinancialAssets[] => {
-
   return accounts.map((account) => {
-    
     const annual_return_rate = account.annual_return_rate ?? 0;
     const current_amount = account.current ?? 0;
 
@@ -159,7 +160,7 @@ const calculateFvHoldings = (
         type,
         subtype,
         total: institution_value.toDecimalPlaces(2),
-        shares: quantity.toDecimalPlaces(2),
+        shares: quantity,
       };
     }
   );

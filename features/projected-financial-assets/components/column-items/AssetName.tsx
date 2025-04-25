@@ -27,9 +27,7 @@ const AssetName = ({ asset }: { asset: Assets }) => {
           </span>
         </HoverCardTrigger>
         <HoverCardContent className="backdrop-blur bg-tertiary-300/40  text-tertiary-900 text-sm">
-          <span className="font-semibold text-[0.85rem]">
-            {asset.name}
-          </span>{" "}
+          <span className="font-semibold text-[0.85rem]">{asset.name}</span>{" "}
         </HoverCardContent>
       </HoverCard>
     );
@@ -39,11 +37,18 @@ const AssetName = ({ asset }: { asset: Assets }) => {
     <TableCell className=" pl-6 text-[0.8rem] w-[8rem]">
       <div className="flex flex-col text-tertiary-1000 font-bold">
         {nameElement}
-        {(asset?.shares ?? 0) > 0 && (
+        {(asset?.shares ?? 0) >= 1 && (
           <span className="font-normal text-tertiary-1000">
             {investmentTypes.includes(asset?.subtype)
               ? Number(asset.shares).toFixed(2) + " Shares"
               : "$" + Number(asset.total).toFixed(2) + " Cash"}
+          </span>
+        )}
+        {(asset?.shares ?? 0) < 1 && (
+          <span className="font-normal text-tertiary-1000">
+            {investmentTypes.includes(asset?.subtype)
+              ? asset.shares + " Shares"
+              : "$" + Number(asset.total) + " Cash"}
           </span>
         )}
       </div>
