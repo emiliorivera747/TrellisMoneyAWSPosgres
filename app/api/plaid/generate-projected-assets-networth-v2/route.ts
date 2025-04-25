@@ -79,11 +79,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
 
     const projected_assets = await generateProjectedFinancialAssets(
-      start_year,
-      end_year,
-      searchParams.get("with_inflation") === "true",
-      default_inflation_rate,
-      account_holdings_securities[0].accounts
+      {start_year: start_year,
+      end_year: end_year,
+      with_inflation: searchParams.get("with_inflation") === "true",
+      annual_inflation_rate: default_inflation_rate,
+      accounts: account_holdings_securities[0].accounts}
     );
 
     return NextResponse.json(
