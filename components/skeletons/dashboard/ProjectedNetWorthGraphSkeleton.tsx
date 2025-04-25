@@ -12,11 +12,6 @@ const ProjectedNetWorthGraphSkeleton = () => {
         </div>
       </div>
       <div className="h-[24rem] w-full bg-tertiary-300 rounded animate-pulse"></div>
-      {/* <div className="gap-2 mt-4 grid grid-cols-6 items-center border-b border-tertiary-300 pb-6 h-[6rem]">
-        <div className="h-10 bg-tertiary-200 rounded-full animate-pulse col-span-2"></div>
-        <div className="h-10 bg-tertiary-200 rounded-full animate-pulse col-span-2"></div>
-        <div className="h-10 bg-tertiary-200 rounded-full animate-pulse col-span-2"></div>
-      </div> */}
     </div>
   );
 };

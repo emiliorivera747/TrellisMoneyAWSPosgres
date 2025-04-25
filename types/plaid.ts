@@ -9,7 +9,7 @@ import {
   AccountHolderCategory,
   PlaidError,
   Products,
-  ItemUpdateTypeEnum
+  ItemUpdateTypeEnum,
 } from "plaid";
 export interface Profile {
   id: number;
@@ -238,7 +238,6 @@ export interface Security {
     face_value?: number | Decimal | null;
   } | null;
 }
-
 
 export interface Owner {
   owner_id: string;

@@ -4,7 +4,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
 import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
-import { generateProjectedFinancialAssetsV2 } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
+import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
 
 // Helpers
 import { updateSecurities } from "@/utils/api-helpers/plaid/investments/updateSecurities";
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       default_inflation_rate
     );
 
-    const projected_assets = await generateProjectedFinancialAssetsV2(
+    const projected_assets = await generateProjectedFinancialAssets(
       start_year,
       end_year,
       searchParams.get("with_inflation") === "true",

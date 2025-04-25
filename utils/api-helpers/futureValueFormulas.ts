@@ -7,6 +7,8 @@ import {
   getInstitutionalValue,
 } from "@/utils/api-helpers/holdingAccessors";
 
+import {FutureValueParams} from "@/features/projected-financial-assets/types/projectedAssetsCard";
+
 /**
  *
  * @param quantity
@@ -95,4 +97,27 @@ export const future_value_fn_v2 = (
   const growthFactor = Math.pow(1 + Number(annual_return_rate), year);
 
   return Number(pv) * growthFactor;
+};
+
+
+
+/**
+ * Calculates future value with or without inflation.
+ */
+export const calculateFutureValue = ({
+  value,
+  annual_return_rate,
+  annual_inflation_rate,
+  years,
+  with_inflation,
+}: FutureValueParams): number => {
+  const valueNumber = value instanceof Decimal ? value.toNumber() : value;
+  return with_inflation
+    ? future_value_with_inflation_fn_v2(
+        valueNumber,
+        annual_return_rate,
+        annual_inflation_rate,
+        years
+      )
+    : future_value_fn_v2(valueNumber, annual_return_rate, years);
 };

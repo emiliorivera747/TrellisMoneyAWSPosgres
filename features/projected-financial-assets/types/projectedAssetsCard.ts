@@ -1,4 +1,5 @@
-import { UseFormReturn, FieldValues } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
+import { Decimal } from "decimal.js";
 
 export type AccountType =
   | "depository"
@@ -7,8 +8,16 @@ export type AccountType =
   | "loan"
   | "Other";
 
-
-export type SecurityType = 'cash' | 'cryptocurrency' | 'derivative' | 'equity' | 'etf' | 'fixed income' | 'loan' | 'mutual fund' | 'other';
+export type SecurityType =
+  | "cash"
+  | "cryptocurrency"
+  | "derivative"
+  | "equity"
+  | "etf"
+  | "fixed income"
+  | "loan"
+  | "mutual fund"
+  | "other";
 export interface Assets {
   name: string;
   annual_growth_rate?: number | null;
@@ -66,4 +75,20 @@ export interface GrowthRateCellPropsText {
   asset: Assets;
 }
 
+export interface HoldingAggregate {
+  security_id: string;
+  name: string;
+  quantity: Decimal;
+  institution_value: Decimal;
+  annual_return_rate: number;
+  subtype: string;
+  account_id: string;
+}
 
+export interface FutureValueParams {
+  value: number | Decimal;
+  annual_return_rate: number | Decimal;
+  annual_inflation_rate: number | Decimal;
+  years: number;
+  with_inflation: boolean;
+}
