@@ -1,66 +1,22 @@
 import { Account } from "@/types/plaid";
-import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
+import {
+  FinancialAssets,
+  ProjectionConfig,
+  ProjectionParams,
+} from "@/features/projected-financial-assets/types/projectedAssets";
 import { getHoldingNameV2 } from "@/utils/api-helpers/holdingAccessors";
 import {
   AccountType,
   HoldingAggregate,
 } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+
 import {
   calculateFutureValue,
   getFormulaValues,
 } from "@/utils/api-helpers/futureValueFormulas";
+
 import Decimal from "decimal.js";
-
-// Configuration for financial projections
-interface ProjectionConfig {
-  years: number;
-  with_inflation: boolean;
-  annual_inflation_rate: number;
-  type: AccountType;
-}
-
-// Parameters for generating financial assets
-interface ProjectionParams {
-  start_year: number;
-  end_year: number;
-  with_inflation?: boolean;
-  annual_inflation_rate: number;
-  accounts?: Account[];
-}
-
-interface createFinancialAssetParams {
-  name: string;
-  annual_return_rate: number;
-  projection: number;
-  security_id: string | null;
-  account_id: string;
-  type: AccountType;
-  subtype: string;
-  total: number | Decimal;
-  shares: Decimal;
-}
-// Factory function to create FinancialAssets objects
-const createFinancialAsset = ({
-  name,
-  annual_return_rate,
-  projection,
-  security_id,
-  account_id,
-  type,
-  subtype,
-  total,
-  shares,
-}: createFinancialAssetParams): FinancialAssets => ({
-  name,
-  annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
-  projection: new Decimal(projection).toDecimalPlaces(2),
-  security_id,
-  account_id,
-  type,
-  subtype,
-  total: new Decimal(total).toDecimalPlaces(2),
-  shares: shares,
-});
+import { createFinancialAsset } from "@/utils/api-helpers/projected-financial-assets/createFinancialAsset";
 
 /**
  * Generates projected financial assets for accounts.
@@ -72,10 +28,9 @@ export const generateProjectedFinancialAssets = async ({
   annual_inflation_rate,
   accounts = [],
 }: ProjectionParams): Promise<FinancialAssets[]> => {
-  // Validate inputs
-  if (start_year > end_year || !Number.isFinite(annual_inflation_rate)) {
-    return [];
-  }
+  
+  if (start_year > end_year || !Number.isFinite(annual_inflation_rate)) return [];
+  
 
   const years = end_year - start_year;
   const groups = Object.groupBy(accounts, ({ type }) => type);
