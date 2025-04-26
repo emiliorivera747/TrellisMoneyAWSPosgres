@@ -4,6 +4,13 @@ import { FinancialAssets } from "@/features/projected-financial-assets/types/pro
 
 const prisma = new PrismaClient();
 
+/**
+ * 
+ * This route is used to update the financial assets of a user.
+ * 
+ * @param req 
+ * @returns 
+ */
 export async function PATCH(req: NextRequest): Promise<NextResponse> {
   try {
     const assets = await req.json();
