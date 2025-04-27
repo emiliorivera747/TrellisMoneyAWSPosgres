@@ -43,6 +43,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           withInflationTag={withInlfationTag}
           years={years}
         />
+        
         {/* The SVG for the graph */}
         <LineGraph
           width={width}
@@ -55,6 +56,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           tooltipTop={tooltipTop}
           tooltipLeft={tooltipLeft}
         />
+        
 
         {/* Tooltip div */}
         {tooltipData && (

@@ -53,10 +53,10 @@ const LineGraph = ({
   return (
     <svg
       className=""
-      width="100%" // Make the SVG width responsive
-      height="88%" // Make the SVG height responsive
-      viewBox={`0 0 ${width} ${height}`} // Use the viewBox to scale the content
-      preserveAspectRatio="none" // Prevent aspect ratio issues if the div size changes
+      width="100%" 
+      height="88%"
+      viewBox={`0 0 ${width} ${height}`} 
+      preserveAspectRatio="none" 
     >
       <rect
         x={0}
