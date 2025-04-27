@@ -1,7 +1,7 @@
 "use client";
 
 //React
-import React, {useRef } from "react";
+import React, { useRef, useMemo } from "react";
 
 //components
 import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphV2";
@@ -23,7 +23,6 @@ const defaultYearsIntoTheFuture = 100;
 const currentYear = Number(new Date().getFullYear().toString());
 const totalYearsRange = currentYear + defaultYearsIntoTheFuture;
 
-
 // Context
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 
@@ -33,7 +32,7 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
  */
 const ProjectedNetWorthGraph = () => {
   const containerRef = useRef(null);
-  
+
   const {
     selectedYear,
     selectedFilter,
@@ -50,7 +49,11 @@ const ProjectedNetWorthGraph = () => {
     selectedFilter
   );
 
-  const years = generateYearsArray(currentYear, totalYearsRange);
+  const years = useMemo(
+    () =>
+      generateYearsArray(currentYear, currentYear + defaultYearsIntoTheFuture),
+    []
+  );
 
   if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
   if (projectionError) return <ProjectedNetWorthGraphError />;
@@ -61,7 +64,7 @@ const ProjectedNetWorthGraph = () => {
     <div className="grid-rows-[22rem_6rem] grid border-b border-tertiary-300">
       <ResponsiveLineGraphContainer
         margin={{ top: 6, right: 6, bottom: 10, left: 6 }}
-        className={"h-[25rem] w-full border-box "}
+        className={"h-[25rem] w-full border-box"}
         ref={containerRef}
         GraphComponent={ProjectedLineGraph}
         dataForLines={dataForLines}

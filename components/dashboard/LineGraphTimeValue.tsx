@@ -23,7 +23,7 @@ import { LineGraphProps, TimeSeriesData } from "@/types/graphs";
 import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
-const LineGraph = ({
+const LineGraphTimeValue = ({
   width,
   height,
   dataForLines,
@@ -34,6 +34,8 @@ const LineGraph = ({
   tooltipTop,
   tooltipLeft,
 }: LineGraphProps) => {
+
+  if (width < 10 || height < 10) return null;
 
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
@@ -107,4 +109,4 @@ const LineGraph = ({
   );
 };
 
-export default LineGraph;
+export default LineGraphTimeValue;

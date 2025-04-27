@@ -6,7 +6,7 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 
 //Components
 import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
-import LineGraph from "@/components/dashboard/LineGraph";
+import LineGraph from "@/components/dashboard/LineGraphTimeValue";
 import PrimaryGraphHeader from "@/features/projected-net-worth/components/projected-networth-graph/headers/PrimaryGraphHeader";
 
 //Types

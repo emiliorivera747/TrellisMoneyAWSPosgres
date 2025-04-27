@@ -2,14 +2,14 @@ import React from "react";
 import { Tooltip } from "@visx/tooltip";
 import { formatDate } from "@/utils/helper-functions/formatDate";
 import { getDate } from "@/utils/helper-functions/accessors";
+import { LineGraphTooltipProps } from "@/types/graphs";
 
-interface LineGraphTooltipProps {
-  margin: { top: number };
-  tooltipLeft: number;
-  defaultStyles: React.CSSProperties;
-  tooltipData: any;
-}
-
+/**
+ * 
+ * 
+ * @param param0 
+ * @returns 
+ */
 const LineGraphTooltip = ({
   margin,
   tooltipLeft,

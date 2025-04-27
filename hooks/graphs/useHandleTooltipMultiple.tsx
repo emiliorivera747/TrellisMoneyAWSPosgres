@@ -12,7 +12,7 @@ const handleMultipleDataPoints = (
   showTooltip: (args: any) => void,
   stockValueScale: any,
   dateScale: any,
-  ...linePayloads: LinePayload<TimeSeriesData>[]
+  ...linePayloads: LinePayload[]
 ) => {
   return useCallback(
     (

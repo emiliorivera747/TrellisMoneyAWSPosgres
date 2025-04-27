@@ -10,6 +10,14 @@ export interface TooltipProps {
   directions: Direction[];
 }
 
+
+export interface ResponsiveLineGraphProps {
+  className: string;
+  GraphComponent: React.ComponentType<any>; // Define GraphComponent type
+  ref: React.Ref<HTMLButtonElement>;
+  [key: string]: any; // Catch-all for any other props
+}
+
 export interface TooltipPayload{
   d: SecurityData;
   color: string;
@@ -80,4 +88,12 @@ export interface LinePayload {
   subheaderColor?: subheaderColor;
   withMessage?: boolean;
   infoMessage?: string;
+}
+
+
+export interface LineGraphTooltipProps {
+  margin: { top: number };
+  tooltipLeft: number;
+  defaultStyles: React.CSSProperties;
+  tooltipData: any;
 }

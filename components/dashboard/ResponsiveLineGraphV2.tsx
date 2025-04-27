@@ -1,20 +1,23 @@
-
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
+import { ResponsiveLineGraphProps } from "@/types/graphs";
 
-// Define props for ResponsiveLineGraphV2
-interface ResponsiveLineGraphV2Props {
-  className: string;
-  GraphComponent: React.ComponentType<any>; // Define GraphComponent type
-  ref: React.Ref<HTMLButtonElement>;
-  [key: string]: any; // Catch-all for any other props
-}
-
+/**
+ *
+ * ResponsiveLineGraphContainer is a wrapper component that uses the ParentSize component from @visx/responsive to make a line graph responsive.
+ *
+ * @param {string} className - The class name to be applied to the container.
+ * @param {React.ComponentType} GraphComponent - The line graph component to be rendered.
+ * @param {React.Ref} ref - A ref to be passed to the GraphComponent.
+ * @param {object} props - Additional props to be passed to the GraphComponent.
+ * 
+ * @returns
+ */
 const ResponsiveLineGraphContainer = ({
   className,
   GraphComponent,
   ref,
   ...props
-}: ResponsiveLineGraphV2Props) => {
+}: ResponsiveLineGraphProps) => {
   return (
     <div className={className}>
       <ParentSize>
