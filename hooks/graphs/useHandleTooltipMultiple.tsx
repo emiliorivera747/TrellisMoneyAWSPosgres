@@ -1,18 +1,18 @@
 import { useCallback } from "react";
 import { localPoint } from "@visx/event";
 import { bisector } from "@visx/vendor/d3-array";
-import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
+import { TimeSeriesData } from "@/types/graphs";
 import { LinePayload } from "@/types/graphs";
 import { getDate } from "@/utils/helper-functions/accessors";
 
-const bisectDate = bisector<SecurityData, Date>((d) => d.date).left;
-const getStockValue = (d: SecurityData) => d.close;
+const bisectDate = bisector<TimeSeriesData, Date>((d) => d.date).left;
+const getStockValue = (d: TimeSeriesData) => d?.close;
 
 const handleMultipleDataPoints = (
   showTooltip: (args: any) => void,
   stockValueScale: any,
   dateScale: any,
-  ...linePayloads: LinePayload[]
+  ...linePayloads: LinePayload<TimeSeriesData>[]
 ) => {
   return useCallback(
     (
@@ -33,7 +33,6 @@ const handleMultipleDataPoints = (
               ? d1
               : d0;
         }
-        //("Payload", payload);
         return {
           d: d,
           strokeWidth: payload.strokeWidth,

@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { scaleLinear } from "@visx/scale";
-import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
+import { TimeSeriesData } from "@/types/graphs";
 import { extent } from "@visx/vendor/d3-array";
 
 
-const getStockValue = (d: SecurityData) => d.close;
+const getStockValue = (d: TimeSeriesData) => d.close;
 
 const useStockValueScale = (
-    data: SecurityData[],
+    data: TimeSeriesData[],
     margin: { top: number; right: number; bottom: number; left: number },
     innerHeight: number
 ) => {

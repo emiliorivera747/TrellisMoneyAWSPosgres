@@ -1,3 +1,6 @@
-import { SecurityData } from '@/features/projected-net-worth/types/graphComponents';
-export const getDate: (d: SecurityData) => Date = (d: SecurityData) => d?.date;
-export const getStockValue = (d: SecurityData) => d?.close;
+import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
+import { TimeSeriesData } from "@/types/graphs";
+export const getDate: (d: TimeSeriesData) => Date = (d: TimeSeriesData) =>
+  d?.date;
+
+export const getStockValue = (d: TimeSeriesData) => d?.close;

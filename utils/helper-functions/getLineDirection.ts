@@ -1,6 +1,6 @@
 import { getStockValue } from "@/utils/helper-functions/accessors";
-import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
+import { TimeSeriesData } from "@/types/graphs";
 
 /**
  * Get the direction of the line by comparing the first and last stock value
@@ -11,7 +11,7 @@ import { Direction } from "@/features/projected-net-worth/types/graphComponents"
  * @param data 
  * @returns 
  */
-export const getLineDirection = (data: SecurityData[]): Direction => {
+export const getLineDirection = (data: TimeSeriesData[]): Direction => {
   
   if (!data || data?.length < 2 ) return "flat";
   

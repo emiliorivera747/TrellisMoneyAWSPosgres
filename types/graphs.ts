@@ -1,23 +1,26 @@
-
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
-import { withInflation } from "@/features/projected-net-worth/utils/data/inflationInfo";
+import { curveMonotoneX } from "@visx/curve"; // Import CurveFactory
 export interface TooltipProps {
   tooltipLeft: number;
   tooltipTop?: number;
   margin: { top: number; right: number; bottom: number; left: number };
   innerHeight: number;
-  // dataForLines: LineGraphData[];
   stockValueScale: (arg: number) => number; // y-axis
   tooltipData: TooltipPayload[];
   directions: Direction[];
 }
 
-export interface TooltipPayload {
+export interface TooltipPayload{
   d: SecurityData;
   color: string;
   strokeWidth: number;
-  data: SecurityData[];
+  data: TimeSeriesData[];
   linePayload: LinePayload;
+}
+
+export interface TimeSeriesData {
+  date: Date;
+  close: number;
 }
 
 export interface LineGraphProps {
@@ -26,13 +29,13 @@ export interface LineGraphProps {
   dataForLines: LinePayload[];
   showTooltip: (args: any) => void;
   hideTooltip: () => void;
-  tooltipData: any;
+  tooltipData: TimeSeriesData[];
   tooltipTop: number;
   tooltipLeft: number;
-  lineColor?: string;
-  withInlfationTag?: boolean;
-  data?: SecurityData[];
+  data?: TimeSeriesData[];
   margin: { top: number; right: number; bottom: number; left: number };
+  curve?: typeof curveMonotoneX;
+  backgroundFill?: string;
 }
 
 export interface SecurityData {
@@ -65,7 +68,7 @@ export interface subheaderColor {
 }
 
 export interface LinePayload {
-  data: SecurityData[];
+  data: TimeSeriesData[];
   color?: string;
   tailwindTagTextColor?: string;
   tailwindTagBgColor?: string;
@@ -78,4 +81,3 @@ export interface LinePayload {
   withMessage?: boolean;
   infoMessage?: string;
 }
-

@@ -13,6 +13,7 @@ import PrimaryGraphHeader from "@/features/projected-net-worth/components/projec
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 import { TooltipPayload } from "@/types/graphs";
 
+
 //TooltipData
 type TooltipData = TooltipPayload[];
 
@@ -32,9 +33,10 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     tooltipLeft = 0,
     withInlfationTag = false,
     years,
-  }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
+  }: ProjectedLineGraphProps &
+    WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
-    
+
     return (
       <div className={`h-full w-full`}>
         <PrimaryGraphHeader
@@ -43,7 +45,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           withInflationTag={withInlfationTag}
           years={years}
         />
-        
+
         {/* The SVG for the graph */}
         <LineGraph
           width={width}
@@ -56,7 +58,6 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           tooltipTop={tooltipTop}
           tooltipLeft={tooltipLeft}
         />
-        
 
         {/* Tooltip div */}
         {tooltipData && (

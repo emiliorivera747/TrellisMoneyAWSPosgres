@@ -27,7 +27,7 @@ export interface HeaderWithIconProps {
   toolTipLabel: string;
 }
 
-export interface ResponsiveLineGraphProps {
+export interface ResponsiveLineGraphProps<T> {
   selectedYear: number;
   filteredDataForLines: LinePayload[];
   tailwindClasses: string;
@@ -80,7 +80,6 @@ export interface ProjectedNetWorthGraphProps {
   handleYearSelection: (year: number) => void;
   handleFilterChange: (key: InflationFilters) => void;
   selectedFilter: InflationFilters;
-
 }
 
 export interface projectionData {
@@ -89,8 +88,7 @@ export interface projectionData {
   data: SecurityData[];
 }
 
-export interface projectedNetWorth  {
-  value: String,
-  data: SecurityData[]
+export interface projectedNetWorth {
+  value: String;
+  data: SecurityData[];
 }
-

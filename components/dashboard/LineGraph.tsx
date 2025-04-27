@@ -17,8 +17,7 @@ import TooltipBar from "@/components/dashboard/TooltipBar";
 import useHandleTooltipMultiple from "@/hooks/graphs/useHandleTooltipMultiple";
 
 //Types
-import { LineGraphProps } from "@/types/graphs";
-import { SecurityData } from "@/types/graphs";
+import { LineGraphProps, TimeSeriesData } from "@/types/graphs";
 
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
@@ -35,6 +34,7 @@ const LineGraph = ({
   tooltipTop,
   tooltipLeft,
 }: LineGraphProps) => {
+
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
   const dateScale = useDateScale(dataForLines[0].data, margin, innerWidth); // x-axis
@@ -53,10 +53,10 @@ const LineGraph = ({
   return (
     <svg
       className=""
-      width="100%" 
-      height="88%"
-      viewBox={`0 0 ${width} ${height}`} 
-      preserveAspectRatio="none" 
+      width="100%"
+      height="89%"
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="none"
     >
       <rect
         x={0}
@@ -72,8 +72,8 @@ const LineGraph = ({
           <LinePath
             key={i}
             data={linePayload.data}
-            x={(d: SecurityData) => dateScale(getDate(d)) ?? 0}
-            y={(d: SecurityData) => stockValueScale(getStockValue(d)) ?? 0}
+            x={(d: TimeSeriesData) => dateScale(getDate(d)) ?? 0}
+            y={(d: TimeSeriesData) => stockValueScale(getStockValue(d)) ?? 0}
             stroke={lineColor}
             strokeWidth={linePayload.strokeWidth ?? 2}
             curve={curveMonotoneX}
