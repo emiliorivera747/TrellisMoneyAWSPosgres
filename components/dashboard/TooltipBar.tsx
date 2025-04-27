@@ -18,7 +18,7 @@ const TooltipBar = ({
   tooltipData,
   stockValueScale,
   directions,
-}: TooltipProps<TimeSeriesData>) => {
+}: TooltipProps) => {
   return (
     <g>
       <Line

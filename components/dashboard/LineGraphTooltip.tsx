@@ -3,15 +3,16 @@ import { Tooltip } from "@visx/tooltip";
 import { formatDate } from "@/utils/helper-functions/formatDate";
 import { getDate } from "@/utils/helper-functions/accessors";
 import { LineGraphTooltipProps } from "@/types/graphs";
+const defaultMargin = { top: 6};
 
 /**
- * 
- * 
- * @param param0 
- * @returns 
+ *
+ *
+ * @param param0
+ * @returns
  */
 const LineGraphTooltip = ({
-  margin,
+  margin = defaultMargin,
   tooltipLeft,
   defaultStyles,
   tooltipData,

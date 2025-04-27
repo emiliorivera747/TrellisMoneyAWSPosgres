@@ -6,13 +6,12 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 
 //Components
 import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
-import LineGraph from "@/components/dashboard/LineGraphTimeValue";
+import LineGraphTimeValue from "@/components/dashboard/LineGraphTimeValue";
 import PrimaryGraphHeader from "@/features/projected-net-worth/components/projected-networth-graph/headers/PrimaryGraphHeader";
 
 //Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 import { TooltipPayload } from "@/types/graphs";
-
 
 //TooltipData
 type TooltipData = TooltipPayload[];
@@ -25,7 +24,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     width,
     height,
     dataForLines,
-    margin = { top: 0, right: 0, bottom: 0, left: 0 },
+    margin,
     showTooltip,
     hideTooltip,
     tooltipData,
@@ -33,8 +32,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     tooltipLeft = 0,
     withInlfationTag = false,
     years,
-  }: ProjectedLineGraphProps &
-    WithTooltipProvidedProps<TooltipData>) => {
+  }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
 
     return (
@@ -47,7 +45,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
         />
 
         {/* The SVG for the graph */}
-        <LineGraph
+        <LineGraphTimeValue
           width={width}
           height={height}
           dataForLines={dataForLines}

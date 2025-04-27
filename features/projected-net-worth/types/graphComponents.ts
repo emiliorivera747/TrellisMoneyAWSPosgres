@@ -58,7 +58,7 @@ export interface ProjectedLineGraphProps {
   width: number;
   height: number;
   dataForLines: LinePayload[];
-  margin: any;
+  margin?: { top: number; right: number; bottom: number; left: number };
   showTooltip?: (args: any) => void;
   hideTooltip?: () => void;
   tooltipData?: any;

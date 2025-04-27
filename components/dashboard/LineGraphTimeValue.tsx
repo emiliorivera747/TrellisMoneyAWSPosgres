@@ -2,7 +2,7 @@
 import React from "react";
 
 //Visx
-import { Bar, line, LinePath } from "@visx/shape";
+import { Bar, LinePath } from "@visx/shape";
 import useDateScale from "@/hooks/graphs/useDateScale";
 import useStockValueScale from "@/hooks/graphs/useStockvalueScale";
 import { curveMonotoneX } from "@visx/curve";
@@ -23,11 +23,13 @@ import { LineGraphProps, TimeSeriesData } from "@/types/graphs";
 import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
+const defaultMargin = { top: 6, right: 6, bottom: 10, left: 6 };
+
 const LineGraphTimeValue = ({
   width,
   height,
   dataForLines,
-  margin,
+  margin = defaultMargin,
   showTooltip,
   hideTooltip,
   tooltipData,

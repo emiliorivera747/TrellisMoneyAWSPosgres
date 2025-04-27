@@ -1,25 +1,25 @@
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
-import { curveMonotoneX } from "@visx/curve"; // Import CurveFactory
+import { curveMonotoneX } from "@visx/curve";
+
 export interface TooltipProps {
   tooltipLeft: number;
   tooltipTop?: number;
   margin: { top: number; right: number; bottom: number; left: number };
   innerHeight: number;
-  stockValueScale: (arg: number) => number; // y-axis
+  stockValueScale: (arg: number) => number;
   tooltipData: TooltipPayload[];
   directions: Direction[];
 }
 
-
 export interface ResponsiveLineGraphProps {
   className: string;
-  GraphComponent: React.ComponentType<any>; // Define GraphComponent type
+  GraphComponent: React.ComponentType<any>;
   ref: React.Ref<HTMLButtonElement>;
-  [key: string]: any; // Catch-all for any other props
+  [key: string]: any;
 }
 
-export interface TooltipPayload{
-  d: SecurityData;
+export interface TooltipPayload {
+  d: TimeSeriesData;
   color: string;
   strokeWidth: number;
   data: TimeSeriesData[];
@@ -41,7 +41,7 @@ export interface LineGraphProps {
   tooltipTop: number;
   tooltipLeft: number;
   data?: TimeSeriesData[];
-  margin: { top: number; right: number; bottom: number; left: number };
+  margin?: { top: number; right: number; bottom: number; left: number };
   curve?: typeof curveMonotoneX;
   backgroundFill?: string;
 }
@@ -90,9 +90,8 @@ export interface LinePayload {
   infoMessage?: string;
 }
 
-
 export interface LineGraphTooltipProps {
-  margin: { top: number };
+  margin?: { top: number };
   tooltipLeft: number;
   defaultStyles: React.CSSProperties;
   tooltipData: any;
