@@ -11,6 +11,7 @@ import NoLinePayloads from "@/features/projected-net-worth/components/projected-
 import TimeValueGraphHeader, {
   Title,
   Value,
+  ValueChangeHeader,
 } from "@/components/dashboard/HeaderTimeValueGraph";
 
 //Types
@@ -44,11 +45,6 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
 
     return (
       <div className={`h-full w-full`}>
-        {/* <PrimaryGraphHeader
-          linePayloads={linePayloads}
-          tooltipData={tooltipData}
-          years={years}
-        /> */}
 
         <TimeValueGraphHeader
           linePayloads={linePayloads}
@@ -56,6 +52,10 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
         >
           <Title>Net Worth</Title>
           <Value lineIndex={0}/>
+          <ValueChangeHeader
+            lineIndex={0}
+            className="text-xs"
+            />
         </TimeValueGraphHeader>
 
         {/* The SVG for the graph */}

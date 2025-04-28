@@ -71,7 +71,6 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
           {yearsBetween + " years"}
         </span>
       )}
-      
     </>
   );
 };

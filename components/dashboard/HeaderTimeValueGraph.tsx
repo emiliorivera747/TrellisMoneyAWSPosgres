@@ -11,11 +11,14 @@ import {
   ValueProp,
   LinePayload,
   TooltipPayload,
+  ValueChangeProps,
 } from "@/types/graphs";
 
 // Functions
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
 import { getStockValue } from "@/utils/helper-functions/accessors";
+import { calculateRateOfChange } from "@/utils/helper-functions/calculateRateOfChange";
+import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
 
 // Context
 const TimeValueGraphHeaderContext = createContext<{
@@ -92,7 +95,81 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
   );
 }
 
+/**
+ *
+ */
+export function ValueChangeHeader({
+  className,
+  lineIndex,
+  withYears = true,
+  ref,
+}: ValueChangeProps) {
+  const defaultClass = "text-tertiary-800 font-normal ";
+  const { linePayloads, tooltipData } = useContext(TimeValueGraphHeaderContext);
+
+  if (!linePayloads) return null;
+
+  const lineData = linePayloads[lineIndex].lineData;
+  const tooltipPayload = tooltipData?.[lineIndex];
+
+  if (!lineData) return null;
+
+  const deafultStockValueDifference =
+    lineData[lineData.length - 1].close - lineData[0].close;
+
+  const defaultRateOfChange = calculateRateOfChange(
+    lineData[0].close,
+    lineData[lineData.length - 1].close
+  );
+
+  if (!tooltipPayload) {
+    return (
+      <p className={cn(defaultClass, className)}>
+        {numberToMoneyFormat(deafultStockValueDifference) +
+          " (" +
+          defaultRateOfChange.toFixed(2) +
+          "%) "}
+        {withYears && (
+          <span className={"text-tertiary-800 font-normal "}>
+            {calculateYearsBetween(
+              lineData[0].date,
+              lineData[lineData.length - 1].date
+            ) + " years"}
+          </span>
+        )}
+      </p>
+    );
+  }
+
+  const stockValueDifference =
+    getStockValue(tooltipPayload.d) - lineData[0].close;
+  const rateOfChange = calculateRateOfChange(
+    lineData[0].close,
+    getStockValue(tooltipPayload.d)
+  );
+
+  const yearsBetween = calculateYearsBetween(
+    lineData[0].date,
+    tooltipPayload.d.date
+  );
+
+  return (
+    <p className={cn(defaultClass, className)}>
+      {numberToMoneyFormat(stockValueDifference) +
+        " (" +
+        rateOfChange.toFixed(2) +
+        "%) "}
+      {withYears && (
+        <span className={"text-tertiary-800 font-normal "}>
+          {yearsBetween + " years"}
+        </span>
+      )}
+    </p>
+  );
+}
+
 TimeValueGraphHeader.Title = Title;
 TimeValueGraphHeader.Value = Value;
+TimeValueGraphHeader.ValueChangeHeader = ValueChangeHeader;
 
 export default TimeValueGraphHeader;

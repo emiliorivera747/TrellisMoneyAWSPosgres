@@ -205,7 +205,6 @@ export interface TitleProps {
 }
 
 export interface ValueProp {
-
   /**
    * The value of the line.
    */
@@ -220,4 +219,26 @@ export interface ValueProp {
    * The class name of the value.
    */
   className?: string;
+}
+
+export interface ValueChangeProps {
+  /**
+   * The value of the line.
+   */
+  lineIndex: number;
+
+  /**
+   * The ref of the value.
+   */
+  ref?: React.Ref<HTMLButtonElement | HTMLDivElement>;
+
+  /**
+   * The class name of the value.
+   */
+  className?: string;
+
+  /**
+   * With years or not.
+   */
+  withYears?: boolean;
 }
