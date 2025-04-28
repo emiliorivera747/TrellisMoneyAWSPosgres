@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 
 // React
 import React, { createContext, ReactNode } from "react";
@@ -7,34 +8,7 @@ import React, { createContext, ReactNode } from "react";
 import { HeaderTimeValueGraphProps } from "@/types/graphs";
 
 // Context
-const HeaderTimeValueGraphHeader = createContext({
-  linePayloads: [
-    {
-      id: "",
-      dataKey: "",
-      colorConfig: {
-        lineColor: "",
-        tagTextColor: "",
-        tagBgColor: "",
-        subheaderColor: "",
-      },
-      strokeWidth: 0,
-      value: "",
-    },
-  ],
-  tooltipData: [
-    {
-      name: "",
-      value: "",
-      color: "",
-      payload: {
-        name: "",
-        value: "",
-        color: "",
-      },
-    },
-  ],
-});
+const HeaderTimeValueGraphHeader = createContext({});
 
 /**
  *
@@ -51,6 +25,24 @@ const HeaderTimeValueGraph = ({
     <HeaderTimeValueGraphHeader.Provider value={{ linePayloads, tooltipData }}>
       {children}
     </HeaderTimeValueGraphHeader.Provider>
+  );
+};
+
+HeaderTimeValueGraph.Title = function Title({
+  children,
+  className,
+  ref,
+}: {
+  children: ReactNode;
+  className?: string;
+  ref?: React.Ref<HTMLButtonElement | HTMLDivElement>;
+}) {
+  const defaultClass =
+    "tracking-wider font-medium text-tertiary-100 not-italic text-[1.4rem]";
+  return (
+    <span className={cn(defaultClass, className)} ref={ref}>
+      {children}
+    </span>
   );
 };
 

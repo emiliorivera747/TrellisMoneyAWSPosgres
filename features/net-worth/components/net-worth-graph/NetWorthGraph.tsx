@@ -17,6 +17,7 @@ import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/gr
 //Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
 import { TooltipPayload } from "@/types/graphs";
+import Head from "next/head";
 
 //TooltipData
 type TooltipData = TooltipPayload[];
@@ -48,7 +49,12 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           years={years}
         /> */}
 
-        <HeaderTimeValueGraph/>
+        <HeaderTimeValueGraph
+          linePayloads={linePayloads}
+          tooltipData={tooltipData}
+        >
+          <HeaderTimeValueGraph.Title>Hello</HeaderTimeValueGraph.Title>
+        </HeaderTimeValueGraph>
 
         {/* The SVG for the graph */}
         <LineGraphTimeValue
