@@ -64,7 +64,7 @@ const LineGraphTimeValue = ({
   const allData = linePayloads.flatMap((line) => line.lineData);
   const stockValueScale = useStockValueScale(allData, margin, innerHeight); // y-axis
   const directions = linePayloads.map((line) => getLineDirection(line.lineData));
-
+  
   // tooltip handler
   const handleTooltip = useHandleTooltipMultiple(
     (args) => showTooltip(args),

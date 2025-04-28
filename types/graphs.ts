@@ -14,7 +14,7 @@ export interface TooltipProps {
 export interface ResponsiveLineGraphProps {
   className: string;
   GraphComponent: React.ComponentType<any>;
-  ref: React.Ref<HTMLButtonElement>;
+  ref: React.Ref<HTMLButtonElement | HTMLDivElement>;
   [key: string]: any;
 }
 

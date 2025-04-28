@@ -22,7 +22,7 @@ import {
 interface PrimaryGraphHeaderProps {
   linePayloads: LinePayload[];
   tooltipData: any;
-  withInflationTag: boolean;
+  withInflationTag?: boolean;
   years: number[];
 }
 

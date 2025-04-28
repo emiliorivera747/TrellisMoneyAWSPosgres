@@ -40,10 +40,10 @@ const ValueAndPriceChange = ({
           lineName={lineName}
         />
       </span>
-      <div className="flex items-center gap-2 ml-[0.1rem]">
+      {/* <div className="flex items-center gap-2 ml-[0.1rem]">
         <p className={`w-[0.4rem] h-[0.4rem] rounded-full `}></p>
         <span className="text-xs">{lineName}</span>
-      </div>
+      </div> */}
     </div>
   );
 };
