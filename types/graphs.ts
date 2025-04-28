@@ -1,5 +1,6 @@
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
 import { curveMonotoneX } from "@visx/curve";
+import { ReactNode } from "react";
 
 export interface TooltipProps {
   tooltipLeft: number;
@@ -32,7 +33,6 @@ export interface TimeSeriesData {
 }
 
 export interface LineGraphTimeValueProps {
-  
   /**
    * The width of the graph
    */
@@ -47,39 +47,39 @@ export interface LineGraphTimeValueProps {
    * The data for the lines to be rendered. Configuration should be provided.
    */
   linePayloads: LinePayload[];
-  
+
   /**
    * The function to show the tooltip.
-   * @param args 
-   * @returns 
+   * @param args
+   * @returns
    */
   showTooltip: (args: any) => void;
-  
+
   /**
    * The function to hide the tooltip.
    */
   hideTooltip: () => void;
-  
+
   /**
    * The data to be displayed in the tooltip.
    */
   tooltipData: TooltipPayload[];
-  
+
   /**
    * The top position of the tooltip.
    */
   tooltipTop: number;
-  
+
   /**
    * The left position of the tooltip.
    */
   tooltipLeft: number;
-  
+
   /**
    * The margin of the graph.
    */
   margin?: { top: number; right: number; bottom: number; left: number };
-  
+
   /**
    * The curve of the line graph.
    */
@@ -120,11 +120,9 @@ export interface subheaderColor {
   flatColor: string;
 }
 
-
 export interface LinePayload {
-
   /**
-   * The data of Line to be rendered. 
+   * The data of Line to be rendered.
    */
   lineData: TimeSeriesData[];
 
@@ -142,11 +140,9 @@ export interface LinePayload {
    * The filter to be applied to the line.
    */
   value?: string;
-
 }
 
 export interface ColorConfig {
-  
   /**
    * The color of the line
    */
@@ -166,7 +162,6 @@ export interface ColorConfig {
    * The color of the subheader
    */
   subheaderColor: subheaderColor;
-
 }
 
 export interface LineGraphTooltipProps {
@@ -176,7 +171,6 @@ export interface LineGraphTooltipProps {
   tooltipData: any;
 }
 
-
 export interface ValueAndPriceChangeProps {
   tooltipPayload: TooltipPayload | null;
   data: TimeSeriesData[];
@@ -185,4 +179,10 @@ export interface ValueAndPriceChangeProps {
   subHeaderTailwindCss?: string;
   withInfo?: boolean;
   lineName?: string;
+}
+
+export interface HeaderTimeValueGraphProps {
+  children: ReactNode;
+  linePayloads: LinePayload[];
+  tooltipData: TooltipPayload[];
 }

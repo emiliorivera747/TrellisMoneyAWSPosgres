@@ -8,6 +8,7 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
 import LineGraphTimeValue from "@/components/dashboard/LineGraphTimeValue";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
+import HeaderTimeValueGraph from "@/components/dashboard/HeaderTimeValueGraph";
 import PrimaryGraphHeader from "@/features/projected-net-worth/components/projected-networth-graph/headers/PrimaryGraphHeader";
 
 //Types
@@ -46,6 +47,8 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           tooltipData={tooltipData}
           years={years}
         /> */}
+
+        <HeaderTimeValueGraph/>
 
         {/* The SVG for the graph */}
         <LineGraphTimeValue
