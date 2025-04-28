@@ -55,7 +55,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           tooltipData={tooltipData}
         >
           <Title>Net Worth</Title>
-          <Value lineIndex={0}></Value>
+          <Value lineIndex={0}/>
         </TimeValueGraphHeader>
 
         {/* The SVG for the graph */}

@@ -151,7 +151,7 @@ const page = () => {
   return (
     <section className="h-screen mx-28 mt-[3.5rem]">
       <ResponsiveLineGraphV2
-        className={`w-full h-[30rem] border-b border-tertiary-200`}
+        className={`w-full h-[30rem] border-b border-tertiary-400`}
         ref={graphRef}
         GraphComponent={NetWorthGraph}
         linePayloads={[

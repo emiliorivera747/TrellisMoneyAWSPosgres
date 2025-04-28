@@ -9,19 +9,18 @@ import {
   HeaderTimeValueGraphProps,
   TitleProps,
   ValueProp,
+  LinePayload,
+  TooltipPayload,
 } from "@/types/graphs";
 
 // Functions
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
 import { getStockValue } from "@/utils/helper-functions/accessors";
 
-// Types
-import { LinePayload } from "@/types/graphs";
-
 // Context
 const TimeValueGraphHeaderContext = createContext<{
-  linePayloads: { value: number; data: any[] }[];
-  tooltipData?: any;
+  linePayloads: LinePayload[];
+  tooltipData?: TooltipPayload[];
 }>({
   linePayloads: [],
   tooltipData: undefined,
@@ -72,15 +71,15 @@ export function Title({ children, className, ref }: TitleProps) {
  * @returns
  */
 export function Value({ className, lineIndex, ref }: ValueProp) {
-  const defaultClass = "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
+  const defaultClass =
+    "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
 
   const { linePayloads, tooltipData } = useContext(TimeValueGraphHeaderContext);
 
   if (!linePayloads) return null;
 
-  const lineData = linePayloads?.[lineIndex]?.data;
+  const lineData = linePayloads[lineIndex].lineData;
   const tooltipPayload = tooltipData?.[lineIndex];
-
 
   return (
     <span className={cn(defaultClass, className)} ref={ref}>
