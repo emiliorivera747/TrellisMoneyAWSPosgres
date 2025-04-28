@@ -6,10 +6,6 @@ import {
 
 import { NextRequest } from "next/server"; // Assuming Next.js 13+ App Router
 
-
-
-
-
 /**
  *
  * Stripe webhook handler
