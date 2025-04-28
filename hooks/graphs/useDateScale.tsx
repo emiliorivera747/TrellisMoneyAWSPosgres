@@ -9,6 +9,7 @@ const useDateScale = (
   margin: { left: number },
   innerWidth: number
 ) => {
+  if (!data || data.length === 0) return null;
   const scale = useMemo(
     () =>
       scaleTime({

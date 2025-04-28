@@ -12,17 +12,22 @@ import {
  * @param filteredData
  * @returns
  */
-export const getDataForLines = (
+export const createLinePayLoads = (
   selectedFilter: string,
   filteredData: LinePayload[]
 ) => {
   const dataForLines =
     selectedFilter === "isBoth"
       ? [
-          { data: filteredData?.[1]?.lineData || [], lineColors1 },
-          { data: filteredData?.[0]?.lineData || [], lineColors2 },
+          { data: filteredData?.[1]?.lineData || [], colorConfig: lineColors1 },
+          { data: filteredData?.[0]?.lineData || [], colorConfig: lineColors2 },
         ]
-      : [{ lineData: filteredData?.[0]?.lineData || [], lineColors1 }];
+      : [
+          {
+            lineData: filteredData?.[0]?.lineData || [],
+            colorConfig: lineColors1,
+          },
+        ];
 
   return dataForLines;
 };

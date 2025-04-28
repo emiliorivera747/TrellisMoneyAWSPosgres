@@ -19,9 +19,8 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
   withYears = true,
 }) => {
   
-  if (!data || data.length === 0) {
-    return null;
-  }
+  if (!data || data.length === 0) return null;
+
 
   const deafultStockValueDifference =
     data[data.length - 1].close - data[0].close;

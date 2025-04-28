@@ -13,7 +13,7 @@ import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/Pro
 
 // Functions
 import { generateYearsArray } from "@/features/projected-net-worth/utils/generateYearsArray";
-import { getDataForLines } from "@/features/projected-net-worth/utils/getDataForLines";
+import { createLinePayLoads } from "@/features/projected-net-worth/utils/getDataForLines";
 
 // Hooks
 import useFilteredData from "@/features/projected-net-worth/utils/hooks/useFilteredData";
@@ -58,7 +58,8 @@ const ProjectedNetWorthGraph = () => {
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
   if (futureProjectionError) return <ProjectedNetWorthGraphError />;
 
-  const dataForLines = getDataForLines(selectedFilter, filteredData);
+  const dataForLines = createLinePayLoads(selectedFilter, filteredData);
+  console.log("dataForLines", dataForLines);
 
   return (
     <div className="grid-rows-[22rem_6rem] grid border-b border-tertiary-300">

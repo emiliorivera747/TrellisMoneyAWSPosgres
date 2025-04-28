@@ -56,6 +56,7 @@ const LineGraphTimeValue = ({
 }: LineGraphTimeValueProps) => {
   
   if (width < 10 || height < 10) return null;
+  if (!linePayloads) return null;
 
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;

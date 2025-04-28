@@ -8,9 +8,13 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
 import LineGraphTimeValue from "@/components/dashboard/LineGraphTimeValue";
 import PrimaryGraphHeader from "@/features/projected-net-worth/components/projected-networth-graph/headers/PrimaryGraphHeader";
+import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
 
 //Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
+
+//Utils
+import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
 import { TooltipPayload } from "@/types/graphs";
 
 //TooltipData
@@ -34,6 +38,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     years,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
+    if (!checkLinePayloads(linePayloads)) return <NoLinePayloads />;
 
     return (
       <div className={`h-full w-full`}>
