@@ -22,9 +22,9 @@ const handleMultipleDataPoints = (
       const x0 = dateScale.invert(x);
 
       const tooltipData = linePayloads.map((payload) => {
-        const index = bisectDate(payload.data, x0, 1);
-        const d0 = payload.data[index - 1];
-        const d1 = payload.data[index];
+        const index = bisectDate(payload.lineData, x0, 1);
+        const d0 = payload.lineData[index - 1];
+        const d1 = payload.lineData[index];
         let d = d0;
         if (d1 && getDate(d1)) {
           d =
@@ -36,7 +36,7 @@ const handleMultipleDataPoints = (
         return {
           d: d,
           strokeWidth: payload.strokeWidth,
-          data: payload.data,
+          data: payload.lineData,
           linePayload: payload,
         };
       });

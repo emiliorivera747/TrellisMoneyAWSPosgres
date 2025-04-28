@@ -16,7 +16,7 @@ export const getLineDirection = (data: TimeSeriesData[]): Direction => {
   if (!data || data?.length < 2 ) return "flat";
   
   const initialStockValue = getStockValue(data[0]);
-  const lastStockValue = getStockValue(data[data.length - 1]);
+  const lastStockValue = getStockValue(data[data?.length - 1]);
 
   if (initialStockValue < lastStockValue) {
     return "up";

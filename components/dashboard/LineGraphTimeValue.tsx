@@ -89,7 +89,7 @@ const LineGraphTimeValue = ({
         rx={14}
       />
       {linePayloads.map((linePayload, i) => {
-        const { lineColor } = getTailwindColors(directions[i], linePayload);
+        const { lineColor } = getTailwindColors(directions[i], linePayload) ;
         return (
           <LinePath
             key={i}

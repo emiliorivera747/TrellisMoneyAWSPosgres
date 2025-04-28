@@ -25,9 +25,11 @@ const MultipleValPriceChange = ({
   dataForLines,
   tooltipData,
 }: MultipleValPriceChangeProps) => {
+
+  if (!dataForLines) return null;
   
-  const directions = dataForLines.map((line) => getLineDirection(line.data));
-  const isMultipleLines = dataForLines.length >= 2;
+  const directions = dataForLines.map((line) => getLineDirection(line.lineData));
+  const isMultipleLines = dataForLines?.length >= 2;
 
   return (
     <div className="flex flex-row gap-2 w-[75%]">
@@ -40,7 +42,7 @@ const MultipleValPriceChange = ({
           <StockValueAndPriceChange
             key={index}
             tooltipPayload={tooltipData ? tooltipData[index] : null}
-            data={line.data}
+            data={line.lineData}
             mainHeaderTailwindCss={`${
               isMultipleLines ? "text-[1.1rem]" : "text-[1.4rem]"
             }  text-tertiary-1000 font-medium `}
