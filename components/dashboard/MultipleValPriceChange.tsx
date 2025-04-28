@@ -1,5 +1,5 @@
 import React from "react";
-import StockValueAndPriceChange from "@/components/dashboard/StockValueAndPriceChange";
+import ValueAndPriceChange from "@/components/dashboard/ValueAndPriceChange";
 
 //Types
 import { LinePayload } from "@/types/graphs";
@@ -10,7 +10,7 @@ import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
 interface MultipleValPriceChangeProps {
-  dataForLines: LinePayload[];
+  payloadForLines: LinePayload[];
   tooltipData: TooltipPayload[];
 }
 
@@ -22,24 +22,34 @@ interface MultipleValPriceChangeProps {
  * @returns
  */
 const MultipleValPriceChange = ({
-  dataForLines,
+  payloadForLines,
   tooltipData,
 }: MultipleValPriceChangeProps) => {
-
-  if (!dataForLines) return null;
   
-  const directions = dataForLines.map((line) => getLineDirection(line.lineData));
-  const isMultipleLines = dataForLines?.length >= 2;
+  if (!payloadForLines) return null;
+
+  const directions = payloadForLines.map((line) =>
+    getLineDirection(line.lineData)
+  );
+  const isMultipleLines = payloadForLines?.length >= 2;
+
+  const getLineName = (line: LinePayload) => {
+    if (payloadForLines.length > 1) {
+      if (line.value === "isInflation") return "with inflation";
+      return "no inflation";
+    }
+    return "";
+  };
 
   return (
     <div className="flex flex-row gap-2 w-[75%]">
-      {dataForLines.map((line, index) => {
+      {payloadForLines.map((line, index) => {
         const { tailwindPrimaryTextColor } = getTailwindColors(
           directions[index],
           line
         );
         return (
-          <StockValueAndPriceChange
+          <ValueAndPriceChange
             key={index}
             tooltipPayload={tooltipData ? tooltipData[index] : null}
             data={line.lineData}
@@ -47,6 +57,7 @@ const MultipleValPriceChange = ({
               isMultipleLines ? "text-[1.1rem]" : "text-[1.4rem]"
             }  text-tertiary-1000 font-medium `}
             subHeaderTailwindCss={`${tailwindPrimaryTextColor} font-semibold text-[0.7rem]`}
+            lineName={getLineName(line)}
           />
         );
       })}

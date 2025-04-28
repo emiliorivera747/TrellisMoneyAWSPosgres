@@ -21,7 +21,6 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
   
   if (!data || data.length === 0) return null;
 
-
   const deafultStockValueDifference =
     data[data.length - 1].close - data[0].close;
 
@@ -55,7 +54,7 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
     data[0].close,
     getStockValue(tooltipPayload.d)
   );
-  
+
   const yearsBetween = calculateYearsBetween(
     data[0].date,
     tooltipPayload.d.date
@@ -66,12 +65,13 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
       {numberToMoneyFormat(stockValueDifference) +
         " (" +
         rateOfChange.toFixed(2) +
-        "%) "}
+        "%) "} 
       {withYears && (
         <span className="text-tertiary-800 font-normal ">
           {yearsBetween + " years"}
         </span>
       )}
+      
     </>
   );
 };

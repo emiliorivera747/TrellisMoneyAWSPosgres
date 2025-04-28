@@ -4,6 +4,8 @@ import {
   lineColors2,
 } from "@/features/projected-net-worth/utils/data/lineColors";
 
+import { InflationFilters } from "@/features/projected-net-worth/types/filters";
+
 /**
  *
  * Returns the data for the lines based on the selected filter and filtered data.
@@ -14,7 +16,7 @@ import {
  */
 export const createLinePayLoads = (
   selectedFilter: string,
-  filteredData: LinePayload[]
+  filteredData: LinePayload[],
 ) => {
   const dataForLines =
     selectedFilter === "isBoth"
@@ -22,16 +24,19 @@ export const createLinePayLoads = (
           {
             lineData: filteredData?.[1]?.lineData || [],
             colorConfig: lineColors1,
+            value: filteredData?.[1]?.value,
           },
           {
             lineData: filteredData?.[0]?.lineData || [],
             colorConfig: lineColors2,
+            value: filteredData?.[0]?.value,
           },
         ]
       : [
           {
             lineData: filteredData?.[0]?.lineData || [],
             colorConfig: lineColors1,
+            value: filteredData?.[0]?.value,
           },
         ];
 

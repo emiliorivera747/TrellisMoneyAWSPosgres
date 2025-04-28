@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { AccountsGetRequest } from "plaid";
-import { plaidClient } from "@/config/plaidClient";
 import { prisma } from "@/lib/prisma";
 import { calculateNetWorth } from "@/utils/api-helpers/calculateNetWorth";
 import { createClient } from "@/utils/supabase/server";

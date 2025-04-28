@@ -39,6 +39,7 @@ const getLabel = (category: InflationCategory) => {
 const InflationTag = ({
   linePayload,
 }: InflationTagProps) => {
+  
   if (!linePayload) return null;
   const lineDirection = getLineDirection(linePayload.lineData);
   const { tailwindTagTextColor, tailwindTagBgColor } = getTailwindColors(

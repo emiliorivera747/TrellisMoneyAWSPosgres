@@ -111,7 +111,7 @@ const PrimaryGraphHeader = ({
 
       <div className="flex flex-row ">
         <MultipleValPriceChange
-          dataForLines={linePayloads}
+          payloadForLines={linePayloads}
           tooltipData={tooltipData}
         />
         {withInflationTag && linePayloads.length === 1 && (

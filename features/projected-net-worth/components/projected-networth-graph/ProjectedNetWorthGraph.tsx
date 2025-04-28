@@ -50,7 +50,6 @@ const ProjectedNetWorthGraph = () => {
     selectedFilter
   );
 
-
   const years = useMemo(
     () =>
       generateYearsArray(currentYear, currentYear + defaultYearsIntoTheFuture),

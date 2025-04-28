@@ -5,4 +5,5 @@ export interface RenderTooltipContentProps {
     tooltipPayload: TooltipPayload | null;
     data: SecurityData[];
     withYears?: boolean;
+    lineName?: string;
   }

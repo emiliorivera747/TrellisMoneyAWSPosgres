@@ -138,6 +138,11 @@ export interface LinePayload {
    */
   strokeWidth?: number;
 
+  /**
+   * The filter to be applied to the line.
+   */
+  value?: string;
+
 }
 
 export interface ColorConfig {
@@ -169,4 +174,15 @@ export interface LineGraphTooltipProps {
   tooltipLeft: number;
   defaultStyles: React.CSSProperties;
   tooltipData: any;
+}
+
+
+export interface ValueAndPriceChangeProps {
+  tooltipPayload: TooltipPayload | null;
+  data: TimeSeriesData[];
+  withYears?: boolean;
+  mainHeaderTailwindCss?: string;
+  subHeaderTailwindCss?: string;
+  withInfo?: boolean;
+  lineName?: string;
 }

@@ -77,7 +77,7 @@ const LineGraphTimeValue = ({
     <svg
       className=""
       width="100%"
-      height="89%"
+      height="86%"
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="none"
     >
@@ -95,8 +95,8 @@ const LineGraphTimeValue = ({
           <LinePath
             key={i}
             data={linePayload.lineData}
-            x={(d: TimeSeriesData) => dateScale(getDate(d)) ?? 0}
-            y={(d: TimeSeriesData) => stockValueScale(getStockValue(d)) ?? 0}
+            x={(d: TimeSeriesData) => (dateScale ? dateScale(getDate(d)) : 0)}
+            y={(d: TimeSeriesData) => (stockValueScale ? stockValueScale(getStockValue(d)) : 0)}
             stroke={lineColor}
             strokeWidth={linePayload.strokeWidth ?? 2}
             curve={curve}

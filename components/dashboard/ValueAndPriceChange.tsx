@@ -1,32 +1,27 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { TiArrowSortedUp } from "react-icons/ti";
 import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
-import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 
-// functions
+// Functions
 import { getStockValue } from "@/utils/helper-functions/accessors";
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
 
-import { TooltipPayload, TimeSeriesData } from "@/types/graphs";
+import { TooltipPayload, TimeSeriesData, ValueAndPriceChangeProps } from "@/types/graphs";
 
-const StockValueAndPriceChange = ({
+
+const ValueAndPriceChange = ({
   tooltipPayload,
   data,
   withYears = true,
   mainHeaderTailwindCss = "text-zinc-800 text-[1.4rem] font-medium ",
   subHeaderTailwindCss = "text-secondary-900",
   withInfo = false,
-}: {
-  tooltipPayload: TooltipPayload | null;
-  data: TimeSeriesData[];
-  withYears?: boolean;
-  mainHeaderTailwindCss?: string;
-  subHeaderTailwindCss?: string;
-  withInfo?: boolean;
-}) => {
+  lineName = "",
+}: ValueAndPriceChangeProps) => {
   if (!data) return null;
+
   return (
-    <div className="flex flex-col min-w-[15.5rem] w-auto ">
+    <div className="flex flex-col min-w-[15.5rem] w-auto">
       <span
         className={`tracking-wider ${mainHeaderTailwindCss} flex gap-2 items-center `}
       >
@@ -42,10 +37,15 @@ const StockValueAndPriceChange = ({
           tooltipPayload={tooltipPayload}
           data={data}
           withYears={withYears}
+          lineName={lineName}
         />
       </span>
+      <div className="flex items-center gap-2 ml-[0.1rem]">
+        <p className={`w-[0.4rem] h-[0.4rem] rounded-full `}></p>
+        <span className="text-xs">{lineName}</span>
+      </div>
     </div>
   );
 };
 
-export default StockValueAndPriceChange;
+export default ValueAndPriceChange;
