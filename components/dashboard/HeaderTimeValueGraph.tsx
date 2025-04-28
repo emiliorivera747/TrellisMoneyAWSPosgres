@@ -81,7 +81,6 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
   const lineData = linePayloads?.[lineIndex]?.data;
   const tooltipPayload = tooltipData?.[lineIndex];
 
-  console.log("lineData", lineData?.length);
 
   return (
     <span className={cn(defaultClass, className)} ref={ref}>
