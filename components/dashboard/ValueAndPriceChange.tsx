@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { TiArrowSortedUp } from "react-icons/ti";
 import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
 
@@ -18,6 +18,7 @@ const ValueAndPriceChange = ({
   withInfo = false,
   lineName = "",
 }: ValueAndPriceChangeProps) => {
+  
   if (!data) return null;
 
   return (

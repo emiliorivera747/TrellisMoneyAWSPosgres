@@ -8,8 +8,10 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
 import LineGraphTimeValue from "@/components/dashboard/LineGraphTimeValue";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
-import HeaderTimeValueGraph from "@/components/dashboard/HeaderTimeValueGraph";
-import PrimaryGraphHeader from "@/features/projected-net-worth/components/projected-networth-graph/headers/PrimaryGraphHeader";
+import TimeValueGraphHeader, {
+  Title,
+  Value,
+} from "@/components/dashboard/HeaderTimeValueGraph";
 
 //Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
@@ -17,7 +19,6 @@ import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/gr
 //Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
 import { TooltipPayload } from "@/types/graphs";
-import Head from "next/head";
 
 //TooltipData
 type TooltipData = TooltipPayload[];
@@ -49,12 +50,13 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           years={years}
         /> */}
 
-        <HeaderTimeValueGraph
+        <TimeValueGraphHeader
           linePayloads={linePayloads}
           tooltipData={tooltipData}
         >
-          <HeaderTimeValueGraph.Title>Hello</HeaderTimeValueGraph.Title>
-        </HeaderTimeValueGraph>
+          <Title>Net Worth</Title>
+          <Value lineIndex={0}></Value>
+        </TimeValueGraphHeader>
 
         {/* The SVG for the graph */}
         <LineGraphTimeValue

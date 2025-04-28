@@ -186,3 +186,38 @@ export interface HeaderTimeValueGraphProps {
   linePayloads: LinePayload[];
   tooltipData: TooltipPayload[];
 }
+
+export interface TitleProps {
+  /**
+   * The children of the title.
+   */
+  children: ReactNode;
+
+  /**
+   * The class name of the title.
+   */
+  className?: string;
+
+  /**
+   * The ref of the title.
+   */
+  ref?: React.Ref<HTMLButtonElement | HTMLDivElement>;
+}
+
+export interface ValueProp {
+
+  /**
+   * The value of the line.
+   */
+  lineIndex: number;
+
+  /**
+   * The ref of the value.
+   */
+  ref?: React.Ref<HTMLButtonElement | HTMLDivElement>;
+
+  /**
+   * The class name of the value.
+   */
+  className?: string;
+}
