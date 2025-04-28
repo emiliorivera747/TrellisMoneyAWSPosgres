@@ -4,6 +4,14 @@ import {
   lineColors2,
 } from "@/features/projected-net-worth/utils/data/lineColors";
 
+/**
+ *
+ * Returns the data for the lines based on the selected filter and filtered data.
+ *
+ * @param selectedFilter
+ * @param filteredData
+ * @returns
+ */
 export const getDataForLines = (
   selectedFilter: string,
   filteredData: LinePayload[]
@@ -11,10 +19,10 @@ export const getDataForLines = (
   const dataForLines =
     selectedFilter === "isBoth"
       ? [
-          { data: filteredData?.[1]?.data || [], ...lineColors1 },
-          { data: filteredData?.[0]?.data || [], ...lineColors2 },
+          { data: filteredData?.[1]?.lineData || [], lineColors1 },
+          { data: filteredData?.[0]?.lineData || [], lineColors2 },
         ]
-      : [{ data: filteredData?.[0]?.data || [], ...lineColors1 }];
+      : [{ lineData: filteredData?.[0]?.lineData || [], lineColors1 }];
 
   return dataForLines;
 };

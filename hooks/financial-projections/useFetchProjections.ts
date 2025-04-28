@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 const currentYear = Number(new Date().getFullYear().toString());
 import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
 
-
 interface useFetchProjectionsProps {
   selectedYear: number;
   selectedFilter: string;
@@ -13,9 +12,9 @@ const useFetchProjections = ({
   selectedFilter,
 }: useFetchProjectionsProps) => {
   const {
-    data: projectionData,
-    error: projectionError,
-    isLoading: projectionLoading,
+    data: futureProjectionData,
+    error: futureProjectionError,
+    isLoading: futureProjectionLoading,
   } = useQuery({
     queryKey: [
       "projectedAssetsAndNetworth",
@@ -31,7 +30,11 @@ const useFetchProjections = ({
       ),
     enabled: !!selectedYear,
   });
-  return { projectionData, projectionError, projectionLoading };
+  return {
+    futureProjectionData,
+    futureProjectionError,
+    futureProjectionLoading,
+  };
 };
 
 export default useFetchProjections;

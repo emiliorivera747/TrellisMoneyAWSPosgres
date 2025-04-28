@@ -25,22 +25,20 @@ const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
  * Handles all of the state for the dashboard page.
  * @returns Dashboard state and functions to handle the dashboard
  */
-export const useDashboard = (): DashboardState & {
-  handleYearSelection: (year: number) => void;
-  handleFilterChange: (filter: InflationFilters) => void;
-  editRetirementYear: (year: number) => void;
-  onSubmit: SubmitHandler<FormData>;
-} => {
+export const useDashboard = (): DashboardState => {
   const [selectedYear, setSelectedYear] = useState<number>(currentYear + 40);
   const [selectedFilter, setSelectedFilter] =
     useState<InflationFilters>("isNoInflation");
   const [retirementYear, setRetirementYear] = useState(DEFAULT_RETIREMENT_YEAR);
 
-  const { projectionData, projectionError, projectionLoading } =
-    useFetchProjections({
-      selectedYear,
-      selectedFilter,
-    });
+  const {
+    futureProjectionData,
+    futureProjectionError,
+    futureProjectionLoading,
+  } = useFetchProjections({
+    selectedYear,
+    selectedFilter,
+  });
 
   /**
    * Function to edit the retirement year
@@ -56,8 +54,8 @@ export const useDashboard = (): DashboardState & {
 
   const {
     mutate: mutateAsset,
-    isPending: isPendingAssets,
-    isError: isErrorAssets,
+    isLoadingAssets,
+    isErrorAssets,
   } = useUpdateAssets();
 
   const { user, error: userError } = useFetchUser();
@@ -79,7 +77,7 @@ export const useDashboard = (): DashboardState & {
   const onSubmit: SubmitHandler<FormData> = (data) => {
     handleFormSubmission(
       data,
-      projectionData,
+      futureProjectionData,
       selectedFilter,
       user,
       mutateAsset
@@ -87,18 +85,18 @@ export const useDashboard = (): DashboardState & {
     setMode("view");
   };
 
-  const assets = projectionData?.projected_assets?.[0]?.data || [];
+  const assets = futureProjectionData?.projected_assets?.[0]?.data || [];
 
   return {
     selectedYear,
     selectedFilter,
-    projectionData,
-    projectionError,
-    projectionLoading,
+    futureProjectionData,
+    futureProjectionError,
+    futureProjectionLoading,
     user,
     userError,
     linkToken,
-    isPendingAssets,
+    isLoadingAssets,
     form,
     mode,
     netWorthData,

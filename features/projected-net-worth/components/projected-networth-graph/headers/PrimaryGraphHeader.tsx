@@ -19,14 +19,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 interface PrimaryGraphHeaderProps {
-  dataForLines: LinePayload[];
+  linePayloads: LinePayload[];
   tooltipData: any;
   withInflationTag: boolean;
   years: number[];
 }
 
 const PrimaryGraphHeader = ({
-  dataForLines,
+  linePayloads,
   tooltipData,
   withInflationTag,
   years,
@@ -110,12 +110,12 @@ const PrimaryGraphHeader = ({
 
       <div className="flex flex-row ">
         <MultipleValPriceChange
-          dataForLines={dataForLines}
+          dataForLines={linePayloads}
           tooltipData={tooltipData}
         />
-        {withInflationTag && dataForLines.length === 1 && (
+        {withInflationTag && linePayloads.length === 1 && (
           <div className="text-[0.7rem] text-tertiary-1000 gap-1 w-[25%] flex items-start justify-end pt-5">
-            <InflationTag dataForLine={dataForLines[0]} />
+            <InflationTag dataForLine={linePayloads[0]} />
           </div>
         )}
       </div>

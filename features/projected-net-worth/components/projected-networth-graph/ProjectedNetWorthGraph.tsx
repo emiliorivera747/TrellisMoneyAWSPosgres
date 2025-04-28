@@ -21,7 +21,6 @@ import useFilteredData from "@/features/projected-net-worth/utils/hooks/useFilte
 // Constants
 const defaultYearsIntoTheFuture = 100;
 const currentYear = Number(new Date().getFullYear().toString());
-const totalYearsRange = currentYear + defaultYearsIntoTheFuture;
 
 // Context
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
@@ -36,15 +35,16 @@ const ProjectedNetWorthGraph = () => {
   const {
     selectedYear,
     selectedFilter,
-    projectionData,
-    projectionLoading,
-    projectionError,
+    futureProjectionData,
+    futureProjectionLoading,
+    futureProjectionError,
   } = useDashboardContext();
+
   /**
    *  Returns the filtered data based on the projectionData and selected filter.
    */
   const filteredData = useFilteredData(
-    projectionData?.projected_net_worth,
+    futureProjectionData,
     selectedYear,
     selectedFilter
   );
@@ -55,8 +55,8 @@ const ProjectedNetWorthGraph = () => {
     []
   );
 
-  if (projectionLoading) return <ProjectedNetWorthGraphSkeleton />;
-  if (projectionError) return <ProjectedNetWorthGraphError />;
+  if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
+  if (futureProjectionError) return <ProjectedNetWorthGraphError />;
 
   const dataForLines = getDataForLines(selectedFilter, filteredData);
 
@@ -66,7 +66,7 @@ const ProjectedNetWorthGraph = () => {
         className={"h-[25rem] w-full border-box"}
         ref={containerRef}
         GraphComponent={ProjectedLineGraph}
-        dataForLines={dataForLines}
+        linePayloads={dataForLines}
         withInlfationTag={selectedFilter === "isInflation"}
         years={years}
       />

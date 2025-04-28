@@ -4,6 +4,11 @@ export interface SecurityData {
   date: Date;
   close: number;
 }
+
+export type ProjectedNetWorth = {
+  value: String;
+  data: SecurityData[];
+};
 export interface DoubleLineGraphProps {
   width: number;
   selectedYear: number;
@@ -57,7 +62,7 @@ export interface ColorBasedOnLineDirection {
 export interface ProjectedLineGraphProps {
   width: number;
   height: number;
-  dataForLines: LinePayload[];
+  linePayloads: LinePayload[];
   margin?: { top: number; right: number; bottom: number; left: number };
   showTooltip?: (args: any) => void;
   hideTooltip?: () => void;
@@ -73,7 +78,7 @@ export interface ProjectedLineGraphProps {
 }
 
 export interface ProjectedNetWorthGraphProps {
-  projectionData?: projectedNetWorth[] | null;
+  projectionData?: ProjectedNetWorth[] | null;
   projectionLoading: boolean;
   projectionError: Error | null;
   selectedYear: number;
@@ -88,7 +93,4 @@ export interface projectionData {
   data: SecurityData[];
 }
 
-export interface projectedNetWorth {
-  value: String;
-  data: SecurityData[];
-}
+

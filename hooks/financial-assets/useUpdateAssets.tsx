@@ -12,7 +12,11 @@ const useUpdateAssets = () => {
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
-  const { mutate, isPending, isError } = useMutation({
+  const {
+    mutate,
+    isPending: isLoadingAssets,
+    isError: isErrorAssets,
+  } = useMutation({
     mutationFn: assetService.updateAllAssets,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -31,7 +35,7 @@ const useUpdateAssets = () => {
       });
     },
   });
-  return { mutate, isPending, isError };
+  return { mutate, isLoadingAssets, isErrorAssets };
 };
 
 export default useUpdateAssets;

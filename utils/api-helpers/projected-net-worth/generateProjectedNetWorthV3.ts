@@ -70,6 +70,7 @@ export const generateProjectedNetWorthV3 = async (
       );
     }
   }
+  
   pushProjectedNetWorthToEachDay(projectedNetWorth, start_year, end_year, hm);
   return projectedNetWorth;
 };

@@ -31,18 +31,63 @@ export interface TimeSeriesData {
   close: number;
 }
 
-export interface LineGraphProps {
+export interface LineGraphTimeValueProps {
+  
+  /**
+   * The width of the graph
+   */
   width: number;
+
+  /**
+   * The height of the graph
+   */
   height: number;
-  dataForLines: LinePayload[];
+
+  /**
+   * The data for the lines to be rendered. Configuration should be provided.
+   */
+  linePayloads: LinePayload[];
+  
+  /**
+   * The function to show the tooltip.
+   * @param args 
+   * @returns 
+   */
   showTooltip: (args: any) => void;
+  
+  /**
+   * The function to hide the tooltip.
+   */
   hideTooltip: () => void;
-  tooltipData: TimeSeriesData[];
+  
+  /**
+   * The data to be displayed in the tooltip.
+   */
+  tooltipData: TooltipPayload[];
+  
+  /**
+   * The top position of the tooltip.
+   */
   tooltipTop: number;
+  
+  /**
+   * The left position of the tooltip.
+   */
   tooltipLeft: number;
-  data?: TimeSeriesData[];
+  
+  /**
+   * The margin of the graph.
+   */
   margin?: { top: number; right: number; bottom: number; left: number };
+  
+  /**
+   * The curve of the line graph.
+   */
   curve?: typeof curveMonotoneX;
+
+  /**
+   * The background fill color of the graph.
+   */
   backgroundFill?: string;
 }
 
@@ -51,7 +96,7 @@ export interface SecurityData {
   close: number;
 }
 
-export interface lineColor {
+export interface LineColor {
   upColor: string;
   downColor: string;
   flatColor: string;
@@ -75,19 +120,48 @@ export interface subheaderColor {
   flatColor: string;
 }
 
+
 export interface LinePayload {
-  data: TimeSeriesData[];
-  color?: string;
-  tailwindTagTextColor?: string;
-  tailwindTagBgColor?: string;
-  tailwindPrimaryTextColor?: string;
+
+  /**
+   * The data of Line to be rendered. 
+   */
+  lineData: TimeSeriesData[];
+
+  /**
+   * The color of the line.
+   */
+  colorConfig?: ColorConfig;
+
+  /**
+   * The stroke width of the line.
+   */
   strokeWidth?: number;
-  lineColor?: lineColor;
-  tagTextColor?: tagTextColor;
-  tagBgColor?: tagBgColor;
-  subheaderColor?: subheaderColor;
-  withMessage?: boolean;
-  infoMessage?: string;
+
+}
+
+export interface ColorConfig {
+  
+  /**
+   * The color of the line
+   */
+  lineColor: LineColor;
+
+  /**
+   * The color of the tag text
+   */
+  tagTextColor: tagTextColor;
+
+  /**
+   * The color of the tag background
+   */
+  tagBgColor: tagBgColor;
+
+  /**
+   * The color of the subheader
+   */
+  subheaderColor: subheaderColor;
+
 }
 
 export interface LineGraphTooltipProps {

@@ -1,53 +1,150 @@
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { ProjectionData } from "@/features/projected-financial-assets/types/projectedAssets";
+import { useForm } from "react-hook-form";
+import { FutureProjectionData } from "@/features/projected-financial-assets/types/projectedAssets";
 import { User } from "@/types/user";
 import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
-
-export interface DashboardState {
-  selectedYear: number;
-  selectedFilter: InflationFilters;
-  projectionData: ProjectionData | null | undefined;
-  projectionError: any;
-  projectionLoading: boolean;
-  user: User | null;
-  userError: any;
-  linkToken: string | null;
-  isPendingAssets: boolean;
-  netWorthData: {
-    data: { netWorth: number; assets: number; liabilities: number };
-  } | null;
-  assets: Assets[];
-  netWorthError: any;
-  netWorthLoading: boolean;
-  mode: "edit" | "view";
-  retirementYear: number;
-  handleModeChange: () => void;
-  form: ReturnType<typeof useForm>;
-  mutateAsset: (asset: any) => void;
+import { SubmitHandler } from "react-hook-form";
+interface CustomFormData {
+  [key: string]: any;
 }
 
-export interface DashboardContextProps {
+/**
+ *  State for the dashboard page
+ */
+export interface DashboardState {
+  /**
+   * The selected year for the dashboard
+   */
   selectedYear: number;
-  retirementYear: number;
+
+  /**
+   * The selected filter for the dashboard
+   * may be one of the following:
+   * - isNoInflation
+   * - isBoth
+   * - isInflation
+   */
   selectedFilter: InflationFilters;
-  projectionData: ProjectionData | null | undefined;
-  projectionError: any;
-  projectionLoading: boolean;
+
+  /**
+   * The future projections assets and net worth data
+   */
+  futureProjectionData: FutureProjectionData | null | undefined;
+
+  /**
+   * The error for the future projections
+   */
+  futureProjectionError: any;
+
+  /**
+   * The loading state for the future projections
+   */
+  futureProjectionLoading: boolean;
+
+  /**
+   * The user data
+   */
   user: User | null;
+
+  /**
+   * The error for the user data
+   */
   userError: any;
+
+  /**
+   * The link token for plaid
+   */
   linkToken: string | null;
-  isPendingAssets: boolean;
-  assets: Assets[];
+
+  /**
+   * The loading state for the assets after updating
+   */
+  isLoadingAssets: boolean;
+
+  /**
+   * Net worth data included assets and liabilities
+   */
   netWorthData: {
     data: { netWorth: number; assets: number; liabilities: number };
   } | null;
+
+  /**
+   * Assets data
+   */
+  assets: Assets[];
+
+  /**
+   * The error for the net worth data
+   */
   netWorthError: any;
+
+  /**
+   * The loading state for the net worth data
+   */
   netWorthLoading: boolean;
+
+  /**
+   * The mode for the asset card
+   */
   mode: "edit" | "view";
+
+  /**
+   * The year the user is retiring
+   */
+  retirementYear: number;
+
+  /**
+   * Updates the mode for the asset card
+   *
+   * @returns
+   */
   handleModeChange: () => void;
+
+  /**
+   * Form for the asset card
+   */
   form: ReturnType<typeof useForm>;
+
+  /**
+   * React Query function to update the asset
+   *
+   * @param asset
+   * @returns
+   */
   mutateAsset: (asset: any) => void;
+
+  /**
+   *
+   * Handles the year selection for the dashboard
+   *
+   * @param year
+   * @returns
+   */
+  handleYearSelection: (year: number) => void;
+
+  /**
+   * Handles the filter selection for the dashboard
+   *
+   * @param filter
+   * @returns
+   */
+  handleFilterChange: (filter: InflationFilters) => void;
+
+  /**
+   * Edits the retirement year for the dashboard
+   *
+   * @param year
+   * @returns
+   */
+  editRetirementYear: (year: number) => void;
+
+  /**
+   * Handles the form submission for the dashboard
+   *
+   * @param data
+   * @returns
+   */
+  onSubmit: SubmitHandler<CustomFormData>;
 }
 
 export interface NetValueDisplayCardProps {

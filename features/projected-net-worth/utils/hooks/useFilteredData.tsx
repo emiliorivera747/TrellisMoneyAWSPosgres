@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
+
+import { FutureProjectionData, ProjectedNetworth } from "@/types/futureProjections";
+import { SecurityData } from "@/types/graphs";
 
 // Functions
 import { filterProjectionData } from "@/features/projected-net-worth/utils/filterData";
 
-type projectedNetWorth = {
-  value: String;
-  data: SecurityData[];
-};
 
 /**
  * Custom hook to filter the projection data based on the selected year.
@@ -16,26 +14,31 @@ type projectedNetWorth = {
  * @returns The filtered data.
  */
 const useFilteredData = (
-  projectionData: projectedNetWorth[] | undefined | null,
+  futureProjectionData: FutureProjectionData | null | undefined,
   selectedYear: number,
   selectedFilter: string
 ) => {
-  const [filteredData, setFilteredData] = useState<projectedNetWorth[]>([]);
+
+  const [filteredData, setFilteredData] = useState<{ value: string; lineData: SecurityData[] }[]>([]);
 
   useEffect(() => {
-
-    if (!projectionData || projectionData.length === 0) {
-      setFilteredData([]); 
+   
+    if (futureProjectionData === null) return;
+    
+    const projectedNetWorthsData = futureProjectionData?.projected_net_worth;
+   
+    if (!projectedNetWorthsData || projectedNetWorthsData.length === 0) {
+      setFilteredData([]);
       return;
     }
 
-    const filtered = projectionData?.map((item) => {
-      const filtered = filterProjectionData(item.data, selectedYear);
-      return { value: item.value, data: filtered };
+    const filtered = projectedNetWorthsData?.map((projectedNetWorth) => {
+      const filtered = filterProjectionData(projectedNetWorth.data, selectedYear);
+      return { value: projectedNetWorth.value, lineData: filtered };
     });
 
     setFilteredData(filtered);
-  }, [projectionData, selectedYear, selectedFilter]);
+  }, [futureProjectionData, selectedYear, selectedFilter]);
 
   return filteredData;
 };

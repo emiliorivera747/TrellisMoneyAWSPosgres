@@ -17,7 +17,7 @@ export interface NetWorthData {
   close: number;
 }
 
-export interface ProjectionData {
+export interface FutureProjectionData {
   projected_assets: ProjectedAssets[];
   projected_net_worth: ProjectedNetworth[];
 }

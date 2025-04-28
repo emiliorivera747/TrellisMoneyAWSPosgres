@@ -1,46 +1,21 @@
 import React, { createContext, ReactNode, useContext } from "react";
-import { InflationFilters } from "@/features/projected-net-worth/types/filters";
-import { SubmitHandler } from "react-hook-form";
-import { DashboardContextProps } from "@/types/dashboard";
+import {  DashboardState } from "@/types/dashboard";
 
-// Define a custom FormData interface to avoid conflicts
-interface CustomFormData {
-  [key: string]: any;
-}
-
-// hook
+// Hooks
 import { useDashboard } from "@/hooks/dashboard/useDashboard";
 
 /**
- *
+ * Dashboard  context
  */
-const DashboardContext = createContext<
-  | (DashboardContextProps & {
-      handleYearSelection: (year: number) => void;
-      handleFilterChange: (filter: InflationFilters) => void;
-      editRetirementYear: (year: number) => void;
-      onSubmit: SubmitHandler<CustomFormData>;
-    })
-  | null
->(null);
+const DashboardContext = createContext<DashboardState | null>(null);
 
 export const DashboardProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  
   const dashboardState = useDashboard();
 
   return (
-    <DashboardContext.Provider
-      value={
-        dashboardState as DashboardContextProps & {
-          handleYearSelection: (year: number) => void;
-          handleFilterChange: (filter: InflationFilters) => void;
-          editRetirementYear: (year: number) => void;
-          onSubmit: SubmitHandler<CustomFormData>;
-        }
-      }
-    >
+    <DashboardContext.Provider value={dashboardState}>
       {children}
     </DashboardContext.Provider>
   );

@@ -16,27 +16,27 @@ export const getTailwindColors = (
   return {
     lineColor: getColorBasedOnLineDirection({
       direction,
-      upColor: dataForLines.lineColor?.upColor ?? "text-green-700",
-      downColor: dataForLines.lineColor?.downColor ?? "text-red-700",
-      flatColor: dataForLines.lineColor?.flatColor ?? "text-secondary-900",
+      upColor: dataForLines?.colorConfig?.lineColor?.upColor ?? "text-green-700",
+      downColor: dataForLines?.colorConfig?.lineColor?.downColor ?? "text-red-700",
+      flatColor: dataForLines?.colorConfig?.lineColor?.flatColor ?? "text-secondary-900",
     }),
     tailwindTagTextColor: getColorBasedOnLineDirection({
       direction,
-      upColor: dataForLines.tagTextColor?.upColor ?? "text-green-700",
-      downColor: dataForLines.tagTextColor?.downColor ?? "text-red-700",
-      flatColor: dataForLines.tagTextColor?.flatColor ?? "text-secondary-900",
+      upColor: dataForLines?.colorConfig?.tagTextColor?.upColor ?? "text-green-700",
+      downColor: dataForLines?.colorConfig?.tagTextColor?.downColor ?? "text-red-700",
+      flatColor: dataForLines?.colorConfig?.tagTextColor?.flatColor ?? "text-secondary-900",
     }),
     tailwindTagBgColor: getColorBasedOnLineDirection({
       direction,
-      upColor: dataForLines.tagBgColor?.upColor ?? "bg-green-100",
-      downColor: dataForLines.tagBgColor?.downColor ?? "bg-red-100",
-      flatColor: dataForLines.tagBgColor?.flatColor ?? "bg-secondary-100",
+      upColor: dataForLines?.colorConfig?.tagBgColor?.upColor ?? "bg-green-100",
+      downColor: dataForLines?.colorConfig?.tagBgColor?.downColor ?? "bg-red-100",
+      flatColor: dataForLines?.colorConfig?.tagBgColor?.flatColor ?? "bg-secondary-100",
     }),
     tailwindPrimaryTextColor: getColorBasedOnLineDirection({
       direction,
-      upColor: dataForLines.subheaderColor?.upColor ?? "text-green-700",
-      downColor: dataForLines.subheaderColor?.downColor ?? "text-red-700",
-      flatColor: dataForLines.subheaderColor?.flatColor ?? "text-secondary-900",
+      upColor: dataForLines?.colorConfig?.subheaderColor?.upColor ?? "text-green-700",
+      downColor: dataForLines?.colorConfig?.subheaderColor?.downColor ?? "text-red-700",
+      flatColor: dataForLines?.colorConfig?.subheaderColor?.flatColor ?? "text-secondary-900",
     }),
   };
 };
