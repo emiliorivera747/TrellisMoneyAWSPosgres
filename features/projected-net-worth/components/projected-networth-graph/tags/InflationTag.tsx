@@ -9,6 +9,7 @@ import {
 import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
+
 const getSvgPath = (category: InflationCategory) => {
   switch (category) {
     case "up":
@@ -36,12 +37,13 @@ const getLabel = (category: InflationCategory) => {
 };
 
 const InflationTag = ({
-  dataForLine,
+  linePayload,
 }: InflationTagProps) => {
-  const lineDirection = getLineDirection(dataForLine.data);
+  if (!linePayload) return null;
+  const lineDirection = getLineDirection(linePayload.lineData);
   const { tailwindTagTextColor, tailwindTagBgColor } = getTailwindColors(
     lineDirection,
-    dataForLine
+    linePayload
   );
 
   return (

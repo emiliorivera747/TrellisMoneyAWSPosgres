@@ -122,7 +122,7 @@ const LineGraphTimeValue = ({
           margin={margin}
           innerHeight={innerHeight}
           tooltipData={tooltipData}
-          stockValueScale={stockValueScale}
+          stockValueScale={stockValueScale ?? (() => 0)}
           directions={directions}
         />
       )}
