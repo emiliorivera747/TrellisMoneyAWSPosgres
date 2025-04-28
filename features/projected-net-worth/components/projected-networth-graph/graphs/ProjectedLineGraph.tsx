@@ -38,7 +38,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     years,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
-    if (!checkLinePayloads(linePayloads)) return <NoLinePayloads />;
+    if (checkLinePayloads(linePayloads) === false) return <NoLinePayloads />;
 
     return (
       <div className={`h-full w-full`}>

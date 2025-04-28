@@ -19,8 +19,14 @@ export const createLinePayLoads = (
   const dataForLines =
     selectedFilter === "isBoth"
       ? [
-          { data: filteredData?.[1]?.lineData || [], colorConfig: lineColors1 },
-          { data: filteredData?.[0]?.lineData || [], colorConfig: lineColors2 },
+          {
+            lineData: filteredData?.[1]?.lineData || [],
+            colorConfig: lineColors1,
+          },
+          {
+            lineData: filteredData?.[0]?.lineData || [],
+            colorConfig: lineColors2,
+          },
         ]
       : [
           {

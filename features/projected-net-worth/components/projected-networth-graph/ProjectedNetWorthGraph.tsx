@@ -39,6 +39,7 @@ const ProjectedNetWorthGraph = () => {
     futureProjectionLoading,
     futureProjectionError,
   } = useDashboardContext();
+  
 
   /**
    *  Returns the filtered data based on the projectionData and selected filter.
@@ -48,6 +49,7 @@ const ProjectedNetWorthGraph = () => {
     selectedYear,
     selectedFilter
   );
+
 
   const years = useMemo(
     () =>
@@ -59,7 +61,7 @@ const ProjectedNetWorthGraph = () => {
   if (futureProjectionError) return <ProjectedNetWorthGraphError />;
 
   const dataForLines = createLinePayLoads(selectedFilter, filteredData);
-  console.log("dataForLines", dataForLines);
+
 
   return (
     <div className="grid-rows-[22rem_6rem] grid border-b border-tertiary-300">
