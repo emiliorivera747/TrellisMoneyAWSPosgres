@@ -8,7 +8,7 @@ const GraphHeaders = ({ label }: { label: string }) => {
       </span>
       <InformationIcon
         modalTitle={"Future Projection"}
-        size={"size-7"}
+        size={"size-6"}
         modalDescription="The projected amount of your overall portfolio value in the future. This is based on your current portfolio value, the expected rate of return, and the time period you select."
       />
     </div>

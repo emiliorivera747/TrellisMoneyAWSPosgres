@@ -37,6 +37,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     withInlfationTag = false,
     years,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
+    
     if (width < 10) return null;
     if (checkLinePayloads(linePayloads) === false) return <NoLinePayloads />;
 
