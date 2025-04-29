@@ -74,6 +74,7 @@ const PrimaryGraphHeader = ({
               Filters
             </button>
           </AlertDialogTrigger>
+          
           <AlertDialogContent className="shadow-lg">
             <AlertDialogHeader>
               <AlertDialogTitle className="mb-6 border-b border-tertiary-400 pb-4 flex justify-between items-center">

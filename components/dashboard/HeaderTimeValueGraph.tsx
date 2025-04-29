@@ -144,7 +144,6 @@ export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
   );
 }
 
-
 /**
  * 
  *  The total years between the first and last data point of the line.
@@ -159,7 +158,9 @@ export function TotalYears({
   className?: string;
   lineIndex: number;
 }) {
-  const { linePayloads } = useContext(TimeValueGraphHeaderContext);
+  const { linePayloads, tooltipData } = useContext(TimeValueGraphHeaderContext);
+  const tooltipPayload = tooltipData?.[lineIndex];
+
 
   const defaultClass = "text-tertiary-800 font-normal";
 
@@ -171,10 +172,15 @@ export function TotalYears({
 
   const years = calculateYearsBetween(
     lineData[0].date,
-    lineData[lineData.length - 1].date
+    tooltipPayload ? tooltipPayload.d.date : lineData[lineData.length - 1].date
   );
 
   return <span className={cn(defaultClass, className)}>{years} years</span>;
+}
+
+
+export function Info(){
+
 }
 
 TimeValueGraphHeader.Title = Title;

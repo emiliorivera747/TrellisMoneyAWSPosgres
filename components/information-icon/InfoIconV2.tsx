@@ -1,5 +1,5 @@
 import React from "react";
-
+import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -10,23 +10,36 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+interface ModalData {
+  header: string;
+  description: string;
+}
+
 interface InformationIconProps {
   size?: string;
   color?: string;
   strokeWidth?: number;
-  ref?: React.Ref<SVGSVGElement>;
+  ref: React.Ref<SVGSVGElement>;
   modalTitle?: string;
-  modalDescription?: string;
+  modalData?: ModalData[];
+  modalDescriptionT?: string;
+  modalDescriptionB?: string;
+  className?: string;
 }
 
 const InformationIcon = ({
   size = "size-6",
   color = "text-tertiary-800",
   strokeWidth = 1.5,
+  className,
   ref,
   modalTitle = "Are you sure?",
-  modalDescription = "This action cannot be undone.",
+  modalDescriptionT,
+  modalDescriptionB,
+  modalData,
 }: InformationIconProps) => {
+  const defaultClass = `${size} ${color} hover:bg-tertiary-200 rounded p-1`;
+
   return (
     <AlertDialog>
       <AlertDialogTrigger>
@@ -38,7 +51,7 @@ const InformationIcon = ({
           strokeWidth={strokeWidth}
           ref={ref}
           stroke="currentColor"
-          className={`${size} ${color} hover:bg-tertiary-200 rounded p-1`}
+          className={cn(defaultClass, className)}
         >
           <path
             strokeLinecap="round"
@@ -52,7 +65,9 @@ const InformationIcon = ({
           <div className="flex justify-between items-center w-full ">
             <div className="w-full">
               <div className="flex flex-row justify-between pb-2 w-full items-center">
-                <AlertDialogTitle>{modalTitle}</AlertDialogTitle>
+                <AlertDialogTitle className="text-xl text-tertiary-1000">
+                  {modalTitle}
+                </AlertDialogTitle>
                 <AlertDialogCancel className="shadow-none" asChild>
                   <button
                     aria-label="Close"
@@ -62,13 +77,32 @@ const InformationIcon = ({
                   </button>
                 </AlertDialogCancel>
               </div>
-              <AlertDialogDescription className="align-start">
-                {modalDescription}
+              <AlertDialogDescription className="align-start pb-4">
+                {modalDescriptionT}
               </AlertDialogDescription>
+              {modalData?.map((data: ModalData, index: number) => {
+                return (
+                  <React.Fragment key={index}>
+                    <AlertDialogHeader className="font-bold text-sm">
+                      {data.header}
+                    </AlertDialogHeader>
+                    <AlertDialogDescription className="pb-4 text-sm">
+                      {data.description}
+                    </AlertDialogDescription>
+                  </React.Fragment>
+                );
+              })}
+              {modalDescriptionB && (
+                <AlertDialogDescription className="align-start pb-4">
+                  {modalDescriptionB}
+                </AlertDialogDescription>
+              )}
             </div>
           </div>
         </AlertDialogHeader>
-        <AlertDialogCancel className="bg-tertiary-1000 hover:bg-tertiary-900 text-white hover:text-white p-[1.2rem] rounded-[12px]">Cancel</AlertDialogCancel>
+        <AlertDialogCancel className="bg-tertiary-1000 hover:bg-tertiary-900 text-white hover:text-white p-[1.2rem] rounded-[12px]">
+          Cancel
+        </AlertDialogCancel>
       </AlertDialogContent>
     </AlertDialog>
   );

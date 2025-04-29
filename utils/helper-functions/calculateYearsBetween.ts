@@ -12,8 +12,6 @@ export const calculateYearsBetween = (
   const start = new Date(startDate);
   const end = new Date(endDate);
   let years = end.getFullYear() - start.getFullYear();
-  if (years < 0) {
-    years = new Date().getFullYear();
-  }
+  if (years < 0) years = 0;
   return years;
 };
