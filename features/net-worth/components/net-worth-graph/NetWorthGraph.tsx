@@ -20,6 +20,7 @@ import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/gr
 //Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
 import { TooltipPayload } from "@/types/graphs";
+import { getTailwindColors } from "@/utils/helper-functions/graph/getTailwindColors";
 
 //TooltipData
 type TooltipData = TooltipPayload[];
@@ -38,24 +39,24 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     tooltipData,
     tooltipTop = 0,
     tooltipLeft = 0,
-    years,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
     if (checkLinePayloads(linePayloads) === false) return <NoLinePayloads />;
 
+    const { primaryTextColorTW } = getTailwindColors(linePayloads[0]);
+
     return (
       <div className={`h-full w-full`}>
-
         <TimeValueGraphHeader
           linePayloads={linePayloads}
           tooltipData={tooltipData}
         >
           <Title>Net Worth</Title>
-          <Value lineIndex={0}/>
+          <Value lineIndex={0} />
           <ValueChangeHeader
             lineIndex={0}
-            className="text-xs"
-            />
+            className={`${primaryTextColorTW} text-[0.7rem]`}
+          />
         </TimeValueGraphHeader>
 
         {/* The SVG for the graph */}
