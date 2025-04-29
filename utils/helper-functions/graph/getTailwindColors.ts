@@ -10,6 +10,7 @@ import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
  * @returns
  */
 export const getTailwindColors = (payloadForLine: LinePayload) => {
+  
   const direction = getLineDirection(payloadForLine.lineData);
 
   return {

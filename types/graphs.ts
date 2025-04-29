@@ -263,3 +263,16 @@ export interface ValuePriceChangeLabelProps {
    */
   className?: string;
 }
+
+export interface ValuePriceChangeLabelProps {
+  
+  /**
+   * The ref of the value.
+   */
+  ref?: React.Ref<HTMLParagraphElement>;
+
+  /**
+   * The class name of the value.
+   */
+  className?: string;
+}

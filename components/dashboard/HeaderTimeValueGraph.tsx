@@ -19,6 +19,8 @@ import {
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
 import { getStockValue } from "@/utils/helper-functions/accessors";
 import { calculateRateOfChange } from "@/utils/helper-functions/calculateRateOfChange";
+import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
+
 
 // Context
 const TimeValueGraphHeaderContext = createContext<{
@@ -98,11 +100,7 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
 /**
  * Shows the change in the value as well as the rate of change as a percentage.
  */
-export function ValueChangeHeader({
-  className,
-  lineIndex,
-}: ValueChangeProps) {
-  
+export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
   const { linePayloads, tooltipData } = useContext(TimeValueGraphHeaderContext);
 
   if (!linePayloads) return null;
@@ -146,8 +144,42 @@ export function ValueChangeHeader({
   );
 }
 
+
+/**
+ * 
+ *  The total years between the first and last data point of the line.
+ * 
+ * @param param0 
+ * @returns 
+ */
+export function TotalYears({
+  className,
+  lineIndex,
+}: {
+  className?: string;
+  lineIndex: number;
+}) {
+  const { linePayloads } = useContext(TimeValueGraphHeaderContext);
+
+  const defaultClass = "text-tertiary-800 font-normal";
+
+  if (!linePayloads) return null;
+
+  const lineData = linePayloads[lineIndex].lineData;
+
+  if (!lineData) return null;
+
+  const years = calculateYearsBetween(
+    lineData[0].date,
+    lineData[lineData.length - 1].date
+  );
+
+  return <span className={cn(defaultClass, className)}>{years} years</span>;
+}
+
 TimeValueGraphHeader.Title = Title;
 TimeValueGraphHeader.Value = Value;
 TimeValueGraphHeader.ValueChangeHeader = ValueChangeHeader;
+TimeValueGraphHeader.TotalYears = TotalYears;
 
 export default TimeValueGraphHeader;

@@ -12,6 +12,7 @@ import TimeValueGraphHeader, {
   Title,
   Value,
   ValueChangeHeader,
+  TotalYears,
 } from "@/components/dashboard/HeaderTimeValueGraph";
 
 //Types
@@ -53,10 +54,13 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
         >
           <Title>Net Worth</Title>
           <Value lineIndex={0} />
-          <ValueChangeHeader
-            lineIndex={0}
-            className={`${primaryTextColorTW} text-[0.7rem]`}
-          />
+          <div className="flex gap-1">
+            <ValueChangeHeader
+              lineIndex={0}
+              className={`${primaryTextColorTW} text-[0.7rem]`}
+            />
+            <TotalYears lineIndex={0} className="text-[0.7rem]" />
+          </div>
         </TimeValueGraphHeader>
 
         {/* The SVG for the graph */}
