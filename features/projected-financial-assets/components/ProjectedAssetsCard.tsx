@@ -1,5 +1,5 @@
 // React
-import React, { useRef} from "react";
+import React, { useRef } from "react";
 
 // Containers
 import ProjectedAssetsContainer from "@/features/projected-financial-assets/components/containers/ProjectedAssetsContainer";
@@ -22,13 +22,19 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
  * @returns projected assets card
  */
 const ProjectedAssetsCard = () => {
-  
-  const {projectionLoading, isPendingAssets, selectedYear, mode, handleModeChange, assets } =
-    useDashboardContext();
+  const {
+    futureProjectionLoading,
+    isLoadingAssets,
+    selectedYear,
+    mode,
+    handleModeChange,
+    assets,
+  } = useDashboardContext();
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  if (isPendingAssets || projectionLoading) return <ProjectedAssetsCardSkeleton />;
+  if (isLoadingAssets || futureProjectionLoading)
+    return <ProjectedAssetsCardSkeleton />;
 
   return (
     <ProjectedAssetsContainer assets={assets}>
@@ -49,7 +55,7 @@ const ProjectedAssetsCard = () => {
               text={"Update"}
               className="w-[8rem] font-semibold text-sm h-[3rem]"
               ref={buttonRef}
-              isLoading={isPendingAssets}
+              isLoading={isLoadingAssets}
             />
           </div>
         )}

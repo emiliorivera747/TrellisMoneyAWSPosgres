@@ -56,14 +56,16 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           linePayloads={linePayloads}
           tooltipData={tooltipData}
         >
-          <Title>Net Worth</Title>
-          <InfoIconV2
-            modalTitle="Net Worth"
-            modalDescriptionT="Net worth is the total value of an individual's or entity's assets minus their liabilities. It represents financial wealth at a specific point in time."
-            modalDescriptionB="A positive net worth indicates financial stability, while a negative net worth suggests debt exceeds assets. Tracking net worth helps assess financial healthciplined budgeting, and strategic investments can grow net worth over time."
-            modalData={netWorthInfo}
-            ref={svgRef}
-          />
+          <div className="flex items-center">
+            <Title>Net Worth</Title>
+            <InfoIconV2
+              modalTitle="Net Worth"
+              modalDescriptionT="Net worth is the total value of an individual's or entity's assets minus their liabilities. It represents financial wealth at a specific point in time."
+              modalDescriptionB="A positive net worth indicates financial stability, while a negative net worth suggests debt exceeds assets. Tracking net worth helps assess financial healthciplined budgeting, and strategic investments can grow net worth over time."
+              modalData={netWorthInfo}
+              ref={svgRef}
+            />
+          </div>
           <Value lineIndex={0} />
           <div className="flex gap-1">
             <ValueChangeHeader
