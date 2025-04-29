@@ -16,7 +16,8 @@ import { generateYearsArray } from "@/features/projected-net-worth/utils/generat
 import { createLinePayLoads } from "@/features/projected-net-worth/utils/getDataForLines";
 
 // Hooks
-import useFilteredData from "@/features/projected-net-worth/utils/hooks/useFilteredData";
+import useFilteredData from "@/features/projected-net-worth/hooks/useFilteredData";
+import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 
 // Constants
 const defaultYearsIntoTheFuture = 100;
@@ -39,7 +40,6 @@ const ProjectedNetWorthGraph = () => {
     futureProjectionLoading,
     futureProjectionError,
   } = useDashboardContext();
-  
 
   /**
    *  Returns the filtered data based on the projectionData and selected filter.
