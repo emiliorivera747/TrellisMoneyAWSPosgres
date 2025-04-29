@@ -31,6 +31,7 @@ const MultipleValPriceChange = ({
   const directions = payloadForLines.map((line) =>
     getLineDirection(line.lineData)
   );
+  
   const isMultipleLines = payloadForLines?.length >= 2;
 
   const getLineName = (line: LinePayload) => {

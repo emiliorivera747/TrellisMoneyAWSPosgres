@@ -149,7 +149,7 @@ const page = () => {
   //   useAccounts();
 
   return (
-    <section className="h-screen mx-28 mt-[3.5rem]">
+    <section className="h-screen mx-28 mt-[3.2rem]">
       <ResponsiveLineGraphV2
         className={`w-full h-[28rem] border-b border-tertiary-400`}
         ref={graphRef}

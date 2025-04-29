@@ -230,7 +230,7 @@ export interface ValueChangeProps {
   /**
    * The ref of the value.
    */
-  ref?: React.Ref<HTMLButtonElement | HTMLDivElement>;
+  ref?: React.Ref<HTMLParagraphElement>;
 
   /**
    * The class name of the value.
@@ -241,4 +241,25 @@ export interface ValueChangeProps {
    * With years or not.
    */
   withYears?: boolean;
+}
+
+
+export interface ValuePriceChangeLabelProps {
+  /**
+   * The difference in value
+   */
+  valueDifference: number;
+  /**
+   * The rate of change
+   */
+  rateOfChange: number;
+  /**
+   * The ref of the value.
+   */
+  ref?: React.Ref<HTMLParagraphElement>;
+
+  /**
+   * The class name of the value.
+   */
+  className?: string;
 }

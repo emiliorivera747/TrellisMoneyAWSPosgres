@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 
 // React
 import React, { createContext, useContext } from "react";
+import ValuePriceChangelabel from "@/components/dashboard/ValuePriceChangeLabel";
 
 // Components
 import {
@@ -18,7 +19,6 @@ import {
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
 import { getStockValue } from "@/utils/helper-functions/accessors";
 import { calculateRateOfChange } from "@/utils/helper-functions/calculateRateOfChange";
-import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
 
 // Context
 const TimeValueGraphHeaderContext = createContext<{
@@ -96,15 +96,13 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
 }
 
 /**
- *
+ * Shows the change in the value as well as the rate of change as a percentage.
  */
 export function ValueChangeHeader({
   className,
   lineIndex,
-  withYears = true,
-  ref,
 }: ValueChangeProps) {
-  const defaultClass = "text-tertiary-800 font-normal ";
+  
   const { linePayloads, tooltipData } = useContext(TimeValueGraphHeaderContext);
 
   if (!linePayloads) return null;
@@ -122,49 +120,29 @@ export function ValueChangeHeader({
     lineData[lineData.length - 1].close
   );
 
-  if (!tooltipPayload) {
+  if (!tooltipPayload)
     return (
-      <p className={cn(defaultClass, className)}>
-        {numberToMoneyFormat(deafultStockValueDifference) +
-          " (" +
-          defaultRateOfChange.toFixed(2) +
-          "%) "}
-        {withYears && (
-          <span className={"text-tertiary-800 font-normal "}>
-            {calculateYearsBetween(
-              lineData[0].date,
-              lineData[lineData.length - 1].date
-            ) + " years"}
-          </span>
-        )}
-      </p>
+      <ValuePriceChangelabel
+        valueDifference={deafultStockValueDifference}
+        rateOfChange={defaultRateOfChange}
+        className={className}
+      />
     );
-  }
 
   const stockValueDifference =
     getStockValue(tooltipPayload.d) - lineData[0].close;
+
   const rateOfChange = calculateRateOfChange(
     lineData[0].close,
     getStockValue(tooltipPayload.d)
   );
 
-  const yearsBetween = calculateYearsBetween(
-    lineData[0].date,
-    tooltipPayload.d.date
-  );
-
   return (
-    <p className={cn(defaultClass, className)}>
-      {numberToMoneyFormat(stockValueDifference) +
-        " (" +
-        rateOfChange.toFixed(2) +
-        "%) "}
-      {withYears && (
-        <span className={"text-tertiary-800 font-normal "}>
-          {yearsBetween + " years"}
-        </span>
-      )}
-    </p>
+    <ValuePriceChangelabel
+      valueDifference={stockValueDifference}
+      rateOfChange={rateOfChange}
+      className={className}
+    />
   );
 }
 

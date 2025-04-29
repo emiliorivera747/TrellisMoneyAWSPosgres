@@ -5,7 +5,6 @@ import { RenderTooltipContentProps } from "@/features/projected-net-worth/types/
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
 import { getStockValue } from "@/utils/helper-functions/accessors";
 import { calculateRateOfChange } from "@/utils/helper-functions/calculateRateOfChange";
-import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
 
 /**
  *  Render the tooltip content
@@ -16,9 +15,7 @@ import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBe
 const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
   tooltipPayload,
   data,
-  withYears = true,
 }) => {
-  
   if (!data || data.length === 0) return null;
 
   const deafultStockValueDifference =
@@ -34,45 +31,59 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
    */
   if (!tooltipPayload) {
     return (
-      <>
-        {numberToMoneyFormat(deafultStockValueDifference) +
-          " (" +
-          defaultRateOfChange.toFixed(2) +
-          "%)"}
-        {withYears && (
-          <span className="text-tertiary-800 font-normal ">
-            {calculateYearsBetween(data[0].date, data[data.length - 1].date) +
-              " years"}
-          </span>
-        )}
-      </>
+      <ValuePriceChangeLabel
+        valueDifference={deafultStockValueDifference}
+        rateOfChange={defaultRateOfChange}
+      />
     );
   }
 
-  const stockValueDifference = getStockValue(tooltipPayload.d) - data[0].close;
+  const valueDifference = getStockValue(tooltipPayload.d) - data[0].close;
   const rateOfChange = calculateRateOfChange(
     data[0].close,
     getStockValue(tooltipPayload.d)
   );
 
-  const yearsBetween = calculateYearsBetween(
-    data[0].date,
-    tooltipPayload.d.date
-  );
 
   return (
-    <>
-      {numberToMoneyFormat(stockValueDifference) +
-        " (" +
-        rateOfChange.toFixed(2) +
-        "%) "} 
-      {withYears && (
-        <span className="text-tertiary-800 font-normal ">
-          {yearsBetween + " years"}
-        </span>
-      )}
-    </>
+    <ValuePriceChangeLabel
+      valueDifference={valueDifference}
+      rateOfChange={rateOfChange}
+    />
   );
 };
 
 export default RenderTooltipContent;
+
+
+
+interface ValuePriceChangeLabelProps {
+  /**
+   * The difference in value
+   */
+  valueDifference: number;
+  /**
+   * The rate of change
+   */
+  rateOfChange: number;
+}
+
+/**
+ *  Render the value price change label
+ *
+ * @param param0
+ * @returns
+ */
+const ValuePriceChangeLabel = ({
+  valueDifference,
+  rateOfChange,
+}: ValuePriceChangeLabelProps) => {
+  return (
+    <>
+      {numberToMoneyFormat(valueDifference) +
+        " (" +
+        rateOfChange.toFixed(2) +
+        "%) "}
+    </>
+  );
+};
