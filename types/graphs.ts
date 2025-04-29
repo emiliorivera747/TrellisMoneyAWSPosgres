@@ -243,7 +243,6 @@ export interface ValueChangeProps {
   withYears?: boolean;
 }
 
-
 export interface ValuePriceChangeLabelProps {
   /**
    * The difference in value
@@ -265,7 +264,6 @@ export interface ValuePriceChangeLabelProps {
 }
 
 export interface ValuePriceChangeLabelProps {
-  
   /**
    * The ref of the value.
    */
@@ -275,4 +273,39 @@ export interface ValuePriceChangeLabelProps {
    * The class name of the value.
    */
   className?: string;
+}
+
+export interface GraphFilterConfig {
+  /**
+   * The key of the filter.
+   */
+  key: string;
+  /**
+   * The label of the filter.
+   */
+  label: string;
+  /**
+   * The value of the filter.
+   */
+  svg_path: string;
+  /**
+   * The color of the filter.
+   */
+  color: string;
+}
+
+export interface LineGraphFilterButtonsProps {
+  /**
+   * The key of the filter.
+   */
+  selectedFilter: string;
+  /**
+   * The label of the filter.
+   */
+  handleFilterChange: (key: string) => void;
+
+  /**
+   * Configuration for the filter.
+   */
+  filterConfig: GraphFilterConfig[];
 }

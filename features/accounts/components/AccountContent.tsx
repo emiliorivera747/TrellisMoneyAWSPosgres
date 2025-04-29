@@ -23,7 +23,6 @@ import { useAccountsContext } from "@/context/accounts/AccountContext";
 const AccountContent = () => {
   const graphRef = useRef<HTMLDivElement>(null);
   const { filter } = useAccountsContext();
-  console.log("filter", filter);
 
   return (
     <section className="h-screen mx-28 mt-[3.2rem]">

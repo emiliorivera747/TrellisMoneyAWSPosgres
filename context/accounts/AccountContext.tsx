@@ -14,7 +14,6 @@ const AccountsContext = createContext<any>(null);
  */
 export const AccountsProvider = ({ children }: any) => {
   const accountState = useAccounts();
-  useAccounts();
   return (
     <AccountsContext.Provider value={accountState}>
       {children}
