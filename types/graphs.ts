@@ -319,3 +319,29 @@ export interface LineGraphFilterButtonsProps {
    */
   className?: string;
 }
+
+export interface GraphFilterButtonWithModalProps {
+  /**
+   * The key of the filter.
+   */
+  selectedFilter: string;
+  /**
+   * The label of the filter.
+   */
+  handleFilterChange: (key: string) => void;
+
+  /**
+   * Configuration for the filter.
+   */
+  filterConfig: GraphFilterConfig[];
+
+  /**
+   * The ref of the filter.
+   */
+  ref?: React.Ref<HTMLDivElement>;
+
+  /**
+   * The class name of the filter.
+   */
+  className?: string;
+}
