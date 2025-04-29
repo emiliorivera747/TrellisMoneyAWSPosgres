@@ -15,8 +15,8 @@ import TimeValueGraphHeader, {
   ValueChangeHeader,
   TotalYears,
 } from "@/components/dashboard/HeaderTimeValueGraph";
-import InformationIcon from "@/components/information-icon/InformationIcon";
 import InfoIconV2 from "@/components/information-icon/InfoIconV2";
+import { netWorthInfo } from "@/features/projected-net-worth/utils/data/netWorthInfo";
 
 //Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
@@ -61,22 +61,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
             modalTitle="Net Worth"
             modalDescriptionT="Net worth is the total value of an individual's or entity's assets minus their liabilities. It represents financial wealth at a specific point in time."
             modalDescriptionB="A positive net worth indicates financial stability, while a negative net worth suggests debt exceeds assets. Tracking net worth helps assess financial healthciplined budgeting, and strategic investments can grow net worth over time."
-            modalData={[
-              {
-                header: "Assets",
-                description:
-                  "Include cash, investments, real estate, vehicles, and other valuable possessions.",
-              },
-              {
-                header: "Liabilities",
-                description:
-                  "Include debts like mortgages, loans, credit card balances, and other obligations.",
-              },
-              {
-                header: "Formula",
-                description: "Net Worth = Total Assets - Total Liabilities.",
-              },
-            ]}
+            modalData={netWorthInfo}
             ref={svgRef}
           />
           <Value lineIndex={0} />
