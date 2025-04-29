@@ -69,6 +69,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     const { filter, handleFilterChange } = useAccountsContext();
 
     const svgRef = useRef<SVGSVGElement>(null);
+    const filterRef = useRef<HTMLDivElement>(null);
 
     return (
       <div className={`h-full w-full`}>
@@ -133,6 +134,8 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
                     selectedFilter={filter}
                     handleFilterChange={handleFilterChange}
                     filterConfig={filterConfig}
+                    className="grid grid-cols-2 gap-3 py-2"
+                    ref={filterRef}
                   />
                 </AlertDialogHeader>
                 <AlertDialogFooter className="pt-6">

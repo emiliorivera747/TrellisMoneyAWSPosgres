@@ -308,4 +308,14 @@ export interface LineGraphFilterButtonsProps {
    * Configuration for the filter.
    */
   filterConfig: GraphFilterConfig[];
+
+  /**
+   * The ref of the filter.
+   */
+  ref?: React.Ref<HTMLDivElement>;
+
+  /**
+   * The class name of the filter.
+   */
+  className?: string;
 }

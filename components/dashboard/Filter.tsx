@@ -1,15 +1,19 @@
-import React from 'react';
+import React from "react";
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
-import { LineGraphFilterButtonsProps } from '@/types/graphs';
+import { LineGraphFilterButtonsProps } from "@/types/graphs";
+import { cn } from "@/lib/utils";
 
-const Filter = ({filterConfig, selectedFilter, handleFilterChange }: LineGraphFilterButtonsProps) => {
+const Filter = ({
+  filterConfig,
+  selectedFilter,
+  handleFilterChange,
+  ref,
+  className,
+}: LineGraphFilterButtonsProps) => {
+  const defaultClass = "grid grid-cols-3 gap-3 py-2";
   return (
-    <div className="grid grid-cols-3 gap-3 py-2">
-    {filterConfig.map(
-      (
-        filter,
-        index
-      ) => (
+    <div ref={ref} className={cn(defaultClass, className)}>
+      {filterConfig.map((filter, index) => (
         <LineGraphFilterButton
           key={index}
           isSelected={selectedFilter === filter.key}
@@ -18,9 +22,9 @@ const Filter = ({filterConfig, selectedFilter, handleFilterChange }: LineGraphFi
           onClick={() => handleFilterChange(filter.key)}
           color={filter.color}
         />
-    ))}
+      ))}
     </div>
   );
-}
+};
 
 export default Filter;
