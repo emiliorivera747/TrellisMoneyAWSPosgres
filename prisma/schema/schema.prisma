@@ -24,12 +24,6 @@ model User {
   email_verified Boolean?      @default(false)
   phone_verified Boolean?      @default(false)
   phone          String?
-  Subscription   Subscription?
   customer_id    String?       @unique
-  accounts       Account[]
-  holdings       Holding[]
-  securities     Security[]
-  items          Item[]
   profile        Profile?
-  plan           Plan          @default(free)
 }
