@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import Link from "@/components/Plaid/Link";
 import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 
@@ -22,13 +22,19 @@ import { useAccountsContext } from "@/context/accounts/AccountContext";
 
 const AccountContent = () => {
   const graphRef = useRef<HTMLDivElement>(null);
-  const { filter } = useAccountsContext();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { filter, startDate, endDate } = useAccountsContext();
+
+
+  useEffect(() => {
+    
+  }, [filter, startDate, endDate]);
 
   return (
-    <section className="h-screen mx-28 mt-[3.2rem]">
-      <div className="relative grid grid-rows-[28rem_6rem]  border-tertiary-400 h-[34rem] border px-8 py-4 rounded-[12px] ">
+    <section className="h-screen mx-[10%] mt-[3.2rem]">
+      <div className="relative grid grid-rows-[26rem_6rem] border-tertiary-400 h-[34rem] border px-8 py-8 rounded-[12px] ">
         <ResponsiveLineGraphV2
-          className={`w-full h-[26rem]`}
+          className={`w-full h-[27rem] `}
           ref={graphRef}
           GraphComponent={NetWorthGraph}
           linePayloads={
@@ -55,8 +61,8 @@ const AccountContent = () => {
           }
           years={[]}
         />
-        <div className="flex flex-row items-center absolute bottom-8 left-4">
-          <LineGraphTimeButton label="1D" />
+        <div className="flex flex-row items-center absolute bottom-8 left-8 ">
+          <LineGraphTimeButton label="1D" onClick={() => console.log("")} />
           <LineGraphTimeButton label="1W" />
           <LineGraphTimeButton label="1M" />
           <LineGraphTimeButton label="3M" />
