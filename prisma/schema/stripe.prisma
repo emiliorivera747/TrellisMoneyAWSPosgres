@@ -1,0 +1,22 @@
+enum Plan {
+   free
+   premium
+ }
+ 
+ enum SubscriptionPeriod {
+   monthly
+   yearly
+ }
+ 
+ model Subscription {
+   id         String             @id @default(cuid()) @map("_id")
+   user_id    String             @unique
+   plan       Plan
+   period     SubscriptionPeriod
+   status     String
+   start_date DateTime           @default(now())
+   end_date   DateTime
+   created_at DateTime           @default(now())
+   updated_at DateTime           @updatedAt
+   User       User               @relation(fields: [user_id], references: [user_id])
+ }
