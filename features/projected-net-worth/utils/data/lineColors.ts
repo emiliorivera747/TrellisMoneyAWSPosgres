@@ -52,3 +52,8 @@ export const lineColors2 = {
     flatColor: "text-primary-900",
   },
 };
+
+export const colorConfigs = [
+  lineColors1,
+  lineColors2,
+]

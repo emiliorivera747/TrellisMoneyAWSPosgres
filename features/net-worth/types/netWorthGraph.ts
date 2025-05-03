@@ -1,4 +1,6 @@
 import { LinePayload } from "@/types/graphs";
+import { TimeSeriesData } from "@/types/graphs";
+
 
 export interface ProjectedLineGraphProps {
   /**
@@ -54,4 +56,16 @@ export interface ProjectedLineGraphProps {
    * Years to be displayed on the x-axis of the graph.
    */
   years: number[];
+}
+
+export interface NetWorthHistory {
+  /**
+   * The data for the net worth history.
+   */
+  data: TimeSeriesData[];
+
+  /**
+   * The value for the net worth history.
+   */
+  value: "Net Worth";
 }

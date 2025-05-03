@@ -10,13 +10,13 @@ export const useAccounts = () => {
     useFetchAccounts();
 
   const [filter, setFilter] = useState<string>("net-worth");
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
+  const [startDate, setStartDate] = useState<Date>( new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
 
   const handleFilterChange = (newFilter: string) => setFilter(newFilter);
-  const handleStartDateChange = (newStartData: string) =>
+  const handleStartDateChange = (newStartData: Date) =>
     setStartDate(newStartData);
-  const handleEndDateChange = (newEndData: string) => setEndDate(newEndData);
+  const handleEndDateChange = (newEndData: Date) => setEndDate(newEndData);
 
 
   return {
