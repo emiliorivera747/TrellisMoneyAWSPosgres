@@ -345,3 +345,37 @@ export interface GraphFilterButtonWithModalProps {
    */
   className?: string;
 }
+
+export interface DateFilterConfig {
+  /**
+   * The label of the date filter.
+   */
+  label: string;
+
+  /**
+   * The value of the date filter.
+   */
+  value: string;
+
+  /**
+   * The start date of the date filter.
+   */
+  startData: Date;
+
+  /**
+   * The end date of the date filter.
+   */
+  endData: Date;
+}
+
+export interface DateFilterProps {
+  /**
+   * The data filter configuration.
+   */
+  dateFilter: DateFilterConfig[];
+
+  /**
+   * The function to handle the date filter change.
+   */
+  handleDateFilterChange: (startData: Date, endDate: Date) => void;
+}

@@ -1,16 +1,15 @@
 "use client";
-import React, { useRef, useEffect } from "react";
-import Link from "@/components/Plaid/Link";
-import useGenerateToken from "@/hooks/plaid/useGenerateToken";
+import React, { useRef, useEffect, useState } from "react";
+import { dateFilterConfig } from "@/features/accounts/config/dateFilterConfig";
 
 // Components
 import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2";
 import NetWorthGraph from "@/features/net-worth/components/net-worth-graph/NetWorthGraph";
-import LineGraphTimeButton from "@/components/buttons/LineGraphTimeButton";
 import {
   lineColors1,
   lineColors2,
 } from "@/features/projected-net-worth/utils/data/lineColors";
+import DateFilter from "@/features/accounts/components/DateFilter";
 
 import {
   mockHistoricalNetWorthData,
@@ -23,12 +22,21 @@ import { useAccountsContext } from "@/context/accounts/AccountContext";
 const AccountContent = () => {
   const graphRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { filter, startDate, endDate } = useAccountsContext();
 
+  const {
+    filter,
+    startDate,
+    endDate,
+    handleStartDateChange,
+    handleEndDateChange,
+  } = useAccountsContext();
 
-  useEffect(() => {
-    
-  }, [filter, startDate, endDate]);
+  useEffect(() => {}, [filter, startDate, endDate]);
+
+  const handleDateFilterChange = (startDate: Date, endDate: Date) => {
+    handleStartDateChange(startDate);
+    handleEndDateChange(endDate);
+  };
 
   return (
     <section className="h-screen mx-[10%] mt-[3.2rem]">
@@ -61,34 +69,11 @@ const AccountContent = () => {
           }
           years={[]}
         />
-        <div className="flex flex-row items-center absolute bottom-8 left-8 ">
-          <LineGraphTimeButton label="1D" onClick={() => console.log("")} />
-          <LineGraphTimeButton label="1W" />
-          <LineGraphTimeButton label="1M" />
-          <LineGraphTimeButton label="3M" />
-          <LineGraphTimeButton label="YTD" />
-          <LineGraphTimeButton label="ALL" />
-        </div>
+        <DateFilter
+          handleDateFilterChange={handleDateFilterChange}
+          dateFilter={dateFilterConfig}
+        />
       </div>
-
-      {/* <header className="mt-8 px-4">
-    <h1 className="text-xl">Accounts</h1>
-    <div className="h-full w-[30%] sticky top-0 pt-[2%]">
-      <Link linkToken={linkToken} />
-    </div>
-    <div className="flex flex-col gap-4 mt-8">
-      {isLoadingAccounts && <p>Loading...</p>}
-      {isErrorAccounts && <p>Error</p>}
-      {accountsResponse &&
-        accountsResponse.data.map((account, i) => (
-          <div key={i} className="border p-4 rounded">
-            <h2 className="text-sm text-tertiary-1000 mb-2">
-              {JSON.stringify(account, null, 3)}
-            </h2>
-          </div>
-        ))}
-    </div>
-  </header> */}
     </section>
   );
 };
