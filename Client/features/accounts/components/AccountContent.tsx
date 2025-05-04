@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef} from "react";
 import { dateFilterConfig } from "@/features/accounts/config/dateFilterConfig";
 
 // Components
@@ -13,6 +13,9 @@ import { useAccountsContext } from "@/context/accounts/AccountContext";
 // Types
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
 
+// Hooks
+import {useFetchAccounts} from "@/features/accounts/hooks/useFetchAccounts";
+
 /**
  *
  * Responsible for showing all of the accounts
@@ -21,7 +24,7 @@ import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth"
  * @returns
  */
 const AccountContent = () => {
-  
+
   const graphRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -30,6 +33,10 @@ const AccountContent = () => {
     endDate,
     handleDateFilterChange,
   } = useAccountsContext();
+
+  // const { accountsResponse } = useFetchAccounts();
+
+  // console.log("accountsResponse", accountsResponse);
 
   const {filteredData} = useFilterNetWorth({ filter, startDate, endDate});
 
@@ -46,6 +53,7 @@ const AccountContent = () => {
           handleDateFilterChange={handleDateFilterChange}
           dateFilter={dateFilterConfig}
         />
+        
       </div>
     </section>
   );

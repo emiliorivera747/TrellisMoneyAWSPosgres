@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useFetchAccounts } from "@/features/accounts/utils/hooks/useFetchAccounts";
+import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
 
 /**
  * Custom hook to handle the accounts page state
