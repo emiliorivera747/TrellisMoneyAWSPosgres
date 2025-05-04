@@ -10,7 +10,7 @@ import { handleFormSubmission } from "@/features/projected-financial-assets/util
 import { DashboardState } from "@/types/dashboard";
 
 // Hooks
-import useFetchNetWorth from "@/features/net-worth/hooks/useFetchNetWorth";
+import {useFetchNetWorth} from "@/features/net-worth/hooks/useFetchNetWorth";
 
 const currentYear = Number(new Date().getFullYear().toString());
 

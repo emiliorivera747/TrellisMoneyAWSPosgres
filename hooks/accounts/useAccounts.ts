@@ -14,9 +14,16 @@ export const useAccounts = () => {
   const [endDate, setEndDate] = useState<Date>(new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
 
   const handleFilterChange = (newFilter: string) => setFilter(newFilter);
+
   const handleStartDateChange = (newStartData: Date) =>
     setStartDate(newStartData);
+
   const handleEndDateChange = (newEndData: Date) => setEndDate(newEndData);
+
+  const handleDateFilterChange = (newStartData: Date, newEndData: Date) => {
+    setStartDate(newStartData);
+    setEndDate(newEndData);
+  }
 
 
   return {
@@ -26,6 +33,7 @@ export const useAccounts = () => {
     handleFilterChange,
     handleStartDateChange,
     handleEndDateChange,
+    handleDateFilterChange,
     accountsResponse,
     isLoadingAccounts,
     isErrorAccounts,
