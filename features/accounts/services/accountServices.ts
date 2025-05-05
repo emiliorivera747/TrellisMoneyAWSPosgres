@@ -1,7 +1,7 @@
 import { API_URL } from "@/utils/global-variables/globals";
 
-const fetchItems = async () => {
-  const res = await fetch(`${API_URL}/plaid/items-accounts`, {
+const fetchAccounts = async () => {
+  const res = await fetch(`${API_URL}/plaid/accounts`, {
     method: "GET",
     cache: "no-store",
     headers: {
@@ -14,7 +14,6 @@ const fetchItems = async () => {
   return res.json();
 };
 
-
 export const accountServices = {
-    fetchItems,
-}
+  fetchAccounts,
+};

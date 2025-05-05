@@ -1,5 +1,6 @@
-import React from "react";
-import { Item } from "@/types/plaid";
+"use client";
+import React, { useEffect, useState } from "react";
+import { Account } from "@/types/plaid";
 
 /**
  *
@@ -9,19 +10,26 @@ import { Item } from "@/types/plaid";
  * @param param0
  * @returns
  */
-const AccountsList = ({ items }: { items: Item[] }) => {
-  console.log("items", items);
-  if (!items) return <div className="text-center text-md text-tertiary-800">No accounts found</div>;
-  
+const AccountsList = ({ accounts }: { accounts: Account[] }) => {
+  if (!accounts)
+    return (
+      <div className="text-center text-md text-tertiary-800">
+        No accounts found
+      </div>
+    );
+
+  console.log("accounts", accounts);
+  useEffect(() => {}, [accounts]);
+
   return (
     <div>
-      {items?.map((item: Item) => {
+      {accounts?.map((account: Account) => {
         return (
           <div
-            key={item.item_id}
+            key={account.account_id}
             className="border border-tertiary-400 p-4 rounded-[12px] mb-4"
           >
-            {item.institution_id}
+            {account.name}
           </div>
         );
       })}

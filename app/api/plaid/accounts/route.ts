@@ -27,15 +27,15 @@ export async function GET(req: NextRequest) {
      */
     const accounts = await getAccounts(items);
 
-    noAccountsError(accounts); // Check if the accounts are empty or undefined
+    // noAccountsError(accounts); // Check if the accounts are empty or undefined
 
-    /**
-     *  Store the accounts in the database
-     */
-    await updateAccounts(accounts);
+    // /**
+    //  *  Store the accounts in the database
+    //  */
+    // await updateAccounts(accounts);
 
     return NextResponse.json(
-      { message: "Retrieved accounts", data: accounts },
+      { message: "Retrieved accounts", data: accounts.flat() },
       { status: 200 }
     );
   } catch (error) {

@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import { useFetchItems } from "@/features/accounts/hooks/useFetchAccounts";
+import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
 
 /**
  * Custom hook to handle the accounts page state
  */
 export const useAccounts = () => {
   const { accountsResponse, isLoadingAccounts, isErrorAccounts } =
-    useFetchItems();
+    useFetchAccounts();
 
   const [filter, setFilter] = useState<string>("net-worth");
   const [startDate, setStartDate] = useState<Date>( new Date());

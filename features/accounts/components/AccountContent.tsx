@@ -16,7 +16,7 @@ import { useAccountsContext } from "@/context/accounts/AccountContext";
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
 
 // Hooks
-import { useFetchItems } from "@/features/accounts/hooks/useFetchAccounts";
+import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
 
 /**
  *
@@ -31,7 +31,7 @@ const AccountContent = () => {
   const { filter, startDate, endDate, handleDateFilterChange } =
     useAccountsContext();
 
-  const { itemsResponse } = useFetchItems();
+  const { accountsResponse } = useFetchAccounts();
 
   const { filteredData } = useFilterNetWorth({ filter, startDate, endDate });
 
@@ -50,7 +50,7 @@ const AccountContent = () => {
         />
       </div>
       <div className="grid grid-cols-[3fr_1fr] pt-8 w-full gap-4">
-        <AccountsList items={itemsResponse?.data ? itemsResponse.data : []} />
+        <AccountsList accounts={accountsResponse?.data ? accountsResponse.data : []} />
         <div className="flex justify-end">
           <AddConnection />
         </div>

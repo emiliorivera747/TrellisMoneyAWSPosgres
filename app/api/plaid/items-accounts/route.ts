@@ -28,6 +28,7 @@ export async function GET(req: Request) {
 
     const itemsWithAccounts = await getItemsAndAccountsByUserId(user?.id || "");
 
+
     // console.log("Items with accounts", itemsWithAccounts);
 
     return NextResponse.json(
