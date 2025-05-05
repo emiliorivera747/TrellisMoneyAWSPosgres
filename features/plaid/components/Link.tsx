@@ -3,8 +3,9 @@ import { useCallback } from "react";
 import { usePlaidLink } from "react-plaid-link";
 
 import { LinkProps } from "@/types/plaid";
+import { cn } from "@/lib/utils";
 
-const Link = (props: LinkProps) => {
+const Link = ({ linkToken, ref, className }: LinkProps) => {
   const onSuccess = useCallback(async (public_token: string) => {
     // send public_token to server
     const response = await fetch("/api/plaid/exchange-token", {
@@ -19,20 +20,26 @@ const Link = (props: LinkProps) => {
   }, []);
 
   const config: Parameters<typeof usePlaidLink>[0] = {
-    token: props.linkToken!,
+    token: linkToken!,
     onSuccess,
   };
 
   const { open, ready } = usePlaidLink(config);
+  const defualtClassName =
+    "text-[0.8rem] rounded-[12px] px-4 py-4 border border-tertiary-300 text-tertiary-1000 hover:bg-tertiary-100 uppercase";
 
   return (
     <button
-      style={{boxShadow: "rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px"}}
-      className="rounded-[12px] px-4 py-4 border border-tertiary-300 text-tertiary-1000 hover:bg-tertiary-100"
+      ref={ref}
+      style={{
+        boxShadow:
+          "rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px",
+      }}
+      className={cn(defualtClassName, className)}
       onClick={() => open()}
       disabled={!ready}
     >
-      Link account
+      Connect your account
     </button>
   );
 };

@@ -1,11 +1,12 @@
 "use client";
-import React, { useRef} from "react";
+import React, { useRef } from "react";
 import { dateFilterConfig } from "@/features/accounts/config/dateFilterConfig";
 
 // Components
 import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2";
 import NetWorthGraph from "@/features/net-worth/components/net-worth-graph/NetWorthGraph";
 import DateFilter from "@/features/accounts/components/DateFilter";
+import AddConnection from "@/features/accounts/components/AddConnection";
 
 // Context
 import { useAccountsContext } from "@/context/accounts/AccountContext";
@@ -14,12 +15,7 @@ import { useAccountsContext } from "@/context/accounts/AccountContext";
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
 
 // Hooks
-import {useFetchAccounts} from "@/features/accounts/hooks/useFetchAccounts";
-
-// Link
-import Link from "@/features/plaid/components/Link";
-
-import useGenerateToken from "@/hooks/plaid/useGenerateToken";
+import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
 
 /**
  *
@@ -29,21 +25,15 @@ import useGenerateToken from "@/hooks/plaid/useGenerateToken";
  * @returns
  */
 const AccountContent = () => {
-
   const graphRef = useRef<HTMLDivElement>(null);
-  const linkToken = useGenerateToken();
 
-  const {
-    filter,
-    startDate,
-    endDate,
-    handleDateFilterChange,
-  } = useAccountsContext();
+  const { filter, startDate, endDate, handleDateFilterChange } =
+    useAccountsContext();
 
   const { accountsResponse } = useFetchAccounts();
   console.log("Account Response", accountsResponse);
 
-  const {filteredData} = useFilterNetWorth({ filter, startDate, endDate});
+  const { filteredData } = useFilterNetWorth({ filter, startDate, endDate });
 
   return (
     <section className="h-screen mx-[10%] mt-[3.2rem]">
@@ -59,8 +49,11 @@ const AccountContent = () => {
           dateFilter={dateFilterConfig}
         />
       </div>
-      <div className="mt-8">
-        <Link linkToken={linkToken} />
+      <div className="grid grid-cols-[3fr_1fr] pt-8 w-full">
+        <div className="">Account List</div>
+        <div className="flex justify-end">
+          <AddConnection />
+        </div>
       </div>
     </section>
   );
