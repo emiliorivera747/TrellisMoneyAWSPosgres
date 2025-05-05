@@ -9,6 +9,7 @@ import DateFilter from "@/features/accounts/components/DateFilter";
 import AddConnection from "@/features/accounts/components/AddConnection";
 import AccountsList from "@/features/accounts/components/AccountsList";
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
+import PrimaryAccountSection from "@/features/accounts/components/PrimaryAccountSection";
 
 // Context
 import { useAccountsContext } from "@/context/accounts/AccountContext";
@@ -18,6 +19,7 @@ import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth"
 
 // Hooks
 import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
+import { Primary } from "@/stories/Button.stories";
 
 /**
  *
@@ -37,30 +39,28 @@ const AccountContent = () => {
   const { filteredData } = useFilterNetWorth({ filter, startDate, endDate });
 
   return (
-    <section className="h-screen mx-[4%] mt-[3.2rem]">
-      <div className="p-4 w-[70%] mt-[2%] max-h-screen">
-        <PrimaryDashboardSection>
-          <div className="flex gap-8">
-            <div className="relative grid grid-rows-[26rem_6rem] h-[28rem] border-b w-[80%]">
-              <ResponsiveLineGraphV2
-                className={`w-full h-[20rem]`}
-                ref={graphRef}
-                GraphComponent={NetWorthGraph}
-                linePayloads={filteredData}
-              />
-              <DateFilter
-                handleDateFilterChange={handleDateFilterChange}
-                dateFilter={dateFilterConfig}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-[3fr_1fr] pt-8 w-full gap-8">
-            <AccountsList
-              accounts={accountsResponse?.data ? accountsResponse.data : []}
-            />
-          </div>
-        </PrimaryDashboardSection>
-      </div>
+    <section className="h-screen mx-[4%]  overflow-y-scroll no-scrollbar">
+      <PrimaryAccountSection>
+        <div className="relative grid grid-rows-[26rem_6rem] h-[28rem] border-b">
+          <ResponsiveLineGraphV2
+            className={`w-full h-[20rem]`}
+            ref={graphRef}
+            GraphComponent={NetWorthGraph}
+            linePayloads={filteredData}
+          />
+          <DateFilter
+            handleDateFilterChange={handleDateFilterChange}
+            dateFilter={dateFilterConfig}
+          />
+        </div>
+
+        <div className=" pt-8 w-full gap-8">
+          <AccountsList
+            accounts={accountsResponse?.data ? accountsResponse.data : []}
+          />
+        </div>
+      </PrimaryAccountSection>
+
       {/* <div className="h-full w-[30%] sticky top-0 pt-[3%]">
         <AddConnection />
       </div> */}
