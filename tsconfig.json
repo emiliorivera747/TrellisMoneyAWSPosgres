@@ -23,12 +23,12 @@
     }
   },
   "include": [
-    "Client/next-env.d.ts",
+    "**/*.js",
+    "**/*.jsx",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.jsx",
-    "**/*.js",
-    "Client/.next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "next-env.d.ts"
   ],
-  "exclude": ["Client/node_modules", "Client/cypress.config.ts"]
+  "exclude": ["node_modules", "cypress.config.ts"]
 }

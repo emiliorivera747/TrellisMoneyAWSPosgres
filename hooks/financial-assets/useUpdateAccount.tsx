@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import assetService from "@/services/assets/assetsServices";
+import assetService from "../../../services/assets/assetsServices";
 import { useToast } from "@/hooks/toast/use-toast"
 
 /**

@@ -25,5 +25,4 @@ model User {
   phone_verified Boolean?      @default(false)
   phone          String?
   customer_id    String?       @unique
-  profile        Profile?
 }

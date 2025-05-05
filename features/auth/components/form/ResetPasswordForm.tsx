@@ -19,7 +19,7 @@ import PrimaryAuthContainer from "../containers/PrimaryAuthContainer";
 import {
   ResetPasswordInputs,
   resetPasswordSchema,
-} from "../../schemas/formSchemas";
+} from "@/features/auth/schemas/formSchemas";
 
 
 //Server Actions
