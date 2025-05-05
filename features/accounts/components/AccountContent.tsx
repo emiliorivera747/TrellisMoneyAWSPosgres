@@ -16,6 +16,11 @@ import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth"
 // Hooks
 import {useFetchAccounts} from "@/features/accounts/hooks/useFetchAccounts";
 
+// Link
+import Link from "@/features/plaid/components/Link";
+
+import useGenerateToken from "@/hooks/plaid/useGenerateToken";
+
 /**
  *
  * Responsible for showing all of the accounts
@@ -26,6 +31,7 @@ import {useFetchAccounts} from "@/features/accounts/hooks/useFetchAccounts";
 const AccountContent = () => {
 
   const graphRef = useRef<HTMLDivElement>(null);
+  const linkToken = useGenerateToken();
 
   const {
     filter,
@@ -34,7 +40,8 @@ const AccountContent = () => {
     handleDateFilterChange,
   } = useAccountsContext();
 
-  const { accountsResponse } = useFetchAccounts();
+  // const { accountsResponse } = useFetchAccounts();
+  // console.log("Account Response", accountsResponse);
 
   const {filteredData} = useFilterNetWorth({ filter, startDate, endDate});
 
@@ -51,6 +58,9 @@ const AccountContent = () => {
           handleDateFilterChange={handleDateFilterChange}
           dateFilter={dateFilterConfig}
         />
+      </div>
+      <div className="mt-8">
+        <Link linkToken={linkToken} />
       </div>
     </section>
   );
