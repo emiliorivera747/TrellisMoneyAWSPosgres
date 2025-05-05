@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 
@@ -19,13 +19,18 @@ const AddConnection = () => {
   return (
     <div
       style={{
-        boxShadow:
-          "rgba(0, 0, 0, 0.12) 0px 6px 16px",
+        boxShadow: "rgba(0, 0, 0, 0.12) 0px 6px 16px",
       }}
-      className="py-6 border border-tertiary-400 px-4 w-[18rem] flex flex-col items-center justify-center rounded-[12px] bg-white h-[10rem]"
+      className="border border-tertiary-400  w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem]"
     >
-      <h1 className="text-[1rem] text-tertiary-900 pb-4 font-semibold ">Add Connection</h1>
-      <Link linkToken={linkToken} />
+      <div className="border-b w-full px-6 flex text-center items-center justify-start h-[4rem] ">
+        <h1 className="text-[1rem] text-tertiary-800 font-semibold">
+          Add Connection
+        </h1>
+      </div>
+      <div className="px-6 flex my-auto items-center justify-center">
+        <Link linkToken={linkToken} />
+      </div>
     </div>
   );
 };
