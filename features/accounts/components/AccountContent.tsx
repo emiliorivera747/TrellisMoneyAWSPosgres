@@ -7,6 +7,7 @@ import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2"
 import NetWorthGraph from "@/features/net-worth/components/net-worth-graph/NetWorthGraph";
 import DateFilter from "@/features/accounts/components/DateFilter";
 import AddConnection from "@/features/accounts/components/AddConnection";
+import AccountsList from "@/features/accounts/components/AccountsList";
 
 // Context
 import { useAccountsContext } from "@/context/accounts/AccountContext";
@@ -15,7 +16,7 @@ import { useAccountsContext } from "@/context/accounts/AccountContext";
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
 
 // Hooks
-import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
+import { useFetchItems } from "@/features/accounts/hooks/useFetchAccounts";
 
 /**
  *
@@ -30,8 +31,7 @@ const AccountContent = () => {
   const { filter, startDate, endDate, handleDateFilterChange } =
     useAccountsContext();
 
-  const { accountsResponse } = useFetchAccounts();
-  console.log("Account Response", accountsResponse);
+  const { itemsResponse } = useFetchItems();
 
   const { filteredData } = useFilterNetWorth({ filter, startDate, endDate });
 
@@ -49,8 +49,8 @@ const AccountContent = () => {
           dateFilter={dateFilterConfig}
         />
       </div>
-      <div className="grid grid-cols-[3fr_1fr] pt-8 w-full">
-        <div className="">Account List</div>
+      <div className="grid grid-cols-[3fr_1fr] pt-8 w-full gap-4">
+        <AccountsList items={itemsResponse?.data ? itemsResponse.data : []} />
         <div className="flex justify-end">
           <AddConnection />
         </div>

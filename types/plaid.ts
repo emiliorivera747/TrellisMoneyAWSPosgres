@@ -168,7 +168,7 @@ export interface Item {
   update_type?: string | null;
   consent_expiration_time?: string | null;
   accountId?: string | null;
-  account?: Account | null;
+  account?: Account[] | null;
   access_token?: string | null;
   update_time?: ItemUpdateTypeEnum;
 }

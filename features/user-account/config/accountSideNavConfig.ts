@@ -1,3 +1,5 @@
+import { url } from "inspector";
+
 export const accountSideNavConfig = [
   {
     label: "Membership Details",
@@ -11,4 +13,9 @@ export const accountSideNavConfig = [
     label: "Billing History",
     url: process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_LINK! ?? "#",
   },
+  {
+    label: "Connections",
+    url: "/account/connections",
+  }
+  
 ];

@@ -6,18 +6,18 @@ import { accountServices } from "@/features/accounts/services/accountServices";
  *
  * @returns {Object} - An object containing accounts data, loading state, and error state.
  */
-export const useFetchAccounts = () => {
+export const useFetchItems = () => {
   const {
-    data: accountsResponse,
+    data: itemsResponse,
     isLoading: isLoadingAccounts,
     isError: isErrorAccounts,
   } = useQuery({
     queryKey: ["accounts"],
-    queryFn: () => accountServices.fetchAccounts(),
+    queryFn: () => accountServices.fetchItems(),
     enabled: true,
     refetchOnWindowFocus: false,
     retry: 1,
   });
 
-  return { accountsResponse, isLoadingAccounts, isErrorAccounts };
+  return { itemsResponse, isLoadingAccounts, isErrorAccounts };
 };
