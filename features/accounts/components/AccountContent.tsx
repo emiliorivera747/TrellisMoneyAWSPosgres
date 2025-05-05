@@ -40,8 +40,8 @@ const AccountContent = () => {
     handleDateFilterChange,
   } = useAccountsContext();
 
-  // const { accountsResponse } = useFetchAccounts();
-  // console.log("Account Response", accountsResponse);
+  const { accountsResponse } = useFetchAccounts();
+  console.log("Account Response", accountsResponse);
 
   const {filteredData} = useFilterNetWorth({ filter, startDate, endDate});
 

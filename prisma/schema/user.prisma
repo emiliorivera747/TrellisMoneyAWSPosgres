@@ -20,7 +20,7 @@ model Item {
   access_token            String
   User                    User      @relation(fields: [user_id], references: [user_id])
   user_id                 String
-  account                 Account[]
+  accounts                 Account[]
 }
 
 model TransactionStatus {
