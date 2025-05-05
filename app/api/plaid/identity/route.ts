@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { IdentityGetRequest } from "plaid";
-import { plaidClient } from "@/config/plaidClient";
+import { client } from "@/config/plaidClient";
 
 export async function GET(req: NextRequest) {
   const request: IdentityGetRequest = {
@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   };
 
   try {
-    const response = await plaidClient.identityGet(request);
+    const response = await client.identityGet(request);
     const identities = response.data.accounts.flatMap(
       (account) => account.owners
     );

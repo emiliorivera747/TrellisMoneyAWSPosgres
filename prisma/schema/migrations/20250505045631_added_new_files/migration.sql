@@ -7,15 +7,15 @@ CREATE TYPE "SubscriptionPeriod" AS ENUM ('monthly', 'yearly');
 -- CreateTable
 CREATE TABLE "Account" (
     "account_id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "type" TEXT NOT NULL,
-    "available" DECIMAL(65,30) NOT NULL,
-    "current" DECIMAL(65,30) NOT NULL,
-    "limit" DECIMAL(65,30) NOT NULL,
-    "iso_currency_code" TEXT NOT NULL,
-    "unofficial_currency_code" TEXT NOT NULL,
+    "name" TEXT,
+    "type" TEXT,
+    "available" DECIMAL(65,30),
+    "current" DECIMAL(65,30),
+    "limit" DECIMAL(65,30),
+    "iso_currency_code" TEXT,
+    "unofficial_currency_code" TEXT,
     "mask" TEXT,
-    "officail_name" TEXT,
+    "official_name" TEXT,
     "subtype" TEXT,
     "verification_status" TEXT,
     "persistent_account_id" TEXT,
@@ -89,14 +89,15 @@ CREATE TABLE "HoldingHistory" (
     "institution_price_as_of" TIMESTAMPTZ(3) NOT NULL,
     "institution_price_datetime" TIMESTAMPTZ(3),
     "institution_value" DECIMAL(65,30) NOT NULL,
-    "iso_currency_code" TEXT NOT NULL,
+    "iso_currency_code" TEXT,
     "unofficial_currency_code" TEXT,
     "vested_quantity" DECIMAL(65,30),
     "vested_value" DECIMAL(65,30) NOT NULL,
     "quantity" DECIMAL(65,30) NOT NULL,
     "account_id" TEXT NOT NULL,
     "security_id" TEXT NOT NULL,
-    "timestamp" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_at" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "user_id" TEXT NOT NULL,
 
     CONSTRAINT "HoldingHistory_pkey" PRIMARY KEY ("id")
@@ -128,7 +129,7 @@ CREATE TABLE "Owner" (
 CREATE TABLE "Profile" (
     "id" SERIAL NOT NULL,
     "bio" TEXT,
-    "userId" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
 
     CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
 );
@@ -145,7 +146,6 @@ CREATE TABLE "User" (
     "phone_verified" BOOLEAN DEFAULT false,
     "phone" TEXT,
     "customer_id" TEXT,
-    "plan" "Plan" NOT NULL DEFAULT 'free',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -210,6 +210,7 @@ CREATE TABLE "Subscription" (
     "user_id" TEXT NOT NULL,
     "plan" "Plan" NOT NULL,
     "period" "SubscriptionPeriod" NOT NULL,
+    "status" TEXT NOT NULL,
     "start_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "end_date" TIMESTAMP(3) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -295,7 +296,7 @@ CREATE UNIQUE INDEX "Balance_balance_id_key" ON "Balance"("balance_id");
 CREATE UNIQUE INDEX "Owner_owner_id_key" ON "Owner"("owner_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
+CREATE UNIQUE INDEX "Profile_user_id_key" ON "Profile"("user_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
@@ -343,7 +344,7 @@ ALTER TABLE "Holding" ADD CONSTRAINT "Holding_account_id_fkey" FOREIGN KEY ("acc
 ALTER TABLE "HoldingHistory" ADD CONSTRAINT "HoldingHistory_security_id_user_id_account_id_fkey" FOREIGN KEY ("security_id", "user_id", "account_id") REFERENCES "Holding"("security_id", "user_id", "account_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Profile" ADD CONSTRAINT "Profile_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Security" ADD CONSTRAINT "Security_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
