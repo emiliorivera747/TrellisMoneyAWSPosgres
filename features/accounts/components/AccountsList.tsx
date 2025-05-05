@@ -38,15 +38,15 @@ const AccountsList = ({ accounts }: { accounts: Account[] }) => {
     <div>
       {Object.entries(groups).map(([type, accounts]) => {
         return (
-          <div>
-            <h1 className="text-[1.4rem] font-bold pb-2">
+          <div key={type}>
+            <h1 className="text-[1.4rem] font-bold pb-3">
               {type.charAt(0).toUpperCase() + type.slice(1)}
             </h1>
             {accounts?.map((account: Account) => {
               return (
                 <div
                   key={account.account_id}
-                  className="border border-tertiary-400 p-4 rounded-[12px] mb-4"
+                  className="rounded-[12px] mb-4 border py-6 px-4"
                 >
                   {account.name}
                 </div>

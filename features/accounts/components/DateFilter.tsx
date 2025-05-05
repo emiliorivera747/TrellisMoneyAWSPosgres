@@ -13,7 +13,7 @@ const DateFilter = ({
   handleDateFilterChange,
 }: DateFilterProps) => {
   return (
-    <div className="flex flex-row items-center absolute bottom-8 left-8 ">
+    <div className="flex flex-row items-center absolute bottom-8  ">
       {dateFilter.map((filter, index) => {
         return (
           <LineGraphTimeButton

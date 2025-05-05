@@ -26,15 +26,15 @@ const Link = ({ linkToken, ref, className }: LinkProps) => {
 
   const { open, ready } = usePlaidLink(config);
   const defualtClassName =
-    "text-[0.8rem] rounded-[12px] px-4 py-4 border border-tertiary-300 text-tertiary-1000 hover:bg-tertiary-100 uppercase";
+    "bg-gradient-to-r form-secondary-900 to-secondary-1000 bg-secondary-900 text-[0.8rem] rounded-[12px] px-4 py-4 text-tertiary-1000 hover:bg-tertiary-100 text-white";
 
   return (
     <button
       ref={ref}
-      style={{
-        boxShadow:
-          "rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px",
-      }}
+      // style={{
+      //   boxShadow:
+      //     "rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px",
+      // }}
       className={cn(defualtClassName, className)}
       onClick={() => open()}
       disabled={!ready}

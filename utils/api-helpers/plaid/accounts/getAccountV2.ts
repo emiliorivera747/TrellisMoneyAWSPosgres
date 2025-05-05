@@ -2,6 +2,8 @@ import { ItemPrisma } from "@/types/prisma";
 import { client } from "@/config/plaidClient";
 import { AccountBaseWithItemId } from "@/types/plaid";
 import { getAllAccessTokens } from "@/utils/api-helpers/plaid/getAccessTokensFromItems";
+import { prisma } from "@/lib/prisma";
+
 
 /**
  * Fetch all of the accounts associated with the access tokens
