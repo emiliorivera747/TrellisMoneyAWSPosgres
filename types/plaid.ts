@@ -270,3 +270,7 @@ export interface LinkProps {
   ref?: React.RefObject<HTMLButtonElement>;
   className?: string;
 }
+
+export interface GroupedAccounts {
+  [key: string]: Account[];
+}
