@@ -39,8 +39,9 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Error fetching account balance data" },
+      { error: errorMessage },
       { status: 500 }
     );
   }

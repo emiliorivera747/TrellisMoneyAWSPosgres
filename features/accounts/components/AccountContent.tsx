@@ -34,9 +34,7 @@ const AccountContent = () => {
     handleDateFilterChange,
   } = useAccountsContext();
 
-  // const { accountsResponse } = useFetchAccounts();
-
-  // console.log("accountsResponse", accountsResponse);
+  const { accountsResponse } = useFetchAccounts();
 
   const {filteredData} = useFilterNetWorth({ filter, startDate, endDate});
 
@@ -53,7 +51,6 @@ const AccountContent = () => {
           handleDateFilterChange={handleDateFilterChange}
           dateFilter={dateFilterConfig}
         />
-        
       </div>
     </section>
   );

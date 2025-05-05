@@ -59,9 +59,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const { start_year, end_year } = getDates(searchParams);
     validateTimestamp(timestamp);
 
-    // /**
-    //  * Get the user's accounts
-    //  */
+    /**
+     * Get the user's accounts
+     */
     // const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
     // await getAccounts(items);
     // await getInvestments(items, timestamp || "");
@@ -97,6 +97,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       { status: 200 }
     );
   } catch (error) {
+    console.log(error?.message);
     if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
     if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
     return handleOtherErrror(error);

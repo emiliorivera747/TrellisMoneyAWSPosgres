@@ -8,6 +8,7 @@ export async function PATCH(
   { params }: { params: Promise<{ _id: string }> }
 ): Promise<NextResponse> {
   try {
+
     const body = await req.json();
     const { user_id, annual_growth_rate } = body;
     const {_id} = await params;
@@ -41,8 +42,8 @@ export async function PATCH(
       { status: 200 }
     );
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
 
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
       {
         message: errorMessage,

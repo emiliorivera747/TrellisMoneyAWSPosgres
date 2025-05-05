@@ -20,7 +20,7 @@ model Security {
   industry                 String?
   option_contract_id       Int?
   holdings                 Holding[]
-  User                     User              @relation(fields: [user_id], references: [user_id])
+  user                     User              @relation(fields: [user_id], references: [user_id])
   user_id                  String
   timestamp                DateTime?         @default(now()) @db.Timestamptz(3)
   fixed_income             FixedIncome?
