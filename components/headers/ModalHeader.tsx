@@ -21,11 +21,11 @@ interface ModalHeaderProps {
  */
 const ModalHeader = ({ title, ref, className }: ModalHeaderProps) => {
   const defaultClass =
-    "flex justify-between items-center border-b border-tertiary-200 p-2 mb-2";
+    "flex justify-between items-center border-b border-tertiary-200 pb-4 pt-2 mb-2";
   return (
     <header ref={ref} className={cn(defaultClass, className)}>
       <AlertDialogTitle>{title}</AlertDialogTitle>
-      <AlertDialogCancel className="flex items-center justify-center border-none shadow-none rounded-full py-2">
+      <AlertDialogCancel className="flex items-center justify-center border-none shadow-none rounded-full h-10 w-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
