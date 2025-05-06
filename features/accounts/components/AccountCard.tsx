@@ -16,7 +16,6 @@ import {
 import ModalHeader from "@/components/headers/ModalHeader";
 
 import { transactions } from "@/features/accounts/utils/data/mockTransactionData";
-import { mock } from "node:test";
 
 const AccountCard = ({ account }: { account: Account }) => {
   return (

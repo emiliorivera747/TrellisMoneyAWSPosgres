@@ -1,5 +1,3 @@
-
-
 model Item {
   item_id                 String    @unique
   institution_id          String
@@ -18,9 +16,9 @@ model Item {
   consented_data_scopes   String[]
   consented_use_cases     String[]
   access_token            String
-  User                    User      @relation(fields: [user_id], references: [user_id])
+  User                    User      @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
   user_id                 String
-  accounts                 Account[]
+  accounts                Account[]
 }
 
 model TransactionStatus {
