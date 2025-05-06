@@ -1,47 +1,43 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Account, GroupedAccounts } from "@/types/plaid";
+import React from "react";
+
+import { Account } from "@/types/plaid";
+
+import NoAccountsFound from "@/features/accounts/components/NoAccountsFound";
+
+import { useAccountsContext } from "@/context/accounts/AccountContext";
 
 /**
  *
  * Responsible for showing all of the accounts
  *
  *
- * @param param0
+ * @param accounts - The accounts to show
  * @returns
  */
-const AccountsList = ({ accounts }: { accounts: Account[] }) => {
-  const [groups, setGroups] = useState<GroupedAccounts>({});
-  if (!accounts)
-    return (
-      <div className="text-center text-md text-tertiary-800">
-        No accounts found
-      </div>
-    );
+const AccountsList = () => {
+  const { isLoadingAccounts, isErrorAccounts, groups } =
+    useAccountsContext() as {
+      isLoadingAccounts: boolean;
+      isErrorAccounts: boolean;
+      groups: Record<string, Account[]>;
+    };
 
-  useEffect(() => {
-    const groupedAccounts = accounts.reduce(
-      (acc: { [key: string]: Account[] }, account) => {
-        const { type } = account;
-        if (!acc[type]) {
-          acc[type] = [];
-        }
-        acc[type].push(account);
-        return acc;
-      },
-      {}
-    );
-    setGroups(groupedAccounts);
-  }, [accounts]);
+  
+  if (isLoadingAccounts) return <div>Loading...</div>;
+  if (isErrorAccounts) return <div>Error</div>;
+  if (!groups) return <NoAccountsFound />;
 
   return (
     <div>
       {Object.entries(groups).map(([type, accounts]) => {
         return (
           <div key={type}>
+            {/* Header for each type */}
             <h1 className="text-[1.4rem] font-bold pb-3">
               {type.charAt(0).toUpperCase() + type.slice(1)}
             </h1>
+
+            {/* Display Account Cards */}
             {accounts?.map((account: Account) => {
               return (
                 <div

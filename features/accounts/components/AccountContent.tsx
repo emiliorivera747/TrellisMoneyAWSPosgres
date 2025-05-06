@@ -8,7 +8,6 @@ import NetWorthGraph from "@/features/net-worth/components/net-worth-graph/NetWo
 import DateFilter from "@/features/accounts/components/DateFilter";
 import AddConnection from "@/features/accounts/components/AddConnection";
 import AccountsList from "@/features/accounts/components/AccountsList";
-import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
 import PrimaryAccountSection from "@/features/accounts/components/PrimaryAccountSection";
 
 // Context
@@ -17,9 +16,6 @@ import { useAccountsContext } from "@/context/accounts/AccountContext";
 // Types
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
 
-// Hooks
-import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
-import { Primary } from "@/stories/Button.stories";
 
 /**
  *
@@ -33,8 +29,6 @@ const AccountContent = () => {
 
   const { filter, startDate, endDate, handleDateFilterChange } =
     useAccountsContext();
-
-  const { accountsResponse } = useFetchAccounts();
 
   const { filteredData } = useFilterNetWorth({ filter, startDate, endDate });
 
@@ -54,9 +48,7 @@ const AccountContent = () => {
           />
         </div>
         <div className=" pt-8 w-full gap-8">
-          <AccountsList
-            accounts={accountsResponse?.data ? accountsResponse.data : []}
-          />
+          <AccountsList/>
         </div>
       </PrimaryAccountSection>
 
