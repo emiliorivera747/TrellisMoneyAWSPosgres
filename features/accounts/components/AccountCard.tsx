@@ -16,8 +16,10 @@ import {
 import ModalHeader from "@/components/headers/ModalHeader";
 
 import { transactions } from "@/features/accounts/utils/data/mockTransactionData";
+import { useAccountsContext } from "@/context/accounts/AccountContext";
 
 const AccountCard = ({ account }: { account: Account }) => {
+  const { mutateItem } = useAccountsContext();
   return (
     <AlertDialog>
       <AlertDialogTrigger className="w-full">
@@ -50,8 +52,15 @@ const AccountCard = ({ account }: { account: Account }) => {
               Manage Connections
             </div>
             <div>
-              <button className="px-4 py-4 border rounded-[12px]
-              mb-4 ml-2 text-red-600 font-semibold hover:bg-tertiary-200">Delete Connection</button>
+              <button
+                className="px-4 py-4 border rounded-[12px]
+              mb-4 ml-2 text-red-600 font-semibold hover:bg-tertiary-200"
+                onClick={() => {
+                  mutateItem(account.item_id);
+                }}
+              >
+                Delete Connection
+              </button>
             </div>
             <div className="text-md font-semibold border-b border-tertiary-200 pb-4 mx-2 mb-4 ">
               {" "}

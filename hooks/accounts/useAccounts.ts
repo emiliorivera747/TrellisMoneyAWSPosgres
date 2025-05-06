@@ -8,12 +8,17 @@ import useGroupAccounts from "@/features/accounts/hooks/useGroupAccounts";
 // Types
 import { UseAccountsResponse } from "@/types/hooks";
 
+import { useDeleteItem } from "@/hooks/accounts/useDeleteItem";
+
 /**
  * Custom hook to handle the accounts page state
  */
 export const useAccounts = (): UseAccountsResponse => {
+  
   const { accountsResponse, isLoadingAccounts, isErrorAccounts } =
     useFetchAccounts();
+
+  const { mutateItem, itemIsPending, itemHasError } = useDeleteItem();
 
   const accounts = accountsResponse?.data || null;
 
@@ -41,6 +46,9 @@ export const useAccounts = (): UseAccountsResponse => {
     startDate,
     endDate,
     groups,
+    itemIsPending,
+    itemHasError,
+    mutateItem,
     handleFilterChange,
     handleStartDateChange,
     handleEndDateChange,

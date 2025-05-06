@@ -5,6 +5,9 @@ export interface UseAccountsResponse {
   startDate: Date;
   endDate: Date;
   groups: GroupedAccounts;
+  itemIsPending: boolean;
+  itemHasError: boolean;
+  mutateItem: (itemId: string) => void;
   handleFilterChange: (newFilter: string) => void;
   handleStartDateChange: (newStartData: Date) => void;
   handleEndDateChange: (newEndData: Date) => void;

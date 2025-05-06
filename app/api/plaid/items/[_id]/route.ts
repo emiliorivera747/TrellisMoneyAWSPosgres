@@ -51,6 +51,7 @@ export async function DELETE(
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
+    console.log("Error Message: ", errorMessage);
     return NextResponse.json({ message: errorMessage }, { status: 500 });
   }
 }
