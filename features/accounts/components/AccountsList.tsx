@@ -6,6 +6,10 @@ import NoAccountsFound from "@/features/accounts/components/NoAccountsFound";
 
 import { useAccountsContext } from "@/context/accounts/AccountContext";
 
+//Components
+import AccountListHeader from "@/features/accounts/components/headers/AccountListHeader";
+import Accountcard from "@/features/accounts/components/AccountCard";
+
 /**
  *
  * Responsible for showing all of the accounts
@@ -22,31 +26,18 @@ const AccountsList = () => {
       groups: Record<string, Account[]>;
     };
 
-  
   if (isLoadingAccounts) return <div>Loading...</div>;
   if (isErrorAccounts) return <div>Error</div>;
   if (!groups) return <NoAccountsFound />;
 
   return (
-    <div>
+    <div className="pb-10">
       {Object.entries(groups).map(([type, accounts]) => {
         return (
           <div key={type}>
-            {/* Header for each type */}
-            <h1 className="text-[1.4rem] font-bold pb-3">
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </h1>
-
-            {/* Display Account Cards */}
+            <AccountListHeader type={type} />
             {accounts?.map((account: Account) => {
-              return (
-                <div
-                  key={account.account_id}
-                  className="rounded-[12px] mb-4 border py-6 px-4"
-                >
-                  {account.name}
-                </div>
-              );
+              return <Accountcard key={account.account_id} account={account} />;
             })}
           </div>
         );

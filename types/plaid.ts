@@ -58,7 +58,7 @@ export interface verification_insights {
 
 export interface Account {
   account_id: string;
-  balances?: Balance;
+  balance?: Balance;
   mask?: string | undefined | null;
   official_name?: string | undefined | null;
   subtype: string | undefined | null;

@@ -26,7 +26,7 @@ const Link = ({ linkToken, ref, className }: LinkProps) => {
 
   const { open, ready } = usePlaidLink(config);
   const defaultClassName =
-    "w-full bg-gradient-to-r from-secondary-800 to-secondary-900 hover:from-secondary-900 hover:to-secondary-1000 text-[0.8rem] rounded-[12px] px-4 py-4 text-tertiary-1000 hover:bg-tertiary-100 text-white font-extrabold";
+    "w-full bg-gradient-to-r from-tertiary-800 to-tertiary-900 hover:from-tertiary-900 hover:to-tertiary-1000 text-[0.8rem] rounded-[12px] px-4 py-4 text-tertiary-1000 hover:bg-tertiary-100 text-white font-extrabold";
 
   return (
     <button

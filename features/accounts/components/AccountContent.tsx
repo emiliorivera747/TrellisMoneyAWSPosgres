@@ -9,6 +9,7 @@ import DateFilter from "@/features/accounts/components/DateFilter";
 import AddConnection from "@/features/accounts/components/AddConnection";
 import AccountsList from "@/features/accounts/components/AccountsList";
 import PrimaryAccountSection from "@/features/accounts/components/PrimaryAccountSection";
+import AssetsAndLiabilitiesCard from "@/features/accounts/components/AssetsAndLiabilitiesCard";
 
 // Context
 import { useAccountsContext } from "@/context/accounts/AccountContext";
@@ -35,7 +36,7 @@ const AccountContent = () => {
   return (
     <section className="h-screen mx-[2%] overflow-y-scroll no-scrollbar flex flex-row gap-8">
       <PrimaryAccountSection>
-        <div className="relative grid grid-rows-[26rem_6rem] h-[32rem] border-b">
+        <div className="relative grid grid-rows-[22rem_6rem] h-[32rem] border-b">
           <ResponsiveLineGraphV2
             className={`w-full h-[26rem]`}
             ref={graphRef}
@@ -52,7 +53,8 @@ const AccountContent = () => {
         </div>
       </PrimaryAccountSection>
 
-      <div className="h-full w-[25%] sticky top-0 pt-[3%] justify-center flex">
+      <div className="h-full w-[25%] sticky top-0  justify-start flex flex-col gap-4 pt-12">
+        <AssetsAndLiabilitiesCard />
         <AddConnection />
       </div>
     </section>

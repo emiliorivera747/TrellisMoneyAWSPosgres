@@ -17,7 +17,6 @@ import { createLinePayLoads } from "@/features/projected-net-worth/utils/getData
 
 // Hooks
 import useFilteredData from "@/features/projected-net-worth/hooks/useFilteredData";
-import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 
 // Constants
 const defaultYearsIntoTheFuture = 100;

@@ -15,6 +15,15 @@ export const getAccountWithItemIds = async (items: ItemPrisma[]) => {
                 in: items.map((item) => item.item_id),
             },
         },
+        include: {
+            balance: {
+                select: {
+                    current: true,
+                    available: true,
+                    limit: true,
+                },
+            },
+        },
     });
 
     return accounts;
