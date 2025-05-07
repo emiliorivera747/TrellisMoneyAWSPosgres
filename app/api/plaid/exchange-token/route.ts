@@ -4,7 +4,6 @@ import { createClient } from "@/utils/supabase/server";
 import { client } from "@/config/plaidClient";
 import { ItemGetResponse } from "plaid";
 import { AxiosResponse } from "axios";
-import { getItem } from "@/utils/api-helpers/plaid/items/getItem";
 
 /**
  * Handles the POST request to exchange a public token for an access token
@@ -14,33 +13,44 @@ import { getItem } from "@/utils/api-helpers/plaid/items/getItem";
  * @returns A JSON response with the access token or an error message
  */
 export async function POST(req: NextRequest) {
-  const { public_token } = await req.json();
+  const {public_token, institution, accounts} = await req.json();
+  const {institution_id} = institution;
 
   try {
     const supabase = await createClient();
 
-    // const {
-    //   data: { user },
-    // } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    // // Exchange the public token for an access token
-    // const response = await client.itemPublicTokenExchange({ public_token });
-    // const { access_token } = response.data;
+    // Look up items in the database to check if the institution is already connected
+    const items = await prisma.item.findMany({
+      where: {
+        user_id: user?.id,
+        institution_id,
+      },
+    });
+
+    // If the institution is already connected, return an error
+    if (items.length > 0) {
+      return NextResponse.json(
+        { error: "Institution already connected" },
+        { status: 400 }
+      );
+    }
+
+    // Exchange the public token for an access token
+    const response = await client.itemPublicTokenExchange({ public_token });
+    const { access_token } = response.data;
 
     // // Retrieve item details using the access token
-    // const item = await client.itemGet({ access_token });
+    const item = await client.itemGet({ access_token });
 
-    // // Check if the item already exists in the database
-    // const itemFound = await getItem(item.data.item.item_id);
+    // Add the new item to the database
+    const addItemResponse = await addItem(user?.id ?? "", item, access_token);
 
-    // // If the item exists, remove it from Plaid
-    // if (itemFound) await client.itemRemove({ access_token });
-
-    // // Add the new item to the database
-    // const addItemResponse = await addItem(user?.id ?? "", item, access_token);
-
-    // // Return the access token if the item was added successfully
-    // if (addItemResponse) return NextResponse.json({ access_token });
+    // Return the access token if the item was added successfully
+    if (addItemResponse) return NextResponse.json({ access_token });
 
     // Return an error if the item could not be added
     return NextResponse.json(
