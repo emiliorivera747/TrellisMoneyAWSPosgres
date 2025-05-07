@@ -13,6 +13,8 @@ import UserProfileAvatarMenu from "@/features/user-account/components/UserProfil
 
 import Link from "next/link";
 
+import Image from "next/image";
+
 const SideNavigationBar: React.FC = () => {
   const pathname = usePathname();
   const currentPath = pathname;
@@ -21,18 +23,17 @@ const SideNavigationBar: React.FC = () => {
     <aside className=" sm:border-tertiary-200 flex flex-col sm:flex-row justify-start w-full sm:justify-center sm:w-24 2xl:w-48  sticky text-white sm:border-r border-tertiary-300 border-box h-screen">
       <nav className=" flex flex-row sm:flex-col  pb-4 justify-between items-center my-[3.2rem]">
         <ul className="flex flex-row sm:flex-col w-full sm:justify-normal sm:items-start items-center">
-          <li className="h-[3rem] w-[3rem] sm:mb-4 hover:bg-tertiary-300 rounded-[100%] flex items-center justify-center">
-            <Link href="/dashboard">
-              <CldImage
-                alt="Trellis Money Logo"
-                src="https://res.cloudinary.com/dxxdfgpdh/image/upload/v1743799722/Adobe_Express_-_file_efjeww.png"
-                width="1000"
-                height="1000"
-                className="rounded-[100%] h-[3rem] w-[3rem] sm:h-[4rem] sm:w-[4rem] p-2 font-bold"
-                crop={{
-                  type: "auto",
-                  source: true,
-                }}
+          <li className="h-[3rem] w-[3rem] sm:mb-2 hover:bg-tertiary-300 rounded-[100%] flex items-center justify-center">
+            <Link
+              href="/dashboard"
+              className="flex items-center justify-center h-full w-full"
+            >
+              <Image
+                src="/Logo.svg"
+                alt="logo"
+                height={0}
+                width={0}
+                className="h-[2rem] w-[2rem]"
               />
             </Link>
           </li>
