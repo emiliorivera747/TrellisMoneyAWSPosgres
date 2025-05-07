@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
     /**
      *  Store the accounts in the database
      */
-    // await updateAccounts(accounts);
+ 
 
     return NextResponse.json(
       { message: "Retrieved accounts", data: accounts },
