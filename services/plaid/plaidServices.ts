@@ -15,7 +15,7 @@ const exchangeToken = async ({
   institution,
   accounts,
 }: ExchangeTokenProps) => {
-  await fetch(`${API_URL}/api/plaid/exchange-token`, {
+  await fetch(`${API_URL}/plaid/exchange-token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

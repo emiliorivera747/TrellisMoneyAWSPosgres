@@ -39,6 +39,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Check whether the accounts arleady exist in the database
+    accounts.forEach(async (account: any) => {
+      const existingAccount = await prisma.account.findFirst({
+        where: {
+          account_id: account.account_id,
+          user_id: user?.id,
+        },
+      });
+
+      // If the account already exists, return an error
+      if (existingAccount) {
+        return NextResponse.json(
+          { error: "Account already exists" },
+          { status: 400 }
+        );
+      }
+    })
+
     // Exchange the public token for an access token
     const response = await client.itemPublicTokenExchange({ public_token });
     const { access_token } = response.data;
