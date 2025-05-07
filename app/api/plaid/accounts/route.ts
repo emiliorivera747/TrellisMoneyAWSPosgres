@@ -20,7 +20,6 @@ export async function GET(req: NextRequest) {
     const user = await getUser();
 
     const items = await getItemsByUserId(user?.id || "");
-
     noItemsError(items); // Check if the items are empty or undefined
 
     /**

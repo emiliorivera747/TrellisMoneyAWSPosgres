@@ -19,28 +19,28 @@ export async function POST(req: NextRequest) {
   try {
     const supabase = await createClient();
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    // const {
+    //   data: { user },
+    // } = await supabase.auth.getUser();
 
-    // Exchange the public token for an access token
-    const response = await client.itemPublicTokenExchange({ public_token });
-    const { access_token } = response.data;
+    // // Exchange the public token for an access token
+    // const response = await client.itemPublicTokenExchange({ public_token });
+    // const { access_token } = response.data;
 
-    // Retrieve item details using the access token
-    const item = await client.itemGet({ access_token });
+    // // Retrieve item details using the access token
+    // const item = await client.itemGet({ access_token });
 
-    // Check if the item already exists in the database
-    const itemFound = await getItem(item.data.item.item_id);
+    // // Check if the item already exists in the database
+    // const itemFound = await getItem(item.data.item.item_id);
 
-    // If the item exists, remove it from Plaid
-    if (itemFound) await client.itemRemove({ access_token });
+    // // If the item exists, remove it from Plaid
+    // if (itemFound) await client.itemRemove({ access_token });
 
-    // Add the new item to the database
-    const addItemResponse = await addItem(user?.id ?? "", item, access_token);
+    // // Add the new item to the database
+    // const addItemResponse = await addItem(user?.id ?? "", item, access_token);
 
-    // Return the access token if the item was added successfully
-    if (addItemResponse) return NextResponse.json({ access_token });
+    // // Return the access token if the item was added successfully
+    // if (addItemResponse) return NextResponse.json({ access_token });
 
     // Return an error if the item could not be added
     return NextResponse.json(

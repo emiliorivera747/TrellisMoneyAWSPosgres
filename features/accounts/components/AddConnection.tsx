@@ -29,7 +29,9 @@ const AddConnection = () => {
         </h1>
       </div>
       <div className="px-6 flex my-auto items-center justify-center">
-        <Link linkToken={linkToken} />
+        {linkToken != null && linkToken.length > 0 && (
+          <Link linkToken={linkToken} itemId={null}/>
+        )}
       </div>
     </div>
   );

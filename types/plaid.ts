@@ -269,6 +269,7 @@ export interface LinkProps {
   linkToken: string | null;
   ref?: React.RefObject<HTMLButtonElement>;
   className?: string;
+  itemId?: string | null;
 }
 
 export interface GroupedAccounts {
