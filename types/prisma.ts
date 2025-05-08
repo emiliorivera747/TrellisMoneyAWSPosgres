@@ -1,5 +1,5 @@
 import { Decimal } from "decimal.js";
-import { PlaidError, Products, ItemUpdateTypeEnum, StringFieldUpdateOperationsInput |} from "plaid";
+import { PlaidError, Products, ItemUpdateTypeEnum } from "plaid";
 import { Account } from "@/types/plaid";
 export interface SecurityHistory {
   security_id: string;
@@ -31,11 +31,11 @@ export interface ItemPrisma {
   institution_id?: string | null | undefined;
   institution_name?: string | null;
   webhook?: string | null;
-  error: PlaidError | null;
-  available_products?: Array<Products>;
-  billed_products?: Array<Products>;
-  products?: Array<Products>;
-  consented_products?: Array<Products>;
+  error: PlaidError | null | string;
+  available_products?: Array<Products | string>;
+  billed_products?: Array<Products | string>;
+  products?: Array<Products | string>;
+  consented_products?: Array<Products | string>;
   request_id?: string | null;
   update_type?: string | null;
   consent_expiration_time?: string | null;

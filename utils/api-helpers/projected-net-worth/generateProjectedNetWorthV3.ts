@@ -28,10 +28,10 @@ export const generateProjectedNetWorthV3 = async (
   // Early return for empty holdings or invalid dates
   if (!accounts.length || end_year < start_year) return [];
   const hm: { [key: number]: number } = {};
-  const groups = Object.groupBy(accounts, (account) => account.type);
+  const groups = Object.groupBy(accounts, (account) => account.type as AccountType);
 
   for (let key in groups) {
-    const accounts = groups[key];
+    const accounts = groups[key as AccountType];
     if (key === "investment") {
       populateHashMapWithFvHoldings(
         hm,

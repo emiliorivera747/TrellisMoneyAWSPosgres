@@ -65,8 +65,8 @@ export interface Account {
   verification_status?: string | undefined | null;
   annual_return_rate?: number | null | Decimal;
   current?: number | null | Decimal;
-  name: string;
-  type: string;
+  name: string | null;
+  type: string | null;
   items?: Item;
   owners?: Owner[];
   user_id?: string;

@@ -1,4 +1,5 @@
 import { Item } from '@/types/plaid';
+import { ItemPrisma } from '@/types/prisma';
 
 const accountsData = [
       {
@@ -88,7 +89,7 @@ const accountsData = [
       }
 ];
 
-export const getAccounts = async (items: Item[]) => {
+export const getAccounts = async (items: ItemPrisma[]) => {
 
   // Get all of the access tokens in items
   const accessTokens = items.map((item) => item.access_token);

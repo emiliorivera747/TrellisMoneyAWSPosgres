@@ -2,8 +2,8 @@
 
 //Functions
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
-import { ProjectedAssets, ProjectedNetworth, ProjectionData } from "@/features/projected-financial-assets/types/projectedAssets";
-
+import { ProjectedAssets} from "@/features/projected-financial-assets/types/projectedAssets";
+import { FutureProjectionData } from "@/types/futureProjections";
 /**
  * Handles form submission to update the annual return rate.
  *
@@ -16,7 +16,7 @@ import { ProjectedAssets, ProjectedNetworth, ProjectionData } from "@/features/p
  */
 export const handleFormSubmission = (
   data: Record<string, number>,
-  projectionData: ProjectionData | undefined | null,
+  projectionData: FutureProjectionData | undefined | null,
   selectedFilter: string,
   user: any,
   mutate: (asset: any) => void,
@@ -44,7 +44,7 @@ export const handleFormSubmission = (
  * @param selectedFilter - Currently selected filter.
  */
 const getCurrentProjectedAsset = (
-  projectionData: ProjectionData,
+  projectionData: FutureProjectionData | undefined | null,
   selectedFilter: string
 ) => {
   return projectionData?.projected_assets?.find(

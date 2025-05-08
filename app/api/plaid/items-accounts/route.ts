@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getItemsByUserId, getItemsAndAccountsByUserId } from "@/utils/api-helpers/prisma/itemsService";
+import { getItemsByUserId } from "@/utils/api-helpers/prisma/itemsService";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
 import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
 import { noAccountsError } from "@/utils/api-helpers/errors/accountErrors";
@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     // const items = await getItemsByUserId(user?.id || "");
 
     // noItemsError(items); // Check if the items are empty or undefined
-    
+
     // /**
     //  *  Go through each item and fetch the accounts
     //  */
@@ -26,20 +26,18 @@ export async function GET(req: Request) {
     //  */
     // await updateAccounts(accounts);
 
-    const itemsWithAccounts = await getItemsAndAccountsByUserId(user?.id || "");
-
+    // const itemsWithAccounts = await getItemsAndAccountsByUserId(user?.id || "");
 
     // console.log("Items with accounts", itemsWithAccounts);
 
     return NextResponse.json(
-      { message: "Retrieved institutional items", data: itemsWithAccounts },
+      { message: "Retrieved institutional items", data: [] },
       { status: 200 }
     );
-
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
-      console.log("Error", errorMessage);
+    console.log("Error", errorMessage);
 
     return NextResponse.json({ message: errorMessage }, { status: 500 });
   }

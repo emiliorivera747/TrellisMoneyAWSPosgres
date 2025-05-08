@@ -90,7 +90,6 @@ export const createHoldingHistory = async (
       account_id: getValueOrDefault(holding?.account_id, ""),
       security_id: getValueOrDefault(holding?.security_id, ""),
       user_id: user_id,
-      timestamp: isoToUTC(timestamp),
     },
   });
 };

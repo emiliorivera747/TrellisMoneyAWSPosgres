@@ -3,7 +3,7 @@ import { AccountsGetRequest } from "plaid";
 import { prisma } from "@/lib/prisma";
 import { calculateNetWorth } from "@/utils/api-helpers/calculateNetWorth";
 import { createClient } from "@/utils/supabase/server";
-import { client } from "@/lib/config/plaidClient";
+import { client } from "@/config/plaidClient";
 
 export async function GET(req: NextRequest) {
   const request: AccountsGetRequest = {

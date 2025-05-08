@@ -1,4 +1,5 @@
 import { Assets } from "@/types/assets";
+import { Account } from "@/types/plaid";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import Decimal from "decimal.js";
 

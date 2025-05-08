@@ -97,7 +97,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error?.message);
     if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
     if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
     return handleOtherErrror(error);

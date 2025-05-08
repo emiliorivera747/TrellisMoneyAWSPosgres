@@ -32,7 +32,7 @@ export const generateProjectedFinancialAssets = async ({
     return [];
 
   const years = end_year - start_year;
-  const groups = Object.groupBy(accounts, ({ type }) => type);
+  const groups = Object.groupBy(accounts, ({ type }) => type || "unknown");
 
   return Object.entries(groups).flatMap(([type, accountList]) => {
     const config: ProjectionConfig = {
@@ -67,14 +67,14 @@ const calculateAccountAssets = (
     });
 
     return createFinancialAsset({
-      name: account.name,
+      name: account.name || "",
       annual_return_rate,
       projection,
       security_id: null,
       account_id: account.account_id,
       type,
       subtype: "cash",
-      total: account.balances?.current ?? 0,
+      total: account?.balance?.current ?? 0,
       shares: new Decimal(0),
     });
   });
@@ -114,7 +114,7 @@ const calculateInvestmentAssets = (
       type,
       subtype: "cash",
       total: institutional_value,
-      shares: quantity,
+      shares: new Decimal(quantity || 0),
     });
   });
 
@@ -150,7 +150,7 @@ const aggregateHoldingsByTicker = (
 
       const aggregate = aggregates.get(ticker_symbol) || {
         security_id: holding?.security?.security_id || "",
-        name: getHoldingNameV2(holding, name),
+        name: getHoldingNameV2(holding, name || ""),
         quantity: new Decimal(0),
         institution_value: new Decimal(0),
         annual_return_rate: new Decimal(annual_return_rate || 0).toNumber(),

@@ -44,7 +44,7 @@ const AccountCard = ({ account }: { account: Account }) => {
       </AlertDialogTrigger>
       <AlertDialogContent className="h-[70vh] w-[60vw] overflow-scroll max-w-screen rounded-[12px]">
         <AlertDialogHeader>
-          <ModalHeader title={account.name} />
+          <ModalHeader title={account.name || ""} />
 
           <div className="">
             <div className="text-md font-semibold border-b border-tertiary-200 pb-4 mx-2 mb-4">
