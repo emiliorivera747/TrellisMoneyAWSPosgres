@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import Script from "next/script";
 
+
 //External Libraries
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -10,7 +11,7 @@ import { ToastContainer } from "react-toastify";
 //Styles
 import localFont from "next/font/local";
 import "./globals.css";
-import { Rubik, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -52,15 +53,7 @@ export default function RootLayout({
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-R0GTFSV0LN"
         ></script>
-        <script id="google-analytics">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-  
-            gtag('config', 'G-R0GTFSV0LN');`
-            }
-        </script>
+
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased ${inter.className}`}
         >
