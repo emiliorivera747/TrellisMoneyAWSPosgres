@@ -1,11 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# Dashboard
+## Dashboard
 <img width="1510" alt="Screenshot 2025-06-09 at 7 54 18 PM" src="https://github.com/user-attachments/assets/0cecab3a-7f61-4877-8c22-366d9319965b" />
 
-# Sign In Page
+## Sign In Page
 <img width="1511" alt="Screenshot 2025-06-09 at 7 53 02 PM" src="https://github.com/user-attachments/assets/f3376d73-e44d-4c53-a47d-9b9b380e95cf" />
 
+## Subscription (Strip integration)
+<img width="1508" alt="Screenshot 2025-06-09 at 7 58 50 PM" src="https://github.com/user-attachments/assets/3641699e-664f-471d-acb9-e495d9e277ed" />
 
 ## Getting Started
 
