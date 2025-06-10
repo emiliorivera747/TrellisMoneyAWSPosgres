@@ -60,6 +60,11 @@ const SignInForm = () => {
     "Signed in successfully!"
   );
 
+
+  /**
+   * This component is responsible for rendering the sign in form.
+   * 
+   */
   return (
     <PrimaryAuthContainer>
       {/*  Sign in form */}
