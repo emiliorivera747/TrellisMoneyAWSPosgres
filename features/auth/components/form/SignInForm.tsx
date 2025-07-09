@@ -33,6 +33,12 @@ import { State } from "@/types/serverActionState";
 //Hooks
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
+/**
+ * 
+ * Displays the sign in form with email and password fields.
+ * 
+ * @returns SignInForm component
+ */
 const SignInForm = () => {
 
   const buttonRef = useRef(null);
