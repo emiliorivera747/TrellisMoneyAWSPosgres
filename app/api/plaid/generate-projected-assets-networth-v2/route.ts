@@ -2,13 +2,9 @@ import { NextResponse, NextRequest } from "next/server";
 
 //functions
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
-import { handleMissingData } from "@/utils/api-helpers/projected-net-worth/handleMissingData";
-import { handleErrors } from "@/utils/api-helpers/projected-net-worth/handleErrors";
 import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
 
 // Helpers
-import { updateSecurities } from "@/utils/api-helpers/plaid/investments/updateSecurities";
-import { updateHoldings } from "@/utils/api-helpers/plaid/investments/updateHoldings";
 import {
   handlePrismaErrorWithCode,
   isPrismaError,
@@ -17,15 +13,10 @@ import {
 } from "@/utils/api-helpers/prisma/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/getDates";
-import { getItemsById } from "@/utils/api-helpers/prisma/getItemsById";
-import { getHoldingsAndSecuritiesMock } from "@/utils/api-helpers/plaid/getHoldingsAndSecuritiesMock";
-import { getHoldingsAndSecurities } from "@/utils/api-helpers/prisma/getHoldingsAndSecurities";
 import { getAccountsHoldingsSecurities } from "@/utils/api-helpers/prisma/getAccountsHoldingsSecurities";
 import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV3";
 import { getItemsByUserId } from "@/utils/api-helpers/prisma/itemsService";
 import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
-import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
-import { updateHoldingsAndSecurities } from "@/utils/api-helpers/plaid/investments/updateHoldingsAndSecurities";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
 import { getInvestments } from "@/utils/api-helpers/plaid/investments/getInvestments";
 
@@ -62,9 +53,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     /**
      * Get the user's accounts
      */
-    // const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
-    // await getAccounts(items);
-    // await getInvestments(items, timestamp || "");
+    const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
+    await getAccounts(items);
+    await getInvestments(items, timestamp || "");
 
     //Get the user's updated holdings and securities
     const account_holdings_securities = await getAccountsHoldingsSecurities(

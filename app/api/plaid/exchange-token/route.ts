@@ -57,8 +57,6 @@ export async function POST(req: NextRequest) {
       }
     })
 
-    //Test
-
     // Exchange the public token for an access token
     const response = await client.itemPublicTokenExchange({ public_token });
     const { access_token } = response.data;
