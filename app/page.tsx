@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     "Trellis Money is a personal finance management tool. Track investments across all accounts. Set goals and budgets. Get insights into your spending.",
 };
 
+/**
+ * 
+ * Landing page for Trellis Money
+ * 
+ * @returns Home page
+ * 
+ */
 export default async function Home() {
   const supabase = await createClient();
 
