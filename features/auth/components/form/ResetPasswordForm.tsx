@@ -29,6 +29,7 @@ import { State } from "@/types/serverActionState";
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
 /**
+ * Form to help user navigate reset password
  *
  * @param {string | null} code reset password code
  * @returns Form to reset the password
