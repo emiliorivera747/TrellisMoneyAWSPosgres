@@ -12,6 +12,12 @@ interface User {
   uid: string;
 }
 
+/**
+ * Higher order component that redirects the user to the dashboard
+ * 
+ * @param children 
+ * @returns redirect
+ */
 const DashboardRedirect= ({ children }: ProtectedRouteProps) => {
   const supabase = createClient();
 
