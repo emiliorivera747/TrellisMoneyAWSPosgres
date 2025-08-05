@@ -1,8 +1,13 @@
 import React from "react";
 import zxcvbn from "zxcvbn";
 
+/**
+ * Checks the password strength and gives the use feedback.
+ *
+ * @param password
+ * @returns password strength component
+ */
 function PasswordStrengthChecker({ password }: { password: string }) {
-
   if (!password) {
     return null;
   }
@@ -26,7 +31,9 @@ function PasswordStrengthChecker({ password }: { password: string }) {
     <div className="text-[0.8rem] mb-2 ">
       <div className="flex flex-col items-start">
         <p className="text-[#343a40]">Password strength: {strengthLabel}</p>
-        {feedback && <p className="mb-1 text-xs text-[#495057] font-light">{feedback}</p>}
+        {feedback && (
+          <p className="mb-1 text-xs text-[#495057] font-light">{feedback}</p>
+        )}
       </div>
       <div className="w-full bg-gray-300 h-2 rounded mt-1">
         <div
