@@ -1,6 +1,11 @@
 
 import React from "react";
 
+/**
+ * Component serves as a divider for login and sign up page.
+ * 
+ * @returns divider 
+ */
 const OrDividerSkeleton = () => {
     return (
         <div className="flex justify-center items-center h-[5rem] w-full animate-pulse">
