@@ -1,7 +1,7 @@
 "use client";
 
 // React & Next
-import React, { useActionState} from "react";
+import React, { useActionState } from "react";
 import { useRouter } from "next/navigation";
 
 //External libraries
@@ -21,14 +21,18 @@ import {
   resetPasswordSchema,
 } from "@/features/auth/schemas/formSchemas";
 
-
 //Server Actions
-import { resetPassword} from "@/app/actions/actions";
+import { resetPassword } from "@/app/actions/actions";
 import { State } from "@/types/serverActionState";
 
 //Hooks
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
+/**
+ *
+ * @param {string | null} code reset password code
+ * @returns Form to reset the password
+ */
 const ResetPasswordForm = ({ code }: { code?: string | null }) => {
   const {
     register,
@@ -49,14 +53,16 @@ const ResetPasswordForm = ({ code }: { code?: string | null }) => {
     router.push("/dashboard");
   };
 
-  const {err} = useHandleActionState(state, setError,onSuccessFn, "Successfully updated password!");
+  const { err } = useHandleActionState(
+    state,
+    setError,
+    onSuccessFn,
+    "Successfully updated password!"
+  );
 
   return (
     <PrimaryAuthContainer>
-      <form
-        action={formAction}
-        className="flex flex-col gap-2"
-      >
+      <form action={formAction} className="flex flex-col gap-2">
         <PrimaryAuthHeader label="Reset Your Password" />
         <div className="flex flex-col  mb-2">
           <input type="hidden" name="code" value={code || ""} />
