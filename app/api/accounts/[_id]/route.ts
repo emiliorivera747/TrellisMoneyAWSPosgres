@@ -3,6 +3,14 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+/**
+ * 
+ * Makes updates to accounts based on the account id
+ * 
+ * @param req 
+ * @param param1 search params
+ * @returns 
+ */
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ _id: string }> }
