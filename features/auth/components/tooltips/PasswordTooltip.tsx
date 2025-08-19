@@ -15,6 +15,13 @@ const passwordCriteria = [
   { regex: /[^A-Za-z0-9]/, label: "At least 1 special character" },
 ];
 
+
+/**
+ * Shows tooltip for password
+ * 
+ * @param password
+ * @returns 
+ */
 const PasswordTooltip = ({ password }: { password: string }) => {
   return (
     <div className="relative z-50">
