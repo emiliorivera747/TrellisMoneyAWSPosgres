@@ -8,6 +8,17 @@ import { State } from "@/types/serverActionState";
 import { getSupabaseErrorMessage } from "@/features/auth/utils/getSupabaseErrorMessages";
 import { handleZodErrors } from "@/features/auth/utils/handleZodErrors";
 
+
+/**
+ * 
+ * The hooks is used to handle the server actions
+ * 
+ * @param state 
+ * @param setError 
+ * @param onSuccessFn 
+ * @param successMessage 
+ * @returns 
+ */
 export function useHandleActionState<TFields extends FieldValues>(
   state: State,
   setError: UseFormSetError<TFields>,
