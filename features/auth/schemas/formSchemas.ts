@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+
+/**
+ * Zod schemas for sign up
+ */
 export const signUpSchema = z.object({
   email: z
     .string()
@@ -21,6 +25,9 @@ export const signUpSchema = z.object({
     ),
 });
 
+/**
+ * Zod schemas for sign in
+ */
 export const signInSchema = z.object({
   email: z
     .string()
@@ -33,6 +40,9 @@ export const signInSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
+/**
+ * Zod schema for records
+ */
 export const recordSchema = z.object({
   record: z.object({
     id: z.string().uuid(), // id should be a valid UUID
@@ -94,6 +104,10 @@ export const recordSchema = z.object({
   }),
 });
 
+
+/**
+ * Zod schemas for password reset
+ */
 export const resetPasswordSchema = z.object({
   password: z
     .string()
@@ -120,6 +134,9 @@ export const loginHelpSchema = z.object({
   }, "Email local part cannot be longer than 63 characters"),
 });
 
+/**
+ * Zod schema for email verification
+ */
 export const emailVerificationSchema = z.object({
   email: z
     .string()
