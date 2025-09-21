@@ -21,6 +21,11 @@ interface PrimaryYearMenuProps {
   editRetirementYear: (year: number) => void;
 }
 
+
+/**
+ * Select Year menu button
+ * 
+ */
 const SelectYearMenuButton = ({
   years,
   retirementYear,
