@@ -22,7 +22,7 @@
   "prisma": {
     "seed": "ts-node --esm prisma/seed.ts",
     "migrate": "prisma migrate dev --name init",
-    "schema": "prisma/schema"
+    "schema": "./prisma/schema"
   },
   "dependencies": {
     "@apollo/server": "^4.11.3",
