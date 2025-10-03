@@ -19,17 +19,17 @@ export const getAccounts = async (
 
   // Get all of the accounts associated with the access tokens and add corresponding item_id
   const accounts = await Promise.all(
+    
     accessTokens.map(async (token) => {
+      
       const response = await client.accountsGet({ access_token: token });
-      console.log("Full Accounts Response:", JSON.stringify(response.data, null, 2));
+      
       return response.data.accounts.map((account) => ({
         ...account,
         item_id: response.data.item.item_id,
       }));
     })
   );
-
-  console.log("Accounts", accounts);
 
   return accounts;
 };

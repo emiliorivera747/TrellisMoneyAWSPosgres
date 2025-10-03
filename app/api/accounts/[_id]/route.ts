@@ -19,7 +19,7 @@ export async function PATCH(
 
     const body = await req.json();
     const { user_id, annual_growth_rate } = body;
-    const {_id} = await params;
+    const { _id } = await params;
 
     // Validate inputs
     if (!_id || !user_id) {
@@ -49,9 +49,11 @@ export async function PATCH(
       },
       { status: 200 }
     );
+
   } catch (error) {
 
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
+
     return NextResponse.json(
       {
         message: errorMessage,

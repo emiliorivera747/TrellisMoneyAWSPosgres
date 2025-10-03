@@ -54,9 +54,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     /**
      * Get the user's accounts
      */
-    const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
-    await getAccounts(items);
-    await getInvestments(items, timestamp || "");
+    // const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
+    // await getAccounts(items);
+    // await getInvestments(items, timestamp || "");
 
     //Get the user's updated holdings and securities
     const account_holdings_securities = await getAccountsHoldingsSecurities(

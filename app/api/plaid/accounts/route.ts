@@ -25,9 +25,9 @@ export async function GET(req: NextRequest) {
     /**
      *  Go through each item and fetch the accounts
      */
-    const accounts = await getAccounts(items);
+    // const accounts = await getAccounts(items);
 
-    // const accounts = await getAccountWithItemIds(items);
+    const accounts = await getAccountWithItemIds(items);
 
 
     noAccountsError(accounts); // Check if the accounts are empty or undefined
