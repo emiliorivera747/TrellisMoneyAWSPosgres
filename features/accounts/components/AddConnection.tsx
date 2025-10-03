@@ -2,8 +2,19 @@
 
 import React from "react";
 
-// Link
-import Link from "@/features/plaid/components/Link";
+// Components
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import AddAccount from "@/features/accounts/components/buttons/AddAccount";
+
 
 // Hooks
 import useGenerateToken from "@/hooks/plaid/useGenerateToken";
@@ -17,20 +28,21 @@ import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 const AddConnection = () => {
   const linkToken = useGenerateToken();
   return (
-    <div
-      style={{
-        boxShadow: "rgba(0, 0, 0, 0.12) 0px 6px 16px",
-      }}
-      className="border border-tertiary-400  w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem]"
-    >
-      <div className="border-b w-full px-6 flex text-center items-center justify-start h-[4rem] ">
-        <h1 className="text-[1rem] text-tertiary-800 font-semibold">
-          Add Connection
-        </h1>
-      </div>
-      <div className="px-6 flex my-auto items-center justify-center">
-        <Link linkToken={linkToken} itemId={null} />
-      </div>
+    <div className=" w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem]">
+      <Dialog>
+        <DialogTrigger>
+          <AddAccount />
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
