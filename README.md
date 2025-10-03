@@ -7,8 +7,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 <img width="1511" alt="Screenshot 2025-06-09 at 7 53 02 PM" src="https://github.com/user-attachments/assets/f3376d73-e44d-4c53-a47d-9b9b380e95cf" />
 
 ## Subscription (Stripe integration)
-<img width="1508" alt="Screenshot 2025-06-09 at 7 58 50 PM" src="https://github.com/user-attac<img width="1509" height="856" alt="Screenshot 2025-10-02 at 8 08 25 PM" src="https://github.com/user-attachments/assets/2cb12563-72d3-42a3-bb3d-3d28eb7f0d99" />
-hments/assets/3641699e-664f-471d-acb9-e495d9e277ed" />
+<img width="1508" alt="Screenshot 2025-06-09 at 7 58 50 PM" src="https://github.com/user-attachments/assets/3641699e-664f-471d-acb9-e495d9e277ed" />
+
+## Plaid Integration
+<img width="1509" height="856" alt="Screenshot 2025-10-02 at 8 08 25 PM" src="https://github.com/user-attachments/assets/2cb12563-72d3-42a3-bb3d-3d28eb7f0d99" />
 
 
 ## Getting Started
