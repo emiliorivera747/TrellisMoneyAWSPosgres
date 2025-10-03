@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { client } from "@/config/plaidClient";
 import { ItemGetResponse } from "plaid";
 import { AxiosResponse } from "axios";
+import { getUser } from "@/utils/api-helpers/supabase/getUser";
 
 /**
  * Handles the POST request to exchange a public token for an access token
@@ -13,18 +14,12 @@ import { AxiosResponse } from "axios";
  * @returns A JSON response with the access token or an error message
  */
 export async function POST(req: NextRequest) {
-  
-  const {public_token, institution, accounts} = await req.json();
-  
-  const {institution_id} = institution;
+  const { public_token, institution, accounts } = await req.json();
+
+  const { institution_id } = institution;
 
   try {
-    
-    const supabase = await createClient();
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = getUser();
 
     // Look up items in the database to check if the institution is already connected
     const items = await prisma.item.findMany({
@@ -58,7 +53,7 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
-    })
+    });
 
     // Exchange the public token for an access token
     const response = await client.itemPublicTokenExchange({ public_token });

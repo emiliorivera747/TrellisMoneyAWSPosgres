@@ -11,6 +11,7 @@ import plaidServices from "@/services/plaid/plaidServices";
 const Link = ({ linkToken, ref, className, itemId }: LinkProps) => {
   const onSuccess = useCallback(async (public_token: string, metadata: any) => {
     const { institution, accounts } = metadata;
+    
     if (itemId !== null) {
       // Handle Update mode
     } else {

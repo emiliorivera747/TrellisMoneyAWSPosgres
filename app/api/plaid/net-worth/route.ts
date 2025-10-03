@@ -2,8 +2,12 @@ import { NextResponse, NextRequest } from "next/server";
 import { AccountsGetRequest } from "plaid";
 import { prisma } from "@/lib/prisma";
 import { calculateNetWorth } from "@/utils/api-helpers/calculateNetWorth";
-import { createClient } from "@/utils/supabase/server";
-import { client } from "@/config/plaidClient";
+import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getItemsByUserId } from "@/utils/api-helpers/prisma/itemsService";
+import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
+import { getAccountsFromPlaid } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
+import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
+
 
 export async function GET(req: NextRequest) {
   const request: AccountsGetRequest = {
@@ -11,15 +15,30 @@ export async function GET(req: NextRequest) {
   };
 
   try {
-    const supabase = await createClient();
+    const user = await getUser();
 
-    // Get the user
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    /**
+     * Get all institutional items
+     * */
+    const items = await getItemsByUserId(user?.id || "");
+    noItemsError(items);
+
+    /**
+     * Plaid Accounts
+     */
+    // const plaidAccounts = await getAccountsFromPlaid(items);
+
+    /**
+     * Store accounts in Database
+     */
+    // await updateAccounts(plaidAccounts);
+
 
     // const response = await client.accountsBalanceGet(request);
 
+    /**
+     * Retrieve all accounts
+     */
     const accounts = await prisma.account.findMany({
       where: {
         user_id: user?.id || "",
