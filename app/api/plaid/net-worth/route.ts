@@ -12,6 +12,8 @@ export async function GET(req: NextRequest) {
 
   try {
     const supabase = await createClient();
+
+    // Get the user
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -23,6 +25,7 @@ export async function GET(req: NextRequest) {
         user_id: user?.id || "",
       },
     });
+
     const data = calculateNetWorth(accounts);
 
     return NextResponse.json({ data }, { status: 200 });

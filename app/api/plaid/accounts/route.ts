@@ -25,29 +25,24 @@ export async function GET(req: NextRequest) {
     /**
      *  Go through each item and fetch the accounts
      */
-    // const accounts = await getAccounts(items);
-
-    const accounts = await getAccountWithItemIds(items);
-
-
-    noAccountsError(accounts); // Check if the accounts are empty or undefined
+    const accounts = await getAccounts(items);
 
     /**
      *  Store the accounts in the database
      */
     await updateAccounts(accounts);
- 
+
+    const accountsWithIds = await getAccountWithItemIds(items);
+
+    noAccountsError(accountsWithIds); // Check if the accounts are empty or undefined
 
     return NextResponse.json(
-      { message: "Retrieved accounts", data: accounts },
+      { message: "Retrieved accounts", data: accountsWithIds },
       { status: 200 }
     );
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    console.log("Error fetching accounts:", errorMessage);
-    return NextResponse.json(
-      { error: errorMessage },
-      { status: 500 }
-    );
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
