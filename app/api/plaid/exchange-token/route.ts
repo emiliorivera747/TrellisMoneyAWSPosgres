@@ -13,10 +13,13 @@ import { AxiosResponse } from "axios";
  * @returns A JSON response with the access token or an error message
  */
 export async function POST(req: NextRequest) {
+  
   const {public_token, institution, accounts} = await req.json();
+  
   const {institution_id} = institution;
 
   try {
+    
     const supabase = await createClient();
 
     const {

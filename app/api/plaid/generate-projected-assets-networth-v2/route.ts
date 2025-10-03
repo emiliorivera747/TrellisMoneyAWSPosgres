@@ -62,6 +62,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const account_holdings_securities = await getAccountsHoldingsSecurities(
       user?.id || ""
     );
+    
     const projected_net_worth = await generateProjectedNetWorthV3(
       account_holdings_securities[0].accounts,
       start_year,

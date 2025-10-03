@@ -27,11 +27,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       { link_token: linkTokenResponse },
       { status: 200 }
     );
+
   } catch (error) {
+
     return NextResponse.json(
       { error: ERROR_MESSAGES.LINK_TOKEN_ERROR },
       { status: 500 }
     );
+    
   }
 }
 

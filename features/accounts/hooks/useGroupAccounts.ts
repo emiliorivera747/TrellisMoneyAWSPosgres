@@ -11,16 +11,17 @@ import { Account, GroupedAccounts } from "@/types/plaid";
  */
 const useGroupAccounts = ({ accounts }: { accounts: Account[] }) => {
   const [groups, setGroups] = useState<GroupedAccounts>({});
+
   useEffect(() => {
     const groupedAccounts = accounts?.reduce(
       (acc: { [key: string]: Account[] }, account) => {
-        const { type } = account;
         
+        const { type } = account;
+
         if (!type) return acc;
 
-        if (!acc[type]) {
-          acc[type] = [];
-        }
+        if (!acc[type]) acc[type] = [];
+        
         acc[type].push(account);
         return acc;
       },

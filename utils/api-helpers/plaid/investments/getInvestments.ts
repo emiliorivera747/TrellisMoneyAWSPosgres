@@ -16,6 +16,7 @@ export const getInvestments = async (
   items: ItemPrisma[],
   timestamp: string
 ) => {
+  
   /**
    *  Get all of the access tokens from the items
    */
