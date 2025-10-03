@@ -1,0 +1,7 @@
+model Household {
+    household_id String    @id @default(cuid())
+    name         String    @default("Shared Household")
+    members      User[]    @relation("HouseholdMembers")
+    items        Item[]
+    account      Account[]
+}

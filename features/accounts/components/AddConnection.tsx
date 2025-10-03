@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/dialog";
 import AddAccount from "@/features/accounts/components/buttons/AddAccount";
 
-
 // Hooks
 import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 
@@ -35,8 +34,8 @@ const AddConnection = () => {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
+            <DialogTitle>Who is the owner of the account?</DialogTitle>
+            <DialogDescription className="py-6">
               This action cannot be undone. This will permanently delete your
               account and remove your data from our servers.
             </DialogDescription>
