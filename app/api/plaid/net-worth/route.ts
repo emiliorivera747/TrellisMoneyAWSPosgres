@@ -10,10 +10,6 @@ import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccount
 
 
 export async function GET(req: NextRequest) {
-  const request: AccountsGetRequest = {
-    access_token: process.env.PLAID_ACCESS_TOKEN || "",
-  };
-
   try {
     const user = await getUser();
 
@@ -26,12 +22,12 @@ export async function GET(req: NextRequest) {
     /**
      * Plaid Accounts
      */
-    // const plaidAccounts = await getAccountsFromPlaid(items);
+    const plaidAccounts = await getAccountsFromPlaid(items);
 
     /**
      * Store accounts in Database
      */
-    // await updateAccounts(plaidAccounts);
+    await updateAccounts(plaidAccounts);
 
 
     // const response = await client.accountsBalanceGet(request);

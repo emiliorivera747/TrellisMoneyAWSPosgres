@@ -25,12 +25,12 @@ export async function GET(req: NextRequest) {
     /**
      *  Go through each item and fetch the accounts
      */
-    // const accounts = await getAccounts(items);
+    const accounts = await getAccounts(items);
 
     /**
      *  Store the accounts in the database
      */
-    // await updateAccounts(accounts);
+    await updateAccounts(accounts);
 
     const accountsWithIds = await getAccountWithItemIds(items);
 
