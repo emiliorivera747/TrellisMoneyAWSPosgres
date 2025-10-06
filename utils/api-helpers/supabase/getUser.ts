@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 /**
  * Gets the user from Supabase
  * 
- * @returns 
+ * @returns the user
  * 
  */
 export const getUser = async () => {

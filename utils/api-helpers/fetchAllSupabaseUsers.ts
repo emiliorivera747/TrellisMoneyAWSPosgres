@@ -1,5 +1,7 @@
 import { createClient } from "@/utils/supabase/client";
 
+
+
 export async function fetchAllSupabaseUsers() {
   const supabase = createClient();
   const { data, error } = await supabase.auth.admin.listUsers();
