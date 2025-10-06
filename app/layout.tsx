@@ -16,6 +16,10 @@ import { Analytics } from "@vercel/analytics/react";
 //Components
 import { ReactQueryClientProvider } from "@/features/react-query/components/ReactQueryClientProvider";
 
+/**
+ * We will be using inter as our main font
+ * 
+ */
 const inter = Inter({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // Load all weights
@@ -39,6 +43,14 @@ export const metadata: Metadata = {
     "Trellis Money is a personal finance management tool. Track investments across all accounts. Set goals and budgets. Get insights into your spending.",
 };
 
+
+/**
+ * 
+ * The root layout for the application
+ * 
+ * @param param0 
+ * @returns 
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
