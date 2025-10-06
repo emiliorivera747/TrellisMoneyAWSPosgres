@@ -9,6 +9,13 @@ import { getAccountsFromPlaid } from "@/utils/api-helpers/plaid/accounts/getAcco
 import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
 
 
+/**
+ * 
+ * The API calculates the user net worth
+ * 
+ * @param req 
+ * @returns 
+ */
 export async function GET(req: NextRequest) {
   try {
     const user = await getUser();
