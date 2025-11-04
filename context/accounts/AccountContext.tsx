@@ -9,8 +9,6 @@ const AccountsContext = createContext<any>(null);
 /**
  * Custom hook to use the AccountsContext
  *
- * @param children
- * @returns
  */
 export const AccountsProvider = ({ children }: any) => {
   const accountState = useAccounts();
@@ -24,7 +22,6 @@ export const AccountsProvider = ({ children }: any) => {
 /**
  * Custom hook to use the AccountsContext
  *
- * @returns
  */
 export const useAccountsContext = () => {
   const context = useContext(AccountsContext);
