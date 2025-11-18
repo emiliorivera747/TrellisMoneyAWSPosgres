@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 
-//functions
+// Functions
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
 
@@ -20,7 +20,7 @@ import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
 import { getInvestments } from "@/utils/api-helpers/plaid/investments/getInvestments";
 
-//types
+// Types
 import { ItemPrisma } from "@/types/prisma";
 
 const default_inflation_rate = 0.025;
@@ -33,7 +33,6 @@ const default_inflation_rate = 0.025;
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    
     /**
      * Get the timestamp from the request body
      */
@@ -58,11 +57,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     await getAccounts(items);
     await getInvestments(items, timestamp || "");
 
-    //Get the user's updated holdings and securities
+    // Get the user's updated holdings and securities
     const account_holdings_securities = await getAccountsHoldingsSecurities(
       user?.id || ""
     );
-    
+
     const projected_net_worth = await generateProjectedNetWorthV3(
       account_holdings_securities[0].accounts,
       start_year,
@@ -71,13 +70,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       default_inflation_rate
     );
 
-    const projected_assets = await generateProjectedFinancialAssets(
-      {start_year: start_year,
+    const projected_assets = await generateProjectedFinancialAssets({
+      start_year: start_year,
       end_year: end_year,
       with_inflation: searchParams.get("with_inflation") === "true",
       annual_inflation_rate: default_inflation_rate,
-      accounts: account_holdings_securities[0].accounts}
-    );
+      accounts: account_holdings_securities[0].accounts,
+    });
 
     return NextResponse.json(
       {
