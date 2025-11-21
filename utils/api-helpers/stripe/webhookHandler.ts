@@ -73,6 +73,7 @@ export const getSubscriptionData = (priceId: string): SubscriptionData => {
 
 /**
  * Handles the checkout session completed event from Stripe.
+ * Optimized to batch database operations where possible
  *
  * @param event
  */
@@ -96,73 +97,79 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
     throw new Error("User not found");
   }
 
-  // Update customer ID if not present
-  if (!user.customer_id) {
+  // Process line items
+  const lineItems = session.line_items?.data ?? [];
+  const subscriptionItem = lineItems.find(item => {
+    const priceId = item.price?.id;
+    const isSubscription = !!item.price?.recurring;
+    return priceId && isSubscription;
+  });
+
+  if (subscriptionItem) {
+    const priceId = subscriptionItem.price?.id;
+    if (!priceId) return;
+
+    const subscriptionData = getSubscriptionData(priceId);
+    
+    // Batch user and subscription updates in a single transaction
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { user_id: user.user_id },
+        data: { 
+          customer_id: user.customer_id ? undefined : customerId,
+          plan: "premium"
+        },
+      }),
+      prisma.subscription.upsert({
+        where: { user_id: user.user_id },
+        update: subscriptionData,
+        create: {
+          ...subscriptionData,
+          user_id: user.user_id,
+        },
+      })
+    ]);
+  } else if (!user.customer_id) {
+    // Only update customer ID if needed and no subscription was found
     await prisma.user.update({
       where: { user_id: user.user_id },
       data: { customer_id: customerId },
     });
   }
-
-  // Process line items
-  const lineItems = session.line_items?.data ?? [];
-  for (const item of lineItems) {
-    const priceId = item.price?.id;
-    const isSubscription = !!item.price?.recurring;
-
-    if (!priceId || !isSubscription) continue;
-
-    // Update or create subscription
-    const subscriptionData = getSubscriptionData(priceId);
-    await prisma.subscription.upsert({
-      where: { user_id: user.user_id },
-      update: subscriptionData,
-      create: {
-        ...subscriptionData,
-        user_id: user.user_id,
-      },
-    });
-
-    // Update user plan
-    await prisma.user.update({
-      where: { user_id: user.user_id },
-      data: { plan: "premium" },
-    });
-  }
 };
 
+/**
+ * Handles subscription deletion event from Stripe
+ * Optimized to batch user and subscription updates in a single transaction
+ * 
+ * @param event
+ */
 export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
   const subscription = await stripe.subscriptions.retrieve(
     (event.data.object as Stripe.Subscription).id
   );
 
-
   const user = await prisma.user.findUnique({
     where: { customer_id: subscription.customer as string },
   });
 
-  if (user) {
+  if (!user) {
+    throw new Error("User not found for the subscription deleted event.");
+  }
 
-    /** Update the user plan */
-    await prisma.user.update({
+  // Batch user and subscription updates in a single transaction
+  await prisma.$transaction([
+    prisma.user.update({
       where: { user_id: user.user_id },
-      data: { plan: "free"},
-    });
-
-    /**
-     * Update the users subscription
-     */
-    await prisma.subscription.update({
+      data: { plan: "free" },
+    }),
+    prisma.subscription.update({
       where: { user_id: user.user_id },
       data: {
         plan: "free",
         status: "inactive",
         end_date: new Date(),
       },
-    });
-  }
-  else{
-    throw new Error("User not found for the subscription deleted event.");
-
-  }
+    })
+  ]);
 };
