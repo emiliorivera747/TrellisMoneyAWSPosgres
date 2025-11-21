@@ -78,7 +78,7 @@ export const generateProjectedNetWorthV3 = async (
 /**
  *
  * populates the projected net worth for each day
- *
+ * Optimized to reduce redundant calculations and improve efficiency
  *
  * @param projectedNetWorth
  * @param start_year
@@ -91,25 +91,26 @@ const pushProjectedNetWorthToEachDay = (
   end_year: number,
   hm: { [key: number]: number }
 ) => {
-  const days = (end_year - start_year) * 365; // Only include the first month of the last year
+  const days = (end_year - start_year) * 365;
 
   for (let i = 0; i <= days; i++) {
     const year = start_year + Math.floor(i / 365);
     const dayOfYear = i % 365;
 
-    // Interpolate between the two values for this year and next year
-    let previousValue = hm[year] || 0;
-    let nextValue = hm[year + 1] || previousValue;
+    // Early exit if we're past the first month of the last year
+    if (year === end_year && dayOfYear >= 30) break;
+
+    // Get values for interpolation
+    const previousValue = hm[year] || 0;
+    const nextValue = hm[year + 1] || previousValue;
 
     // Linearly interpolate between the current year's value and next year's value
-    const interpolationFactor = (i % 365) / 365;
+    const interpolationFactor = dayOfYear / 365;
     const interpolatedValue =
       previousValue + (nextValue - previousValue) * interpolationFactor;
-    const date = new Date(year, 0, 1);
-    date.setDate(date.getDate() + dayOfYear);
+    
+    const date = new Date(year, 0, 1 + dayOfYear);
 
-    // Only push dates within the first month of the last year
-    if (year === end_year && date.getMonth() > 0) break;
     projectedNetWorth.push({
       date: date,
       close: Math.round(interpolatedValue * 100) / 100,
@@ -121,11 +122,12 @@ const pushProjectedNetWorthToEachDay = (
  *
  * populates the hashmap with the projected net worth
  * for each year
+ * Optimized to pre-calculate holdings data outside the year loop
  *
  * @param hm
  * @param start_year
  * @param end_year
- * @param holdings
+ * @param accounts
  * @returns
  */
 const populateHashMapWithFvHoldings = (
@@ -136,42 +138,38 @@ const populateHashMapWithFvHoldings = (
   with_inflation: boolean,
   annual_inflation_rate: number
 ) => {
-  for (const account of accounts) {
-    const holdings = account.holdings ?? [];
-    /**
-     * Go through each year and calculate the future value of the holdings
-     */
-    for (let i = 0; i < end_year - start_year + 1; i++) {
-      let total = 0;
-      for (const holding of holdings) {
-        const { quantity, close_price, annual_return_rate } =
-          getFormulaValues(holding);
+  // Pre-calculate holding data for reuse across years
+  const holdingsData = accounts.flatMap(account => 
+    (account.holdings ?? []).map(holding => getFormulaValues(holding))
+  );
 
-        if (with_inflation) {
-          let fv = future_value_with_inflation_fn(
-            quantity,
-            close_price,
-            annual_return_rate,
-            annual_inflation_rate,
-            i
-          );
+  const yearRange = end_year - start_year + 1;
 
-          total += fv;
-        } else if (!with_inflation) {
-          let fv = future_value_fn(
-            quantity,
-            close_price,
-            annual_return_rate,
-            i
-          );
-
-          total += fv;
-        }
+  // Calculate future values for each year
+  for (let i = 0; i < yearRange; i++) {
+    let total = 0;
+    
+    for (const { quantity, close_price, annual_return_rate } of holdingsData) {
+      if (with_inflation) {
+        total += future_value_with_inflation_fn(
+          quantity,
+          close_price,
+          annual_return_rate,
+          annual_inflation_rate,
+          i
+        );
+      } else {
+        total += future_value_fn(
+          quantity,
+          close_price,
+          annual_return_rate,
+          i
+        );
       }
-      hm[start_year + i] = hm[start_year + i]
-        ? hm[start_year + i] + total
-        : total;
     }
+    
+    const year = start_year + i;
+    hm[year] = (hm[year] || 0) + total;
   }
 };
 
@@ -179,11 +177,12 @@ const populateHashMapWithFvHoldings = (
  *
  * populates the hashmap with the projected net worth
  * for each year
+ * Optimized to pre-calculate account data and remove redundant conditions
  *
  * @param hm
  * @param start_year
  * @param end_year
- * @param holdings
+ * @param accounts
  * @returns
  */
 const populateHashMapWithFvAccounts = (
@@ -194,40 +193,43 @@ const populateHashMapWithFvAccounts = (
   with_inflation: boolean,
   annual_inflation_rate: number
 ) => {
-  for (const account of accounts) {
-    const annual_return_rate = account.annual_return_rate;
-    const current_amount = account.current;
+  // Pre-calculate account data for reuse
+  const accountsData = accounts.map(account => ({
+    current_amount: account.current ?? 0,
+    annual_return_rate: account.annual_return_rate ?? 0,
+    isNegative: account.type === "loan" || account.type === "credit"
+  }));
 
-    /**
-     * Go through each year and calculate the future value of the holdings
-     */
-    for (let i = 0; i < end_year - start_year + 1; i++) {
-      let total = 0;
+  const yearRange = end_year - start_year + 1;
 
+  // Calculate future values for each year
+  for (let i = 0; i < yearRange; i++) {
+    let total = 0;
+
+    for (const { current_amount, annual_return_rate, isNegative } of accountsData) {
+      let fv: number;
+      
       if (with_inflation) {
-        let fv = future_value_with_inflation_fn(
+        fv = future_value_with_inflation_fn(
           1,
-          current_amount ?? 0,
-          annual_return_rate ?? 0,
+          current_amount,
+          annual_return_rate,
           annual_inflation_rate,
           i
         );
-        if (account.type === "loan" || account.type === "credit") fv = -fv;
-        total += fv;
-      } else if (!with_inflation) {
-        let fv = future_value_fn(
+      } else {
+        fv = future_value_fn(
           1,
-          current_amount ?? 0,
-          annual_return_rate ?? 0,
+          current_amount,
+          annual_return_rate,
           i
         );
-        if (account.type === "loan" || account.type === "credit") fv = -fv;
-        total += fv;
       }
-
-      hm[start_year + i] = hm[start_year + i]
-        ? hm[start_year + i] + total
-        : total;
+      
+      total += isNegative ? -fv : fv;
     }
+
+    const year = start_year + i;
+    hm[year] = (hm[year] || 0) + total;
   }
 };
