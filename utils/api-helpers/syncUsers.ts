@@ -1,37 +1,52 @@
 import { prisma } from "@/lib/prisma";
 import { fetchAllSupabaseUsers } from "@/utils/api-helpers/fetchAllSupabaseUsers";
 
+/**
+ * Syncs users between Supabase and the database
+ * Optimized to batch operations and avoid N+1 queries
+ */
 export async function syncUsers() {
   const supabaseUsers = await fetchAllSupabaseUsers();
   const existingUsers = await prisma.user.findMany();
 
-  // If the user exists in our database but not in Supabase, we delete it
-  for (const existingUser of existingUsers) {
-    const supabaseUser = supabaseUsers.find(
-      (user) => user.id === existingUser.user_id
-    );
+  // Create sets for O(1) lookup performance
+  const supabaseUserIds = new Set(supabaseUsers.map((user) => user.id));
+  const existingUserIds = new Set(existingUsers.map((user) => user.user_id));
 
-    if (!supabaseUser) {
-      await prisma.user.delete({
-        where: { user_id: existingUser.user_id },
-      });
-    }
+  // Find users to delete (exist in DB but not in Supabase)
+  const usersToDelete = existingUsers
+    .filter((existingUser) => !supabaseUserIds.has(existingUser.user_id))
+    .map((user) => user.user_id);
+
+  // Find users to create (exist in Supabase but not in DB)
+  const usersToCreate = supabaseUsers
+    .filter((supabaseUser) => !existingUserIds.has(supabaseUser.id))
+    .map((user) => ({
+      email: user.email || "none",
+      user_id: user.id,
+    }));
+
+  // Execute batch operations
+  const operations = [];
+
+  if (usersToDelete.length > 0) {
+    operations.push(
+      prisma.user.deleteMany({
+        where: { user_id: { in: usersToDelete } },
+      })
+    );
   }
 
-  
-  // If the user doesn't exist in our database, we create it
-  for (const supabaseUser of supabaseUsers) {
-    const existingUser = await prisma.user.findUnique({
-      where: { user_id: supabaseUser.id },
-    });
+  if (usersToCreate.length > 0) {
+    operations.push(
+      prisma.user.createMany({
+        data: usersToCreate,
+        skipDuplicates: true,
+      })
+    );
+  }
 
-    if (!existingUser) {
-      await prisma.user.create({
-        data: {
-          email: supabaseUser.email ? supabaseUser.email : "none",
-          user_id: supabaseUser.id,
-        },
-      });
-    } 
+  if (operations.length > 0) {
+    await prisma.$transaction(operations);
   }
 }

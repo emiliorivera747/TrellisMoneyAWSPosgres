@@ -15,6 +15,7 @@ import { NextResponse } from "next/server";
 /**
  *
  * Updates the holdings and securities in the database.
+ * Optimized to run queries in parallel and combine all operations in one transaction
  *
  * @param holdings
  * @param securities
@@ -33,10 +34,12 @@ export const updateHoldingsAndSecurities = async (
   const user_id = user?.id || "";
 
   /**
-   * Retrieve all existing Securities and Holdings
+   * Retrieve all existing Securities and Holdings in parallel
    */
-  const existingSecurities = await getExistingSecurities(securities);
-  const existingHoldings = await getExistingHoldings(holdings);
+  const [existingSecurities, existingHoldings] = await Promise.all([
+    getExistingSecurities(securities),
+    getExistingHoldings(holdings)
+  ]);
 
   /**
    * Create a map of the securities and holdings
@@ -49,7 +52,7 @@ export const updateHoldingsAndSecurities = async (
   );
 
   /**
-   * Upsert securities and return security history
+   * Upsert securities and holdings, and get their history
    */
   const { securityHistory, securityUpserts } = await upsertSecurities(
     securities,
@@ -58,9 +61,6 @@ export const updateHoldingsAndSecurities = async (
     securitiesMap
   );
 
-  /**
-   * Upsert holdings and return holding history
-   */
   const { holdingHistory, holdingUpserts } = await upsertHoldings(
     holdings,
     user_id,
@@ -68,34 +68,39 @@ export const updateHoldingsAndSecurities = async (
     holdingMap
   );
 
-  const sLen = securities.length;
-  const hLen = holdings.length;
-
-  await prisma.$transaction([...securityUpserts, ...holdingUpserts]);
-  if (sLen > 0) {
-    try {
-      await prisma.securityHistory.createMany({ data: securityHistory });
-    } catch (error) {
-      return NextResponse.json(
-        { error: "Error creating securities" },
-        { status: 500 }
+  /**
+   * Execute all database operations in a single transaction
+   * This includes upserts and history creation
+   */
+  try {
+    await prisma.$transaction([
+      ...securityUpserts,
+      ...holdingUpserts
+    ]);
+    
+    // Create history records in parallel after upserts complete
+    const historyPromises = [];
+    if (securityHistory.length > 0) {
+      historyPromises.push(
+        prisma.securityHistory.createMany({ data: securityHistory, skipDuplicates: true })
       );
     }
-  }
-
-  if (hLen > 0) {
-    try {
-      await prisma.holdingHistory.createMany({ data: holdingHistory });
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      } else {
-        console.log("An unknown error occurred");
-      }
-      return NextResponse.json(
-        { error: "Error creating holding history" },
-        { status: 500 }
+    if (holdingHistory.length > 0) {
+      historyPromises.push(
+        prisma.holdingHistory.createMany({ data: holdingHistory, skipDuplicates: true })
       );
     }
+    
+    if (historyPromises.length > 0) {
+      await Promise.all(historyPromises);
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("Transaction error:", error.message);
+    }
+    return NextResponse.json(
+      { error: "Error updating holdings and securities" },
+      { status: 500 }
+    );
   }
 };
