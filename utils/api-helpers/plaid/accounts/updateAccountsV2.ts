@@ -34,6 +34,7 @@ export async function updateAccounts(
     const accountData = extractAccountData(account, balances);
 
     // Queue balance upsert operation
+    // Note: Logic duplicated from updateBalance() for batching performance
     balanceOperations.push(
       prisma.balance.upsert({
         where: { balance_id: account.account_id },

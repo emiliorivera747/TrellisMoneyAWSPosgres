@@ -73,23 +73,27 @@ export const updateHoldingsAndSecurities = async (
    * This includes upserts and history creation
    */
   try {
-    await prisma.$transaction(async (tx) => {
-      // Execute all upserts
-      await Promise.all([...securityUpserts, ...holdingUpserts]);
-      
-      // Create history records in parallel
-      const historyPromises = [];
-      if (securityHistory.length > 0) {
-        historyPromises.push(tx.securityHistory.createMany({ data: securityHistory, skipDuplicates: true }));
-      }
-      if (holdingHistory.length > 0) {
-        historyPromises.push(tx.holdingHistory.createMany({ data: holdingHistory, skipDuplicates: true }));
-      }
-      
-      if (historyPromises.length > 0) {
-        await Promise.all(historyPromises);
-      }
-    });
+    await prisma.$transaction([
+      ...securityUpserts,
+      ...holdingUpserts
+    ]);
+    
+    // Create history records in parallel after upserts complete
+    const historyPromises = [];
+    if (securityHistory.length > 0) {
+      historyPromises.push(
+        prisma.securityHistory.createMany({ data: securityHistory, skipDuplicates: true })
+      );
+    }
+    if (holdingHistory.length > 0) {
+      historyPromises.push(
+        prisma.holdingHistory.createMany({ data: holdingHistory, skipDuplicates: true })
+      );
+    }
+    
+    if (historyPromises.length > 0) {
+      await Promise.all(historyPromises);
+    }
   } catch (error) {
     if (error instanceof Error) {
       console.log("Transaction error:", error.message);
