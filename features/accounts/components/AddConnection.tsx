@@ -30,7 +30,7 @@ const AddConnection = () => {
         <DialogTrigger>
           <AddAccount />
         </DialogTrigger>
-        <DialogContent>,
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>Who is the owner of the account?</DialogTitle>
             <DialogDescription className="py-6">
