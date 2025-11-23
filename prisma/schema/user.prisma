@@ -40,8 +40,8 @@ model Item {
   User                    User       @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
   user_id                 String
   accounts                Account[]
-  Household               Household? @relation(fields: [householdId], references: [id])
-  householdId             String?
+  Household               Household? @relation(fields: [household_id], references: [id])
+  household_id            String?
 }
 
 model TransactionStatus {

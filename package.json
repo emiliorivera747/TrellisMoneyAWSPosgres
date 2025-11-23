@@ -20,7 +20,6 @@
     "cypress:open": "cypress open"
   },
   "prisma": {
-    "seed": "ts-node --esm prisma/seed.ts",
     "migrate": "prisma migrate dev --name init",
     "schema": "./prisma/schema"
   },
