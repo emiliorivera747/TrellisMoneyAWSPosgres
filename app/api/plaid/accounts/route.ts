@@ -12,8 +12,6 @@ import { getAccountWithItemIds } from "@/utils/api-helpers/prisma/account/accoun
  * Fetch all of the users accounts from Plaid and
  * store them in the database.
  *
- * @param req
- * @returns
  */
 export async function GET(req: NextRequest) {
   try {
