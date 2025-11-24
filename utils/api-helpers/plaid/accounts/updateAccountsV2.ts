@@ -14,6 +14,7 @@ import { getUser} from "@/utils/api-helpers/supabase/getUser";
 
 /**
  * Update the accounts in the database
+ * Optimized to use batch operations via $transaction to reduce database round-trips
  */
 export async function updateAccounts(
   accountBase: AccountBaseWithItemId[][],
@@ -22,43 +23,79 @@ export async function updateAccounts(
   const user = await getUser();
   const user_id = user?.id || "";
 
+  // Prepare all balance and account operations
+  const balanceOperations = [];
+  const accountOperations = [];
+
   for (const account of accounts) {
-    
     hasAccountBalance(account);
 
     const balances = account?.balances ?? default_balance;
-
-    const balanceRes = await updateBalance(balances, account?.account_id);
-    
-    if (!balanceRes)
-      return NextResponse.json(
-        { message: "Failed to update Balance" },
-        { status: 500 }
-      );
-
-    // Check if the balance was updated successfully
     const accountData = extractAccountData(account, balances);
 
-    await prisma.account.upsert({
-      where: { account_id: account.account_id },
-      update: {
-        ...accountData,
-        updated_at: new Date(),
-      },
-      create: {
-        account_id: getValueOrDefault(account?.account_id, ""),
-        ...accountData,
-        user: {
-          connect: { user_id }, // Connect to existing User
+    // Queue balance upsert operation
+    // Note: Logic duplicated from updateBalance() for batching performance
+    balanceOperations.push(
+      prisma.balance.upsert({
+        where: { balance_id: account.account_id },
+        update: {
+          available: getValueOrDefault(balances?.available, 0),
+          current: getValueOrDefault(balances?.current, 0),
+          limit: getValueOrDefault(balances?.limit, 0),
+          iso_currency_code: getValueOrDefault(balances?.iso_currency_code, ""),
+          unofficial_currency_code: getValueOrDefault(
+            balances?.unofficial_currency_code,
+            ""
+          ),
+          updated_at: new Date(),
         },
-        item: {
-          connect: { item_id: account?.item_id ?? "" },
+        create: {
+          balance_id: account.account_id,
+          available: getValueOrDefault(balances?.available, 0),
+          current: getValueOrDefault(balances?.current, 0),
+          limit: getValueOrDefault(balances?.limit, 0),
+          iso_currency_code: getValueOrDefault(balances?.iso_currency_code, ""),
+          unofficial_currency_code: getValueOrDefault(
+            balances?.unofficial_currency_code,
+            ""
+          ),
         },
-        balance: {
-          connect: { balance_id: account?.account_id ?? "" },
+      })
+    );
+
+    // Queue account upsert operation
+    accountOperations.push(
+      prisma.account.upsert({
+        where: { account_id: account.account_id },
+        update: {
+          ...accountData,
+          updated_at: new Date(),
         },
-      },
-    });
+        create: {
+          account_id: getValueOrDefault(account?.account_id, ""),
+          ...accountData,
+          user: {
+            connect: { user_id },
+          },
+          item: {
+            connect: { item_id: account?.item_id ?? "" },
+          },
+          balance: {
+            connect: { balance_id: account?.account_id ?? "" },
+          },
+        },
+      })
+    );
+  }
+
+  // Execute all operations in a single transaction
+  try {
+    await prisma.$transaction([...balanceOperations, ...accountOperations]);
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Failed to update accounts and balances" },
+      { status: 500 }
+    );
   }
 }
 
