@@ -50,18 +50,7 @@ const AddConnection = () => {
     <div className=" w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem]">
       <Dialog>
         <DialogTrigger>
-          <span
-            onClick={!linkToken ? undefined : () => open()}
-            className={`px-4 py-2 rounded text-white cursor-pointer ${
-              !linkToken ? "bg-blue-500" : "bg-green-500 disabled:opacity-50"
-            } ${!linkToken || !ready ? "pointer-events-none opacity-50" : ""}`}
-          >
-            {!linkToken
-              ? "Connect Bank Account"
-              : ready
-              ? "Open Plaid Modal"
-              : "Loading..."}
-          </span>
+          <span>{}</span>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
