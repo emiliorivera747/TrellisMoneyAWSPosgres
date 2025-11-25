@@ -45,18 +45,25 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Validate the request body
+    /**
+     * Validate the user schema
+     */
     recordSchema.parse(body);
-
     const { email, id, name, email_verified, phone, phone_verified } =
       parseRecord(body);
 
+    /**
+     * Does the User already exist?
+     */
     const user = await prisma.user.findFirst({
       where: { OR: [{ email }, { user_id: id }] },
     });
-
     if (user) return userAlreadyExistsError();
 
+    /**
+     * You've gotten this far. Therefore,
+     * create the user.
+     */
     const newUser = await prisma.user.create({
       data: {
         name,
@@ -99,9 +106,9 @@ export async function GET() {
 }
 
 /**
- * 
- * @param req 
- * @returns 
+ *
+ * @param req
+ * @returns
  */
 export async function PUT(req: Request) {
   try {
@@ -153,9 +160,8 @@ export async function PUT(req: Request) {
   }
 }
 
-
 /**
- * 
+ *
  * @route POST /api/users
  * @desc Register a new user
  * @access Public
@@ -178,7 +184,7 @@ export async function DELETE() {
         { status: 404 }
       );
     }
-    
+
     return NextResponse.json(
       { status: "success", message: "User deleted" },
       { status: 200 }
