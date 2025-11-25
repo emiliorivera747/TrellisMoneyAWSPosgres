@@ -20,8 +20,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const user = getUser();
-
-    // Look up items in the database to check if the institution is already connected
+    
+    /**
+     *  Look up the items and check if institution is already connected
+     */
     const items = await prisma.item.findMany({
       where: {
         user_id: user?.id,
@@ -29,7 +31,9 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // If the institution is already connected, return an error
+    /**
+     *  Return error if institution already connected
+     */
     if (items.length > 0) {
       return NextResponse.json(
         { error: "Institution already connected" },
@@ -37,7 +41,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check whether the accounts arleady exist in the database
+    /**
+     *  Check whether the accounts already exist i n the DB
+     */
     accounts.forEach(async (account: any) => {
       const existingAccount = await prisma.account.findFirst({
         where: {
@@ -46,7 +52,9 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      // If the account already exists, return an error
+      /**
+       * Account already exist return error
+       */
       if (existingAccount) {
         return NextResponse.json(
           { error: "Account already exists" },
@@ -55,26 +63,27 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    // Exchange the public token for an access token
+    // ----- Exchange the public token for an access token -----
     const response = await client.itemPublicTokenExchange({ public_token });
     const { access_token } = response.data;
 
-    // // Retrieve item details using the access token
+    // ----- Retrieve item details using the access token -----
     const item = await client.itemGet({ access_token });
 
-    // Add the new item to the database
+    // ------ Add the new item to the database ------
     const addItemResponse = await addItem(user?.id ?? "", item, access_token);
 
-    // Return the access token if the item was added successfully
+    // ----- Return the access token if the item was added successfully -----
     if (addItemResponse) return NextResponse.json({ access_token });
 
-    // Return an error if the item could not be added
+    // ----- Return an error if the item could not be added -----
     return NextResponse.json(
       { error: "Error adding item to database" },
       { status: 500 }
     );
   } catch (error) {
-    // Handle errors during the token exchange process
+
+    // ----- Handle errors during the token exchange process -----
     return NextResponse.json(
       { error: "Error exchanging public token" },
       { status: 500 }

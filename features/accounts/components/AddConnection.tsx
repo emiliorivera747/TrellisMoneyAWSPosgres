@@ -73,7 +73,7 @@ const AddConnection = () => {
           </span>
         </DialogTrigger>
 
-        <DialogContent className="p-0 pt-4 pb-6 rounded-[12px] h-[60vh] ">
+        <DialogContent className="p-0 pt-4 pb-6 rounded-[12px] ">
           <DialogHeader className="border-b border-tertiary-300  flex ustify-between h-[3rem] ">
             <DialogTitle className="pl-4 text-md font-light text-tertiary-900">
               {currentStep.title}
