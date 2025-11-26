@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { createClient } from "@/utils/supabase/server";
 import { client } from "@/config/plaidClient";
 import { ItemGetResponse } from "plaid";
 import { AxiosResponse } from "axios";

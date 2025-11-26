@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server";
 import { client } from "@/config/plaidClient";
 import { Products, CountryCode } from "plaid";
+import { getUser } from "@/utils/api-helpers/supabase/getUser";
 
 const ERROR_MESSAGES = {
   UNAUTHENTICATED: "User not authenticated",
@@ -15,29 +15,35 @@ const ERROR_MESSAGES = {
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const supabase = await createClient();
+    /**
+     * Get the current user
+     */
+    const user = await getUser();
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    /**
+     * Unauthorized error
+     */
+    if (!user)
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-    const linkTokenResponse = await getLinkTokenRepsponse(user?.id!);
+    /**
+     * Get the user we want to get the linktoken for
+     */
+    const { user_id } = await req.json();
+
+    const linkTokenResponse = await getLinkTokenRepsponse(user_id);
 
     return NextResponse.json(
       { link_token: linkTokenResponse },
       { status: 200 }
     );
-
   } catch (error) {
-
     return NextResponse.json(
       { error: ERROR_MESSAGES.LINK_TOKEN_ERROR },
       { status: 500 }
     );
-    
   }
 }
-
 
 /**
  * Generates a link token for Plaid Link

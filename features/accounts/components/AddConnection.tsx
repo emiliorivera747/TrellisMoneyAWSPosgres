@@ -72,14 +72,12 @@ const AddConnection = () => {
             Add Account
           </span>
         </DialogTrigger>
-
-        <DialogContent className="p-0 pt-4 pb-6 rounded-[12px] ">
+        <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
           <DialogHeader className="border-b border-tertiary-300  flex ustify-between h-[3rem] ">
             <DialogTitle className="pl-4 text-md font-light text-tertiary-900">
               {currentStep.title}
             </DialogTitle>
           </DialogHeader>
-
           {/* Content */}
           <div className=" h-[20rem] px-4 overflow-scroll">
             {currentStep.description && (
@@ -89,7 +87,6 @@ const AddConnection = () => {
             )}
             {currentStep.content}
           </div>
-
           {/* Footer */}
             <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">
             {!isFirstStep && (
