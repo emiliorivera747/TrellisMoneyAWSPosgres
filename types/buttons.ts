@@ -42,3 +42,11 @@ export interface SubmitButtonPropsV2 {
   text?: string;
   isLoading?: boolean;
 }
+
+
+export interface PrimaryModalButtonProp {
+  ref: React.Ref<HTMLButtonElement>;
+  label: string;
+  className: string;
+  onClickFn: React.MouseEventHandler<HTMLButtonElement>;
+}

@@ -1,14 +1,10 @@
 import React from "react";
-
 import { cn } from "@/lib/utils";
+import { PrimaryModalButtonProp } from "@/types/buttons";
 
-interface PrimaryModalButtonProp {
-  ref: React.Ref<HTMLButtonElement>;
-  label: string;
-  className: string;
-  onClickFn: React.MouseEventHandler<HTMLButtonElement>;
-}
-
+/**
+ * The primary button that will be used for modals
+ */
 const PrimaryModalButton = ({
   onClickFn,
   ref,
