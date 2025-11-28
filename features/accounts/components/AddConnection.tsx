@@ -42,14 +42,17 @@ const AddConnection = () => {
       content: (
         <div key={1} className="">
           {householdResponse?.data?.members.map(
-            ({
-              head_of_household_id,
-              name,
-            }: {
-              head_of_household_id: string;
-              name: string;
-            }) => {
-              return <div key={head_of_household_id}> {name}</div>;
+            (
+              {
+                head_of_household_id,
+                name,
+              }: {
+                head_of_household_id: string;
+                name: string;
+              },
+              index: number
+            ) => {
+              return <div key={`${head_of_household_id}-${index}`}> {name}</div>;
             }
           )}
         </div>
