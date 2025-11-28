@@ -22,7 +22,10 @@ import { useFetchHouseholdMembers } from "@/features/accounts/hooks/useFetchHous
 import plaidService from "@/features/plaid/services/plaidServices";
 
 // Types
-import { PlaidLinkOnSuccessMetadata } from 'react-plaid-link';
+import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
+
+// Config
+import { getSteps } from "@/features/accounts/config/ModalSteps";
 
 /**
  *
@@ -35,43 +38,29 @@ const AddConnection = () => {
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
     useFetchHouseholdMembers({ isDialogOpen });
 
-  const steps = [
-    {
-      title: "Select Account Owner",
-      description: "Who owns this account?",
-      content: (
-        <div key={1} className="">
-          {householdResponse?.data?.members.map(
-            (
-              {
-                head_of_household_id,
-                name,
-              }: {
-                head_of_household_id: string;
-                name: string;
-              },
-              index: number
-            ) => {
-              return <div key={`${head_of_household_id}-${index}`}> {name}</div>;
-            }
-          )}
-        </div>
-      ),
-    },
-  ];
+  const steps = getSteps({householdResponse});
 
   const { currentStep, isFirstStep, isLastStep, back, next } =
     useMultistepForm(steps);
 
   const { open, ready, error } = usePlaidLink({
     token: linkToken,
-    onSuccess: async (publicToken: string, metadata: PlaidLinkOnSuccessMetadata) => {
-      const institutionName = metadata.institution?.name || "Unknown Institution";
-      await plaidService.exchangeToken(JSON.stringify({
-        public_token: publicToken,
-        institution: { institution_id: metadata.institution?.institution_id, name: institutionName },
-        accounts: metadata.accounts || [],
-      }));
+    onSuccess: async (
+      publicToken: string,
+      metadata: PlaidLinkOnSuccessMetadata
+    ) => {
+      const institutionName =
+        metadata.institution?.name || "Unknown Institution";
+      await plaidService.exchangeToken(
+        JSON.stringify({
+          public_token: publicToken,
+          institution: {
+            institution_id: metadata.institution?.institution_id,
+            name: institutionName,
+          },
+          accounts: metadata.accounts || [],
+        })
+      );
     },
     onExit: (err, metadata) => {
       console.log("Plaid exit:", err, metadata);
