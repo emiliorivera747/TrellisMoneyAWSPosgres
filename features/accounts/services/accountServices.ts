@@ -14,6 +14,8 @@ const fetchAccounts = async () => {
   return res.json();
 };
 
+
+
 export const accountServices = {
   fetchAccounts,
 };
