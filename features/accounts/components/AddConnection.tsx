@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 // Components
 import {
@@ -16,7 +16,6 @@ import {
 // Hooks
 import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 import { useMultistepForm } from "@/hooks/forms/useMultistepForm";
-
 import { usePlaidLink } from "react-plaid-link";
 
 /**
@@ -27,17 +26,38 @@ import { usePlaidLink } from "react-plaid-link";
  */
 const AddConnection = () => {
   const linkToken = useGenerateToken();
+  const [members, setMembers] = useState([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchMembers = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/members");
+      if (!response.ok) throw new Error("Failed to fetch household members.");
+      const res = await response.json();
+      setMembers(res.data.members);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isDialogOpen && members.length === 0 && !isLoading) fetchMembers();
+  }, [isDialogOpen, members.length, isLoading, fetchMembers]);
 
   const steps = [
     {
-      title: "Institution",
-      description: "Securely link your bank account using Plaid",
-      content: <div className="h-full">Step 1</div>,
-    },
-    {
       title: "Select Account Owner",
       description: "Who owns this account?",
-      content: <div className=""> Step 2</div>,
+      content: (
+        <div className="">
+          {members.map(({ head_of_household_id, name }) => {
+            return <div key={head_of_household_id}> {name}</div>;
+          })}
+        </div>
+      ),
     },
   ];
 
@@ -66,8 +86,8 @@ const AddConnection = () => {
 
   return (
     <div className=" w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem] my-4">
-      <Dialog>
-        <DialogTrigger>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogTrigger asChild>
           <span className="w-full h-4 bg-tertiary-300 text-tertiary-900 py-4 px-6 rounded-[12px]">
             Add Account
           </span>
@@ -88,7 +108,7 @@ const AddConnection = () => {
             {currentStep.content}
           </div>
           {/* Footer */}
-            <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">
+          <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">
             {!isFirstStep && (
               <button
                 className="px-4 py-2 bg-gray-200 rounded-[12px]"
@@ -100,10 +120,10 @@ const AddConnection = () => {
 
             <div className="flex justify-end w-full">
               <button
-              className="px-4 py-2 bg-primary-700 text-white rounded-[12px]"
-              onClick={() => next()}
+                className="px-4 py-2 bg-primary-700 text-white rounded-[12px]"
+                onClick={() => next()}
               >
-              Next
+                Next
               </button>
             </div>
           </DialogFooter>
