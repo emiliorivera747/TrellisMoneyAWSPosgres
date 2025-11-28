@@ -1,20 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import { householdService } from "@/features/accounts/services/householdServices";
 
-
 /**
- * 
+ *
  * Custom hook to fetch the household members
- * 
+ *
  * @returns {Object} - An object containing accounts data, loading state, and error state.
  */
-export const useFetchHouseholdMembers = () => {
+export const useFetchHouseholdMembers = ({
+  isDialogOpen,
+}: {
+  isDialogOpen: boolean;
+}) => {
   const {
     data: householdResponse,
     isLoading: isLoadingHousehold,
     isError: isErrorHousehold,
   } = useQuery({
-    queryKey: ["household"],
+    queryKey: ["household", isDialogOpen],
     queryFn: () => householdService.fetchHousehold(),
     enabled: true,
     refetchOnWindowFocus: false,

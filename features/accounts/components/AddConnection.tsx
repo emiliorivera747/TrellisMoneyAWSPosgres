@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 
 // Components
 import {
@@ -16,9 +16,7 @@ import {
 import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 import { useMultistepForm } from "@/hooks/forms/useMultistepForm";
 import { usePlaidLink } from "react-plaid-link";
-
-// Services 
-import { householdService } from "@/features/accounts/services/householdServices";
+import { useFetchHouseholdMembers } from "@/features/accounts/hooks/useFetchHousehold";
 
 /**
  *
@@ -28,36 +26,27 @@ import { householdService } from "@/features/accounts/services/householdServices
  */
 const AddConnection = () => {
   const linkToken = useGenerateToken();
-  const [members, setMembers] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchMembers = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/members");
-      if (!response.ok) throw new Error("Failed to fetch household members.");
-      const res = await response.json();
-      setMembers(res.data.members);
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isDialogOpen && members.length === 0 && !isLoading) fetchMembers();
-  }, [isDialogOpen, members.length, isLoading, fetchMembers]);
+  const { householdResponse, isLoadingHousehold, isErrorHousehold } =
+    useFetchHouseholdMembers({ isDialogOpen });
 
   const steps = [
     {
       title: "Select Account Owner",
       description: "Who owns this account?",
       content: (
-        <div className="">
-          {members.map(({ head_of_household_id, name }) => {
-            return <div key={head_of_household_id}> {name}</div>;
-          })}
+        <div key={1} className="">
+          {householdResponse?.data?.members.map(
+            ({
+              head_of_household_id,
+              name,
+            }: {
+              head_of_household_id: string;
+              name: string;
+            }) => {
+              return <div key={head_of_household_id}> {name}</div>;
+            }
+          )}
         </div>
       ),
     },
