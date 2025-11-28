@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 // Components
 import {
@@ -27,6 +27,9 @@ import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 // Config
 import { getSteps, Step } from "@/features/accounts/config/ModalSteps";
 
+// Components
+import PrimaryModalButton from "@/components/buttons/PrimaryModalButton";
+
 /**
  *
  * Responsible for adding a connection to plaid
@@ -37,6 +40,9 @@ const AddConnection = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
     useFetchHouseholdMembers({ isDialogOpen });
+
+  const prevButtonRef = useRef(null);
+  const nextButtonRef = useRef(null);
 
   const steps: Step[] = getSteps({ householdResponse });
 
@@ -98,20 +104,20 @@ const AddConnection = () => {
           {/* Footer */}
           <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">
             {!isFirstStep && (
-              <button
+              <PrimaryModalButton
                 className="px-4 py-2 bg-gray-200 rounded-[12px]"
-                onClick={() => back()}
-              >
-                Previous
-              </button>
+                onClickFn={() => back()}
+                label="Previous"
+                ref={prevButtonRef}
+              />
             )}
             <div className="flex justify-end w-full">
-              <button
-                className="px-4 py-2 bg-primary-700 text-white rounded-[12px]"
-                onClick={() => next()}
-              >
-                Next
-              </button>
+              <PrimaryModalButton
+                className="px-4 py-2 bg-primary-800 rounded-[12px]"
+                onClickFn={() => next()}
+                label="Next"
+                ref={prevButtonRef}
+              />
             </div>
           </DialogFooter>
         </DialogContent>
