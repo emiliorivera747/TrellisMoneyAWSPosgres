@@ -116,7 +116,7 @@ const AddConnection = () => {
                 className="px-4 py-2 bg-primary-800 rounded-[12px]"
                 onClickFn={() => next()}
                 label="Next"
-                ref={prevButtonRef}
+                ref={nextButtonRef}
               />
             </div>
           </DialogFooter>
