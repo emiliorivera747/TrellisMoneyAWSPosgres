@@ -18,11 +18,16 @@ import { useMultistepForm } from "@/hooks/forms/useMultistepForm";
 import { usePlaidLink } from "react-plaid-link";
 import { useFetchHouseholdMembers } from "@/features/accounts/hooks/useFetchHousehold";
 
+// Services
+import plaidService from "@/features/plaid/services/plaidServices";
+
+// Types
+import { PlaidLinkOnSuccessMetadata } from 'react-plaid-link';
+
 /**
  *
  * Responsible for adding a connection to plaid
  *
- * @returns
  */
 const AddConnection = () => {
   const linkToken = useGenerateToken();
@@ -57,13 +62,13 @@ const AddConnection = () => {
 
   const { open, ready, error } = usePlaidLink({
     token: linkToken,
-    onSuccess: async (publicToken: string) => {
-      // Exchange public_token for access_token
-      await fetch("/api/plaid/exchange-token", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ public_token: publicToken }),
-      });
+    onSuccess: async (publicToken: string, metadata: PlaidLinkOnSuccessMetadata) => {
+      const institutionName = metadata.institution?.name || "Unknown Institution";
+      await plaidService.exchangeToken(JSON.stringify({
+        public_token: publicToken,
+        institution: { institution_id: metadata.institution?.institution_id, name: institutionName },
+        accounts: metadata.accounts || [],
+      }));
     },
     onExit: (err, metadata) => {
       console.log("Plaid exit:", err, metadata);

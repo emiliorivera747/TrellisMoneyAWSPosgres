@@ -2,7 +2,6 @@ import { API_URL } from "@/utils/global-variables/globals";
 
 import { ExchangeTokenProps } from "@/types/plaidServices";
 
-
 /**
  * Exchanges the public token for an access token.
  * @param {ExchangeTokenProps} props - The properties required to exchange the token.

@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     }
 
     /**
-     *  Check whether the accounts already exist i n the DB
+     *  Check whether the accounts already exist in the DB
      */
     accounts.forEach(async (account: any) => {
       const existingAccount = await prisma.account.findFirst({
