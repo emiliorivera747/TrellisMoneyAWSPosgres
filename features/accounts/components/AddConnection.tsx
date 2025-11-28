@@ -25,7 +25,8 @@ import plaidService from "@/features/plaid/services/plaidServices";
 import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 
 // Config
-import { getSteps, Step } from "@/features/accounts/config/ModalSteps";
+import { Step } from "@/features/accounts/types/household";
+import { getSteps } from "@/features/accounts/config/ModalSteps";
 
 // Components
 import PrimaryModalButton from "@/components/buttons/PrimaryModalButton";
@@ -88,14 +89,14 @@ const AddConnection = () => {
         </DialogTrigger>
         <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
           <DialogHeader className="border-b border-tertiary-300  flex ustify-between h-[3rem] ">
-            <DialogTitle className="pl-4 text-md font-light text-tertiary-900">
+            <DialogTitle className="pl-4 text-md font-semibold text-tertiary-900">
               {currentStep.title}
             </DialogTitle>
           </DialogHeader>
           {/* Content */}
           <div className=" h-[20rem] px-4 overflow-scroll">
             {currentStep.description && (
-              <DialogDescription className="flex items-center pb-2">
+              <DialogDescription className="flex items-center pb-4">
                 {currentStep.description}
               </DialogDescription>
             )}
