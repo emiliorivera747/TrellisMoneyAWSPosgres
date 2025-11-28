@@ -25,7 +25,7 @@ import plaidService from "@/features/plaid/services/plaidServices";
 import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 
 // Config
-import { getSteps } from "@/features/accounts/config/ModalSteps";
+import { getSteps, Step } from "@/features/accounts/config/ModalSteps";
 
 /**
  *
@@ -38,7 +38,7 @@ const AddConnection = () => {
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
     useFetchHouseholdMembers({ isDialogOpen });
 
-  const steps = getSteps({householdResponse});
+  const steps: Step[] = getSteps({ householdResponse });
 
   const { currentStep, isFirstStep, isLastStep, back, next } =
     useMultistepForm(steps);
