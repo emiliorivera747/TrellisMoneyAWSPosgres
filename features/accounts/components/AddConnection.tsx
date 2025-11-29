@@ -19,7 +19,7 @@ import { usePlaidLink } from "react-plaid-link";
 import { useFetchHouseholdMembers } from "@/features/accounts/hooks/useFetchHousehold";
 
 // Services
-import plaidService from "@/features/plaid/services/plaidServices";
+import plaidService from "@/services/plaid/plaidServices";
 
 // Types
 import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
@@ -54,18 +54,11 @@ const AddConnection = () => {
       publicToken: string,
       metadata: PlaidLinkOnSuccessMetadata
     ) => {
-      const institutionName =
-        metadata.institution?.name || "Unknown Institution";
-      await plaidService.exchangeToken(
-        JSON.stringify({
-          public_token: publicToken,
-          institution: {
-            institution_id: metadata.institution?.institution_id,
-            name: institutionName,
-          },
-          accounts: metadata.accounts || [],
-        })
-      );
+      await plaidService.exchangeToken({
+        public_token: publicToken,
+        institution: metadata?.institution ?? { institution_id: "", name: "" },
+        accounts: metadata.accounts || [],
+      });
       setSelectedUserId(null);
     },
     onExit: (err, metadata) => {
