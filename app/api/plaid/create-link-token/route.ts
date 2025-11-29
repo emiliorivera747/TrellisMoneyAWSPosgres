@@ -15,6 +15,7 @@ const ERROR_MESSAGES = {
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
+    
     /**
      * Get the current user
      */

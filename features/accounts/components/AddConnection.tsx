@@ -42,11 +42,19 @@ const AddConnection = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
     useFetchHouseholdMembers({ isDialogOpen });
+  const [userId, setUserId] = useState<String | null>(null);
 
   const prevButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
 
-  const steps: Step[] = getSteps({ householdResponse });
+  const handleSelectUser = (id: string) => {
+    setUserId(id);
+  };
+
+  const steps: Step[] = getSteps({
+    householdResponse,
+    clickFn: handleSelectUser,
+  });
 
   const { currentStep, isFirstStep, isLastStep, back, next } =
     useMultistepForm(steps);

@@ -1,6 +1,6 @@
 import React from "react";
 
-const MemberCardSkeleton = ({ length }: { length: number }) => {
+const MemberCardSkeleton = ({ length}: { length: number }) => {
   return (
     <div className="">
       {Array.from({ length: length }).map((_, index) => (
