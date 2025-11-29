@@ -30,6 +30,7 @@ import { getSteps } from "@/features/accounts/config/ModalSteps";
 
 // Components
 import PrimaryModalButton from "@/components/buttons/PrimaryModalButton";
+import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCardSkeleton";
 
 /**
  *
@@ -83,7 +84,7 @@ const AddConnection = () => {
     <div className=" w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem] my-4">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <span className="w-full h-4 bg-tertiary-300 text-tertiary-900 py-4 px-6 rounded-[12px]">
+          <span className="flex items-center justify-center w-full h-[4rem] bg-tertiary-300 text-tertiary-900 py-4 px-6 rounded-[12px]">
             Add Account
           </span>
         </DialogTrigger>
@@ -100,7 +101,13 @@ const AddConnection = () => {
                 {currentStep.description}
               </DialogDescription>
             )}
-            {currentStep.content}
+            {isLoadingHousehold ? (
+              <MemberCardSkeleton
+                length={householdResponse?.data?.members?.length || 6}
+              />
+            ) : (
+              currentStep.content
+            )}
           </div>
           {/* Footer */}
           <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">

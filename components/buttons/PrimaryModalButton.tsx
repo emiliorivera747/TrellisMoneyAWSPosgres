@@ -11,7 +11,7 @@ const PrimaryModalButton = ({
   label,
   className,
 }: PrimaryModalButtonProp) => {
-  const defaultClass = "px-4 py-2 bg-primary-700 text-white rounded-[12px]";
+  const defaultClass = "px-4 py-2 bg-primary-800 text-white rounded-[12px] border border-primary-700";
   return (
     <button
       ref={ref}
