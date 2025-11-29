@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 const useGenerateToken = () => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
-  console.log("linkToken", linkToken);
   const generateToken = async (user_id: string) => {
     setLinkToken(null);
 
