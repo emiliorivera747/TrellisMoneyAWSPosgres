@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 // Components
 import {
@@ -38,29 +38,18 @@ import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCa
  *
  */
 const AddConnection = () => {
-  const linkToken = useGenerateToken();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+
+  const { linkToken, generateToken } = useGenerateToken();
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
     useFetchHouseholdMembers({ isDialogOpen });
-  const [userId, setUserId] = useState<String | null>(null);
 
   const prevButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
 
-  const handleSelectUser = (id: string) => {
-    setUserId(id);
-  };
-
-  const steps: Step[] = getSteps({
-    householdResponse,
-    clickFn: handleSelectUser,
-  });
-
-  const { currentStep, isFirstStep, isLastStep, back, next } =
-    useMultistepForm(steps);
-
   const { open, ready, error } = usePlaidLink({
-    token: linkToken,
+    token: linkToken ?? null,
     onSuccess: async (
       publicToken: string,
       metadata: PlaidLinkOnSuccessMetadata
@@ -77,68 +66,94 @@ const AddConnection = () => {
           accounts: metadata.accounts || [],
         })
       );
+      setSelectedUserId(null);
     },
     onExit: (err, metadata) => {
       console.log("Plaid exit:", err, metadata);
+      setSelectedUserId(null);
     },
     onEvent: (eventName, metadata) => {
       console.log("Plaid event:", eventName, metadata);
     },
   });
 
+  useEffect(() => {
+    if (linkToken && ready && selectedUserId) open();
+  }, [selectedUserId, linkToken, ready, open]);
+
+  const handleSelectUser = async (userId: string) => {
+    setIsDialogOpen(false);
+    setSelectedUserId(userId);
+    try {
+      await generateToken(userId);
+    } catch (error) {
+      setSelectedUserId(null);
+    }
+  };
+
+  const steps: Step[] = getSteps({
+    householdResponse,
+    clickFn: handleSelectUser,
+  });
+
+  const { currentStep, isFirstStep, isLastStep, back, next } =
+    useMultistepForm(steps);
+
   if (error) return <p>Error loading Plaid: {error.message}</p>;
 
   return (
-    <div className=" w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem] my-4">
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger asChild>
-          <span className="flex items-center justify-center w-full h-[4rem] bg-tertiary-300 text-tertiary-900 py-4 px-6 rounded-[12px]">
-            Add Account
-          </span>
-        </DialogTrigger>
-        <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
-          <DialogHeader className="border-b border-tertiary-300  flex ustify-between h-[3rem] ">
-            <DialogTitle className="pl-4 text-md font-semibold text-tertiary-900">
-              {currentStep.title}
-            </DialogTitle>
-          </DialogHeader>
-          {/* Content */}
-          <div className=" h-[20rem] px-4 overflow-scroll">
-            {currentStep.description && (
-              <DialogDescription className="flex items-center pb-4">
-                {currentStep.description}
-              </DialogDescription>
-            )}
-            {isLoadingHousehold ? (
-              <MemberCardSkeleton
-                length={householdResponse?.data?.members?.length || 6}
-              />
-            ) : (
-              currentStep.content
-            )}
-          </div>
-          {/* Footer */}
-          <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">
-            {!isFirstStep && (
-              <PrimaryModalButton
-                className="px-4 py-2 bg-gray-200 rounded-[12px]"
-                onClickFn={() => back()}
-                label="Previous"
-                ref={prevButtonRef}
-              />
-            )}
-            <div className="flex justify-end w-full">
-              <PrimaryModalButton
-                className="px-4 py-2 bg-primary-800 rounded-[12px]"
-                onClickFn={() => next()}
-                label="Next"
-                ref={nextButtonRef}
-              />
+    <>
+      <div className=" w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem] my-4">
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <span className="flex items-center justify-center w-full h-[4rem] bg-tertiary-300 text-tertiary-900 py-4 px-6 rounded-[12px]">
+              Add Account
+            </span>
+          </DialogTrigger>
+          <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
+            <DialogHeader className="border-b border-tertiary-300  flex ustify-between h-[3rem] ">
+              <DialogTitle className="pl-4 text-md font-semibold text-tertiary-900">
+                {currentStep.title}
+              </DialogTitle>
+            </DialogHeader>
+            {/* Content */}
+            <div className=" h-[20rem] px-4 overflow-scroll">
+              {currentStep.description && (
+                <DialogDescription className="flex items-center pb-4">
+                  {currentStep.description}
+                </DialogDescription>
+              )}
+              {isLoadingHousehold ? (
+                <MemberCardSkeleton
+                  length={householdResponse?.data?.members?.length || 6}
+                />
+              ) : (
+                currentStep.content
+              )}
             </div>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+            {/* Footer */}
+            <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">
+              {!isFirstStep && (
+                <PrimaryModalButton
+                  className="px-4 py-2 bg-gray-200 rounded-[12px]"
+                  onClickFn={() => back()}
+                  label="Previous"
+                  ref={prevButtonRef}
+                />
+              )}
+              <div className="flex justify-end w-full">
+                <PrimaryModalButton
+                  className="px-4 py-2 bg-primary-800 rounded-[12px]"
+                  onClickFn={() => next()}
+                  label="Next"
+                  ref={nextButtonRef}
+                />
+              </div>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </>
   );
 };
 
