@@ -1,7 +1,7 @@
 model User {
-  user_id String  @id @default(uuid())
-  email   String  @unique
-  name    String?
+  id             String        @id @default(uuid())
+  email          String        @unique
+  name           String?
   email_verified Boolean?      @default(false)
   phone_verified Boolean?      @default(false)
   phone          String?
@@ -36,7 +36,7 @@ model Item {
   consented_data_scopes   String[]
   consented_use_cases     String[]
   access_token            String
-  User                    User       @relation(fields: [user_id], references: [user_id])
+  User                    User       @relation(fields: [user_id], references: [id])
   user_id                 String
   accounts                Account[]
   Household               Household? @relation(fields: [household_id], references: [household_id])

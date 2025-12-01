@@ -24,7 +24,7 @@ CREATE TABLE "Account" (
     "balance_id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "timestamp" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
-    "household_id" TEXT NOT NULL,
+    "household_id" TEXT,
     "item_id" TEXT NOT NULL,
     "updated_at" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
     "created_at" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP
@@ -106,10 +106,11 @@ CREATE TABLE "HoldingHistory" (
 
 -- CreateTable
 CREATE TABLE "Household" (
-    "id" TEXT NOT NULL,
+    "household_id" TEXT NOT NULL,
+    "head_of_household_id" TEXT NOT NULL,
     "name" TEXT NOT NULL DEFAULT 'Shared Household',
 
-    CONSTRAINT "Household_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Household_pkey" PRIMARY KEY ("household_id")
 );
 
 -- CreateTable
@@ -214,17 +215,17 @@ CREATE TABLE "Subscription" (
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT,
-    "created_at" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "user_id" TEXT NOT NULL,
     "email_verified" BOOLEAN DEFAULT false,
     "phone_verified" BOOLEAN DEFAULT false,
     "phone" TEXT,
     "customer_id" TEXT,
     "plan" "Plan" NOT NULL DEFAULT 'free',
+    "created_at" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -297,7 +298,7 @@ CREATE TABLE "FixedIncome" (
 -- CreateTable
 CREATE TABLE "_HouseholdMembers" (
     "A" TEXT NOT NULL,
-    "B" INTEGER NOT NULL,
+    "B" TEXT NOT NULL,
 
     CONSTRAINT "_HouseholdMembers_AB_pkey" PRIMARY KEY ("A","B")
 );
@@ -312,6 +313,9 @@ CREATE UNIQUE INDEX "Account_balance_id_key" ON "Account"("balance_id");
 CREATE UNIQUE INDEX "Balance_balance_id_key" ON "Balance"("balance_id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Household_head_of_household_id_key" ON "Household"("head_of_household_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Owner_owner_id_key" ON "Owner"("owner_id");
 
 -- CreateIndex
@@ -324,10 +328,10 @@ CREATE UNIQUE INDEX "Security_security_id_key" ON "Security"("security_id");
 CREATE UNIQUE INDEX "Subscription_user_id_key" ON "Subscription"("user_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "User_user_id_key" ON "User"("user_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_user_id_key" ON "User"("user_id");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_customer_id_key" ON "User"("customer_id");
@@ -348,7 +352,7 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_balance_id_fkey" FOREIGN KEY ("bal
 ALTER TABLE "Account" ADD CONSTRAINT "Account_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Account" ADD CONSTRAINT "Account_household_id_fkey" FOREIGN KEY ("household_id") REFERENCES "Household"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Account" ADD CONSTRAINT "Account_household_id_fkey" FOREIGN KEY ("household_id") REFERENCES "Household"("household_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_item_id_fkey" FOREIGN KEY ("item_id") REFERENCES "Item"("item_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -381,16 +385,16 @@ ALTER TABLE "SecurityHistory" ADD CONSTRAINT "SecurityHistory_security_id_fkey" 
 ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Item" ADD CONSTRAINT "Item_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Item" ADD CONSTRAINT "Item_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Item" ADD CONSTRAINT "Item_household_id_fkey" FOREIGN KEY ("household_id") REFERENCES "Household"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Item" ADD CONSTRAINT "Item_household_id_fkey" FOREIGN KEY ("household_id") REFERENCES "Household"("household_id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FixedIncome" ADD CONSTRAINT "FixedIncome_securityId_fkey" FOREIGN KEY ("securityId") REFERENCES "Security"("security_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_HouseholdMembers" ADD CONSTRAINT "_HouseholdMembers_A_fkey" FOREIGN KEY ("A") REFERENCES "Household"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_HouseholdMembers" ADD CONSTRAINT "_HouseholdMembers_A_fkey" FOREIGN KEY ("A") REFERENCES "Household"("household_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_HouseholdMembers" ADD CONSTRAINT "_HouseholdMembers_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -11,7 +11,7 @@ model Holding {
   vested_value               Decimal
   quantity                   Decimal
   security                   Security         @relation(fields: [security_id], references: [security_id], onDelete: Cascade)
-  user                       User             @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  user                       User             @relation(fields: [user_id], references: [id], onDelete: Cascade)
   account_id                 String
   security_id                String
   timestamp                  DateTime         @default(now()) @db.Timestamptz(3)

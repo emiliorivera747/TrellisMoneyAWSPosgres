@@ -107,7 +107,6 @@ export async function POST(req: NextRequest) {
       error instanceof Error
         ? error.message
         : "There was an Error exchanging public token";
-    console.log("Error Message", errorMessage);
     // ----- Handle errors during the token exchange process -----
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }

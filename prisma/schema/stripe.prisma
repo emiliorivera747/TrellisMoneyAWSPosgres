@@ -18,5 +18,5 @@ enum Plan {
    end_date   DateTime
    created_at DateTime           @default(now())
    updated_at DateTime           @updatedAt
-   user       User               @relation(fields: [user_id], references: [user_id])
+   user       User               @relation(fields: [user_id], references: [id])
  }
