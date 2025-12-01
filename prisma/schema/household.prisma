@@ -1,9 +1,8 @@
 model Household {
-    id                   String    @id @default(cuid())
-    headOfHouseHold      User @relation("HeadOfHousehold",  fields:[head_of_household_id], references: [user_id])
-    head_of_household_id String    @unique
-    name                 String    @default("Shared Household")
-    members              User[]    @relation("HouseholdMembers")
-    items                Item[]
-    account              Account[]
+    household_id String    @id @default(cuid())
+    head_of_household_id   String   @unique
+    name         String    @default("Shared Household")
+    members      User[]    @relation("HouseholdMembers")
+    items        Item[]
+    account      Account[]
 }

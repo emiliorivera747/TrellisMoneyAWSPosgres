@@ -19,26 +19,31 @@ function getRedirectBase(request: Request, origin: string): string {
 /**
  * Adds or updates a user in the PostgreSQL database via Prisma.
  */
-async function upsertUser(user: {
+async function upsertUser(currentUser: {
   id: string;
   email?: string;
   user_metadata: { full_name?: string };
 }) {
   try {
-    await prisma.user.upsert({
-      where: { user_id: user.id },
+    const res = await prisma.user.upsert({
+      where: { user_id: currentUser.id }, 
       update: {
-        email: user.email,
-        name: user.user_metadata.full_name || "Unknown",
+        email: currentUser.email,
+        name: currentUser.user_metadata.full_name?.trim() || "Unknown",
       },
       create: {
-        user_id: user.id,
-        email: user.email ?? "",
-        name: user.user_metadata.full_name || "Unknown",
+        user_id: currentUser.id,
+        email: currentUser.email,
+        name: currentUser.user_metadata.full_name?.trim() || "Unknown",
       },
     });
-  } catch (dbError) {
-    console.error("Failed to upsert user in database:", dbError);
+    return res;
+  } catch (err) {
+    const errorMessage =
+      err instanceof Error ? err.message : "There was an error updating user";
+    console.log("Error Message", errorMessage);
+    console.error("Failed to upsert user in database:", errorMessage);
+    return null;
   }
 }
 
@@ -63,37 +68,41 @@ export async function GET(request: Request) {
   const stripePaymentLink = searchParams.get("stripePaymentLink");
 
   // If no code is provided, redirect to error page
-  if (!code) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  if (!code) {
+    console.warn("No code in callback url");
+    return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  }
 
   const supabase = await createClient();
 
   try {
     // Exchange OAuth code for a session
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-    if (error) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-
-    const user = data.user;
-
-    // Check if user exists in the database
-    const userDB = await getUser(user.id);
-    const exists = !!userDB;
-
-    // If user data is available, update the database
-    if (user && !exists) {
-      await upsertUser(user);
-    } else {
-      console.warn("No user data returned from session");
+    if (error || !data.session || !data.user) {
+      console.error("Supabse code exchange failed:", error);
+      return NextResponse.redirect(`${origin}/auth/auth-code-error`);
     }
 
-    // Determine redirect URL
-    const redirectBase = getRedirectBase(request, origin);
+    const user = data.user;
+    console.log("BEFORE UPSERT");
+    // ----- Always keep user in sync with DB -----
+    const res = await upsertUser(user);
+    console.log("res", res);
+    if (!res) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+    console.log("HEY");
 
-    if (stripePaymentLink && user?.email && !exists) {
+    if (stripePaymentLink && user?.email) {
+      console.log("HERE");
       const redirectUrl = `${stripePaymentLink}?prefilled_email=${encodeURIComponent(
         user.email
       )}`;
       return NextResponse.redirect(redirectUrl);
     }
+
+    // ----- Redirect URL -----
+    const redirectBase = getRedirectBase(request, origin);
+    console.log("Redirect Base", redirectBase);
+
     return NextResponse.redirect(`${redirectBase}${next}`);
   } catch (error) {
     return NextResponse.redirect(`${origin}/auth/auth-code-error`);

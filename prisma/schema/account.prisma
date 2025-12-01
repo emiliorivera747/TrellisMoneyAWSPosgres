@@ -21,8 +21,8 @@ model Account {
   timestamp                DateTime?        @default(now()) @db.Timestamptz(3)
   history                  AccountHistory[]
   holdings                 Holding[]
-  houseHold                Household        @relation(fields: [household_id], references: [ id], onDelete: Cascade)
-  household_id             String
+  houseHold                Household?       @relation(fields: [household_id], references: [household_id], onDelete: Cascade)
+  household_id             String?
   item                     Item             @relation(fields: [item_id], references: [item_id], onDelete: Cascade)
   item_id                  String
   updated_at               DateTime?        @default(now()) @db.Timestamptz(3)

@@ -17,50 +17,64 @@ export async function POST(req: NextRequest) {
 
   const { institution_id } = institution;
 
+  console.log("Accounts", accounts);
+
   try {
-    const user = getUser();
-    
+    const user = await getUser();
+
     /**
-     *  Look up the items and check if institution is already connected
+     *  Look up the items and check if institution is already
+     *  connected
      */
-    const items = await prisma.item.findMany({
+    const currentItems = await prisma.item.findMany({
       where: {
         user_id: user?.id,
         institution_id,
       },
+      include: {
+        accounts: true,
+      },
     });
 
     /**
-     *  Return error if institution already connected
+     *  If we have more than 1 item than we have duplicates. In
+     *  that case we will delete all the items and create a new
+     *  one.
      */
-    if (items.length > 0) {
-      return NextResponse.json(
-        { error: "Institution already connected" },
-        { status: 400 }
-      );
+    if (currentItems.length > 1) {
+      for (const { item_id } of currentItems) {
+        await prisma.item.delete({
+          where: {
+            item_id,
+          },
+        });
+      }
     }
 
     /**
-     *  Check whether the accounts already exist in the DB
+     * If we have one item then we will keep the original
+     * item if accounts match.
      */
-    accounts.forEach(async (account: any) => {
-      const existingAccount = await prisma.account.findFirst({
-        where: {
-          account_id: account.account_id,
-          user_id: user?.id,
-        },
-      });
+    if (currentItems.length === 1) {
+      const currentItem = currentItems[0];
 
-      /**
-       * Account already exist return error
-       */
-      if (existingAccount) {
+      // Check if the accounts match
+      const accountIds = accounts.map((account: any) => account.account_id);
+      const existingAccountIds = currentItem.accounts.map(
+        (account: any) => account.account_id
+      );
+
+      const accountsMatch = accountIds.every((id: string) =>
+        existingAccountIds.includes(id)
+      );
+
+      if (accountsMatch) {
         return NextResponse.json(
-          { error: "Account already exists" },
-          { status: 400 }
+          { message: "Accounts already linked with the institution" },
+          { status: 200 }
         );
       }
-    });
+    }
 
     // ----- Exchange the public token for an access token -----
     const response = await client.itemPublicTokenExchange({ public_token });
@@ -72,8 +86,16 @@ export async function POST(req: NextRequest) {
     // ------ Add the new item to the database ------
     const addItemResponse = await addItem(user?.id ?? "", item, access_token);
 
+    // ----- Match the accounts to the item -----
+    const addAccountResponse = await addAccounts(
+      user?.id ?? "",
+      item.data.item.item_id,
+      accounts
+    );
+
     // ----- Return the access token if the item was added successfully -----
-    if (addItemResponse) return NextResponse.json({ access_token });
+    if (addItemResponse && addAccountResponse)
+      return NextResponse.json({ access_token });
 
     // ----- Return an error if the item could not be added -----
     return NextResponse.json(
@@ -81,12 +103,13 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   } catch (error) {
-
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "There was an Error exchanging public token";
+    console.log("Error Message", errorMessage);
     // ----- Handle errors during the token exchange process -----
-    return NextResponse.json(
-      { error: "Error exchanging public token" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -124,4 +147,44 @@ const addItem = async (
     },
   });
   return res;
+};
+/**
+ * Adds accounts to the database for the given item.
+ *
+ * @param item_id - The ID of the item
+ * @param accounts - The accounts to be added
+ */
+const addAccounts = async (
+  user_id: string,
+  item_id: string,
+  accounts: any[]
+) => {
+  for (const account of accounts) {
+    await prisma.account.create({
+      data: {
+        // Add the mandatory 'connect' operation for the 'user' relation
+        user: {
+          connect: {
+            id: user_id, // Connect the Account to the User with this ID
+          },
+        },
+
+        // Add the mandatory 'connect' operation for the 'item' relation (if required by your schema)
+        item: {
+          connect: {
+            item_id: item_id, // Connect the Account to the Item with this ID
+          },
+        },
+
+        // Continue with other account data
+        account_id: account.id,
+        name: account.name,
+        mask: account.mask || null,
+        type: account.type,
+        subtype: account.subtype,
+        verification_status: account.verification_status || null,
+        class_type: account.class_type || null,
+      },
+    });
+  }
 };

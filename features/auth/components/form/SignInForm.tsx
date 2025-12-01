@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useRef, useEffect} from "react";
+import React, { useActionState, useRef} from "react";
 
 //External libraries
 import { useForm } from "react-hook-form";
@@ -65,7 +65,6 @@ const SignInForm = () => {
     onSuccessFn,
     "Signed in successfully!"
   );
-
 
   /**
    * This component is responsible for rendering the sign in form.
