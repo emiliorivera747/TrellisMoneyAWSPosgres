@@ -1,5 +1,4 @@
 import { NextResponse, NextRequest } from "next/server";
-import { AccountsGetRequest } from "plaid";
 import { prisma } from "@/lib/prisma";
 import { calculateNetWorth } from "@/utils/api-helpers/calculateNetWorth";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
@@ -7,7 +6,6 @@ import { getItemsByUserId } from "@/utils/api-helpers/prisma/itemsService";
 import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
 import { getAccountsFromPlaid } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
 import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
-
 
 /**
  * 
@@ -35,9 +33,6 @@ export async function GET(req: NextRequest) {
      * Store accounts in Database
      */
     await updateAccounts(plaidAccounts);
-
-
-    // const response = await client.accountsBalanceGet(request);
 
     /**
      * Retrieve all accounts

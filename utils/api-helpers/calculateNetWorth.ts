@@ -1,5 +1,5 @@
-import { AccountBase } from "plaid";
 import {Account} from '@/types/plaid';
+
 export function calculateNetWorth(accounts: Account[]): { netWorth: number, assets: number, liabilities: number } {
     let netWorth = 0;
     let assets = 0;
@@ -9,7 +9,7 @@ export function calculateNetWorth(accounts: Account[]): { netWorth: number, asse
         const { type, subtype } = account;
         const balance = account?.current ?? 0;
 
-        // Handle DEPOSITORY account types (cash holding)
+        // ----- Handle DEPOSITORY account types (cash holding) ------
         if (type === 'depository') {
             if (['checking', 'savings', 'hsa', 'cd', 'money market', 'paypal', 'prepaid', 'cash management', 'ebt'].includes(subtype || '')) {
                 netWorth += Number(balance);
@@ -17,7 +17,7 @@ export function calculateNetWorth(accounts: Account[]): { netWorth: number, asse
             }
         }
 
-        // Handle CREDIT account types (liabilities)
+        // ------ Handle CREDIT account types (liabilities) -----
         else if (type === 'credit') {
             if (subtype === 'credit card' || subtype === 'paypal') {
                 netWorth -= Number(balance);
@@ -25,7 +25,7 @@ export function calculateNetWorth(accounts: Account[]): { netWorth: number, asse
             }
         }
 
-        // Handle LOAN account types (liabilities)
+        // ----- Handle LOAN account types (liabilities) -----
         else if (type === 'loan') {
             if (['auto', 'business', 'commercial', 'construction', 'consumer', 'home equity', 'mortgage', 'student', 
                 'line of credit', 'overdraft', 'other'].includes(subtype || '')) {
@@ -34,7 +34,7 @@ export function calculateNetWorth(accounts: Account[]): { netWorth: number, asse
             }
         }
 
-        // Handle INVESTMENT account types (assets)
+        // ----- Handle INVESTMENT account types (assets) -----
         else if (type === 'investment') {
             if (['401a', '401k', '403B', '457b', 'brokerage', 'cash isa', 'crypto exchange', 'education savings account', 
                 'fixed annuity', 'gic', 'hsa', 'ira', 'isa', 'keogh', 'lif', 'lira', 'lrsp', 'lrif', 'mutual fund', 
@@ -46,7 +46,7 @@ export function calculateNetWorth(accounts: Account[]): { netWorth: number, asse
             }
         }
 
-        // Handle other account types that are difficult to categorize (e.g., trust, life insurance, other)
+        // ----- Handle other account types that are difficult to categorize (e.g., trust, life insurance, other) ------
         else if (type === 'other') {
             if (subtype === 'trust' || subtype === 'life insurance' || subtype === 'variable annuity' || subtype === 'other annuity') {
                 netWorth += Number(balance);
