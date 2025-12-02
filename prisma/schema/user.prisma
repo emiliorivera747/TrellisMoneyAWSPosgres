@@ -17,9 +17,6 @@ model User {
   accounts   Account[]
   items      Item[]
 
-  // Household
-  household Household?
-
   // Stripe
   plan Plan @default(free)
 
