@@ -1,8 +1,39 @@
 model Household {
-    household_id String    @id @default(cuid())
-    head_of_household_id   String   @unique
-    name         String    @default("Shared Household")
-    members      User[]    @relation("HouseholdMembers")
-    items        Item[]
-    account      Account[]
+    household_id String @id @default(uuid())
+
+    name    String            @default("Our Household")
+    members HouseholdMember[]
+    items   Item[]
+    accounts Account[]
+
+    // Relations
+    head_of_household    User   @relation(fields: [head_of_household_id], references: [user_id])
+    head_of_household_id String @unique
+
+    // Timestamp
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model HouseholdMember {
+    member_id String @id @default(uuid())
+
+    name String
+    role String
+    dob  DateTime?
+
+    invited_email String?
+    invite_status String  @default("pending")
+
+    // Relations
+    household    Household @relation(fields: [household_id], references: [household_id])
+    household_id String
+
+    user    User?   @relation("UserMemberships", fields: [user_id], references: [user_id])
+    user_id String?
+
+    @@unique([household_id, user_id]) // One user can't be added twice
+    @@unique([household_id, invited_email]) // prevent duplicate invites
+    @@index([household_id])
+    @@index([user_id])
 }
