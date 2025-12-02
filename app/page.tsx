@@ -32,10 +32,6 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
 
   return (
     <div className="bg-white h-auto">
