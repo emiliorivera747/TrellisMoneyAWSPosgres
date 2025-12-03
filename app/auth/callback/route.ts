@@ -6,7 +6,6 @@ import { createClient } from "@/utils/supabase/server";
 const ALLOWED_STRIPE_DOMAINS = [
   "checkout.stripe.com",
   "buy.stripe.com",
-  "billing.stripe.com",
 ] as const;
 
 // Safe internal paths only

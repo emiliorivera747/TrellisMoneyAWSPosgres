@@ -93,10 +93,8 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
     where: { email },
   });
 
-  if (!user) {
-    throw new Error("User not found");
-  }
-
+  if (!user) throw new Error("User not found");
+  
   // Process line items
   const lineItems = session.line_items?.data ?? [];
   const subscriptionItem = lineItems.find(item => {
@@ -111,7 +109,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
 
     const subscriptionData = getSubscriptionData(priceId);
     
-    // Batch user and subscription updates in a single transaction
+    // ----- Batch user and subscription updates in a single transaction ------
     await prisma.$transaction([
       prisma.user.update({
         where: { user_id: user.user_id },
