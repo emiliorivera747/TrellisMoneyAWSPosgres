@@ -16,27 +16,23 @@ export async function GET(request: Request) {
   const stripePaymentLink = searchParams.get("stripePaymentLink");
 
   // If no code is provided, redirect to error page
-  if (!code) {
-    console.warn("No code in callback url");
-    return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-  }
+  if (!code) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 
   const supabase = await createClient();
 
   try {
+    
     // Exchange OAuth code for a session
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-    if (error || !data.session || !data.user) {
-      console.error("Supabse code exchange failed:", error);
+    if (error || !data.session || !data.user)
       return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-    }
 
     const user = data.user;
 
     // ----- Always keep user in sync with DB -----
-    const res = await upsertUser(user);
+    const userDB = await upsertUser(user);
 
-    if (!res) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+    if (!userDB) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 
     if (stripePaymentLink && user?.email) {
       const redirectUrl = `${stripePaymentLink}?prefilled_email=${encodeURIComponent(
@@ -55,6 +51,18 @@ export async function GET(request: Request) {
     await prisma.$disconnect(); // Ensure Prisma connection is closed
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+// ====================== Helper Functions ============================
 
 /**
  * Determines the base redirect URL based on environment and headers.
@@ -76,24 +84,98 @@ async function upsertUser(currentUser: {
   user_metadata: { full_name?: string };
 }) {
   try {
-    const res = await prisma.user.upsert({
-      where: { user_id: currentUser.id },
-      update: {
-        email: currentUser.email,
-        name: currentUser.user_metadata.full_name?.trim() || "Unknown",
-      },
-      create: {
-        user_id: currentUser.id,
-        email: currentUser.email,
-        name: currentUser.user_metadata.full_name?.trim() || "Unknown",
-      },
-    });
-    return res;
+    
+    /**
+     * Check whether the user exist or not
+     */
+    const existingUser = await getUserWithId(currentUser);
+    const userExist = !!existingUser;
+
+    /**
+     * Perform the upsert
+     */
+    const userDB = await updateOrCreateUser(currentUser);
+
+    /**
+     * If the user does not exist then we will
+     * create a new house and member.
+     */
+    if (!userExist) await createHousehold(currentUser);
+
+    return userDB;
   } catch (err) {
     const errorMessage =
       err instanceof Error ? err.message : "There was an error updating user";
-    console.log("Error Message", errorMessage);
-    console.error("Failed to upsert user in database:", errorMessage);
+
     return null;
   }
 }
+
+const createHousehold = async (currentUser: {
+  id: string;
+  email?: string;
+  user_metadata: { full_name?: string };
+}) => {
+  let houeseholdName = "",
+    fullName = currentUser.user_metadata.full_name;
+  let email = currentUser.email;
+
+  /**
+   * Create household name
+   */
+  if (fullName) houeseholdName = `${fullName}'s Household`;
+  else if (email) houeseholdName = `${email}'s Household`;
+  else houeseholdName = "Our Household";
+
+  await prisma.$transaction(async (tx) => {
+    const household = await tx.household.create({
+      data: {
+        name: houeseholdName,
+      },
+    });
+
+    await tx.householdMember.create({
+      data: {
+        name: fullName ?? "Unknown",
+        role: "ADMIN",
+        user_id: currentUser?.id,
+        household_id: household.household_id,
+      },
+    });
+  });
+};
+
+const getUserWithId = async (currentUser: {
+  id: string;
+  email?: string;
+  user_metadata: { full_name?: string };
+}) => {
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      user_id: currentUser.id,
+    },
+    select: { user_id: true },
+  });
+  return existingUser;
+};
+
+const updateOrCreateUser = async (currentUser: {
+  id: string;
+  email?: string;
+  user_metadata: { full_name?: string };
+}) => {
+  const userDB = await prisma.user.upsert({
+    where: { user_id: currentUser.id },
+    update: {
+      email: currentUser.email ?? "",
+      name: currentUser.user_metadata.full_name?.trim() || "Unknown",
+    },
+    create: {
+      user_id: currentUser.id,
+      email: currentUser.email ?? "",
+      name: currentUser.user_metadata.full_name?.trim() || "Unknown",
+    },
+  });
+
+  return userDB;
+};
