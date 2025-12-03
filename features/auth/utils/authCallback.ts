@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import {SupabaseUserSyncData} from '@/features/auth/types/callback'
+import { SupabaseUserSyncData } from "@/features/auth/types/callback";
 /**
  * Determines the base redirect URL based on environment and headers.
  */
@@ -53,10 +53,10 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
    * Create household name
    */
   const householdName = fullName
-    ? `${fullName}'s Household`
-    : email
-    ? `${email}'s Household`
-    : "Our Household";
+    ? fullName.endsWith("s")
+      ? `${fullName}' Household`
+      : `${fullName}'s Household`
+    : email?.split("@")[0] + "'s Household";
 
   await prisma.$transaction(async (tx) => {
     const household = await tx.household.create({
