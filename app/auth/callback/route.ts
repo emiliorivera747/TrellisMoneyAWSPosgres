@@ -22,7 +22,7 @@ export async function GET(request: Request) {
   const supabase = await createClient();
 
   try {
-    // Exchange OAuth code for a session
+    // ----- Exchange OAuth code for a session -----
     const {
       data: { session, user },
       error,
