@@ -1,11 +1,5 @@
 import { prisma } from "@/lib/prisma";
-
-interface SupabaseUserSyncData {
-  id: string;
-  email?: string;
-  user_metadata: { full_name?: string };
-}
-
+import {SupabaseUserSyncData} from '@/features/auth/types/callback'
 /**
  * Determines the base redirect URL based on environment and headers.
  */
