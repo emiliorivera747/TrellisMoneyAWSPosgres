@@ -80,8 +80,7 @@ export async function GET(request: Request) {
   if (!session?.user)
     return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 
-  // ----- Always keep user in sync with DB -----
-  // Sync user to DB (soft fail — don't block login)
+  // ----- Sync user to DB (soft fail — don't block login) -----
   try {
     await upsertUser(session.user);
   } catch (err) {
