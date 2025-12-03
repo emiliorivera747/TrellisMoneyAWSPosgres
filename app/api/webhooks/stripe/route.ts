@@ -10,9 +10,6 @@ import { NextRequest } from "next/server"; // Assuming Next.js 13+ App Router
  *
  * Stripe webhook handler
  *
- *
- * @param req
- * @returns
  */
 export async function POST(req: NextRequest) {
   try {
@@ -32,7 +29,7 @@ export async function POST(req: NextRequest) {
         break;
       case "customer.subscription.deleted":
         await handleSubscriptionDeleted(event);
-        break; 
+        break;
       default:
         console.log(`Unhandled event type: ${event.type}`);
     }

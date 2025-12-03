@@ -22,16 +22,14 @@ export const metadata: Metadata = {
  *
  * Landing page for Trellis Money
  *
- * @returns Home page
- *
  */
 export default async function Home() {
+  
   const supabase = await createClient();
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
 
   return (
     <div className="bg-white h-auto">
