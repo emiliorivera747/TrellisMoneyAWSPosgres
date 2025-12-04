@@ -18,7 +18,7 @@ import { ReactQueryClientProvider } from "@/features/react-query/components/Reac
 
 /**
  * We will be using inter as our main font
- * 
+ *
  */
 const inter = Inter({
   subsets: ["latin"],
@@ -43,13 +43,12 @@ export const metadata: Metadata = {
     "Trellis Money is a personal finance management tool. Track investments across all accounts. Set goals and budgets. Get insights into your spending.",
 };
 
-
 /**
- * 
+ *
  * The root layout for the application
- * 
- * @param param0 
- * @returns 
+ *
+ * @param param0
+ * @returns
  */
 export default function RootLayout({
   children,

@@ -88,7 +88,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
 
   if (!email) throw new Error("Customer email not found in session");
 
-  // Get or create user
+  // ----- Find the user -----
   const user = await prisma.user.findUnique({
     where: { email },
   });
