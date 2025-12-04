@@ -38,7 +38,7 @@ function UnauthenticatedCTA() {
     <div className="mt-10 flex flex-col items-center">
       <Link
         href="/sign-up"
-        className="flex h-[3.5rem] items-center justify-center rounded-full bg-gradient-to-r from-tertiary-100 to-tertiary-200  hover:from-tertiary-200 hover:to-tertiary-300 px-[4rem] py-[1.05882rem] transition duration-300 font-semibold text-tertiary-800 border-none border-tertiary-300"
+        className="flex h-[3.5rem] items-center justify-center rounded-full bg-gradient-to-r to-tertiary-100 from-tertiary-300  hover:to-tertiary-200 hover:from-tertiary-400 px-[4rem] py-[1.05882rem] transition duration-300 font-semibold text-tertiary-800 border-none border-tertiary-300"
       >
         Enjoy 30 days free
       </Link>

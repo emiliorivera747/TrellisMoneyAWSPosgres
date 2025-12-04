@@ -10,6 +10,5 @@ export const usePlans = () => {
     queryKey: ["plans"],
     queryFn: () => planServices.fetchPlans(),
   });
-
   return { plansResponse, plansError, isPendingPlans };
 };
