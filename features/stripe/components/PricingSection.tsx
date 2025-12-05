@@ -4,7 +4,14 @@ import SubscriptionCard from "@/features/stripe/components/SubscriptionCard";
 import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
 
 const PricingSection = () => {
+  const dict = {
+    month: "mo",
+    year: "yr",
+  };
+
   const { plansResponse, plansError, isPendingPlans } = usePlans();
+
+  if (isPendingPlans) return <div>Loading...</div>;
 
   return (
     <section className=" h-auto sm:h-screen w-full flex flex-col border-t border-tertiary-300">
@@ -15,36 +22,28 @@ const PricingSection = () => {
         Manage your finances. Cancel anytime.
       </p>
       <div className="flex flex-col sm:flex-row gap-6 items-center justify-center  p-8 ">
-        <SubscriptionCard
-          title="Premium Plus Monthly"
-          price="$5/mo"
-          features={[
-            "Track your investments",
-            "Set goals and budgets",
-            "Get insights into your spending",
-            "Get alerts and notifications",
-            "Set projections and forecasts",
-          ]}
-          payment_link={
-            process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PLAN_LINK as string
-          }
-          footerDescription="Auto-renews at $5/mo. Switch plans or cancel anytime."
-        />
-        <SubscriptionCard
-          title="Premium Plus Yearly"
-          price="$50/yr"
-          features={[
-            "Track your investments",
-            "Set goals and budgets",
-            "Get insights into your spending",
-            "Get alerts and notifications",
-            "Set projections and forecasts",
-          ]}
-          payment_link={
-            process.env.NEXT_PUBLIC_STRIPE_YEARLY_PLAN_LINK as string
-          }
-          footerDescription="Auto-renews at $50/yr. Switch plans or cancel anytime."
-        />
+        {plansResponse.map(({ product, unit_amount, recurring }) => {
+          const priceDescription =
+            recurring?.interval === "month"
+              ? `${unit_amount / 100}${dict["month"]}`
+              : `${unit_amount / 100}${dict["year"]}`;
+
+          const features = product?.marketing_features?.map((feature) => {
+            return feature.name;
+          });
+          return (
+            <SubscriptionCard
+              key={product?.name}
+              title={product?.name}
+              price={priceDescription}
+              features={features ? features : []}
+              payment_link={
+                process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PLAN_LINK as string
+              }
+              footerDescription={`Auto-renews at ${priceDescription} Switch plans or cancel anytime.`}
+            />
+          );
+        })}
       </div>
     </section>
   );
