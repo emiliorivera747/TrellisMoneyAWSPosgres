@@ -16,6 +16,15 @@ export const metadata: Metadata = {
   title: "Trellis Money - Seeing value where others don't",
   description:
     "Trellis Money is a personal finance management tool. Track investments across all accounts. Set goals and budgets. Get insights into your spending.",
+  keywords: [
+    "personal finance",
+    "finance management",
+    "investment tracking",
+    "budgeting",
+    "spending insights",
+    "financial goals",
+    "Trellis Money",
+  ],
 };
 
 /**
