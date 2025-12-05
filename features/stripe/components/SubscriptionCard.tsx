@@ -15,14 +15,14 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   footerDescription,
 }) => {
   return (
-    <div className="subscription-card border rounded-[12px] shadow-md p-6 px-8 flex flex-col items-center backdrop-blur bg-tertiary-300/40 w-[25rem] hover:shadow-2xl">
+    <div className="subscription-card border rounded-[12px] shadow-md p-6 px-8 flex flex-col items-center backdrop-blur bg-tertiary-300/40 w-[20rem] sm:w-[25rem] hover:shadow-2xl">
       <h2 className="text-xl font-bold mb-2">{title}</h2>
       <p className=" text-tertiary-800 text-md font-semibold mb-4">{price}</p>
-      <ul className="mb-8 w-full">
+      <ul className="mb-6 w-full ">
         {features.map((feature, index) => (
           <li
             key={index}
-            className="text-gray-700 flex flex-row gap-2 items-center py-3 text-md"
+            className="text-gray-700 grid grid-cols-[2.2rem_1fr] my-2 sm:my-3 sm:text-[1.2rem] text-sm py-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
                 clipRule="evenodd"
               />
             </svg>
-
             {feature}
           </li>
         ))}
@@ -46,7 +45,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         href={"/sign-up"}
         text={"Subscribe"}
       />
-      <p className="pt-8 text-md text-tertiary-700 items-center w-full">
+      <p className="pt-6 text-sm sm:text-md text-tertiary-700 items-center w-full">
         {footerDescription}
       </p>
     </div>

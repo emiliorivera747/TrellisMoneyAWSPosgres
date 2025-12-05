@@ -5,12 +5,10 @@ import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
 
 const PricingSection = () => {
   const { plansResponse, plansError, isPendingPlans } = usePlans();
-  console.log("Plans response", plansResponse);
 
   return (
     <section className=" h-auto sm:h-screen w-full flex flex-col border-t border-tertiary-300">
       <h1 className="text-center text-3xl font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent mt-[5rem]">
-        {" "}
         Start your Trellis Money membership
       </h1>
       <p className="text-center text-md bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-transparent  mt-4">
