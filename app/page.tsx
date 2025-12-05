@@ -4,7 +4,7 @@ import React from "react";
 export const dynamic = "force-dynamic";
 
 // Components
-import HeroSection from "@/components/layout/HeroSection";
+import HeroSection from "@/components/marketing/layout/HeroSection";
 import Navbar from "@/components/nav-bars/NavBar";
 import Footer from "@/components/footers/Footer";
 import PricingSection from "@/features/subscription-plans/components/PricingSection";
@@ -31,6 +31,30 @@ export const metadata: Metadata = {
  *
  * Landing page for Trellis Money
  *
+ */
+/**
+ * The `Home` component serves as the main entry point for the application.
+ * It fetches the authenticated user data from Supabase and renders the 
+ * main sections of the page, including the Navbar, HeroSection, PricingSection, 
+ * and Footer. The authentication status is passed as a prop to the relevant components.
+ *
+ * @async
+ * @function
+ * @returns {JSX.Element} The rendered JSX for the home page.
+ *
+ * @remarks
+ * - This component uses the `createClient` function to initialize the Supabase client.
+ * - The `supabase.auth.getUser` method is used to retrieve the current authenticated user.
+ * - The `isAuthenticated` prop is derived from the presence of a user object.
+ *
+ * @example
+ * ```tsx
+ * import Home from './page';
+ * 
+ * export default function App() {
+ *   return <Home />;
+ * }
+ * ```
  */
 export default async function Home() {
   const supabase = await createClient();
