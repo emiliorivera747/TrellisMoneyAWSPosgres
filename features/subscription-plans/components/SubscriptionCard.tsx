@@ -1,12 +1,29 @@
-import PaymentLink from "@/features/stripe/components/PaymentLink";
-interface SubscriptionCardProps {
-  title: string;
-  price: string;
-  features: string[];
-  payment_link: string;
-  footerDescription: string;
-}
-
+import PaymentLink from "@/features/subscription-plans/components/PaymentLink";
+import { SubscriptionCardProps } from "@/features/subscription-plans/types/subscription";
+/**
+ * A React functional component that renders a subscription card with a title, price,
+ * list of features, a payment link, and a footer description. The card is styled with
+ * Tailwind CSS classes and includes hover effects.
+ *
+ * @component
+ * @param {object} props - The props object for the SubscriptionCard component.
+ * @param {string} props.title - The title of the subscription plan.
+ * @param {string} props.price - The price of the subscription plan.
+ * @param {string[]} props.features - An array of features included in the subscription plan.
+ * @param {string} props.payment_link - The payment link URL for subscribing to the plan.
+ * @param {string} props.footerDescription - A description or note displayed in the footer of the card.
+ *
+ * @returns {JSX.Element} A styled subscription card component.
+ *
+ * @example
+ * <SubscriptionCard
+ *   title="Premium Plan"
+ *   price="$29.99/month"
+ *   features={["Feature 1", "Feature 2", "Feature 3"]}
+ *   payment_link="https://example.com/subscribe"
+ *   footerDescription="Cancel anytime."
+ * />
+ */
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   title,
   price,

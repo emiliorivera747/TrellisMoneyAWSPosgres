@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-import SubscriptionCard from "@/features/stripe/components/SubscriptionCard";
-import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
 
 // Types
 import { StripePrice } from "@/features/stripe/types/price";
@@ -10,7 +8,11 @@ import { StripePrice } from "@/features/stripe/types/price";
 import { getPriceDescription } from "@/features/stripe/utils/getPriceFromUnitAmount";
 
 // Components
-import PricingSectionSkeleton from "@/features/stripe/components/skeleton/PricingSectionSkeleton";
+import PricingSectionSkeleton from "@/features/subscription-plans/components/skeleton/PricingSectionSkeleton";
+import SubscriptionCard from "@/features/subscription-plans/components/SubscriptionCard";
+
+// Hooks
+import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
 
 const PricingSection = () => {
   const { plansResponse, plansError, isPendingPlans } = usePlans();

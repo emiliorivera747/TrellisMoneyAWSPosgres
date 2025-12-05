@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 import HeroSection from "@/features/home/components/HeroSection";
 import Navbar from "@/components/nav-bars/NavBar";
 import Footer from "@/components/footers/Footer";
-import PricingSection from "@/features/stripe/components/PricingSection";
+import PricingSection from "@/features/subscription-plans/components/PricingSection";
 
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
@@ -24,7 +24,6 @@ export const metadata: Metadata = {
  *
  */
 export default async function Home() {
-  
   const supabase = await createClient();
 
   const {
