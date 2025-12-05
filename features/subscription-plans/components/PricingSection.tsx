@@ -20,14 +20,14 @@ const PricingSection = () => {
   if (isPendingPlans) return <PricingSectionSkeleton />;
 
   return (
-    <section className=" h-auto sm:h-screen w-full flex flex-col border-t border-tertiary-300">
+    <section className=" h-auto min-h-screen sm:h-screen w-full flex flex-col border-t border-tertiary-300">
       <h1 className="text-center text-3xl font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent mt-[5rem]">
         Start your Trellis Money membership
       </h1>
       <p className="text-center text-md bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-transparent  mt-4">
         Manage your finances. Cancel anytime.
       </p>
-      <div className="flex flex-col sm:flex-row gap-6 items-center justify-center  p-8 ">
+      <div className="flex flex-row flex-wrap items-center justify-center gap-4">
         {plansResponse.map(
           ({ product, unit_amount, recurring }: StripePrice) => {
             const priceDescription = getPriceDescription(
@@ -35,9 +35,10 @@ const PricingSection = () => {
               recurring?.interval
             );
 
-            const features = product?.marketing_features?.map((feature) => {
-              return feature.name;
-            });
+            const features = product?.marketing_features?.map(
+              (feature) => feature.name
+            );
+
             return (
               <SubscriptionCard
                 key={product?.name}
