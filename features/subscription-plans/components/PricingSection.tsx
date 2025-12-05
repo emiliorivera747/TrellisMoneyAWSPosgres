@@ -9,10 +9,6 @@ import { getPriceDescription } from "@/features/stripe/utils/getPriceFromUnitAmo
 // Components
 import PricingSectionSkeleton from "@/features/subscription-plans/components/skeleton/PricingSectionSkeleton";
 import SubscriptionCard from "@/features/subscription-plans/components/SubscriptionCard";
-import {
-  PrimaryHeaderProps,
-  SecondaryHeaderProps,
-} from "@/types/components/marketing/headers";
 
 // Hooks
 import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
