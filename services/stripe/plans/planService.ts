@@ -1,22 +1,10 @@
 /**
- * Retrieve all of the current plans from stripe
- *
+ * Fetch all active Prices (recommended replacement for deprecated /v1/plans)
  */
 const fetchPlans = async () => {
-  const url = "https://api.stripe.com/v1/plans";
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
-    },
-  });
-
-  if (!res.ok) throw new Error(`There was an error fetching plans from Stripe`);
-
-  const plansResponse = await res.json();
-
-  return plansResponse;
+  const res = await fetch("/api/stripe/plans");
+  if (!res.ok) throw new Error("Failed to fetch plans");
+  return res.json();
 };
 
 export const planServices = {
