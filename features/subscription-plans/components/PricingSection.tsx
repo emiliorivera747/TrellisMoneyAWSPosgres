@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 // Types
 import { StripePrice } from "@/features/stripe/types/price";
@@ -10,9 +9,17 @@ import { getPriceDescription } from "@/features/stripe/utils/getPriceFromUnitAmo
 // Components
 import PricingSectionSkeleton from "@/features/subscription-plans/components/skeleton/PricingSectionSkeleton";
 import SubscriptionCard from "@/features/subscription-plans/components/SubscriptionCard";
+import {
+  PrimaryHeaderProps,
+  SecondaryHeaderProps,
+} from "@/types/components/marketing/headers";
 
 // Hooks
 import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
+import {
+  PrimaryHeader,
+  SecondaryHeader,
+} from "@/components/marketing/headers/Headers";
 
 /**
  * PricingSection Component
@@ -56,13 +63,10 @@ const PricingSection = () => {
 
   return (
     <section className="h-auto min-h-screen sm:min-h-screen w-full flex flex-col border-t border-tertiary-300  pb-10">
-      <h1 className="text-center text-3xl font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent mt-[5rem]">
-        Start your Trellis Money membership
-      </h1>
-      <p className="text-center text-md bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-transparent  mt-4">
-        Manage your finances. Cancel anytime.
-      </p>
-      <div className="flex flex-row flex-wrap items-center justify-center gap-4">
+      <PrimaryHeader label={"Start your Trellis Money membership"} />
+      <SecondaryHeader label={"Manage your finances. Cancel anytime."} />
+      
+      <div className="flex flex-row flex-wrap items-center justify-center gap-4 mt-8">
         {plansResponse.map(
           ({ product, unit_amount, recurring }: StripePrice) => {
             const priceDescription = getPriceDescription(

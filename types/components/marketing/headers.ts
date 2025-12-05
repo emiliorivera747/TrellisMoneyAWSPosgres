@@ -1,5 +1,5 @@
 interface BaseHeaderProps {
-    className: string;
+    className?: string;
     label: string;
     ref?: React.Ref<HTMLHeadingElement>;
 }
