@@ -39,7 +39,7 @@ export interface StripePrice {
   nickname: string | null;
   product: StripeProduct; // Updated to allow either a string or a StripeProduct object
   recurring: {
-    interval: "day" | "week" | "month" | "year";
+    interval: RecurringInterval;
     interval_count: number;
     trial_period_days: number | null;
     usage_type: "licensed" | "metered";
@@ -51,3 +51,6 @@ export interface StripePrice {
   unit_amount: number | null;
   unit_amount_decimal: string | null;
 }
+
+export type RecurringInterval = "day" | "week" | "month" | "year";
+export type RecurringIntervalAbbreviation = "d" | "wk" | "mo" | "yr";

@@ -6,15 +6,12 @@ import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
 // Types
 import { StripePrice } from "@/features/stripe/types/price";
 
+// Utils
+import { getPriceDescription } from "@/features/stripe/utils/getPriceFromUnitAmount";
+
 const PricingSection = () => {
-  const dict = {
-    month: "mo",
-    year: "yr",
-  };
 
   const { plansResponse, plansError, isPendingPlans } = usePlans();
-
-  console.log(plansResponse);
 
   if (isPendingPlans) return <div>Loading...</div>;
 
@@ -29,10 +26,11 @@ const PricingSection = () => {
       <div className="flex flex-col sm:flex-row gap-6 items-center justify-center  p-8 ">
         {plansResponse.map(
           ({ product, unit_amount, recurring }: StripePrice) => {
-            const priceDescription =
-              recurring?.interval === "month"
-                ? `$${(unit_amount ?? 0) / 100}/${dict["month"]}`
-                : `$${(unit_amount ?? 0) / 100}/${dict["year"]}`;
+            
+            const priceDescription = getPriceDescription(
+              unit_amount,
+              recurring?.interval
+            );
 
             const features = product?.marketing_features?.map((feature) => {
               return feature.name;
