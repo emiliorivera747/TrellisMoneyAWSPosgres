@@ -4,7 +4,7 @@ import React from "react";
 export const dynamic = "force-dynamic";
 
 // Components
-import HeroSection from "@/features/home/components/HeroSection";
+import HeroSection from "@/components/layout/HeroSection";
 import Navbar from "@/components/nav-bars/NavBar";
 import Footer from "@/components/footers/Footer";
 import PricingSection from "@/features/subscription-plans/components/PricingSection";
