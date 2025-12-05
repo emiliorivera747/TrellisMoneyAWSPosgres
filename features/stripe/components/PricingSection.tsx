@@ -14,6 +14,8 @@ const PricingSection = () => {
 
   const { plansResponse, plansError, isPendingPlans } = usePlans();
 
+  console.log(plansResponse);
+
   if (isPendingPlans) return <div>Loading...</div>;
 
   return (
