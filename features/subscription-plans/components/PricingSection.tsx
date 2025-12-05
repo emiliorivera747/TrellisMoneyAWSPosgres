@@ -14,6 +14,41 @@ import SubscriptionCard from "@/features/subscription-plans/components/Subscript
 // Hooks
 import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
 
+/**
+ * PricingSection Component
+ *
+ * This component renders a pricing section for Trellis Money membership plans.
+ * It fetches subscription plans using the `usePlans` hook and displays them
+ * in a responsive layout. If the plans are still loading, it shows a skeleton
+ * loader.
+ *
+ * @component
+ *
+ * @returns {JSX.Element} The rendered PricingSection component.
+ *
+ * @remarks
+ * - The component uses the `usePlans` hook to fetch subscription plans data.
+ * - If the data is still loading, it renders the `PricingSectionSkeleton` component.
+ * - Each subscription plan is displayed using the `SubscriptionCard` component.
+ * - The `getPriceDescription` utility function is used to format the price and interval.
+ *
+ * @example
+ * ```tsx
+ * <PricingSection />
+ * ```
+ *
+ * @dependencies
+ * - `usePlans`: Custom hook to fetch subscription plans.
+ * - `PricingSectionSkeleton`: Component to display a loading state.
+ * - `SubscriptionCard`: Component to display individual subscription plans.
+ * - `getPriceDescription`: Utility function to format price and interval.
+ *
+ * @env
+ * - `NEXT_PUBLIC_STRIPE_MONTHLY_PLAN_LINK`: Environment variable for the payment link.
+ *
+ * @styles
+ * - The component uses Tailwind CSS classes for styling.
+ */
 const PricingSection = () => {
   const { plansResponse, plansError, isPendingPlans } = usePlans();
 
