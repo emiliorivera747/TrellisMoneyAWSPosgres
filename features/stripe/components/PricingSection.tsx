@@ -15,7 +15,7 @@ import PricingSectionSkeleton from "@/features/stripe/components/skeleton/Pricin
 const PricingSection = () => {
   const { plansResponse, plansError, isPendingPlans } = usePlans();
 
-  if (true) return <PricingSectionSkeleton />;
+  if (isPendingPlans) return <PricingSectionSkeleton />;
 
   return (
     <section className=" h-auto sm:h-screen w-full flex flex-col border-t border-tertiary-300">

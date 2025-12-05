@@ -54,5 +54,5 @@ export const getPriceDescription = (
   unit_amount: number | null ,
   interval: RecurringInterval | null | undefined
 ) => {
-  return `${getPriceFromUnitAmount(unit_amount)}/${getAbbreviation(interval)}`;
+  return `$${getPriceFromUnitAmount(unit_amount)}/${getAbbreviation(interval)}`;
 };

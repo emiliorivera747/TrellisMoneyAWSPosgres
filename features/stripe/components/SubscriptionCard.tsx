@@ -16,13 +16,13 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
 }) => {
   return (
     <div className="subscription-card border rounded-[12px] shadow-md p-6 px-8 flex flex-col items-center backdrop-blur bg-tertiary-300/40 w-[20rem] sm:w-[25rem] hover:shadow-2xl">
-      <h2 className="text-xl font-bold mb-2">{title}</h2>
-      <p className=" text-tertiary-800 text-md font-semibold mb-4">{price}</p>
-      <ul className="mb-6 w-full ">
+      <h2 className="text-xl font-bold mb-2 text-tertiary-1000">{title}</h2>
+      <p className=" text-tertiary-700 text-md font-medium mb-4">{price}</p>
+      <ul className="mb-4 w-full ">
         {features.map((feature, index) => (
           <li
             key={index}
-            className="text-gray-700 grid grid-cols-[2.2rem_1fr] my-2 sm:my-3 sm:text-[1.2rem] text-sm py-2"
+            className="font-light text-tertiary-800 grid grid-cols-[2.2rem_1fr] my-2 sm:my-3 sm:text-[1.2rem] text-sm py-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         href={"/sign-up"}
         text={"Subscribe"}
       />
-      <p className="pt-6 text-sm sm:text-md text-tertiary-700 items-center w-full">
+      <p className="pt-6 text-sm sm:text-md text-tertiary-700 items-center w-full font-light">
         {footerDescription}
       </p>
     </div>
