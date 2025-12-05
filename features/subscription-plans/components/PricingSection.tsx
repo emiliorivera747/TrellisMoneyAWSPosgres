@@ -73,7 +73,6 @@ const PricingSection = () => {
             const features = product?.marketing_features?.map(
               (feature) => feature.name
             );
-
             return (
               <SubscriptionCard
                 key={product?.name}

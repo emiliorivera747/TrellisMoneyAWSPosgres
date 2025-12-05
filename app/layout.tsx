@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/themes/theme-provider";
 
 //External Libraries
 import "react-toastify/dist/ReactToastify.css";

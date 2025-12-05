@@ -1,7 +1,7 @@
 import SideNavigationBar from "@/components/navigation/SideNavigationBar";
 import Footer from "@/components/footers/Footer";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/themes/theme-provider";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 
 import { Metadata } from "next";
