@@ -1,5 +1,31 @@
 import React from "react";
 
+/**
+ * A skeleton component that serves as a placeholder for the `NetValueDisplayCard` 
+ * while the actual data is being loaded. It uses a combination of div elements 
+ * styled with Tailwind CSS classes to create a shimmering loading effect.
+ *
+ * @component
+ * @returns {JSX.Element} A skeleton placeholder for the `NetValueDisplayCard`.
+ *
+ * @remarks
+ * - The component uses the `animate-pulse` class to create a loading animation.
+ * - The layout is structured with flexbox for alignment and spacing.
+ * - The `bg-tertiary-200` class is used to simulate the appearance of loading content.
+ *
+ * @example
+ * ```tsx
+ * import NetValueDisplaySkeleton from './NetValueDisplayCardSkeleton';
+ *
+ * const App = () => {
+ *   return (
+ *     <div>
+ *       <NetValueDisplaySkeleton />
+ *     </div>
+ *   );
+ * };
+ * ```
+ */
 const NetValueDisplaySkeleton = () => {
   return (
     <div className="border border-tertiary-400 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-3 rounded-[12px] animate-pulse">
