@@ -55,7 +55,7 @@ const PricingSection = () => {
   if (isPendingPlans) return <PricingSectionSkeleton />;
 
   return (
-    <section className=" h-auto min-h-screen sm:h-screen w-full flex flex-col border-t border-tertiary-300">
+    <section className="h-auto min-h-screen sm:min-h-screen w-full flex flex-col border-t border-tertiary-300 bg-yellow-50 pb-10">
       <h1 className="text-center text-3xl font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent mt-[5rem]">
         Start your Trellis Money membership
       </h1>
