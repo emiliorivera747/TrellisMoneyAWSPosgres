@@ -9,11 +9,13 @@ import { StripePrice } from "@/features/stripe/types/price";
 // Utils
 import { getPriceDescription } from "@/features/stripe/utils/getPriceFromUnitAmount";
 
-const PricingSection = () => {
+// Components
+import PricingSectionSkeleton from "@/features/stripe/components/skeleton/PricingSectionSkeleton";
 
+const PricingSection = () => {
   const { plansResponse, plansError, isPendingPlans } = usePlans();
 
-  if (isPendingPlans) return <div>Loading...</div>;
+  if (true) return <PricingSectionSkeleton />;
 
   return (
     <section className=" h-auto sm:h-screen w-full flex flex-col border-t border-tertiary-300">
@@ -26,7 +28,6 @@ const PricingSection = () => {
       <div className="flex flex-col sm:flex-row gap-6 items-center justify-center  p-8 ">
         {plansResponse.map(
           ({ product, unit_amount, recurring }: StripePrice) => {
-            
             const priceDescription = getPriceDescription(
               unit_amount,
               recurring?.interval
