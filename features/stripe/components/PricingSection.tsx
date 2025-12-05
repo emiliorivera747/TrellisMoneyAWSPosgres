@@ -3,6 +3,9 @@ import React from "react";
 import SubscriptionCard from "@/features/stripe/components/SubscriptionCard";
 import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
 
+// Types
+import { StripePrice } from "@/features/stripe/types/price";
+
 const PricingSection = () => {
   const dict = {
     month: "mo",
@@ -22,28 +25,30 @@ const PricingSection = () => {
         Manage your finances. Cancel anytime.
       </p>
       <div className="flex flex-col sm:flex-row gap-6 items-center justify-center  p-8 ">
-        {plansResponse.map(({ product, unit_amount, recurring }) => {
-          const priceDescription =
-            recurring?.interval === "month"
-              ? `${unit_amount / 100}${dict["month"]}`
-              : `${unit_amount / 100}${dict["year"]}`;
+        {plansResponse.map(
+          ({ product, unit_amount, recurring }: StripePrice) => {
+            const priceDescription =
+              recurring?.interval === "month"
+                ? `$${(unit_amount ?? 0) / 100}/${dict["month"]}`
+                : `$${(unit_amount ?? 0) / 100}/${dict["year"]}`;
 
-          const features = product?.marketing_features?.map((feature) => {
-            return feature.name;
-          });
-          return (
-            <SubscriptionCard
-              key={product?.name}
-              title={product?.name}
-              price={priceDescription}
-              features={features ? features : []}
-              payment_link={
-                process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PLAN_LINK as string
-              }
-              footerDescription={`Auto-renews at ${priceDescription} Switch plans or cancel anytime.`}
-            />
-          );
-        })}
+            const features = product?.marketing_features?.map((feature) => {
+              return feature.name;
+            });
+            return (
+              <SubscriptionCard
+                key={product?.name}
+                title={product?.name}
+                price={priceDescription}
+                features={features ? features : []}
+                payment_link={
+                  process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PLAN_LINK as string
+                }
+                footerDescription={`Auto-renews at ${priceDescription} Switch plans or cancel anytime.`}
+              />
+            );
+          }
+        )}
       </div>
     </section>
   );
