@@ -1,6 +1,7 @@
 import PaymentLink from "@/features/subscription-plans/components/PaymentLink";
 import { SubscriptionCardProps } from "@/features/subscription-plans/types/subscription";
 
+import Link from "next/link";
 
 /**
  * A React functional component that renders a subscription card with a title, price,
@@ -30,7 +31,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   title,
   price,
   features,
-  price_id, 
+  price_id,
   footerDescription,
 }) => {
   return (
@@ -59,9 +60,9 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
           </li>
         ))}
       </ul>
-      <PaymentLink
+      <Link
         href={`/sign-up?price_id=${price_id}`}
-        text={"Subscribe"}
+        className="flex items-center justify-center w-full bg-gradient-to-r from-primary-700 to-primary-800 text-white px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] hover:bg-blue-700 hover:to-blue-700 transition duration-300"
       />
       <p className="pt-6 text-sm sm:text-md text-tertiary-700 items-center w-full font-light">
         {footerDescription}
