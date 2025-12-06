@@ -14,25 +14,60 @@ import DotLoader from "@/components/loading/DotLoader";
 //types
 import { GoogleButtonProps } from "@/features/auth/types/buttons/buttons";
 
-const defaultClass = 'mb-4 px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] w-full text-sm font-medium text-gray-700 bg-white border border-gray-300 shadow-sm hover:bg-[#f1f3f5] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4';
+const defaultClass =
+  "mb-4 px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] w-full text-sm font-medium text-gray-700 bg-white border border-gray-300 shadow-sm hover:bg-[#f1f3f5] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4";
 
-const GoogleButton = ({ label, dataTestID, className , ref }: GoogleButtonProps) => {
+/**
+ * A React functional component that renders a Google sign-in button.
+ * The button initiates the OAuth sign-in process with Google using Supabase.
+ *
+ * @param {Object} props - The props for the GoogleButton component.
+ * @param {string} props.label - The label text to display on the button.
+ * @param {string} props.dataTestID - The data-testid attribute for testing purposes.
+ * @param {string} props.className - Additional CSS classes to apply to the button.
+ * @param {React.Ref<HTMLButtonElement>} props.ref - A ref to the button element.
+ *
+ * @returns {JSX.Element} The rendered Google sign-in button component.
+ *
+ * @remarks
+ * - The button displays a loading indicator while the sign-in process is in progress.
+ * - The `signInWithGoogle` function handles the OAuth sign-in process and passes
+ *   a `price_id` in the state parameter for redirection.
+ * - The `supabase.auth.signInWithOAuth` method is used to initiate the sign-in process.
+ *
+ * @example
+ * ```tsx
+ * <GoogleButton
+ *   label="Sign in with Google"
+ *   dataTestID="google-sign-in-button"
+ *   className="custom-class"
+ *   ref={buttonRef}
+ * />
+ * ```
+ */
+const GoogleButton = ({
+  label,
+  dataTestID,
+  className,
+  ref,
+}: GoogleButtonProps) => {
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
 
+  const priceId = "";
   async function signInWithGoogle() {
     setIsGoogleLoading(true);
     try {
-      const stripePaymentLink = localStorage.getItem("stripePaymentLink");
-      const redirectTo = stripePaymentLink
-        ? `${window.location.origin}/auth/callback?stripePaymentLink=${encodeURIComponent(stripePaymentLink)}`
-        : `${window.location.origin}/auth/callback`;
+      const redirectTo = `${window.location.origin}/auth/callback`;
+
+      const state = JSON.stringify({ price_id: priceId }); // Pass price_id in state
 
       // Sign in with Google
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo,
+          queryParams: { state },
         },
       });
       if (error) throw error;

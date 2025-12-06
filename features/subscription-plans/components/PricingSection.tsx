@@ -48,9 +48,6 @@ import {
  * - `SubscriptionCard`: Component to display individual subscription plans.
  * - `getPriceDescription`: Utility function to format price and interval.
  *
- * @env
- * - `NEXT_PUBLIC_STRIPE_MONTHLY_PLAN_LINK`: Environment variable for the payment link.
- *
  * @styles
  * - The component uses Tailwind CSS classes for styling.
  */
