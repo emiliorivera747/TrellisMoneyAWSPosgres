@@ -4,7 +4,9 @@
 import { StripePrice } from "@/features/stripe/types/price";
 
 // Utils
-import { getPriceDescription } from "@/features/stripe/utils/getPriceFromUnitAmount";
+import { getPriceDescription } from "@/features/subscription-plans/utils/getPriceFromUnitAmount";
+import getFeaturesFromProducts from "@/features/subscription-plans/utils/getFeaturesFromProducts";
+import sortByInterval from "@/features/subscription-plans/utils/sortByInterval";
 
 // Components
 import PricingSectionSkeleton from "@/features/subscription-plans/components/skeleton/PricingSectionSkeleton";
@@ -63,31 +65,23 @@ const PricingSection = () => {
 
       <div className="flex flex-row flex-wrap items-center justify-center gap-8 mt-8">
         {plansResponse
-          .sort((a: StripePrice, b: StripePrice) => {
-            const order = { day: 1, week: 2, month: 3, year: 4 };
-            const intervalA = a.recurring?.interval;
-            const intervalB = b.recurring?.interval;
-            return (
-              ((intervalA && order[intervalA]) || 0) -
-              ((intervalB && order[intervalB]) || 0)
-            );
-          })
+          .sort(sortByInterval)
           .map(({ product, unit_amount, recurring, id }: StripePrice) => {
+            
             const priceDescription = getPriceDescription(
               unit_amount,
               recurring?.interval
             );
 
-            const features = product?.marketing_features?.map(
-              (feature) => feature.name
-            );
+            const features = getFeaturesFromProducts(product);
+
             return (
               <SubscriptionCard
                 key={id}
                 title={product?.name}
                 price={priceDescription}
                 features={features ? features : []}
-                price_id={id}
+                subscription_link_url={`/sign-up?price_id=${id}`}
                 footerDescription={`Auto-renews at ${priceDescription} Switch plans or cancel anytime.`}
               />
             );
