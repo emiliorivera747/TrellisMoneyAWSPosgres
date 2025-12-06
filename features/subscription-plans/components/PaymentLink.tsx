@@ -1,6 +1,6 @@
 "use client";
 
-// Next js
+// Next.js
 import Link from "next/link";
 
 // Types
@@ -24,7 +24,6 @@ import { cn } from "@/lib/utils";
  * @example
  * <PaymentLink
  *   href="https://example.com"
- *   paymentLink="https://stripe.com/payment-link"
  *   text="Pay Now"
  * />
  */
@@ -36,7 +35,7 @@ const PaymentLink = ({ href, text, ref, className }: PaymentLinkProps) => {
       ref={ref}
       href={href || "#"}
       className={cn(defaultClasses, className)}
-    >
+    > 
       {text}
     </Link>
   );

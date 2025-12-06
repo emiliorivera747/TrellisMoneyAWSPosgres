@@ -37,6 +37,7 @@ import { SignUpInputs } from "@/features/auth/schemas/formSchemas";
  * @returns JSX.Element
  */
 export default function Signup() {
+  
   const buttonRef = useRef(null);
   
   const { pending } = useFormStatus();
