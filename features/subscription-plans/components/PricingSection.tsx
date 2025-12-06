@@ -53,6 +53,7 @@ import {
  * - The component uses Tailwind CSS classes for styling.
  */
 const PricingSection = () => {
+  
   const { plansResponse, plansError, isPendingPlans } = usePlans();
 
   if (isPendingPlans) return <PricingSectionSkeleton />;
@@ -61,10 +62,9 @@ const PricingSection = () => {
     <section className="h-auto min-h-screen sm:min-h-screen w-full flex flex-col border-t border-tertiary-300  pb-10">
       <PrimaryHeader label={"Start your Trellis Money membership"} />
       <SecondaryHeader label={"Manage your finances. Cancel anytime."} />
-      
-      <div className="flex flex-row flex-wrap items-center justify-center gap-4 mt-8">
+      <div className="flex flex-row flex-wrap items-center justify-center gap-6 mt-8">
         {plansResponse.map(
-          ({ product, unit_amount, recurring }: StripePrice) => {
+          ({ product, unit_amount, recurring ,id }: StripePrice) => {
             const priceDescription = getPriceDescription(
               unit_amount,
               recurring?.interval
@@ -75,7 +75,7 @@ const PricingSection = () => {
             );
             return (
               <SubscriptionCard
-                key={product?.name}
+                key={id}
                 title={product?.name}
                 price={priceDescription}
                 features={features ? features : []}
