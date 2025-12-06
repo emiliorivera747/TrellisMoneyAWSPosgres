@@ -6,6 +6,8 @@ import Link from "next/link";
 // Types
 import { PaymentLinkProps } from "@/features/subscription-plans/types/subscription";
 
+import { cn } from "@/lib/utils";
+
 /**
  * A React component that renders a styled payment link. When clicked, it stores the provided
  * payment link in the browser's local storage under the key "stripePaymentLink".
@@ -26,14 +28,14 @@ import { PaymentLinkProps } from "@/features/subscription-plans/types/subscripti
  *   text="Pay Now"
  * />
  */
-const PaymentLink = ({ href, text, ref }: PaymentLinkProps) => {
+const PaymentLink = ({ href, text, ref, className }: PaymentLinkProps) => {
+  const defaultClasses =
+    "flex items-center justify-center w-full bg-gradient-to-r from-primary-700 to-primary-800 text-white px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] hover:bg-blue-700 hover:to-blue-700 transition duration-300";
   return (
     <Link
       ref={ref}
       href={href || "#"}
-      className={
-        "flex items-center justify-center w-full bg-gradient-to-r from-primary-700 to-primary-800 text-white px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] hover:bg-blue-700 hover:to-blue-700 transition duration-300"
-      }
+      className={cn(defaultClasses, className)}
     >
       {text}
     </Link>

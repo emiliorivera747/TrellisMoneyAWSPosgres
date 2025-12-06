@@ -1,6 +1,7 @@
 export type PaymentLinkProps = {
   href: string;
   paymentLink?: string;
+  className?: string;
   text: string;
   ref?: React.Ref<HTMLAnchorElement>;
 };

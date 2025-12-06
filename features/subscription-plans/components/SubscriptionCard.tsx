@@ -1,5 +1,7 @@
 import PaymentLink from "@/features/subscription-plans/components/PaymentLink";
 import { SubscriptionCardProps } from "@/features/subscription-plans/types/subscription";
+
+
 /**
  * A React functional component that renders a subscription card with a title, price,
  * list of features, a payment link, and a footer description. The card is styled with
