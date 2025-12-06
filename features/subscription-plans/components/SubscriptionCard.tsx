@@ -1,6 +1,4 @@
-import PaymentLink from "@/features/subscription-plans/components/PaymentLink";
 import { SubscriptionCardProps } from "@/features/subscription-plans/types/subscription";
-
 import Link from "next/link";
 
 /**
