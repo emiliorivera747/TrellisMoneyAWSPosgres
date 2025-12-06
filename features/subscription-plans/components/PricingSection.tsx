@@ -9,6 +9,10 @@ import { getPriceDescription } from "@/features/stripe/utils/getPriceFromUnitAmo
 // Components
 import PricingSectionSkeleton from "@/features/subscription-plans/components/skeleton/PricingSectionSkeleton";
 import SubscriptionCard from "@/features/subscription-plans/components/SubscriptionCard";
+import {
+  PrimaryHeaderProps,
+  SecondaryHeaderProps,
+} from "@/types/components/marketing/headers";
 
 // Hooks
 import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
@@ -53,8 +57,8 @@ import {
  * - The component uses Tailwind CSS classes for styling.
  */
 const PricingSection = () => {
-  
   const { plansResponse, plansError, isPendingPlans } = usePlans();
+  console.log();
 
   if (isPendingPlans) return <PricingSectionSkeleton />;
 
@@ -62,9 +66,16 @@ const PricingSection = () => {
     <section className="h-auto min-h-screen sm:min-h-screen w-full flex flex-col border-t border-tertiary-300  pb-10">
       <PrimaryHeader label={"Start your Trellis Money membership"} />
       <SecondaryHeader label={"Manage your finances. Cancel anytime."} />
-      <div className="flex flex-row flex-wrap items-center justify-center gap-6 mt-8">
-        {plansResponse.map(
-          ({ product, unit_amount, recurring ,id }: StripePrice) => {
+
+      <div className="flex flex-row flex-wrap items-center justify-center gap-8 mt-8">
+        {plansResponse
+          .sort((a: StripePrice, b: StripePrice) => {
+            const order = { "day": 1, "week": 2, "month": 3,"year": 4 };
+            const intervalA = a.recurring?.interval;
+            const intervalB = b.recurring?.interval;
+            return ((intervalA && order[intervalA]) || 0) - ((intervalB && order[intervalB]) || 0);
+          })
+          .map(({ product, unit_amount, recurring }: StripePrice) => {
             const priceDescription = getPriceDescription(
               unit_amount,
               recurring?.interval
@@ -75,7 +86,7 @@ const PricingSection = () => {
             );
             return (
               <SubscriptionCard
-                key={id}
+                key={product?.name}
                 title={product?.name}
                 price={priceDescription}
                 features={features ? features : []}
@@ -85,8 +96,7 @@ const PricingSection = () => {
                 footerDescription={`Auto-renews at ${priceDescription} Switch plans or cancel anytime.`}
               />
             );
-          }
-        )}
+          })}
       </div>
     </section>
   );
