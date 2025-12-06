@@ -28,7 +28,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   title,
   price,
   features,
-  payment_link,
+  price_id, 
   footerDescription,
 }) => {
   return (
@@ -58,8 +58,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         ))}
       </ul>
       <PaymentLink
-        paymentLink={payment_link}
-        href={"/sign-up"}
+        href={`/sign-up?price_id=${price_id}`}
         text={"Subscribe"}
       />
       <p className="pt-6 text-sm sm:text-md text-tertiary-700 items-center w-full font-light">

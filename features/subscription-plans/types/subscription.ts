@@ -8,7 +8,7 @@ export type PaymentLinkProps = {
 export interface SubscriptionCardProps {
   title: string;
   price: string;
+  price_id: string;
   features: string[];
-  payment_link: string;
   footerDescription: string;
 }
