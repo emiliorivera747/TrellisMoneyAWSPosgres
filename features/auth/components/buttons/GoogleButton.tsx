@@ -53,7 +53,7 @@ const GoogleButton = ({
   ref,
 }: GoogleButtonProps) => {
   const searchParams = useSearchParams();
-  const price_id = searchParams.get("price_id");
+  const price_id = searchParams?.get("price_id") ?? "";
 
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
@@ -74,7 +74,6 @@ const GoogleButton = ({
         },
       });
 
-      
       if (error) throw error;
     } catch (error) {
       setIsGoogleLoading(false);
