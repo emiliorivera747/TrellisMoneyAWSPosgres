@@ -3,6 +3,7 @@
 // React & Next
 import React, { useState } from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 // Utils
 import { createClient } from "@/utils/supabase/client";
@@ -51,16 +52,18 @@ const GoogleButton = ({
   className,
   ref,
 }: GoogleButtonProps) => {
+  const searchParams = useSearchParams();
+  const price_id = searchParams.get("price_id");
+
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
 
-  const priceId = "";
   async function signInWithGoogle() {
     setIsGoogleLoading(true);
     try {
       const redirectTo = `${window.location.origin}/auth/callback`;
 
-      const state = JSON.stringify({ price_id: priceId }); // Pass price_id in state
+      const state = JSON.stringify({ price_id });
 
       // Sign in with Google
       const { error } = await supabase.auth.signInWithOAuth({
@@ -70,6 +73,8 @@ const GoogleButton = ({
           queryParams: { state },
         },
       });
+
+      
       if (error) throw error;
     } catch (error) {
       setIsGoogleLoading(false);
