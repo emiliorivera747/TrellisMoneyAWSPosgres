@@ -3,3 +3,6 @@ export interface SupabaseUserSyncData {
   email?: string;
   user_metadata: { full_name?: string };
 }
+export interface CallbackState {
+  price_id: string;
+}

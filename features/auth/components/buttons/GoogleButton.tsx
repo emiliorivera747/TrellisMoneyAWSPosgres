@@ -63,7 +63,9 @@ const GoogleButton = ({
     try {
       const redirectTo = `${window.location.origin}/auth/callback`;
 
-      const state = JSON.stringify({ price_id });
+      const stateObj = {price_id};
+
+      const state = Buffer.from(JSON.stringify(stateObj), "utf-8").toString("base64url");
 
       // Sign in with Google
       const { error } = await supabase.auth.signInWithOAuth({
