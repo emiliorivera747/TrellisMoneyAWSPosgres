@@ -6,9 +6,6 @@ import { createClient } from "@/utils/supabase/server";
 // Stripe
 import { stripe } from "@/lib/stripe";
 
-// Types
-import { CallbackState } from "@/features/auth/types/callback";
-
 /**
  * Handles the OAuth callback, exchanging the code for a session, updating the database,
  * and redirecting to Stripe or the next URL.
@@ -16,25 +13,9 @@ import { CallbackState } from "@/features/auth/types/callback";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const stateParam = searchParams.get("state");
+  const price_id = searchParams.get("price_id");
 
   let intendedRedirect: string = "/dashboard";
-  let price_id: string | undefined;
-
-  /**
-   * If state is present then decode and update the price_id
-   */
-  if (stateParam) {
-    try {
-      const decoded = JSON.parse(
-        Buffer.from(stateParam, "base64url").toString("utf-8")
-      ) as CallbackState;
-
-      if (decoded.price_id) price_id = decoded.price_id;
-    } catch (err) {
-      console.warn("Failed to parse OAuth state:", err);
-    }
-  }
 
   // -----If no code is provided, redirect to error page -----
   if (!code) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
@@ -93,8 +74,8 @@ async function createCheckoutSession(userEmail: string, priceId: string) {
     customer_email: userEmail,
     mode: "subscription",
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/billing`,
+    success_url: `${process.env.NEXT_PUBLIC_DOMAIN}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_DOMAIN}/billing`,
   });
   return session.url;
 }
