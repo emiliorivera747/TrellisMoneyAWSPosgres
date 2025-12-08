@@ -5,8 +5,8 @@ import { createClient } from "@/utils/supabase/server";
 
 import { getPriceIdBySlug } from "@/lib/plan-cache";
 
-// Stripe
-import { stripe } from "@/lib/stripe";
+// Utils
+import createCheckoutSession from "@/utils/api-helpers/stripe/createCheckoutSession";
 
 /**
  * Handles the OAuth callback, exchanging the code for a session, updating the database,
@@ -72,17 +72,4 @@ export async function GET(request: Request) {
   // Final safe redirect
   const redirectUrl = new URL(intendedRedirect, origin);
   return NextResponse.redirect(redirectUrl.toString());
-}
-
-// Helper to create a Stripe Checkout session
-async function createCheckoutSession(userEmail: string, priceId: string) {
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    customer_email: userEmail,
-    mode: "subscription",
-    line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${process.env.NEXT_PUBLIC_DOMAIN}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_DOMAIN}/billing`,
-  });
-  return session.url;
 }

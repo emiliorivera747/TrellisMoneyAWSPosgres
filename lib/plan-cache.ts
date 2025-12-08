@@ -46,7 +46,6 @@ export async function getPriceIdBySlug(slug: string): Promise<string | null> {
     Object.keys(cachedPlans).length === 0 ||
     NOW - LASTFETCHED > CACHE_TTL_MS
   ) {
-    console.log("Refreshing Stripe plan cache...");
     const { data } = await stripe.prices.list({
       active: true,
       limit: 100,
@@ -54,7 +53,6 @@ export async function getPriceIdBySlug(slug: string): Promise<string | null> {
     });
 
     cachedPlans = {};
-    console.log("data", data);
     for (const price of data) {
       const planSlug =
         typeof price.product === "object" &&
