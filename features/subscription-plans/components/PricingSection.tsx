@@ -75,7 +75,7 @@ const PricingSection = () => {
                 title={product?.name}
                 price={priceDescription}
                 features={features ? features : []}
-                subscription_link_url={`/sign-up?plan=${product?.metadata?.slug}`}
+                subscription_link_url={`/sign-up?plan=${product?.metadata?.url_slug}`}
                 footerDescription={`Auto-renews at ${priceDescription} Switch plans or cancel anytime.`}
               />
             );
