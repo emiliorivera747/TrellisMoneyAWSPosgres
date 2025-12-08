@@ -41,20 +41,21 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 
   // ----- Sync user to DB (soft fail — don't block login) -----
-  try {
-    await upsertUser(session.user);
-  } catch (err) {
-    console.error("Failed to sync user to DB after login:", err);
-  }
+  upsertUser(session.user).catch(err =>
+    console.error("Failed to sync user to DB:", err)
+  );
 
   // ----- Redirect to Stripe with prefilled email (if valid) -----
   if (plan && session.user.email) {
     const price_id = await getPriceIdBySlug(plan);
+    
     if (!price_id) {
       console.error("Price ID is null");
       return NextResponse.redirect(`${origin}/auth/auth-code-error`);
     }
+
     try {
+      
       const checkoutUrl = await createCheckoutSession(
         session.user.email,
         price_id
