@@ -1,5 +1,12 @@
 import { stripe } from "@/lib/stripe";
 
+interface CreateSessionProps {
+  customer_email: string;
+  price_id: string;
+  success_url?: string;
+  cancel_url?: string;
+}
+
 /**
  * Creates a Stripe Checkout Session for a subscription.
  *
@@ -18,14 +25,23 @@ import { stripe } from "@/lib/stripe";
  * Environment variables:
  * - `NEXT_PUBLIC_DOMAIN` is used to construct the success and cancel URLs.
  */
-async function createCheckoutSession(userEmail: string, priceId: string) {
+async function createCheckoutSession({
+  customer_email,
+  price_id,
+  success_url,
+  cancel_url,
+}: CreateSessionProps) {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    customer_email: userEmail,
+    customer_email,
     mode: "subscription",
-    line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${process.env.NEXT_PUBLIC_DOMAIN}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_DOMAIN}/billing`,
+    line_items: [{ price: price_id, quantity: 1 }],
+    success_url: success_url
+      ? success_url
+      : `${process.env.NEXT_PUBLIC_DOMAIN}/dashboard`,
+    cancel_url: cancel_url
+      ? success_url
+      : `${process.env.NEXT_PUBLIC_DOMAIN}/billing`,
   });
   return session.url;
 }

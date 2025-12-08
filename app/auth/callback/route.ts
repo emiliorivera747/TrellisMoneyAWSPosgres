@@ -17,38 +17,32 @@ export async function GET(request: Request) {
   const code = searchParams.get("code");
   const plan = searchParams.get("plan");
 
-  let intendedRedirect: string = "/dashboard";
-
   // -----If no code is provided, redirect to error page -----
   if (!code) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 
   const supabase = await createClient();
 
   // ----- Exchange OAuth code for a session -----
-  const { error: exchangeTokenError } =
+  const { data, error: exchangeTokenError } =
     await supabase.auth.exchangeCodeForSession(code);
 
-  if (exchangeTokenError) {
+  if (exchangeTokenError || !data?.session?.user) {
     console.error("Supabase code exchange failed:", exchangeTokenError);
     return NextResponse.redirect(`${origin}/auth/auth-code-error`);
   }
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session?.user)
-    return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-
-  // ----- Sync user to DB (soft fail — don't block login) -----
-  upsertUser(session.user).catch(err =>
-    console.error("Failed to sync user to DB:", err)
-  );
+  // ----- Get Email -----
+  const customer_email = data?.session?.user?.email;
 
   // ----- Redirect to Stripe with prefilled email (if valid) -----
-  if (plan && session.user.email) {
+  if (plan && customer_email) {
+    /**
+     *   Destroy the session
+     */
+    await supabase.auth.signOut();
+
     const price_id = await getPriceIdBySlug(plan);
-    
+
     if (!price_id) {
       console.error("Price ID is null");
       return NextResponse.redirect(`${origin}/auth/auth-code-error`);
@@ -56,10 +50,12 @@ export async function GET(request: Request) {
 
     try {
       
-      const checkoutUrl = await createCheckoutSession(
-        session.user.email,
-        price_id
-      );
+      const checkoutUrl = await createCheckoutSession({
+        customer_email,
+        price_id,
+        success_url: `${origin}/api/auth/success?code=${code}`,
+        cancel_url: `${origin}/dashboard`,
+      });
 
       if (!checkoutUrl) {
         console.error("Checkout URL is null");
@@ -71,7 +67,6 @@ export async function GET(request: Request) {
       console.error("Failed to create Stripe checkout session:", error);
     }
   }
-  // ----- Final safe redirect -----
-  const redirectUrl = new URL(intendedRedirect, origin);
-  return NextResponse.redirect(redirectUrl.toString());
+
+  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 }
