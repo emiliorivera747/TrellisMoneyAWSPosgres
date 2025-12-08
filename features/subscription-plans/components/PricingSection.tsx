@@ -64,21 +64,18 @@ const PricingSection = () => {
         {plansResponse?.data
           .sort(sortByInterval)
           .map(({ product, unit_amount, recurring, id }: StripePrice) => {
-            
             const priceDescription = getPriceDescription(
               unit_amount,
               recurring?.interval
             );
-
             const features = getFeaturesFromProducts(product);
-
             return (
               <SubscriptionCard
                 key={id}
                 title={product?.name}
                 price={priceDescription}
                 features={features ? features : []}
-                subscription_link_url={`/sign-up?p_id=${id}`}
+                subscription_link_url={`/sign-up?plan=${product?.metadata?.slug}`}
                 footerDescription={`Auto-renews at ${priceDescription} Switch plans or cancel anytime.`}
               />
             );
