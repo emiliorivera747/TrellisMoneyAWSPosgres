@@ -13,7 +13,7 @@ export default function HeroSection({ isAuthenticated }: HeroSectionProps) {
         <h1 className="bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-[2rem]  text-transparent sm:text-[3.2rem] tracking-wide font-bold ">
           See the bigger picture
         </h1>
-        <p className="mt-2 mb-3 bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-[0.9rem] text-transparent sm:text-[1.2rem]">
+        <p className="mt-2 mb-1 bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-[0.9rem] text-transparent sm:text-[1.2rem]">
           Take control of your finances with Trellis Money
         </p>
         {isAuthenticated ? <AuthenticatedCTA /> : <UnauthenticatedCTA />}
@@ -41,7 +41,7 @@ function UnauthenticatedCTA() {
           boxShadow: `rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px`,
         }}
         href="/sign-up"
-        className="flex h-[3.5rem] items-center justify-center rounded-[12px] bg-gradient-to-r  hover:to-tertiary-100 hover:from-tertiary-100 px-[4rem] py-[1.05882rem] transition duration-300 font-semibold text-tertiary-800 border-none border-tertiary-300"
+        className="flex h-[3.5rem] items-center justify-center rounded-[12px] bg-white hover:bg-tertiary-200 px-[4rem] py-[1.05882rem] transition delay-150 duration-300 ease-in-out font-semibold text-tertiary-800 border-none border-tertiary-300"
       >
         Enjoy 30 days free
       </Link>

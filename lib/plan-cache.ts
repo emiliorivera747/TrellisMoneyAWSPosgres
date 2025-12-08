@@ -38,9 +38,7 @@ export async function getPriceIdBySlug(slug: string): Promise<string | null> {
   const NOW = Date.now();
 
   /**
-   *
    * If cached plans does not exist or it has been longer than 30 minutes since the last time it was updated
-   *
    */
   if (
     Object.keys(cachedPlans).length === 0 ||

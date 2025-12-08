@@ -27,6 +27,7 @@ export async function GET(request: Request) {
   // ----- Exchange OAuth code for a session -----
   const { error: exchangeTokenError } =
     await supabase.auth.exchangeCodeForSession(code);
+
   if (exchangeTokenError) {
     console.error("Supabase code exchange failed:", exchangeTokenError);
     return NextResponse.redirect(`${origin}/auth/auth-code-error`);
@@ -46,7 +47,7 @@ export async function GET(request: Request) {
     console.error("Failed to sync user to DB after login:", err);
   }
 
-  // Redirect to Stripe with prefilled email (if valid)
+  // ----- Redirect to Stripe with prefilled email (if valid) -----
   if (plan && session.user.email) {
     const price_id = await getPriceIdBySlug(plan);
     if (!price_id) {
@@ -69,7 +70,7 @@ export async function GET(request: Request) {
       console.error("Failed to create Stripe checkout session:", error);
     }
   }
-  // Final safe redirect
+  // ----- Final safe redirect -----
   const redirectUrl = new URL(intendedRedirect, origin);
   return NextResponse.redirect(redirectUrl.toString());
 }
