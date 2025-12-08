@@ -61,7 +61,7 @@ const PricingSection = () => {
       <SecondaryHeader label={"Manage your finances. Cancel anytime."} />
 
       <div className="flex flex-row flex-wrap items-center justify-center gap-8 mt-8">
-        {plansResponse
+        {plansResponse?.data
           .sort(sortByInterval)
           .map(({ product, unit_amount, recurring, id }: StripePrice) => {
             
