@@ -18,7 +18,6 @@ import { GoogleButtonProps } from "@/features/auth/types/buttons/buttons";
 const defaultClass =
   "mb-4 px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] w-full text-sm font-medium text-gray-700 bg-white border border-gray-300 shadow-sm hover:bg-[#f1f3f5] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4";
 
-
 /**
  * A React functional component that renders a Google sign-in button.
  * The button initiates the OAuth sign-in process with Google using Supabase.
@@ -54,18 +53,20 @@ const GoogleButton = ({
   ref,
 }: GoogleButtonProps) => {
   const searchParams = useSearchParams();
-  const price_id = searchParams?.get("price_id") ?? "";
+  const price_id = searchParams?.get("p_id") ?? null;
 
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
 
   async function signInWithGoogle() {
+    
     setIsGoogleLoading(true);
+    
     try {
       const redirectTo = price_id
-      ? `${window.location.origin}/auth/callback?price_id=${price_id}`
-      : `${window.location.origin}/auth/callback`;
-    
+        ? `${window.location.origin}/auth/callback?price_id=${price_id}`
+        : `${window.location.origin}/auth/callback`;
+
       // Sign in with Google
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",

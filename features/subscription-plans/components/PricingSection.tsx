@@ -78,7 +78,7 @@ const PricingSection = () => {
                 title={product?.name}
                 price={priceDescription}
                 features={features ? features : []}
-                subscription_link_url={`/sign-up?price_id=${id}`}
+                subscription_link_url={`/sign-up?p_id=${id}`}
                 footerDescription={`Auto-renews at ${priceDescription} Switch plans or cancel anytime.`}
               />
             );

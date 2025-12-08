@@ -1,26 +1,23 @@
-// app/api/plans/route.ts
+import { NextResponse} from "next/server";
+
+import { stripe } from "@/lib/stripe";
+
 export async function GET() {
-  const url = "https://api.stripe.com/v1/prices";
+  try {
+    /**
+     * Get all of the prices
+     */
+    const prices = await stripe.prices.list({
+      active: true,
+      limit: 100,
+      expand: ["data.product"],
+    });
 
-  const params = new URLSearchParams({
-    active: "true",
-    limit: "100",
-  });
-
-  params.append("expand[]", "data.product");
-
-  const res = await fetch(`${url}?${params.toString()}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  });
-
-  if (!res.ok) {
-    return new Response(await res.text(), { status: res.status });
+    return NextResponse.json(
+      { data: prices.data, status: "success" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return new Response(error.message, { status: error.statusCode || 500 });
   }
-
-  const data = await res.json();
-  return Response.json(data.data);
 }
