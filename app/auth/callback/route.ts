@@ -1,8 +1,6 @@
 // pages/api/auth/callback.ts
 import { NextResponse } from "next/server";
-import { upsertUser } from "@/features/auth/utils/authCallback";
 import { createClient } from "@/utils/supabase/server";
-
 import { getPriceIdBySlug } from "@/lib/plan-cache";
 
 // Utils
@@ -36,9 +34,7 @@ export async function GET(request: Request) {
 
   // ----- Redirect to Stripe with prefilled email (if valid) -----
   if (plan && customer_email) {
-    /**
-     *   Destroy the session
-     */
+
     await supabase.auth.signOut();
 
     const price_id = await getPriceIdBySlug(plan);
