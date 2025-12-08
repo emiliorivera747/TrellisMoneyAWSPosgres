@@ -53,18 +53,17 @@ const GoogleButton = ({
   ref,
 }: GoogleButtonProps) => {
   const searchParams = useSearchParams();
-  const price_id = searchParams?.get("p_id") ?? null;
+  const plan = searchParams?.get("plan") ?? null;
 
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
 
   async function signInWithGoogle() {
-    
     setIsGoogleLoading(true);
-    
+
     try {
-      const redirectTo = price_id
-        ? `${window.location.origin}/auth/callback?price_id=${price_id}`
+      const redirectTo = plan
+        ? `${window.location.origin}/auth/callback?plan=${plan}`
         : `${window.location.origin}/auth/callback`;
 
       // Sign in with Google
