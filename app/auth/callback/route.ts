@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { upsertUser } from "@/features/auth/utils/authCallback";
 import { createClient } from "@/utils/supabase/server";
 
+import { getPriceIdBySlug } from "@/lib/plan-cache";
+
 // Stripe
 import { stripe } from "@/lib/stripe";
 
@@ -13,7 +15,7 @@ import { stripe } from "@/lib/stripe";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const price_id = searchParams.get("price_id");
+  const plan = searchParams.get("plan");
 
   let intendedRedirect: string = "/dashboard";
 
@@ -45,7 +47,12 @@ export async function GET(request: Request) {
   }
 
   // Redirect to Stripe with prefilled email (if valid)
-  if (price_id && session.user.email) {
+  if (plan && session.user.email) {
+    const price_id = await getPriceIdBySlug(plan);
+    if (!price_id) {
+      console.error("Price ID is null");
+      return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+    }
     try {
       const checkoutUrl = await createCheckoutSession(
         session.user.email,
