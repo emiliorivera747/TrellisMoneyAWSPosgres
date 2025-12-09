@@ -1,4 +1,3 @@
-import React from "react";
 
 import {
   PrimaryHeaderProps,
@@ -21,7 +20,7 @@ export const PrimaryHeader = ({
   className,
   label,
   ref,
-}: PrimaryHeaderProps): JSX.Element => {
+}: PrimaryHeaderProps) => {
   const defaultClasses =
     "text-center text-3xl font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent mt-[5rem]";
   return (
@@ -45,7 +44,7 @@ export const SecondaryHeader = ({
   className,
   label,
   ref,
-}: SecondaryHeaderProps): JSX.Element => {
+}: SecondaryHeaderProps) => {
   const defaultClasses =
     "text-center text-md bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-transparent mt-4";
   return (

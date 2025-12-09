@@ -141,7 +141,7 @@ export async function PUT(req: Request) {
       },
       data: {
         name,
-        id,
+        user_id: id,
       },
     });
 

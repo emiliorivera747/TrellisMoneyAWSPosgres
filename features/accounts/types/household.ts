@@ -17,5 +17,5 @@ export interface StepProps {
 export interface Step {
   title: string;
   description: string;
-  content: JSX.Element;
+  content: React.ReactNode;
 }
