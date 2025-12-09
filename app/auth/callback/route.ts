@@ -10,7 +10,6 @@ import { getPriceIdBySlug } from "@/lib/plan-cache";
  * and redirecting to Stripe or the next URL.
  */
 export async function GET(request: Request) {
-  
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
   const plan = searchParams.get("plan");
@@ -31,12 +30,10 @@ export async function GET(request: Request) {
   }
 
   const currentUser = data.session.user;
-  console.log(currentUser);
 
   // ---- Upsert User ----
-  await upsertUser(currentUser).catch((error) =>
-    console.error("Error upserting user:", error)
-  );
+  const dbUser = await upsertUser(currentUser);
+  if (!dbUser) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 
   if (plan && currentUser.email) {
     try {

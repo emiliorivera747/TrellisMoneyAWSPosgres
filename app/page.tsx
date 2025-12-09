@@ -34,8 +34,8 @@ export const metadata: Metadata = {
  */
 /**
  * The `Home` component serves as the main entry point for the application.
- * It fetches the authenticated user data from Supabase and renders the 
- * main sections of the page, including the Navbar, HeroSection, PricingSection, 
+ * It fetches the authenticated user data from Supabase and renders the
+ * main sections of the page, including the Navbar, HeroSection, PricingSection,
  * and Footer. The authentication status is passed as a prop to the relevant components.
  *
  * @async
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
  * @example
  * ```tsx
  * import Home from './page';
- * 
+ *
  * export default function App() {
  *   return <Home />;
  * }
@@ -67,7 +67,7 @@ export default async function Home() {
     <div className="bg-white h-auto">
       <Navbar isAuthenticated={!!user} />
       <HeroSection isAuthenticated={!!user} />
-      <PricingSection />
+      {!user && <PricingSection />}
       <Footer />
     </div>
   );

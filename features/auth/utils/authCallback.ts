@@ -67,7 +67,7 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
         name: householdName,
       },
     });
-
+    
     await tx.householdMember.create({
       data: {
         name: fullName ?? "Unknown",
@@ -80,12 +80,10 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
 };
 
 export const getHousehold = async (user_id: string) => {
-  
   const householdExists = await prisma.householdMember.findFirst({
     where: { user_id },
     select: { household_id: true },
   });
-
   return householdExists;
 };
 
