@@ -59,7 +59,7 @@ export async function GET(request: Request) {
         return NextResponse.redirect(`${origin}/auth/auth-code-error`);
       }
 
-      return NextResponse.json(checkoutUrl);
+      return NextResponse.redirect(checkoutUrl);
     } catch (error) {
       console.error("Error creating checkout session:", error);
       return NextResponse.redirect(`${origin}/auth/auth-code-error`);
