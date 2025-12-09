@@ -18,14 +18,14 @@ import {
  * @param {React.ReactNode} props.icon - The icon to be displayed next to the label.
  * @param {string} props.toolTipLabel - The text to be displayed inside the tooltip.
  *
- * @returns {JSX.Element} The rendered header component with an icon and tooltip.
+ * @returns {React.ReactNode} The rendered header component with an icon and tooltip.
  */
 const HeaderWithIcon = ({
   actionFunction = () => {},
   label = "Label",
   icon = "Icon",
   toolTipLabel = "label",
-}: HeaderWithIconProps): JSX.Element => {
+}: HeaderWithIconProps): React.ReactNode => {
   return (
     <div
       className={

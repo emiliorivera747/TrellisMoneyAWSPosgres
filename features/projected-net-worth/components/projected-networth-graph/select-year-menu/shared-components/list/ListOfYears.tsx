@@ -10,9 +10,9 @@ import { ListOfYearsProps } from "@/features/projected-net-worth/types/selectYea
  * @param {number[]} props.years - An array of years to be displayed as buttons.
  * @param {Function} props.actionFn - A function to be called when a year button is clicked.
  *
- * @returns {JSX.Element} A list of buttons representing the years, or a message if no years are available.
+ * @returns {React.ReactNode} A list of buttons representing the years, or a message if no years are available.
  */
-const ListOfYears = ({ years, actionFn }: ListOfYearsProps): JSX.Element => {
+const ListOfYears = ({ years, actionFn }: ListOfYearsProps): React.ReactNode => {
     if (!years || years.length === 0) {
         return <p>No years available</p>;
     }

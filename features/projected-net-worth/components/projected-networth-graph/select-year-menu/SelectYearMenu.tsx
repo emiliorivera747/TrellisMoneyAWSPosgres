@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-//Functions
+// Functions
 import { getYearRanges } from "@/utils/helper-functions/getYearRanges";
 
-//Components
+// Components
 import RetirementYearSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/retirement-year/RetirementYearSectionMenu";
 import BeforeRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/before-retirement/BeforeRetirementSectionMenu";
 import AfterRetirementSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/after-retirement/AfterRetirementSectionMenu";
 
-//Types
+// Types
 import { GroupedDateSelectorProps } from "@/features/projected-net-worth/types/selectYearMenu";
 
 /**
@@ -21,14 +21,14 @@ import { GroupedDateSelectorProps } from "@/features/projected-net-worth/types/s
  * @param {Function} props.setSelectedYear - Function to set the selected year.
  * @param {Function} props.setRetirementYear - Function to set the retirement year.
  *
- * @returns {JSX.Element} The SelectYearMenu component.
+ * @returns {React.ReactNode} The SelectYearMenu component.
  */
 const SelectYearMenu = ({
   years = [],
   retirementYear = new Date().getFullYear(),
   setSelectedYear = () => {},
   setRetirementYear = () => {},
-}: GroupedDateSelectorProps): JSX.Element => {
+}: GroupedDateSelectorProps): React.ReactNode => {
   const groupsRange = 10;
   const [showBeforeRetirement, setShowBeforeRetirement] = useState(true);
   const [showAfterRetirement, setShowAfterRetirement] = useState(false);

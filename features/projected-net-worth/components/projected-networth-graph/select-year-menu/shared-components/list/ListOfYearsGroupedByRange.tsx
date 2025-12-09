@@ -9,12 +9,12 @@ import { ListOfYearsGroupedByRangeProps } from "@/features/projected-net-worth/t
  * @param {Function} props.actionFn - The function to be called when an action is performed on a year.
  * @param {Object} props.beforeRetirementRanges - An object where keys are ranges (e.g., "10-15") and values are arrays of years within those ranges.
  *
- * @returns {JSX.Element} The rendered component.
+ * @returns {React.ReactNode} The rendered component.
  */
 const ListOfYearsGroupedByRange = ({
   actionFn,
   beforeRetirementRanges,
-}: ListOfYearsGroupedByRangeProps): JSX.Element => {
+}: ListOfYearsGroupedByRangeProps): React.ReactNode => {
 
   if (!beforeRetirementRanges || typeof beforeRetirementRanges !== 'object') {
     return <div>No data available</div>;

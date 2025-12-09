@@ -1,4 +1,4 @@
-import React from "react";
+
 import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/headers/HeaderWithIcon";
 import {
   cheveronUp,
@@ -17,7 +17,7 @@ import { BeforeRetirementSectionMenuProps } from "@/features/projected-net-worth
  * @param {Function} props.setSelectedYear - Function to set the selected year.
  * @param {Array} props.beforeRetirementRanges - Array of year ranges before retirement.
  *
- * @returns {JSX.Element} The rendered component.
+ * @returns {React.ReactNode} The rendered component.
  *
  * @example
  * <BeforeRetirementSectionMenu
@@ -32,7 +32,7 @@ const BeforeRetirementSectionMenu = ({
   headerFn,
   setSelectedYear,
   beforeRetirementRanges,
-}: BeforeRetirementSectionMenuProps): JSX.Element => {
+}: BeforeRetirementSectionMenuProps): React.ReactNode => {
 
   // Ensure required props are provided
   if (!headerFn || !setSelectedYear || !beforeRetirementRanges) {

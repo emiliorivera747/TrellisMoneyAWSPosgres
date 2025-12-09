@@ -11,13 +11,13 @@ import { YearSelectorProps } from "@/features/projected-net-worth/types/selectYe
  * @param {number} props.selectedYear - The currently selected year.
  * @param {Function} props.setSelectedYear - Function to update the selected year.
  * 
- * @returns {JSX.Element} A dropdown menu for selecting a year.
+ * @returns {React.ReactNode} A dropdown menu for selecting a year.
  */
 const YearSelector = ({
   years,
   selectedYear,
   setSelectedYear,
-}: YearSelectorProps): JSX.Element => {
+}: YearSelectorProps): React.ReactNode => {
   if (!years || years.length === 0) return <p>Years not available. Please try again later</p>;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
