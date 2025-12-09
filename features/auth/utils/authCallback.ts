@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { SupabaseUserSyncData } from "@/features/auth/types/callback";
+
 /**
  * Determines the base redirect URL based on environment and headers.
  */
@@ -16,6 +17,7 @@ export function getRedirectBase(request: Request, origin: string): string {
  */
 export async function upsertUser(currentUser: SupabaseUserSyncData) {
   try {
+    
     /**
      * Perform the upsert
      */
@@ -46,6 +48,7 @@ export async function upsertUser(currentUser: SupabaseUserSyncData) {
 }
 
 export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
+  
   const { id, email, user_metadata } = currentUser;
   const fullName = user_metadata.full_name?.trim();
 
@@ -77,10 +80,12 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
 };
 
 export const getHousehold = async (user_id: string) => {
+  
   const householdExists = await prisma.householdMember.findFirst({
     where: { user_id },
     select: { household_id: true },
   });
+
   return householdExists;
 };
 

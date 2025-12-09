@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
 
     const accountsWithIds = await getAccountWithItemIds(items);
 
-    noAccountsError(accountsWithIds); // Check if the accounts are empty or undefined
+    // noAccountsError(accountsWithIds); // Check if the accounts are empty or undefined
 
     return NextResponse.json(
       { message: "Retrieved accounts", data: accountsWithIds },

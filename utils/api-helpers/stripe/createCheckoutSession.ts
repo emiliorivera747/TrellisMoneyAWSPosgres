@@ -40,7 +40,7 @@ async function createCheckoutSession({
       ? success_url
       : `${process.env.NEXT_PUBLIC_DOMAIN}/dashboard`,
     cancel_url: cancel_url
-      ? success_url
+      ? cancel_url
       : `${process.env.NEXT_PUBLIC_DOMAIN}/billing`,
   });
   return session.url;

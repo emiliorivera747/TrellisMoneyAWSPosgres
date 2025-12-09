@@ -10,20 +10,20 @@ const prisma = new PrismaClient();
  */
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
+    
+    
     /**
      * Get the user
      */
     const user = await getUser();
 
-    // /**
-    //  * Does the household exist?
-    //  */
+
     if (!user)
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
     const household = await prisma.household.findUnique({
       where: {
-        head_of_household_id: user.id,
+        household_id: user.id,
       },
       include: {
         members: true,
@@ -58,7 +58,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "There was a server error";
-    console.log(errorMessage);
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

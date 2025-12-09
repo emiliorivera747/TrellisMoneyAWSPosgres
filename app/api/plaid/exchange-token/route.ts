@@ -17,8 +17,6 @@ export async function POST(req: NextRequest) {
 
   const { institution_id } = institution;
 
-  console.log("Accounts", accounts);
-
   try {
     const user = await getUser();
 
@@ -147,24 +145,28 @@ const addItem = async (
   });
   return res;
 };
+
 /**
  * Adds accounts to the database for the given item.
  *
  * @param item_id - The ID of the item
  * @param accounts - The accounts to be added
+ * @returns The added accounts
  */
 const addAccounts = async (
   user_id: string,
   item_id: string,
   accounts: any[]
 ) => {
+  const addedAccounts = [];
+
   for (const account of accounts) {
-    await prisma.account.create({
+    const createdAccount = await prisma.account.create({
       data: {
         // Add the mandatory 'connect' operation for the 'user' relation
         user: {
           connect: {
-            id: user_id, // Connect the Account to the User with this ID
+            user_id, // Connect the Account to the User with this ID
           },
         },
 
@@ -182,8 +184,12 @@ const addAccounts = async (
         type: account.type,
         subtype: account.subtype,
         verification_status: account.verification_status || null,
-        class_type: account.class_type || null,
+        // class_type: account.class_type || null,
       },
     });
+
+    addedAccounts.push(createdAccount);
   }
+
+  return addedAccounts;
 };
