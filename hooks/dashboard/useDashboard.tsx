@@ -59,7 +59,7 @@ export const useDashboard = (): DashboardState => {
   } = useUpdateAssets();
 
   const { user, error: userError } = useFetchUser();
-  const linkToken = useGenerateToken();
+  const { linkToken } = useGenerateToken();
 
   const form = useForm<FormData, any, undefined>({
     defaultValues: {},

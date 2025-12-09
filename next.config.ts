@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  compilerOptions: {
-    esModuleInterop: true,
-  },
   images: {
     domains: ['res.cloudinary.com'], 
   },
