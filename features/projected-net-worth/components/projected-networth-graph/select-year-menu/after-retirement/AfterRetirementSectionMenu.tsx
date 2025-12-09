@@ -21,14 +21,14 @@ import { AfterRetirementSectionMenuProps } from "@/features/projected-net-worth/
  * @param {() => void} props.headerFn - A function to be called when the header is clicked.
  * @param {(year: number) => void} props.setSelectedYear - A function to set the selected year.
  *
- * @returns {JSX.Element} The rendered component.
+ * @returns {React.ReactNode} The rendered component.
  */
 const AfterRetirementSectionMenu = ({
   afterRetirementYears,
   showAfterRetirement,
   headerFn,
   setSelectedYear,
-}: AfterRetirementSectionMenuProps): JSX.Element => {
+}: AfterRetirementSectionMenuProps): React.ReactNode => {
   return (
     <div className="mb-6">
       <HeaderWithIcon
