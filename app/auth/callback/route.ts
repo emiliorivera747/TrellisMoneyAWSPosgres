@@ -45,7 +45,7 @@ export async function GET(request: Request) {
       }
 
       const success_url = next?.startsWith("http") ? next : `${origin}${next}`;
-      const cancel_url = `${origin}/billing`;
+      const cancel_url = `${origin}/sign-up?plan=${plan}`;
 
       const checkoutUrl = await createCheckoutSession({
         customer_email: currentUser.email,
