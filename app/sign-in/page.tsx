@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Metadata } from "next";
 import NavBar from "@/components/nav-bars/SecondaryNavbar";
@@ -20,7 +19,7 @@ import DashboardRedirect from "@/features/auth/components/private-route/Dashboar
 const LoginPage = () => {
   return (
     <DashboardRedirect>
-      <div className="flex flex-col items-center justify-center m-h-screen h-auto min-w-screen w-auto">
+      <div className="flex flex-col items-center justify-center min-h-screen h-auto min-w-screen w-auto">
         <div className="w-full">
           <NavBar />
         </div>

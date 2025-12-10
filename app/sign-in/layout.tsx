@@ -26,7 +26,7 @@ export default function SignInLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="min-h-screen w-full">
+    <section className="min-h-screen w-full ">
       {children}
       <Footer />
     </section>

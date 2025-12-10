@@ -2,7 +2,7 @@ import React from "react";
 
 const PrimaryAuthContainer = ({ children }: {children: React.ReactNode}) => {
     return (
-        <div className="flex flex-col w-[90%] sm:w-[480px] pt-8 rounded-lg min-h-screen h-auto mb-auto mt-[1%] box-border px-6">
+        <div className="flex flex-col w-[90%] sm:w-[480px] pt-8 rounded-lg mb-auto mt-[1%] box-border px-6">
             {children}
         </div>
     );
