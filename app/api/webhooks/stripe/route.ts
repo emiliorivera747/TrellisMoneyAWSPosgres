@@ -23,7 +23,6 @@ export async function POST(req: NextRequest) {
 
     switch (event.type) {
       case "checkout.session.completed":
-        console.log("checkout.session.completed");
         await handleCheckoutSessionCompleted(event);
         break;
       case "checkout.session.expired":
