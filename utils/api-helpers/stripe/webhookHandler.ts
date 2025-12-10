@@ -3,7 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
 
 import { getCheckoutSession } from "@/utils/api-helpers/stripe/getCheckoutSession";
-import { getUserByEmail } from "@/utils/api-helpers/prisma/user/user";
+import {
+  getUserByEmail,
+  updateCustomerId,
+} from "@/utils/api-helpers/prisma/user/user";
 
 // Constants
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
@@ -95,6 +98,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
 
   // Process line items
   const lineItems = session.line_items?.data ?? [];
+
   const subscriptionItem = lineItems.find((item) => {
     const priceId = item.price?.id;
     const isSubscription = !!item.price?.recurring;
@@ -126,12 +130,9 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
         },
       }),
     ]);
+    
   } else if (!user.customer_id) {
-    // Only update customer ID if needed and no subscription was found
-    await prisma.user.update({
-      where: { user_id: user.user_id },
-      data: { customer_id: customerId },
-    });
+    await updateCustomerId(user.user_id, customerId);
   }
 };
 
