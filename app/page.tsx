@@ -5,6 +5,7 @@ import HeroSection from "@/components/marketing/layout/HeroSection";
 import Navbar from "@/components/nav-bars/NavBar";
 import Footer from "@/components/footers/Footer";
 import PricingSection from "@/features/subscription-plans/components/PricingSection";
+import HomePageSkeleton from "@/components/skeletons/pages/HomePageSkeleton";
 
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
