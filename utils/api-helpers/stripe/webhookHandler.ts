@@ -2,6 +2,9 @@ import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
 
+import { getCheckoutSession } from "@/utils/api-helpers/stripe/getCheckoutSession";
+import { getUserByEmail } from "@/utils/api-helpers/prisma/user/user";
+
 // Constants
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
 const PRICE_IDS = {
@@ -78,10 +81,7 @@ export const getSubscriptionData = (priceId: string): SubscriptionData => {
  * @param event
  */
 export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
-  const session = await stripe.checkout.sessions.retrieve(
-    (event.data.object as Stripe.Checkout.Session).id,
-    { expand: ["line_items"] }
-  );
+  const session = await getCheckoutSession(event);
 
   const customerId = session.customer as string;
   const { email } = session.customer_details ?? {};
@@ -89,15 +89,13 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   if (!email) throw new Error("Customer email not found in session");
 
   // ----- Find the user -----
-  const user = await prisma.user.findUnique({
-    where: { email },
-  });
+  const user = await getUserByEmail(email);
 
   if (!user) throw new Error("User not found");
-  
+
   // Process line items
   const lineItems = session.line_items?.data ?? [];
-  const subscriptionItem = lineItems.find(item => {
+  const subscriptionItem = lineItems.find((item) => {
     const priceId = item.price?.id;
     const isSubscription = !!item.price?.recurring;
     return priceId && isSubscription;
@@ -108,17 +106,17 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
     if (!priceId) return;
 
     const subscriptionData = getSubscriptionData(priceId);
-    
+
     // ----- Batch user and subscription updates in a single transaction ------
     await prisma.$transaction([
       prisma.user.update({
         where: { user_id: user.user_id },
-        data: { 
+        data: {
           customer_id: user.customer_id ? undefined : customerId,
-          plan: "premium"
+          plan: "premium",
         },
       }),
-      
+
       prisma.subscription.upsert({
         where: { user_id: user.user_id },
         update: subscriptionData,
@@ -126,7 +124,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
           ...subscriptionData,
           user_id: user.user_id,
         },
-      })
+      }),
     ]);
   } else if (!user.customer_id) {
     // Only update customer ID if needed and no subscription was found
@@ -140,7 +138,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
 /**
  * Handles subscription deletion event from Stripe
  * Optimized to batch user and subscription updates in a single transaction
- * 
+ *
  * @param event
  */
 export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
@@ -169,6 +167,6 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
         status: "inactive",
         end_date: new Date(),
       },
-    })
+    }),
   ]);
 };
