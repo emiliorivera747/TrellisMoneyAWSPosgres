@@ -8,9 +8,9 @@ interface HeroSectionProps {
 
 export default function HeroSection({ isAuthenticated }: HeroSectionProps) {
   return (
-    <header className="flex h-[90vh] flex-col items-center justify-center text-center">
-      <div className=" -translate-y-[20%] sm:-translate-y-[20%] sm:w-[90%] flex flex-col justify-center items-center">
-        <h1 className="bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-[2rem]  text-transparent sm:text-[3.2rem] tracking-wide font-bold ">
+    <header className="flex h-[90vh] flex-col items-center justify-center text-center ">
+      <div className=" -translate-y-[20%] sm:-translate-y-[20%] w-[86%] sm:w-[90%] flex flex-col justify-center items-center">
+        <h1 className="bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-[1.8rem]  text-transparent sm:text-[3.2rem] tracking-wide font-bold pb-2">
           See the bigger picture
         </h1>
         <p className="mt-2 mb-1 bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-[0.9rem] text-transparent sm:text-[1.2rem]">

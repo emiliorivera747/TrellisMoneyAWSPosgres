@@ -10,7 +10,7 @@ interface NavbarProps {
 
 const NavBar = ({ isAuthenticated }: NavbarProps) => {
   return (
-    <nav className="flex items-center justify-between border-b border-gray-200 px-4 py-5 mx-10 sm:px-4 sm:py-5">
+    <nav className="flex items-center justify-between border-b border-gray-200  py-5 mx-10 sm:px-4 sm:py-5">
       <div className="flex items-center">
         <Link href="/" className="flex items-end">
           <span className="text-xl font-bold text-tertiary-1000  flex items-end">

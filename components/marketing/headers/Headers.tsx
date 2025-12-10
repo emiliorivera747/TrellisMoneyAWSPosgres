@@ -22,7 +22,7 @@ export const PrimaryHeader = ({
   ref,
 }: PrimaryHeaderProps) => {
   const defaultClasses =
-    "text-center text-3xl font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent mt-[5rem]";
+    "text-center text-xl sm:text-3xl font-bold text-tertiary-900  bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-transparent mt-[5rem]";
   return (
     <h1 className={cn(defaultClasses, className)} ref={ref}>
       {label}
