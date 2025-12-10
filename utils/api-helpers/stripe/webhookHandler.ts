@@ -2,10 +2,15 @@ import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
 
-import { getCheckoutSession } from "@/utils/api-helpers/stripe/getCheckoutSession";
+import {
+  getCheckoutSession,
+  getSubscriptionSession,
+} from "@/utils/api-helpers/stripe/getSessions";
+
 import {
   getUserByEmail,
   updateCustomerId,
+  getUserByCustomerId,
 } from "@/utils/api-helpers/prisma/user/user";
 
 // Constants
@@ -130,7 +135,6 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
         },
       }),
     ]);
-    
   } else if (!user.customer_id) {
     await updateCustomerId(user.user_id, customerId);
   }
@@ -143,19 +147,20 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
  * @param event
  */
 export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
-  const subscription = await stripe.subscriptions.retrieve(
-    (event.data.object as Stripe.Subscription).id
-  );
+  const subscription = await getSubscriptionSession(event);
 
-  const user = await prisma.user.findUnique({
-    where: { customer_id: subscription.customer as string },
-  });
+  // ---- get the Customer id -----
+  const customerId =
+    typeof subscription.customer === "string"
+      ? subscription.customer
+      : subscription.customer?.id;
+  if (!customerId) throw new Error("Customer ID not found in subscription.");
 
-  if (!user) {
+  const user = await getUserByCustomerId(customerId);
+  if (!user)
     throw new Error("User not found for the subscription deleted event.");
-  }
 
-  // Batch user and subscription updates in a single transaction
+  // ----- Update user and subscription in a single transaction -----
   await prisma.$transaction([
     prisma.user.update({
       where: { user_id: user.user_id },
