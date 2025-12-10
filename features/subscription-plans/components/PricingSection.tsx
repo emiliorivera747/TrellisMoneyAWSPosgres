@@ -57,7 +57,7 @@ const PricingSection = () => {
 
   return (
     <section className="h-auto min-h-screen sm:min-h-screen w-full flex flex-col border-t border-tertiary-300  pb-10">
-      <PrimaryHeader label={"Start yourmembership"} />
+      <PrimaryHeader label={"Start your membership"} />
       <SecondaryHeader label={"Manage your finances. Cancel anytime."} />
 
       <div className="flex flex-row flex-wrap items-center justify-center gap-8 mt-8">
