@@ -66,11 +66,16 @@ const GoogleButton = ({
         ? `${window.location.origin}/auth/callback?plan=${plan}`
         : `${window.location.origin}/auth/callback`;
 
+      const error_callback = `${window.location.origin}/auth-error`;
+
       // Sign in with Google
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo,
+          queryParams: {
+            error_callback,
+          },
         },
       });
 
