@@ -33,28 +33,40 @@ import React from "react";
  */
 const TermsPage: React.FC = () => {
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Terms and Conditions</h1>
-      <p>
+    <div className="p-10 pl-14 font-sans font-bold text-tertiary-900">
+      <h1 className="text-2xl font-semibold mb-4">Terms and Conditions</h1>
+      <p className="mb-6 font-light text-tertiary-800">
         Welcome to Trellis Money! These terms and conditions outline the rules
         and regulations for the use of our application.
       </p>
-      <h2>Acceptance of Terms</h2>
-      <p>
+      <h2 className="text-xl font-semibold mb-2 text-tertiary-1000">
+        Acceptance of Terms
+      </h2>
+      <p className="mb-6 font-light text-tertiary-800">
         By accessing or using our application, you agree to be bound by these
         terms. If you do not agree with any part of the terms, you must not use
         the application.
       </p>
-      <h2>Changes to Terms</h2>
-      <p>
+      <h2 className="text-xl font-semibold mb-2 text-tertiary-1000">
+        Changes to Terms
+      </h2>
+      <p className="mb-6 font-light text-tertiary-800">
         We reserve the right to modify these terms at any time. Any changes will
         be effective immediately upon posting. It is your responsibility to
         review the terms periodically.
       </p>
-      <h2>Contact Us</h2>
-      <p>
-        If you have any questions about these terms, please contact us at
-        support@trellismoney.com.
+      <h2 className="text-xl font-semibold mb-2 text-tertiary-1000">
+        Contact Us
+      </h2>
+      <p className="mb-6 font-light text-tertiary-800">
+        If you have any questions about these terms, please contact us at{" "}
+        <a
+          href="mailto:support@trellismoney.com"
+          className="text-blue-500 underline"
+        >
+          support@trellismoney.com
+        </a>
+        .
       </p>
     </div>
   );
