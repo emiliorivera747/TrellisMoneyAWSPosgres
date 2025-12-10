@@ -19,19 +19,20 @@ export async function POST(req: NextRequest) {
     if (!signature)
       return new Response("Missing Stripe-Signature header", { status: 400 });
 
-    // Verify webhook
     const event = verifyWebhookSignature(body, signature);
 
-    // Handle events
     switch (event.type) {
       case "checkout.session.completed":
+        console.log("checkout.session.completed");
         await handleCheckoutSessionCompleted(event);
+        break;
+      case "checkout.session.expired":
+        console.log("checkout.session.expired");
         break;
       case "customer.subscription.deleted":
         await handleSubscriptionDeleted(event);
         break;
       case "payment_intent.succeeded":
-        console.log("HEY THERE!");
         break;
       default:
         console.log(`Unhandled event type: ${event.type}`);
