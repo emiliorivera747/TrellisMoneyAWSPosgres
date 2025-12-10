@@ -1,8 +1,8 @@
 import {
-  verifyWebhookSignature,
   handleCheckoutSessionCompleted,
   handleSubscriptionDeleted,
 } from "@/utils/api-helpers/stripe/webhookHandler";
+import { verifyWebhookSignature } from "@/utils/api-helpers/stripe/verifyWebhookSignature";
 
 import { NextRequest } from "next/server";
 
@@ -26,7 +26,6 @@ export async function POST(req: NextRequest) {
         await handleCheckoutSessionCompleted(event);
         break;
       case "checkout.session.expired":
-        console.log("checkout.session.expired");
         break;
       case "customer.subscription.deleted":
         await handleSubscriptionDeleted(event);
