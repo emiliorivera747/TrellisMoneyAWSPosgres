@@ -127,7 +127,7 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
 export const getSubscriptionData = async (
   priceId: string
 ): Promise<SubscriptionData> => {
-  const price = await stripe.prices.retrieve(priceId);
+  const price = await stripe.prices.retrieve(priceId, { expand: ["product"] });
 
   return {
     plan: "premium",
