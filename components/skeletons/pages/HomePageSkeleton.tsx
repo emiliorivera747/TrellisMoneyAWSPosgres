@@ -13,9 +13,9 @@ const HomePageSkeleton = () => {
                 <div className="h-6 w-80 bg-gray-300 rounded mb-4"></div>
                 <div className="h-12 w-40 bg-gray-300 rounded"></div>
             </header>
-            <footer className="p-4 border-t border-gray-200 mt-auto ">
+            {/* <footer className="p-4 border-t border-gray-200 mt-auto ">
                 <div className="h-6 w-full bg-gray-300 rounded"></div>
-            </footer>
+            </footer> */}
         </div>
     );
 };
