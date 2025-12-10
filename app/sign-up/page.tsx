@@ -1,5 +1,3 @@
-import React from "react";
-
 // Components
 import SignUpForm from "@/features/auth/components/form/SignUpForm";
 import NavBar from "@/components/nav-bars/SecondaryNavbar";
