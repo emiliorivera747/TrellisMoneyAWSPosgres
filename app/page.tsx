@@ -1,6 +1,3 @@
-// Next and React
-import React from "react";
-
 export const dynamic = "force-dynamic";
 
 // Components

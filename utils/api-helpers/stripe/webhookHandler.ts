@@ -118,6 +118,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
           plan: "premium"
         },
       }),
+      
       prisma.subscription.upsert({
         where: { user_id: user.user_id },
         update: subscriptionData,

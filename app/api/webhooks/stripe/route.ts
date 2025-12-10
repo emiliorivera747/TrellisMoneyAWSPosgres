@@ -4,7 +4,7 @@ import {
   handleSubscriptionDeleted,
 } from "@/utils/api-helpers/stripe/webhookHandler";
 
-import { NextRequest } from "next/server"; // Assuming Next.js 13+ App Router
+import { NextRequest } from "next/server";
 
 /**
  *
@@ -29,6 +29,9 @@ export async function POST(req: NextRequest) {
         break;
       case "customer.subscription.deleted":
         await handleSubscriptionDeleted(event);
+        break;
+      case "payment_intent.succeeded":
+        console.log("HEY THERE!");
         break;
       default:
         console.log(`Unhandled event type: ${event.type}`);
