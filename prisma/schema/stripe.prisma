@@ -19,6 +19,11 @@ enum Status {
   paused
 }
 
+enum PriceType {
+  one_time
+  recurring
+}
+
 model Product {
   id          String   @id @map("_id")
   name        String
@@ -34,9 +39,9 @@ model Price {
   id            String         @id @map("_id")
   product_id    String
   active        Boolean        @default(true)
-  currency      String
+  currency      String // ISO currency code (USD, EUR, etc.)
   unit_amount   Int?
-  type          String // 'one_time' or 'recurring'
+  type          PriceType
   recurring     Json? // Contains interval, interval_count, etc.
   metadata      Json?
   created_at    DateTime       @default(now())
