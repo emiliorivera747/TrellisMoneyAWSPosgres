@@ -8,7 +8,6 @@ enum SubscriptionPeriod {
   yearly
 }
 
-
 enum Status {
   incomplete
   incomplete_expired
@@ -20,15 +19,49 @@ enum Status {
   paused
 }
 
+enum PriceType {
+  one_time
+  recurring
+}
+
+model Product {
+  id          String   @id @map("_id")
+  name        String
+  description String?
+  active      Boolean  @default(true)
+  metadata    Json?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  prices      Price[]
+}
+
+model Price {
+  id            String         @id @map("_id")
+  product_id    String
+  active        Boolean        @default(true)
+  currency      String // ISO currency code (USD, EUR, etc.)
+  unit_amount   Int?
+  type          PriceType
+  recurring     Json? // Contains interval, interval_count, etc.
+  metadata      Json?
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  product       Product        @relation(fields: [product_id], references: [id])
+  subscriptions Subscription[]
+}
+
 model Subscription {
-  id         String             @id @default(cuid()) @map("_id")
-  user_id    String             @unique
-  status     Status
-  plan       Plan
-  period     SubscriptionPeriod
-  start_date DateTime           @default(now())
-  end_date   DateTime
-  created_at DateTime           @default(now())
-  updated_at DateTime           @updatedAt
-  user       User               @relation(fields: [user_id], references: [user_id])
+  id                     String             @id @default(cuid()) @map("_id")
+  stripe_subscription_id String?            @unique
+  user_id                String             @unique
+  price_id               String?
+  status                 Status
+  plan                   Plan
+  period                 SubscriptionPeriod
+  start_date             DateTime           @default(now())
+  end_date               DateTime
+  created_at             DateTime           @default(now())
+  updated_at             DateTime           @updatedAt
+  user                   User               @relation(fields: [user_id], references: [user_id])
+  price                  Price?             @relation(fields: [price_id], references: [id])
 }

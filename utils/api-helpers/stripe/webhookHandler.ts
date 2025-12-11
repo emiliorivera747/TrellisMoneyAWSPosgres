@@ -110,7 +110,7 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
       where: { user_id: user.user_id },
       data: {
         plan: "free",
-        status: "inactive",
+        status: "canceled",
         end_date: new Date(),
       },
     }),
