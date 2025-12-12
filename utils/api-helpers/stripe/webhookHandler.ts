@@ -13,14 +13,9 @@ import {
   getUserByCustomerId,
 } from "@/utils/api-helpers/prisma/user/user";
 
+import { getSubscriptionItem } from "@/utils/api-helpers/stripe/webhookHelpers";
 
-interface SubscriptionData {
-  plan: "premium";
-  period: "monthly" | "yearly";
-  start_date: Date;
-  end_date: Date;
-  status: "active";
-}
+import { Subscription } from "@/types/stripe";
 
 /**
  * Handles the checkout session completed event from Stripe.
@@ -40,34 +35,31 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   const user = await getUserByEmail(email);
 
   if (!user) throw new Error("User not found");
+  const user_id = user.user_id;
 
   // ----- Process line items -----
   const lineItems = session.line_items?.data ?? [];
 
-  const subscriptionItem = lineItems.find((item) => {
-    const priceId = item.price?.id;
-    const isSubscription = !!item.price?.recurring;
-    return priceId && isSubscription;
-  });
+  const subscriptionItem = getSubscriptionItem(lineItems);
 
   if (subscriptionItem) {
     const priceId = subscriptionItem.price?.id;
     if (!priceId) return;
 
     const subscriptionData = await getSubscriptionData(priceId);
+    let customer_id = user.customer_id ? undefined : customerId;
 
     // ----- Batch user and subscription updates in a single transaction ------
     await prisma.$transaction([
       prisma.user.update({
-        where: { user_id: user.user_id },
+        where: { user_id },
         data: {
-          customer_id: user.customer_id ? undefined : customerId,
-          plan: "premium",
+          customer_id,
         },
       }),
 
       prisma.subscription.upsert({
-        where: { user_id: user.user_id },
+        where: { user_id },
         update: subscriptionData,
         create: {
           ...subscriptionData,
@@ -126,11 +118,13 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
  */
 export const getSubscriptionData = async (
   priceId: string
-): Promise<SubscriptionData> => {
+): Promise<Subscription> => {
   const price = await stripe.prices.retrieve(priceId, { expand: ["product"] });
 
+  if(!price.recurring) throw new Error("Provided priceId is not for a recurring subscription");
+
+  
   return {
-    plan: "premium",
     period: "monthly",
     start_date: new Date(),
     end_date: new Date(),

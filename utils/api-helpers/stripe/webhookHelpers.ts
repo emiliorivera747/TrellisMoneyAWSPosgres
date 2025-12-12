@@ -5,9 +5,6 @@ const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
 /**
  *  Verifies the Stripe webhook signature.
  *
- * @param body
- * @param signature
- * @returns
  */
 export const verifyWebhookSignature = (
   body: string,
@@ -20,17 +17,20 @@ export const verifyWebhookSignature = (
   }
 };
 
-// export const calculateEndDate = (priceId: string): Date => {
-//   const endDate = new Date();
-//   switch (priceId) {
-//     case PRICE_IDS.YEARLY:
-//       endDate.setFullYear(endDate.getFullYear() + 1);
-//       break;
-//     case PRICE_IDS.MONTHLY:
-//       endDate.setMonth(endDate.getMonth() + 1);
-//       break;
-//     default:
-//       throw new Error(`Invalid price ID: ${priceId}`);
-//   }
-//   return endDate;
-// };
+
+/**
+ * Retrieves the subscription item from a list of Stripe line items.
+ *
+ * @param lineItems - An array of Stripe line items.
+ * @returns The subscription item if found, otherwise undefined.
+ */
+export const getSubscriptionItem = (lineItems: Stripe.LineItem[]) => {
+  // Find the line item that represents a subscription
+  const subscriptionItem = lineItems.find((item) => {
+    const priceId = item.price?.id; // The price ID of the line item
+    const isSubscription = !!item.price?.recurring; // Check if the price is recurring (indicating a subscription)
+    return priceId && isSubscription; // Return true if both conditions are met
+  });
+
+  return subscriptionItem; // Return the subscription item or undefined
+};
