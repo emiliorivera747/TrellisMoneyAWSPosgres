@@ -2,14 +2,13 @@ model User {
   user_id String @id @default(uuid())
 
   // Other
-  email          String        @unique
+  email          String   @unique
   name           String?
-  email_verified Boolean?      @default(false)
-  phone_verified Boolean?      @default(false)
+  email_verified Boolean? @default(false)
+  phone_verified Boolean? @default(false)
   phone          String?
-  customer_id    String?       @unique
+  customer_id    String?  @unique
   profile        Profile?
-  subscription   Subscription?
 
   // Financial
   securities Security[]
@@ -18,7 +17,8 @@ model User {
   items      Item[]
 
   // Stripe
-  plan Plan @default(free)
+  subscriptions Subscription[]
+
 
   memberships HouseholdMember[] @relation("UserMemberships")
 
