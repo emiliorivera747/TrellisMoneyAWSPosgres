@@ -1,5 +1,4 @@
 import Stripe from "stripe";
-import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
 
 import {
@@ -17,6 +16,7 @@ import { getSubscriptionItem } from "@/utils/api-helpers/stripe/webhookHelpers";
 
 import { Subscription } from "@/types/stripe";
 
+
 /**
  * Handles the checkout session completed event from Stripe.
  * Optimized to batch database operations where possible
@@ -24,10 +24,11 @@ import { Subscription } from "@/types/stripe";
  * @param event
  */
 export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
-  const session = await getCheckoutSession(event);
+  const { line_items, subscription, customer, customer_details } =
+    await getCheckoutSession(event);
 
-  const customerId = session.customer as string;
-  const { email } = session.customer_details ?? {};
+  const customer_id = customer as string;
+  const { email } = customer_details ?? {};
 
   if (!email) throw new Error("Customer email not found in session");
 
@@ -38,16 +39,45 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   const user_id = user.user_id;
 
   // ----- Process line items -----
-  const lineItems = session.line_items?.data ?? [];
+  const lineItems = line_items?.data ?? [];
 
   const subscriptionItem = getSubscriptionItem(lineItems);
 
   if (subscriptionItem) {
     const priceId = subscriptionItem.price?.id;
+
     if (!priceId) return;
 
-    const subscriptionData = await getSubscriptionData(priceId);
-    let customer_id = user.customer_id ? undefined : customerId;
+    if (!subscription) throw new Error("Subscription is null");
+
+    if (subscription && typeof subscription === "object") {
+      const subscriptionData: Subscription = {
+        subscription_id: subscription.id,
+        user_id,
+        customer_id,
+        price_id: priceId,
+        status: subscription.status as Subscription["status"],
+        start_date: subscription.start_date,
+        current_period_start: 
+          subscription.current_period_start,
+        current_period_end: new Date(subscription.current_period_end * 1000),
+        trial_start: subscription.trial_start
+          ? new Date(subscription.trial_start * 1000)
+          : undefined,
+        trial_end: subscription.trial_end
+          ? new Date(subscription.trial_end * 1000)
+          : undefined,
+        ended_at: subscription.ended_at
+          ? new Date(subscription.ended_at * 1000)
+          : undefined,
+        canceled_at: subscription.canceled_at
+          ? new Date(subscription.canceled_at * 1000)
+          : undefined,
+        cancel_at_period_end: subscription.cancel_at_period_end,
+        created_at: new Date(),
+        updated_at: new Date(),
+      };
+    }
 
     // ----- Batch user and subscription updates in a single transaction ------
     await prisma.$transaction([
@@ -107,27 +137,4 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
       },
     }),
   ]);
-};
-
-/**
- *
- * Calculates the subscription data based on the price ID.
- *
- * @param priceId
- * @returns
- */
-export const getSubscriptionData = async (
-  priceId: string
-): Promise<Subscription> => {
-  const price = await stripe.prices.retrieve(priceId, { expand: ["product"] });
-
-  if(!price.recurring) throw new Error("Provided priceId is not for a recurring subscription");
-
-  
-  return {
-    period: "monthly",
-    start_date: new Date(),
-    end_date: new Date(),
-    status: "active",
-  };
 };

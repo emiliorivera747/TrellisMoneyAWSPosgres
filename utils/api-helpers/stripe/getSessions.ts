@@ -17,7 +17,7 @@ import { stripe } from "@/lib/stripe";
 export const getCheckoutSession = async (event: Stripe.Event) => {
   const session = await stripe.checkout.sessions.retrieve(
     (event.data.object as Stripe.Checkout.Session).id,
-    { expand: ["line_items"] }
+    { expand: ["line_items", "subscription"] }
   );
 
   return session;
