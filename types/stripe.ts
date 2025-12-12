@@ -74,7 +74,7 @@ export interface Subscription {
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
    */
-  created?: number;
+  created_at?: number;
 
   /**
    * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period.
@@ -87,8 +87,6 @@ export interface Subscription {
   canceled_at: number | null;
 
   updated_at?: number;
-
-  price?: Price;
 }
 
 export interface Price {
@@ -142,7 +140,6 @@ export interface Price {
   created?: number;
 
   updated_at?: number;
-
 }
 
 export interface Product {

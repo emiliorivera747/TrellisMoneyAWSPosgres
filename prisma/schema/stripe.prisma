@@ -30,19 +30,17 @@ model Subscription {
 
   status SubscriptionStatus @default(incomplete)
 
-  start_date           DateTime
-  current_period_start DateTime
-  current_period_end   DateTime
+  start_date           Int?
+  trial_start          Int?
+  trial_end            Int?
+  ended_at             Int?
+  cancel_at            Int?
+  cancel_at_period_end Boolean @default(false)
 
-  trial_start DateTime?
-  trial_end   DateTime?
+  created_at Int?
+  updated_at Int?
 
-  ended_at             DateTime?
-  canceled_at          DateTime?
-  cancel_at_period_end Boolean   @default(false)
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  canceled_at Int?
 
   // Relations
   user  User   @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
