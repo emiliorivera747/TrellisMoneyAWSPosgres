@@ -3,7 +3,6 @@ import {
   handleSubscriptionDeleted,
 } from "@/utils/api-helpers/stripe/webhookHandler";
 import { verifyWebhookSignature } from "@/utils/api-helpers/stripe/verifyWebhookSignature";
-
 import { NextRequest } from "next/server";
 
 /**
@@ -34,6 +33,13 @@ export async function POST(req: NextRequest) {
     const event = verifyWebhookSignature(body, signature);
 
     switch (event.type) {
+      case "invoice.paid":
+        break;
+      case "invoice.payment_failed":
+        break;
+      case "customer.subscription.deleted":
+        await handleSubscriptionDeleted(event);
+        break;
       case "checkout.session.completed":
         await handleCheckoutSessionCompleted(event);
         break;
@@ -41,18 +47,11 @@ export async function POST(req: NextRequest) {
         break;
       case "customer.subscription.updated":
         break;
-      case "customer.subscription.deleted":
-        await handleSubscriptionDeleted(event);
+      case "invoice.payment_action_required":
         break;
       case "customer.subscription.resumed":
         break;
       case "customer.subscription.trial_will_end":
-        break;
-      case "invoice.paid":
-        break;
-      case "invoice.payment_failed":
-        break;
-      case "invoice.payment_action_required":
         break;
       case "invoice.upcoming":
         break;
