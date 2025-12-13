@@ -2,6 +2,45 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 
+/**
+ * Handles the POST request to create a new item in the database.
+ *
+ * This function expects a JSON payload in the request body containing an `item` object
+ * with various properties. It uses Prisma to create a new record in the `item` table
+ * with the provided data. If any property is missing, it defaults to an empty string.
+ *
+ * @param req - The incoming HTTP request object of type `NextRequest`.
+ * @returns A JSON response containing a success message and the created item object,
+ *          or an error message with a 500 status code in case of failure.
+ *
+ * @throws Will return a 500 status code if an error occurs during the database operation.
+ *
+ * Example usage:
+ * ```json
+ * POST /api/plaid/items
+ * {
+ *   "item": {
+ *     "item_id": "123",
+ *     "institution_id": "456",
+ *     "available_products": ["transactions"],
+ *     "billed_products": ["auth"],
+ *     "products": ["identity"],
+ *     "error": null,
+ *     "user_id": "user_789",
+ *     "access_token": "access-token-abc",
+ *     "update_type": "background",
+ *     "consent_expiration_time": "2023-12-31T23:59:59Z",
+ *     "institution_name": "Bank Name",
+ *     "webhook": "https://example.com/webhook",
+ *     "auth_method": "oauth",
+ *     "consented_products": ["transactions"],
+ *     "consented_data_scopes": ["read"],
+ *     "consented_use_cases": ["personal_finance"],
+ *     "request_id": "req_123"
+ *   }
+ * }
+ * ```
+ */
 export async function POST(req: NextRequest) {
  try {
     const body = await req.json();
