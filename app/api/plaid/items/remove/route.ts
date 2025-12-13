@@ -3,9 +3,7 @@ import { ItemRemoveRequest } from "plaid"; // Adjust the import path based on yo
 
 
 
-const request: ItemRemoveRequest = {
-    access_token: "access-production-d8343d1c-50ee-45aa-8696-091cd58dceb2",
-};
+
 
 export async function POST(req: NextRequest) {
   try {
