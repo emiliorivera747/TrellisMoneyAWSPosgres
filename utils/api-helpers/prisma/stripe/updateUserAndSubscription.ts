@@ -35,7 +35,7 @@ interface updateUserAndSubscriptionProps {
  *   subscriptionData: {
  *     plan: 'premium',
  *     status: 'active',
- *   },
+ *   },                 
  * });
  * console.log(result);
  */

@@ -33,8 +33,15 @@ export const getCheckoutSession = async (event: Stripe.Event) => {
  * @throws Will throw an error if the subscription retrieval fails.
  */
 export const getSubscriptionSession = async (event: Stripe.Event) => {
-  const subscription = await stripe.subscriptions.retrieve(
-    (event.data.object as Stripe.Subscription).id
-  );
+  const sessionId = (event.data.object as Stripe.Checkout.Session).id;
+  const subscription = await stripe.subscriptions.retrieve(sessionId, {
+    expand: [
+      "line_items",
+      "subscription", 
+      "subscription.items.data.price",
+      "subscription.items.data.price.product",
+      "customer",
+    ],
+  });
   return subscription;
 };
