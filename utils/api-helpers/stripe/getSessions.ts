@@ -15,10 +15,16 @@ import { stripe } from "@/lib/stripe";
  * @throws Will throw an error if the session retrieval fails or the event data is invalid.
  */
 export const getCheckoutSession = async (event: Stripe.Event) => {
-  const session = await stripe.checkout.sessions.retrieve(
-    (event.data.object as Stripe.Checkout.Session).id,
-    { expand: ["line_items", "subscription"] }
-  );
+  const sessionId = (event.data.object as Stripe.Checkout.Session).id;
+  const session = await stripe.checkout.sessions.retrieve(sessionId, {
+    expand: [
+      "line_items",
+      "subscription",
+      "subscription.items.data.price",
+      "subscription.items.data.price.product",
+      "customer",
+    ],
+  });
 
   return session;
 };
@@ -37,7 +43,7 @@ export const getSubscriptionSession = async (event: Stripe.Event) => {
   const subscription = await stripe.subscriptions.retrieve(sessionId, {
     expand: [
       "line_items",
-      "subscription", 
+      "subscription",
       "subscription.items.data.price",
       "subscription.items.data.price.product",
       "customer",
