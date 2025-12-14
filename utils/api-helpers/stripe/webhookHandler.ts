@@ -12,9 +12,12 @@ import {
   getUserByCustomerId,
 } from "@/utils/api-helpers/prisma/user/user";
 
-import { getSubscriptionItem } from "@/utils/api-helpers/stripe/webhookHelpers";
+import {
+  getSubscriptionItem,
+  generateSubscription,
+} from "@/utils/api-helpers/stripe/webhookHelpers";
 
-import { Subscription } from "@/types/stripe";
+import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateUserAndSubscription";
 
 /**
  * Handles the checkout session completed event from Stripe.
@@ -26,9 +29,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   const { line_items, subscription, customer, customer_details } =
     await getCheckoutSession(event);
 
-  const customer_id = customer as string;
   const { email } = customer_details ?? {};
-
   if (!email) throw new Error("Customer email not found in session");
 
   // ----- Find the user -----
@@ -37,10 +38,8 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   if (!user) throw new Error("User not found");
   const user_id = user.user_id;
 
-  // ----- Process line items -----
-  const lineItems = line_items?.data ?? [];
-
-  const subscriptionItem = getSubscriptionItem(lineItems);
+  // ----- Get the Subscription item based on the line item -----
+  const subscriptionItem = getSubscriptionItem(line_items?.data ?? []);
 
   if (subscriptionItem) {
     const price_id = subscriptionItem.price?.id;
@@ -50,34 +49,24 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
     if (!subscription) throw new Error("Subscription is null");
 
     if (subscription && typeof subscription === "object") {
-      
       const subscriptionData = generateSubscription({
         subscription,
-        customer_id,
+        customer_id: customer as string,
         price_id,
         user_id,
       });
 
       // ----- Batch user and subscription updates in a single transaction ------
-      await prisma.$transaction([
-        prisma.user.update({
-          where: { user_id },
-          data: {
-            customer_id,
-          },
-        }),
+      const res = await updateUserAndSubscription({
+        user_id,
+        customer_id: customer as string,
+        subscriptionData,
+      });
 
-        prisma.subscription.upsert({
-          where: { user_id },
-          update: subscriptionData,
-          create: {
-            ...subscriptionData,
-          },
-        }),
-      ]);
+      if (!res) throw new Error("failed to update subscription");
     }
   } else if (!user.customer_id) {
-    await updateCustomerId(user.user_id, customer_id);
+    await updateCustomerId(user.user_id, customer as string);
   }
 };
 
@@ -116,35 +105,4 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
       },
     }),
   ]);
-};
-
-const generateSubscription = ({
-  subscription,
-  customer_id,
-  price_id,
-  user_id,
-}: {
-  subscription: Stripe.Subscription;
-  customer_id: string;
-  price_id: string;
-  user_id: string;
-}) => {
-  const subscriptionData: Subscription = {
-    subscription_id: subscription.id,
-    user_id,
-    customer_id,
-    price_id,
-    status: subscription.status as Subscription["status"],
-    start_date: subscription.start_date ?? 0,
-    trial_start: subscription.trial_start ?? 0,
-    trial_end: subscription.trial_end ?? 0,
-    ended_at: subscription.ended_at ?? 0,
-    cancel_at: subscription.cancel_at ?? 0,
-    cancel_at_period_end: subscription.cancel_at_period_end ?? false,
-    canceled_at: subscription.canceled_at ?? 0,
-    created_at: subscription.created ?? 0,
-    updated_at: Math.floor(Date.now() / 1000),
-  };
-
-  return subscriptionData;
 };
