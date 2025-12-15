@@ -26,7 +26,9 @@ export const verifyWebhookSignature = (
  * @param lineItems - An array of Stripe line items.
  * @returns The subscription item if found, otherwise undefined.
  */
-export const getSubscriptionItem = (lineItems: Stripe.LineItem[]) => {
+export const getSubscriptionItemFromLineItems = (
+  lineItems: Stripe.LineItem[]
+) => {
   // Find the line item that represents a subscription
   const subscriptionItem = lineItems.find((item) => {
     const priceId = item.price?.id; // The price ID of the line item
@@ -78,4 +80,13 @@ export const generateSubscription = ({
   };
 
   return subscriptionData;
+};
+
+export const getSubscriptionItemFromSubscription = (
+  subscription: Stripe.Subscription
+) => {
+  const subscriptionItem = subscription.items.data.find(
+    (item: Stripe.SubscriptionItem) => item.price.recurring !== null
+  );
+  return subscriptionItem;
 };

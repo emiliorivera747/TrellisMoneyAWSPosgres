@@ -13,7 +13,7 @@ import {
 } from "@/utils/api-helpers/prisma/user/user";
 
 import {
-  getSubscriptionItem,
+  getSubscriptionItemFromSubscription,
   generateSubscription,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 
@@ -26,45 +26,44 @@ import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateU
  * @param event
  */
 export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
-  const { line_items, subscription, customer, customer_details } =
-    await getCheckoutSession(event);
+  const { subscription, customer, customer_details } = await getCheckoutSession(
+    event
+  );
 
   const { email } = customer_details ?? {};
   if (!email) throw new Error("Customer email not found in session");
 
   // ----- Find the user -----
   const user = await getUserByEmail(email);
-
   if (!user) throw new Error("User not found");
+
   const user_id = user.user_id;
 
-  // ----- Get the Subscription item based on the line item -----
-  const subscriptionItem = getSubscriptionItem(line_items?.data ?? []);
+  if (subscription && typeof subscription === "object") 
+    {
+    const subscriptionItem = getSubscriptionItemFromSubscription(subscription);
 
-  if (subscriptionItem) {
-    const price_id = subscriptionItem.price?.id;
+    if (!subscriptionItem?.price)
+      throw new Error("No recurring price found on subscription");
 
-    if (!price_id) return;
+    const price: Stripe.Price = subscriptionItem.price;
+    const price_id: string = price.id;
 
-    if (!subscription) throw new Error("Subscription is null");
+    const subscriptionData = generateSubscription({
+      subscription,
+      customer_id: customer as string,
+      price_id,
+      user_id,
+    });
 
-    if (subscription && typeof subscription === "object") {
-      const subscriptionData = generateSubscription({
-        subscription,
-        customer_id: customer as string,
-        price_id,
-        user_id,
-      });
+    // ----- Batch user and subscription updates in a single transaction ------
+    const res = await updateUserAndSubscription({
+      user_id,
+      customer_id: customer as string,
+      subscriptionData,
+    });
 
-      // ----- Batch user and subscription updates in a single transaction ------
-      const res = await updateUserAndSubscription({
-        user_id,
-        customer_id: customer as string,
-        subscriptionData,
-      });
-
-      if (!res) throw new Error("failed to update subscription");
-    }
+    if (!res) throw new Error("failed to update subscription");
   } else if (!user.customer_id) {
     await updateCustomerId(user.user_id, customer as string);
   }
