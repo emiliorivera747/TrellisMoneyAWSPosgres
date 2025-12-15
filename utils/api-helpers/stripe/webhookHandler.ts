@@ -24,41 +24,45 @@ import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateU
  * @param event
  */
 export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
-  // ----- Get the checkout session -----
-  const { subscription, customer, customer_email, mode } =
-    await getCheckoutSession(event);
+  try {
+    // ----- Get the checkout session -----
+    const { subscription, customer, customer_email, mode } =
+      await getCheckoutSession(event);
 
-  // ----- Does customer have email? ----
-  if (!customer_email) throw new Error("Customer email not found in session");
+    // ----- Does customer have email? ----
+    if (!customer_email) throw new Error("Customer email not found in session");
 
-  // ----- Find the user -----
-  const user = await getUserByEmail(customer_email);
-  if (!user) throw new Error("User not found");
+    // ----- Find the user -----
+    const user = await getUserByEmail(customer_email);
+    if (!user) throw new Error("User not found");
 
-  if (
-    subscription &&
-    typeof subscription === "object" &&
-    mode === "subscription"
-  ) {
-    const subscriptionItem = getSubscriptionItemFromSubscription(subscription);
+    if (
+      subscription &&
+      typeof subscription === "object" &&
+      mode === "subscription"
+    ) {
+      const subscriptionItem = getSubscriptionItemFromSubscription(subscription);
 
-    if (!subscriptionItem?.price) throw new Error("No recurring price found");
+      if (!subscriptionItem?.price) throw new Error("No recurring price found");
 
-    const price_id: string = subscriptionItem.price.id;
+      const price_id: string = subscriptionItem.price.id;
 
-    const subscriptionData = generateSubscriptionData({
-      subscription,
-      customer_id: customer as string,
-      price_id,
-      user_id: user.user_id,
-    });
+      const subscriptionData = generateSubscriptionData({
+        subscription,
+        customer_id: customer as string,
+        price_id,
+        user_id: user.user_id,
+      });
 
-    // ----- Batch user and subscription updates in a single transaction ------
-    await updateUserAndSubscription({
-      user_id: user.user_id,
-      customer_id: customer as string,
-      subscriptionData,
-    });
+      // ----- Batch user and subscription updates in a single transaction ------
+      await updateUserAndSubscription({
+        user_id: user.user_id,
+        customer_id: customer as string,
+        subscriptionData,
+      });
+    }
+  } catch (error) {
+    console.error("Error in handleCheckoutSessionCompleted:", error);
   }
 };
 

@@ -32,33 +32,34 @@ export async function POST(req: NextRequest) {
 
     const event = verifyWebhookSignature(body, signature);
 
+    console.log(`Received event: ${event.type}`);
     switch (event.type) {
       case "invoice.paid":
-        break;
+      break;
       case "invoice.payment_failed":
-        break;
+      break;
       case "customer.subscription.deleted":
-        await handleSubscriptionDeleted(event);
-        break;
+      await handleSubscriptionDeleted(event);
+      break;
       case "checkout.session.completed":
-        await handleCheckoutSessionCompleted(event);
-        break;
+      await handleCheckoutSessionCompleted(event);
+      break;
       case "customer.subscription.created":
-        break;
+      break;
       case "customer.subscription.updated":
-        break;
+      break;
       case "invoice.payment_action_required":
-        break;
+      break;
       case "customer.subscription.resumed":
-        break;
+      break;
       case "customer.subscription.trial_will_end":
-        break;
+      break;
       case "invoice.upcoming":
-        break;
+      break;
       case "payment_intent.succeeded":
-        break;
+      break;
       default:
-        console.log(`Unhandled event type: ${event.type}`);
+      console.log(`Unhandled event type: ${event.type}`);
     }
     return new Response("Webhook processed successfully", { status: 200 });
   } catch (error) {
