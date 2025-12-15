@@ -51,7 +51,7 @@ export const getSubscriptionItemFromLineItems = (
  *
  * @returns {Subscription} The generated subscription object containing normalized data.
  */
-export const generateSubscription = ({
+export const generateSubscriptionData = ({
   subscription,
   customer_id,
   price_id,

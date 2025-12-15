@@ -13,7 +13,7 @@ import {
 
 import {
   getSubscriptionItemFromSubscription,
-  generateSubscription,
+  generateSubscriptionData,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 
 import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateUserAndSubscription";
@@ -29,7 +29,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   const { subscription, customer, customer_email, mode } =
     await getCheckoutSession(event);
 
-  // ----- Does customer have email ----
+  // ----- Does customer have email? ----
   if (!customer_email) throw new Error("Customer email not found in session");
 
   // ----- Find the user -----
@@ -43,12 +43,11 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   ) {
     const subscriptionItem = getSubscriptionItemFromSubscription(subscription);
 
-    if (!subscriptionItem?.price)
-      throw new Error("No recurring price found on subscription");
+    if (!subscriptionItem?.price) throw new Error("No recurring price found");
 
     const price_id: string = subscriptionItem.price.id;
 
-    const subscriptionData = generateSubscription({
+    const subscriptionData = generateSubscriptionData({
       subscription,
       customer_id: customer as string,
       price_id,
