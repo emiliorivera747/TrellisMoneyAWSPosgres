@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 const SubscriptionPage = () => {
-  return <div className="m-h-screen h-auto w-screen">Subscription</div>;
+  return <div className="min-h-screen h-auto">Subscription</div>;
 };
 
 export default SubscriptionPage;

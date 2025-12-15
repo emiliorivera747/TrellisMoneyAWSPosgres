@@ -1,8 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
 
-import { CldImage } from "next-cloudinary";
-
 // Icons
 import SideNavItemLink from "@/components/navigation/SideNavItemLink";
 

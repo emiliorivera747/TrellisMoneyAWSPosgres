@@ -56,7 +56,10 @@ const PricingSection = () => {
   if (isPendingPlans) return <PricingSectionSkeleton />;
 
   return (
-    <section className="h-auto min-h-screen sm:min-h-screen w-full flex flex-col border-t border-tertiary-300  pb-10">
+    <section
+      id="plans"
+      className="h-auto min-h-screen sm:min-h-screen w-full flex flex-col border-t border-tertiary-300  pb-10"
+    >
       <PrimaryHeader label={"Start your membership"} />
       <SecondaryHeader label={"Manage your finances. Cancel anytime."} />
 
