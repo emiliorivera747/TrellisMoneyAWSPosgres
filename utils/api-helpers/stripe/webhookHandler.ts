@@ -8,7 +8,6 @@ import {
 
 import {
   getUserByEmail,
-  updateCustomerId,
   getUserByCustomerId,
 } from "@/utils/api-helpers/prisma/user/user";
 
@@ -27,19 +26,21 @@ import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateU
  */
 export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   // ----- Get the checkout session -----
-  const { subscription, customer, customer_details } = await getCheckoutSession(
-    event
-  );
+  const { subscription, customer, customer_email, mode } =
+    await getCheckoutSession(event);
 
-  // ----- Get the customers email ----
-  const { email } = customer_details ?? {};
-  if (!email) throw new Error("Customer email not found in session");
+  // ----- Does customer have email ----
+  if (!customer_email) throw new Error("Customer email not found in session");
 
   // ----- Find the user -----
-  const user = await getUserByEmail(email);
+  const user = await getUserByEmail(customer_email);
   if (!user) throw new Error("User not found");
 
-  if (subscription && typeof subscription === "object") {
+  if (
+    subscription &&
+    typeof subscription === "object" &&
+    mode === "subscription"
+  ) {
     const subscriptionItem = getSubscriptionItemFromSubscription(subscription);
 
     if (!subscriptionItem?.price)
@@ -55,13 +56,11 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
     });
 
     // ----- Batch user and subscription updates in a single transaction ------
-    const res = await updateUserAndSubscription({
+    await updateUserAndSubscription({
       user_id: user.user_id,
       customer_id: customer as string,
       subscriptionData,
     });
-
-    if (!res) throw new Error("failed to update subscription");
   }
 };
 

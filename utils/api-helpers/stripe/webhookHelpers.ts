@@ -62,6 +62,7 @@ export const generateSubscription = ({
   price_id: string;
   user_id: string;
 }) => {
+  
   const subscriptionData: Subscription = {
     subscription_id: subscription.id,
     user_id,
@@ -78,7 +79,6 @@ export const generateSubscription = ({
     created_at: subscription.created ?? 0,
     updated_at: Math.floor(Date.now() / 1000),
   };
-
   return subscriptionData;
 };
 
