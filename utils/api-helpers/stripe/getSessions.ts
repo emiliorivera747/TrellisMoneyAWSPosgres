@@ -19,7 +19,6 @@ export const getCheckoutSession = async (
       "subscription",
       "subscription.items.data.price",
       "subscription.items.data.price.product",
-      "customer", // uncomment if needed
     ],
   });
 };

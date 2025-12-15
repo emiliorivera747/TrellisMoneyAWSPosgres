@@ -26,10 +26,12 @@ import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateU
  * @param event
  */
 export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
+  // ----- Get the checkout session -----
   const { subscription, customer, customer_details } = await getCheckoutSession(
     event
   );
 
+  // ----- Get the customers email ----
   const { email } = customer_details ?? {};
   if (!email) throw new Error("Customer email not found in session");
 
@@ -37,35 +39,29 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   const user = await getUserByEmail(email);
   if (!user) throw new Error("User not found");
 
-  const user_id = user.user_id;
-
-  if (subscription && typeof subscription === "object") 
-    {
+  if (subscription && typeof subscription === "object") {
     const subscriptionItem = getSubscriptionItemFromSubscription(subscription);
 
     if (!subscriptionItem?.price)
       throw new Error("No recurring price found on subscription");
 
-    const price: Stripe.Price = subscriptionItem.price;
-    const price_id: string = price.id;
+    const price_id: string = subscriptionItem.price.id;
 
     const subscriptionData = generateSubscription({
       subscription,
       customer_id: customer as string,
       price_id,
-      user_id,
+      user_id: user.user_id,
     });
 
     // ----- Batch user and subscription updates in a single transaction ------
     const res = await updateUserAndSubscription({
-      user_id,
+      user_id: user.user_id,
       customer_id: customer as string,
       subscriptionData,
     });
 
     if (!res) throw new Error("failed to update subscription");
-  } else if (!user.customer_id) {
-    await updateCustomerId(user.user_id, customer as string);
   }
 };
 
