@@ -82,6 +82,13 @@ export const generateSubscription = ({
   return subscriptionData;
 };
 
+/**
+ * Retrieves the first subscription item from a Stripe subscription
+ * that has a recurring price.
+ *
+ * @param subscription - The Stripe subscription object to extract the item from.
+ * @returns The first subscription item with a recurring price, or `undefined` if none is found.
+ */
 export const getSubscriptionItemFromSubscription = (
   subscription: Stripe.Subscription
 ) => {
