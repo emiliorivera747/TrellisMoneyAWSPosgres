@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
-import { NextResponse, type NextRequest } from "next/server";
-
+import { NextRequest, NextResponse } from "next/server";
+import getSubscriptionMinimalData from "@/utils/api-helpers/prisma/stripe/getSubscriptionMinimalData";
 
 const PROTECTED_PATHS = [
   "/dashboard",
@@ -16,9 +16,9 @@ const PROTECTED_PATHS = [
  * properly, including redirecting unauthenticated users from protected paths.
  *
  * @param request - The incoming `NextRequest` object containing details about the HTTP request.
- * 
+ *
  * @returns A `NextResponse` object that may include updated cookies or a redirect response.
- * 
+ *
  * ### Notes:
  * - The `createServerClient` function is used to initialize the Supabase client with
  *   the necessary environment variables and cookie handling.
@@ -29,11 +29,11 @@ const PROTECTED_PATHS = [
  * - When returning the `supabaseResponse`, ensure that cookies are properly copied to
  *   maintain synchronization between the browser and server. Failure to do so may result
  *   in premature session termination.
- * 
+ *
  * ### Example:
  * ```typescript
  * import { updateSession } from './middleware';
- * 
+ *
  * export async function middleware(request: NextRequest) {
  *   return await updateSession(request);
  * }
@@ -54,12 +54,6 @@ export async function updateSession(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) =>
-            request.cookies.set(name, value)
-          );
-          supabaseResponse = NextResponse.next({
-            request,
-          });
-          cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           );
         },
@@ -77,11 +71,22 @@ export async function updateSession(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  if (!user && isProtectedPath(pathname)) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone();
-    url.pathname = "/sign-in";
-    return NextResponse.redirect(url);
+  if (isProtectedPath(pathname)) {
+    // ----- If user is not logged in the redirect to sign up -----
+    if (!user) return NextResponse.redirect(new URL("/sign-up", request.url));
+
+    // ---- Get subscription -----
+    const subscription = await getSubscriptionMinimalData(user.id);
+
+    // ----- Convert miliseconds to seconds -----
+    const now = Math.floor(Date.now() / 1000);
+
+    const hasAcess =
+      subscription &&
+      (subscription.status === "active" || subscription.status === "trialing");
+
+    if (!hasAcess)
+      return NextResponse.redirect(new URL("/subscriptions", request.url));
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
