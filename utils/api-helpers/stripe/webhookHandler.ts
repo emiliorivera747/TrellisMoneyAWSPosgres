@@ -1,5 +1,4 @@
 import Stripe from "stripe";
-import { prisma } from "@/lib/prisma";
 
 import {
   getCheckoutSession,
@@ -84,18 +83,18 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
     throw new Error("User not found for the subscription deleted event.");
 
   // ----- Update user and subscription in a single transaction -----
-  await prisma.$transaction([
-    prisma.user.update({
-      where: { user_id: user.user_id },
-      data: { plan: "free" },
-    }),
-    prisma.subscription.update({
-      where: { user_id: user.user_id },
-      data: {
-        plan: "free",
-        status: "inactive",
-        end_date: new Date(),
-      },
-    }),
-  ]);
+  // await prisma.$transaction([
+  //   prisma.user.update({
+  //     where: { user_id: user.user_id },
+  //     data: { plan: "free" },
+  //   }),
+  //   prisma.subscription.update({
+  //     where: { user_id: user.user_id },
+  //     data: {
+  //       plan: "free",
+  //       status: "inactive",
+  //       end_date: new Date(),
+  //     },
+  //   }),
+  // ]);
 };

@@ -1,8 +1,5 @@
 "use client";
 
-// React
-import React from "react";
-
 // Components
 import { DashboardContent } from "@/features/dashboard/components/DashboardContent";
 

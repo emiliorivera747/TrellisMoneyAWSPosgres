@@ -5,7 +5,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dashboard | Trellis Money",
   description:
-    "Dashboard for Trellis Money gives you insights into your investments, goals, budgets, Networth and other key financial metrics.",
+    "Dashboard for Trellis Money gives you insights into your investments, goals, budgets, net worth and other key financial metrics.",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

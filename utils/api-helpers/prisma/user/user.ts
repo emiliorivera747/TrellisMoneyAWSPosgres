@@ -35,14 +35,13 @@ export const getUserByEmail = async (email: string) => {
 export const updateCustomerId = async (userId: string, customerId: string) => {
   const user = await prisma.user.update({
     where: { user_id: userId },
-    data: { customer_id: customerId},
+    data: { customer_id: customerId },
   });
 
   if (!user) null;
 
   return user;
 };
-
 
 /**
  * Retrieves a user from the database based on the provided customer ID.
@@ -64,5 +63,25 @@ export const getUserByCustomerId = async (customerId: string) => {
 
   if (!user) return null;
 
+  return user;
+};
+
+/**
+ * Retrieves a user from the database by their unique user ID.
+ *
+ * @param user_id - The unique identifier of the user to retrieve.
+ * @returns The user object if found, otherwise `null`.
+ *
+ * @remarks
+ * This function uses Prisma's `findUnique` method to fetch the user
+ * based on the provided `user_id`. If no user is found, it returns `null`.
+ * Note: The current implementation always returns `null`, which may need
+ * to be updated to return the actual user object when found.
+ */
+export const getUserById = async (user_id: string) => {
+  const user = await prisma.user.findUnique({
+    where: { user_id },
+  });
+  if (!user) return null;
   return user;
 };
