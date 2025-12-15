@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import getSubscriptionMinimalData from "@/utils/api-helpers/prisma/stripe/getSubscriptionMinimalData";
 import { PROTECTED_PATHS } from "@/proxy";
 
+// Util
+import { hasActiveSubscription } from "@/utils/api-helpers/stripe/subscriptions";
+
 /**
  * Updates the session for a given request by interacting with the Supabase client.
  * This function ensures that user authentication and session management are handled
@@ -71,14 +74,7 @@ export async function updateSession(request: NextRequest) {
     // ---- Get subscription -----
     const subscription = await getSubscriptionMinimalData(user.id);
 
-    // ----- Convert miliseconds to seconds -----
-    const now = Math.floor(Date.now() / 1000);
-
-    const hasAccess =
-      subscription &&
-      (subscription.status === "active" || subscription.status === "trialing");
-
-    if (!hasAccess)
+    if (!hasActiveSubscription(subscription))
       return NextResponse.redirect(new URL("/subscriptions", request.url));
   }
 
