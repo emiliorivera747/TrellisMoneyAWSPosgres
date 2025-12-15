@@ -14,14 +14,14 @@ import { prisma } from "@/lib/prisma";
  */
 const getSubscriptionMinimalData = async (user_id: string) => {
   
-  const subscription = await prisma.subscription.findUnique({
+  const sub = await prisma.subscription.findUnique({
     where: { user_id },
     select: { status: true, cancel_at: true, cancel_at_period_end: true },
   });
 
-  if (!subscription) return null;
+  if (!sub) return null;
 
-  return subscription;
+  return sub;
 };
 
 export default getSubscriptionMinimalData;
