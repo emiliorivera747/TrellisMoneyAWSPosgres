@@ -1,15 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 import getSubscriptionMinimalData from "@/utils/api-helpers/prisma/stripe/getSubscriptionMinimalData";
+import { PROTECTED_PATHS } from "@/proxy";
 
-const PROTECTED_PATHS = [
-  "/dashboard",
-  "/settings",
-  "/profile",
-  "/accounts",
-  "/investments",
-  "/investment-goals",
-];
 /**
  * Updates the session for a given request by interacting with the Supabase client.
  * This function ensures that user authentication and session management are handled
