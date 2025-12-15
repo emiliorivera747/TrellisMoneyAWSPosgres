@@ -41,7 +41,8 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
       typeof subscription === "object" &&
       mode === "subscription"
     ) {
-      const subscriptionItem = getSubscriptionItemFromSubscription(subscription);
+      const subscriptionItem =
+        getSubscriptionItemFromSubscription(subscription);
 
       if (!subscriptionItem?.price) throw new Error("No recurring price found");
 

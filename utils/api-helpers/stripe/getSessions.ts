@@ -14,12 +14,7 @@ export const getCheckoutSession = async (
   }
 
   return await stripe.checkout.sessions.retrieve(session.id, {
-    expand: [
-      "line_items",
-      "subscription",
-      "subscription.items.data.price",
-      "subscription.items.data.price.product",
-    ],
+    expand: ["subscription", "subscription.items.data.price"],
   });
 };
 
@@ -36,10 +31,6 @@ export const getSubscriptionSession = async (
   }
 
   return await stripe.subscriptions.retrieve(subscription.id, {
-    expand: [
-      "items.data.price",
-      "items.data.price.product",
-      "customer",
-    ],
+    expand: ["items.data.price", "items.data.price.product", "customer"],
   });
 };

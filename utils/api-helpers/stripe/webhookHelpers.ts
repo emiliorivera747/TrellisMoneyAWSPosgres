@@ -2,6 +2,7 @@ import { stripe } from "@/lib/stripe";
 import Stripe from "stripe";
 
 import { Subscription } from "@/types/stripe";
+import { string } from "zod";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
 
@@ -62,7 +63,6 @@ export const generateSubscriptionData = ({
   price_id: string;
   user_id: string;
 }) => {
-  
   const subscriptionData: Subscription = {
     subscription_id: subscription.id,
     user_id,
@@ -96,4 +96,30 @@ export const getSubscriptionItemFromSubscription = (
     (item: Stripe.SubscriptionItem) => item.price.recurring !== null
   );
   return subscriptionItem;
+};
+
+interface IsSubscriptionParams {
+  subscription: Stripe.Subscription | string;
+  mode: string;
+}
+
+/**
+ * Determines if the provided parameters indicate a subscription.
+ *
+ * @param {IsSubscriptionParams} params - The parameters to evaluate.
+ * @param {unknown} params.subscription - The subscription object to check.
+ * @param {string} params.mode - The mode to verify, expected to be "subscription".
+ * @returns {boolean} `true` if the parameters indicate a subscription, otherwise `false`.
+ *
+ * @example
+ * const result = isSubscription({ subscription: {}, mode: "subscription" });
+ * console.log(result); // true
+ */
+export const isSubscription = (
+  subscription: string | Stripe.Subscription | null,
+  mode: string
+): boolean => {
+  return (
+    subscription && typeof subscription === "object" && mode === "subscription"
+  ) as boolean;
 };
