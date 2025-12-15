@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+
 const PROTECTED_PATHS = [
   "/dashboard",
   "/settings",
@@ -9,7 +10,35 @@ const PROTECTED_PATHS = [
   "/investments",
   "/investment-goals",
 ];
-
+/**
+ * Updates the session for a given request by interacting with the Supabase client.
+ * This function ensures that user authentication and session management are handled
+ * properly, including redirecting unauthenticated users from protected paths.
+ *
+ * @param request - The incoming `NextRequest` object containing details about the HTTP request.
+ * 
+ * @returns A `NextResponse` object that may include updated cookies or a redirect response.
+ * 
+ * ### Notes:
+ * - The `createServerClient` function is used to initialize the Supabase client with
+ *   the necessary environment variables and cookie handling.
+ * - Avoid placing any logic between the `createServerClient` initialization and the
+ *   `supabase.auth.getUser()` call to prevent debugging issues related to user sessions.
+ * - If the user is not authenticated and attempts to access a protected path, they are
+ *   redirected to the `/sign-in` page.
+ * - When returning the `supabaseResponse`, ensure that cookies are properly copied to
+ *   maintain synchronization between the browser and server. Failure to do so may result
+ *   in premature session termination.
+ * 
+ * ### Example:
+ * ```typescript
+ * import { updateSession } from './middleware';
+ * 
+ * export async function middleware(request: NextRequest) {
+ *   return await updateSession(request);
+ * }
+ * ```
+ */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -46,17 +75,9 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/sign-in") &&
-    !request.nextUrl.pathname.startsWith("/auth") &&
-    !request.nextUrl.pathname.startsWith("/sign-up") &&
-    !request.nextUrl.pathname.startsWith("/login-help") &&
-    !request.nextUrl.pathname.startsWith("/reset-password") &&
-    !request.nextUrl.pathname.startsWith("/privacy") &&
-    !request.nextUrl.pathname.startsWith("/terms") &&
-    request.nextUrl.pathname !== "/"
-  ) {
+  const pathname = request.nextUrl.pathname;
+
+  if (!user && isProtectedPath(pathname)) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/sign-in";
@@ -78,3 +99,7 @@ export async function updateSession(request: NextRequest) {
 
   return supabaseResponse;
 }
+
+const isProtectedPath = (pathname: string) => {
+  return PROTECTED_PATHS.some((path) => pathname.startsWith(path));
+};
