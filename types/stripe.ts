@@ -153,3 +153,9 @@ export interface Product {
 
   prices: Price[];
 }
+
+export type MinmalSubscription = {
+  status: SubscriptionStatus;
+  cancel_at: number | null;
+  cancel_at_period_end: boolean;
+};

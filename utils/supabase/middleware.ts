@@ -74,11 +74,11 @@ export async function updateSession(request: NextRequest) {
     // ----- Convert miliseconds to seconds -----
     const now = Math.floor(Date.now() / 1000);
 
-    const hasAcess =
+    const hasAccess =
       subscription &&
       (subscription.status === "active" || subscription.status === "trialing");
 
-    if (!hasAcess)
+    if (!hasAccess)
       return NextResponse.redirect(new URL("/subscriptions", request.url));
   }
 
