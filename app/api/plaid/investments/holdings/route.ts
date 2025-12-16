@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
-import { getItemsByUserId } from "@/utils/api-helpers/prisma/itemsService";
+import { getItemsByUserId } from "@/utils/api-helpers/prisma/item/itemsService";
 import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
 import { getInvestments } from "@/utils/api-helpers/plaid/investments/getInvestments";
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";

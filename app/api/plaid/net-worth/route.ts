@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { calculateNetWorth } from "@/utils/api-helpers/calculateNetWorth";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
-import { getItemsByUserId } from "@/utils/api-helpers/prisma/itemsService";
+import { getItemsByUserId } from "@/utils/api-helpers/prisma/item/itemsService";
 import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
 import { getAccountsFromPlaid } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
 import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
