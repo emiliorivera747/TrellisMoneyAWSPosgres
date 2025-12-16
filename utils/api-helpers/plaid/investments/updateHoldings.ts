@@ -1,15 +1,29 @@
-import { prisma } from "@/lib/prisma";
+
 import { Holding } from "@/types/plaid";
 import {
   createHoldingHistory,
   updateOrCreateHolding,
-  getAllHoldingsWithIds,
-} from "@/utils/api-helpers/plaid/holdings";
-
+} from "@/utils/prisma/holding/holdings";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
 
 
 
+/**
+ * Updates or creates holdings and their corresponding history records for a user.
+ *
+ * @param holdings - An array of `Holding` objects representing the user's investment holdings.
+ * @param timestamp - A string representing the timestamp when the holdings are updated.
+ *
+ * This function retrieves the current user, iterates through the provided holdings,
+ * and performs the following operations for each holding:
+ * - Updates or creates the holding record in the database.
+ * - Creates a history record for the holding with the provided timestamp.
+ *
+ * Note: The `getUser`, `updateOrCreateHolding`, and `createHoldingHistory` functions
+ * are assumed to handle the database operations and are called asynchronously.
+ *
+ * @throws Will throw an error if any of the asynchronous operations fail.
+ */
 export async function updateHoldings(
   holdings: Holding[],
   timestamp: string

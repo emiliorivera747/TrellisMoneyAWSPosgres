@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import SideNavItemLink from "@/components/navigation/SideNavItemLink";
 
 //Data
-import { navigationItems } from "@/utils/data/navigation-bar-data/navigationItems";
+import { navigationItems } from "@/utils/mock/data/navigation-bar-data/navigationItems";
 
 import UserProfileAvatarMenu from "@/features/user-account/components/UserProfileAvatarMenu";
 

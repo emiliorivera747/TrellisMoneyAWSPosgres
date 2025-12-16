@@ -181,7 +181,7 @@ const account = {
 
 export const getHoldingsAndSecuritiesMock = async (access_token: string) => {
 
-  const defualt_access_token  = 'access-production-7b9e2f4d-8c1a-4e5b-a2d3-f6e7890c3d2b';
+  const defualt_access_token  = '';
 
   if (defualt_access_token === access_token){
     return account
