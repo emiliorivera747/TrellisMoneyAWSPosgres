@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "build:scripts": "tsc -p tsconfig.scripts.json",
+    "sync:stripe": "tsx scripts/syncProductsAndPrices.ts",
     "build": "prisma generate --schema ./prisma/schema && next build",
     "start": "next start",
     "lint": "eslint .",
@@ -111,6 +113,7 @@
     "babel-jest": "^29.7.0",
     "cypress": "^13.16.0",
     "eslint": "^9.14.0",
+    "eslint-config-next": "16.0.10",
     "eslint-plugin-jest-dom": "^5.5.0",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-storybook": "^0.11.0",
@@ -125,9 +128,9 @@
     "tailwindcss": "^3.4.1",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5",
-    "typescript-eslint": "^8.14.0",
-    "eslint-config-next": "16.0.10"
+    "typescript-eslint": "^8.14.0"
   },
   "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
   "main": "index.js",
