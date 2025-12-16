@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getItemsByUserId } from "@/utils/api-helpers/prisma/item/itemsService";
+import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
 import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
 import { noAccountsError } from "@/utils/api-helpers/errors/accountErrors";

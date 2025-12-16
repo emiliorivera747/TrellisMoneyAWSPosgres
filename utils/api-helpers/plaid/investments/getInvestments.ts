@@ -1,5 +1,5 @@
 import { client } from "@/config/plaidClient";
-import { getAllAccessTokens } from "@/utils/api-helpers/plaid/getAccessTokensFromItems";
+import { getAllAccessTokens } from "@/utils/api-helpers/plaid/items/getAccessTokensFromItems";
 import { ItemPrisma } from "@/types/prisma";
 import { updateHoldingsAndSecurities } from "@/utils/api-helpers/plaid/investments/updateHoldingsAndSecurities";
 import { updateItem } from "@/utils/api-helpers/plaid/items/updateItems";

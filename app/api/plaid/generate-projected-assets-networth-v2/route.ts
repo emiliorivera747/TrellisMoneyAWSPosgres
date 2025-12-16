@@ -13,9 +13,9 @@ import {
 } from "@/utils/api-helpers/errors/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/getDates";
-import { getAccountsHoldingsSecurities } from "@/utils/api-helpers/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
+import { getAccountsHoldingsSecurities } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
 import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV3";
-import { getItemsByUserId } from "@/utils/api-helpers/prisma/item/itemsService";
+import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
 import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
 import { getInvestments } from "@/utils/api-helpers/plaid/investments/getInvestments";

@@ -1,5 +1,3 @@
-import { holdings } from "@/utils/data/mockHoldingData";
-import { Item } from '@/types/plaid';
 
 const account = {
   accounts: [

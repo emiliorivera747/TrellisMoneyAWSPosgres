@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
-import getSubscriptionMinimalData from "@/utils/api-helpers/prisma/stripe/getSubscriptionMinimalData";
+import getSubscriptionMinimalData from "@/utils/prisma/stripe/getSubscriptionMinimalData";
 import { PROTECTED_PATHS } from "@/proxy";
 
 // Util

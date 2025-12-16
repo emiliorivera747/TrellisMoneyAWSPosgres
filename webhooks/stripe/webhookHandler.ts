@@ -6,7 +6,7 @@ import { getSubscriptionByEvent } from "@/services/stripe/getSubscription";
 import {
   getUserByEmail,
   getUserByCustomerId,
-} from "@/utils/api-helpers/prisma/user/user";
+} from "@/utils/prisma/user/user";
 
 import {
   getSubscriptionItemFromSubscription,
@@ -15,9 +15,9 @@ import {
   getSubscriptionById,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 
-import { updateSubscription } from "@/utils/api-helpers/prisma/stripe/subscriptions";
+import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 
-import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateUserAndSubscription";
+import updateUserAndSubscription from "@/utils/prisma/stripe/updateUserAndSubscription";
 
 /**
  * Handles the checkout session completed event from Stripe.
