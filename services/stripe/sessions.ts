@@ -16,5 +16,3 @@ export const getCheckoutSession = async (
     expand: ["subscription", "subscription.items.data.price"],
   });
 };
-
-

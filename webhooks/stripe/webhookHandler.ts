@@ -1,9 +1,7 @@
 import Stripe from "stripe";
 
-import {
-  getCheckoutSession,
-  getSubscriptionSession,
-} from "@/utils/api-helpers/stripe/getSessions";
+import { getCheckoutSession } from "@/services/stripe/sessions";
+import { getSubscriptionByEvent } from "@/services/stripe/getSubscription";
 
 import {
   getUserByEmail,
@@ -80,7 +78,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
  */
 export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
   try {
-    const subscription = await getSubscriptionSession(event);
+    const subscription = await getSubscriptionByEvent(event);
 
     // ---- get the Customer id -----
     let customerId: string | null = getUserByCustomerIdFromSub(subscription);
@@ -113,14 +111,14 @@ export const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
     const invoice = event.data.object as Stripe.Invoice;
 
-    // 
+    //
     const subscriptionLine = invoice.lines.data.find(
       (line) => line.parent?.subscription_item_details
     );
 
     const subscriptionId =
       subscriptionLine?.parent?.subscription_item_details?.subscription;
-    if (!subscriptionId) throw new Error('No subscription ID found on invoice');
+    if (!subscriptionId) throw new Error("No subscription ID found on invoice");
 
     const subscription = await getSubscriptionById(subscriptionId);
     if (!subscription) throw new Error("Subscription object was not found");
