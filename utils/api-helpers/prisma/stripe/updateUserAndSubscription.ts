@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-
 import { Subscription } from "@/types/stripe";
 
 interface updateUserAndSubscriptionProps {
@@ -44,6 +43,7 @@ const updateUserAndSubscription = async ({
   customer_id,
   subscriptionData,
 }: updateUserAndSubscriptionProps) => {
+  
   const res = await prisma.$transaction([
     prisma.user.update({
       where: { user_id },

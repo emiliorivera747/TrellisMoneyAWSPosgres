@@ -60,14 +60,14 @@ export const generateSubscriptionData = ({
 }: {
   subscription: Stripe.Subscription;
   customer_id: string;
-  price_id: string;
+  price_id?: string;
   user_id: string;
 }) => {
   const subscriptionData: Subscription = {
     subscription_id: subscription.id,
-    user_id,
-    customer_id,
-    price_id,
+    user_id: user_id,
+    customer_id: customer_id,
+    price_id: price_id ?? "",
     status: subscription.status as Subscription["status"],
     start_date: subscription.start_date ?? 0,
     trial_start: subscription.trial_start ?? 0,
@@ -119,11 +119,10 @@ export const isSubscription = (
   subscription: string | Stripe.Subscription | null,
   mode: string
 ): boolean => {
-  return (
-    subscription && typeof subscription === "object" && mode === "subscription"
-  ) as boolean;
+  return (subscription &&
+    typeof subscription === "object" &&
+    mode === "subscription") as boolean;
 };
-
 
 /**
  * Extracts the customer ID from a Stripe subscription object.
@@ -136,7 +135,9 @@ export const isSubscription = (
  * @param subscription - The Stripe subscription object from which to extract the customer ID.
  * @returns The customer ID as a string if available, otherwise `null`.
  */
-export const getUserByCustomerIdFromSub = (subscription: Stripe.Subscription) =>{
+export const getUserByCustomerIdFromSub = (
+  subscription: Stripe.Subscription
+) => {
   let customerId: string | null;
 
   if (typeof subscription.customer === "string") {
@@ -148,4 +149,4 @@ export const getUserByCustomerIdFromSub = (subscription: Stripe.Subscription) =>
   }
 
   return customerId;
-}
+};

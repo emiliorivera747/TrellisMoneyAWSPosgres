@@ -64,13 +64,57 @@ export const updateUserAndSubscription = async ({
   return res;
 };
 
-export const deactivateSubscription = async (user_id: string, ) => {
-  await prisma.subscription.update({
+/**
+ * Deactivates a user's subscription by updating the subscription details in the database.
+ *
+ * @param user_id - The unique identifier of the user whose subscription is being deactivated.
+ * @param subscription - The subscription object containing the updated subscription details.
+ * 
+ * The `subscription` object should include the following properties:
+ * - `status`: The current status of the subscription.
+ * - `start_date`: The start date of the subscription.
+ * - `trial_start`: The start date of the trial period, if applicable.
+ * - `trial_end`: The end date of the trial period, if applicable.
+ * - `ended_at`: The timestamp when the subscription ended, if applicable.
+ * - `cancel_at`: The timestamp when the subscription is scheduled to be canceled, if applicable.
+ * - `cancel_at_period_end`: A boolean indicating whether the subscription will be canceled at the end of the current billing period.
+ * - `canceled_at`: The timestamp when the subscription was canceled, if applicable.
+ * - `updated_at`: The timestamp when the subscription was last updated.
+ * 
+ * @returns A promise that resolves when the subscription is successfully updated in the database.
+ */
+export const deactivateSubscription = async (
+  user_id: string,
+  subscription: Subscription
+) => {
+  const {
+    status,
+    start_date,
+    trial_start,
+    trial_end,
+    ended_at,
+    cancel_at,
+    cancel_at_period_end,
+    canceled_at,
+    updated_at,
+  } = subscription;
+
+  const res = await prisma.subscription.update({
     where: {
       user_id,
     },
     data: {
-        p
+      status,
+      start_date,
+      trial_start,
+      trial_end,
+      ended_at,
+      cancel_at,
+      cancel_at_period_end,
+      canceled_at,
+      updated_at,
     },
   });
+
+  return res;
 };
