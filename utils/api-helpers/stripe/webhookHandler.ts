@@ -16,7 +16,7 @@ import {
   getUserByCustomerIdFromSub,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 
-import { deactivateSubscription } from "@/utils/api-helpers/stripe/subscriptions";
+import { deactivateSubscription } from "@/utils/api-helpers/prisma/stripe/subscriptions";
 
 import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateUserAndSubscription";
 
@@ -95,7 +95,7 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
       user_id: user.user_id,
     });
 
-    deactivateSubscription(subscriptionData);
+    await deactivateSubscription(user.user_id, subscriptionData);
   } catch (error) {
     console.error("Error in handleCheckoutSessionCompleted:", error);
   }
