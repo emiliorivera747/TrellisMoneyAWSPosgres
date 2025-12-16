@@ -17,10 +17,7 @@ import {
   getSubscriptionById,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 
-import {
-  deactivateSubscription,
-  updateSubscription,
-} from "@/utils/api-helpers/prisma/stripe/subscriptions";
+import { updateSubscription } from "@/utils/api-helpers/prisma/stripe/subscriptions";
 
 import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateUserAndSubscription";
 
@@ -99,7 +96,7 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
       user_id: user.user_id,
     });
 
-    await deactivateSubscription(user.user_id, subscriptionData);
+    await updateSubscription(user.user_id, subscriptionData);
   } catch (error) {
     console.error("Error in handleSubscriptionDeleted:", error);
   }
@@ -116,13 +113,14 @@ export const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
     const invoice = event.data.object as Stripe.Invoice;
 
+    // 
     const subscriptionLine = invoice.lines.data.find(
       (line) => line.parent?.subscription_item_details
     );
 
     const subscriptionId =
       subscriptionLine?.parent?.subscription_item_details?.subscription;
-    if (!subscriptionId) throw new Error("Subscription ID not found");
+    if (!subscriptionId) throw new Error('No subscription ID found on invoice');
 
     const subscription = await getSubscriptionById(subscriptionId);
     if (!subscription) throw new Error("Subscription object was not found");
@@ -142,6 +140,6 @@ export const handleInvoicePaidEvent = async (event: Stripe.Event) => {
 
     await updateSubscription(user.user_id, subscriptionData);
   } catch (error) {
-    console.error("Error in handleSubscriptionDeleted:", error);
+    console.error("Error in handleInvoicePaidEvent:", error);
   }
 };

@@ -1,7 +1,7 @@
 import {
   handleCheckoutSessionCompleted,
   handleSubscriptionDeleted,
-  handleInvoivePaidEvent,
+  handleInvoicePaidEvent,
 } from "@/utils/api-helpers/stripe/webhookHandler";
 import { verifyWebhookSignature } from "@/utils/api-helpers/stripe/verifyWebhookSignature";
 import { NextRequest } from "next/server";
@@ -34,9 +34,10 @@ export async function POST(req: NextRequest) {
     const event = verifyWebhookSignature(body, signature);
 
     console.log(`Received event: ${event.type}`);
+
     switch (event.type) {
       case "invoice.paid":
-        await handleInvoivePaidEvent(event);
+        await handleInvoicePaidEvent(event);
         break;
       case "invoice.payment_failed":
         break;
@@ -68,7 +69,6 @@ export async function POST(req: NextRequest) {
         break;
       case "price.updated":
         break;
-
       default:
         console.log(`Unhandled event type: ${event.type}`);
     }
