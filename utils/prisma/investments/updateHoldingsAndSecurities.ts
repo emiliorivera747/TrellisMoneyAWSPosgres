@@ -3,11 +3,11 @@ import { getUser } from "@/utils/api-helpers/supabase/getUser";
 import {
   getExistingSecurities,
   upsertSecurities,
-} from "@/utils/api-helpers/plaid/investments/securityService";
+} from "@/utils/prisma/investments/securityService";
 import {
   upsertHoldings,
   getExistingHoldings,
-} from "@/utils/api-helpers/plaid/investments/holdingService";
+} from "@/utils/prisma/investments/holdingService";
 
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";

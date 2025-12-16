@@ -1,8 +1,8 @@
 import { client } from "@/config/plaidClient";
-import { getAllAccessTokens } from "@/utils/api-helpers/plaid/items/getAccessTokensFromItems";
+import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
 import { ItemPrisma } from "@/types/prisma";
-import { updateHoldingsAndSecurities } from "@/utils/api-helpers/plaid/investments/updateHoldingsAndSecurities";
-import { updateItem } from "@/utils/api-helpers/plaid/items/updateItems";
+import { updateHoldingsAndSecurities } from "@/utils/prisma/investments/updateHoldingsAndSecurities";
+import { updateItem } from "@/utils/prisma/item/updateItems";
 import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
 
 /**

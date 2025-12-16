@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/config/plaidClient";
-import { getItem } from "@/utils/api-helpers/plaid/items/getItem";
+import { getItem } from "@/utils/prisma/item/getItem";
 
 export async function DELETE(
   req: NextRequest,

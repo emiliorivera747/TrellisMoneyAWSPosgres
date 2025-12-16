@@ -18,7 +18,7 @@ import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-w
 import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
 import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
-import { getInvestments } from "@/utils/api-helpers/plaid/investments/getInvestments";
+import { getInvestments } from "@/utils/prisma/investments/getInvestments";
 
 // Types
 import { ItemPrisma } from "@/types/prisma";
