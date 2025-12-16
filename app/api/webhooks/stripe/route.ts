@@ -1,6 +1,7 @@
 import {
   handleCheckoutSessionCompleted,
   handleSubscriptionDeleted,
+  handleInvoivePaidEvent,
 } from "@/utils/api-helpers/stripe/webhookHandler";
 import { verifyWebhookSignature } from "@/utils/api-helpers/stripe/verifyWebhookSignature";
 import { NextRequest } from "next/server";
@@ -23,10 +24,7 @@ import { NextRequest } from "next/server";
  * @throws Will return a `400 Bad Request` response if an error occurs during processing.
  */
 export async function POST(req: NextRequest) {
-  
-  
   try {
-
     const body = await req.text();
     const signature = req.headers.get("Stripe-Signature");
 
@@ -38,6 +36,7 @@ export async function POST(req: NextRequest) {
     console.log(`Received event: ${event.type}`);
     switch (event.type) {
       case "invoice.paid":
+        await handleInvoivePaidEvent(event);
         break;
       case "invoice.payment_failed":
         break;

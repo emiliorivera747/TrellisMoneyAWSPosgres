@@ -32,3 +32,4 @@ export const getSubscriptionSession = async (
     expand: ["items.data.price", "items.data.price.product", "customer"],
   });
 };
+
