@@ -5,7 +5,7 @@ import {
   getClosePrice,
   getAnnualReturnRate,
   getInstitutionalValue,
-} from "@/utils/api-helpers/holdingAccessors";
+} from "@/utils/api-helpers/holdings/holdingAccessors";
 
 import {FutureValueParams} from "@/features/projected-financial-assets/types/projectedAssetsCard";
 

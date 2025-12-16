@@ -7,7 +7,7 @@ import {
   RecordSchema,
 } from "@/features/auth/schemas/formSchemas";
 
-import { handleZodError } from "@/utils/api-helpers/handleZodErrors";
+import { handleZodError } from "@/utils/api-helpers/errors/handleZodErrors";
 const getNameFromBody = (body: RecordSchema) =>
   body?.record?.raw_user_meta_data?.name || body?.record?.email || "none";
 

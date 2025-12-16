@@ -12,7 +12,7 @@ import {
   isPrismaErrorWithCode,
 } from "@/utils/api-helpers/errors/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
-import { getDates } from "@/utils/api-helpers/getDates";
+import { getDates } from "@/utils/api-helpers/dates/getDates";
 import { getAccountsHoldingsSecurities } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
 import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV3";
 import { getItemsByUserId } from "@/utils/prisma/item/itemsService";

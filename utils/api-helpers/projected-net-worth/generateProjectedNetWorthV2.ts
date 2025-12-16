@@ -3,7 +3,7 @@ import {
   future_value_with_inflation_fn,
   future_value_fn,
   getFormulaValues,
-} from "@/utils/api-helpers/futureValueFormulas";
+} from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
 
 /**
  * Generates the projected net worth over a range of years based on the provided holdings.

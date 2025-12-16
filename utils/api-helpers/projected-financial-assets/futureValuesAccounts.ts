@@ -1,12 +1,12 @@
 import { Account } from "@/types/plaid";
 
-import { getHoldingName } from "@/utils/api-helpers/holdingAccessors";
+import { getHoldingName } from "@/utils/api-helpers/holdings/holdingAccessors";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import {
     future_value_with_inflation_fn,
     future_value_fn,
     getFormulaValues,
-  } from "@/utils/api-helpers/futureValueFormulas";
+  } from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
 
 import Decimal from "decimal.js";
 

@@ -4,7 +4,7 @@ import {
   ProjectionConfig,
   ProjectionParams,
 } from "@/features/projected-financial-assets/types/projectedAssets";
-import { getHoldingNameV2 } from "@/utils/api-helpers/holdingAccessors";
+import { getHoldingNameV2 } from "@/utils/api-helpers/holdings/holdingAccessors";
 import {
   AccountType,
   HoldingAggregate,
@@ -13,7 +13,7 @@ import {
 import {
   calculateFutureValue,
   getFormulaValues,
-} from "@/utils/api-helpers/futureValueFormulas";
+} from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
 
 import Decimal from "decimal.js";
 import { createFinancialAsset } from "@/utils/api-helpers/projected-financial-assets/createFinancialAsset";

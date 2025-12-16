@@ -3,7 +3,7 @@ import { Security } from "plaid";
 import { SecurityHistory } from "@/types/prisma";
 import { Security as SecurityPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
-import isoToUTC from "@/utils/api-helpers/isoToUTC";
+import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Decimal } from "decimal.js";
 import { PrismaPromise } from "@prisma/client";
 

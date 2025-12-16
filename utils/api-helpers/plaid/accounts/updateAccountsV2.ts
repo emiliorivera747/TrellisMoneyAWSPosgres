@@ -7,7 +7,7 @@ import { AccountSubtype, AccountType } from "plaid";
 import { AccountBaseWithItemId } from "@/types/plaid";
 
 // Helpers
-import { hasAccountBalance } from "@/utils/api-helpers/hasAccountBalance";
+import { hasAccountBalance } from "@/utils/api-helpers/plaid/accounts/hasAccountBalance";
 import { updateBalance } from "@/utils/api-helpers/plaid/accounts/updateBalance";
 import { NextResponse } from "next/server";
 import { getUser} from "@/utils/api-helpers/supabase/getUser";

@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { Holding } from "plaid";
 import { Holding as HoldingPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
-import isoToUTC from "@/utils/api-helpers/isoToUTC";
+import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Decimal } from "decimal.js";
 import { HoldingHistory } from "@/types/prisma";
 import { getUser } from "@/utils/api-helpers/supabase/getUser";
