@@ -2,7 +2,7 @@ import {
   handleCheckoutSessionCompleted,
   handleSubscriptionDeleted,
   handleInvoicePaidEvent,
-} from "@/utils/api-helpers/stripe/webhookHandler";
+} from "@/webhooks/stripe/webhookHandler";
 import { verifyWebhookSignature } from "@/utils/api-helpers/stripe/verifyWebhookSignature";
 import { NextRequest } from "next/server";
 

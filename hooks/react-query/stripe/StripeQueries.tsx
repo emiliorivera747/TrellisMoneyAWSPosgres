@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { planServices } from "@/services/stripe/plans/planService";
+import { planServices } from "@/services/plans/planService";
 
 export const usePlans = () => {
   const {
