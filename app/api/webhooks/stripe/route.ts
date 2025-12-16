@@ -23,7 +23,10 @@ import { NextRequest } from "next/server";
  * @throws Will return a `400 Bad Request` response if an error occurs during processing.
  */
 export async function POST(req: NextRequest) {
+  
+  
   try {
+
     const body = await req.text();
     const signature = req.headers.get("Stripe-Signature");
 
