@@ -13,6 +13,7 @@ import {
 import {
   getSubscriptionItemFromSubscription,
   generateSubscriptionData,
+  getUserByCustomerIdFromSub,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 
 import updateUserAndSubscription from "@/utils/api-helpers/prisma/stripe/updateUserAndSubscription";
@@ -36,6 +37,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
     const user = await getUserByEmail(customer_email);
     if (!user) throw new Error("User not found");
 
+    // ----- If we have a subscription -----
     if (
       subscription &&
       typeof subscription === "object" &&
@@ -74,32 +76,33 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
  * @param event
  */
 export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
-  const subscription = await getSubscriptionSession(event);
+  try {
+    const subscription = await getSubscriptionSession(event);
 
-  // ---- get the Customer id -----
-  const customerId =
-    typeof subscription.customer === "string"
-      ? subscription.customer
-      : subscription.customer?.id;
-  if (!customerId) throw new Error("Customer ID not found in subscription.");
+    // ---- get the Customer id -----
+    let customerId: string | null = getUserByCustomerIdFromSub(subscription);
+    if (!customerId) throw new Error("Could not retrieve the customer id");
+    const user = await getUserByCustomerId(customerId);
 
-  const user = await getUserByCustomerId(customerId);
-  if (!user)
-    throw new Error("User not found for the subscription deleted event.");
+    if (!user)
+      throw new Error("User not found for the subscription deleted event.");
 
-  // ----- Update user and subscription in a single transaction -----
-  // await prisma.$transaction([
-  //   prisma.user.update({
-  //     where: { user_id: user.user_id },
-  //     data: { plan: "free" },
-  //   }),
-  //   prisma.subscription.update({
-  //     where: { user_id: user.user_id },
-  //     data: {
-  //       plan: "free",
-  //       status: "inactive",
-  //       end_date: new Date(),
-  //     },
-  //   }),
-  // ]);
+    // ----- Update user and subscription in a single transaction -----
+    // await prisma.$transaction([
+    //   prisma.user.update({
+    //     where: { user_id: user.user_id },
+    //     data: { plan: "free" },
+    //   }),
+    //   prisma.subscription.update({
+    //     where: { user_id: user.user_id },
+    //     data: {
+    //       plan: "free",
+    //       status: "inactive",
+    //       end_date: new Date(),
+    //     },
+    //   }),
+    // ]);
+  } catch (error) {
+    console.error("Error in handleCheckoutSessionCompleted:", error);
+  }
 };

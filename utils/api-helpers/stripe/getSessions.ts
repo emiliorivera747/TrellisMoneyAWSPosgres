@@ -9,9 +9,8 @@ export const getCheckoutSession = async (
 ): Promise<Stripe.Checkout.Session> => {
   const session = event.data.object as Stripe.Checkout.Session;
 
-  if (!session.id) {
+  if (!session.id)
     throw new Error("Invalid checkout session event: missing ID");
-  }
 
   return await stripe.checkout.sessions.retrieve(session.id, {
     expand: ["subscription", "subscription.items.data.price"],
@@ -26,9 +25,8 @@ export const getSubscriptionSession = async (
 ): Promise<Stripe.Subscription> => {
   const subscription = event.data.object as Stripe.Subscription;
 
-  if (!subscription.id) {
+  if (!subscription.id)
     throw new Error("Invalid subscription event: missing ID");
-  }
 
   return await stripe.subscriptions.retrieve(subscription.id, {
     expand: ["items.data.price", "items.data.price.product", "customer"],
