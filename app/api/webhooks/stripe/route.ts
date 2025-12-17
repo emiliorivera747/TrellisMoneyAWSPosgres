@@ -1,6 +1,6 @@
-import { handleInvoicePaidEvent } from "@/webhooks/stripe/handleInvoicePaidEvent";
-import { handleSubscriptionDeleted } from "@/webhooks/stripe/handleSubscriptionDeleted";
-import { handleCheckoutSessionCompleted } from "@/webhooks/stripe/handleCheckoutSessionCompleted";
+import { handleInvoicePaidEvent } from "@/webhooks/stripe/handlers/handleInvoicePaidEvent";
+import { handleSubscriptionDeleted } from "@/webhooks/stripe/handlers/handleSubscriptionDeleted";
+import { handleCheckoutSessionCompleted } from "@/webhooks/stripe/handlers/handleCheckoutSessionCompleted";
 import { verifyWebhookSignature } from "@/utils/api-helpers/stripe/verifyWebhookSignature";
 import { NextRequest } from "next/server";
 

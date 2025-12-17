@@ -21,7 +21,7 @@ export const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
     const invoice = event.data.object as Stripe.Invoice;
 
-    //
+
     const subscriptionLine = invoice.lines.data.find(
       (line) => line.parent?.subscription_item_details
     );
