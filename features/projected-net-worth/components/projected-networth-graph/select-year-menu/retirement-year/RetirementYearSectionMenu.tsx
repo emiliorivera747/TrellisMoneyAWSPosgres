@@ -1,5 +1,5 @@
 //React
-import React, { useState } from "react";
+import { useState } from "react";
 
 // Icons
 import { getPencilSvg } from "@/utils/helper-functions/svg/getPencilSvg";
