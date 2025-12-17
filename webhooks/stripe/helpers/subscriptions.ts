@@ -3,6 +3,14 @@ import { stripe } from "@/lib/stripe";
 import { Subscription } from "@/types/stripe";
 import Stripe from "stripe";
 
+// Utils
+import { logError } from "@/utils/api-helpers/errors/logError";
+
+import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
+import { getUserByCustomerId } from "@/utils/prisma/user/user";
+
+import { getSubscriptionFromInvoice } from "@/webhooks/stripe/helpers/invoice";
+
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
 
 /**
@@ -163,4 +171,60 @@ export const getSubscriptionById = async (subscriptionId: string) => {
   });
 
   return subscription;
+};
+
+/**
+ * Generates subscription data from a Stripe invoice.
+ *
+ * This function retrieves the subscription associated with the given invoice,
+ * extracts the customer ID, fetches the corresponding user, and generates
+ * subscription data based on the retrieved information. If any step fails,
+ * it logs an error and returns `null`.
+ *
+ * @param invoice - The Stripe invoice object used to generate subscription data.
+ * @returns A promise that resolves to the generated subscription data object, or `null` if an error occurs.
+ *
+ * @throws Will log an error message if:
+ * - The subscription object is not found.
+ * - The customer ID is not found in the subscription.
+ * - The user does not exist for the given customer ID.
+ * - An unexpected error occurs during the process.
+ */
+export const generateSubscriptionDataFromInvoice = async (
+  invoice: Stripe.Invoice
+) => {
+  try {
+    const subscription = await getSubscriptionFromInvoice(invoice);
+    if (!subscription) {
+      logError("Subscription object was not found");
+      return null;
+    }
+
+    const customer_id = getCustomerIdFromSub(subscription);
+    if (!customer_id) {
+      logError("Customer ID was not found in subscription");
+      return null;
+    }
+
+    const user = await getUserByCustomerId(customer_id);
+    if (!user) {
+      logError("User does not exist with customer ID");
+      return null;
+    }
+
+    const subscriptionData = generateSubscriptionData({
+      subscription,
+      customer_id,
+      user_id: user.user_id,
+    });
+
+    return { subscriptionData, user_id: user.user_id, user };
+  } catch (error) {
+    logError(
+      `Error generating subscription data from invoice: ${
+        (error as Error).message
+      }`
+    );
+    return null;
+  }
 };

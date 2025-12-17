@@ -9,10 +9,9 @@ import {
   getSubscriptionFromInvoice,
 } from "@/webhooks/stripe/helpers/invoice";
 
-import { generateSubscriptionData } from "@/webhooks/stripe/helpers/subscriptions";
-import { getCustomerIdFromSub } from "../helpers/customers";
+import { generateSubscriptionDataFromInvoice } from "@/webhooks/stripe/helpers/subscriptions";
+import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
 import { getUserByCustomerId } from "@/utils/prisma/user/user";
-
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 
 /**
@@ -22,26 +21,13 @@ const handlePaymentFailed = async (event: Stripe.Event) => {
   try {
     const invoice = getInvoiceFromEvent(event);
 
-    const subscription = await getSubscriptionFromInvoice(invoice);
-    if (!subscription) return logError("Subscription object was not found");
+    const result = await generateSubscriptionDataFromInvoice(invoice);
+    if (!result)
+      return logError("Failed to generate subscription data from invoice");
+    const { user_id, subscriptionData } = result;
 
-    const customer_id = getCustomerIdFromSub(subscription);
-    if (!customer_id) return logError("");
+    await updateSubscription(user_id, subscriptionData);
 
-    const user = await getUserByCustomerId(customer_id);
-    if (!user) return logError("User does not exist with customer id");
-
-    const subscriptionData = generateSubscriptionData({
-      subscription,
-      customer_id,
-      user_id: user.user_id,
-    });
-
-    await updateSubscription(user.user_id, subscriptionData);
-
-    console.log(
-      `Subscription ${subscription.id} updated for user ${user.user_id} – status: ${subscription.status}`
-    );
   } catch (error) {
     console.error("Error in handleInvoicePaidEvent:", error);
   }

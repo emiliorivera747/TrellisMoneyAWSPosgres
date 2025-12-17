@@ -1,46 +1,25 @@
 import Stripe from "stripe";
-import { getUserByCustomerId } from "@/utils/prisma/user/user";
-import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
-import { generateSubscriptionData } from "@/webhooks/stripe/helpers/subscriptions";
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
-import {
-  getSubscriptionFromInvoice,
-  getInvoiceFromEvent,
-} from "@/webhooks/stripe/helpers/invoice";
+
+// Helpers
+import { getInvoiceFromEvent } from "@/webhooks/stripe/helpers/invoice";
 import { logError } from "@/utils/api-helpers/errors/logError";
+import { generateSubscriptionDataFromInvoice } from "@/webhooks/stripe/helpers/subscriptions";
 
 /**
  * This event handler endpoint processes invoice.paid event.
  */
 const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
+    
     const invoice = getInvoiceFromEvent(event);
 
-    // ----- Get the subscription -----
-    const subscription = await getSubscriptionFromInvoice(invoice);
-    if (!subscription) return logError("Subscription object was not found");
+    const res = await generateSubscriptionDataFromInvoice(invoice);
+    if (!res) return logError("Failed to generate Subscriptin data");
 
-    // ----- Get the customer id -----
-    const customerId = getCustomerIdFromSub(subscription);
-    if (!customerId) return logError("Could not retrieve the customer id");
 
-    // ----- Get the user -----
-    const user = await getUserByCustomerId(customerId);
-    if (!user) return logError("User does not exist with customer id");
-
-    // ---- Get subscription data to update the subscription -----
-    const subscriptionData = generateSubscriptionData({
-      subscription,
-      customer_id: customerId as string,
-      user_id: user.user_id,
-    });
-
-    await updateSubscription(user.user_id, subscriptionData);
-
-    // ----- Log the subscription update -----
-    console.log(
-      `Subscription ${subscription.id} updated for user ${user.user_id} – status: ${subscription.status}`
-    );
+    const { user_id, subscriptionData } = res;
+    await updateSubscription(user_id, subscriptionData);
   } catch (error) {
     console.error("Error in handleInvoicePaidEvent:", error);
   }
