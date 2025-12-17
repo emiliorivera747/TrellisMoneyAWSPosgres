@@ -1,11 +1,12 @@
 import Stripe from "stripe";
 import { getUserByCustomerId } from "@/utils/prisma/user/user";
-import {
-  generateSubscriptionData,
-  getCustomerIdFromSub,
-} from "@/utils/api-helpers/stripe/webhookHelpers";
+import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
+import { generateSubscriptionData } from "@/webhooks/stripe/helpers/subscriptions";
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
-import { getSubscriptionFromInvoice, getInvoiceFromEvent } from "@/webhooks/stripe/helpers/invoice";
+import {
+  getSubscriptionFromInvoice,
+  getInvoiceFromEvent,
+} from "@/webhooks/stripe/helpers/invoice";
 import { logError } from "@/utils/api-helpers/errors/logError";
 
 /**
@@ -39,6 +40,5 @@ const handleInvoicePaidEvent = async (event: Stripe.Event) => {
     console.error("Error in handleInvoicePaidEvent:", error);
   }
 };
-
 
 export default handleInvoicePaidEvent;
