@@ -7,11 +7,17 @@ import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 import { logError } from "@/utils/api-helpers/errors/logError";
 import { generateSubscriptionDataFromSubscription } from "@/webhooks/stripe/helpers/subscriptions";
 
+
 /**
- * Handles subscription deletion event from Stripe
- * Optimized to batch user and subscription updates in a single transaction
+ * Handles the deletion of a Stripe subscription.
  *
- * @param event
+ * This function is triggered by a Stripe event and processes the deletion
+ * of a subscription by retrieving the subscription details, generating
+ * the necessary subscription data, and updating the subscription in the system.
+ *
+ * @param event - The Stripe event containing information about the subscription deletion.
+ * @throws Will log an error if there is an issue retrieving the subscription,
+ *         generating subscription data, or updating the subscription.
  */
 const handleSubscriptionDeleted = async (event: Stripe.Event) => {
   try {

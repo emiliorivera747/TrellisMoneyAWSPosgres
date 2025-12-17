@@ -10,9 +10,9 @@ import { logError } from "@/utils/api-helpers/errors/logError";
 
 /**
  * Handles the checkout session completed event from Stripe.
- * Optimized to batch database operations where possible
+ * Optimized to batch database operations where possible.
  *
- * @param event
+ * @param event - The Stripe event object containing session details.
  */
 const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   try {
@@ -20,12 +20,18 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
     const { subscription, customer, customer_email, mode } =
       await getStripeCheckoutSession(event);
 
-    // ----- Does customer have email? ----
-    if (!customer_email) return logError("Customer email not found in session");
+    // ----- Does customer have email? -----
+    if (!customer_email) {
+      logError("Customer email not found in session");
+      return;
+    }
 
     // ----- Find the user -----
     const user = await getUserByEmail(customer_email);
-    if (!user) return logError("User not found");
+    if (!user) {
+      logError("User not found");
+      return;
+    }
 
     // ----- If we have a subscription -----
     if (
@@ -36,7 +42,10 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
       const subscriptionItem =
         getSubscriptionItemFromSubscription(subscription);
 
-      if (!subscriptionItem?.price) return logError("No recurring price found");
+      if (!subscriptionItem?.price) {
+        logError("No recurring price found");
+        return;
+      }
 
       const price_id: string = subscriptionItem.price.id;
 
@@ -48,7 +57,7 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
         user_id: user.user_id,
       });
 
-      // ----- Batch user and subscription updates in a single transaction ------
+      // ----- Batch user and subscription updates in a single transaction -----
       await updateUserAndSubscription({
         user_id: user.user_id,
         customer_id: customer as string,

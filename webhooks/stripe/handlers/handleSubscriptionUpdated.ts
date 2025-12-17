@@ -13,27 +13,36 @@ import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 import { getStripeSubscriptionByEvent } from "@/services/stripe/subscriptions";
 
 /**
- * Handles customer.subscription.updated event.
+ * Handles the `subscription.updated` Stripe webhook event.
  *
- * This event triggers on ANY change to a subscription.
- * We sync the latest subscription state to our database to keep it in sync.
- * We do NOT send emails or revoke/grant access here — those are handled in
- * more specific events (e.g., invoice.paid, invoice.payment_failed, subscription.deleted).
+ * This function processes the updated subscription event from Stripe, retrieves the associated
+ * user and subscription details, and updates the local subscription record with the latest state.
+ * It ensures that the webhook is acknowledged with a 200 status code even in case of errors.
+ *
+ * @param event - The Stripe event object representing the `subscription.updated` webhook event.
+ *
+ * @throws This function does not throw errors to ensure the webhook is acknowledged properly.
+ *
+ * @remarks
+ * - The function uses helper utilities to extract the subscription, customer ID, and user details.
+ * - It logs errors consistently using the `logError` utility.
+ * - The function does not re-throw errors to prevent webhook acknowledgment failures.
  */
 const handleSubscriptionUpdated = async (event: Stripe.Event) => {
   try {
-    
     // Direct helper to get subscription from event (common pattern)
     const subscription = await getStripeSubscriptionByEvent(event);
-    if (!subscription) return logError("Subscription object not found in subscription.updated event");
+    if (!subscription)
+      return logError(
+        "Subscription object not found in subscription.updated event"
+      );
 
     const customer_id = getCustomerIdFromSub(subscription);
     if (!customer_id) return logError("Customer ID not found on subscription");
-    
 
     const user = await getUserByCustomerId(customer_id);
-    if (!user) return logError(`User not found for Stripe customer ${customer_id}`);
-    
+    if (!user)
+      return logError(`User not found for Stripe customer ${customer_id}`);
 
     // Generate the standardized data shape your updateSubscription expects
     const subscriptionData = generateSubscriptionData({
@@ -51,7 +60,6 @@ const handleSubscriptionUpdated = async (event: Stripe.Event) => {
   } catch (error) {
     // Use your shared logError utility for consistency
     logError("Error in handleSubscriptionUpdated");
-    // Do NOT re-throw — we must acknowledge the webhook with 200
   }
 };
 

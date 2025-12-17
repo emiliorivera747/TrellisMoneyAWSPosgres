@@ -9,6 +9,16 @@ import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 /**
  * This event handler endpoint processes invoice.paid event.
  */
+/**
+ * Handles the "payment_action_required" event from Stripe.
+ * This function processes the event, extracts the invoice, generates subscription data,
+ * and updates the user's subscription accordingly.
+ *
+ * @param event - The Stripe event object containing details about the "payment_action_required" event.
+ * 
+ * @throws Will log an error if there is an issue processing the event, generating subscription data,
+ *         or updating the subscription.
+ */
 const handlePaymentActionRequired = async (event: Stripe.Event) => {
   try {
     const invoice = getInvoiceFromEvent(event);
