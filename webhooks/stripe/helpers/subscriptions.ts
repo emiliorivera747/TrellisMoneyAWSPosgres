@@ -8,7 +8,6 @@ import { logError } from "@/utils/api-helpers/errors/logError";
 
 import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
 import { getUserByCustomerId } from "@/utils/prisma/user/user";
-
 import { getSubscriptionFromInvoice } from "@/webhooks/stripe/helpers/invoice";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
@@ -233,13 +232,12 @@ export const generateSubscriptionDataFromInvoice = async (
  * Generates subscription data from a Stripe subscription object.
  *
  * This function retrieves the customer ID from the provided Stripe subscription,
- * fetches the associated user using the customer ID, and generates subscription
- * data based on the subscription and user information. If any step fails, it logs
- * an error and returns null.
+ * fetches the associated user based on the customer ID, and generates subscription
+ * data using the subscription, customer ID, and user information.
  *
  * @param subscription - The Stripe subscription object to process.
- * @returns An object containing the generated subscription data, user ID, and user
- *          information, or null if an error occurs.
+ * @returns An object containing the generated subscription data, user ID, and user information,
+ *          or `null` if an error occurs or the user is not found.
  *
  * @throws Will throw an error if the customer ID cannot be retrieved from the subscription.
  */

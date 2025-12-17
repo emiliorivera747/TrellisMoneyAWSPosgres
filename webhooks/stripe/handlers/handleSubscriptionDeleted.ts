@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { getSubscriptionByEvent } from "@/services/stripe/getSubscription";
+import { getStripeSubscriptionByEvent } from "@/services/stripe/subscriptions";
 
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 
@@ -15,7 +15,7 @@ import { generateSubscriptionDataFromSubscription } from "@/webhooks/stripe/help
  */
 const handleSubscriptionDeleted = async (event: Stripe.Event) => {
   try {
-    const subscription = await getSubscriptionByEvent(event);
+    const subscription = await getStripeSubscriptionByEvent(event);
 
     const res = await generateSubscriptionDataFromSubscription(subscription);
     if (!res)

@@ -17,7 +17,6 @@ const handleInvoicePaidEvent = async (event: Stripe.Event) => {
     const res = await generateSubscriptionDataFromInvoice(invoice);
     if (!res) return logError("Failed to generate Subscriptin data");
 
-
     const { user_id, subscriptionData } = res;
     await updateSubscription(user_id, subscriptionData);
   } catch (error) {

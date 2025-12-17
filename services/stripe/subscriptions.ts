@@ -16,7 +16,7 @@ import { stripe } from "@/lib/stripe";
  * @throws Will throw an error if the subscription ID is invalid or if there is an issue
  *         with the Stripe API request.
  */
-export const getSubscriptionById = async (subscriptionId: string) => {
+export const getStripeSubscriptionById = async (subscriptionId: string) => {
   const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
     expand: ["items.data.price", "items.data.price.product", "customer"],
   });
@@ -26,7 +26,7 @@ export const getSubscriptionById = async (subscriptionId: string) => {
 /**
  * Retrieves a fully expanded Subscription (for subscription.* events)
  */
-export const getSubscriptionByEvent = async (
+export const getStripeSubscriptionByEvent = async (
   event: Stripe.Event
 ): Promise<Stripe.Subscription> => {
   const subscription = event.data.object as Stripe.Subscription;

@@ -10,7 +10,7 @@ import { getUserByCustomerId } from "@/utils/prisma/user/user";
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 
 // Stripe
-import { getSubscriptionByEvent } from "@/services/stripe/subscriptions";
+import { getStripeSubscriptionByEvent } from "@/services/stripe/subscriptions";
 
 /**
  * Handles customer.subscription.updated event.
@@ -24,7 +24,7 @@ const handleSubscriptionUpdated = async (event: Stripe.Event) => {
   try {
     
     // Direct helper to get subscription from event (common pattern)
-    const subscription = await getSubscriptionByEvent(event);
+    const subscription = await getStripeSubscriptionByEvent(event);
     if (!subscription) return logError("Subscription object not found in subscription.updated event");
 
     const customer_id = getCustomerIdFromSub(subscription);

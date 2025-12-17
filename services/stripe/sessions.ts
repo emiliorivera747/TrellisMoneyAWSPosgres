@@ -4,7 +4,7 @@ import { stripe } from "@/lib/stripe";
 /**
  * Retrieves a fully expanded Checkout Session
  */
-export const getCheckoutSession = async (
+export const getStripeCheckoutSession = async (
   event: Stripe.Event
 ): Promise<Stripe.Checkout.Session> => {
   const session = event.data.object as Stripe.Checkout.Session;

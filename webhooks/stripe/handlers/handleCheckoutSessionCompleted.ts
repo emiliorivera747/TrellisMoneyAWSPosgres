@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { getCheckoutSession } from "@/services/stripe/sessions";
+import { getStripeCheckoutSession } from "@/services/stripe/sessions";
 import { getUserByEmail } from "@/utils/prisma/user/user";
 import {
   getSubscriptionItemFromSubscription,
@@ -18,7 +18,7 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   try {
     // ----- Get the checkout session -----
     const { subscription, customer, customer_email, mode } =
-      await getCheckoutSession(event);
+      await getStripeCheckoutSession(event);
 
     // ----- Does customer have email? ----
     if (!customer_email) return logError("Customer email not found in session");
