@@ -11,7 +11,7 @@ import { logError } from "@/utils/api-helpers/errors/logError";
 /**
  * This event handler endpoint processes invoice.paid event.
  */
-export const handleInvoicePaidEvent = async (event: Stripe.Event) => {
+const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
     const invoice = event.data.object as Stripe.Invoice;
 
@@ -39,3 +39,6 @@ export const handleInvoicePaidEvent = async (event: Stripe.Event) => {
     console.error("Error in handleInvoicePaidEvent:", error);
   }
 };
+
+
+export default handleInvoicePaidEvent;

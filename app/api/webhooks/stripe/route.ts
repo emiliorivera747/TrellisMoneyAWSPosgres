@@ -1,8 +1,13 @@
-import { handleInvoicePaidEvent } from "@/webhooks/stripe/handlers/handleInvoicePaidEvent";
-import { handleSubscriptionDeleted } from "@/webhooks/stripe/handlers/handleSubscriptionDeleted";
-import { handleCheckoutSessionCompleted } from "@/webhooks/stripe/handlers/handleCheckoutSessionCompleted";
 import { verifyWebhookSignature } from "@/utils/api-helpers/stripe/verifyWebhookSignature";
 import { NextRequest } from "next/server";
+
+// Handlers
+import handleInvoicePaidEvent from "@/webhooks/stripe/handlers/handleInvoicePaidEvent";
+import handleSubscriptionDeleted from "@/webhooks/stripe/handlers/handleSubscriptionDeleted";
+import handleCheckoutSessionCompleted from "@/webhooks/stripe/handlers/handleCheckoutSessionCompleted";
+import handlePaymentActionRequired from "@/webhooks/stripe/handlers/handlePaymentActionRequired";
+import handlePaymentFailed from "@/webhooks/stripe/handlers/handlePaymentFailed";
+import handleSubscriptionUpdated from "@/webhooks/stripe/handlers/handleSubscriptionUpdated";
 
 /**
  * Handles incoming POST requests for Stripe webhooks.
@@ -38,6 +43,7 @@ export async function POST(req: NextRequest) {
         await handleInvoicePaidEvent(event);
         break;
       case "invoice.payment_failed":
+        await handlePaymentFailed(event);
         break;
       case "customer.subscription.deleted":
         await handleSubscriptionDeleted(event);
@@ -48,8 +54,10 @@ export async function POST(req: NextRequest) {
       case "customer.subscription.created":
         break;
       case "customer.subscription.updated":
+        await handleSubscriptionUpdated(event);
         break;
       case "invoice.payment_action_required":
+        await handlePaymentActionRequired(event);
         break;
       case "customer.subscription.resumed":
         break;

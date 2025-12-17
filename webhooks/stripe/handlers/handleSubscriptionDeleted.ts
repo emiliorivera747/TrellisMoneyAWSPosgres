@@ -14,7 +14,7 @@ import { logError } from "@/utils/api-helpers/errors/logError";
  *
  * @param event
  */
-export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
+const handleSubscriptionDeleted = async (event: Stripe.Event) => {
   try {
     const subscription = await getSubscriptionByEvent(event);
 
@@ -37,3 +37,5 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
     console.error("Error in handleSubscriptionDeleted:", error);
   }
 };
+
+export default handleSubscriptionDeleted;

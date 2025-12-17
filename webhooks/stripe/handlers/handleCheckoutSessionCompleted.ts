@@ -14,7 +14,7 @@ import { logError } from "@/utils/api-helpers/errors/logError";
  *
  * @param event
  */
-export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
+const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   try {
     // ----- Get the checkout session -----
     const { subscription, customer, customer_email, mode } =
@@ -59,3 +59,5 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
     console.error("Error in handleCheckoutSessionCompleted:", error);
   }
 };
+
+export default handleCheckoutSessionCompleted;
