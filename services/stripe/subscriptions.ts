@@ -20,7 +20,6 @@ export const getSubscriptionById = async (subscriptionId: string) => {
   const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
     expand: ["items.data.price", "items.data.price.product", "customer"],
   });
-
   return subscription;
 };
 

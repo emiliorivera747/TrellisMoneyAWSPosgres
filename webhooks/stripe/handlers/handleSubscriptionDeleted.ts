@@ -21,8 +21,8 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
     // ---- get the Customer id -----
     let customerId: string | null = getCustomerIdFromSub(subscription);
     if (!customerId) throw new Error("Could not retrieve the customer id");
+    
     const user = await getUserByCustomerId(customerId);
-
     if (!user)
       return logError("User not found for the subscription deleted event.");
 
