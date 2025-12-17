@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 
-
 /**
  * Gets the user from Supabase
  * 

@@ -51,30 +51,30 @@ export async function POST(req: NextRequest) {
       case "checkout.session.completed":
         await handleCheckoutSessionCompleted(event);
         break;
-      case "customer.subscription.created":
-        break;
+      // case "customer.subscription.created":
+      //   break;
       case "customer.subscription.updated":
         await handleSubscriptionUpdated(event);
         break;
       case "invoice.payment_action_required":
         await handlePaymentActionRequired(event);
         break;
-      case "customer.subscription.resumed":
-        break;
-      case "customer.subscription.trial_will_end":
-        break;
-      case "invoice.upcoming":
-        break;
-      case "payment_intent.succeeded":
-        break;
-      case "product.created":
-        break;
-      case "product.updated":
-        break;
-      case "price.created":
-        break;
-      case "price.updated":
-        break;
+      // case "customer.subscription.resumed":
+      //   break;
+      // case "customer.subscription.trial_will_end":
+      //   break;
+      // case "invoice.upcoming":
+      //   break;
+      // case "payment_intent.succeeded":
+      //   break;
+      // case "product.created":
+      //   break;
+      // case "product.updated":
+      //   break;
+      // case "price.created":
+      //   break;
+      // case "price.updated":
+      //   break;
       default:
         console.log(`Unhandled event type: ${event.type}`);
     }
