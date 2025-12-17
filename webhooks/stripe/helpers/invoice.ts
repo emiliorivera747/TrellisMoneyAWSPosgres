@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { logError } from "@/utils/api-helpers/errors/logError";
-import { getSubscriptionById } from "@/services/stripe/subscriptions";
+import { getStripeSubscriptionById } from "@/services/stripe/subscriptions";
 
 /**
  * Retrieves the subscription line item from a Stripe invoice.
@@ -77,7 +77,7 @@ export const getSubIdFromInvoice = (invoice: Stripe.Invoice) => {
  */
 export const getSubscriptionFromInvoice = async (invoice: Stripe.Invoice) => {
   const id = getSubIdFromInvoice(invoice);
-  const subscription = id ? await getSubscriptionById(id) : null;
+  const subscription = id ? await getStripeSubscriptionById(id) : null;
   return subscription;
 };
 
