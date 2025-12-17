@@ -1,5 +1,5 @@
 import { Security, Holding } from "plaid";
-import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getUser } from "@/services/supabase/getUser";
 import {
   getExistingSecurities,
   upsertSecurities,

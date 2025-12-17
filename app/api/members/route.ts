@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getUser } from "@/services/supabase/getUser";
 
 import { PrismaClient } from "@prisma/client";
 

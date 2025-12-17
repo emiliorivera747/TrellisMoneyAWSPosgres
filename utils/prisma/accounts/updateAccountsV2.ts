@@ -8,9 +8,8 @@ import { AccountBaseWithItemId } from "@/types/plaid";
 
 // Helpers
 import { hasAccountBalance } from "@/utils/api-helpers/plaid/accounts/hasAccountBalance";
-import { updateBalance } from "@/utils/api-helpers/plaid/accounts/updateBalance";
 import { NextResponse } from "next/server";
-import { getUser} from "@/utils/api-helpers/supabase/getUser";
+import { getUser} from "@/services/supabase/getUser";
 
 /**
  * Update the accounts in the database

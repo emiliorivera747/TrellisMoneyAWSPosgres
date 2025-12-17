@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getUser } from "@/services/supabase/getUser";
 import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
 import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
 import { getInvestments } from "@/utils/prisma/investments/getInvestments";

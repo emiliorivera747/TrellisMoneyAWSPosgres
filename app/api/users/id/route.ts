@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { authenticateUser } from "@/utils/api-helpers/supabase/authenticateUser";
+import { authenticateUser } from "@/services/supabase/authenticateUser";
 import { createClient } from "@/utils/supabase/server";
 
 const userDoesNotExist = () =>

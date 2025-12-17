@@ -1,4 +1,4 @@
-import { getStockValue } from "@/utils/helper-functions/accessors";
+import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
 import { TimeSeriesData } from "@/types/graphs";
 

@@ -5,7 +5,7 @@ import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultVal
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Decimal } from "decimal.js";
 import { HoldingHistory } from "@/types/prisma";
-import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getUser } from "@/services/supabase/getUser";
 import { PrismaPromise } from "@prisma/client";
 
 /**

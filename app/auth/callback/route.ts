@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { upsertUser } from "@/features/auth/utils/authCallback";
-import createCheckoutSession from "@/utils/api-helpers/stripe/createCheckoutSession";
+import createCheckoutSession from "@/services/stripe/createCheckoutSession";
 import { getPriceIdBySlug } from "@/lib/plan-cache";
 
 /**

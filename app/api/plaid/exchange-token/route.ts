@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { client } from "@/config/plaidClient";
 import { ItemGetResponse } from "plaid";
 import { AxiosResponse } from "axios";
-import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getUser } from "@/services/supabase/getUser";
 
 /**
  * Handles the POST request to exchange a public token for an access token

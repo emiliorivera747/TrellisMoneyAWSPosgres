@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { scaleTime } from "@visx/scale";
 import { extent } from "@visx/vendor/d3-array";
 import { TimeSeriesData } from "@/types/graphs";
-import { getDate } from "@/utils/helper-functions/accessors";
+import { getDate } from "@/utils/helper-functions/accessors/accessors";
 
 const useDateScale = (
   data: TimeSeriesData[],

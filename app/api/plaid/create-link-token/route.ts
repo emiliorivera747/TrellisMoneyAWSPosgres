@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/config/plaidClient";
 import { Products, CountryCode } from "plaid";
-import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getUser } from "@/services/supabase/getUser";
 
 const ERROR_MESSAGES = {
   UNAUTHENTICATED: "User not authenticated",

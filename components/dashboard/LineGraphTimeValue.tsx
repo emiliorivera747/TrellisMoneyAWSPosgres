@@ -9,7 +9,7 @@ import { curveMonotoneX } from "@visx/curve";
 
 
 //Accessors
-import { getDate, getStockValue } from "@/utils/helper-functions/accessors";
+import { getDate, getStockValue } from "@/utils/helper-functions/accessors/accessors";
 
 //Components
 import TooltipBar from "@/components/dashboard/TooltipBar";

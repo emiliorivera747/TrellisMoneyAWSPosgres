@@ -3,7 +3,7 @@ import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems
 import { ItemPrisma } from "@/types/prisma";
 import { updateHoldingsAndSecurities } from "@/utils/prisma/investments/updateHoldingsAndSecurities";
 import { updateItem } from "@/utils/prisma/item/updateItems";
-import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
+import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
 
 /**
  *

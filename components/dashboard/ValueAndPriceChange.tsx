@@ -3,7 +3,7 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
 
 // Functions
-import { getStockValue } from "@/utils/helper-functions/accessors";
+import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
 
 import {ValueAndPriceChangeProps } from "@/types/graphs";

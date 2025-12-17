@@ -4,7 +4,7 @@ import {
   createHoldingHistory,
   updateOrCreateHolding,
 } from "@/utils/prisma/holding/holdings";
-import { getUser } from "@/utils/api-helpers/supabase/getUser";
+import { getUser } from "@/services/supabase/getUser";
 
 
 

@@ -3,7 +3,7 @@ import { Line } from "@visx/shape";
 import { TooltipProps, TimeSeriesData } from "@/types/graphs";
 
 //Accessors
-import { getStockValue } from "@/utils/helper-functions/accessors";
+import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 
 //Functions
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";

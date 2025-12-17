@@ -1,10 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
-import { getUser } from "@/utils/api-helpers/supabase/getUser";
-import { getAccounts } from "@/utils/api-helpers/plaid/accounts/getAccountV2";
-import { updateAccounts } from "@/utils/api-helpers/plaid/accounts/updateAccountsV2";
+import { getUser } from "@/services/supabase/getUser";
+import { getAccounts } from "@/services/plaid/getAccountV2";
+import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
 import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
-import { getAccountWithItemIds } from "@/utils/prisma/account/accountService";
+import { getAccountWithItemIds } from "@/utils/prisma/accounts/accountService";
 
 /**
  *

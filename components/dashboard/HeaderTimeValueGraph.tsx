@@ -17,7 +17,7 @@ import {
 
 // Functions
 import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
-import { getStockValue } from "@/utils/helper-functions/accessors";
+import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 import { calculateRateOfChange } from "@/utils/helper-functions/calculateRateOfChange";
 import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
 
