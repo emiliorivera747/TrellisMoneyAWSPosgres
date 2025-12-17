@@ -228,3 +228,45 @@ export const generateSubscriptionDataFromInvoice = async (
     return null;
   }
 };
+
+/**
+ * Generates subscription data from a Stripe subscription object.
+ *
+ * This function retrieves the customer ID from the provided Stripe subscription,
+ * fetches the associated user using the customer ID, and generates subscription
+ * data based on the subscription and user information. If any step fails, it logs
+ * an error and returns null.
+ *
+ * @param subscription - The Stripe subscription object to process.
+ * @returns An object containing the generated subscription data, user ID, and user
+ *          information, or null if an error occurs.
+ *
+ * @throws Will throw an error if the customer ID cannot be retrieved from the subscription.
+ */
+export const generateSubscriptionDataFromSubscription = async (
+  subscription: Stripe.Subscription
+) => {
+  try {
+    // ---- get the Customer id -----
+    let customerId: string | null = getCustomerIdFromSub(subscription);
+    if (!customerId) throw new Error("Could not retrieve the customer id");
+
+    const user = await getUserByCustomerId(customerId);
+    if (!user) return logError("User not found for the subscription event.");
+
+    const subscriptionData = generateSubscriptionData({
+      subscription,
+      customer_id: customerId as string,
+      user_id: user.user_id,
+    });
+
+    return { subscriptionData, user_id: user.user_id, user };
+  } catch (error) {
+    logError(
+      `Error generating subscription data from subscription: ${
+        (error as Error).message
+      }`
+    );
+    return null;
+  }
+};

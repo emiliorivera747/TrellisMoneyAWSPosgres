@@ -21,13 +21,12 @@ const handlePaymentFailed = async (event: Stripe.Event) => {
   try {
     const invoice = getInvoiceFromEvent(event);
 
-    const result = await generateSubscriptionDataFromInvoice(invoice);
-    if (!result)
-      return logError("Failed to generate subscription data from invoice");
-    const { user_id, subscriptionData } = result;
+    const res = await generateSubscriptionDataFromInvoice(invoice);
+    if (!res) return logError("Failed to generate subscription data");
+
+    const { user_id, subscriptionData } = res;
 
     await updateSubscription(user_id, subscriptionData);
-
   } catch (error) {
     console.error("Error in handleInvoicePaidEvent:", error);
   }

@@ -1,12 +1,12 @@
 import Stripe from "stripe";
 import { getSubscriptionByEvent } from "@/services/stripe/getSubscription";
 import { getUserByCustomerId } from "@/utils/prisma/user/user";
-import {
-  generateSubscriptionData,
-  getCustomerIdFromSub,
-} from "@/utils/api-helpers/stripe/webhookHelpers";
+
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
+
+// Helpers
 import { logError } from "@/utils/api-helpers/errors/logError";
+import { generateSubscriptionDataFromSubscription } from "@/webhooks/stripe/helpers/subscriptions";
 
 /**
  * Handles subscription deletion event from Stripe
@@ -18,26 +18,16 @@ const handleSubscriptionDeleted = async (event: Stripe.Event) => {
   try {
     const subscription = await getSubscriptionByEvent(event);
 
-    // ---- get the Customer id -----
-    let customerId: string | null = getCustomerIdFromSub(subscription);
-    if (!customerId) throw new Error("Could not retrieve the customer id");
-    
-    const user = await getUserByCustomerId(customerId);
-    if (!user)
-      return logError("User not found for the subscription deleted event.");
-
-    const subscriptionData = generateSubscriptionData({
-      subscription,
-      customer_id: customerId as string,
-      user_id: user.user_id,
-    });
-
-    await updateSubscription(user.user_id, subscriptionData);
+    const res = await generateSubscriptionDataFromSubscription(subscription);
+    if (!res)
+      return logError(
+        "Failed to generate subscription from Stripe subscription"
+      );
+    await updateSubscription(res.user_id, res.subscriptionData);
 
     console.log(
-      `Subscription ${subscription.id} updated for user ${user.user_id} – status: ${subscription.status}`
+      `Subscription ${subscription.id} updated for user ${res.user_id} – status: ${subscription.status}`
     );
-    
   } catch (error) {
     console.error("Error in handleSubscriptionDeleted:", error);
   }
