@@ -6,12 +6,9 @@ import { logError } from "@/utils/api-helpers/errors/logError";
 // Helpers
 import {
   getInvoiceFromEvent,
-  getSubscriptionFromInvoice,
 } from "@/webhooks/stripe/helpers/invoice";
 
 import { generateSubscriptionDataFromInvoice } from "@/webhooks/stripe/helpers/subscriptions";
-import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
-import { getUserByCustomerId } from "@/utils/prisma/user/user";
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 
 /**

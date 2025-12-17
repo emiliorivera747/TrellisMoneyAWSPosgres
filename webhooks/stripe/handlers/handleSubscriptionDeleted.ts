@@ -1,6 +1,5 @@
 import Stripe from "stripe";
 import { getSubscriptionByEvent } from "@/services/stripe/getSubscription";
-import { getUserByCustomerId } from "@/utils/prisma/user/user";
 
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 
