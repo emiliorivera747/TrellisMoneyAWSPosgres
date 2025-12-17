@@ -217,7 +217,7 @@ export const generateSubscriptionDataFromInvoice = async (
       user_id: user.user_id,
     });
 
-    return { subscriptionData, user_id: user.user_id, user };
+    return { subscriptionData, user_id: user.user_id, user, customer_id};
   } catch (error) {
     logError(
       `Error generating subscription data from invoice: ${
