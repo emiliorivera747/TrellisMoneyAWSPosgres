@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { Holding } from "plaid";
 import { Holding as HoldingPrisma } from "@/types/plaid";
-import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
+import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Decimal } from "decimal.js";
 import { HoldingHistory } from "@/types/prisma";

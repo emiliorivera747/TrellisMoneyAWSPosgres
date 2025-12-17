@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // Functions
-import { getYearRanges } from "@/utils/helper-functions/getYearRanges";
+import { getYearRanges } from "@/utils/helper-functions/dates/getYearRanges";
 
 // Components
 import RetirementYearSectionMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/retirement-year/RetirementYearSectionMenu";

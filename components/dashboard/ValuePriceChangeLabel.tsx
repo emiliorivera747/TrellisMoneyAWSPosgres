@@ -1,4 +1,4 @@
-import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
+import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
 
 // Types
 import { ValuePriceChangeLabelProps } from "@/types/graphs";

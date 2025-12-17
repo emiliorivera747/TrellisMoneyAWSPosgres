@@ -8,7 +8,7 @@ import ListOfYears from "@/features/projected-net-worth/components/projected-net
 import {
   cheveronUp,
   cheveronDown,
-} from "@/utils/helper-functions/getCheverons";
+} from "@/utils/helper-functions/svg/getCheverons";
 
 import { AfterRetirementSectionMenuProps } from "@/features/projected-net-worth/types/selectYearMenu";
 

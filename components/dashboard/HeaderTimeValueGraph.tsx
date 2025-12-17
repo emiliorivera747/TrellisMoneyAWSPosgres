@@ -16,10 +16,10 @@ import {
 } from "@/types/graphs";
 
 // Functions
-import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
+import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
-import { calculateRateOfChange } from "@/utils/helper-functions/calculateRateOfChange";
-import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
+import { calculateRateOfChange } from "@/utils/helper-functions/graph/calculations/calculateRateOfChange";
+import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateYearsBetween";
 
 
 // Context

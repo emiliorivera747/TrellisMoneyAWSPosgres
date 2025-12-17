@@ -3,7 +3,7 @@ import HeaderWithIcon from "@/features/projected-net-worth/components/projected-
 import {
   cheveronUp,
   cheveronDown,
-} from "@/utils/helper-functions/getCheverons";
+} from "@/utils/helper-functions/svg/getCheverons";
 import ListOfYearsGroupedByRange from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/list/ListOfYearsGroupedByRange";
 import { BeforeRetirementSectionMenuProps } from "@/features/projected-net-worth/types/selectYearMenu";
 

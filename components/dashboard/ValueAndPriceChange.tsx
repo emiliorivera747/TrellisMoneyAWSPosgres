@@ -4,7 +4,7 @@ import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
 
 // Functions
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
-import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
+import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
 
 import {ValueAndPriceChangeProps } from "@/types/graphs";
 

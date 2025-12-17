@@ -21,7 +21,7 @@ import useHandleTooltipMultiple from "@/hooks/graphs/useHandleTooltipMultiple";
 import { LineGraphTimeValueProps, TimeSeriesData } from "@/types/graphs";
 
 //Functions
-import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
+import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
 const defaultMargin = { top: 6, right: 6, bottom: 10, left: 6 };

@@ -13,7 +13,7 @@ import {
 } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 // Utils
-import { formatToMoney } from "@/utils/helper-functions/formatToMoney";
+import { formatToMoney } from "@/utils/helper-functions/formatting/formatToMoney";
 
 /**
  *

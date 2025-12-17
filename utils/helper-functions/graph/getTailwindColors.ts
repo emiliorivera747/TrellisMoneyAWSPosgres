@@ -1,6 +1,6 @@
-import { getColorBasedOnLineDirection } from "@/utils/helper-functions/getColorBasedOnLineDirection";
+import { getColorBasedOnLineDirection } from "@/utils/helper-functions/graph/getColorBasedOnLineDirection";
 import { LinePayload } from "@/types/graphs";
-import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
+import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 
 /**
  *

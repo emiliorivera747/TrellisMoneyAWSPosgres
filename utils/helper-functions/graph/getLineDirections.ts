@@ -1,4 +1,4 @@
-import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
+import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
 interface GetLineDirections {
     data1: SecurityData[];

@@ -1,4 +1,4 @@
-import { GetSvgV2 } from "@/utils/helper-functions/GetSvgV2";
+import { GetSvgV2 } from "@/utils/helper-functions/svg/GetSvgV2";
 
 export const cheveronDown = () => {
     return GetSvgV2({

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 // Icons
-import { getPencilSvg } from "@/utils/helper-functions/getPencilSvg";
+import { getPencilSvg } from "@/utils/helper-functions/svg/getPencilSvg";
 
 // Components
 import HeaderWithIcon from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/shared-components/headers/HeaderWithIcon";

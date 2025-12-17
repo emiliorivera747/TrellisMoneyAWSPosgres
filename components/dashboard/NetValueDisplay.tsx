@@ -7,7 +7,7 @@ import InformationIcon from "@/components/information-icon/InformationIcon";
 import { NetValueDisplayCardProps } from "@/types/dashboard";
 
 // Helpers
-import { convertToMoney } from "@/utils/helper-functions/convertToMoney";
+import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 
 import NetValueDisplayCardSkeleton from "@/components/skeletons/dashboard/NetValueDisplayCardSkeleton";
 

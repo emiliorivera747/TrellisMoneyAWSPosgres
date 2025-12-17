@@ -6,7 +6,7 @@ import { LinePayload } from "@/types/graphs";
 import { TooltipPayload } from "@/types/graphs";
 
 //Functions
-import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
+import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
 interface MultipleValPriceChangeProps {

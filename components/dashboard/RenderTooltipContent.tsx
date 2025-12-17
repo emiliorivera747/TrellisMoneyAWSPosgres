@@ -2,10 +2,10 @@ import React from "react";
 import { RenderTooltipContentProps } from "@/features/projected-net-worth/types/tooltips";
 
 // functions
-import numberToMoneyFormat from "@/utils/helper-functions/numberToMoneyFormat";
+import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
-import { calculateRateOfChange } from "@/utils/helper-functions/calculateRateOfChange";
-import { calculateYearsBetween } from "@/utils/helper-functions/calculateYearsBetween";
+import { calculateRateOfChange } from "@/utils/helper-functions/graph/calculations/calculateRateOfChange";
+import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateYearsBetween";
 
 /**
  *  Render the tooltip content

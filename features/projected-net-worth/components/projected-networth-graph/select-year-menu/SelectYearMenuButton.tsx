@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 //Functions
-import { GetSvgV2 } from "@/utils/helper-functions/GetSvgV2";
+import { GetSvgV2 } from "@/utils/helper-functions/svg/GetSvgV2";
 
 //Components
 import SelectYearMenu from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenu";

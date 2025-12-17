@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
+import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Holding } from "@/types/plaid";
 

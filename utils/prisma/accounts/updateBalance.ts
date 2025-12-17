@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { Balance } from "@/types/plaid";
-import { getValueOrDefault } from "@/utils/helper-functions/getValueOrDefaultValue";
+import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 
 export async function updateBalance(balance: Balance, account_id: string) {
   const dbResponse = await prisma.balance.upsert({

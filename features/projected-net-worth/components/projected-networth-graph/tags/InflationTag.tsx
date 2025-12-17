@@ -1,12 +1,12 @@
 import React from "react";
-import { GetSvgV2 } from "@/utils/helper-functions/GetSvgV2";
+import { GetSvgV2 } from "@/utils/helper-functions/svg/GetSvgV2";
 import {
   InflationCategory,
   InflationTagProps,
 } from "@/features/projected-net-worth/types/inflationTagComponent";
 
 // Functions
-import { getLineDirection } from "@/utils/helper-functions/getLineDirection";
+import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
 
