@@ -21,6 +21,7 @@ import updateUserAndSubscription from "@/utils/prisma/stripe/updateUserAndSubscr
  */
 export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   try {
+    
     // ----- Get the checkout session -----
     const { subscription, customer, customer_email, mode } =
       await getCheckoutSession(event);
@@ -38,6 +39,7 @@ export const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
       typeof subscription === "object" &&
       mode === "subscription"
     ) {
+      
       const subscriptionItem =
         getSubscriptionItemFromSubscription(subscription);
 

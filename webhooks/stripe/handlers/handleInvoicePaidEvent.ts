@@ -1,7 +1,5 @@
 import Stripe from "stripe";
-
 import { getUserByCustomerId } from "@/utils/prisma/user/user";
-
 import {
   generateSubscriptionData,
   getUserByCustomerIdFromSub,
@@ -9,6 +7,7 @@ import {
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
+import { getSubIdFromInvoice } from "@/webhooks/stripe/helpers/invoice";
 
 /**
  * This event handler endpoint deals with the invoice.paid event.
@@ -19,15 +18,11 @@ import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
  */
 export const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
+    
     const invoice = event.data.object as Stripe.Invoice;
 
+    const subscriptionId = getSubIdFromInvoice(invoice);
 
-    const subscriptionLine = invoice.lines.data.find(
-      (line) => line.parent?.subscription_item_details
-    );
-
-    const subscriptionId =
-      subscriptionLine?.parent?.subscription_item_details?.subscription;
     if (!subscriptionId) throw new Error("No subscription ID found on invoice");
 
     const subscription = await getSubscriptionById(subscriptionId);
