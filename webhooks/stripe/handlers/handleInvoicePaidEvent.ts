@@ -2,39 +2,37 @@ import Stripe from "stripe";
 import { getUserByCustomerId } from "@/utils/prisma/user/user";
 import {
   generateSubscriptionData,
-  getUserByCustomerIdFromSub,
+  getCustomerIdFromSub,
   getSubscriptionById,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
-
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 import { getSubIdFromInvoice } from "@/webhooks/stripe/helpers/invoice";
+import { logError } from "@/utils/api-helpers/errors/logError";
 
 /**
- * This event handler endpoint deals with the invoice.paid event.
- *
- * What should we do here?
- *    - Update the subscription
- *
+ * This event handler endpoint processes invoice.paid event.
  */
 export const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
-    
     const invoice = event.data.object as Stripe.Invoice;
 
+    // ---- Get the subscription id from invoice -----
     const subscriptionId = getSubIdFromInvoice(invoice);
+    if (!subscriptionId) return logError("No subscription ID found on invoice");
 
-    if (!subscriptionId) throw new Error("No subscription ID found on invoice");
-
+    // ----- Get the subscription -----
     const subscription = await getSubscriptionById(subscriptionId);
-    if (!subscription) throw new Error("Subscription object was not found");
+    if (!subscription) return logError("Subscription object was not found");
 
-    let customerId: string | null = getUserByCustomerIdFromSub(subscription);
-    if (!customerId) throw new Error("Could not retrieve the customer id");
+    // ----- Get the customer id -----
+    let customerId = getCustomerIdFromSub(subscription);
+    if (!customerId) return logError("Could not retrieve the customer id");
+
+    // ----- Get the user -----
     const user = await getUserByCustomerId(customerId);
+    if (!user) return logError("User does not exist with customer id");
 
-    if (!user)
-      throw new Error("User not found for the subscription deleted event.");
-
+    // ---- Get subscription data to update the subscription -----
     const subscriptionData = generateSubscriptionData({
       subscription,
       customer_id: customerId as string,

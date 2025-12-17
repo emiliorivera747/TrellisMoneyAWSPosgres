@@ -133,7 +133,7 @@ export const isSubscription = (
  * @param subscription - The Stripe subscription object from which to extract the customer ID.
  * @returns The customer ID as a string if available, otherwise `null`.
  */
-export const getUserByCustomerIdFromSub = (
+export const getCustomerIdFromSub = (
   subscription: Stripe.Subscription
 ) => {
   let customerId: string | null;
