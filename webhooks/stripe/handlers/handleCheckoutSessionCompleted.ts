@@ -54,6 +54,11 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
         customer_id: customer as string,
         subscriptionData,
       });
+
+      // ----- Log subscription update -----
+      console.log(
+        `Subscription ${subscription.id} updated for user ${user.user_id} – status: ${subscription.status}`
+      );
     }
   } catch (error) {
     console.error("Error in handleCheckoutSessionCompleted:", error);

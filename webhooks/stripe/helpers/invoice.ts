@@ -75,9 +75,9 @@ export const getSubIdFromInvoice = (invoice: Stripe.Invoice) => {
  * @returns The subscription object if the subscription ID is found,
  *          otherwise `null`.
  */
-export const getSubscriptionFromInvoice = (invoice: Stripe.Invoice) => {
+export const getSubscriptionFromInvoice = async (invoice: Stripe.Invoice) => {
   const id = getSubIdFromInvoice(invoice);
-  const subscription = id ? getSubscriptionById(id) : null;
+  const subscription = id ? await getSubscriptionById(id) : null;
   return subscription;
 };
 

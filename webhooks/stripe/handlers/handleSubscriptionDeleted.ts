@@ -33,6 +33,11 @@ const handleSubscriptionDeleted = async (event: Stripe.Event) => {
     });
 
     await updateSubscription(user.user_id, subscriptionData);
+
+    console.log(
+      `Subscription ${subscription.id} updated for user ${user.user_id} – status: ${subscription.status}`
+    );
+    
   } catch (error) {
     console.error("Error in handleSubscriptionDeleted:", error);
   }
