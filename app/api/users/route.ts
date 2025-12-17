@@ -1,13 +1,14 @@
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { z } from "zod";
-import { authenticateUser } from "@/services/supabase/authenticateUser";
+import { withAuth } from "@/lib/protected";
 import {
   recordSchema,
   RecordSchema,
 } from "@/features/auth/schemas/formSchemas";
 
 import { handleZodError } from "@/utils/api-helpers/errors/handleZodErrors";
+
 const getNameFromBody = (body: RecordSchema) =>
   body?.record?.raw_user_meta_data?.name || body?.record?.email || "none";
 
@@ -36,12 +37,11 @@ const parseRecord = (body: RecordSchema) => {
 /**
  * Register a new user
  *
- *
  * @route POST /api/users
  * @desc Register a new user
  * @access Public
  */
-export async function POST(req: Request) {
+export const POST = async (req: NextRequest) => {
   try {
     const body = await req.json();
 
@@ -83,116 +83,123 @@ export async function POST(req: Request) {
     if (err instanceof z.ZodError) return handleZodError(err);
     return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
-}
+};
 
 /**
  * Get users
  * @returns
  */
-export async function GET() {
-  try {
-    const result = await authenticateUser();
-    if (result instanceof NextResponse) return result;
-    const users = await prisma.user.findMany();
-    return NextResponse.json({ status: "success", users }, { status: 200 });
-  } catch (error) {
-    if (error instanceof Error) {
+export const GET = async (req: NextRequest) =>
+  withAuth(req, async (req, user) => {
+    try {
+      const users = await prisma.user.findMany();
+      return NextResponse.json({ status: "success", users }, { status: 200 });
+    } catch (error) {
+      if (error instanceof Error) {
+        return NextResponse.json(
+          { message: "Server Error", status: "error", error: error },
+          { status: 500 }
+        );
+      }
       return NextResponse.json(
-        { message: "Server Error", staus: "error", error: error },
+        { message: "Unknown Error", status: "error" },
         { status: 500 }
       );
     }
-  }
-}
+  });
 
 /**
  *
  * @param req
  * @returns
  */
-export async function PUT(req: Request) {
-  try {
-    const result = await authenticateUser();
-    if (result instanceof NextResponse) return result;
-    const body = await req.json();
-    recordSchema.parse(body);
+export const PUT = async (req: NextRequest) =>
+  withAuth(req, async (req, user) => {
+    try {
+      const body = await req.json();
+      recordSchema.parse(body);
 
-    const record = body.record;
+      const record = body.record;
 
-    const { email, id } = record;
-    const name = getNameFromBody(body);
+      const { email, id } = record;
+      const name = getNameFromBody(body);
 
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
+      const user = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
 
-    if (!user) {
+      if (!user) {
+        return NextResponse.json(
+          { status: "error", message: "User does not exist" },
+          { status: 404 }
+        );
+      }
+
+      const updatedUser = await prisma.user.update({
+        where: {
+          email,
+        },
+        data: {
+          name,
+          user_id: id,
+        },
+      });
+
       return NextResponse.json(
-        { status: "error", message: "User does not exist" },
-        { status: 404 }
+        { status: "success", message: "User updated", user: updatedUser },
+        { status: 200 }
       );
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return NextResponse.json(
+          { status: "error", message: err.errors },
+          { status: 400 }
+        );
+      }
+      return NextResponse.json({ message: "Server Error" }, { status: 500 });
     }
-
-    const updatedUser = await prisma.user.update({
-      where: {
-        email,
-      },
-      data: {
-        name,
-        user_id: id,
-      },
-    });
-
-    return NextResponse.json(
-      { status: "success", message: "User updated", user: updatedUser },
-      { status: 200 }
-    );
-  } catch (err) {
-    if (err instanceof z.ZodError) {
-      return NextResponse.json(
-        { status: "error", message: err.errors },
-        { status: 400 }
-      );
-    }
-    return NextResponse.json({ message: "Server Error" }, { status: 500 });
-  }
-}
+  });
 
 /**
  *
- * @route POST /api/users
- * @desc Register a new user
- * @access Public
+ * @route DELETE /api/users
+ * @desc Delete a user
+ * @access Protected
  */
-export async function DELETE() {
-  try {
-    const result = await authenticateUser();
-    if (result instanceof NextResponse) return result;
-    const id = result?.id;
+export const DELETE = async (req: NextRequest) =>
+  withAuth(req, async (req, user) => {
+    try {
+      const id = user.id;
 
-    const user = await prisma.user.findUnique({
-      where: {
-        user_id: id,
-      },
-    });
+      const userRecord = await prisma.user.findUnique({
+        where: {
+          user_id: id,
+        },
+      });
 
-    if (!user) {
+      if (!userRecord) {
+        return NextResponse.json(
+          { status: "error", message: "User does not exist" },
+          { status: 404 }
+        );
+      }
+
+      await prisma.user.delete({
+        where: {
+          user_id: id,
+        },
+      });
+
       return NextResponse.json(
-        { status: "error", message: "User does not exist" },
-        { status: 404 }
+        { status: "success", message: "User deleted" },
+        { status: 200 }
+      );
+    } catch (err) {
+      return NextResponse.json(
+        { message: "Server Error", error: err, status: "error" },
+        { status: 500 }
       );
     }
-
-    return NextResponse.json(
-      { status: "success", message: "User deleted" },
-      { status: 200 }
-    );
-  } catch (err) {
-    return NextResponse.json(
-      { message: "Server Error", error: err, status: "error" },
-      { status: 500 }
-    );
-  }
-}
+  });
