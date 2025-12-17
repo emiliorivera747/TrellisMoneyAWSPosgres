@@ -1,55 +1,45 @@
 import { NextResponse, NextRequest } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { calculateNetWorth } from "@/utils/api-helpers/net-worth/calculateNetWorth";
-import { getUser } from "@/services/supabase/getUser";
 import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
-import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
-import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
+import { getAccounts } from "@/services/plaid/getAccountV2";
 import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
+import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
+import { getAccountWithItemIds } from "@/utils/prisma/accounts/accountService";
+import { withAuth } from "@/lib/protected";
 
 /**
- * 
- * The API calculates the user net worth
- * 
- * @param req 
- * @returns 
+ *
+ * Fetch all of the users accounts from Plaid and
+ * store them in the database.
+ *
  */
 export async function GET(req: NextRequest) {
-  try {
-    const user = await getUser();
+  return withAuth(req, async (request, user) => {
+    try {
+      const items = await getItemsByUserId(user?.id || "");
+      noItemsError(items); // Check if the items are empty or undefined
 
-    /**
-     * Get all institutional items
-     * */
-    const items = await getItemsByUserId(user?.id || "");
-    noItemsError(items);
+      /**
+       *  Go through each item and fetch the accounts
+       */
+      const accounts = await getAccounts(items);
 
-    /**
-     * Plaid Accounts
-     */
-    const plaidAccounts = await getAccountsFromPlaid(items);
+      /**
+       *  Store the accounts in the database
+       */
+      await updateAccounts(accounts);
 
-    /**
-     * Store accounts in Database
-     */
-    await updateAccounts(plaidAccounts);
+      const accountsWithIds = await getAccountWithItemIds(items);
 
-    /**
-     * Retrieve all accounts
-     */
-    const accounts = await prisma.account.findMany({
-      where: {
-        user_id: user?.id || "",
-      },
-    });
+      // noAccountsError(accountsWithIds); // Check if the accounts are empty or undefined
 
-    const data = calculateNetWorth(accounts);
-
-    return NextResponse.json({ data }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Error fetching account balance data" },
-      { status: 500 }
-    );
-  }
+      return NextResponse.json(
+        { message: "Retrieved accounts", data: accountsWithIds },
+        { status: 200 }
+      );
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      return NextResponse.json({ error: errorMessage }, { status: 500 });
+    }
+  });
 }

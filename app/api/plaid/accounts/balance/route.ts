@@ -1,23 +1,45 @@
 import { NextResponse, NextRequest } from "next/server";
-import { AccountsGetRequest } from "plaid";
-import { prisma } from "@/lib/prisma";
+import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
+import { getAccounts } from "@/services/plaid/getAccountV2";
+import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
+import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
+import { getAccountWithItemIds } from "@/utils/prisma/accounts/accountService";
+import { withAuth } from "@/lib/protected";
 
-
+/**
+ *
+ * Fetch all of the users accounts from Plaid and
+ * store them in the database.
+ *
+ */
 export async function GET(req: NextRequest) {
+  return withAuth(req, async (request, user) => {
+    try {
+      const items = await getItemsByUserId(user?.id || "");
+      noItemsError(items); // Check if the items are empty or undefined
 
-  const request: AccountsGetRequest = {
-    access_token: process.env.PLAID_ACCESS_TOKEN || "",
-  };
+      /**
+       *  Go through each item and fetch the accounts
+       */
+      const accounts = await getAccounts(items);
 
-  try {
-    // const response = await plaidClient.accountsBalanceGet(request);
-    // const accounts = response.data.accounts;
-    const accounts = await prisma.account.findMany();
-    return NextResponse.json({ accounts }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Error fetching account balance data" },
-      { status: 500 }
-    );
-  }
+      /**
+       *  Store the accounts in the database
+       */
+      await updateAccounts(accounts);
+
+      const accountsWithIds = await getAccountWithItemIds(items);
+
+      // noAccountsError(accountsWithIds); // Check if the accounts are empty or undefined
+
+      return NextResponse.json(
+        { message: "Retrieved accounts", data: accountsWithIds },
+        { status: 200 }
+      );
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      return NextResponse.json({ error: errorMessage }, { status: 500 });
+    }
+  });
 }

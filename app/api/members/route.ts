@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "@/services/supabase/getUser";
 import { PrismaClient } from "@prisma/client";
 import { withAuth } from "@/lib/protected";
 
@@ -11,9 +10,6 @@ const prisma = new PrismaClient();
 export async function GET(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
-      if (!user) {
-        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-      }
 
       const household = await prisma.household.findUnique({
         where: {

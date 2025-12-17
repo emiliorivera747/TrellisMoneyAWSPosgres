@@ -17,11 +17,13 @@ import { getAccountsHoldingsSecurities } from "@/utils/prisma/accounts-holdings-
 import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV3";
 import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
 import { getAccounts } from "@/services/plaid/getAccountV2";
-import { getUser } from "@/services/supabase/getUser";
 import { getInvestments } from "@/utils/prisma/investments/getInvestments";
 
 // Types
 import { ItemPrisma } from "@/types/prisma";
+
+// Auth
+import { withAuth } from "@/lib/protected";
 
 const default_inflation_rate = 0.025;
 
@@ -32,65 +34,62 @@ const default_inflation_rate = 0.025;
  * @returns {Promise<NextResponse>}
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  try {
-    /**
-     * Get the timestamp from the request body
-     */
-    const { timestamp } = await req.json();
+  return withAuth(req, async (request, user) => {
+    try {
+      /**
+       * Get the timestamp from the request body
+       */
+      const { timestamp } = await request.json();
 
-    /**
-     * Get the user's information
-     */
-    const user = await getUser();
+      /**
+       * Get the start and end years from the request URL
+       */
+      const { searchParams } = new URL(request.url);
+      const { start_year, end_year } = getDates(searchParams);
+      validateTimestamp(timestamp);
 
-    /**
-     * Get the start and end years from the request URL
-     */
-    const { searchParams } = new URL(req.url);
-    const { start_year, end_year } = getDates(searchParams);
-    validateTimestamp(timestamp);
+      /**
+       * Get the user's accounts
+       */
+      const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
+      await getAccounts(items);
+      await getInvestments(items, timestamp || "");
 
-    /**
-     * Get the user's accounts
-     */
-    const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
-    await getAccounts(items);
-    await getInvestments(items, timestamp || "");
+      // Get the user's updated holdings and securities
+      const account_holdings_securities = await getAccountsHoldingsSecurities(
+        user?.id || ""
+      );
 
-    // Get the user's updated holdings and securities
-    const account_holdings_securities = await getAccountsHoldingsSecurities(
-      user?.id || ""
-    );
+      const projected_net_worth = await generateProjectedNetWorthV3(
+        account_holdings_securities[0].accounts,
+        start_year,
+        end_year,
+        searchParams.get("with_inflation") === "true",
+        default_inflation_rate
+      );
 
-    const projected_net_worth = await generateProjectedNetWorthV3(
-      account_holdings_securities[0].accounts,
-      start_year,
-      end_year,
-      searchParams.get("with_inflation") === "true",
-      default_inflation_rate
-    );
+      const projected_assets = await generateProjectedFinancialAssets({
+        start_year: start_year,
+        end_year: end_year,
+        with_inflation: searchParams.get("with_inflation") === "true",
+        annual_inflation_rate: default_inflation_rate,
+        accounts: account_holdings_securities[0].accounts,
+      });
 
-    const projected_assets = await generateProjectedFinancialAssets({
-      start_year: start_year,
-      end_year: end_year,
-      with_inflation: searchParams.get("with_inflation") === "true",
-      annual_inflation_rate: default_inflation_rate,
-      accounts: account_holdings_securities[0].accounts,
-    });
-
-    return NextResponse.json(
-      {
-        message: "Accounts, holdings, and securities updated successfully.",
-        data: {
-          projected_net_worth: projected_net_worth,
-          projected_assets: projected_assets,
+      return NextResponse.json(
+        {
+          message: "Accounts, holdings, and securities updated successfully.",
+          data: {
+            projected_net_worth: projected_net_worth,
+            projected_assets: projected_assets,
+          },
         },
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
-    if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
-    return handleOtherErrror(error);
-  }
+        { status: 200 }
+      );
+    } catch (error) {
+      if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
+      if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
+      return handleOtherErrror(error);
+    }
+  });
 }
