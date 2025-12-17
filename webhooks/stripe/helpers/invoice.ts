@@ -1,4 +1,6 @@
 import Stripe from "stripe";
+import { logError } from "@/utils/api-helpers/errors/logError";
+import { getSubscriptionById } from "@/services/stripe/subscriptions";
 
 /**
  * Retrieves the subscription line item from a Stripe invoice.
@@ -10,10 +12,15 @@ import Stripe from "stripe";
  * @returns The subscription line item if found, otherwise `undefined`.
  */
 export const getSubscriptionLineFromInvoice = (invoice: Stripe.Invoice) => {
-  const lineItem = invoice.lines.data.find(
-    (line) => line.parent?.subscription_item_details
-  );
-  return lineItem;
+  try {
+    const lineItem = invoice.lines.data.find(
+      (line) => line.parent?.subscription_item_details
+    );
+    return lineItem;
+  } catch (error) {
+    logError("Error retrieving subscription line from invoice");
+    return undefined;
+  }
 };
 
 /**
@@ -26,9 +33,14 @@ export const getSubscriptionLineFromInvoice = (invoice: Stripe.Invoice) => {
 export const getSubscriptionIdForInvoiceLine = (
   lineItem: Stripe.InvoiceLineItem | undefined
 ) => {
-  const subscriptionId =
-    lineItem?.parent?.subscription_item_details?.subscription;
-  return subscriptionId;
+  try {
+    const subscriptionId =
+      lineItem?.parent?.subscription_item_details?.subscription;
+    return subscriptionId;
+  } catch (error) {
+    logError("Error retrieving subscription ID for invoice line");
+    return undefined;
+  }
 };
 
 /**
@@ -41,7 +53,30 @@ export const getSubscriptionIdForInvoiceLine = (
  * @returns The subscription ID associated with the invoice.
  */
 export const getSubIdFromInvoice = (invoice: Stripe.Invoice) => {
-  const lineItem = getSubscriptionLineFromInvoice(invoice);
-  const subscriptionId = getSubscriptionIdForInvoiceLine(lineItem);
-  return subscriptionId;
+  try {
+    const lineItem = getSubscriptionLineFromInvoice(invoice);
+    const subscriptionId = getSubscriptionIdForInvoiceLine(lineItem);
+    return subscriptionId;
+  } catch (error) {
+    logError("Error retrieving subscription ID from invoice");
+    return undefined;
+  }
+};
+
+/**
+ * Retrieves the subscription associated with a given Stripe invoice.
+ *
+ * This function extracts the subscription ID from the provided invoice
+ * and fetches the corresponding subscription details. If the subscription
+ * ID cannot be determined, it returns `null`.
+ *
+ * @param invoice - The Stripe invoice object from which the subscription
+ *                  information will be extracted.
+ * @returns The subscription object if the subscription ID is found,
+ *          otherwise `null`.
+ */
+export const getSubscriptionFromInvoice = (invoice: Stripe.Invoice) => {
+  const id = getSubIdFromInvoice(invoice);
+  const subscription = id ? getSubscriptionById(id) : null;
+  return subscription;
 };

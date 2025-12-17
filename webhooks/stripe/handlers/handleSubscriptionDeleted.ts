@@ -1,15 +1,12 @@
 import Stripe from "stripe";
-
 import { getSubscriptionByEvent } from "@/services/stripe/getSubscription";
-
 import { getUserByCustomerId } from "@/utils/prisma/user/user";
-
 import {
   generateSubscriptionData,
-  getUserByCustomerIdFromSub,
+  getCustomerIdFromSub,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
-
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
+import { logError } from "@/utils/api-helpers/errors/logError";
 
 /**
  * Handles subscription deletion event from Stripe
@@ -22,12 +19,12 @@ export const handleSubscriptionDeleted = async (event: Stripe.Event) => {
     const subscription = await getSubscriptionByEvent(event);
 
     // ---- get the Customer id -----
-    let customerId: string | null = getUserByCustomerIdFromSub(subscription);
+    let customerId: string | null = getCustomerIdFromSub(subscription);
     if (!customerId) throw new Error("Could not retrieve the customer id");
     const user = await getUserByCustomerId(customerId);
 
     if (!user)
-      throw new Error("User not found for the subscription deleted event.");
+      return logError("User not found for the subscription deleted event.");
 
     const subscriptionData = generateSubscriptionData({
       subscription,

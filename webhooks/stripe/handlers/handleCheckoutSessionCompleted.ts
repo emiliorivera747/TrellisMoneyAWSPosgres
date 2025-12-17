@@ -1,5 +1,4 @@
 import Stripe from "stripe";
-
 import { getCheckoutSession } from "@/services/stripe/sessions";
 import { getUserByEmail } from "@/utils/prisma/user/user";
 import {

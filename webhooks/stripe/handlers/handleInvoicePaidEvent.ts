@@ -3,10 +3,9 @@ import { getUserByCustomerId } from "@/utils/prisma/user/user";
 import {
   generateSubscriptionData,
   getCustomerIdFromSub,
-  getSubscriptionById,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
-import { getSubIdFromInvoice } from "@/webhooks/stripe/helpers/invoice";
+import { getSubscriptionFromInvoice } from "@/webhooks/stripe/helpers/invoice";
 import { logError } from "@/utils/api-helpers/errors/logError";
 
 /**
@@ -16,16 +15,12 @@ export const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
     const invoice = event.data.object as Stripe.Invoice;
 
-    // ---- Get the subscription id from invoice -----
-    const subscriptionId = getSubIdFromInvoice(invoice);
-    if (!subscriptionId) return logError("No subscription ID found on invoice");
-
     // ----- Get the subscription -----
-    const subscription = await getSubscriptionById(subscriptionId);
+    const subscription = await getSubscriptionFromInvoice(invoice);
     if (!subscription) return logError("Subscription object was not found");
 
     // ----- Get the customer id -----
-    let customerId = getCustomerIdFromSub(subscription);
+    const customerId = getCustomerIdFromSub(subscription);
     if (!customerId) return logError("Could not retrieve the customer id");
 
     // ----- Get the user -----
