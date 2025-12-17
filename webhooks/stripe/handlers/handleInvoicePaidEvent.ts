@@ -5,7 +5,7 @@ import {
   getCustomerIdFromSub,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
-import { getSubscriptionFromInvoice } from "@/webhooks/stripe/helpers/invoice";
+import { getSubscriptionFromInvoice, getInvoiceFromEvent } from "@/webhooks/stripe/helpers/invoice";
 import { logError } from "@/utils/api-helpers/errors/logError";
 
 /**
@@ -13,7 +13,7 @@ import { logError } from "@/utils/api-helpers/errors/logError";
  */
 const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
-    const invoice = event.data.object as Stripe.Invoice;
+    const invoice = getInvoiceFromEvent(event);
 
     // ----- Get the subscription -----
     const subscription = await getSubscriptionFromInvoice(invoice);

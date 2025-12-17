@@ -80,3 +80,14 @@ export const getSubscriptionFromInvoice = (invoice: Stripe.Invoice) => {
   const subscription = id ? getSubscriptionById(id) : null;
   return subscription;
 };
+
+/**
+ * Extracts the invoice object from a Stripe event.
+ *
+ * @param event - The Stripe event containing the invoice data.
+ * @returns The extracted Stripe invoice object.
+ */
+export const getInvoiceFromEvent = (event: Stripe.Event) => {
+  const invoice = event.data.object as Stripe.Invoice;
+  return invoice;
+};
