@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import useFetchUser from "@/hooks/user/useFetchUser";
 
 const page = () => {
-  const params = useParams();
   const { user } = useFetchUser();
 
   return (
