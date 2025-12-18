@@ -40,7 +40,7 @@ function UnauthenticatedCTA() {
         style={{
           boxShadow: `rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px`,
         }}
-        href="/sign-up"
+        href="/sign-up?plan=premium-monthly"
         className="flex h-[3.5rem] items-center justify-center rounded-[12px] bg-white hover:bg-tertiary-100 px-[4rem] py-[1.05882rem] transition delay-150 duration-300 ease-in-out font-semibold text-tertiary-800 border-none border-tertiary-300"
       >
         Enjoy 30 days free
