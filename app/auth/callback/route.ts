@@ -42,9 +42,11 @@ export async function GET(request: Request) {
   const subscriptions: Subscription[] = dbUser.subscriptions;
 
   /**
-   *  - Check whether we have a plan
-   *  - Check if user has email 
-   *  - User without active subscriptions can choose to sign up
+   *  We can allow the user to be redirected to stripe checkout page when
+   *  we have, 
+   *        - Plan query param
+   *        - Supabase email
+   *        - No active subscriptions
    */
   if (plan && currentUser.email && !hasActiveSubscription(subscriptions)) {
     try {
