@@ -19,7 +19,6 @@ model User {
   // Stripe
   subscriptions Subscription[]
 
-
   memberships HouseholdMember[] @relation("UserMemberships")
 
   // Timestamp
@@ -28,7 +27,7 @@ model User {
 }
 
 model Item {
-  item_id                 String     @unique
+  item_id                 String     @id
   institution_id          String
   institution_name        String?
   webhook                 String?
