@@ -17,7 +17,6 @@ export function getRedirectBase(request: Request, origin: string): string {
  */
 export async function upsertUser(currentUser: SupabaseUserSyncData) {
   try {
-    
     /**
      * Perform the upsert
      */
@@ -51,20 +50,19 @@ export async function upsertUser(currentUser: SupabaseUserSyncData) {
  * Creates a household for the given user and assigns the user as an admin member of the household.
  *
  * @param currentUser - The user data containing the user's ID, email, and metadata.
- * 
+ *
  * The function performs the following steps:
  * 1. Generates a household name based on the user's full name or email.
  * 2. Creates a new household in the database with the generated name.
  * 3. Adds the user as an admin member of the newly created household.
- * 
+ *
  * @remarks
  * - If the user's full name is not available, the household name is derived from the user's email.
  * - The function uses a database transaction to ensure both the household and household member are created atomically.
- * 
+ *
  * @throws Will throw an error if the database transaction fails.
  */
 export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
-  
   const { id, email, user_metadata } = currentUser;
   const fullName = user_metadata.full_name?.trim();
 
@@ -83,7 +81,7 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
         name: householdName,
       },
     });
-    
+
     await tx.householdMember.create({
       data: {
         name: fullName ?? "Unknown",
@@ -127,9 +125,9 @@ export const getHousehold = async (user_id: string) => {
 /**
  * Updates an existing user or creates a new user in the database based on the provided user data.
  *
- * @param currentUser - The user data to synchronize with the database. This includes the user's ID, email, 
+ * @param currentUser - The user data to synchronize with the database. This includes the user's ID, email,
  * and metadata such as the full name.
- * 
+ *
  * @returns A promise that resolves to the user record in the database after the upsert operation.
  *
  * The function performs the following:
@@ -152,7 +150,11 @@ export const updateOrCreateUser = async (currentUser: SupabaseUserSyncData) => {
       email: currentUser.email ?? "",
       name: currentUser.user_metadata.full_name?.trim() || "Unknown",
     },
+    include: {
+      subscriptions: true,
+    },
   });
-
   return userDB;
 };
+
+

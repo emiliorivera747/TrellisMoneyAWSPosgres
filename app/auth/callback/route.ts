@@ -5,6 +5,11 @@ import { upsertUser } from "@/features/auth/utils/authCallback";
 import { createCheckoutSession } from "@/services/stripe/sessions";
 import { getPriceIdBySlug } from "@/lib/plan-cache";
 
+// Utils
+import { hasActiveSubscription } from "@/features/auth/utils/callbackHelpers";
+
+import { Subscription } from "@prisma/client";
+
 /**
  * Handles the OAuth callback, exchanging the code for a session, updating the database,
  * and redirecting to Stripe or the next URL.
@@ -34,8 +39,14 @@ export async function GET(request: Request) {
   // ---- Upsert User ----
   const dbUser = await upsertUser(currentUser);
   if (!dbUser) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  const subscriptions: Subscription[] = dbUser.subscriptions;
 
-  if (plan && currentUser.email) {
+  /**
+   *  - Check whether we have a plan
+   *  - Check if user has email 
+   *  - User without active subscriptions can choose to sign up
+   */
+  if (plan && currentUser.email && !hasActiveSubscription(subscriptions)) {
     try {
       const price_id = await getPriceIdBySlug(plan);
 
