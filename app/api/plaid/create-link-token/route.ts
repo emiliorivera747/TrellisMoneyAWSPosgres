@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/config/plaidClient";
 import { Products, CountryCode } from "plaid";
-import { getUser } from "@/services/supabase/getUser";
 import { withAuth } from "@/lib/protected";
 
 const ERROR_MESSAGES = {

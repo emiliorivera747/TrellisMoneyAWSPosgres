@@ -288,6 +288,11 @@ export type HouseholdNullableScalarRelationFilter = {
   isNot?: Prisma.HouseholdWhereInput | null
 }
 
+export type HouseholdScalarRelationFilter = {
+  is?: Prisma.HouseholdWhereInput
+  isNot?: Prisma.HouseholdWhereInput
+}
+
 export type HouseholdCountOrderByAggregateInput = {
   household_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -307,11 +312,6 @@ export type HouseholdMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-}
-
-export type HouseholdScalarRelationFilter = {
-  is?: Prisma.HouseholdWhereInput
-  isNot?: Prisma.HouseholdWhereInput
 }
 
 export type HouseholdCreateNestedOneWithoutAccountsInput = {
@@ -336,12 +336,10 @@ export type HouseholdCreateNestedOneWithoutItemsInput = {
   connect?: Prisma.HouseholdWhereUniqueInput
 }
 
-export type HouseholdUpdateOneWithoutItemsNestedInput = {
+export type HouseholdUpdateOneRequiredWithoutItemsNestedInput = {
   create?: Prisma.XOR<Prisma.HouseholdCreateWithoutItemsInput, Prisma.HouseholdUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.HouseholdCreateOrConnectWithoutItemsInput
   upsert?: Prisma.HouseholdUpsertWithoutItemsInput
-  disconnect?: Prisma.HouseholdWhereInput | boolean
-  delete?: Prisma.HouseholdWhereInput | boolean
   connect?: Prisma.HouseholdWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.HouseholdUpdateToOneWithWhereWithoutItemsInput, Prisma.HouseholdUpdateWithoutItemsInput>, Prisma.HouseholdUncheckedUpdateWithoutItemsInput>
 }

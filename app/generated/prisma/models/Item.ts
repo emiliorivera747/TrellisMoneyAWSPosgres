@@ -226,7 +226,7 @@ export type ItemGroupByOutputType = {
   consented_use_cases: string[]
   access_token: string
   user_id: string
-  household_id: string | null
+  household_id: string
   _count: ItemCountAggregateOutputType | null
   _min: ItemMinAggregateOutputType | null
   _max: ItemMaxAggregateOutputType | null
@@ -269,10 +269,10 @@ export type ItemWhereInput = {
   consented_use_cases?: Prisma.StringNullableListFilter<"Item">
   access_token?: Prisma.StringFilter<"Item"> | string
   user_id?: Prisma.StringFilter<"Item"> | string
-  household_id?: Prisma.StringNullableFilter<"Item"> | string | null
-  User?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  household_id?: Prisma.StringFilter<"Item"> | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   accounts?: Prisma.AccountListRelationFilter
-  Household?: Prisma.XOR<Prisma.HouseholdNullableScalarRelationFilter, Prisma.HouseholdWhereInput> | null
+  household?: Prisma.XOR<Prisma.HouseholdScalarRelationFilter, Prisma.HouseholdWhereInput>
 }
 
 export type ItemOrderByWithRelationInput = {
@@ -294,10 +294,10 @@ export type ItemOrderByWithRelationInput = {
   consented_use_cases?: Prisma.SortOrder
   access_token?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  household_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  User?: Prisma.UserOrderByWithRelationInput
+  household_id?: Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
-  Household?: Prisma.HouseholdOrderByWithRelationInput
+  household?: Prisma.HouseholdOrderByWithRelationInput
 }
 
 export type ItemWhereUniqueInput = Prisma.AtLeast<{
@@ -322,10 +322,10 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   consented_use_cases?: Prisma.StringNullableListFilter<"Item">
   access_token?: Prisma.StringFilter<"Item"> | string
   user_id?: Prisma.StringFilter<"Item"> | string
-  household_id?: Prisma.StringNullableFilter<"Item"> | string | null
-  User?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  household_id?: Prisma.StringFilter<"Item"> | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   accounts?: Prisma.AccountListRelationFilter
-  Household?: Prisma.XOR<Prisma.HouseholdNullableScalarRelationFilter, Prisma.HouseholdWhereInput> | null
+  household?: Prisma.XOR<Prisma.HouseholdScalarRelationFilter, Prisma.HouseholdWhereInput>
 }, "item_id">
 
 export type ItemOrderByWithAggregationInput = {
@@ -347,7 +347,7 @@ export type ItemOrderByWithAggregationInput = {
   consented_use_cases?: Prisma.SortOrder
   access_token?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  household_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  household_id?: Prisma.SortOrder
   _count?: Prisma.ItemCountOrderByAggregateInput
   _max?: Prisma.ItemMaxOrderByAggregateInput
   _min?: Prisma.ItemMinOrderByAggregateInput
@@ -375,7 +375,7 @@ export type ItemScalarWhereWithAggregatesInput = {
   consented_use_cases?: Prisma.StringNullableListFilter<"Item">
   access_token?: Prisma.StringWithAggregatesFilter<"Item"> | string
   user_id?: Prisma.StringWithAggregatesFilter<"Item"> | string
-  household_id?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  household_id?: Prisma.StringWithAggregatesFilter<"Item"> | string
 }
 
 export type ItemCreateInput = {
@@ -396,9 +396,9 @@ export type ItemCreateInput = {
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
   access_token: string
-  User: Prisma.UserCreateNestedOneWithoutItemsInput
+  user: Prisma.UserCreateNestedOneWithoutItemsInput
   accounts?: Prisma.AccountCreateNestedManyWithoutItemInput
-  Household?: Prisma.HouseholdCreateNestedOneWithoutItemsInput
+  household: Prisma.HouseholdCreateNestedOneWithoutItemsInput
 }
 
 export type ItemUncheckedCreateInput = {
@@ -420,7 +420,7 @@ export type ItemUncheckedCreateInput = {
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
   access_token: string
   user_id: string
-  household_id?: string | null
+  household_id: string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutItemInput
 }
 
@@ -442,9 +442,9 @@ export type ItemUpdateInput = {
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
-  User?: Prisma.UserUpdateOneRequiredWithoutItemsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutItemsNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutItemNestedInput
-  Household?: Prisma.HouseholdUpdateOneWithoutItemsNestedInput
+  household?: Prisma.HouseholdUpdateOneRequiredWithoutItemsNestedInput
 }
 
 export type ItemUncheckedUpdateInput = {
@@ -466,7 +466,7 @@ export type ItemUncheckedUpdateInput = {
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutItemNestedInput
 }
 
@@ -489,7 +489,7 @@ export type ItemCreateManyInput = {
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
   access_token: string
   user_id: string
-  household_id?: string | null
+  household_id: string
 }
 
 export type ItemUpdateManyMutationInput = {
@@ -531,7 +531,7 @@ export type ItemUncheckedUpdateManyInput = {
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ItemScalarRelationFilter = {
@@ -781,8 +781,8 @@ export type ItemCreateWithoutAccountsInput = {
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
   access_token: string
-  User: Prisma.UserCreateNestedOneWithoutItemsInput
-  Household?: Prisma.HouseholdCreateNestedOneWithoutItemsInput
+  user: Prisma.UserCreateNestedOneWithoutItemsInput
+  household: Prisma.HouseholdCreateNestedOneWithoutItemsInput
 }
 
 export type ItemUncheckedCreateWithoutAccountsInput = {
@@ -804,7 +804,7 @@ export type ItemUncheckedCreateWithoutAccountsInput = {
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
   access_token: string
   user_id: string
-  household_id?: string | null
+  household_id: string
 }
 
 export type ItemCreateOrConnectWithoutAccountsInput = {
@@ -841,8 +841,8 @@ export type ItemUpdateWithoutAccountsInput = {
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
-  User?: Prisma.UserUpdateOneRequiredWithoutItemsNestedInput
-  Household?: Prisma.HouseholdUpdateOneWithoutItemsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutItemsNestedInput
+  household?: Prisma.HouseholdUpdateOneRequiredWithoutItemsNestedInput
 }
 
 export type ItemUncheckedUpdateWithoutAccountsInput = {
@@ -864,7 +864,7 @@ export type ItemUncheckedUpdateWithoutAccountsInput = {
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ItemCreateWithoutUserInput = {
@@ -886,7 +886,7 @@ export type ItemCreateWithoutUserInput = {
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
   access_token: string
   accounts?: Prisma.AccountCreateNestedManyWithoutItemInput
-  Household?: Prisma.HouseholdCreateNestedOneWithoutItemsInput
+  household: Prisma.HouseholdCreateNestedOneWithoutItemsInput
 }
 
 export type ItemUncheckedCreateWithoutUserInput = {
@@ -907,7 +907,7 @@ export type ItemUncheckedCreateWithoutUserInput = {
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
   access_token: string
-  household_id?: string | null
+  household_id: string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutItemInput
 }
 
@@ -959,7 +959,7 @@ export type ItemScalarWhereInput = {
   consented_use_cases?: Prisma.StringNullableListFilter<"Item">
   access_token?: Prisma.StringFilter<"Item"> | string
   user_id?: Prisma.StringFilter<"Item"> | string
-  household_id?: Prisma.StringNullableFilter<"Item"> | string | null
+  household_id?: Prisma.StringFilter<"Item"> | string
 }
 
 export type ItemCreateWithoutHouseholdInput = {
@@ -980,7 +980,7 @@ export type ItemCreateWithoutHouseholdInput = {
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
   access_token: string
-  User: Prisma.UserCreateNestedOneWithoutItemsInput
+  user: Prisma.UserCreateNestedOneWithoutItemsInput
   accounts?: Prisma.AccountCreateNestedManyWithoutItemInput
 }
 
@@ -1050,7 +1050,7 @@ export type ItemCreateManyUserInput = {
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
   access_token: string
-  household_id?: string | null
+  household_id: string
 }
 
 export type ItemUpdateWithoutUserInput = {
@@ -1072,7 +1072,7 @@ export type ItemUpdateWithoutUserInput = {
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   accounts?: Prisma.AccountUpdateManyWithoutItemNestedInput
-  Household?: Prisma.HouseholdUpdateOneWithoutItemsNestedInput
+  household?: Prisma.HouseholdUpdateOneRequiredWithoutItemsNestedInput
 }
 
 export type ItemUncheckedUpdateWithoutUserInput = {
@@ -1093,7 +1093,7 @@ export type ItemUncheckedUpdateWithoutUserInput = {
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutItemNestedInput
 }
 
@@ -1115,7 +1115,7 @@ export type ItemUncheckedUpdateManyWithoutUserInput = {
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ItemCreateManyHouseholdInput = {
@@ -1157,7 +1157,7 @@ export type ItemUpdateWithoutHouseholdInput = {
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
-  User?: Prisma.UserUpdateOneRequiredWithoutItemsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutItemsNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutItemNestedInput
 }
 
@@ -1255,9 +1255,9 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   access_token?: boolean
   user_id?: boolean
   household_id?: boolean
-  User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   accounts?: boolean | Prisma.Item$accountsArgs<ExtArgs>
-  Household?: boolean | Prisma.Item$HouseholdArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
@@ -1281,8 +1281,8 @@ export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   access_token?: boolean
   user_id?: boolean
   household_id?: boolean
-  User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  Household?: boolean | Prisma.Item$HouseholdArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1305,8 +1305,8 @@ export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   access_token?: boolean
   user_id?: boolean
   household_id?: boolean
-  User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  Household?: boolean | Prisma.Item$HouseholdArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectScalar = {
@@ -1333,26 +1333,26 @@ export type ItemSelectScalar = {
 
 export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"item_id" | "institution_id" | "institution_name" | "webhook" | "auth_method" | "request_id" | "update_type" | "consent_expiration_time" | "created_at" | "available_products" | "billed_products" | "products" | "error" | "consented_products" | "consented_data_scopes" | "consented_use_cases" | "access_token" | "user_id" | "household_id", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   accounts?: boolean | Prisma.Item$accountsArgs<ExtArgs>
-  Household?: boolean | Prisma.Item$HouseholdArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  Household?: boolean | Prisma.Item$HouseholdArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
 }
 export type ItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  Household?: boolean | Prisma.Item$HouseholdArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
 }
 
 export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Item"
   objects: {
-    User: Prisma.$UserPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
     accounts: Prisma.$AccountPayload<ExtArgs>[]
-    Household: Prisma.$HouseholdPayload<ExtArgs> | null
+    household: Prisma.$HouseholdPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     item_id: string
@@ -1373,7 +1373,7 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     consented_use_cases: string[]
     access_token: string
     user_id: string
-    household_id: string | null
+    household_id: string
   }, ExtArgs["result"]["item"]>
   composites: {}
 }
@@ -1768,9 +1768,9 @@ readonly fields: ItemFieldRefs;
  */
 export interface Prisma__ItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  User<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   accounts<T extends Prisma.Item$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  Household<T extends Prisma.Item$HouseholdArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$HouseholdArgs<ExtArgs>>): Prisma.Prisma__HouseholdClient<runtime.Types.Result.GetResult<Prisma.$HouseholdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  household<T extends Prisma.HouseholdDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HouseholdDefaultArgs<ExtArgs>>): Prisma.Prisma__HouseholdClient<runtime.Types.Result.GetResult<Prisma.$HouseholdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2236,25 +2236,6 @@ export type Item$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
-}
-
-/**
- * Item.Household
- */
-export type Item$HouseholdArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Household
-   */
-  select?: Prisma.HouseholdSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Household
-   */
-  omit?: Prisma.HouseholdOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.HouseholdInclude<ExtArgs> | null
-  where?: Prisma.HouseholdWhereInput
 }
 
 /**
