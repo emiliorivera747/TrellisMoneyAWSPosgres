@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import prisma from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
 import { Interval, UsageType } from "@/app/generated/prisma/client";
@@ -89,8 +90,14 @@ async function syncProductsAndPrices() {
 
 // Execute the sync
 syncProductsAndPrices()
-  .then(() => prisma.$disconnect())
+  .then(() => {
+    console.log("Sync completed.");
+    return prisma.$disconnect();
+  })
   .catch((err) => {
-    console.error("Error syncing products and prices:", err);
-    prisma.$disconnect();
+    console.error("Error during sync:", err);
+    return prisma.$disconnect();
+  })
+  .finally(() => {
+    process.exit(0);
   });
