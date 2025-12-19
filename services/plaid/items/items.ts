@@ -1,4 +1,3 @@
-import { ItemRemoveRequest } from "plaid";
 import { client } from "@/config/plaidClient";
 
 /**
