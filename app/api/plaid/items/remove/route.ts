@@ -11,7 +11,11 @@ import { removeItemFromPlaid } from "@/services/plaid/items/items";
 import getItemWithHousehold from "@/utils/prisma/item/getItemWithHousehold";
 import { getMemberInfo } from "@/utils/api-helpers/item/getMemberInfo";
 
-import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
+import {
+  apiFail,
+  apiSuccess,
+  apiError,
+} from "@/utils/api-helpers/api-responses/response";
 
 /**
  * Handles the POST request to remove a Plaid item.
@@ -40,10 +44,7 @@ export async function POST(req: NextRequest) {
       const user_id = user.id;
 
       if (!item_id || typeof item_id !== "string")
-        return NextResponse.json(
-          { message: "Invalid item_id", status: "fail" },
-          { status: 400 }
-        );
+        return apiFail("Invalid item_id", 400);
 
       /**
        * Get the item with all of its populated objects
@@ -54,19 +55,13 @@ export async function POST(req: NextRequest) {
        *  If item not found return 404 error
        */
       if (!item)
-        return NextResponse.json(
-          {
-            message: "Item not found or you do not have access to it.",
-            status: "fail",
-          },
-          { status: 404 }
-        );
+        return apiFail("Item not found or you do not have access to it.", 404);
 
       const { isOwner, isAdmin } = getMemberInfo(item, user_id);
 
       /**
        * Is the current user the owner of the item? or
-       * Are they a currentMember and have ADMIN priledges?
+       * Are they a currentMember and have ADMIN privileges?
        */
       if (isOwner || isAdmin) {
         try {
@@ -78,35 +73,19 @@ export async function POST(req: NextRequest) {
             },
           });
 
-          return NextResponse.json(
-            {
-              message: "Item successfully removed.",
-              status: "success",
-            },
-            { status: 200 }
-          );
+          return apiSuccess(null, "Item successfully removed.", 200);
         } catch (error) {
-          return NextResponse.json(
-            {
-              message:
-                "We couldn't disconnect the insitution right now. Please try again in a few minutes. Your data is safe.",
-              status: "fail",
-            },
-            { status: 502 }
+          return apiFail(
+            "We couldn't disconnect the institution right now. Please try again in a few minutes. Your data is safe.",
+            502
           );
         }
       } else {
-        return NextResponse.json(
-          { message: "You do not have permission to remove this item." },
-          { status: 403 }
-        );
+        return apiFail("You do not have permission to remove this item.", 403);
       }
     } catch (error) {
       console.error("Unexpected error in remove item endpoint:", error);
-      return NextResponse.json(
-        { error: getServerErrorMessage(error) },
-        { status: 500 }
-      );
+      return apiError(error, 500);
     }
   });
 }
