@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "@/lib/protected";
-import { ItemRemoveRequest } from "plaid"; // Adjust the import path based on your project structure
 import prisma from "@/lib/prisma";
 import { removeItemFromPlaid } from "@/services/plaid/items/items";
 
@@ -24,31 +23,38 @@ export async function POST(req: NextRequest) {
           { status: 404 }
         );
 
+      const currentMember = item.household.members[0];
+
       /**
        * Is the current user the owner of the item?
        */
-      if (item.user_id === user_id) {
+      if (item.user_id === user_id || (currentMember && currentMember.role === 'ADMIN')) {
+        try {
+          
+          await removeItemFromPlaid(item.access_token);
 
-        const res = removeItemFromPlaid(item.access_token);
+          await prisma.item.delete({
+            where: {
+              item_id,
+            },
+          });
 
-        // Remove the item from the database
-        await prisma.item.delete({
-          where: {
-        item_id,
-          },
-        });
-
-        return NextResponse.json({ message: "Item successfully removed." });
+          return NextResponse.json({ message: "Item successfully removed." });
+        } catch (error) {
+          return NextResponse.json(
+            { error: "Plaid removal failed. Nothing deleted from database." },
+            { status: 500 }
+          );
+        }
       } else {
         return NextResponse.json(
           { error: "You do not have permission to remove this item." },
           { status: 403 }
         );
       }
-
-
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
   });

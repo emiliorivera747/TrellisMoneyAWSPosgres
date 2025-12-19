@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { client } from "@/config/plaidClient";
-import { Products, CountryCode } from "plaid";
 import { withAuth } from "@/lib/protected";
+import getLinkToken from "@/services/plaid/link/getLinkToken";
 
 const ERROR_MESSAGES = {
   UNAUTHENTICATED: "User not authenticated",
@@ -20,7 +19,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
        */
       const { user_id } = await request.json();
 
-      const linkTokenResponse = await getLinkTokenRepsponse(user_id);
+      const linkTokenResponse = await getLinkToken(user_id);
 
       return NextResponse.json(
         { link_token: linkTokenResponse },
@@ -34,19 +33,3 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
   });
 }
-
-/**
- * Generates a link token for Plaid Link
- * @param userId - The user ID
- * @returns {Promise<string>} - The link token
- */
-const getLinkTokenRepsponse = async (userId: string) => {
-  const linkTokenResponse = await client.linkTokenCreate({
-    user: { client_user_id: userId },
-    client_name: "Trellis Money",
-    products: [Products.Transactions, Products.Investments],
-    country_codes: [CountryCode.Us],
-    language: "en",
-  });
-  return linkTokenResponse.data.link_token;
-};

@@ -5,7 +5,7 @@ import { Products, CountryCode } from "plaid";
  * @param userId - The user ID
  * @returns {Promise<string>} - The link token
  */
-const getLinkTokenRepsponse = async (userId: string) => {
+const getLinkToken = async (userId: string) => {
   const linkTokenResponse = await client.linkTokenCreate({
     user: { client_user_id: userId },
     client_name: "Trellis Money",
@@ -16,4 +16,4 @@ const getLinkTokenRepsponse = async (userId: string) => {
   return linkTokenResponse.data.link_token;
 };
 
-export default getLinkTokenRepsponse;
+export default getLinkToken;
