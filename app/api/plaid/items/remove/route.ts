@@ -9,6 +9,9 @@ import { removeItemFromPlaid } from "@/services/plaid/items/items";
 
 // Utils
 import getItemWithHousehold from "@/utils/prisma/item/getItemWithHousehold";
+import { getMemberInfo } from "@/utils/api-helpers/item/getMemberInfo";
+
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
 /**
  * Handles the POST request to remove a Plaid item.
@@ -59,9 +62,7 @@ export async function POST(req: NextRequest) {
           { status: 404 }
         );
 
-      const currentMember = item.household.members[0];
-      const isOwner = item.user_id === user_id;
-      const isAdmin = currentMember && currentMember.role === "ADMIN";
+      const { isOwner, isAdmin } = getMemberInfo(item, user_id);
 
       /**
        * Is the current user the owner of the item? or
@@ -87,23 +88,25 @@ export async function POST(req: NextRequest) {
         } catch (error) {
           return NextResponse.json(
             {
-              error:
+              message:
                 "We couldn't disconnect the insitution right now. Please try again in a few minutes. Your data is safe.",
+              status: "fail",
             },
             { status: 502 }
           );
         }
       } else {
         return NextResponse.json(
-          { error: "You do not have permission to remove this item." },
+          { message: "You do not have permission to remove this item." },
           { status: 403 }
         );
       }
     } catch (error) {
       console.error("Unexpected error in remove item endpoint:", error);
-      const errorMessage =
-        error instanceof Error ? error.message : "Internal server error";
-      return NextResponse.json({ error: errorMessage }, { status: 500 });
+      return NextResponse.json(
+        { error: getServerErrorMessage(error) },
+        { status: 500 }
+      );
     }
   });
 }
