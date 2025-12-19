@@ -13,6 +13,8 @@ datasource db {
   provider = "postgresql"
 }
 
+
+// ###################################################### ACCOUNT ##########################################
 model Account {
   account_id               String           @unique
   name                     String?
@@ -72,6 +74,9 @@ model Balance {
   timestamp                DateTime? @default(now()) @db.Timestamptz(3)
 }
 
+
+// ###################################################### USER ##########################################
+
 model User {
   user_id String @id @default(uuid())
 
@@ -99,6 +104,10 @@ model User {
   created_at DateTime @default(now()) @db.Timestamptz(3)
   updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(3)
 }
+
+
+
+// ###################################################### ITEM ##########################################
 
 model Item {
   item_id                 String     @id
@@ -155,6 +164,9 @@ model FixedIncome {
   security              Security @relation(fields: [securityId], references: [security_id])
   securityId            String   @unique
 }
+
+
+// ###################################################### SUBSCRIPTION ##########################################
 
 
 enum SubscriptionStatus {
@@ -240,6 +252,9 @@ model Product {
   prices Price[]
 }
 
+
+// ###################################################### PROFILE ##########################################
+
 model Profile {
   id     Int     @id @default(autoincrement())
   bio    String?
@@ -267,6 +282,10 @@ model Owner {
   accountId       String
   timestamp       DateTime? @default(now())
 }
+
+
+
+// ###################################################### HOUSEHOLD ##########################################
 
 enum HouseholdRole {
     ADMIN
@@ -309,6 +328,10 @@ model HouseholdMember {
     @@index([household_id])
     @@index([user_id])
 }
+
+
+
+// ###################################################### HOLDING ##########################################
 
 model Holding {
   cost_basis                 Decimal
@@ -354,6 +377,10 @@ model HoldingHistory {
   user_id                    String
   holding                    Holding   @relation(fields: [security_id, user_id, account_id], references: [security_id, user_id, account_id], onDelete: Cascade) // Composite foreign key
 }
+
+
+
+// ###################################################### SECURITY ##########################################
 
 model Security {
   security_id              String            @unique
