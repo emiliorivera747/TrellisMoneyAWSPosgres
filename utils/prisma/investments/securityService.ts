@@ -1,11 +1,10 @@
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { Security } from "plaid";
 import { SecurityHistory } from "@/types/prisma";
 import { Security as SecurityPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Decimal } from "decimal.js";
-import { PrismaPromise } from "@prisma/client";
 
 /**
  * Compares the securities from plaid with the securities in the database
@@ -36,7 +35,7 @@ export const upsertSecurities = async (
   >
 ): Promise<{
   securityHistory: SecurityHistory[];
-  securityUpserts: PrismaPromise<SecurityPrisma>[];
+  securityUpserts: Promise<SecurityPrisma>[];
 }> => {
   const securityHistory: SecurityHistory[] = [];
 

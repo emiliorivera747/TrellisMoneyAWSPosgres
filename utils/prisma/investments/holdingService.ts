@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { Holding } from "plaid";
 import { Holding as HoldingPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
@@ -6,7 +6,6 @@ import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Decimal } from "decimal.js";
 import { HoldingHistory } from "@/types/prisma";
 import { getUser } from "@/services/supabase/getUser";
-import { PrismaPromise } from "@prisma/client";
 
 /**
  *
@@ -28,7 +27,7 @@ export const upsertHoldings = async (
   >
 ): Promise<{
   holdingHistory: HoldingHistory[];
-  holdingUpserts: PrismaPromise<HoldingPrisma>[];
+  holdingUpserts: Promise<HoldingPrisma>[];
 }> => {
   const holdingHistory: HoldingHistory[] = [];
 
@@ -116,7 +115,10 @@ const getHoldingHistoryFields = (holding: Holding, user_id: string) => ({
   institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
   institution_value: getValueOrDefault(holding?.institution_value, 0),
   iso_currency_code: holding.iso_currency_code || "USD",
-  unofficial_currency_code: getValueOrDefault(holding?.unofficial_currency_code, "USD"),
+  unofficial_currency_code: getValueOrDefault(
+    holding?.unofficial_currency_code,
+    "USD"
+  ),
   vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
   vested_value: getValueOrDefault(holding?.vested_value, 0),
   quantity: getValueOrDefault(holding?.quantity, 0),

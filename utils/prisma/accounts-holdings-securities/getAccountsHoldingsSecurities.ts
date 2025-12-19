@@ -1,4 +1,4 @@
-import {prisma} from '@/lib/prisma';
+import prisma from '@/lib/prisma';
 
 /**
  * Get accounts with holdings and securities for a specific user

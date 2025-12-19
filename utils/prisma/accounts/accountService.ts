@@ -1,5 +1,5 @@
 import { ItemPrisma } from "@/types/prisma";
-import {prisma} from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 
 /**
  * Fetch all of the accounts associated with the user id

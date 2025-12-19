@@ -1,29 +1,29 @@
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
-import { Interval, UsageType } from "@prisma/client";
+import { Interval, UsageType } from "@/app/generated/prisma/client";
 
 /**
  * Synchronizes products and their associated prices from Stripe to a local database using Prisma.
- * 
+ *
  * This function retrieves all active products from Stripe, along with their associated prices,
- * and ensures that the local database is up-to-date by performing upserts (update or insert) 
+ * and ensures that the local database is up-to-date by performing upserts (update or insert)
  * for each product and its prices. The upserts are wrapped in a transaction to ensure data consistency.
- * 
+ *
  * @async
  * @function
- * 
+ *
  * @remarks
  * - The function uses Stripe's API to fetch products and prices.
  * - It uses Prisma's `$transaction` method to perform database operations atomically.
  * - Products and prices are upserted based on their unique identifiers (`product_id` and `price_id`).
  * - The function assumes that the `product` and `price` tables exist in the Prisma schema.
- * 
+ *
  * @throws {Error} If there is an issue with the Stripe API or the database operations.
- * 
+ *
  * @example
  * // Call the function to sync products and prices
  * await syncProductsAndPrices();
- * 
+ *
  * @see {@link https://stripe.com/docs/api/products/list} for Stripe's product listing API.
  * @see {@link https://stripe.com/docs/api/prices/list} for Stripe's price listing API.
  */

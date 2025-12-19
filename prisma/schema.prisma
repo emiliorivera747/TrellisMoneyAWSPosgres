@@ -1,0 +1,411 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Account {
+  account_id               String           @unique
+  name                     String?
+  type                     String?
+  available                Decimal?
+  current                  Decimal?
+  limit                    Decimal?
+  iso_currency_code        String?
+  unofficial_currency_code String?
+  mask                     String?
+  official_name            String?
+  subtype                  String?
+  verification_status      String?
+  persistent_account_id    String?
+  annual_return_rate       Decimal?         @default(0.00)
+  holder_category          String?
+  balance                  Balance?         @relation(fields: [balance_id], references: [balance_id], onDelete: Cascade)
+  balance_id               String           @unique
+  user                     User             @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  user_id                  String
+  timestamp                DateTime?        @default(now()) @db.Timestamptz(3)
+  history                  AccountHistory[]
+  holdings                 Holding[]
+  household                Household?       @relation(fields: [household_id], references: [household_id], onDelete: Cascade)
+  household_id             String?
+  item                     Item             @relation(fields: [item_id], references: [item_id], onDelete: Cascade)
+  item_id                  String
+  updated_at               DateTime?        @default(now()) @db.Timestamptz(3)
+  created_at               DateTime?        @default(now()) @db.Timestamptz(3)
+}
+
+model AccountHistory {
+  id                       Int      @id @default(autoincrement())
+  account_id               String
+  name                     String
+  type                     String
+  available                Decimal
+  current                  Decimal
+  limit                    Decimal
+  iso_currency_code        String
+  unofficial_currency_code String
+  user_id                  String?
+  timestamp                DateTime @default(now()) @db.Timestamptz(3)
+  account                  Account  @relation(fields: [account_id], references: [account_id], onDelete: Cascade)
+}
+
+model Balance {
+  balance_id               String    @unique
+  available                Decimal
+  current                  Decimal
+  limit                    Decimal
+  iso_currency_code        String
+  unofficial_currency_code String?
+  last_updated             DateTime? @db.Timestamptz(3)
+  account                  Account?
+  updated_at               DateTime? @default(now()) @db.Timestamptz(3)
+  timestamp                DateTime? @default(now()) @db.Timestamptz(3)
+}
+
+model User {
+  user_id String @id @default(uuid())
+
+  // Other
+  email          String   @unique
+  name           String?
+  email_verified Boolean? @default(false)
+  phone_verified Boolean? @default(false)
+  phone          String?
+  customer_id    String?  @unique
+  profile        Profile?
+
+  // Financial
+  securities Security[]
+  holdings   Holding[]
+  accounts   Account[]
+  items      Item[]
+
+  // Stripe
+  subscriptions Subscription[]
+
+  memberships HouseholdMember[] @relation("UserMemberships")
+
+  // Timestamp
+  created_at DateTime @default(now()) @db.Timestamptz(3)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+}
+
+model Item {
+  item_id                 String     @id
+  institution_id          String
+  institution_name        String?
+  webhook                 String?
+  auth_method             String?
+  request_id              String
+  update_type             String
+  consent_expiration_time String
+  created_at              DateTime   @default(now()) @db.Timestamptz(3)
+  available_products      String[]
+  billed_products         String[]
+  products                String[]
+  error                   String?
+  consented_products      String[]
+  consented_data_scopes   String[]
+  consented_use_cases     String[]
+  access_token            String
+  User                    User       @relation(fields: [user_id], references: [user_id])
+  user_id                 String
+  accounts                Account[]
+  Household               Household? @relation(fields: [household_id], references: [household_id])
+  household_id            String?
+}
+
+model TransactionStatus {
+  id                     Int      @id @default(autoincrement())
+  last_successful_update DateTime @db.Timestamptz(3)
+  last_failed_update     DateTime @db.Timestamptz(3)
+}
+
+model WebhookStatus {
+  id        Int      @id @default(autoincrement())
+  sent_at   DateTime @db.Timestamptz(3)
+  code_sent String
+}
+
+model OptionContract {
+  id                         Int     @id @default(autoincrement())
+  contract_type              String
+  expiration_date            String
+  strike_price               Decimal
+  underlying_security_ticker String
+}
+
+model FixedIncome {
+  id                    Int      @id @default(autoincrement())
+  yield_rate_percentage Decimal?
+  yield_rate_type       String?
+  maturity_date         String?
+  issue_date            String?
+  face_value            Decimal?
+  security              Security @relation(fields: [securityId], references: [security_id])
+  securityId            String   @unique
+}
+
+
+enum SubscriptionStatus {
+  incomplete
+  incomplete_expired
+  trialing
+  active
+  past_due
+  canceled
+  unpaid
+  paused
+}
+
+enum Interval {
+  day
+  week
+  month
+  year
+}
+
+enum UsageType {
+  metered
+  licensed
+}
+
+model Subscription {
+  subscription_id String @id
+  user_id         String @unique
+  customer_id     String
+
+  price_id String?
+
+  status SubscriptionStatus @default(incomplete)
+
+  start_date           Int?
+  trial_start          Int?
+  trial_end            Int?
+  ended_at             Int?
+  cancel_at            Int?
+  cancel_at_period_end Boolean @default(false)
+
+  created_at Int?
+  updated_at Int?
+
+  canceled_at Int?
+
+  // Relations
+  user  User   @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  price Price? @relation(fields: [price_id], references: [price_id])
+}
+
+model Price {
+  price_id String @id
+
+  product_id String
+
+  currency    String
+  unit_amount BigInt
+
+  recurring_interval       Interval
+  recurring_interval_count Int?      @default(1)
+  recurring_usage_type     UsageType @default(licensed)
+
+  active Boolean @default(false)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  product       Product        @relation(fields: [product_id], references: [product_id])
+  subscriptions Subscription[]
+}
+
+model Product {
+  product_id  String  @id
+  name        String
+  description String?
+  active      Boolean @default(true)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  prices Price[]
+}
+
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  user   User    @relation(fields: [user_id], references: [user_id])
+  user_id String  @unique
+}
+
+model Owner {
+  owner_id        String    @unique
+  name            String?
+  phone_number    String?
+  phone_type      String?
+  phone_primary   Boolean?
+  email           String
+  email_type      String?
+  email_primary   Boolean?
+  street          String?
+  region          String?
+  address         String?
+  city            String?
+  state           String?
+  postal_code     String?
+  country         String?
+  address_primary Boolean?
+  accountId       String
+  timestamp       DateTime? @default(now())
+}
+
+enum HouseholdRole {
+    ADMIN
+    MEMBER
+    GUEST
+}
+
+model Household {
+    household_id String @id @default(uuid())
+
+    name     String            @default("Our Household")
+    members  HouseholdMember[]
+    items    Item[]
+    accounts Account[]
+
+    // Timestamp
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model HouseholdMember {
+    member_id String @id @default(uuid())
+
+    name String
+    role HouseholdRole @default(MEMBER)
+    dob  DateTime?
+
+    invited_email String?
+    invite_status String  @default("pending")
+
+    // Relations
+    household    Household @relation(fields: [household_id], references: [household_id])
+    household_id String
+
+    user    User?   @relation("UserMemberships", fields: [user_id], references: [user_id])
+    user_id String?
+
+    @@unique([household_id, user_id]) // One user can't be added twice
+    @@unique([household_id, invited_email]) // prevent duplicate invites
+    @@index([household_id])
+    @@index([user_id])
+}
+
+model Holding {
+  cost_basis                 Decimal
+  institution_price          Decimal
+  institution_price_as_of    DateTime         @db.Timestamptz(3)
+  institution_price_datetime DateTime?        @db.Timestamptz(3)
+  institution_value          Decimal
+  annual_return_rate         Decimal?         @default(0.06)
+  iso_currency_code          String
+  unofficial_currency_code   String?
+  vested_quantity            Decimal?
+  vested_value               Decimal
+  quantity                   Decimal
+  security                   Security         @relation(fields: [security_id], references: [security_id], onDelete: Cascade)
+  user                       User             @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  account_id                 String
+  security_id                String
+  timestamp                  DateTime         @default(now()) @db.Timestamptz(3)
+  user_id                    String
+  history                    HoldingHistory[]
+  account                    Account          @relation(fields: [account_id], references: [account_id], onDelete: Cascade)
+
+  @@id(name: "holding_id", [security_id, user_id, account_id])
+}
+
+model HoldingHistory {
+  id                         Int       @id @default(autoincrement())
+  cost_basis                 Decimal
+  institution_price          Decimal
+  annual_return_rate         Decimal?  @default(0.06)
+  institution_price_as_of    DateTime  @db.Timestamptz(3)
+  institution_price_datetime DateTime? @db.Timestamptz(3)
+  institution_value          Decimal
+  iso_currency_code          String?
+  unofficial_currency_code   String?
+  vested_quantity            Decimal?
+  vested_value               Decimal
+  quantity                   Decimal
+  account_id                 String
+  security_id                String
+  created_at                 DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at                 DateTime  @default(now()) @db.Timestamptz(3)
+  user_id                    String
+  holding                    Holding   @relation(fields: [security_id, user_id, account_id], references: [security_id, user_id, account_id], onDelete: Cascade) // Composite foreign key
+}
+
+model Security {
+  security_id              String            @unique
+  isin                     String?
+  cusip                    String?
+  sedol                    String?
+  institution_security_id  String?
+  institution_id           String?
+  proxy_security_id        String?
+  name                     String?
+  ticker_symbol            String?
+  is_cash_equivalent       Boolean?
+  type                     String?
+  close_price              Decimal?
+  close_price_as_of        DateTime?         @db.Timestamptz(3)
+  update_datetime          DateTime?         @db.Timestamptz(3)
+  iso_currency_code        String?
+  unofficial_currency_code String?
+  market_identifier_code   String?
+  sector                   String?
+  industry                 String?
+  option_contract_id       Int?
+  holdings                 Holding[]
+  user                     User              @relation(fields: [user_id], references: [user_id])
+  user_id                  String
+  timestamp                DateTime?         @default(now()) @db.Timestamptz(3)
+  fixed_income             FixedIncome?
+  history                  SecurityHistory[]
+}
+
+model SecurityHistory {
+  id                       Int       @id @default(autoincrement())
+  isin                     String?
+  cusip                    String?
+  sedol                    String?
+  institution_security_id  String?
+  institution_id           String?
+  proxy_security_id        String?
+  name                     String?
+  ticker_symbol            String?
+  is_cash_equivalent       Boolean?
+  type                     String?
+  close_price              Decimal?
+  close_price_as_of        DateTime? @db.Timestamptz(3)
+  update_datetime          DateTime? @db.Timestamptz(3)
+  iso_currency_code        String?
+  unofficial_currency_code String?
+  market_identifier_code   String?
+  sector                   String?
+  industry                 String?
+  option_contract_id       Int?
+  timestamp                DateTime  @default(now()) @db.Timestamptz(3)
+  security                 Security  @relation(fields: [security_id], references: [security_id])
+  security_id              String
+}

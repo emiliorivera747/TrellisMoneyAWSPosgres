@@ -9,7 +9,7 @@ import {
   getExistingHoldings,
 } from "@/utils/prisma/investments/holdingService";
 
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 /**
@@ -73,10 +73,10 @@ export const updateHoldingsAndSecurities = async (
    * This includes upserts and history creation
    */
   try {
-    await prisma.$transaction([
-      ...securityUpserts,
-      ...holdingUpserts
-    ]);
+    // await prisma.$transaction([
+    //   ...securityUpserts,
+    //   ...holdingUpserts
+    // ]);
     
     // Create history records in parallel after upserts complete
     const historyPromises = [];

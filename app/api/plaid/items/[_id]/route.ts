@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/config/plaidClient";
 import { getItem } from "@/utils/prisma/item/getItem";

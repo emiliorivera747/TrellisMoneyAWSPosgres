@@ -8,8 +8,7 @@ import { getPriceIdBySlug } from "@/lib/plan-cache";
 // Utils
 import { hasActiveSubscription } from "@/features/auth/utils/callbackHelpers";
 
-import { Subscription } from "@prisma/client";
-
+import { Subscription } from "@/app/generated/prisma/client";
 /**
  * Handles the OAuth callback, exchanging the code for a session, updating the database,
  * and redirecting to Stripe or the next URL.
@@ -43,7 +42,7 @@ export async function GET(request: Request) {
 
   /**
    *  We can allow the user to be redirected to stripe checkout page when
-   *  we have, 
+   *  we have,
    *        - Plan query param
    *        - Supabase email
    *        - No active subscriptions

@@ -1,4 +1,4 @@
-import { Subscription } from "@prisma/client";
+import { Subscription } from "@/app/generated/prisma/client";
 
 /**
  * Determines if there is at least one active subscription in the provided list.

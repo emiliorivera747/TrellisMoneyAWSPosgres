@@ -81,3 +81,5 @@ model FixedIncome {
   security              Security @relation(fields: [securityId], references: [security_id])
   securityId            String   @unique
 }
+
+

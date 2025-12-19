@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { Security } from "@/types/plaid";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";

@@ -1,9 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 import { withAuth } from "@/lib/protected";
 
-const prisma = new PrismaClient();
 
 /**
  * 
