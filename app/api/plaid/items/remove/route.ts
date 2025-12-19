@@ -66,13 +66,7 @@ export async function POST(req: NextRequest) {
       if (isOwner || isAdmin) {
         try {
           await removeItemFromPlaid(item.access_token);
-
-          await prisma.item.delete({
-            where: {
-              item_id,
-            },
-          });
-
+          await prisma.item.delete({ where: { item_id } });
           return apiSuccess(null, "Item successfully removed.", 200);
         } catch (error) {
           return apiFail(

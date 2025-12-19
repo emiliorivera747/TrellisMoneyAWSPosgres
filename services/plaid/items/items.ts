@@ -8,31 +8,29 @@ import { client } from "@/config/plaidClient";
  * @returns A promise that resolves to the response from the Plaid API after the item is removed.
  */
 export const removeItemFromPlaid = async (accessToken: string) => {
-  if (!accessToken)
-    throw new Error("Missing access token – cannot remove item from Plaid");
-
-  const request: ItemRemoveRequest = {
-    access_token: accessToken,
-  };
+  if (!accessToken) throw new Error("Missing access token");
 
   try {
-    await client.itemRemove(request);
-    console.log(`Successfully removed item from Plaid (token ending ...${accessToken.slice(-6)})`);
+    await client.itemRemove({
+      access_token: accessToken,
+    });
+    return true;
   } catch (error) {
     // Enhance error with context
     const plaidError = (error as any)?.response?.data || error;
-    
-    console.error("Plaid itemRemove failed:", {
-      message:
-        plaidError.error_message ||
-        (error instanceof Error ? error.message : "Unknown error"),
-      code: plaidError.error_code,
-      accessTokenLast6: accessToken.slice(-6),
-    });
 
-    throw new Error(
-      plaidError.error_message ||
-        "Failed to remove item from Plaid. Please try again later."
-    );
+    // If the item is already gone from Plaid, don't block the DB deletion
+    if (
+      plaidError.error_code === "ITEM_NOT_FOUND" ||
+      plaidError.error_code === "INVALID_ACCESS_TOKEN"
+    ) {
+      console.warn(
+        "Item already removed from Plaid or token invalid. Proceeding with DB cleanup."
+      );
+      return true;
+    }
+
+    console.error("Plaid itemRemove failed:", plaidError);
+    throw new Error(plaidError.error_message || "Plaid communication failed");
   }
 };
