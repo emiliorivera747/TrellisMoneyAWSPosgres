@@ -16,9 +16,8 @@ export const removeItemFromPlaid = async (accessToken: string) => {
   };
 
   try {
-    const res = await client.itemRemove(request);
-    if (!res.data.request_id)
-      throw new Error("Plaid reported item was not removed");
+    await client.itemRemove(request);
+    console.log(`Successfully removed item from Plaid (token ending ...${accessToken.slice(-6)})`);
   } catch (error) {
     // Enhance error with context
     const plaidError = (error as any)?.response?.data || error;

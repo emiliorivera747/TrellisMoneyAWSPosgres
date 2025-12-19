@@ -10,7 +10,6 @@ import { removeItemFromPlaid } from "@/services/plaid/items/items";
 // Utils
 import getItemWithHousehold from "@/utils/prisma/item/getItemWithHousehold";
 
-
 /**
  * Handles the POST request to remove a Plaid item.
  *
@@ -34,9 +33,14 @@ import getItemWithHousehold from "@/utils/prisma/item/getItemWithHousehold";
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      
       const { item_id } = await req.json();
       const user_id = user.id;
+
+      if (!item_id || typeof item_id !== "string")
+        return NextResponse.json(
+          { message: "Invalid item_id", status: "fail" },
+          { status: 400 }
+        );
 
       /**
        * Get the item with all of its populated objects
@@ -48,20 +52,22 @@ export async function POST(req: NextRequest) {
        */
       if (!item)
         return NextResponse.json(
-          { error: "Item not found or you do not have access to it." },
+          {
+            message: "Item not found or you do not have access to it.",
+            status: "fail",
+          },
           { status: 404 }
         );
 
       const currentMember = item.household.members[0];
+      const isOwner = item.user_id === user_id;
+      const isAdmin = currentMember && currentMember.role === "ADMIN";
 
       /**
        * Is the current user the owner of the item? or
        * Are they a currentMember and have ADMIN priledges?
        */
-      if (
-        item.user_id === user_id ||
-        (currentMember && currentMember.role === "ADMIN")
-      ) {
+      if (isOwner || isAdmin) {
         try {
           await removeItemFromPlaid(item.access_token);
 
@@ -71,11 +77,20 @@ export async function POST(req: NextRequest) {
             },
           });
 
-          return NextResponse.json({ message: "Item successfully removed." });
+          return NextResponse.json(
+            {
+              message: "Item successfully removed.",
+              status: "success",
+            },
+            { status: 200 }
+          );
         } catch (error) {
           return NextResponse.json(
-            { error: "Plaid removal failed. Nothing deleted from database." },
-            { status: 500 }
+            {
+              error:
+                "We couldn't disconnect the insitution right now. Please try again in a few minutes. Your data is safe.",
+            },
+            { status: 502 }
           );
         }
       } else {
@@ -85,8 +100,9 @@ export async function POST(req: NextRequest) {
         );
       }
     } catch (error) {
+      console.error("Unexpected error in remove item endpoint:", error);
       const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
+        error instanceof Error ? error.message : "Internal server error";
       return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
   });
