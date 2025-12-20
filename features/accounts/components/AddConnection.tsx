@@ -54,11 +54,12 @@ const AddConnection = () => {
       publicToken: string,
       metadata: PlaidLinkOnSuccessMetadata
     ) => {
+      
       await plaidService.exchangeToken({
         public_token: publicToken,
-        institution: metadata?.institution ?? { institution_id: "", name: "" },
-        accounts: metadata.accounts || [],
+        metadata,
       });
+
       setSelectedUserId(null);
     },
     onExit: (err, metadata) => {

@@ -37,16 +37,21 @@ const createLinkToken = async (user_id: string) => {
  */
 const exchangeToken = async ({
   public_token,
-  institution,
-  accounts,
+  metadata,
 }: ExchangeTokenProps) => {
+  
   const response = await fetch(`${API_URL}/exchange-token`, {
     method: "POST",
-    body: JSON.stringify({ public_token, institution, accounts }),
+    body: JSON.stringify({
+      public_token,
+      institution: metadata?.institution ?? { institution_id: "", name: "" },
+      accounts: metadata.accounts || [],
+    }),
     headers: {
       "Content-Type": "application/json",
     },
   });
+  
   return response;
 };
 

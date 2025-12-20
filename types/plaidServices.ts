@@ -1,3 +1,5 @@
+import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
+
 interface Institution {
   institution_id: string;
   name: string;
@@ -10,8 +12,5 @@ interface Account {
 
 export interface ExchangeTokenProps {
   public_token: string;
-  institution: Institution;
-  accounts: Account[];
+  metadata: PlaidLinkOnSuccessMetadata;
 }
-
-
