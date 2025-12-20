@@ -8,14 +8,27 @@ const getIdentity = async () => {
   return response.json();
 };
 
+// /**
+//  * Plaid service to create link token
+//  */
+// const createLinkToken = async () => {
+//   const response = await fetch(`${API_URL}/create-link-token`, {
+//     method: "POST",
+//   });
+//   return response;
+// };
+
 /**
  * Plaid service to create link token
  */
-const createLinkToken = async () => {
-  const response = await fetch(`${API_URL}/create-link-token`, {
+const createLinkToken = async (user_id: string) => {
+  const res = await fetch(`${API_URL}/create-link-token`, {
     method: "POST",
+    body: JSON.stringify({ user_id }),
+    headers: { "Content-Type": "application/json" },
   });
-  return response;
+  if (!res.ok) throw new Error("Failed to create link token");
+  return res.json();
 };
 
 /**
@@ -61,8 +74,6 @@ const getNetWorth = async () => {
   return response.json();
 };
 
-
-
 const plaidService = {
   getIdentity,
   createLinkToken,
@@ -71,6 +82,7 @@ const plaidService = {
   getAccount,
   getBalance,
   getNetWorth,
+  // createLinkTokenWithUserId,
 };
 
 export default plaidService;

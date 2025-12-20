@@ -31,6 +31,7 @@ import { getSteps } from "@/features/accounts/config/ModalSteps";
 // Components
 import PrimaryModalButton from "@/components/buttons/PrimaryModalButton";
 import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCardSkeleton";
+import AddAccount from "@/features/accounts/components/buttons/AddAccount";
 
 /**
  *
@@ -38,15 +39,15 @@ import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCa
  *
  */
 const AddConnection = () => {
+  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   const { linkToken, generateToken } = useGenerateToken();
+
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
     useFetchHouseholdMembers({ isDialogOpen });
-
-  const prevButtonRef = useRef(null);
-  const nextButtonRef = useRef(null);
 
   const { open, ready, error } = usePlaidLink({
     token: linkToken ?? null,
@@ -118,7 +119,7 @@ const AddConnection = () => {
               )}
               {isLoadingHousehold ? (
                 <MemberCardSkeleton
-                  length={householdResponse?.data?.members?.length || 6}
+                  length={householdResponse?.data?.members?.length || 2}
                 />
               ) : (
                 currentStep.content
@@ -131,7 +132,7 @@ const AddConnection = () => {
                   className="px-4 py-2 bg-gray-200 rounded-[12px]"
                   onClickFn={() => back()}
                   label="Previous"
-                  ref={prevButtonRef}
+        
                 />
               )}
               <div className="flex justify-end w-full">
@@ -139,7 +140,6 @@ const AddConnection = () => {
                   className="px-4 py-2 bg-primary-800 rounded-[12px]"
                   onClickFn={() => next()}
                   label="Next"
-                  ref={nextButtonRef}
                 />
               </div>
             </DialogFooter>

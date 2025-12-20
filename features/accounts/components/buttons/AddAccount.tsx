@@ -1,4 +1,3 @@
-import React from "react";
 
 /**
  * Button to add account
@@ -7,9 +6,9 @@ import React from "react";
  */
 const AddAccount = () => {
   return (
-    <div className="bg-tertiary-200 hover:bg-tertiary-300 py-4 rounded-[12px] text-tertiary-1000 hover:font-bold transition-all duration-300 ease-in-out w-full ">
+    <span className="flex h-[3.5rem] items-center justify-center rounded-[12px] bg-tertiary-200 hover:bg-tertiary-300 px-[4rem] py-[1.05882rem] transition delay-150 duration-300 ease-in-out font-semibold text-tertiary-800 border-none border-tertiary-300">
       Add Account
-    </div>
+    </span>
   );
 };
 
