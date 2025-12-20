@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useForm, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
@@ -10,7 +10,7 @@ import { handleFormSubmission } from "@/features/projected-financial-assets/util
 import { DashboardState } from "@/types/dashboard";
 
 // Hooks
-import {useFetchNetWorth} from "@/features/net-worth/hooks/useFetchNetWorth";
+import { useFetchNetWorth } from "@/features/net-worth/hooks/useFetchNetWorth";
 
 const currentYear = Number(new Date().getFullYear().toString());
 
@@ -40,16 +40,6 @@ export const useDashboard = (): DashboardState => {
     selectedFilter,
   });
 
-  /**
-   * Function to edit the retirement year
-   *
-   * @param year
-   */
-  const editRetirementYear = (year: number) => {
-    setRetirementYear(year);
-    handleYearSelection(year);
-  };
-
   const { netWorthData, netWorthError, netWorthLoading } = useFetchNetWorth();
 
   const {
@@ -66,49 +56,98 @@ export const useDashboard = (): DashboardState => {
   }) as UseFormReturn<FormData, any, undefined>;
 
   const [mode, setMode] = useState<"edit" | "view">("view");
-  const handleModeChange = () => {
+
+  const handleModeChange = useCallback(() => {
     setMode((prevMode) => (prevMode === "edit" ? "view" : "edit"));
-  };
+  }, []);
 
-  const handleYearSelection = (year: number) => setSelectedYear(year);
-  const handleFilterChange = (filter: InflationFilters) =>
+  const handleYearSelection = useCallback((year: number) => {
+    setSelectedYear(year);
+  }, []);
+
+  const handleFilterChange = useCallback((filter: InflationFilters) => {
     setSelectedFilter(filter);
+  }, []);
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    handleFormSubmission(
-      data,
-      futureProjectionData,
+  /**
+   * Function to edit the retirement year
+   *
+   * @param year
+   */
+  const editRetirementYear = useCallback(
+    (year: number) => {
+      setRetirementYear(year);
+      handleYearSelection(year);
+    },
+    [handleYearSelection]
+  );
+
+  const onSubmit = useCallback<SubmitHandler<FormData>>(
+    (data) => {
+      handleFormSubmission(
+        data,
+        futureProjectionData,
+        selectedFilter,
+        user,
+        mutateAsset
+      );
+      setMode("view");
+    },
+    [futureProjectionData, selectedFilter, user, mutateAsset]
+  );
+
+  const assets = useMemo(() => {
+    return futureProjectionData?.projected_assets?.[0]?.data || [];
+  }, []);
+
+  return useMemo(
+    () => ({
+      selectedYear,
       selectedFilter,
+      futureProjectionData,
+      futureProjectionError,
+      futureProjectionLoading,
       user,
-      mutateAsset
-    );
-    setMode("view");
-  };
-
-  const assets = futureProjectionData?.projected_assets?.[0]?.data || [];
-
-  return {
-    selectedYear,
-    selectedFilter,
-    futureProjectionData,
-    futureProjectionError,
-    futureProjectionLoading,
-    user,
-    userError,
-    linkToken,
-    isLoadingAssets,
-    form,
-    mode,
-    netWorthData,
-    netWorthError,
-    netWorthLoading,
-    assets,
-    retirementYear,
-    editRetirementYear,
-    handleModeChange,
-    mutateAsset,
-    handleYearSelection,
-    handleFilterChange,
-    onSubmit,
-  };
+      userError,
+      linkToken,
+      isLoadingAssets,
+      form,
+      mode,
+      netWorthData,
+      netWorthError,
+      netWorthLoading,
+      assets,
+      retirementYear,
+      editRetirementYear,
+      handleModeChange,
+      mutateAsset,
+      handleYearSelection,
+      handleFilterChange,
+      onSubmit,
+    }),
+    [
+      selectedYear,
+      selectedFilter,
+      futureProjectionData,
+      futureProjectionError,
+      futureProjectionLoading,
+      user,
+      userError,
+      linkToken,
+      isLoadingAssets,
+      form,
+      mode,
+      netWorthData,
+      netWorthError,
+      netWorthLoading,
+      assets,
+      retirementYear,
+      editRetirementYear,
+      handleModeChange,
+      mutateAsset,
+      handleYearSelection,
+      handleFilterChange,
+      onSubmit,
+    ]
+  );
 };
