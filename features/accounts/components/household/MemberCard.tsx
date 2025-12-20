@@ -2,6 +2,28 @@ import React from "react";
 import { StepProps, Member } from "@/features/accounts/types/household";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+/**
+ * A functional component that renders a list of household members as clickable cards.
+ * Each card displays the member's avatar and name, and triggers a callback function when clicked.
+ *
+ * @param {Object} props - The props object.
+ * @param {HouseholdResponse} props.householdResponse - The response object containing household data.
+ * @param {Function} [props.clickFn] - An optional callback function triggered when a member card is clicked.
+ *
+ * @typedef {Object} StepProps
+ * @property {HouseholdResponse} householdResponse - The response object containing household data.
+ * @property {Function} [clickFn] - An optional callback function triggered when a member card is clicked.
+ *
+ * @typedef {Object} HouseholdResponse
+ * @property {Array<Member>} data.members - An array of household members.
+ *
+ * @typedef {Object} Member
+ * @property {string} name - The name of the household member.
+ * @property {string} url - The URL of the member's avatar image.
+ * @property {string} user_id - The unique identifier for the household member.
+ *
+ * @returns {JSX.Element} A JSX element representing the list of household member cards.
+ */
 const MemberCard = ({ householdResponse, clickFn }: StepProps) => {
   return (
     <div key={1} className="">
