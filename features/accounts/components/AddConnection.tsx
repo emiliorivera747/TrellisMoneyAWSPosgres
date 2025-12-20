@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 // Components
 import {
@@ -12,19 +12,14 @@ import {
 
 // Hooks
 import useGenerateToken from "@/hooks/plaid/useGenerateToken";
-import { useMultistepForm } from "@/hooks/forms/useMultistepForm";
 import { usePlaidLink } from "react-plaid-link";
-import { useFetchHouseholdMembers } from "@/features/accounts/hooks/useFetchHousehold";
+import { useAddConnection } from "@/features/accounts/hooks/useAddConnection";
 
 // Services
 import plaidService from "@/services/plaid/plaidServices";
 
 // Types
 import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
-
-// Config
-import { Step } from "@/features/accounts/types/household";
-import { getSteps } from "@/features/accounts/config/ModalSteps";
 
 // Components
 import DialogHeader from "@/features/accounts/components/headers/DialogHeader";
@@ -39,15 +34,20 @@ import ConnectionError from "@/features/accounts/components/errors/ConnectionErr
  *
  */
 const AddConnection = () => {
-  
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-
   const { linkToken, generateToken } = useGenerateToken();
-
-  const { householdResponse, isLoadingHousehold, isErrorHousehold } =
-    useFetchHouseholdMembers({ isDialogOpen });
+  
+  const {
+    setSelectedUserId,
+    selectedUserId,
+    isDialogOpen,
+    setIsDialogOpen,
+    currentStep,
+    isLoadingHousehold,
+    householdResponse,
+    isFirstStep,
+    back,
+    next,
+  } = useAddConnection({ generateToken });
 
   const { open, ready, error } = usePlaidLink({
     token: linkToken ?? null,
@@ -73,24 +73,6 @@ const AddConnection = () => {
   useEffect(() => {
     if (linkToken && ready && selectedUserId) open();
   }, [selectedUserId, linkToken, ready, open]);
-
-  const handleSelectUser = async (userId: string) => {
-    setIsDialogOpen(false);
-    setSelectedUserId(userId);
-    try {
-      await generateToken(userId);
-    } catch (error) {
-      setSelectedUserId(null);
-    }
-  };
-
-  const steps: Step[] = getSteps({
-    householdResponse,
-    clickFn: handleSelectUser,
-  });
-
-  const { currentStep, isFirstStep, isLastStep, back, next } =
-    useMultistepForm(steps);
 
   if (error) return <ConnectionError message={error.message} />;
 
