@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -27,10 +26,9 @@ import { Step } from "@/features/accounts/types/household";
 import { getSteps } from "@/features/accounts/config/ModalSteps";
 
 // Components
-import PrimaryModalButton from "@/components/buttons/PrimaryModalButton";
-import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCardSkeleton";
 import DialogHeader from "@/features/accounts/components/headers/DialogHeader";
-import AddAccount from "@/features/accounts/components/buttons/AddAccount";
+import PrimaryDialogSection from "@/features/accounts/components/dialog/PrimaryDialogSection";
+import DialogFormNavigation from "@/features/accounts/components/dialog/DialogFormNavigation";
 
 /**
  *
@@ -38,6 +36,7 @@ import AddAccount from "@/features/accounts/components/buttons/AddAccount";
  *
  */
 const AddConnection = () => {
+  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
@@ -104,37 +103,19 @@ const AddConnection = () => {
           </DialogTrigger>
           <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
             <DialogHeader title={currentStep.title ?? "Untitled"} />
-            {/* Content */}
-            <div className=" h-[20rem] px-4 overflow-scroll">
-              {currentStep.description && (
-                <DialogDescription className="flex items-center pb-4">
-                  {currentStep.description}
-                </DialogDescription>
-              )}
-              {isLoadingHousehold ? (
-                <MemberCardSkeleton
-                  length={householdResponse?.data?.members?.length || 2}
-                />
-              ) : (
-                currentStep.content
-              )}
-            </div>
-            {/* Footer */}
+
+            <PrimaryDialogSection
+              currentStep={currentStep}
+              isLoadingHousehold={isLoadingHousehold}
+              householdResponse={householdResponse}
+            />
+
             <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">
-              {!isFirstStep && (
-                <PrimaryModalButton
-                  className="px-4 py-2 bg-gray-200 rounded-[12px]"
-                  onClickFn={() => back()}
-                  label="Previous"
-                />
-              )}
-              <div className="flex justify-end w-full">
-                <PrimaryModalButton
-                  className="px-4 py-2 bg-primary-800 rounded-[12px]"
-                  onClickFn={() => next()}
-                  label="Next"
-                />
-              </div>
+              <DialogFormNavigation
+                isFirstStep={isFirstStep}
+                back={back}
+                next={next}
+              />
             </DialogFooter>
           </DialogContent>
         </Dialog>
