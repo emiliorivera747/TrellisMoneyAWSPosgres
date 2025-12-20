@@ -1,4 +1,5 @@
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/plaid`;
+import { ExchangeTokenProps } from "@/types/plaidServices";
 
 /**
  * Plaid service to get identity
@@ -34,10 +35,14 @@ const createLinkToken = async (user_id: string) => {
 /**
  * Plaid service to exchange token
  */
-const exchangeToken = async (public_token: string) => {
+const exchangeToken = async ({
+  public_token,
+  institution,
+  accounts,
+}: ExchangeTokenProps) => {
   const response = await fetch(`${API_URL}/exchange-token`, {
     method: "POST",
-    body: JSON.stringify({ public_token }),
+    body: JSON.stringify({ public_token, institution, accounts }),
     headers: {
       "Content-Type": "application/json",
     },
