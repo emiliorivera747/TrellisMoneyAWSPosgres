@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 
 // Components
@@ -29,6 +30,8 @@ import { getSteps } from "@/features/accounts/config/ModalSteps";
 import DialogHeader from "@/features/accounts/components/headers/DialogHeader";
 import PrimaryDialogSection from "@/features/accounts/components/dialog/PrimaryDialogSection";
 import DialogFormNavigation from "@/features/accounts/components/dialog/DialogFormNavigation";
+import AddAccount from "@/features/accounts/components/buttons/AddAccount";
+import ConnectionError from "@/features/accounts/components/errors/ConnectionError";
 
 /**
  *
@@ -56,7 +59,6 @@ const AddConnection = () => {
         public_token: publicToken,
         metadata,
       });
-
       setSelectedUserId(null);
     },
     onExit: (err, metadata) => {
@@ -90,26 +92,22 @@ const AddConnection = () => {
   const { currentStep, isFirstStep, isLastStep, back, next } =
     useMultistepForm(steps);
 
-  if (error) return <p>Error loading Plaid: {error.message}</p>;
+  if (error) return <ConnectionError message={error.message} />;
 
   return (
     <>
       <div className=" w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem] my-4">
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <span className="flex items-center justify-center w-full h-[4rem] bg-tertiary-300 text-tertiary-900 py-4 px-6 rounded-[12px]">
-              Add Account
-            </span>
+          <DialogTrigger>
+            <AddAccount />
           </DialogTrigger>
           <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
             <DialogHeader title={currentStep.title ?? "Untitled"} />
-
             <PrimaryDialogSection
               currentStep={currentStep}
               isLoadingHousehold={isLoadingHousehold}
               householdResponse={householdResponse}
             />
-
             <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">
               <DialogFormNavigation
                 isFirstStep={isFirstStep}
