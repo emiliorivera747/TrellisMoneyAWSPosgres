@@ -3,7 +3,6 @@ import prisma from "@/lib/prisma";
 import { client } from "@/config/plaidClient";
 import { ItemGetResponse } from "plaid";
 import { AxiosResponse } from "axios";
-import { getUser } from "@/services/supabase/getUser";
 import { withAuth } from "@/lib/protected";
 
 /**
