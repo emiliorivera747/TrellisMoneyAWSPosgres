@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
     const { institution_id } = institution;
 
     try {
+      // ----- Get Item From the database -----
       const itemDB = await getItemByUserAndInstitutionId(
         user_id,
         institution_id
@@ -42,8 +43,22 @@ export async function POST(req: NextRequest) {
       // ----- Retrieve item details using the access token -----
       const item = await client.itemGet({ access_token });
 
+      // ----- Retreive the membership -----
+      const membership = await getUserHouseholdMembership(user_id);
+
       // ------ Add the new item to the database ------
-      const addItemResponse = await addItem(user?.id ?? "", item, access_token);
+      if (!membership) {
+        return NextResponse.json(
+          { error: "User household membership not found" },
+          { status: 400 }
+        );
+      }
+      const addItemResponse = await addItem(
+        user?.id ?? "",
+        item,
+        access_token,
+        membership.household_id
+      );
 
       // ----- Match the accounts to the item -----
       const addAccountResponse = await addAccounts(
@@ -73,6 +88,39 @@ export async function POST(req: NextRequest) {
 }
 
 /**
+ * Retrieves the household membership information for a given user.
+ *
+ * @param user_id - The unique identifier of the user whose household membership is being retrieved.
+ * @returns A promise that resolves to an object containing the `household_id` of the user's household membership,
+ *          or `null` if no membership is found.
+ *
+ * @remarks
+ * This function queries the `householdMember` table in the database to find the first record
+ * that matches the provided `user_id`. The result includes only the `household_id` field.
+ *
+ * @example
+ * ```typescript
+ * const membership = await getUserHouseholdMembership("user123");
+ * if (membership) {
+ *   console.log(membership.household_id);
+ * } else {
+ *   console.log("No household membership found.");
+ * }
+ * ```
+ */
+const getUserHouseholdMembership = async (user_id: string) => {
+  const householdMembership = await prisma.householdMember.findFirst({
+    where: {
+      user_id,
+    },
+    select: {
+      household_id: true,
+    },
+  });
+  return householdMembership;
+};
+
+/**
  * Adds the item to the database.
  *
  * @param user_id - The ID of the authenticated user
@@ -83,7 +131,8 @@ export async function POST(req: NextRequest) {
 const addItem = async (
   user_id: string,
   item: AxiosResponse<ItemGetResponse, any>,
-  access_token: string
+  access_token: string,
+  household_id: string
 ) => {
   // Create a new item record in the database
   const res = prisma.item.create({
@@ -100,7 +149,8 @@ const addItem = async (
       created_at: item.data.item.created_at,
       consented_use_cases: item.data.item.consented_use_cases,
       consented_data_scopes: item.data.item.consented_data_scopes,
-      user_id: user_id,
+      user_id,
+      household_id,
       access_token,
       request_id: item.data.request_id,
     },
@@ -143,7 +193,6 @@ const addAccounts = async (
         verification_status: account.verification_status || null,
       },
     });
-
     addedAccounts.push(createdAccount);
   }
 
