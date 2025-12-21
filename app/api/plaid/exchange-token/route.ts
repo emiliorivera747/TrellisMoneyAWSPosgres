@@ -14,8 +14,8 @@ import { withAuth } from "@/lib/protected";
  */
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
-    const { public_token, institution, accounts } = await request.json();
-
+    const { public_token, institution, accounts, user_id } =
+      await request.json();
     const { institution_id } = institution;
 
     try {

@@ -37,6 +37,7 @@ const createLinkToken = async (user_id: string) => {
  */
 const exchangeToken = async ({
   public_token,
+  user_id,
   metadata,
 }: ExchangeTokenProps) => {
   
@@ -46,6 +47,7 @@ const exchangeToken = async ({
       public_token,
       institution: metadata?.institution ?? { institution_id: "", name: "" },
       accounts: metadata.accounts || [],
+      user_id,
     }),
     headers: {
       "Content-Type": "application/json",

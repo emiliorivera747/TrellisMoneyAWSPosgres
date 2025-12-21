@@ -13,4 +13,5 @@ interface Account {
 export interface ExchangeTokenProps {
   public_token: string;
   metadata: PlaidLinkOnSuccessMetadata;
+  user_id: string;
 }
