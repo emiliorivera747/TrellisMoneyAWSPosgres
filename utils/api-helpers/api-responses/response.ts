@@ -8,7 +8,7 @@ type ApiResponse<T = null> = {
   status: "success" | "fail" | "error";
 };
 
-export const apiSuccess = <T>(
+export const SuccessResponse = <T>(
   data: T | null = null,
   message: string = "Success",
   statusCode: number = 200
@@ -22,7 +22,7 @@ export const apiSuccess = <T>(
   return NextResponse.json(body, { status: statusCode });
 };
 
-export const apiFail = (
+export const FailResponse = (
   message: string,
   statusCode: number
 ) => {
@@ -34,7 +34,7 @@ export const apiFail = (
   return NextResponse.json(body, { status: statusCode });
 };
 
-export const apiError = (
+export const ErrorResponse = (
   error: unknown,
   statusCode: number = 500
 ) => {

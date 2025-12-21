@@ -7,7 +7,10 @@ import { withAuth } from "@/lib/protected";
 
 // Utils
 import { getItemByUserAndInstitutionId } from "@/utils/prisma/item/getItem";
-import { apiFail } from "@/utils/api-helpers/api-responses/response";
+import {
+  FailResponse,
+  SuccessResponse,
+} from "@/utils/api-helpers/api-responses/response";
 
 /**
  * Handles the POST request to exchange a public token for an access token
@@ -31,7 +34,7 @@ export async function POST(req: NextRequest) {
       );
 
       if (itemDB)
-        return apiFail(
+        return FailResponse(
           "Item already exists for this user and institution",
           400
         );
@@ -45,15 +48,11 @@ export async function POST(req: NextRequest) {
 
       // ----- Retreive the membership -----
       const membership = await getUserHouseholdMembership(user_id);
+      if (!membership)
+        return FailResponse("User household membership not found", 400);
 
       // ------ Add the new item to the database ------
-      if (!membership) {
-        return NextResponse.json(
-          { error: "User household membership not found" },
-          { status: 400 }
-        );
-      }
-      const addItemResponse = await addItem(
+      await addItem(
         user?.id ?? "",
         item,
         access_token,
@@ -61,27 +60,10 @@ export async function POST(req: NextRequest) {
       );
 
       // ----- Match the accounts to the item -----
-      const addAccountResponse = await addAccounts(
-        user?.id ?? "",
-        item.data.item.item_id,
-        accounts
-      );
+      await addAccounts(user?.id ?? "", item.data.item.item_id, accounts);
 
-      // ----- Return the access token if the item was added successfully -----
-      if (addItemResponse && addAccountResponse)
-        return NextResponse.json({ access_token });
-
-      // ----- Return an error if the item could not be added -----
-      return NextResponse.json(
-        { error: "Error adding item to database" },
-        { status: 500 }
-      );
+      return SuccessResponse({ access_token }, "Item was successfully added!");
     } catch (error) {
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "There was an Error exchanging public token";
-      // ----- Handle errors during the token exchange process -----
       return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
   });

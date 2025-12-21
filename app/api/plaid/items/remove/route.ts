@@ -12,9 +12,9 @@ import getItemWithHousehold from "@/utils/prisma/item/getItemWithHousehold";
 import { getMemberInfo } from "@/utils/api-helpers/item/getMemberInfo";
 
 import {
-  apiFail,
-  apiSuccess,
-  apiError,
+  FailResponse,
+  SuccessResponse,
+  ErrorResponse,
 } from "@/utils/api-helpers/api-responses/response";
 
 /**
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       const user_id = user.id;
 
       if (!item_id || typeof item_id !== "string")
-        return apiFail("Invalid item_id", 400);
+        return FailResponse("Invalid item_id", 400);
 
       /**
        * Get the item with all of its populated objects
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
        *  If item not found return 404 error
        */
       if (!item)
-        return apiFail("Item not found or you do not have access to it.", 404);
+        return FailResponse("Item not found or you do not have access to it.", 404);
 
       const { isOwner, isAdmin } = getMemberInfo(item, user_id);
 
@@ -67,19 +67,19 @@ export async function POST(req: NextRequest) {
         try {
           await removeItemFromPlaid(item.access_token);
           await prisma.item.delete({ where: { item_id } });
-          return apiSuccess(null, "Item successfully removed.", 200);
+          return SuccessResponse(null, "Item successfully removed.", 200);
         } catch (error) {
-          return apiFail(
+          return FailResponse(
             "We couldn't disconnect the institution right now. Please try again in a few minutes. Your data is safe.",
             502
           );
         }
       } else {
-        return apiFail("You do not have permission to remove this item.", 403);
+        return FailResponse("You do not have permission to remove this item.", 403);
       }
     } catch (error) {
       console.error("Unexpected error in remove item endpoint:", error);
-      return apiError(error, 500);
+      return ErrorResponse(error, 500);
     }
   });
 }
