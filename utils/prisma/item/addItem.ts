@@ -32,10 +32,10 @@ export const addItem = async (
       consented_use_cases: item.data.item.consented_use_cases,
       consented_data_scopes: item.data.item.consented_data_scopes,
       user: {
-        connect: { id: user_id },
+        connect: { user_id },
       },
       household: {
-        connect: { id: household_id },
+        connect: { household_id },
       },
       access_token,
       request_id: item.data.request_id,

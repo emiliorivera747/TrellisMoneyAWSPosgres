@@ -25,7 +25,7 @@ export const addAccounts = async (
         },
         item: {
           connect: {
-            item_id: item_id,
+            item_id,
           },
         },
         household: {
