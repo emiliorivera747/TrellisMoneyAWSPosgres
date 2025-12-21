@@ -25,6 +25,7 @@ import ConnectionError from "@/features/accounts/components/errors/ConnectionErr
  *
  */
 const AddConnection = () => {
+  
   const { start, error } = usePlaidConnectionFlowfrom();
   
   const {
