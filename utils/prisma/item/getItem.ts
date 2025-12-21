@@ -21,20 +21,16 @@ export const getItem = async (item_id: string) => {
  * @param institution_id - The unique identifier of the institution.
  * @returns A promise that resolves to an array of items, each including their associated accounts.
  */
-export const getItemsByUserAndInstitutionId = async (
+export const getItemByUserAndInstitutionId = async (
   user_id: string,
   institution_id: string
 ) => {
-  const currentItems = await prisma.item.findMany({
+  const item = await prisma.item.findFirst({
     where: {
       user_id,
       institution_id,
     },
-    include: {
-      accounts: true,
-      user: true,
-    },
   });
 
-  return currentItems;
+  return item;
 };

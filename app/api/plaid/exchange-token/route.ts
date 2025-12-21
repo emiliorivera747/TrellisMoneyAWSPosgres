@@ -6,7 +6,8 @@ import { AxiosResponse } from "axios";
 import { withAuth } from "@/lib/protected";
 
 // Utils
-import { getItemsByUserAndInstitutionId } from "@/utils/prisma/item/getItem";
+import { getItemByUserAndInstitutionId } from "@/utils/prisma/item/getItem";
+import { apiFail } from "@/utils/api-helpers/api-responses/response";
 
 /**
  * Handles the POST request to exchange a public token for an access token
@@ -23,52 +24,16 @@ export async function POST(req: NextRequest) {
     const { institution_id } = institution;
 
     try {
-      /**
-       *  Look up the items associated with the user and instiution.
-       *
-       *  A user have multiple items with the same in institution. Some
-       *  examples are the following,
-       *
-       *    - Different Login:    User may have both a personal and business
-       *                          login to institution
-       *
-       *    - Different Accounts: User may link checking account today and
-       *                          savings tomorrow with same institution
-       *                          resulting in two separate items.
-       *
-       *   Therefore, we will retrieve all of the items to perform performs
-       *   checks before exchanging tokens.
-       *
-       */
-      const currentItems = await getItemsByUserAndInstitutionId(
+      const itemDB = await getItemByUserAndInstitutionId(
         user_id,
         institution_id
       );
 
-      /**
-       * If we have one item then we will keep the original
-       * item if accounts match.
-       */
-      if (currentItems.length === 1) {
-        const currentItem = currentItems[0];
-
-        // Check if the accounts match
-        const accountIds = accounts.map((account: any) => account.account_id);
-        const existingAccountIds = currentItem.accounts.map(
-          (account: any) => account.account_id
+      if (itemDB)
+        return apiFail(
+          "Item already exists for this user and institution",
+          400
         );
-
-        const accountsMatch = accountIds.every((id: string) =>
-          existingAccountIds.includes(id)
-        );
-
-        if (accountsMatch) {
-          return NextResponse.json(
-            { message: "Accounts already linked with the institution" },
-            { status: 200 }
-          );
-        }
-      }
 
       // ----- Exchange the public token for an access token -----
       const response = await client.itemPublicTokenExchange({ public_token });
@@ -160,28 +125,22 @@ const addAccounts = async (
   for (const account of accounts) {
     const createdAccount = await prisma.account.create({
       data: {
-        // Add the mandatory 'connect' operation for the 'user' relation
         user: {
           connect: {
-            user_id, // Connect the Account to the User with this ID
+            user_id,
           },
         },
-
-        // Add the mandatory 'connect' operation for the 'item' relation (if required by your schema)
         item: {
           connect: {
-            item_id: item_id, // Connect the Account to the Item with this ID
+            item_id: item_id,
           },
         },
-
-        // Continue with other account data
         account_id: account.id,
         name: account.name,
         mask: account.mask || null,
         type: account.type,
         subtype: account.subtype,
         verification_status: account.verification_status || null,
-        // class_type: account.class_type || null,
       },
     });
 
