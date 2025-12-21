@@ -32,6 +32,7 @@ export const getItemsByUserAndInstitutionId = async (
     },
     include: {
       accounts: true,
+      user: true,
     },
   });
 

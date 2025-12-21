@@ -46,21 +46,6 @@ export async function POST(req: NextRequest) {
       );
 
       /**
-       *  If we have more than 1 item than we have duplicates. In
-       *  that case we will delete all the items and create a new
-       *  one.
-       */
-      if (currentItems.length > 1) {
-        for (const { item_id } of currentItems) {
-          await prisma.item.delete({
-            where: {
-              item_id,
-            },
-          });
-        }
-      }
-
-      /**
        * If we have one item then we will keep the original
        * item if accounts match.
        */
