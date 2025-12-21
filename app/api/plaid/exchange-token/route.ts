@@ -5,6 +5,9 @@ import { ItemGetResponse } from "plaid";
 import { AxiosResponse } from "axios";
 import { withAuth } from "@/lib/protected";
 
+// Utils
+import { getItemsByUserAndInstitutionId } from "@/utils/prisma/item/getItem";
+
 /**
  * Handles the POST request to exchange a public token for an access token
  * and store the item in the database.
@@ -16,22 +19,31 @@ export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     const { public_token, institution, accounts, user_id } =
       await request.json();
+
     const { institution_id } = institution;
 
     try {
       /**
-       *  Look up the items and check if institution is already
-       *  connected
+       *  Look up the items associated with the user and instiution.
+       *
+       *  A user have multiple items with the same in institution. Some
+       *  examples are the following,
+       *
+       *    - Different Login:    User may have both a personal and business
+       *                          login to institution
+       *
+       *    - Different Accounts: User may link checking account today and
+       *                          savings tomorrow with same institution
+       *                          resulting in two separate items.
+       *
+       *   Therefore, we will retrieve all of the items to perform performs
+       *   checks before exchanging tokens.
+       *
        */
-      const currentItems = await prisma.item.findMany({
-        where: {
-          user_id: user?.id,
-          institution_id,
-        },
-        include: {
-          accounts: true,
-        },
-      });
+      const currentItems = await getItemsByUserAndInstitutionId(
+        user_id,
+        institution_id
+      );
 
       /**
        *  If we have more than 1 item than we have duplicates. In
