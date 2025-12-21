@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Account } from "@/types/plaid";
 
 import NoAccountsFound from "@/features/accounts/components/NoAccountsFound";
@@ -25,8 +23,6 @@ const AccountsList = () => {
       isErrorAccounts: boolean;
       groups: Record<string, Account[]>;
     };
-
-  console.log(groups);
 
   if (isLoadingAccounts) return <div>Loading...</div>;
   if (isErrorAccounts) return <div>Error</div>;

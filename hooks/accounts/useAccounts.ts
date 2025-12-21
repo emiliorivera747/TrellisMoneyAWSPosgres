@@ -8,17 +8,16 @@ import useGroupAccounts from "@/features/accounts/hooks/useGroupAccounts";
 // Types
 import { UseAccountsResponse } from "@/types/hooks";
 
-import { useDeleteItem } from "@/hooks/accounts/useDeleteItem";
+import { useRemoveItem } from "../react-query/items/useRemoveItem";
 
 /**
  * Custom hook to handle the accounts page state
  */
 export const useAccounts = (): UseAccountsResponse => {
-  
   const { accountsResponse, isLoadingAccounts, isErrorAccounts } =
     useFetchAccounts();
 
-  const { mutateItem, itemIsPending, itemHasError } = useDeleteItem();
+  const { mutateItem, itemIsPending, itemHasError } = useRemoveItem();
 
   const accounts = accountsResponse?.data || null;
   const { groups } = useGroupAccounts({ accounts });
