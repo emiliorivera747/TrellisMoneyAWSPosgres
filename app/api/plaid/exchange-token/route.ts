@@ -8,6 +8,7 @@ import { getItemByUserAndInstitutionId } from "@/utils/prisma/item/getItem";
 import {
   FailResponse,
   SuccessResponse,
+  ErrorResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 import { getUserHouseholdMembership } from "@/utils/prisma/household-member/members";
@@ -85,10 +86,7 @@ export async function POST(req: NextRequest) {
       return SuccessResponse({ access_token }, "Item was successfully added!");
     } catch (error) {
       console.error(error);
-      return NextResponse.json(
-        { error: getServerErrorMessage(error) },
-        { status: 500 }
-      );
+      return ErrorResponse(error, 500);
     }
   });
 }
