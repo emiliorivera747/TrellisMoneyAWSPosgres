@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
 import { client } from "@/config/plaidClient";
 
 import { withAuth } from "@/lib/protected";
@@ -14,6 +13,7 @@ import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerError
 import { getUserHouseholdMembership } from "@/utils/prisma/household-member/members";
 import { addItem } from "@/utils/prisma/item/addItem";
 import { addAccounts } from "@/utils/prisma/accounts/addAccounts";
+import { logError } from "@/utils/api-helpers/errors/logError";
 
 /**
  * Handles the POST request to exchange a public token for an access token
@@ -51,22 +51,40 @@ export async function POST(req: NextRequest) {
 
       // ----- Retreive the membership -----
       const membership = await getUserHouseholdMembership(user_id);
-      if (!membership)
-        return FailResponse("Househol membership not found", 400);
+      if (!membership) {
+        logError("Household membership not found");
+        return FailResponse("Household membership not found", 400);
+      }
+
+      const household_id = membership.household_id;
 
       // ------ Add the new item to the database ------
-      await addItem(
+      const addedItem = await addItem(
         user?.id ?? "",
         item,
         access_token,
-        membership.household_id
+        household_id
       );
+      if (!addedItem) {
+        logError("Failed to add item");
+        return FailResponse("Failed to add household", 400);
+      }
 
       // ----- Match the accounts to the item -----
-      await addAccounts(user?.id ?? "", item.data.item.item_id, accounts);
+      const addedAccount = await addAccounts(
+        user?.id ?? "",
+        item.data.item.item_id,
+        accounts,
+        household_id
+      );
+      if (!addedAccount) {
+        logError("Failed to add accounts");
+        return FailResponse("Failed to add accounts", 400);
+      }
 
       return SuccessResponse({ access_token }, "Item was successfully added!");
     } catch (error) {
+      console.error(error);
       return NextResponse.json(
         { error: getServerErrorMessage(error) },
         { status: 500 }

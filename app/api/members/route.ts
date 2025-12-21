@@ -30,6 +30,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           { status: 200 }
         );
       } else {
+        
         const userDB = await prisma.user.findUnique({
           where: {
             user_id: user.id,

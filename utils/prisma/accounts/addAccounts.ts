@@ -10,7 +10,8 @@ import prisma from "@/lib/prisma";
 export const addAccounts = async (
   user_id: string,
   item_id: string,
-  accounts: any[]
+  accounts: any[],
+  household_id: string
 ) => {
   const addedAccounts = [];
 
@@ -25,6 +26,11 @@ export const addAccounts = async (
         item: {
           connect: {
             item_id: item_id,
+          },
+        },
+        household: {
+          connect: {
+            household_id,
           },
         },
         account_id: account.id,
