@@ -43,7 +43,7 @@ const usePlaidConnectionFlow = () => {
   const start = async (userId: string) => {
     setLinkToken(null);
     const res = await plaidService.createLinkToken(userId);
-    setLinkToken(res.data.link_toke);
+    setLinkToken(res.data.link_token);
   };
 
   useEffect(() => {
