@@ -30,6 +30,7 @@ import ConnectionError from "@/features/accounts/components/errors/ConnectionErr
 const AddConnection = () => {
   
   const { linkToken, generateToken } = useGenerateToken();
+  const { open, ready, error } = usePlaid({ linkToken });
 
   const {
     isDialogOpen,
@@ -41,8 +42,6 @@ const AddConnection = () => {
     back,
     next,
   } = useAddConnection({ generateToken });
-
-  const { open, ready, error } = usePlaid({ linkToken });
 
   useEffect(() => {
     if (linkToken && ready) open();

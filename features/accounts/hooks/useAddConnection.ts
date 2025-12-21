@@ -23,10 +23,11 @@ import { useMultistepForm } from "@/hooks/forms/useMultistepForm";
  * @property {() => void} next - Function to navigate to the next step in the multi-step form.
  */
 export const useAddConnection = ({
-  generateToken,
+  onSelectUser,
 }: {
-  generateToken: (userId: string) => Promise<void>;
+  onSelectUser: (userId: string) => Promise<void>;
 }) => {
+  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
@@ -34,7 +35,7 @@ export const useAddConnection = ({
 
   const handleSelectUser = async (userId: string) => {
     setIsDialogOpen(false);
-    await generateToken(userId);
+    await onSelectUser(userId);
   };
 
   const steps: Step[] = getSteps({
