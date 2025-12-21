@@ -35,10 +35,8 @@ import ConnectionError from "@/features/accounts/components/errors/ConnectionErr
  */
 const AddConnection = () => {
   const { linkToken, generateToken } = useGenerateToken();
-  
+
   const {
-    setSelectedUserId,
-    selectedUserId,
     isDialogOpen,
     setIsDialogOpen,
     currentStep,
@@ -59,20 +57,15 @@ const AddConnection = () => {
         public_token: publicToken,
         metadata,
       });
-      setSelectedUserId(null);
     },
     onExit: (err, metadata) => {
       console.log("Plaid exit:", err, metadata);
-      setSelectedUserId(null);
-    },
-    onEvent: (eventName, metadata) => {
-      console.log("Plaid event:", eventName, metadata);
     },
   });
 
   useEffect(() => {
-    if (linkToken && ready && selectedUserId) open();
-  }, [selectedUserId, linkToken, ready, open]);
+    if (linkToken && ready) open();
+  }, [linkToken, ready, open]);
 
   if (error) return <ConnectionError message={error.message} />;
 

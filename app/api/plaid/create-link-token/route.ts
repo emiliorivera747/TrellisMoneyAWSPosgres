@@ -18,13 +18,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
        * Get the user we want to get the link token for
        */
       const { user_id } = await request.json();
-
       const linkTokenResponse = await getLinkToken(user_id);
 
-      return NextResponse.json(
-        { link_token: linkTokenResponse },
-        { status: 200 }
-      );
+      const data = {
+        link_token: linkTokenResponse,
+        user_id,
+      };
+      
+      return NextResponse.json({ data, status: "success" }, { status: 200 });
     } catch (error) {
       return NextResponse.json(
         { error: ERROR_MESSAGES.LINK_TOKEN_ERROR },

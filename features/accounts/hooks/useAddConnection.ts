@@ -30,22 +30,14 @@ export const useAddConnection = ({
 }: {
   generateToken: (userId: string) => Promise<void>;
 }) => {
-  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
     useFetchHouseholdMembers({ isDialogOpen });
 
   const handleSelectUser = async (userId: string) => {
     setIsDialogOpen(false);
-    setSelectedUserId(userId);
-    try {
-      await generateToken(userId);
-    } catch (error) {
-      setSelectedUserId(null);
-    }
+    await generateToken(userId);
   };
 
   const steps: Step[] = getSteps({
@@ -59,8 +51,6 @@ export const useAddConnection = ({
   return {
     isDialogOpen,
     setIsDialogOpen,
-    selectedUserId,
-    setSelectedUserId,
     householdResponse,
     isLoadingHousehold,
     isErrorHousehold,

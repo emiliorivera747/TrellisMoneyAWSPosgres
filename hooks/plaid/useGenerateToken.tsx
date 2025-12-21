@@ -33,18 +33,21 @@ import plaidService from "@/features/plaid-link/services/plaidServices";
  */
 const useGenerateToken = () => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const generateToken = async (user_id: string) => {
     setLinkToken(null);
     try {
       const res = await plaidService.createLinkToken(user_id);
-      setLinkToken(res.link_token);
+      setLinkToken(res.data.link_token);
+      setUserId(res.datauser_id);
       return res.link_token;
     } catch (error) {
       setLinkToken(null);
+
       throw error;
     }
   };
-  return { linkToken, generateToken };
+  return { linkToken, generateToken, userId };
 };
 
 export default useGenerateToken;
