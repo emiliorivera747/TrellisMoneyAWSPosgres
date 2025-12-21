@@ -11,6 +11,7 @@ import {
   FailResponse,
   SuccessResponse,
 } from "@/utils/api-helpers/api-responses/response";
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
 /**
  * Handles the POST request to exchange a public token for an access token
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
     const { institution_id } = institution;
 
     try {
+      
       // ----- Get Item From the database -----
       const itemDB = await getItemByUserAndInstitutionId(
         user_id,
@@ -64,7 +66,10 @@ export async function POST(req: NextRequest) {
 
       return SuccessResponse({ access_token }, "Item was successfully added!");
     } catch (error) {
-      return NextResponse.json({ error: errorMessage }, { status: 500 });
+      return NextResponse.json(
+        { error: getServerErrorMessage(error) },
+        { status: 500 }
+      );
     }
   });
 }
