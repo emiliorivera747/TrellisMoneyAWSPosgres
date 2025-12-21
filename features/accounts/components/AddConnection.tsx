@@ -12,14 +12,8 @@ import {
 
 // Hooks
 import useGenerateToken from "@/hooks/plaid/useGenerateToken";
-import { usePlaidLink } from "react-plaid-link";
 import { useAddConnection } from "@/features/accounts/hooks/useAddConnection";
-
-// Services
-import plaidService from "@/services/plaid/plaidServices";
-
-// Types
-import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
+import usePlaid from "@/hooks/plaid/usePlaid";
 
 // Components
 import DialogHeader from "@/features/accounts/components/headers/DialogHeader";
@@ -34,6 +28,7 @@ import ConnectionError from "@/features/accounts/components/errors/ConnectionErr
  *
  */
 const AddConnection = () => {
+  
   const { linkToken, generateToken } = useGenerateToken();
 
   const {
@@ -47,21 +42,7 @@ const AddConnection = () => {
     next,
   } = useAddConnection({ generateToken });
 
-  const { open, ready, error } = usePlaidLink({
-    token: linkToken ?? null,
-    onSuccess: async (
-      publicToken: string,
-      metadata: PlaidLinkOnSuccessMetadata
-    ) => {
-      await plaidService.exchangeToken({
-        public_token: publicToken,
-        metadata,
-      });
-    },
-    onExit: (err, metadata) => {
-      console.log("Plaid exit:", err, metadata);
-    },
-  });
+  const { open, ready, error } = usePlaid({ linkToken });
 
   useEffect(() => {
     if (linkToken && ready) open();

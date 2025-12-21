@@ -9,21 +9,18 @@ import { useMultistepForm } from "@/hooks/forms/useMultistepForm";
  *
  * @param {Object} params - The parameters for the hook.
  * @param {(userId: string) => Promise<void>} params.generateToken - A function to generate a token for a given user ID.
- *
  * @returns {Object} - The state and functions to manage the connection process.
- * @property {boolean} isDialogOpen - Indicates whether the dialog is open.
- * @property {React.Dispatch<React.SetStateAction<boolean>>} setIsDialogOpen - Function to set the dialog open state.
- * @property {string | null} selectedUserId - The currently selected user ID.
- * @property {React.Dispatch<React.SetStateAction<string | null>>} setSelectedUserId - Function to set the selected user ID.
- * @property {any} householdResponse - The response data for household members.
- * @property {boolean} isLoadingHousehold - Indicates whether the household data is loading.
- * @property {boolean} isErrorHousehold - Indicates whether there was an error fetching household data.
- * @property {(userId: string) => Promise<void>} handleSelectUser - Function to handle user selection and token generation.
- * @property {Step} currentStep - The current step in the multi-step form.
- * @property {boolean} isFirstStep - Indicates whether the current step is the first step.
- * @property {boolean} isLastStep - Indicates whether the current step is the last step.
- * @property {() => void} back - Function to navigate to the previous step.
- * @property {() => void} next - Function to navigate to the next step.
+ * @property {boolean} isDialogOpen - Indicates whether the dialog for adding a connection is open.
+ * @property {React.Dispatch<React.SetStateAction<boolean>>} setIsDialogOpen - Function to update the dialog open state.
+ * @property {any} householdResponse - The response data containing household members.
+ * @property {boolean} isLoadingHousehold - Indicates whether the household data is currently being loaded.
+ * @property {boolean} isErrorHousehold - Indicates whether there was an error while fetching household data.
+ * @property {(userId: string) => Promise<void>} handleSelectUser - Function to handle user selection and trigger token generation for the selected user.
+ * @property {Step} currentStep - The current step in the multi-step form process.
+ * @property {boolean} isFirstStep - Indicates whether the current step is the first step in the process.
+ * @property {boolean} isLastStep - Indicates whether the current step is the last step in the process.
+ * @property {() => void} back - Function to navigate to the previous step in the multi-step form.
+ * @property {() => void} next - Function to navigate to the next step in the multi-step form.
  */
 export const useAddConnection = ({
   generateToken,

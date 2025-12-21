@@ -39,11 +39,9 @@ const useGenerateToken = () => {
     try {
       const res = await plaidService.createLinkToken(user_id);
       setLinkToken(res.data.link_token);
-      setUserId(res.datauser_id);
-      return res.link_token;
+      setUserId(res.data.user_id);
+      return res.data.link_token;
     } catch (error) {
-      setLinkToken(null);
-
       throw error;
     }
   };
