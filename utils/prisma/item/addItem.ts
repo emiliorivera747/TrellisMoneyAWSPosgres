@@ -31,8 +31,12 @@ export const addItem = async (
       created_at: item.data.item.created_at,
       consented_use_cases: item.data.item.consented_use_cases,
       consented_data_scopes: item.data.item.consented_data_scopes,
-      user_id,
-      household_id,
+      user: {
+        connect: { id: user_id },
+      },
+      household: {
+        connect: { id: household_id },
+      },
       access_token,
       request_id: item.data.request_id,
     },
