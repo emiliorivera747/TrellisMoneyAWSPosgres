@@ -11,9 +11,8 @@ import {
 } from "@/components/ui/dialog";
 
 // Hooks
-import useGenerateToken from "@/hooks/plaid/useGenerateToken";
+import usePlaidConnectionFlowfrom from "@/hooks/plaid/usePlaidConnectionFlow";
 import { useAddConnection } from "@/features/accounts/hooks/useAddConnection";
-import usePlaid from "@/hooks/plaid/usePlaid";
 
 // Components
 import DialogHeader from "@/features/accounts/components/headers/DialogHeader";
@@ -28,10 +27,8 @@ import ConnectionError from "@/features/accounts/components/errors/ConnectionErr
  *
  */
 const AddConnection = () => {
+  const { start, error } = usePlaidConnectionFlowfrom();
   
-  const { linkToken, generateToken } = useGenerateToken();
-  const { open, ready, error } = usePlaid({ linkToken });
-
   const {
     isDialogOpen,
     setIsDialogOpen,
@@ -41,11 +38,7 @@ const AddConnection = () => {
     isFirstStep,
     back,
     next,
-  } = useAddConnection({ generateToken });
-
-  useEffect(() => {
-    if (linkToken && ready) open();
-  }, [linkToken, ready, open]);
+  } = useAddConnection({ onSelectUser: start });
 
   if (error) return <ConnectionError message={error.message} />;
 
