@@ -1,22 +1,22 @@
 import SideNavigationBar from "@/components/navigation/SideNavigationBar";
-import { Toaster } from "@/components/ui/toaster";
-
-import { Metadata } from "next";
+import Footer from "@/components/footers/Footer";
+import {Metadata} from "next";
 
 export const metadata: Metadata = {
-  title: "Dashboard | Trellis Money",
-  description:
-    "Dashboard for Trellis Money gives you insights into your investments, goals, budgets, Networth and other key financial metrics.",
+  title: "Accounts | Trellis Money",
+  description: "Keep track of all your bank accounts across different platforms and accounts with Trellis Money.",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="max-h-screen ml-[2%] sm:ml-[2%] 2xl:ml-[10%] border-box">
+    <div className="h-screen mx-[2%] sm:mx-[4%] 2xl:mx-[25%] border-box">
       <div className="flex sm:flex-row flex-col">
         <SideNavigationBar />
-        <main className=" sm:w-full flex flex-col">{children}</main>
-        <Toaster />
+        <main className=" sm:w-full flex flex-col ">
+          {children}
+        </main>
       </div>
+      <Footer />
     </div>
   );
 }

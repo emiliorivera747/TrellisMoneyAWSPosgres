@@ -27,13 +27,15 @@ CREATE TABLE "Account" (
     "persistent_account_id" TEXT,
     "annual_return_rate" DECIMAL(65,30) DEFAULT 0.00,
     "holder_category" TEXT,
-    "balance_id" TEXT NOT NULL,
+    "balance_id" TEXT,
     "user_id" TEXT NOT NULL,
     "timestamp" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
-    "household_id" TEXT,
+    "household_id" TEXT NOT NULL,
     "item_id" TEXT NOT NULL,
     "updated_at" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
-    "created_at" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP
+    "created_at" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Account_pkey" PRIMARY KEY ("account_id")
 );
 
 -- CreateTable
@@ -63,7 +65,9 @@ CREATE TABLE "Balance" (
     "unofficial_currency_code" TEXT,
     "last_updated" TIMESTAMPTZ(3),
     "updated_at" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
-    "timestamp" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP
+    "timestamp" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Balance_pkey" PRIMARY KEY ("balance_id")
 );
 
 -- CreateTable
@@ -101,7 +105,7 @@ CREATE TABLE "Item" (
     "consented_use_cases" TEXT[],
     "access_token" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
-    "household_id" TEXT,
+    "household_id" TEXT NOT NULL,
 
     CONSTRAINT "Item_pkey" PRIMARY KEY ("item_id")
 );
@@ -318,7 +322,9 @@ CREATE TABLE "Security" (
     "industry" TEXT,
     "option_contract_id" INTEGER,
     "user_id" TEXT NOT NULL,
-    "timestamp" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP
+    "timestamp" TIMESTAMPTZ(3) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Security_pkey" PRIMARY KEY ("security_id")
 );
 
 -- CreateTable
@@ -350,13 +356,7 @@ CREATE TABLE "SecurityHistory" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Account_account_id_key" ON "Account"("account_id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Account_balance_id_key" ON "Account"("balance_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Balance_balance_id_key" ON "Balance"("balance_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
@@ -388,9 +388,6 @@ CREATE UNIQUE INDEX "HouseholdMember_household_id_user_id_key" ON "HouseholdMemb
 -- CreateIndex
 CREATE UNIQUE INDEX "HouseholdMember_household_id_invited_email_key" ON "HouseholdMember"("household_id", "invited_email");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Security_security_id_key" ON "Security"("security_id");
-
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_balance_id_fkey" FOREIGN KEY ("balance_id") REFERENCES "Balance"("balance_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -410,7 +407,7 @@ ALTER TABLE "AccountHistory" ADD CONSTRAINT "AccountHistory_account_id_fkey" FOR
 ALTER TABLE "Item" ADD CONSTRAINT "Item_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("user_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Item" ADD CONSTRAINT "Item_household_id_fkey" FOREIGN KEY ("household_id") REFERENCES "Household"("household_id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Item" ADD CONSTRAINT "Item_household_id_fkey" FOREIGN KEY ("household_id") REFERENCES "Household"("household_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FixedIncome" ADD CONSTRAINT "FixedIncome_securityId_fkey" FOREIGN KEY ("securityId") REFERENCES "Security"("security_id") ON DELETE RESTRICT ON UPDATE CASCADE;

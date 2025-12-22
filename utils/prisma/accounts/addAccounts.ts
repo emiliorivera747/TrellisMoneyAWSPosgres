@@ -15,6 +15,11 @@ export const addAccounts = async (
   accounts: PlaidLinkOnSuccessMetadata["accounts"],
   household_id: string
 ) => {
+  console.log("user_id:", user_id);
+  console.log("item_id:", item_id);
+  console.log("accounts:", accounts);
+  console.log("household_id:", household_id);
+
   const accountAdded = [];
 
   for (const account of accounts) {
