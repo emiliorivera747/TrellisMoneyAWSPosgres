@@ -16,7 +16,7 @@ datasource db {
 
 // ###################################################### ACCOUNT ##########################################
 model Account {
-  account_id               String           @id @unique
+  account_id               String           @id 
   name                     String?
   type                     String?
   available                Decimal?
@@ -62,7 +62,7 @@ model AccountHistory {
 }
 
 model Balance {
-  balance_id               String    @unique
+  balance_id               String    @id
   available                Decimal
   current                  Decimal
   limit                    Decimal
@@ -383,7 +383,7 @@ model HoldingHistory {
 // ###################################################### SECURITY ##########################################
 
 model Security {
-  security_id              String            @unique
+  security_id              String            @id 
   isin                     String?
   cusip                    String?
   sedol                    String?

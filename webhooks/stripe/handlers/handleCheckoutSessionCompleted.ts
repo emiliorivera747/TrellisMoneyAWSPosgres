@@ -16,6 +16,7 @@ import { logError } from "@/utils/api-helpers/errors/logError";
  */
 const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   try {
+    
     // ----- Get the checkout session -----
     const { subscription, customer, customer_email, mode } =
       await getStripeCheckoutSession(event);
