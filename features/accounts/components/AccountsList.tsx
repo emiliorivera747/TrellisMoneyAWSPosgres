@@ -1,7 +1,6 @@
 import { Account } from "@/types/plaid";
 
 import NoAccountsFound from "@/features/accounts/components/NoAccountsFound";
-
 import { useAccountsContext } from "@/context/accounts/AccountContext";
 
 //Components

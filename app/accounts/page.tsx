@@ -1,7 +1,6 @@
 "use client";
 
 import AccountContent from "@/features/accounts/components/AccountContent";
-
 import { AccountsProvider } from "@/context/accounts/AccountContext";
 
 /**

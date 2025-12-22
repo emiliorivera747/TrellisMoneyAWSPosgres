@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { dateFilterConfig } from "@/features/accounts/config/dateFilterConfig";
 
 // Components
