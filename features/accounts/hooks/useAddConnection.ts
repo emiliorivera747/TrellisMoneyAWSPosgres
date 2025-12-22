@@ -41,9 +41,10 @@ export const useAddConnection = ({
   const steps: Step[] = getSteps({
     householdResponse,
     clickFn: handleSelectUser,
+
   });
 
-  const { currentStep, isFirstStep, isLastStep, back, next } =
+  const { currentStep, isFirstStep, isLastStep, back, next , goToRoute} =
     useMultistepForm(steps);
 
   return {

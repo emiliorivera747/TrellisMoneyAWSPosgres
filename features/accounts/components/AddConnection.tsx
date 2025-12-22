@@ -25,18 +25,14 @@ import ConnectionError from "@/features/accounts/components/errors/ConnectionErr
  *
  */
 const AddConnection = () => {
-  
   const { start, error } = usePlaidConnectionFlowfrom();
-  
+
   const {
     isDialogOpen,
     setIsDialogOpen,
     currentStep,
     isLoadingHousehold,
     householdResponse,
-    isFirstStep,
-    back,
-    next,
   } = useAddConnection({ onSelectUser: start });
 
   if (error) return <ConnectionError message={error.message} />;
@@ -55,13 +51,6 @@ const AddConnection = () => {
               isLoadingHousehold={isLoadingHousehold}
               householdResponse={householdResponse}
             />
-            <DialogFooter className="mt-4 flex sm:justify-between px-4 h-[3.2rem] transition-transform transform duration-500 ease-in-out">
-              <DialogFormNavigation
-                isFirstStep={isFirstStep}
-                back={back}
-                next={next}
-              />
-            </DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
