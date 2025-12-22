@@ -17,7 +17,6 @@ import { useAccountsContext } from "@/context/accounts/AccountContext";
 // Types
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
 
-
 /**
  *
  * Responsible for showing all of the accounts

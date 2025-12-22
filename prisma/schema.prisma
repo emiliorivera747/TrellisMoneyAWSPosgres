@@ -16,7 +16,7 @@ datasource db {
 
 // ###################################################### ACCOUNT ##########################################
 model Account {
-  account_id               String           @unique
+  account_id               String           @id @unique
   name                     String?
   type                     String?
   available                Decimal?

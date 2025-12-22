@@ -1,6 +1,12 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "@/lib/protected";
+import {
+  SuccessResponse,
+  ErrorResponse,
+  FailResponse,
+} from "@/utils/api-helpers/api-responses/response";
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
 /**
  * Handles the POST request to create a new item in the database.
@@ -48,29 +54,80 @@ export async function POST(req: NextRequest) {
       // Create the item
       const item = await prisma.item.create({
         data: {
-          item_id: tempItem.item_id || '',
-          institution_id: tempItem.institution_id || '',
-          available_products: tempItem.available_products || '',
-          billed_products: tempItem.billed_products || '',
-          products: tempItem.products || '',
-          error: tempItem.error || '',
-          user_id: user?.id || '', // Use the authenticated user's ID
-          access_token: tempItem.access_token || '',
-          update_type: tempItem.update_type || '',
-          consent_expiration_time: tempItem.consent_expiration_time || '',
-          institution_name: tempItem.institution_name || '',
-          webhook: tempItem.webhook || '',
-          auth_method: tempItem.auth_method || '',
-          consented_products: tempItem.consented_products || '',
-          consented_data_scopes: tempItem.consented_data_scopes || '',
-          consented_use_cases: tempItem.consented_use_cases || '',
-          request_id: tempItem.request_id || '',
+          item_id: tempItem.item_id || "",
+          institution_id: tempItem.institution_id || "",
+          available_products: tempItem.available_products || "",
+          billed_products: tempItem.billed_products || "",
+          products: tempItem.products || "",
+          error: tempItem.error || "",
+          user_id: user?.id || "", // Use the authenticated user's ID
+          access_token: tempItem.access_token || "",
+          update_type: tempItem.update_type || "",
+          consent_expiration_time: tempItem.consent_expiration_time || "",
+          institution_name: tempItem.institution_name || "",
+          webhook: tempItem.webhook || "",
+          auth_method: tempItem.auth_method || "",
+          consented_products: tempItem.consented_products || "",
+          consented_data_scopes: tempItem.consented_data_scopes || "",
+          consented_use_cases: tempItem.consented_use_cases || "",
+          request_id: tempItem.request_id || "",
         },
       });
 
       return NextResponse.json({ message: "Hello, World!", item: item });
     } catch (error) {
-      return NextResponse.json({ error: (error as any).message }, { status: 500 });
+      return NextResponse.json(
+        { error: (error as any).message },
+        { status: 500 }
+      );
+    }
+  });
+}
+
+/**
+ * Handles the GET request to retrieve Plaid items associated with the authenticated user.
+ *
+ * @param req - The incoming Next.js request object.
+ * @returns A promise that resolves to a response containing the user's Plaid items
+ *          or an appropriate error response.
+ *
+ * @remarks
+ * - This function uses the `withAuth` middleware to ensure the user is authenticated.
+ * - It queries the database for Plaid items associated with the authenticated user's ID.
+ * - If no items are found, it returns a 404 response with a failure message.
+ * - In case of an error during the database query, it returns an error response with
+ *   the appropriate server error message.
+ *
+ * @throws Will throw an error if the database query fails.
+ */
+export async function GET(req: NextRequest) {
+  return withAuth(req, async (request, user) => {
+    try {
+      const items = await prisma.item.findMany({
+        where: { user_id: user.id },
+        select: {
+          access_token: false,
+          item_id: true,
+          institution_id: true,
+          available_products: true,
+          billed_products: true,
+          products: true,
+          error: true,
+          update_type: true,
+          consent_expiration_time: true,
+          institution_name: true,
+          webhook: true,
+          auth_method: true,
+          consented_products: true,
+          consented_data_scopes: true,
+          consented_use_cases: true,
+          request_id: true,
+        },
+      });
+      if (!items) FailResponse("Failed to get items", 404);
+      return SuccessResponse({ items });
+    } catch (error) {
+      return ErrorResponse(getServerErrorMessage(error));
     }
   });
 }

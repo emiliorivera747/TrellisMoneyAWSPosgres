@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
 
       // ------ Add the new item to the database ------
       const addedItem = await addItem(
-        user?.id ?? "",
+        user_id,
         item,
         access_token,
         household_id
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
 
       // ----- Match the accounts to the item -----
       const addedAccount = await addAccounts(
-        user?.id ?? "",
+        user_id,
         item.data.item.item_id,
         accounts,
         household_id

@@ -13,24 +13,24 @@ export const addAccounts = async (
   accounts: any[],
   household_id: string
 ) => {
-  const addedAccounts = [];
+  const accountAdded = [];
 
   for (const account of accounts) {
     const createdAccount = await prisma.account.create({
       data: {
         user: {
           connect: {
-            user_id,
+            user_id: user_id,
           },
         },
         item: {
           connect: {
-            item_id,
+            item_id: item_id,
           },
         },
         household: {
           connect: {
-            household_id,
+            household_id: household_id,
           },
         },
         account_id: account.id,
@@ -41,8 +41,8 @@ export const addAccounts = async (
         verification_status: account.verification_status || null,
       },
     });
-    addedAccounts.push(createdAccount);
+    accountAdded.push(createdAccount);
   }
 
-  return addedAccounts;
+  return accountAdded;
 };

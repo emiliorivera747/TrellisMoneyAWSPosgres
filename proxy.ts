@@ -6,6 +6,7 @@ export const PROTECTED_PATHS = [
   "/profile",
   "/account",
   "/accounts",
+  "/plaid-connections",
   "/investments",
   "/investment-goals",
   "/api/plaid/:path*",
@@ -27,6 +28,7 @@ export const config = {
     "/investment-goals",
     "/api/plaid/:path*",
     "/api/stripe/:path*",
+    "/plaid-connections",
     /*
      * Match all request paths except for the ones starting with:
      * - _next/static (static files)
