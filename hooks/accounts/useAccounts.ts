@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
 
 // Hooks
@@ -19,7 +19,7 @@ export const useAccounts = (): UseAccountsResponse => {
 
   const { mutateItem, itemIsPending, itemHasError } = useRemoveItem();
 
-  const accounts = accountsResponse?.data || null;
+  const accounts = accountsResponse?.data?.accounts || null;
   const { groups } = useGroupAccounts({ accounts });
   const [filter, setFilter] = useState<string>("net-worth");
   const [startDate, setStartDate] = useState<Date>(new Date());

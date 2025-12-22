@@ -17,6 +17,7 @@ import Accountcard from "@/features/accounts/components/AccountCard";
  * @returns
  */
 const AccountsList = () => {
+  
   const { isLoadingAccounts, isErrorAccounts, groups } =
     useAccountsContext() as {
       isLoadingAccounts: boolean;
@@ -27,6 +28,8 @@ const AccountsList = () => {
   if (isLoadingAccounts) return <div>Loading...</div>;
   if (isErrorAccounts) return <div>Error</div>;
   if (!groups || Object.keys(groups).length === 0) return <NoAccountsFound />;
+
+  console.log(groups)
 
   return (
     <div className="pb-10">

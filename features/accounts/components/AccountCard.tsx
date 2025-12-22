@@ -1,23 +1,45 @@
-import React from "react";
-
 import { Account } from "@/types/plaid";
-
 import { FaAirbnb } from "react-icons/fa";
 import {
   AlertDialog,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
 import ModalHeader from "@/components/headers/ModalHeader";
-
 import { transactions } from "@/features/accounts/utils/data/mockTransactionData";
 import { useAccountsContext } from "@/context/accounts/AccountContext";
+import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 
+/**
+ * A React component that renders an account card with account details and a modal dialog
+ * for managing connections and viewing transactions.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Account} props.account - The account object containing account details.
+ *
+ * @returns {JSX.Element} The rendered AccountCard component.
+ *
+ * @example
+ * <AccountCard account={account} />
+ *
+ * @remarks
+ * - The component uses `AlertDialog` from Radix UI for the modal dialog functionality.
+ * - The account card displays the account name, current balance, and a placeholder icon.
+ * - Clicking on the card opens a modal dialog with options to manage connections and view transactions.
+ *
+ * @dependencies
+ * - `useAccountsContext` is used to access the `mutateItem` function for deleting connections.
+ * - `convertToMoney` is used to format the account balance.
+ * - `FaAirbnb` is used as a placeholder icon for the account card.
+ *
+ * @internal
+ * - The `transactions` array is assumed to be available in the component's scope.
+ * - The `mutateItem` function is called with the `account.item_id` to delete a connection.
+ */
 const AccountCard = ({ account }: { account: Account }) => {
   const { mutateItem } = useAccountsContext();
   return (
@@ -36,9 +58,7 @@ const AccountCard = ({ account }: { account: Account }) => {
             {account.name}
           </div>
           <div className="flex items-center justify-end font-light text-tertiary-800 pr-4">
-            {account?.balance?.current
-              ? "$" + Number(account.balance.current).toFixed(2)
-              : "$0.00"}
+            {convertToMoney(Number(account.current))}
           </div>
         </div>
       </AlertDialogTrigger>

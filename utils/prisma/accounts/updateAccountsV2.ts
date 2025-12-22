@@ -7,17 +7,14 @@ import { AccountSubtype, AccountType } from "plaid";
 import { AccountBaseWithItemId } from "@/types/plaid";
 
 // Helpers
-import { hasAccountBalance } from "@/utils/api-helpers/plaid/accounts/hasAccountBalance";
-import { NextResponse } from "next/server";
-import { getUser} from "@/services/supabase/getUser";
+import { getUser } from "@/services/supabase/getUser";
+import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 
 /**
  * Update the accounts in the database
  * Optimized to use batch operations via $transaction to reduce database round-trips
  */
-export async function updateAccounts(
-  accountBase: AccountBaseWithItemId[][],
-) {
+export async function updateAccounts(accountBase: AccountBaseWithItemId[][]) {
   const accounts = accountBase.flat();
   const user = await getUser();
   const user_id = user?.id || "";
@@ -27,8 +24,6 @@ export async function updateAccounts(
   const accountOperations = [];
 
   for (const account of accounts) {
-    hasAccountBalance(account);
-
     const balances = account?.balances ?? default_balance;
     const accountData = extractAccountData(account, balances);
 
@@ -89,15 +84,15 @@ export async function updateAccounts(
 
   // Execute all operations in a single transaction
   try {
-    await prisma.$transaction([...balanceOperations, ...accountOperations]);
+    const res = await prisma.$transaction([
+      ...balanceOperations,
+      ...accountOperations,
+    ]);
+    return res;
   } catch (error) {
-    return NextResponse.json(
-      { message: "Failed to update accounts and balances" },
-      { status: 500 }
-    );
+    return ErrorResponse("Failed to update accounts and balances");
   }
 }
-
 
 /**
  * Default balance object
