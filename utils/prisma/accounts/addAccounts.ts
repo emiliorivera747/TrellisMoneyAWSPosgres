@@ -1,4 +1,6 @@
 import prisma from "@/lib/prisma";
+import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
+
 
 /**
  * Adds accounts to the database for the given item.
@@ -10,7 +12,7 @@ import prisma from "@/lib/prisma";
 export const addAccounts = async (
   user_id: string,
   item_id: string,
-  accounts: any[],
+  accounts: PlaidLinkOnSuccessMetadata["accounts"],
   household_id: string
 ) => {
   const accountAdded = [];
@@ -33,7 +35,7 @@ export const addAccounts = async (
             household_id: household_id,
           },
         },
-        account_id: account.id,
+        account_id: account.account_id,
         name: account.name,
         mask: account.mask || null,
         type: account.type,

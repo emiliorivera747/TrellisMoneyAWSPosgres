@@ -40,20 +40,18 @@ const exchangeToken = async ({
   user_id,
   metadata,
 }: ExchangeTokenProps) => {
-  
   const response = await fetch(`${API_URL}/exchange-token`, {
     method: "POST",
     body: JSON.stringify({
       public_token,
-      institution: metadata?.institution ?? { institution_id: "", name: "" },
-      accounts: metadata.accounts || [],
+      metadata,
       user_id,
     }),
     headers: {
       "Content-Type": "application/json",
     },
   });
-  
+
   return response;
 };
 

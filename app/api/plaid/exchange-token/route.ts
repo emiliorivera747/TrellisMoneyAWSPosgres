@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { client } from "@/config/plaidClient";
 
 import { withAuth } from "@/lib/protected";
@@ -10,12 +10,17 @@ import {
   SuccessResponse,
   ErrorResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 import { getUserHouseholdMembership } from "@/utils/prisma/household-member/members";
 import { addItem } from "@/utils/prisma/item/addItem";
 import { addAccounts } from "@/utils/prisma/accounts/addAccounts";
 import { logError } from "@/utils/api-helpers/errors/logError";
+import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 
+interface ExchangeTokenRequestBody {
+  public_token: string;
+  metadata: PlaidLinkOnSuccessMetadata;
+  user_id: string;
+}
 /**
  * Handles the POST request to exchange a public token for an access token
  * and store the item in the database.
@@ -25,10 +30,10 @@ import { logError } from "@/utils/api-helpers/errors/logError";
  */
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
-    const { public_token, institution, accounts, user_id } =
+    const { public_token, metadata, user_id }: ExchangeTokenRequestBody =
       await request.json();
-
-    const { institution_id } = institution;
+    const institution_id = metadata.institution?.institution_id;
+    if (!institution_id) return FailResponse("Institution ID is missing", 400);
 
     try {
       // ----- Get Item From the database -----
@@ -75,7 +80,7 @@ export async function POST(req: NextRequest) {
       const addedAccount = await addAccounts(
         user_id,
         item.data.item.item_id,
-        accounts,
+        metadata.accounts,
         household_id
       );
       if (!addedAccount) {
