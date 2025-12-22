@@ -6,16 +6,22 @@ export interface Member {
 }
 
 export interface StepProps {
-  householdResponse: {
-    data: {
-      members: Member[];
-    };
-  };
+  members: Member[];
   clickFn?: (id: string) => void;
+  handleSetRoute: (route: string) => void;
 }
 
+export interface MemberCardProp {
+  members: Member[];
+  clickFn?: (id: string) => void;
+  handleSetRoute: (route: string) => void;
+}
+export interface AddMemberProps {
+  handleSetRoute: (route: string) => void;
+}
 export interface Step {
   title: string;
   description: string;
   content: React.ReactNode;
+  route?: string;
 }

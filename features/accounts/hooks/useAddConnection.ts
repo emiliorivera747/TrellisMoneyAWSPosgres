@@ -27,7 +27,6 @@ export const useAddConnection = ({
 }: {
   onSelectUser: (userId: string) => Promise<void>;
 }) => {
-  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
@@ -38,14 +37,16 @@ export const useAddConnection = ({
     await onSelectUser(userId);
   };
 
-  const steps: Step[] = getSteps({
-    householdResponse,
-    clickFn: handleSelectUser,
+  const handleSetRoute = (route: string) => {
+    goToRoute(route);
+  };
 
+  const steps: Step[] = getSteps({
+    members: householdResponse?.data?.members,
+    handleSetRoute,
   });
 
-  const { currentStep, isFirstStep, isLastStep, back, next , goToRoute} =
-    useMultistepForm(steps);
+  const { currentStep, goToRoute } = useMultistepForm(steps);
 
   return {
     isDialogOpen,
@@ -55,9 +56,5 @@ export const useAddConnection = ({
     isErrorHousehold,
     handleSelectUser,
     currentStep,
-    isFirstStep,
-    isLastStep,
-    back,
-    next,
   };
 };

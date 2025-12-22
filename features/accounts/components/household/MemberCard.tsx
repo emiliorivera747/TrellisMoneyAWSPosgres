@@ -1,4 +1,4 @@
-import { StepProps, Member } from "@/features/accounts/types/household";
+import { Member, MemberCardProp } from "@/features/accounts/types/household";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 /**
@@ -23,10 +23,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
  *
  * @returns {JSX.Element} A JSX element representing the list of household member cards.
  */
-const MemberCard = ({ householdResponse, clickFn }: StepProps) => {
+const MemberCard = ({ members, clickFn }: MemberCardProp) => {
   return (
     <div key={1} className="">
-      {(householdResponse?.data?.members ?? []).map(
+      {(members ?? []).map(
         (
           { name, url, user_id }: Member,
           index: number
@@ -34,7 +34,7 @@ const MemberCard = ({ householdResponse, clickFn }: StepProps) => {
           return (
             <div
               key={`${user_id}-${index}`}
-              className="flex flex-row gap-4 items-center border rounded-[12px] px-4 py-[1rem] hover:bg-tertiary-200 font-light"
+              className="flex flex-row gap-4 items-center border rounded-[12px] px-4 py-[1rem] hover:bg-tertiary-200 font-light cursor-pointer"
               onClick={() => clickFn?.(user_id)}
             >
               <Avatar>

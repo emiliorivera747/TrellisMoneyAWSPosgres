@@ -1,9 +1,9 @@
-// Components
-import MemberCard from "@/features/accounts/components/household/MemberCard";
-import AddMemberCard from "@/features/accounts/components/household/AddMemberCard";
-
 // Types
 import { StepProps, Step } from "@/features/accounts/types/household";
+
+// Components
+import SelectOwnerStep from "@/features/accounts/components/modal-steps/SelectOwnerStep";
+import AddMemberForm from "@/features/accounts/components/modal-steps/AddMemberForm";
 
 /**
  * Generates an array of steps to be used in a modal workflow.
@@ -11,7 +11,7 @@ import { StepProps, Step } from "@/features/accounts/types/household";
  * @param {StepProps} params - The parameters for generating the steps.
  * @param {HouseholdResponse} params.householdResponse - The household data used to populate the steps.
  * @param {Function} params.clickFn - The function to handle click events within the steps.
- * 
+ *
  * @returns {Step[]} An array of step objects, each containing a title, description, and content.
  *
  * @example
@@ -20,23 +20,17 @@ import { StepProps, Step } from "@/features/accounts/types/household";
  *   clickFn: handleClick,
  * });
  */
-export const getSteps = ({ householdResponse, clickFn }: StepProps): Step[] => [
+export const getSteps = ({ members, handleSetRoute }: StepProps): Step[] => [
   {
     title: "Select Account Owner",
+    route: "owner",
     description: "Who owns this account?",
-    content: (
-      <div className="h-full gap-2 flex flex-col">
-        <MemberCard householdResponse={householdResponse} clickFn={clickFn} />
-        <AddMemberCard
-          householdResponse={householdResponse}
-          clickFn={clickFn}
-        />
-      </div>
-    ),
+    content: <SelectOwnerStep />,
   },
   {
     title: "Add a member",
+    route: "add-member",
     description: "",
-    content: <div>Form</div>,
+    content: <AddMemberForm />,
   },
 ];
