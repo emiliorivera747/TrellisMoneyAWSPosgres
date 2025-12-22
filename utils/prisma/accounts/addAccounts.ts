@@ -35,7 +35,7 @@ export const addAccounts = async (
             household_id: household_id,
           },
         },
-        account_id: account.account_id,
+        account_id: account.id,
         name: account.name,
         mask: account.mask || null,
         type: account.type,
