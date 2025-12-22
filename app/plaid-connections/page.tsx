@@ -22,7 +22,7 @@ const page = () => {
 
   return (
     <section className="h-screen overflow-scroll">
-      <div className=" h-full flex-row items-center justify-start pl-20 pt-[10%]">
+      <div className=" h-full flex-row items-center justify-start pl-20 pt-14">
         <h1 className="pb-6 font-bold text-xl">Items</h1>
         {items?.map(({ item_id }) => {
           return (
