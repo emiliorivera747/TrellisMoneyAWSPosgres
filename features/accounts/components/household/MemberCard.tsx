@@ -1,4 +1,3 @@
-import React from "react";
 import { StepProps, Member } from "@/features/accounts/types/household";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
