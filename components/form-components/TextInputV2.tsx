@@ -6,7 +6,33 @@ import { TextInputV2Props } from "@/types/forms";
 import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
 import ErrorForInputs from "@/components/errors/ErrorForInputs";
 
-const TextInputV2 = <TFieldValues extends FieldValues>({
+/**
+ * A reusable text input component with customizable styles and validation support.
+ * This component is designed to work with React Hook Form for form state management.
+ *
+ * @template TFieldValues - The type of the form values managed by React Hook Form.
+ *
+ * @param {Object} props - The properties for the TextInput component.
+ * @param {Control<TFieldValues>} props.control - The control object from React Hook Form.
+ * @param {string} props.name - The name of the field, used for form registration and validation.
+ * @param {string} [props.type="text"] - The type of the input field (e.g., "text", "password").
+ * @param {string} props.id - The unique identifier for the input field.
+ * @param {string} [props.placeholder=""] - The placeholder text for the input field.
+ * @param {string} [props.defaultValue=""] - The default value for the input field.
+ * @param {string} [props.pt="pt-[1.05882rem]"] - The padding-top CSS class for the input field.
+ * @param {string} [props.px="px-[1rem]"] - The padding-x CSS class for the input field.
+ * @param {string} [props.h="h-[3.2941176471rem]"] - The height CSS class for the input field.
+ * @param {string} [props.w="w-full"] - The width CSS class for the input field.
+ *
+ * @returns {JSX.Element} A styled text input field with validation error handling and a placeholder label.
+ *
+ * @remarks
+ * - The component uses `control.register` to register the input field with React Hook Form.
+ * - Validation errors are displayed using the `ErrorForInputs` component.
+ * - A floating label is implemented using the `PrimaryInputLabel` component.
+ * - The input field dynamically updates its styles based on validation state.
+ */
+const TextInput = <TFieldValues extends FieldValues>({
   control,
   name,
   type = "text",
@@ -51,4 +77,4 @@ const TextInputV2 = <TFieldValues extends FieldValues>({
   );
 };
 
-export default TextInputV2;
+export default TextInput;
