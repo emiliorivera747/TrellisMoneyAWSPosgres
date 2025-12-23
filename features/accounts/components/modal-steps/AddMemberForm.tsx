@@ -16,6 +16,9 @@ import FormFieldGenerator from "@/components/form-builder/FormFieldsGenerator";
 import { memberFields } from "@/features/accounts/data/MemberFormFields";
 import { useConnectionContext } from "../../context/ConnectionContext";
 
+// Services
+import { householdService } from "../../services/householdServices";
+
 const AddMemberForm = () => {
   const { goToRoute } = useConnectionContext();
 
@@ -26,12 +29,15 @@ const AddMemberForm = () => {
   });
 
   const onSubmit = (data: AddMemberFormSchema) => {
-    console.log(data);
+    const res = householdService.createHouseholdMember(data);
   };
 
   return (
     <div>
-      <button className="text-xs text-tertiary-700 flex items-center justify-center font-light gap-1 hover:underline" onClick={() => goToRoute('owner')}>
+      <button
+        className="text-xs text-tertiary-700 flex items-center justify-center font-light gap-1 hover:underline"
+        onClick={() => goToRoute("owner")}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
