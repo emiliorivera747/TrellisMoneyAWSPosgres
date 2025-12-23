@@ -96,3 +96,11 @@ export interface TextInputV2Props<TFieldValues extends FieldValues> {
   h?: string;
   w?: string;
 }
+
+export interface FormFieldData<TFieldValues extends FieldValues> {
+  id: string;
+  name: Path<TFieldValues>;
+  placeholder: string;
+  type: string;
+  control?: Control<TFieldValues>;
+}
