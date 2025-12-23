@@ -7,17 +7,13 @@ import { householdService } from "@/features/accounts/services/householdServices
  *
  * @returns {Object} - An object containing accounts data, loading state, and error state.
  */
-export const useFetchHouseholdMembers = ({
-  isDialogOpen,
-}: {
-  isDialogOpen: boolean;
-}) => {
+export const useFetchHouseholdMembers = () => {
   const {
     data: householdResponse,
     isLoading: isLoadingHousehold,
     isError: isErrorHousehold,
   } = useQuery({
-    queryKey: ["household", isDialogOpen],
+    queryKey: ["household"],
     queryFn: () => householdService.fetchHousehold(),
     enabled: true,
     refetchOnWindowFocus: false,

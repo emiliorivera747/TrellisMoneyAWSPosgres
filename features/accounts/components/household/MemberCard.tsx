@@ -1,5 +1,6 @@
 import { Member, MemberCardProp } from "@/features/accounts/types/household";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCardSkeleton";
 
 /**
  * A functional component that renders a list of household members as clickable cards.
@@ -23,33 +24,29 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
  *
  * @returns {JSX.Element} A JSX element representing the list of household member cards.
  */
-const MemberCard = ({ members, clickFn }: MemberCardProp) => {
+const MemberCards = ({ members, clickFn }: MemberCardProp) => {
+  if (!members) return null;
   return (
     <div key={1} className="">
-      {(members ?? []).map(
-        (
-          { name, url, user_id }: Member,
-          index: number
-        ) => {
-          return (
-            <div
-              key={`${user_id}-${index}`}
-              className="flex flex-row gap-4 items-center border rounded-[12px] px-4 py-[1rem] hover:bg-tertiary-200 font-light cursor-pointer"
-              onClick={() => clickFn?.(user_id)}
-            >
-              <Avatar>
-                <AvatarImage src={url ? url : ""} />
-                <AvatarFallback className="bg-primary-800 text-white">
-                  {name ? name[0].toUpperCase() : "D"}
-                </AvatarFallback>
-              </Avatar>
-              <div key={`${user_id}-${index}`}>{name}</div>
-            </div>
-          );
-        }
-      )}
+      {members.map(({ name, url, user_id }: Member, index: number) => {
+        return (
+          <div
+            key={`${user_id}-${index}`}
+            className="flex flex-row gap-4 items-center border rounded-[12px] px-4 py-[1rem] hover:bg-tertiary-200 font-light cursor-pointer"
+            onClick={() => clickFn?.(user_id)}
+          >
+            <Avatar>
+              <AvatarImage src={url ? url : ""} />
+              <AvatarFallback className="bg-primary-800 text-white">
+                {name ? name[0].toUpperCase() : "D"}
+              </AvatarFallback>
+            </Avatar>
+            <div key={`${user_id}-${index}`}>{name}</div>
+          </div>
+        );
+      })}
     </div>
   );
 };
 
-export default MemberCard;
+export default MemberCards;

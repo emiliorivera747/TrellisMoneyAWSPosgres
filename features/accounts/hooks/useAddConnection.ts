@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useFetchHouseholdMembers } from "@/features/accounts/hooks/useFetchHousehold";
 import { getSteps } from "@/features/accounts/config/ModalSteps";
 import { Step } from "@/features/accounts/types/household";
 import { useMultistepForm } from "@/hooks/forms/useMultistepForm";

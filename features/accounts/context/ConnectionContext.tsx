@@ -15,6 +15,7 @@ interface ConnectionContextType {
   steps: Step[];
   setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
   currentStep: Step;
+  goToRoute: (route: string) => void;
 }
 
 const ConnectionContext = createContext<ConnectionContextType | null>(null);
@@ -44,7 +45,7 @@ export const ConnectionProvider = ({
   children: React.ReactNode;
 }) => {
   const { start, error } = usePlaidConnectionFlowfrom();
-  const { isDialogOpen, steps, setIsDialogOpen, currentStep } =
+  const { isDialogOpen, steps, setIsDialogOpen, currentStep, goToRoute } =
     useAddConnection();
     
   return (
@@ -56,6 +57,7 @@ export const ConnectionProvider = ({
         steps,
         setIsDialogOpen,
         currentStep,
+        goToRoute
       }}
     >
       {children}
