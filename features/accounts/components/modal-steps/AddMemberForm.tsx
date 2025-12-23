@@ -25,7 +25,9 @@ const AddMemberForm = () => {
     resolver: zodResolver(addMemberFormSchema),
   });
 
-  const onSubmit = () => {};
+  const onSubmit = (data: AddMemberFormSchema) => {
+    console.log(data);
+  };
 
   return (
     <div>
