@@ -311,6 +311,7 @@ model HouseholdMember {
   name          String
   role          HouseholdRole  @default(MEMBER)
   dob           DateTime?
+  email         String?         
 
   invited_email String?
   invite_status String         @default("pending")
