@@ -20,7 +20,7 @@ import { useConnectionContext } from "../../context/ConnectionContext";
 import { householdService } from "../../services/householdServices";
 
 const AddMemberForm = () => {
-  const { goToRoute } = useConnectionContext();
+  const { goToRoute, start } = useConnectionContext();
 
   const buttonRef = useRef(null);
 
@@ -28,8 +28,9 @@ const AddMemberForm = () => {
     resolver: zodResolver(addMemberFormSchema),
   });
 
-  const onSubmit = (data: AddMemberFormSchema) => {
-    const res = householdService.createHouseholdMember(data);
+  const onSubmit = async (data: AddMemberFormSchema) => {
+    const res = await householdService.createHouseholdMember(data);
+    if (res.ok) start(res.data.member.member_id);
   };
 
   return (

@@ -7,15 +7,28 @@ import {
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
 
+import { getUserHouseholdMembership } from "@/utils/prisma/household-member/members";
+import { logError } from "@/utils/api-helpers/errors/logError";
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
+
 /**
  * GET /api/members
  */
 export async function GET(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
+      // ----- Retreive the membership -----
+      const membership = await getUserHouseholdMembership(user.id);
+     
+      if (!membership) {
+        logError("Household membership not found");
+        return FailResponse("Household membership not found", 400);
+      }
+
+      // ----- Retrieve the household -----
       const household = await prisma.household.findUnique({
         where: {
-          household_id: user.id,
+          household_id: membership.household_id,
         },
         include: {
           members: true,
@@ -27,12 +40,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
        * otherwise return the current user.
        */
       if (household) {
-        return NextResponse.json(
-          {
-            data: { members: household.members, status: "success" },
-          },
-          { status: 200 }
-        );
+        return SuccessResponse({
+          members: household.members,
+        });
       } else {
         const userDB = await prisma.user.findUnique({
           where: {
@@ -40,17 +50,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           },
         });
 
-        return NextResponse.json(
-          {
-            data: { members: [userDB], status: "success" },
-          },
-          { status: 200 }
-        );
+        return SuccessResponse({
+          members: [userDB],
+        });
       }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "There was a server error";
-      return NextResponse.json({ error: errorMessage }, { status: 500 });
+      const errorMessage = getServerErrorMessage(error);
+      logError(errorMessage);
+      return ErrorResponse(errorMessage);
     }
   });
 }
@@ -62,43 +69,37 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 export async function POST(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
-      // Parse the request body to extract the name and email of the new member
+      // ----- Parse the request body to extract the name and email of the new member -----
       const body = await request.json();
       const { name, email } = body;
+      const user_id = user.id;
 
-      // Validate that both name and email are provided
+      // ----- Validate that both name and email are provided -----
       if (!name || !email)
         return FailResponse("Name and email are required", 404);
+      if (!user_id) return FailResponse("Failled to get user ID", 404);
 
-      // Find the household associated with the authenticated user
-      const household = await prisma.household.findUnique({
-        where: {
-          household_id: user.id,
-        },
-      });
+      // ----- Retreive the membership -----
+      const membership = await getUserHouseholdMembership(user_id);
+      if (!membership) {
+        logError("Household membership not found");
+        return FailResponse("Household membership not found", 400);
+      }
 
-      // If the household does not exist, return an error response
-      if (!household) return FailResponse("Household not found", 404);
-
-      // Create a new household member with the provided name and email
+      // ----- Create a new household member with the provided name and email -----
+      const household_id = membership.household_id;
       const newMember = await prisma.householdMember.create({
         data: {
           name,
           email,
-          household_id: household.household_id,
+          household_id,
         },
       });
-
-      // Return a success response with the newly created member
-      return NextResponse.json(
-        { data: { member: newMember, status: "success" } },
-        { status: 201 }
-      );
+      return SuccessResponse({ member: newMember });
     } catch (error) {
-      // Handle any errors that occur during the process
-      const errorMessage =
-        error instanceof Error ? error.message : "There was a server error";
-      return NextResponse.json({ error: errorMessage }, { status: 500 });
+      const message = getServerErrorMessage(error);
+      console.error(message);
+      return ErrorResponse(getServerErrorMessage(error));
     }
   });
 }

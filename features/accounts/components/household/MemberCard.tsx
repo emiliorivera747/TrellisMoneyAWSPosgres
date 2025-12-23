@@ -27,7 +27,7 @@ import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCa
 const MemberCards = ({ members, clickFn }: MemberCardProp) => {
   if (!members) return null;
   return (
-    <div key={1} className="">
+    <div key={1} className="flex flex-col gap-3">
       {members.map(({ name, url, user_id }: Member, index: number) => {
         return (
           <div
