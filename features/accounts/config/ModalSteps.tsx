@@ -1,5 +1,5 @@
 // Types
-import { StepProps, Step } from "@/features/accounts/types/household";
+import { Step } from "@/features/accounts/types/household";
 
 // Components
 import SelectOwnerStep from "@/features/accounts/components/modal-steps/SelectOwnerStep";
