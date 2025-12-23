@@ -327,6 +327,7 @@ export const HouseholdMemberScalarFieldEnum = {
   name: 'name',
   role: 'role',
   dob: 'dob',
+  email: 'email',
   invited_email: 'invited_email',
   invite_status: 'invite_status',
   household_id: 'household_id',
