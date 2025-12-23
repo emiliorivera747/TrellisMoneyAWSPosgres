@@ -13,6 +13,7 @@ import AssetsAndLiabilitiesCard from "@/features/accounts/components/AssetsAndLi
 
 // Context
 import { useAccountsContext } from "@/context/accounts/AccountContext";
+import {ConnectionProvider} from "@/features/accounts/context/ConnectionContext";
 
 // Types
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
@@ -48,13 +49,15 @@ const AccountContent = () => {
           />
         </div>
         <div className=" pt-8 w-full gap-8">
-          <AccountsList/>
+          <AccountsList />
         </div>
       </PrimaryAccountSection>
 
       <div className="h-full w-[25%] sticky top-0  justify-start flex flex-col gap-4 pt-12">
         <AssetsAndLiabilitiesCard />
-        <AddConnection />
+        <ConnectionProvider>
+          <AddConnection />
+        </ConnectionProvider>
       </div>
     </section>
   );

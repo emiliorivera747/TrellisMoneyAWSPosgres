@@ -1,5 +1,4 @@
 import { DialogDescription } from "@/components/ui/dialog";
-import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCardSkeleton";
 
 /**
  * A functional component that renders the primary section of a dialog.
@@ -21,12 +20,8 @@ import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCa
  */
 const PrimaryDialogSection = ({
   currentStep,
-  isLoadingHousehold,
-  householdResponse,
 }: {
   currentStep: { description?: string; content: React.ReactNode };
-  isLoadingHousehold: boolean;
-  householdResponse: { data?: { members?: any[] } } | null;
 }) => {
   return (
     <div className=" h-[20rem] px-4 overflow-scroll">
@@ -35,13 +30,7 @@ const PrimaryDialogSection = ({
           {currentStep.description}
         </DialogDescription>
       )}
-      {isLoadingHousehold ? (
-        <MemberCardSkeleton
-          length={householdResponse?.data?.members?.length || 2}
-        />
-      ) : (
-        currentStep.content
-      )}
+      {currentStep.content}
     </div>
   );
 };

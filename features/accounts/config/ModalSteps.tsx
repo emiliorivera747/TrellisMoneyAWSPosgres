@@ -20,7 +20,7 @@ import AddMemberForm from "@/features/accounts/components/modal-steps/AddMemberF
  *   clickFn: handleClick,
  * });
  */
-export const getSteps = ({ members, handleSetRoute }: StepProps): Step[] => [
+export const getSteps = (): Step[] => [
   {
     title: "Select Account Owner",
     route: "owner",

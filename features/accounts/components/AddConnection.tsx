@@ -1,23 +1,17 @@
 "use client";
 
 // Components
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-// Hooks
-import usePlaidConnectionFlowfrom from "@/hooks/plaid/usePlaidConnectionFlow";
-import { useAddConnection } from "@/features/accounts/hooks/useAddConnection";
 
 // Components
 import DialogHeader from "@/features/accounts/components/headers/DialogHeader";
 import PrimaryDialogSection from "@/features/accounts/components/dialog/PrimaryDialogSection";
-import DialogFormNavigation from "@/features/accounts/components/dialog/DialogFormNavigation";
 import AddAccount from "@/features/accounts/components/buttons/AddAccount";
 import ConnectionError from "@/features/accounts/components/errors/ConnectionError";
+
+// Context
+import { useConnectionContext } from "@/features/accounts/context/ConnectionContext";
 
 /**
  *
@@ -25,15 +19,8 @@ import ConnectionError from "@/features/accounts/components/errors/ConnectionErr
  *
  */
 const AddConnection = () => {
-  const { start, error } = usePlaidConnectionFlowfrom();
-
-  const {
-    isDialogOpen,
-    setIsDialogOpen,
-    currentStep,
-    isLoadingHousehold,
-    householdResponse,
-  } = useAddConnection({ onSelectUser: start });
+  const { isDialogOpen, error, setIsDialogOpen, currentStep } =
+    useConnectionContext();
 
   if (error) return <ConnectionError message={error.message} />;
 
@@ -46,11 +33,7 @@ const AddConnection = () => {
           </DialogTrigger>
           <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
             <DialogHeader title={currentStep.title ?? "Untitled"} />
-            <PrimaryDialogSection
-              currentStep={currentStep}
-              isLoadingHousehold={isLoadingHousehold}
-              householdResponse={householdResponse}
-            />
+            <PrimaryDialogSection currentStep={currentStep} />
           </DialogContent>
         </Dialog>
       </div>

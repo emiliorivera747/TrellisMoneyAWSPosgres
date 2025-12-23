@@ -22,39 +22,18 @@ import { useMultistepForm } from "@/hooks/forms/useMultistepForm";
  * @property {() => void} back - Function to navigate to the previous step in the multi-step form.
  * @property {() => void} next - Function to navigate to the next step in the multi-step form.
  */
-export const useAddConnection = ({
-  onSelectUser,
-}: {
-  onSelectUser: (userId: string) => Promise<void>;
-}) => {
+export const useAddConnection = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const { householdResponse, isLoadingHousehold, isErrorHousehold } =
-    useFetchHouseholdMembers({ isDialogOpen });
-
-  const handleSelectUser = async (userId: string) => {
-    setIsDialogOpen(false);
-    await onSelectUser(userId);
-  };
-
-  const handleSetRoute = (route: string) => {
-    goToRoute(route);
-  };
-
-  const steps: Step[] = getSteps({
-    members: householdResponse?.data?.members,
-    handleSetRoute,
-  });
+  const steps: Step[] = getSteps();
 
   const { currentStep, goToRoute } = useMultistepForm(steps);
 
   return {
     isDialogOpen,
+    steps,
     setIsDialogOpen,
-    householdResponse,
-    isLoadingHousehold,
-    isErrorHousehold,
-    handleSelectUser,
+    goToRoute,
     currentStep,
   };
 };
