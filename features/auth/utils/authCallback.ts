@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { SupabaseUserSyncData } from "@/features/auth/types/callback";
+import { connect } from "http2";
 
 /**
  * Determines the base redirect URL based on environment and headers.
@@ -63,7 +64,6 @@ export async function upsertUser(currentUser: SupabaseUserSyncData) {
  * @throws Will throw an error if the database transaction fails.
  */
 export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
-  
   const { id, email, user_metadata } = currentUser;
   const fullName = user_metadata.full_name?.trim();
 
@@ -77,20 +77,34 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
     : email?.split("@")[0] + "'s Household";
 
   await prisma.$transaction(async (tx) => {
+    
+    // 1. Create household (no created_by yet)
     const household = await tx.household.create({
       data: {
         name: householdName,
       },
     });
 
-    await tx.householdMember.create({
+    // 2. Create admin member and connect both sides in one call
+    const adminMember = await tx.householdMember.create({
       data: {
         name: fullName ?? "Unknown",
+        email: email ?? undefined,
         role: "ADMIN",
-        user_id: id,
-        household_id: household.household_id,
+        user: id ? { connect: { user_id: id } } : undefined,
+        household: { connect: { household_id: household.household_id } },
       },
     });
+
+    // 3. Now link the creator (unfortunately still needed)
+    await tx.household.update({
+      where: { household_id: household.household_id },
+      data: {
+        created_by: { connect: { member_id: adminMember.member_id } },
+      },
+    });
+
+    return household;
   });
 };
 
@@ -157,5 +171,3 @@ export const updateOrCreateUser = async (currentUser: SupabaseUserSyncData) => {
   });
   return userDB;
 };
-
-

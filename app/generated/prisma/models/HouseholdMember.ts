@@ -179,7 +179,7 @@ export type HouseholdMemberGroupByOutputType = {
   email: string | null
   invited_email: string | null
   invite_status: string
-  household_id: string
+  household_id: string | null
   user_id: string | null
   _count: HouseholdMemberCountAggregateOutputType | null
   _min: HouseholdMemberMinAggregateOutputType | null
@@ -212,9 +212,9 @@ export type HouseholdMemberWhereInput = {
   email?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
   invited_email?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
   invite_status?: Prisma.StringFilter<"HouseholdMember"> | string
-  household_id?: Prisma.StringFilter<"HouseholdMember"> | string
+  household_id?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
   user_id?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
-  household?: Prisma.XOR<Prisma.HouseholdScalarRelationFilter, Prisma.HouseholdWhereInput>
+  household?: Prisma.XOR<Prisma.HouseholdNullableScalarRelationFilter, Prisma.HouseholdWhereInput> | null
   created_households?: Prisma.HouseholdListRelationFilter
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   securities?: Prisma.SecurityListRelationFilter
@@ -231,7 +231,7 @@ export type HouseholdMemberOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   invited_email?: Prisma.SortOrderInput | Prisma.SortOrder
   invite_status?: Prisma.SortOrder
-  household_id?: Prisma.SortOrder
+  household_id?: Prisma.SortOrderInput | Prisma.SortOrder
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   household?: Prisma.HouseholdOrderByWithRelationInput
   created_households?: Prisma.HouseholdOrderByRelationAggregateInput
@@ -255,9 +255,9 @@ export type HouseholdMemberWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
   invited_email?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
   invite_status?: Prisma.StringFilter<"HouseholdMember"> | string
-  household_id?: Prisma.StringFilter<"HouseholdMember"> | string
+  household_id?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
   user_id?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
-  household?: Prisma.XOR<Prisma.HouseholdScalarRelationFilter, Prisma.HouseholdWhereInput>
+  household?: Prisma.XOR<Prisma.HouseholdNullableScalarRelationFilter, Prisma.HouseholdWhereInput> | null
   created_households?: Prisma.HouseholdListRelationFilter
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   securities?: Prisma.SecurityListRelationFilter
@@ -274,7 +274,7 @@ export type HouseholdMemberOrderByWithAggregationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   invited_email?: Prisma.SortOrderInput | Prisma.SortOrder
   invite_status?: Prisma.SortOrder
-  household_id?: Prisma.SortOrder
+  household_id?: Prisma.SortOrderInput | Prisma.SortOrder
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.HouseholdMemberCountOrderByAggregateInput
   _max?: Prisma.HouseholdMemberMaxOrderByAggregateInput
@@ -292,7 +292,7 @@ export type HouseholdMemberScalarWhereWithAggregatesInput = {
   email?: Prisma.StringNullableWithAggregatesFilter<"HouseholdMember"> | string | null
   invited_email?: Prisma.StringNullableWithAggregatesFilter<"HouseholdMember"> | string | null
   invite_status?: Prisma.StringWithAggregatesFilter<"HouseholdMember"> | string
-  household_id?: Prisma.StringWithAggregatesFilter<"HouseholdMember"> | string
+  household_id?: Prisma.StringNullableWithAggregatesFilter<"HouseholdMember"> | string | null
   user_id?: Prisma.StringNullableWithAggregatesFilter<"HouseholdMember"> | string | null
 }
 
@@ -304,7 +304,7 @@ export type HouseholdMemberCreateInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household: Prisma.HouseholdCreateNestedOneWithoutMembersInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutMembersInput
   created_households?: Prisma.HouseholdCreateNestedManyWithoutCreated_byInput
   user?: Prisma.UserCreateNestedOneWithoutMembershipsInput
   securities?: Prisma.SecurityCreateNestedManyWithoutMemberInput
@@ -321,7 +321,7 @@ export type HouseholdMemberUncheckedCreateInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household_id: string
+  household_id?: string | null
   user_id?: string | null
   created_households?: Prisma.HouseholdUncheckedCreateNestedManyWithoutCreated_byInput
   securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutMemberInput
@@ -338,7 +338,7 @@ export type HouseholdMemberUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutMembersNestedInput
+  household?: Prisma.HouseholdUpdateOneWithoutMembersNestedInput
   created_households?: Prisma.HouseholdUpdateManyWithoutCreated_byNestedInput
   user?: Prisma.UserUpdateOneWithoutMembershipsNestedInput
   securities?: Prisma.SecurityUpdateManyWithoutMemberNestedInput
@@ -355,7 +355,7 @@ export type HouseholdMemberUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_households?: Prisma.HouseholdUncheckedUpdateManyWithoutCreated_byNestedInput
   securities?: Prisma.SecurityUncheckedUpdateManyWithoutMemberNestedInput
@@ -372,7 +372,7 @@ export type HouseholdMemberCreateManyInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household_id: string
+  household_id?: string | null
   user_id?: string | null
 }
 
@@ -394,7 +394,7 @@ export type HouseholdMemberUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -411,6 +411,11 @@ export type HouseholdMemberListRelationFilter = {
 
 export type HouseholdMemberOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type HouseholdMemberNullableScalarRelationFilter = {
+  is?: Prisma.HouseholdMemberWhereInput | null
+  isNot?: Prisma.HouseholdMemberWhereInput | null
 }
 
 export type HouseholdMemberHousehold_idUser_idCompoundUniqueInput = {
@@ -563,10 +568,12 @@ export type HouseholdMemberUpdateManyWithoutHouseholdNestedInput = {
   deleteMany?: Prisma.HouseholdMemberScalarWhereInput | Prisma.HouseholdMemberScalarWhereInput[]
 }
 
-export type HouseholdMemberUpdateOneRequiredWithoutCreated_householdsNestedInput = {
+export type HouseholdMemberUpdateOneWithoutCreated_householdsNestedInput = {
   create?: Prisma.XOR<Prisma.HouseholdMemberCreateWithoutCreated_householdsInput, Prisma.HouseholdMemberUncheckedCreateWithoutCreated_householdsInput>
   connectOrCreate?: Prisma.HouseholdMemberCreateOrConnectWithoutCreated_householdsInput
   upsert?: Prisma.HouseholdMemberUpsertWithoutCreated_householdsInput
+  disconnect?: Prisma.HouseholdMemberWhereInput | boolean
+  delete?: Prisma.HouseholdMemberWhereInput | boolean
   connect?: Prisma.HouseholdMemberWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.HouseholdMemberUpdateToOneWithWhereWithoutCreated_householdsInput, Prisma.HouseholdMemberUpdateWithoutCreated_householdsInput>, Prisma.HouseholdMemberUncheckedUpdateWithoutCreated_householdsInput>
 }
@@ -625,7 +632,7 @@ export type HouseholdMemberCreateWithoutAccountsInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household: Prisma.HouseholdCreateNestedOneWithoutMembersInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutMembersInput
   created_households?: Prisma.HouseholdCreateNestedManyWithoutCreated_byInput
   user?: Prisma.UserCreateNestedOneWithoutMembershipsInput
   securities?: Prisma.SecurityCreateNestedManyWithoutMemberInput
@@ -641,7 +648,7 @@ export type HouseholdMemberUncheckedCreateWithoutAccountsInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household_id: string
+  household_id?: string | null
   user_id?: string | null
   created_households?: Prisma.HouseholdUncheckedCreateNestedManyWithoutCreated_byInput
   securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutMemberInput
@@ -673,7 +680,7 @@ export type HouseholdMemberUpdateWithoutAccountsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutMembersNestedInput
+  household?: Prisma.HouseholdUpdateOneWithoutMembersNestedInput
   created_households?: Prisma.HouseholdUpdateManyWithoutCreated_byNestedInput
   user?: Prisma.UserUpdateOneWithoutMembershipsNestedInput
   securities?: Prisma.SecurityUpdateManyWithoutMemberNestedInput
@@ -689,7 +696,7 @@ export type HouseholdMemberUncheckedUpdateWithoutAccountsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_households?: Prisma.HouseholdUncheckedUpdateManyWithoutCreated_byNestedInput
   securities?: Prisma.SecurityUncheckedUpdateManyWithoutMemberNestedInput
@@ -705,7 +712,7 @@ export type HouseholdMemberCreateWithoutUserInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household: Prisma.HouseholdCreateNestedOneWithoutMembersInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutMembersInput
   created_households?: Prisma.HouseholdCreateNestedManyWithoutCreated_byInput
   securities?: Prisma.SecurityCreateNestedManyWithoutMemberInput
   holdings?: Prisma.HoldingCreateNestedManyWithoutMemberInput
@@ -721,7 +728,7 @@ export type HouseholdMemberUncheckedCreateWithoutUserInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household_id: string
+  household_id?: string | null
   created_households?: Prisma.HouseholdUncheckedCreateNestedManyWithoutCreated_byInput
   securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutMemberInput
   holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutMemberInput
@@ -766,7 +773,7 @@ export type HouseholdMemberScalarWhereInput = {
   email?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
   invited_email?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
   invite_status?: Prisma.StringFilter<"HouseholdMember"> | string
-  household_id?: Prisma.StringFilter<"HouseholdMember"> | string
+  household_id?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
   user_id?: Prisma.StringNullableFilter<"HouseholdMember"> | string | null
 }
 
@@ -778,7 +785,7 @@ export type HouseholdMemberCreateWithoutItemsInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household: Prisma.HouseholdCreateNestedOneWithoutMembersInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutMembersInput
   created_households?: Prisma.HouseholdCreateNestedManyWithoutCreated_byInput
   user?: Prisma.UserCreateNestedOneWithoutMembershipsInput
   securities?: Prisma.SecurityCreateNestedManyWithoutMemberInput
@@ -794,7 +801,7 @@ export type HouseholdMemberUncheckedCreateWithoutItemsInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household_id: string
+  household_id?: string | null
   user_id?: string | null
   created_households?: Prisma.HouseholdUncheckedCreateNestedManyWithoutCreated_byInput
   securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutMemberInput
@@ -826,7 +833,7 @@ export type HouseholdMemberUpdateWithoutItemsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutMembersNestedInput
+  household?: Prisma.HouseholdUpdateOneWithoutMembersNestedInput
   created_households?: Prisma.HouseholdUpdateManyWithoutCreated_byNestedInput
   user?: Prisma.UserUpdateOneWithoutMembershipsNestedInput
   securities?: Prisma.SecurityUpdateManyWithoutMemberNestedInput
@@ -842,7 +849,7 @@ export type HouseholdMemberUncheckedUpdateWithoutItemsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_households?: Prisma.HouseholdUncheckedUpdateManyWithoutCreated_byNestedInput
   securities?: Prisma.SecurityUncheckedUpdateManyWithoutMemberNestedInput
@@ -900,7 +907,7 @@ export type HouseholdMemberCreateWithoutCreated_householdsInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household: Prisma.HouseholdCreateNestedOneWithoutMembersInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutMembersInput
   user?: Prisma.UserCreateNestedOneWithoutMembershipsInput
   securities?: Prisma.SecurityCreateNestedManyWithoutMemberInput
   holdings?: Prisma.HoldingCreateNestedManyWithoutMemberInput
@@ -916,7 +923,7 @@ export type HouseholdMemberUncheckedCreateWithoutCreated_householdsInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household_id: string
+  household_id?: string | null
   user_id?: string | null
   securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutMemberInput
   holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutMemberInput
@@ -964,7 +971,7 @@ export type HouseholdMemberUpdateWithoutCreated_householdsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutMembersNestedInput
+  household?: Prisma.HouseholdUpdateOneWithoutMembersNestedInput
   user?: Prisma.UserUpdateOneWithoutMembershipsNestedInput
   securities?: Prisma.SecurityUpdateManyWithoutMemberNestedInput
   holdings?: Prisma.HoldingUpdateManyWithoutMemberNestedInput
@@ -980,7 +987,7 @@ export type HouseholdMemberUncheckedUpdateWithoutCreated_householdsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   securities?: Prisma.SecurityUncheckedUpdateManyWithoutMemberNestedInput
   holdings?: Prisma.HoldingUncheckedUpdateManyWithoutMemberNestedInput
@@ -996,7 +1003,7 @@ export type HouseholdMemberCreateWithoutHoldingsInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household: Prisma.HouseholdCreateNestedOneWithoutMembersInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutMembersInput
   created_households?: Prisma.HouseholdCreateNestedManyWithoutCreated_byInput
   user?: Prisma.UserCreateNestedOneWithoutMembershipsInput
   securities?: Prisma.SecurityCreateNestedManyWithoutMemberInput
@@ -1012,7 +1019,7 @@ export type HouseholdMemberUncheckedCreateWithoutHoldingsInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household_id: string
+  household_id?: string | null
   user_id?: string | null
   created_households?: Prisma.HouseholdUncheckedCreateNestedManyWithoutCreated_byInput
   securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutMemberInput
@@ -1044,7 +1051,7 @@ export type HouseholdMemberUpdateWithoutHoldingsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutMembersNestedInput
+  household?: Prisma.HouseholdUpdateOneWithoutMembersNestedInput
   created_households?: Prisma.HouseholdUpdateManyWithoutCreated_byNestedInput
   user?: Prisma.UserUpdateOneWithoutMembershipsNestedInput
   securities?: Prisma.SecurityUpdateManyWithoutMemberNestedInput
@@ -1060,7 +1067,7 @@ export type HouseholdMemberUncheckedUpdateWithoutHoldingsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_households?: Prisma.HouseholdUncheckedUpdateManyWithoutCreated_byNestedInput
   securities?: Prisma.SecurityUncheckedUpdateManyWithoutMemberNestedInput
@@ -1076,7 +1083,7 @@ export type HouseholdMemberCreateWithoutSecuritiesInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household: Prisma.HouseholdCreateNestedOneWithoutMembersInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutMembersInput
   created_households?: Prisma.HouseholdCreateNestedManyWithoutCreated_byInput
   user?: Prisma.UserCreateNestedOneWithoutMembershipsInput
   holdings?: Prisma.HoldingCreateNestedManyWithoutMemberInput
@@ -1092,7 +1099,7 @@ export type HouseholdMemberUncheckedCreateWithoutSecuritiesInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household_id: string
+  household_id?: string | null
   user_id?: string | null
   created_households?: Prisma.HouseholdUncheckedCreateNestedManyWithoutCreated_byInput
   holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutMemberInput
@@ -1124,7 +1131,7 @@ export type HouseholdMemberUpdateWithoutSecuritiesInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutMembersNestedInput
+  household?: Prisma.HouseholdUpdateOneWithoutMembersNestedInput
   created_households?: Prisma.HouseholdUpdateManyWithoutCreated_byNestedInput
   user?: Prisma.UserUpdateOneWithoutMembershipsNestedInput
   holdings?: Prisma.HoldingUpdateManyWithoutMemberNestedInput
@@ -1140,7 +1147,7 @@ export type HouseholdMemberUncheckedUpdateWithoutSecuritiesInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_households?: Prisma.HouseholdUncheckedUpdateManyWithoutCreated_byNestedInput
   holdings?: Prisma.HoldingUncheckedUpdateManyWithoutMemberNestedInput
@@ -1156,7 +1163,7 @@ export type HouseholdMemberCreateManyUserInput = {
   email?: string | null
   invited_email?: string | null
   invite_status?: string
-  household_id: string
+  household_id?: string | null
 }
 
 export type HouseholdMemberUpdateWithoutUserInput = {
@@ -1167,7 +1174,7 @@ export type HouseholdMemberUpdateWithoutUserInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutMembersNestedInput
+  household?: Prisma.HouseholdUpdateOneWithoutMembersNestedInput
   created_households?: Prisma.HouseholdUpdateManyWithoutCreated_byNestedInput
   securities?: Prisma.SecurityUpdateManyWithoutMemberNestedInput
   holdings?: Prisma.HoldingUpdateManyWithoutMemberNestedInput
@@ -1183,7 +1190,7 @@ export type HouseholdMemberUncheckedUpdateWithoutUserInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_households?: Prisma.HouseholdUncheckedUpdateManyWithoutCreated_byNestedInput
   securities?: Prisma.SecurityUncheckedUpdateManyWithoutMemberNestedInput
   holdings?: Prisma.HoldingUncheckedUpdateManyWithoutMemberNestedInput
@@ -1199,7 +1206,7 @@ export type HouseholdMemberUncheckedUpdateManyWithoutUserInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invited_email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invite_status?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type HouseholdMemberCreateManyHouseholdInput = {
@@ -1333,7 +1340,7 @@ export type HouseholdMemberSelect<ExtArgs extends runtime.Types.Extensions.Inter
   invite_status?: boolean
   household_id?: boolean
   user_id?: boolean
-  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdMember$householdArgs<ExtArgs>
   created_households?: boolean | Prisma.HouseholdMember$created_householdsArgs<ExtArgs>
   user?: boolean | Prisma.HouseholdMember$userArgs<ExtArgs>
   securities?: boolean | Prisma.HouseholdMember$securitiesArgs<ExtArgs>
@@ -1353,7 +1360,7 @@ export type HouseholdMemberSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   invite_status?: boolean
   household_id?: boolean
   user_id?: boolean
-  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdMember$householdArgs<ExtArgs>
   user?: boolean | Prisma.HouseholdMember$userArgs<ExtArgs>
 }, ExtArgs["result"]["householdMember"]>
 
@@ -1367,7 +1374,7 @@ export type HouseholdMemberSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   invite_status?: boolean
   household_id?: boolean
   user_id?: boolean
-  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdMember$householdArgs<ExtArgs>
   user?: boolean | Prisma.HouseholdMember$userArgs<ExtArgs>
 }, ExtArgs["result"]["householdMember"]>
 
@@ -1385,7 +1392,7 @@ export type HouseholdMemberSelectScalar = {
 
 export type HouseholdMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"member_id" | "name" | "role" | "dob" | "email" | "invited_email" | "invite_status" | "household_id" | "user_id", ExtArgs["result"]["householdMember"]>
 export type HouseholdMemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdMember$householdArgs<ExtArgs>
   created_households?: boolean | Prisma.HouseholdMember$created_householdsArgs<ExtArgs>
   user?: boolean | Prisma.HouseholdMember$userArgs<ExtArgs>
   securities?: boolean | Prisma.HouseholdMember$securitiesArgs<ExtArgs>
@@ -1395,18 +1402,18 @@ export type HouseholdMemberInclude<ExtArgs extends runtime.Types.Extensions.Inte
   _count?: boolean | Prisma.HouseholdMemberCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type HouseholdMemberIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdMember$householdArgs<ExtArgs>
   user?: boolean | Prisma.HouseholdMember$userArgs<ExtArgs>
 }
 export type HouseholdMemberIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  household?: boolean | Prisma.HouseholdDefaultArgs<ExtArgs>
+  household?: boolean | Prisma.HouseholdMember$householdArgs<ExtArgs>
   user?: boolean | Prisma.HouseholdMember$userArgs<ExtArgs>
 }
 
 export type $HouseholdMemberPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "HouseholdMember"
   objects: {
-    household: Prisma.$HouseholdPayload<ExtArgs>
+    household: Prisma.$HouseholdPayload<ExtArgs> | null
     created_households: Prisma.$HouseholdPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs> | null
     securities: Prisma.$SecurityPayload<ExtArgs>[]
@@ -1422,7 +1429,7 @@ export type $HouseholdMemberPayload<ExtArgs extends runtime.Types.Extensions.Int
     email: string | null
     invited_email: string | null
     invite_status: string
-    household_id: string
+    household_id: string | null
     user_id: string | null
   }, ExtArgs["result"]["householdMember"]>
   composites: {}
@@ -1818,7 +1825,7 @@ readonly fields: HouseholdMemberFieldRefs;
  */
 export interface Prisma__HouseholdMemberClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  household<T extends Prisma.HouseholdDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HouseholdDefaultArgs<ExtArgs>>): Prisma.Prisma__HouseholdClient<runtime.Types.Result.GetResult<Prisma.$HouseholdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  household<T extends Prisma.HouseholdMember$householdArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HouseholdMember$householdArgs<ExtArgs>>): Prisma.Prisma__HouseholdClient<runtime.Types.Result.GetResult<Prisma.$HouseholdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   created_households<T extends Prisma.HouseholdMember$created_householdsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HouseholdMember$created_householdsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HouseholdPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.HouseholdMember$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HouseholdMember$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   securities<T extends Prisma.HouseholdMember$securitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HouseholdMember$securitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SecurityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2256,6 +2263,25 @@ export type HouseholdMemberDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many HouseholdMembers to delete.
    */
   limit?: number
+}
+
+/**
+ * HouseholdMember.household
+ */
+export type HouseholdMember$householdArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Household
+   */
+  select?: Prisma.HouseholdSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Household
+   */
+  omit?: Prisma.HouseholdOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HouseholdInclude<ExtArgs> | null
+  where?: Prisma.HouseholdWhereInput
 }
 
 /**
