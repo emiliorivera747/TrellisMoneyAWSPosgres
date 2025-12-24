@@ -10,10 +10,6 @@ import {
   SuccessResponse,
   ErrorResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import {
-  getUserHouseholdMembership,
-  getHouseholdIdByMembership,
-} from "@/utils/prisma/household-member/members";
 import { addItem } from "@/utils/prisma/item/addItem";
 import { addAccounts } from "@/utils/prisma/accounts/addAccounts";
 import { logError } from "@/utils/api-helpers/errors/logError";
@@ -36,28 +32,32 @@ export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     const { public_token, metadata, member_id }: ExchangeTokenRequestBody =
       await request.json();
-
     const institution_id = metadata.institution?.institution_id;
-
     if (!institution_id) return FailResponse("Institution ID is missing", 400);
+    if (!public_token) return FailResponse("Public token is missing", 400);
+    if (!metadata) return FailResponse("Metadata is missing", 400);
+    if (!member_id) return FailResponse("Member ID is missing", 400);
+    const user_id = user.id;
 
     try {
+      const { allowed, household_id } = await canUserEditMembersHousehold({
+        user_id,
+        member_id,
+      });
+
       // ----- Does the user have permission -----
-      if (!canUserEditMembersHousehold(user.id))
-        return FailResponse(
-          "User does not have permission to make changes",
-          403
-        );
+      if (!allowed) return FailResponse("Permission denied", 403);
+      if (!household_id) return FailResponse("Household not found", 500);
 
       // ----- Get Item From the database -----
-      const itemDB = await getItemWithMemberAndInstitutionId(
+      const itemDB = await getItemWithMemberAndInstitutionId({
         member_id,
-        institution_id
-      );
+        institution_id,
+      });
 
       if (itemDB)
         return FailResponse(
-          "Item already exists for this user and institution",
+          "This institution is already linked for this member",
           400
         );
 
@@ -68,23 +68,7 @@ export async function POST(req: NextRequest) {
       // ----- Retrieve item details using the access token -----
       const item = await client.itemGet({ access_token });
 
-      // ----- Retreive the membership -----
-      const result = await getHouseholdIdByMembership(member_id);
-      if (!result) {
-        logError("Household id not found");
-        return FailResponse("Household membership not found", 400);
-      }
-
-      const household_id = result;
-
       // ------ Add the new item to the database ------
-      if (!household_id) {
-        logError("Household ID is null");
-        return FailResponse("Household ID is missing", 400);
-      }
-
-      const user_id = user.id;
-
       const addedItem = await addItem({
         member_id,
         user_id,
@@ -95,7 +79,7 @@ export async function POST(req: NextRequest) {
 
       if (!addedItem) {
         logError("Failed to add item");
-        return FailResponse("Failed to add household", 400);
+        return FailResponse("Failed to add item", 500);
       }
 
       // ----- Match the accounts to the item -----
@@ -107,12 +91,12 @@ export async function POST(req: NextRequest) {
         member_id,
       });
 
-      if (!addedAccount) {
-        logError("Failed to add accounts");
-        return FailResponse("Failed to add accounts", 400);
-      }
+      if (addedAccount.length === 0)
+        logError(
+          "No accounts returned in Plaid Link metadata (expected for some products)"
+        );
 
-      return SuccessResponse({ access_token }, "Item was successfully added!");
+      return SuccessResponse({}, "Item was successfully added!");
     } catch (error) {
       console.error(error);
       return ErrorResponse(error, 500);

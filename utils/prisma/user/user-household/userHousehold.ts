@@ -20,18 +20,24 @@ interface HouseholdAccessCheck {
 export const canUserEditMembersHousehold = async ({
   user_id,
   member_id,
-}: HouseholdAccessCheck): Promise<boolean> => {
-  const membership = await prisma.householdMember.findFirst({
+}: HouseholdAccessCheck): Promise<{
+  allowed: boolean;
+  household_id?: string;
+}> => {
+  
+  const userMembership = await prisma.householdMember.findFirst({
     where: {
       user_id,
+      role: "ADMIN",
       household: {
-        members: {
-          some: { member_id },
-        },
+        members: { some: { member_id } },
       },
     },
-    select: { role: true },
+    select: { household_id: true },
   });
 
-  return membership?.role === "ADMIN";
+  return {
+    allowed: !!userMembership,
+    household_id: userMembership?.household_id ?? undefined,
+  };
 };

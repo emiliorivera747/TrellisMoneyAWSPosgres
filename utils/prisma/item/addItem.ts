@@ -24,7 +24,6 @@ export const addItem = async ({
   household_id,
   item,
   access_token,
-
 }: AddItemProps) => {
 
   const res = await prisma.item.create({

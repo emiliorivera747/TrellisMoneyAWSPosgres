@@ -31,7 +31,6 @@ export const getItemByUserAndInstitutionId = async (
       institution_id,
     },
   });
-
   return item;
 };
 
@@ -42,10 +41,13 @@ export const getItemByUserAndInstitutionId = async (
  * @param institution_id - The unique identifier of the institution.
  * @returns A promise that resolves to the item if found, or `null` if no matching item exists.
  */
-export const getItemWithMemberAndInstitutionId = async (
-  member_id: string,
-  institution_id: string
-) => {
+export const getItemWithMemberAndInstitutionId = async ({
+  member_id,
+  institution_id,
+}: {
+  member_id: string;
+  institution_id: string;
+}) => {
   const item = await prisma.item.findFirst({
     where: {
       member_id,
