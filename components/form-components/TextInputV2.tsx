@@ -45,7 +45,7 @@ const TextInput = <TFieldValues extends FieldValues>({
   w = "w-full",
 }: TextInputV2Props<TFieldValues>) => {
   return (
-    <div className="relative my-[0.4rem]">
+    <div className="relative my-3">
       <input
         type={type}
         id={id}
