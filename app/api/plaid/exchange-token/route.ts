@@ -10,7 +10,10 @@ import {
   SuccessResponse,
   ErrorResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { getUserHouseholdMembership } from "@/utils/prisma/household-member/members";
+import {
+  getUserHouseholdMembership,
+  getHouseholdIdByMembership,
+} from "@/utils/prisma/household-member/members";
 import { addItem } from "@/utils/prisma/item/addItem";
 import { addAccounts } from "@/utils/prisma/accounts/addAccounts";
 import { logError } from "@/utils/api-helpers/errors/logError";
@@ -66,13 +69,13 @@ export async function POST(req: NextRequest) {
       const item = await client.itemGet({ access_token });
 
       // ----- Retreive the membership -----
-      const membership = await getUserHouseholdMembership(user_id);
-      if (!membership) {
-        logError("Household membership not found");
+      const result = await getHouseholdIdByMembership(member_id);
+      if (!result) {
+        logError("Household id not found");
         return FailResponse("Household membership not found", 400);
       }
 
-      const household_id = membership.household_id;
+      const household_id = result;
 
       // ------ Add the new item to the database ------
       if (!household_id) {
@@ -104,7 +107,6 @@ export async function POST(req: NextRequest) {
         member_id,
       });
 
-      
       if (!addedAccount) {
         logError("Failed to add accounts");
         return FailResponse("Failed to add accounts", 400);

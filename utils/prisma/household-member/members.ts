@@ -32,3 +32,22 @@ export const getUserHouseholdMembership = async (user_id: string) => {
   });
   return householdMembership;
 };
+
+/**
+ * Retrieves the household ID associated with a given member ID.
+ *
+ * @param member_id - The unique identifier of the household member.
+ * @returns A promise that resolves to the household ID if found, or `null` if no matching record exists.
+ */
+export const getHouseholdIdByMembership = async (member_id: string) => {
+  const householdMembership = await prisma.householdMember.findFirst({
+    where: {
+      member_id,
+    },
+    select: {
+      household_id: true,
+    },
+  });
+
+  return householdMembership?.household_id || null;
+};
