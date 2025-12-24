@@ -337,6 +337,8 @@ model Household {
   // ----- Timestamp -----
   created_at           DateTime           @default(now())
   updated_at           DateTime           @updatedAt
+
+  @@index([created_by_member_id])
 }
 
 model HouseholdMember {

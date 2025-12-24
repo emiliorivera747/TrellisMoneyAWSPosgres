@@ -38,39 +38,39 @@ export type PriceSumAggregateOutputType = {
 
 export type PriceMinAggregateOutputType = {
   price_id: string | null
-  product_id: string | null
   currency: string | null
   unit_amount: bigint | null
   recurring_interval: $Enums.Interval | null
   recurring_interval_count: number | null
   recurring_usage_type: $Enums.UsageType | null
   active: boolean | null
+  product_id: string | null
   created_at: Date | null
   updated_at: Date | null
 }
 
 export type PriceMaxAggregateOutputType = {
   price_id: string | null
-  product_id: string | null
   currency: string | null
   unit_amount: bigint | null
   recurring_interval: $Enums.Interval | null
   recurring_interval_count: number | null
   recurring_usage_type: $Enums.UsageType | null
   active: boolean | null
+  product_id: string | null
   created_at: Date | null
   updated_at: Date | null
 }
 
 export type PriceCountAggregateOutputType = {
   price_id: number
-  product_id: number
   currency: number
   unit_amount: number
   recurring_interval: number
   recurring_interval_count: number
   recurring_usage_type: number
   active: number
+  product_id: number
   created_at: number
   updated_at: number
   _all: number
@@ -89,39 +89,39 @@ export type PriceSumAggregateInputType = {
 
 export type PriceMinAggregateInputType = {
   price_id?: true
-  product_id?: true
   currency?: true
   unit_amount?: true
   recurring_interval?: true
   recurring_interval_count?: true
   recurring_usage_type?: true
   active?: true
+  product_id?: true
   created_at?: true
   updated_at?: true
 }
 
 export type PriceMaxAggregateInputType = {
   price_id?: true
-  product_id?: true
   currency?: true
   unit_amount?: true
   recurring_interval?: true
   recurring_interval_count?: true
   recurring_usage_type?: true
   active?: true
+  product_id?: true
   created_at?: true
   updated_at?: true
 }
 
 export type PriceCountAggregateInputType = {
   price_id?: true
-  product_id?: true
   currency?: true
   unit_amount?: true
   recurring_interval?: true
   recurring_interval_count?: true
   recurring_usage_type?: true
   active?: true
+  product_id?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -215,13 +215,13 @@ export type PriceGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type PriceGroupByOutputType = {
   price_id: string
-  product_id: string
   currency: string
   unit_amount: bigint
   recurring_interval: $Enums.Interval
   recurring_interval_count: number | null
   recurring_usage_type: $Enums.UsageType
   active: boolean
+  product_id: string
   created_at: Date
   updated_at: Date
   _count: PriceCountAggregateOutputType | null
@@ -251,13 +251,13 @@ export type PriceWhereInput = {
   OR?: Prisma.PriceWhereInput[]
   NOT?: Prisma.PriceWhereInput | Prisma.PriceWhereInput[]
   price_id?: Prisma.StringFilter<"Price"> | string
-  product_id?: Prisma.StringFilter<"Price"> | string
   currency?: Prisma.StringFilter<"Price"> | string
   unit_amount?: Prisma.BigIntFilter<"Price"> | bigint | number
   recurring_interval?: Prisma.EnumIntervalFilter<"Price"> | $Enums.Interval
   recurring_interval_count?: Prisma.IntNullableFilter<"Price"> | number | null
   recurring_usage_type?: Prisma.EnumUsageTypeFilter<"Price"> | $Enums.UsageType
   active?: Prisma.BoolFilter<"Price"> | boolean
+  product_id?: Prisma.StringFilter<"Price"> | string
   created_at?: Prisma.DateTimeFilter<"Price"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Price"> | Date | string
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
@@ -266,13 +266,13 @@ export type PriceWhereInput = {
 
 export type PriceOrderByWithRelationInput = {
   price_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   unit_amount?: Prisma.SortOrder
   recurring_interval?: Prisma.SortOrder
   recurring_interval_count?: Prisma.SortOrderInput | Prisma.SortOrder
   recurring_usage_type?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   product?: Prisma.ProductOrderByWithRelationInput
@@ -284,13 +284,13 @@ export type PriceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PriceWhereInput | Prisma.PriceWhereInput[]
   OR?: Prisma.PriceWhereInput[]
   NOT?: Prisma.PriceWhereInput | Prisma.PriceWhereInput[]
-  product_id?: Prisma.StringFilter<"Price"> | string
   currency?: Prisma.StringFilter<"Price"> | string
   unit_amount?: Prisma.BigIntFilter<"Price"> | bigint | number
   recurring_interval?: Prisma.EnumIntervalFilter<"Price"> | $Enums.Interval
   recurring_interval_count?: Prisma.IntNullableFilter<"Price"> | number | null
   recurring_usage_type?: Prisma.EnumUsageTypeFilter<"Price"> | $Enums.UsageType
   active?: Prisma.BoolFilter<"Price"> | boolean
+  product_id?: Prisma.StringFilter<"Price"> | string
   created_at?: Prisma.DateTimeFilter<"Price"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Price"> | Date | string
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
@@ -299,13 +299,13 @@ export type PriceWhereUniqueInput = Prisma.AtLeast<{
 
 export type PriceOrderByWithAggregationInput = {
   price_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   unit_amount?: Prisma.SortOrder
   recurring_interval?: Prisma.SortOrder
   recurring_interval_count?: Prisma.SortOrderInput | Prisma.SortOrder
   recurring_usage_type?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.PriceCountOrderByAggregateInput
@@ -320,13 +320,13 @@ export type PriceScalarWhereWithAggregatesInput = {
   OR?: Prisma.PriceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PriceScalarWhereWithAggregatesInput | Prisma.PriceScalarWhereWithAggregatesInput[]
   price_id?: Prisma.StringWithAggregatesFilter<"Price"> | string
-  product_id?: Prisma.StringWithAggregatesFilter<"Price"> | string
   currency?: Prisma.StringWithAggregatesFilter<"Price"> | string
   unit_amount?: Prisma.BigIntWithAggregatesFilter<"Price"> | bigint | number
   recurring_interval?: Prisma.EnumIntervalWithAggregatesFilter<"Price"> | $Enums.Interval
   recurring_interval_count?: Prisma.IntNullableWithAggregatesFilter<"Price"> | number | null
   recurring_usage_type?: Prisma.EnumUsageTypeWithAggregatesFilter<"Price"> | $Enums.UsageType
   active?: Prisma.BoolWithAggregatesFilter<"Price"> | boolean
+  product_id?: Prisma.StringWithAggregatesFilter<"Price"> | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Price"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Price"> | Date | string
 }
@@ -347,13 +347,13 @@ export type PriceCreateInput = {
 
 export type PriceUncheckedCreateInput = {
   price_id: string
-  product_id: string
   currency: string
   unit_amount: bigint | number
   recurring_interval: $Enums.Interval
   recurring_interval_count?: number | null
   recurring_usage_type?: $Enums.UsageType
   active?: boolean
+  product_id: string
   created_at?: Date | string
   updated_at?: Date | string
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutPriceInput
@@ -375,13 +375,13 @@ export type PriceUpdateInput = {
 
 export type PriceUncheckedUpdateInput = {
   price_id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unit_amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   recurring_interval?: Prisma.EnumIntervalFieldUpdateOperationsInput | $Enums.Interval
   recurring_interval_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   recurring_usage_type?: Prisma.EnumUsageTypeFieldUpdateOperationsInput | $Enums.UsageType
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutPriceNestedInput
@@ -389,13 +389,13 @@ export type PriceUncheckedUpdateInput = {
 
 export type PriceCreateManyInput = {
   price_id: string
-  product_id: string
   currency: string
   unit_amount: bigint | number
   recurring_interval: $Enums.Interval
   recurring_interval_count?: number | null
   recurring_usage_type?: $Enums.UsageType
   active?: boolean
+  product_id: string
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -414,13 +414,13 @@ export type PriceUpdateManyMutationInput = {
 
 export type PriceUncheckedUpdateManyInput = {
   price_id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unit_amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   recurring_interval?: Prisma.EnumIntervalFieldUpdateOperationsInput | $Enums.Interval
   recurring_interval_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   recurring_usage_type?: Prisma.EnumUsageTypeFieldUpdateOperationsInput | $Enums.UsageType
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -432,13 +432,13 @@ export type PriceNullableScalarRelationFilter = {
 
 export type PriceCountOrderByAggregateInput = {
   price_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   unit_amount?: Prisma.SortOrder
   recurring_interval?: Prisma.SortOrder
   recurring_interval_count?: Prisma.SortOrder
   recurring_usage_type?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -450,26 +450,26 @@ export type PriceAvgOrderByAggregateInput = {
 
 export type PriceMaxOrderByAggregateInput = {
   price_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   unit_amount?: Prisma.SortOrder
   recurring_interval?: Prisma.SortOrder
   recurring_interval_count?: Prisma.SortOrder
   recurring_usage_type?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type PriceMinOrderByAggregateInput = {
   price_id?: Prisma.SortOrder
-  product_id?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   unit_amount?: Prisma.SortOrder
   recurring_interval?: Prisma.SortOrder
   recurring_interval_count?: Prisma.SortOrder
   recurring_usage_type?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  product_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -578,13 +578,13 @@ export type PriceCreateWithoutSubscriptionsInput = {
 
 export type PriceUncheckedCreateWithoutSubscriptionsInput = {
   price_id: string
-  product_id: string
   currency: string
   unit_amount: bigint | number
   recurring_interval: $Enums.Interval
   recurring_interval_count?: number | null
   recurring_usage_type?: $Enums.UsageType
   active?: boolean
+  product_id: string
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -620,13 +620,13 @@ export type PriceUpdateWithoutSubscriptionsInput = {
 
 export type PriceUncheckedUpdateWithoutSubscriptionsInput = {
   price_id?: Prisma.StringFieldUpdateOperationsInput | string
-  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unit_amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   recurring_interval?: Prisma.EnumIntervalFieldUpdateOperationsInput | $Enums.Interval
   recurring_interval_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   recurring_usage_type?: Prisma.EnumUsageTypeFieldUpdateOperationsInput | $Enums.UsageType
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  product_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -688,13 +688,13 @@ export type PriceScalarWhereInput = {
   OR?: Prisma.PriceScalarWhereInput[]
   NOT?: Prisma.PriceScalarWhereInput | Prisma.PriceScalarWhereInput[]
   price_id?: Prisma.StringFilter<"Price"> | string
-  product_id?: Prisma.StringFilter<"Price"> | string
   currency?: Prisma.StringFilter<"Price"> | string
   unit_amount?: Prisma.BigIntFilter<"Price"> | bigint | number
   recurring_interval?: Prisma.EnumIntervalFilter<"Price"> | $Enums.Interval
   recurring_interval_count?: Prisma.IntNullableFilter<"Price"> | number | null
   recurring_usage_type?: Prisma.EnumUsageTypeFilter<"Price"> | $Enums.UsageType
   active?: Prisma.BoolFilter<"Price"> | boolean
+  product_id?: Prisma.StringFilter<"Price"> | string
   created_at?: Prisma.DateTimeFilter<"Price"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Price"> | Date | string
 }
@@ -782,13 +782,13 @@ export type PriceCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.T
 
 export type PriceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   price_id?: boolean
-  product_id?: boolean
   currency?: boolean
   unit_amount?: boolean
   recurring_interval?: boolean
   recurring_interval_count?: boolean
   recurring_usage_type?: boolean
   active?: boolean
+  product_id?: boolean
   created_at?: boolean
   updated_at?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -798,13 +798,13 @@ export type PriceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 
 export type PriceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   price_id?: boolean
-  product_id?: boolean
   currency?: boolean
   unit_amount?: boolean
   recurring_interval?: boolean
   recurring_interval_count?: boolean
   recurring_usage_type?: boolean
   active?: boolean
+  product_id?: boolean
   created_at?: boolean
   updated_at?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -812,13 +812,13 @@ export type PriceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 
 export type PriceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   price_id?: boolean
-  product_id?: boolean
   currency?: boolean
   unit_amount?: boolean
   recurring_interval?: boolean
   recurring_interval_count?: boolean
   recurring_usage_type?: boolean
   active?: boolean
+  product_id?: boolean
   created_at?: boolean
   updated_at?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -826,18 +826,18 @@ export type PriceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 
 export type PriceSelectScalar = {
   price_id?: boolean
-  product_id?: boolean
   currency?: boolean
   unit_amount?: boolean
   recurring_interval?: boolean
   recurring_interval_count?: boolean
   recurring_usage_type?: boolean
   active?: boolean
+  product_id?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type PriceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"price_id" | "product_id" | "currency" | "unit_amount" | "recurring_interval" | "recurring_interval_count" | "recurring_usage_type" | "active" | "created_at" | "updated_at", ExtArgs["result"]["price"]>
+export type PriceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"price_id" | "currency" | "unit_amount" | "recurring_interval" | "recurring_interval_count" | "recurring_usage_type" | "active" | "product_id" | "created_at" | "updated_at", ExtArgs["result"]["price"]>
 export type PriceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Price$subscriptionsArgs<ExtArgs>
@@ -858,13 +858,13 @@ export type $PricePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     price_id: string
-    product_id: string
     currency: string
     unit_amount: bigint
     recurring_interval: $Enums.Interval
     recurring_interval_count: number | null
     recurring_usage_type: $Enums.UsageType
     active: boolean
+    product_id: string
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["price"]>
@@ -1293,13 +1293,13 @@ export interface Prisma__PriceClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface PriceFieldRefs {
   readonly price_id: Prisma.FieldRef<"Price", 'String'>
-  readonly product_id: Prisma.FieldRef<"Price", 'String'>
   readonly currency: Prisma.FieldRef<"Price", 'String'>
   readonly unit_amount: Prisma.FieldRef<"Price", 'BigInt'>
   readonly recurring_interval: Prisma.FieldRef<"Price", 'Interval'>
   readonly recurring_interval_count: Prisma.FieldRef<"Price", 'Int'>
   readonly recurring_usage_type: Prisma.FieldRef<"Price", 'UsageType'>
   readonly active: Prisma.FieldRef<"Price", 'Boolean'>
+  readonly product_id: Prisma.FieldRef<"Price", 'String'>
   readonly created_at: Prisma.FieldRef<"Price", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Price", 'DateTime'>
 }

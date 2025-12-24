@@ -42,7 +42,6 @@ export type AccountHistorySumAggregateOutputType = {
 
 export type AccountHistoryMinAggregateOutputType = {
   id: number | null
-  account_id: string | null
   name: string | null
   type: string | null
   available: runtime.Decimal | null
@@ -51,12 +50,13 @@ export type AccountHistoryMinAggregateOutputType = {
   iso_currency_code: string | null
   unofficial_currency_code: string | null
   user_id: string | null
+  member_id: string | null
+  account_id: string | null
   timestamp: Date | null
 }
 
 export type AccountHistoryMaxAggregateOutputType = {
   id: number | null
-  account_id: string | null
   name: string | null
   type: string | null
   available: runtime.Decimal | null
@@ -65,12 +65,13 @@ export type AccountHistoryMaxAggregateOutputType = {
   iso_currency_code: string | null
   unofficial_currency_code: string | null
   user_id: string | null
+  member_id: string | null
+  account_id: string | null
   timestamp: Date | null
 }
 
 export type AccountHistoryCountAggregateOutputType = {
   id: number
-  account_id: number
   name: number
   type: number
   available: number
@@ -79,6 +80,8 @@ export type AccountHistoryCountAggregateOutputType = {
   iso_currency_code: number
   unofficial_currency_code: number
   user_id: number
+  member_id: number
+  account_id: number
   timestamp: number
   _all: number
 }
@@ -100,7 +103,6 @@ export type AccountHistorySumAggregateInputType = {
 
 export type AccountHistoryMinAggregateInputType = {
   id?: true
-  account_id?: true
   name?: true
   type?: true
   available?: true
@@ -109,12 +111,13 @@ export type AccountHistoryMinAggregateInputType = {
   iso_currency_code?: true
   unofficial_currency_code?: true
   user_id?: true
+  member_id?: true
+  account_id?: true
   timestamp?: true
 }
 
 export type AccountHistoryMaxAggregateInputType = {
   id?: true
-  account_id?: true
   name?: true
   type?: true
   available?: true
@@ -123,12 +126,13 @@ export type AccountHistoryMaxAggregateInputType = {
   iso_currency_code?: true
   unofficial_currency_code?: true
   user_id?: true
+  member_id?: true
+  account_id?: true
   timestamp?: true
 }
 
 export type AccountHistoryCountAggregateInputType = {
   id?: true
-  account_id?: true
   name?: true
   type?: true
   available?: true
@@ -137,6 +141,8 @@ export type AccountHistoryCountAggregateInputType = {
   iso_currency_code?: true
   unofficial_currency_code?: true
   user_id?: true
+  member_id?: true
+  account_id?: true
   timestamp?: true
   _all?: true
 }
@@ -229,7 +235,6 @@ export type AccountHistoryGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type AccountHistoryGroupByOutputType = {
   id: number
-  account_id: string
   name: string
   type: string
   available: runtime.Decimal
@@ -238,6 +243,8 @@ export type AccountHistoryGroupByOutputType = {
   iso_currency_code: string
   unofficial_currency_code: string
   user_id: string | null
+  member_id: string | null
+  account_id: string
   timestamp: Date
   _count: AccountHistoryCountAggregateOutputType | null
   _avg: AccountHistoryAvgAggregateOutputType | null
@@ -266,7 +273,6 @@ export type AccountHistoryWhereInput = {
   OR?: Prisma.AccountHistoryWhereInput[]
   NOT?: Prisma.AccountHistoryWhereInput | Prisma.AccountHistoryWhereInput[]
   id?: Prisma.IntFilter<"AccountHistory"> | number
-  account_id?: Prisma.StringFilter<"AccountHistory"> | string
   name?: Prisma.StringFilter<"AccountHistory"> | string
   type?: Prisma.StringFilter<"AccountHistory"> | string
   available?: Prisma.DecimalFilter<"AccountHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -275,13 +281,14 @@ export type AccountHistoryWhereInput = {
   iso_currency_code?: Prisma.StringFilter<"AccountHistory"> | string
   unofficial_currency_code?: Prisma.StringFilter<"AccountHistory"> | string
   user_id?: Prisma.StringNullableFilter<"AccountHistory"> | string | null
+  member_id?: Prisma.StringNullableFilter<"AccountHistory"> | string | null
+  account_id?: Prisma.StringFilter<"AccountHistory"> | string
   timestamp?: Prisma.DateTimeFilter<"AccountHistory"> | Date | string
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
 }
 
 export type AccountHistoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  account_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   available?: Prisma.SortOrder
@@ -290,6 +297,8 @@ export type AccountHistoryOrderByWithRelationInput = {
   iso_currency_code?: Prisma.SortOrder
   unofficial_currency_code?: Prisma.SortOrder
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  member_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  account_id?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   account?: Prisma.AccountOrderByWithRelationInput
 }
@@ -299,7 +308,6 @@ export type AccountHistoryWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AccountHistoryWhereInput | Prisma.AccountHistoryWhereInput[]
   OR?: Prisma.AccountHistoryWhereInput[]
   NOT?: Prisma.AccountHistoryWhereInput | Prisma.AccountHistoryWhereInput[]
-  account_id?: Prisma.StringFilter<"AccountHistory"> | string
   name?: Prisma.StringFilter<"AccountHistory"> | string
   type?: Prisma.StringFilter<"AccountHistory"> | string
   available?: Prisma.DecimalFilter<"AccountHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -308,13 +316,14 @@ export type AccountHistoryWhereUniqueInput = Prisma.AtLeast<{
   iso_currency_code?: Prisma.StringFilter<"AccountHistory"> | string
   unofficial_currency_code?: Prisma.StringFilter<"AccountHistory"> | string
   user_id?: Prisma.StringNullableFilter<"AccountHistory"> | string | null
+  member_id?: Prisma.StringNullableFilter<"AccountHistory"> | string | null
+  account_id?: Prisma.StringFilter<"AccountHistory"> | string
   timestamp?: Prisma.DateTimeFilter<"AccountHistory"> | Date | string
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
 }, "id">
 
 export type AccountHistoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  account_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   available?: Prisma.SortOrder
@@ -323,6 +332,8 @@ export type AccountHistoryOrderByWithAggregationInput = {
   iso_currency_code?: Prisma.SortOrder
   unofficial_currency_code?: Prisma.SortOrder
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  member_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  account_id?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   _count?: Prisma.AccountHistoryCountOrderByAggregateInput
   _avg?: Prisma.AccountHistoryAvgOrderByAggregateInput
@@ -336,7 +347,6 @@ export type AccountHistoryScalarWhereWithAggregatesInput = {
   OR?: Prisma.AccountHistoryScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AccountHistoryScalarWhereWithAggregatesInput | Prisma.AccountHistoryScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"AccountHistory"> | number
-  account_id?: Prisma.StringWithAggregatesFilter<"AccountHistory"> | string
   name?: Prisma.StringWithAggregatesFilter<"AccountHistory"> | string
   type?: Prisma.StringWithAggregatesFilter<"AccountHistory"> | string
   available?: Prisma.DecimalWithAggregatesFilter<"AccountHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -345,6 +355,8 @@ export type AccountHistoryScalarWhereWithAggregatesInput = {
   iso_currency_code?: Prisma.StringWithAggregatesFilter<"AccountHistory"> | string
   unofficial_currency_code?: Prisma.StringWithAggregatesFilter<"AccountHistory"> | string
   user_id?: Prisma.StringNullableWithAggregatesFilter<"AccountHistory"> | string | null
+  member_id?: Prisma.StringNullableWithAggregatesFilter<"AccountHistory"> | string | null
+  account_id?: Prisma.StringWithAggregatesFilter<"AccountHistory"> | string
   timestamp?: Prisma.DateTimeWithAggregatesFilter<"AccountHistory"> | Date | string
 }
 
@@ -357,13 +369,13 @@ export type AccountHistoryCreateInput = {
   iso_currency_code: string
   unofficial_currency_code: string
   user_id?: string | null
+  member_id?: string | null
   timestamp?: Date | string
   account: Prisma.AccountCreateNestedOneWithoutHistoryInput
 }
 
 export type AccountHistoryUncheckedCreateInput = {
   id?: number
-  account_id: string
   name: string
   type: string
   available: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -372,6 +384,8 @@ export type AccountHistoryUncheckedCreateInput = {
   iso_currency_code: string
   unofficial_currency_code: string
   user_id?: string | null
+  member_id?: string | null
+  account_id: string
   timestamp?: Date | string
 }
 
@@ -384,13 +398,13 @@ export type AccountHistoryUpdateInput = {
   iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   unofficial_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   account?: Prisma.AccountUpdateOneRequiredWithoutHistoryNestedInput
 }
 
 export type AccountHistoryUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  account_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   available?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -399,12 +413,13 @@ export type AccountHistoryUncheckedUpdateInput = {
   iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   unofficial_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AccountHistoryCreateManyInput = {
   id?: number
-  account_id: string
   name: string
   type: string
   available: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -413,6 +428,8 @@ export type AccountHistoryCreateManyInput = {
   iso_currency_code: string
   unofficial_currency_code: string
   user_id?: string | null
+  member_id?: string | null
+  account_id: string
   timestamp?: Date | string
 }
 
@@ -425,12 +442,12 @@ export type AccountHistoryUpdateManyMutationInput = {
   iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   unofficial_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AccountHistoryUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  account_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   available?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -439,6 +456,8 @@ export type AccountHistoryUncheckedUpdateManyInput = {
   iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   unofficial_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -454,7 +473,6 @@ export type AccountHistoryOrderByRelationAggregateInput = {
 
 export type AccountHistoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  account_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   available?: Prisma.SortOrder
@@ -463,6 +481,8 @@ export type AccountHistoryCountOrderByAggregateInput = {
   iso_currency_code?: Prisma.SortOrder
   unofficial_currency_code?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
+  account_id?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
@@ -475,7 +495,6 @@ export type AccountHistoryAvgOrderByAggregateInput = {
 
 export type AccountHistoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  account_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   available?: Prisma.SortOrder
@@ -484,12 +503,13 @@ export type AccountHistoryMaxOrderByAggregateInput = {
   iso_currency_code?: Prisma.SortOrder
   unofficial_currency_code?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
+  account_id?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
 export type AccountHistoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  account_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   available?: Prisma.SortOrder
@@ -498,6 +518,8 @@ export type AccountHistoryMinOrderByAggregateInput = {
   iso_currency_code?: Prisma.SortOrder
   unofficial_currency_code?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
+  account_id?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
@@ -579,6 +601,7 @@ export type AccountHistoryCreateWithoutAccountInput = {
   iso_currency_code: string
   unofficial_currency_code: string
   user_id?: string | null
+  member_id?: string | null
   timestamp?: Date | string
 }
 
@@ -592,6 +615,7 @@ export type AccountHistoryUncheckedCreateWithoutAccountInput = {
   iso_currency_code: string
   unofficial_currency_code: string
   user_id?: string | null
+  member_id?: string | null
   timestamp?: Date | string
 }
 
@@ -626,7 +650,6 @@ export type AccountHistoryScalarWhereInput = {
   OR?: Prisma.AccountHistoryScalarWhereInput[]
   NOT?: Prisma.AccountHistoryScalarWhereInput | Prisma.AccountHistoryScalarWhereInput[]
   id?: Prisma.IntFilter<"AccountHistory"> | number
-  account_id?: Prisma.StringFilter<"AccountHistory"> | string
   name?: Prisma.StringFilter<"AccountHistory"> | string
   type?: Prisma.StringFilter<"AccountHistory"> | string
   available?: Prisma.DecimalFilter<"AccountHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -635,6 +658,8 @@ export type AccountHistoryScalarWhereInput = {
   iso_currency_code?: Prisma.StringFilter<"AccountHistory"> | string
   unofficial_currency_code?: Prisma.StringFilter<"AccountHistory"> | string
   user_id?: Prisma.StringNullableFilter<"AccountHistory"> | string | null
+  member_id?: Prisma.StringNullableFilter<"AccountHistory"> | string | null
+  account_id?: Prisma.StringFilter<"AccountHistory"> | string
   timestamp?: Prisma.DateTimeFilter<"AccountHistory"> | Date | string
 }
 
@@ -648,6 +673,7 @@ export type AccountHistoryCreateManyAccountInput = {
   iso_currency_code: string
   unofficial_currency_code: string
   user_id?: string | null
+  member_id?: string | null
   timestamp?: Date | string
 }
 
@@ -660,6 +686,7 @@ export type AccountHistoryUpdateWithoutAccountInput = {
   iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   unofficial_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -673,6 +700,7 @@ export type AccountHistoryUncheckedUpdateWithoutAccountInput = {
   iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   unofficial_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -686,6 +714,7 @@ export type AccountHistoryUncheckedUpdateManyWithoutAccountInput = {
   iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   unofficial_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -693,7 +722,6 @@ export type AccountHistoryUncheckedUpdateManyWithoutAccountInput = {
 
 export type AccountHistorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  account_id?: boolean
   name?: boolean
   type?: boolean
   available?: boolean
@@ -702,13 +730,14 @@ export type AccountHistorySelect<ExtArgs extends runtime.Types.Extensions.Intern
   iso_currency_code?: boolean
   unofficial_currency_code?: boolean
   user_id?: boolean
+  member_id?: boolean
+  account_id?: boolean
   timestamp?: boolean
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["accountHistory"]>
 
 export type AccountHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  account_id?: boolean
   name?: boolean
   type?: boolean
   available?: boolean
@@ -717,13 +746,14 @@ export type AccountHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Type
   iso_currency_code?: boolean
   unofficial_currency_code?: boolean
   user_id?: boolean
+  member_id?: boolean
+  account_id?: boolean
   timestamp?: boolean
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["accountHistory"]>
 
 export type AccountHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  account_id?: boolean
   name?: boolean
   type?: boolean
   available?: boolean
@@ -732,13 +762,14 @@ export type AccountHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   iso_currency_code?: boolean
   unofficial_currency_code?: boolean
   user_id?: boolean
+  member_id?: boolean
+  account_id?: boolean
   timestamp?: boolean
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["accountHistory"]>
 
 export type AccountHistorySelectScalar = {
   id?: boolean
-  account_id?: boolean
   name?: boolean
   type?: boolean
   available?: boolean
@@ -747,10 +778,12 @@ export type AccountHistorySelectScalar = {
   iso_currency_code?: boolean
   unofficial_currency_code?: boolean
   user_id?: boolean
+  member_id?: boolean
+  account_id?: boolean
   timestamp?: boolean
 }
 
-export type AccountHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "account_id" | "name" | "type" | "available" | "current" | "limit" | "iso_currency_code" | "unofficial_currency_code" | "user_id" | "timestamp", ExtArgs["result"]["accountHistory"]>
+export type AccountHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "available" | "current" | "limit" | "iso_currency_code" | "unofficial_currency_code" | "user_id" | "member_id" | "account_id" | "timestamp", ExtArgs["result"]["accountHistory"]>
 export type AccountHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
 }
@@ -768,7 +801,6 @@ export type $AccountHistoryPayload<ExtArgs extends runtime.Types.Extensions.Inte
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    account_id: string
     name: string
     type: string
     available: runtime.Decimal
@@ -777,6 +809,8 @@ export type $AccountHistoryPayload<ExtArgs extends runtime.Types.Extensions.Inte
     iso_currency_code: string
     unofficial_currency_code: string
     user_id: string | null
+    member_id: string | null
+    account_id: string
     timestamp: Date
   }, ExtArgs["result"]["accountHistory"]>
   composites: {}
@@ -1203,7 +1237,6 @@ export interface Prisma__AccountHistoryClient<T, Null = never, ExtArgs extends r
  */
 export interface AccountHistoryFieldRefs {
   readonly id: Prisma.FieldRef<"AccountHistory", 'Int'>
-  readonly account_id: Prisma.FieldRef<"AccountHistory", 'String'>
   readonly name: Prisma.FieldRef<"AccountHistory", 'String'>
   readonly type: Prisma.FieldRef<"AccountHistory", 'String'>
   readonly available: Prisma.FieldRef<"AccountHistory", 'Decimal'>
@@ -1212,6 +1245,8 @@ export interface AccountHistoryFieldRefs {
   readonly iso_currency_code: Prisma.FieldRef<"AccountHistory", 'String'>
   readonly unofficial_currency_code: Prisma.FieldRef<"AccountHistory", 'String'>
   readonly user_id: Prisma.FieldRef<"AccountHistory", 'String'>
+  readonly member_id: Prisma.FieldRef<"AccountHistory", 'String'>
+  readonly account_id: Prisma.FieldRef<"AccountHistory", 'String'>
   readonly timestamp: Prisma.FieldRef<"AccountHistory", 'DateTime'>
 }
     

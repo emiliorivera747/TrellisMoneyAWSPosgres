@@ -63,9 +63,10 @@ export type HoldingHistoryMinAggregateOutputType = {
   quantity: runtime.Decimal | null
   account_id: string | null
   security_id: string | null
+  user_id: string | null
+  member_id: string | null
   created_at: Date | null
   updated_at: Date | null
-  user_id: string | null
 }
 
 export type HoldingHistoryMaxAggregateOutputType = {
@@ -83,9 +84,10 @@ export type HoldingHistoryMaxAggregateOutputType = {
   quantity: runtime.Decimal | null
   account_id: string | null
   security_id: string | null
+  user_id: string | null
+  member_id: string | null
   created_at: Date | null
   updated_at: Date | null
-  user_id: string | null
 }
 
 export type HoldingHistoryCountAggregateOutputType = {
@@ -103,9 +105,10 @@ export type HoldingHistoryCountAggregateOutputType = {
   quantity: number
   account_id: number
   security_id: number
+  user_id: number
+  member_id: number
   created_at: number
   updated_at: number
-  user_id: number
   _all: number
 }
 
@@ -147,9 +150,10 @@ export type HoldingHistoryMinAggregateInputType = {
   quantity?: true
   account_id?: true
   security_id?: true
+  user_id?: true
+  member_id?: true
   created_at?: true
   updated_at?: true
-  user_id?: true
 }
 
 export type HoldingHistoryMaxAggregateInputType = {
@@ -167,9 +171,10 @@ export type HoldingHistoryMaxAggregateInputType = {
   quantity?: true
   account_id?: true
   security_id?: true
+  user_id?: true
+  member_id?: true
   created_at?: true
   updated_at?: true
-  user_id?: true
 }
 
 export type HoldingHistoryCountAggregateInputType = {
@@ -187,9 +192,10 @@ export type HoldingHistoryCountAggregateInputType = {
   quantity?: true
   account_id?: true
   security_id?: true
+  user_id?: true
+  member_id?: true
   created_at?: true
   updated_at?: true
-  user_id?: true
   _all?: true
 }
 
@@ -294,9 +300,10 @@ export type HoldingHistoryGroupByOutputType = {
   quantity: runtime.Decimal
   account_id: string
   security_id: string
+  user_id: string
+  member_id: string
   created_at: Date
   updated_at: Date
-  user_id: string
   _count: HoldingHistoryCountAggregateOutputType | null
   _avg: HoldingHistoryAvgAggregateOutputType | null
   _sum: HoldingHistorySumAggregateOutputType | null
@@ -337,9 +344,10 @@ export type HoldingHistoryWhereInput = {
   quantity?: Prisma.DecimalFilter<"HoldingHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFilter<"HoldingHistory"> | string
   security_id?: Prisma.StringFilter<"HoldingHistory"> | string
+  user_id?: Prisma.StringFilter<"HoldingHistory"> | string
+  member_id?: Prisma.StringFilter<"HoldingHistory"> | string
   created_at?: Prisma.DateTimeFilter<"HoldingHistory"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"HoldingHistory"> | Date | string
-  user_id?: Prisma.StringFilter<"HoldingHistory"> | string
   holding?: Prisma.XOR<Prisma.HoldingScalarRelationFilter, Prisma.HoldingWhereInput>
 }
 
@@ -358,9 +366,10 @@ export type HoldingHistoryOrderByWithRelationInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
+  user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  user_id?: Prisma.SortOrder
   holding?: Prisma.HoldingOrderByWithRelationInput
 }
 
@@ -382,9 +391,10 @@ export type HoldingHistoryWhereUniqueInput = Prisma.AtLeast<{
   quantity?: Prisma.DecimalFilter<"HoldingHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFilter<"HoldingHistory"> | string
   security_id?: Prisma.StringFilter<"HoldingHistory"> | string
+  user_id?: Prisma.StringFilter<"HoldingHistory"> | string
+  member_id?: Prisma.StringFilter<"HoldingHistory"> | string
   created_at?: Prisma.DateTimeFilter<"HoldingHistory"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"HoldingHistory"> | Date | string
-  user_id?: Prisma.StringFilter<"HoldingHistory"> | string
   holding?: Prisma.XOR<Prisma.HoldingScalarRelationFilter, Prisma.HoldingWhereInput>
 }, "id">
 
@@ -403,9 +413,10 @@ export type HoldingHistoryOrderByWithAggregationInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
+  user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  user_id?: Prisma.SortOrder
   _count?: Prisma.HoldingHistoryCountOrderByAggregateInput
   _avg?: Prisma.HoldingHistoryAvgOrderByAggregateInput
   _max?: Prisma.HoldingHistoryMaxOrderByAggregateInput
@@ -431,9 +442,10 @@ export type HoldingHistoryScalarWhereWithAggregatesInput = {
   quantity?: Prisma.DecimalWithAggregatesFilter<"HoldingHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringWithAggregatesFilter<"HoldingHistory"> | string
   security_id?: Prisma.StringWithAggregatesFilter<"HoldingHistory"> | string
+  user_id?: Prisma.StringWithAggregatesFilter<"HoldingHistory"> | string
+  member_id?: Prisma.StringWithAggregatesFilter<"HoldingHistory"> | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"HoldingHistory"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"HoldingHistory"> | Date | string
-  user_id?: Prisma.StringWithAggregatesFilter<"HoldingHistory"> | string
 }
 
 export type HoldingHistoryCreateInput = {
@@ -448,6 +460,7 @@ export type HoldingHistoryCreateInput = {
   vested_quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  member_id: string
   created_at?: Date | string
   updated_at?: Date | string
   holding: Prisma.HoldingCreateNestedOneWithoutHistoryInput
@@ -468,9 +481,10 @@ export type HoldingHistoryUncheckedCreateInput = {
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id: string
   security_id: string
+  user_id: string
+  member_id: string
   created_at?: Date | string
   updated_at?: Date | string
-  user_id: string
 }
 
 export type HoldingHistoryUpdateInput = {
@@ -485,6 +499,7 @@ export type HoldingHistoryUpdateInput = {
   vested_quantity?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   holding?: Prisma.HoldingUpdateOneRequiredWithoutHistoryNestedInput
@@ -505,9 +520,10 @@ export type HoldingHistoryUncheckedUpdateInput = {
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
   security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type HoldingHistoryCreateManyInput = {
@@ -525,9 +541,10 @@ export type HoldingHistoryCreateManyInput = {
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id: string
   security_id: string
+  user_id: string
+  member_id: string
   created_at?: Date | string
   updated_at?: Date | string
-  user_id: string
 }
 
 export type HoldingHistoryUpdateManyMutationInput = {
@@ -542,6 +559,7 @@ export type HoldingHistoryUpdateManyMutationInput = {
   vested_quantity?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -561,9 +579,10 @@ export type HoldingHistoryUncheckedUpdateManyInput = {
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
   security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type HoldingHistoryListRelationFilter = {
@@ -591,9 +610,10 @@ export type HoldingHistoryCountOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
+  user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  user_id?: Prisma.SortOrder
 }
 
 export type HoldingHistoryAvgOrderByAggregateInput = {
@@ -622,9 +642,10 @@ export type HoldingHistoryMaxOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
+  user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  user_id?: Prisma.SortOrder
 }
 
 export type HoldingHistoryMinOrderByAggregateInput = {
@@ -642,9 +663,10 @@ export type HoldingHistoryMinOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
+  user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  user_id?: Prisma.SortOrder
 }
 
 export type HoldingHistorySumOrderByAggregateInput = {
@@ -712,6 +734,7 @@ export type HoldingHistoryCreateWithoutHoldingInput = {
   vested_quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  member_id: string
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -729,6 +752,7 @@ export type HoldingHistoryUncheckedCreateWithoutHoldingInput = {
   vested_quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  member_id: string
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -777,9 +801,10 @@ export type HoldingHistoryScalarWhereInput = {
   quantity?: Prisma.DecimalFilter<"HoldingHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFilter<"HoldingHistory"> | string
   security_id?: Prisma.StringFilter<"HoldingHistory"> | string
+  user_id?: Prisma.StringFilter<"HoldingHistory"> | string
+  member_id?: Prisma.StringFilter<"HoldingHistory"> | string
   created_at?: Prisma.DateTimeFilter<"HoldingHistory"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"HoldingHistory"> | Date | string
-  user_id?: Prisma.StringFilter<"HoldingHistory"> | string
 }
 
 export type HoldingHistoryCreateManyHoldingInput = {
@@ -795,6 +820,7 @@ export type HoldingHistoryCreateManyHoldingInput = {
   vested_quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  member_id: string
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -811,6 +837,7 @@ export type HoldingHistoryUpdateWithoutHoldingInput = {
   vested_quantity?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -828,6 +855,7 @@ export type HoldingHistoryUncheckedUpdateWithoutHoldingInput = {
   vested_quantity?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -845,6 +873,7 @@ export type HoldingHistoryUncheckedUpdateManyWithoutHoldingInput = {
   vested_quantity?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -866,9 +895,10 @@ export type HoldingHistorySelect<ExtArgs extends runtime.Types.Extensions.Intern
   quantity?: boolean
   account_id?: boolean
   security_id?: boolean
+  user_id?: boolean
+  member_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  user_id?: boolean
   holding?: boolean | Prisma.HoldingDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["holdingHistory"]>
 
@@ -887,9 +917,10 @@ export type HoldingHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Type
   quantity?: boolean
   account_id?: boolean
   security_id?: boolean
+  user_id?: boolean
+  member_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  user_id?: boolean
   holding?: boolean | Prisma.HoldingDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["holdingHistory"]>
 
@@ -908,9 +939,10 @@ export type HoldingHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   quantity?: boolean
   account_id?: boolean
   security_id?: boolean
+  user_id?: boolean
+  member_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  user_id?: boolean
   holding?: boolean | Prisma.HoldingDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["holdingHistory"]>
 
@@ -929,12 +961,13 @@ export type HoldingHistorySelectScalar = {
   quantity?: boolean
   account_id?: boolean
   security_id?: boolean
+  user_id?: boolean
+  member_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  user_id?: boolean
 }
 
-export type HoldingHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cost_basis" | "institution_price" | "annual_return_rate" | "institution_price_as_of" | "institution_price_datetime" | "institution_value" | "iso_currency_code" | "unofficial_currency_code" | "vested_quantity" | "vested_value" | "quantity" | "account_id" | "security_id" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["holdingHistory"]>
+export type HoldingHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cost_basis" | "institution_price" | "annual_return_rate" | "institution_price_as_of" | "institution_price_datetime" | "institution_value" | "iso_currency_code" | "unofficial_currency_code" | "vested_quantity" | "vested_value" | "quantity" | "account_id" | "security_id" | "user_id" | "member_id" | "created_at" | "updated_at", ExtArgs["result"]["holdingHistory"]>
 export type HoldingHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   holding?: boolean | Prisma.HoldingDefaultArgs<ExtArgs>
 }
@@ -965,9 +998,10 @@ export type $HoldingHistoryPayload<ExtArgs extends runtime.Types.Extensions.Inte
     quantity: runtime.Decimal
     account_id: string
     security_id: string
+    user_id: string
+    member_id: string
     created_at: Date
     updated_at: Date
-    user_id: string
   }, ExtArgs["result"]["holdingHistory"]>
   composites: {}
 }
@@ -1406,9 +1440,10 @@ export interface HoldingHistoryFieldRefs {
   readonly quantity: Prisma.FieldRef<"HoldingHistory", 'Decimal'>
   readonly account_id: Prisma.FieldRef<"HoldingHistory", 'String'>
   readonly security_id: Prisma.FieldRef<"HoldingHistory", 'String'>
+  readonly user_id: Prisma.FieldRef<"HoldingHistory", 'String'>
+  readonly member_id: Prisma.FieldRef<"HoldingHistory", 'String'>
   readonly created_at: Prisma.FieldRef<"HoldingHistory", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"HoldingHistory", 'DateTime'>
-  readonly user_id: Prisma.FieldRef<"HoldingHistory", 'String'>
 }
     
 

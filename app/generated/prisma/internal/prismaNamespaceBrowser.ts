@@ -107,9 +107,10 @@ export const AccountScalarFieldEnum = {
   holder_category: 'holder_category',
   balance_id: 'balance_id',
   user_id: 'user_id',
-  timestamp: 'timestamp',
+  member_id: 'member_id',
   household_id: 'household_id',
   item_id: 'item_id',
+  timestamp: 'timestamp',
   updated_at: 'updated_at',
   created_at: 'created_at'
 } as const
@@ -119,7 +120,6 @@ export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeo
 
 export const AccountHistoryScalarFieldEnum = {
   id: 'id',
-  account_id: 'account_id',
   name: 'name',
   type: 'type',
   available: 'available',
@@ -128,6 +128,8 @@ export const AccountHistoryScalarFieldEnum = {
   iso_currency_code: 'iso_currency_code',
   unofficial_currency_code: 'unofficial_currency_code',
   user_id: 'user_id',
+  member_id: 'member_id',
+  account_id: 'account_id',
   timestamp: 'timestamp'
 } as const
 
@@ -173,7 +175,6 @@ export const ItemScalarFieldEnum = {
   request_id: 'request_id',
   update_type: 'update_type',
   consent_expiration_time: 'consent_expiration_time',
-  created_at: 'created_at',
   available_products: 'available_products',
   billed_products: 'billed_products',
   products: 'products',
@@ -182,8 +183,10 @@ export const ItemScalarFieldEnum = {
   consented_data_scopes: 'consented_data_scopes',
   consented_use_cases: 'consented_use_cases',
   access_token: 'access_token',
+  member_id: 'member_id',
   user_id: 'user_id',
-  household_id: 'household_id'
+  household_id: 'household_id',
+  created_at: 'created_at'
 } as const
 
 export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
@@ -253,13 +256,13 @@ export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[k
 
 export const PriceScalarFieldEnum = {
   price_id: 'price_id',
-  product_id: 'product_id',
   currency: 'currency',
   unit_amount: 'unit_amount',
   recurring_interval: 'recurring_interval',
   recurring_interval_count: 'recurring_interval_count',
   recurring_usage_type: 'recurring_usage_type',
   active: 'active',
+  product_id: 'product_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -315,6 +318,7 @@ export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof Ow
 export const HouseholdScalarFieldEnum = {
   household_id: 'household_id',
   name: 'name',
+  created_by_member_id: 'created_by_member_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -351,8 +355,9 @@ export const HoldingScalarFieldEnum = {
   quantity: 'quantity',
   account_id: 'account_id',
   security_id: 'security_id',
-  timestamp: 'timestamp',
-  user_id: 'user_id'
+  user_id: 'user_id',
+  member_id: 'member_id',
+  timestamp: 'timestamp'
 } as const
 
 export type HoldingScalarFieldEnum = (typeof HoldingScalarFieldEnum)[keyof typeof HoldingScalarFieldEnum]
@@ -373,9 +378,10 @@ export const HoldingHistoryScalarFieldEnum = {
   quantity: 'quantity',
   account_id: 'account_id',
   security_id: 'security_id',
+  user_id: 'user_id',
+  member_id: 'member_id',
   created_at: 'created_at',
-  updated_at: 'updated_at',
-  user_id: 'user_id'
+  updated_at: 'updated_at'
 } as const
 
 export type HoldingHistoryScalarFieldEnum = (typeof HoldingHistoryScalarFieldEnum)[keyof typeof HoldingHistoryScalarFieldEnum]
@@ -403,6 +409,7 @@ export const SecurityScalarFieldEnum = {
   industry: 'industry',
   option_contract_id: 'option_contract_id',
   user_id: 'user_id',
+  member_id: 'member_id',
   timestamp: 'timestamp'
 } as const
 

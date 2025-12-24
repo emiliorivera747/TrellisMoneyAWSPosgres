@@ -60,8 +60,9 @@ export type HoldingMinAggregateOutputType = {
   quantity: runtime.Decimal | null
   account_id: string | null
   security_id: string | null
-  timestamp: Date | null
   user_id: string | null
+  member_id: string | null
+  timestamp: Date | null
 }
 
 export type HoldingMaxAggregateOutputType = {
@@ -78,8 +79,9 @@ export type HoldingMaxAggregateOutputType = {
   quantity: runtime.Decimal | null
   account_id: string | null
   security_id: string | null
-  timestamp: Date | null
   user_id: string | null
+  member_id: string | null
+  timestamp: Date | null
 }
 
 export type HoldingCountAggregateOutputType = {
@@ -96,8 +98,9 @@ export type HoldingCountAggregateOutputType = {
   quantity: number
   account_id: number
   security_id: number
-  timestamp: number
   user_id: number
+  member_id: number
+  timestamp: number
   _all: number
 }
 
@@ -136,8 +139,9 @@ export type HoldingMinAggregateInputType = {
   quantity?: true
   account_id?: true
   security_id?: true
-  timestamp?: true
   user_id?: true
+  member_id?: true
+  timestamp?: true
 }
 
 export type HoldingMaxAggregateInputType = {
@@ -154,8 +158,9 @@ export type HoldingMaxAggregateInputType = {
   quantity?: true
   account_id?: true
   security_id?: true
-  timestamp?: true
   user_id?: true
+  member_id?: true
+  timestamp?: true
 }
 
 export type HoldingCountAggregateInputType = {
@@ -172,8 +177,9 @@ export type HoldingCountAggregateInputType = {
   quantity?: true
   account_id?: true
   security_id?: true
-  timestamp?: true
   user_id?: true
+  member_id?: true
+  timestamp?: true
   _all?: true
 }
 
@@ -277,8 +283,9 @@ export type HoldingGroupByOutputType = {
   quantity: runtime.Decimal
   account_id: string
   security_id: string
-  timestamp: Date
   user_id: string
+  member_id: string
+  timestamp: Date
   _count: HoldingCountAggregateOutputType | null
   _avg: HoldingAvgAggregateOutputType | null
   _sum: HoldingSumAggregateOutputType | null
@@ -318,12 +325,14 @@ export type HoldingWhereInput = {
   quantity?: Prisma.DecimalFilter<"Holding"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFilter<"Holding"> | string
   security_id?: Prisma.StringFilter<"Holding"> | string
-  timestamp?: Prisma.DateTimeFilter<"Holding"> | Date | string
   user_id?: Prisma.StringFilter<"Holding"> | string
-  security?: Prisma.XOR<Prisma.SecurityScalarRelationFilter, Prisma.SecurityWhereInput>
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  member_id?: Prisma.StringFilter<"Holding"> | string
+  timestamp?: Prisma.DateTimeFilter<"Holding"> | Date | string
   history?: Prisma.HoldingHistoryListRelationFilter
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
+  security?: Prisma.XOR<Prisma.SecurityScalarRelationFilter, Prisma.SecurityWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  member?: Prisma.XOR<Prisma.HouseholdMemberScalarRelationFilter, Prisma.HouseholdMemberWhereInput>
 }
 
 export type HoldingOrderByWithRelationInput = {
@@ -340,12 +349,14 @@ export type HoldingOrderByWithRelationInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
-  timestamp?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  security?: Prisma.SecurityOrderByWithRelationInput
-  user?: Prisma.UserOrderByWithRelationInput
+  member_id?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
   history?: Prisma.HoldingHistoryOrderByRelationAggregateInput
   account?: Prisma.AccountOrderByWithRelationInput
+  security?: Prisma.SecurityOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
+  member?: Prisma.HouseholdMemberOrderByWithRelationInput
 }
 
 export type HoldingWhereUniqueInput = Prisma.AtLeast<{
@@ -366,12 +377,14 @@ export type HoldingWhereUniqueInput = Prisma.AtLeast<{
   quantity?: Prisma.DecimalFilter<"Holding"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFilter<"Holding"> | string
   security_id?: Prisma.StringFilter<"Holding"> | string
-  timestamp?: Prisma.DateTimeFilter<"Holding"> | Date | string
   user_id?: Prisma.StringFilter<"Holding"> | string
-  security?: Prisma.XOR<Prisma.SecurityScalarRelationFilter, Prisma.SecurityWhereInput>
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  member_id?: Prisma.StringFilter<"Holding"> | string
+  timestamp?: Prisma.DateTimeFilter<"Holding"> | Date | string
   history?: Prisma.HoldingHistoryListRelationFilter
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
+  security?: Prisma.XOR<Prisma.SecurityScalarRelationFilter, Prisma.SecurityWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  member?: Prisma.XOR<Prisma.HouseholdMemberScalarRelationFilter, Prisma.HouseholdMemberWhereInput>
 }, "holding_id">
 
 export type HoldingOrderByWithAggregationInput = {
@@ -388,8 +401,9 @@ export type HoldingOrderByWithAggregationInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
-  timestamp?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
   _count?: Prisma.HoldingCountOrderByAggregateInput
   _avg?: Prisma.HoldingAvgOrderByAggregateInput
   _max?: Prisma.HoldingMaxOrderByAggregateInput
@@ -414,8 +428,9 @@ export type HoldingScalarWhereWithAggregatesInput = {
   quantity?: Prisma.DecimalWithAggregatesFilter<"Holding"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringWithAggregatesFilter<"Holding"> | string
   security_id?: Prisma.StringWithAggregatesFilter<"Holding"> | string
-  timestamp?: Prisma.DateTimeWithAggregatesFilter<"Holding"> | Date | string
   user_id?: Prisma.StringWithAggregatesFilter<"Holding"> | string
+  member_id?: Prisma.StringWithAggregatesFilter<"Holding"> | string
+  timestamp?: Prisma.DateTimeWithAggregatesFilter<"Holding"> | Date | string
 }
 
 export type HoldingCreateInput = {
@@ -431,10 +446,11 @@ export type HoldingCreateInput = {
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Date | string
-  security: Prisma.SecurityCreateNestedOneWithoutHoldingsInput
-  user: Prisma.UserCreateNestedOneWithoutHoldingsInput
   history?: Prisma.HoldingHistoryCreateNestedManyWithoutHoldingInput
   account: Prisma.AccountCreateNestedOneWithoutHoldingsInput
+  security: Prisma.SecurityCreateNestedOneWithoutHoldingsInput
+  user: Prisma.UserCreateNestedOneWithoutHoldingsInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutHoldingsInput
 }
 
 export type HoldingUncheckedCreateInput = {
@@ -451,8 +467,9 @@ export type HoldingUncheckedCreateInput = {
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id: string
   security_id: string
-  timestamp?: Date | string
   user_id: string
+  member_id: string
+  timestamp?: Date | string
   history?: Prisma.HoldingHistoryUncheckedCreateNestedManyWithoutHoldingInput
 }
 
@@ -469,10 +486,11 @@ export type HoldingUpdateInput = {
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  security?: Prisma.SecurityUpdateOneRequiredWithoutHoldingsNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutHoldingsNestedInput
   history?: Prisma.HoldingHistoryUpdateManyWithoutHoldingNestedInput
   account?: Prisma.AccountUpdateOneRequiredWithoutHoldingsNestedInput
+  security?: Prisma.SecurityUpdateOneRequiredWithoutHoldingsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutHoldingsNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutHoldingsNestedInput
 }
 
 export type HoldingUncheckedUpdateInput = {
@@ -489,8 +507,9 @@ export type HoldingUncheckedUpdateInput = {
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
   security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.HoldingHistoryUncheckedUpdateManyWithoutHoldingNestedInput
 }
 
@@ -508,8 +527,9 @@ export type HoldingCreateManyInput = {
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id: string
   security_id: string
-  timestamp?: Date | string
   user_id: string
+  member_id: string
+  timestamp?: Date | string
 }
 
 export type HoldingUpdateManyMutationInput = {
@@ -541,8 +561,9 @@ export type HoldingUncheckedUpdateManyInput = {
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
   security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type HoldingListRelationFilter = {
@@ -575,8 +596,9 @@ export type HoldingCountOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
-  timestamp?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
 }
 
 export type HoldingAvgOrderByAggregateInput = {
@@ -603,8 +625,9 @@ export type HoldingMaxOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
-  timestamp?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
 }
 
 export type HoldingMinOrderByAggregateInput = {
@@ -621,8 +644,9 @@ export type HoldingMinOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   security_id?: Prisma.SortOrder
-  timestamp?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  member_id?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
 }
 
 export type HoldingSumOrderByAggregateInput = {
@@ -724,6 +748,48 @@ export type HoldingUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.HoldingScalarWhereInput | Prisma.HoldingScalarWhereInput[]
 }
 
+export type HoldingCreateNestedManyWithoutMemberInput = {
+  create?: Prisma.XOR<Prisma.HoldingCreateWithoutMemberInput, Prisma.HoldingUncheckedCreateWithoutMemberInput> | Prisma.HoldingCreateWithoutMemberInput[] | Prisma.HoldingUncheckedCreateWithoutMemberInput[]
+  connectOrCreate?: Prisma.HoldingCreateOrConnectWithoutMemberInput | Prisma.HoldingCreateOrConnectWithoutMemberInput[]
+  createMany?: Prisma.HoldingCreateManyMemberInputEnvelope
+  connect?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+}
+
+export type HoldingUncheckedCreateNestedManyWithoutMemberInput = {
+  create?: Prisma.XOR<Prisma.HoldingCreateWithoutMemberInput, Prisma.HoldingUncheckedCreateWithoutMemberInput> | Prisma.HoldingCreateWithoutMemberInput[] | Prisma.HoldingUncheckedCreateWithoutMemberInput[]
+  connectOrCreate?: Prisma.HoldingCreateOrConnectWithoutMemberInput | Prisma.HoldingCreateOrConnectWithoutMemberInput[]
+  createMany?: Prisma.HoldingCreateManyMemberInputEnvelope
+  connect?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+}
+
+export type HoldingUpdateManyWithoutMemberNestedInput = {
+  create?: Prisma.XOR<Prisma.HoldingCreateWithoutMemberInput, Prisma.HoldingUncheckedCreateWithoutMemberInput> | Prisma.HoldingCreateWithoutMemberInput[] | Prisma.HoldingUncheckedCreateWithoutMemberInput[]
+  connectOrCreate?: Prisma.HoldingCreateOrConnectWithoutMemberInput | Prisma.HoldingCreateOrConnectWithoutMemberInput[]
+  upsert?: Prisma.HoldingUpsertWithWhereUniqueWithoutMemberInput | Prisma.HoldingUpsertWithWhereUniqueWithoutMemberInput[]
+  createMany?: Prisma.HoldingCreateManyMemberInputEnvelope
+  set?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+  disconnect?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+  delete?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+  connect?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+  update?: Prisma.HoldingUpdateWithWhereUniqueWithoutMemberInput | Prisma.HoldingUpdateWithWhereUniqueWithoutMemberInput[]
+  updateMany?: Prisma.HoldingUpdateManyWithWhereWithoutMemberInput | Prisma.HoldingUpdateManyWithWhereWithoutMemberInput[]
+  deleteMany?: Prisma.HoldingScalarWhereInput | Prisma.HoldingScalarWhereInput[]
+}
+
+export type HoldingUncheckedUpdateManyWithoutMemberNestedInput = {
+  create?: Prisma.XOR<Prisma.HoldingCreateWithoutMemberInput, Prisma.HoldingUncheckedCreateWithoutMemberInput> | Prisma.HoldingCreateWithoutMemberInput[] | Prisma.HoldingUncheckedCreateWithoutMemberInput[]
+  connectOrCreate?: Prisma.HoldingCreateOrConnectWithoutMemberInput | Prisma.HoldingCreateOrConnectWithoutMemberInput[]
+  upsert?: Prisma.HoldingUpsertWithWhereUniqueWithoutMemberInput | Prisma.HoldingUpsertWithWhereUniqueWithoutMemberInput[]
+  createMany?: Prisma.HoldingCreateManyMemberInputEnvelope
+  set?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+  disconnect?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+  delete?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+  connect?: Prisma.HoldingWhereUniqueInput | Prisma.HoldingWhereUniqueInput[]
+  update?: Prisma.HoldingUpdateWithWhereUniqueWithoutMemberInput | Prisma.HoldingUpdateWithWhereUniqueWithoutMemberInput[]
+  updateMany?: Prisma.HoldingUpdateManyWithWhereWithoutMemberInput | Prisma.HoldingUpdateManyWithWhereWithoutMemberInput[]
+  deleteMany?: Prisma.HoldingScalarWhereInput | Prisma.HoldingScalarWhereInput[]
+}
+
 export type HoldingCreateNestedOneWithoutHistoryInput = {
   create?: Prisma.XOR<Prisma.HoldingCreateWithoutHistoryInput, Prisma.HoldingUncheckedCreateWithoutHistoryInput>
   connectOrCreate?: Prisma.HoldingCreateOrConnectWithoutHistoryInput
@@ -793,9 +859,10 @@ export type HoldingCreateWithoutAccountInput = {
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Date | string
+  history?: Prisma.HoldingHistoryCreateNestedManyWithoutHoldingInput
   security: Prisma.SecurityCreateNestedOneWithoutHoldingsInput
   user: Prisma.UserCreateNestedOneWithoutHoldingsInput
-  history?: Prisma.HoldingHistoryCreateNestedManyWithoutHoldingInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutHoldingsInput
 }
 
 export type HoldingUncheckedCreateWithoutAccountInput = {
@@ -811,8 +878,9 @@ export type HoldingUncheckedCreateWithoutAccountInput = {
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   security_id: string
-  timestamp?: Date | string
   user_id: string
+  member_id: string
+  timestamp?: Date | string
   history?: Prisma.HoldingHistoryUncheckedCreateNestedManyWithoutHoldingInput
 }
 
@@ -859,8 +927,9 @@ export type HoldingScalarWhereInput = {
   quantity?: Prisma.DecimalFilter<"Holding"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFilter<"Holding"> | string
   security_id?: Prisma.StringFilter<"Holding"> | string
-  timestamp?: Prisma.DateTimeFilter<"Holding"> | Date | string
   user_id?: Prisma.StringFilter<"Holding"> | string
+  member_id?: Prisma.StringFilter<"Holding"> | string
+  timestamp?: Prisma.DateTimeFilter<"Holding"> | Date | string
 }
 
 export type HoldingCreateWithoutUserInput = {
@@ -876,9 +945,10 @@ export type HoldingCreateWithoutUserInput = {
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Date | string
-  security: Prisma.SecurityCreateNestedOneWithoutHoldingsInput
   history?: Prisma.HoldingHistoryCreateNestedManyWithoutHoldingInput
   account: Prisma.AccountCreateNestedOneWithoutHoldingsInput
+  security: Prisma.SecurityCreateNestedOneWithoutHoldingsInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutHoldingsInput
 }
 
 export type HoldingUncheckedCreateWithoutUserInput = {
@@ -895,6 +965,7 @@ export type HoldingUncheckedCreateWithoutUserInput = {
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id: string
   security_id: string
+  member_id: string
   timestamp?: Date | string
   history?: Prisma.HoldingHistoryUncheckedCreateNestedManyWithoutHoldingInput
 }
@@ -925,6 +996,70 @@ export type HoldingUpdateManyWithWhereWithoutUserInput = {
   data: Prisma.XOR<Prisma.HoldingUpdateManyMutationInput, Prisma.HoldingUncheckedUpdateManyWithoutUserInput>
 }
 
+export type HoldingCreateWithoutMemberInput = {
+  cost_basis: runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price_as_of: Date | string
+  institution_price_datetime?: Date | string | null
+  institution_value: runtime.Decimal | runtime.DecimalJsLike | number | string
+  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code: string
+  unofficial_currency_code?: string | null
+  vested_quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  timestamp?: Date | string
+  history?: Prisma.HoldingHistoryCreateNestedManyWithoutHoldingInput
+  account: Prisma.AccountCreateNestedOneWithoutHoldingsInput
+  security: Prisma.SecurityCreateNestedOneWithoutHoldingsInput
+  user: Prisma.UserCreateNestedOneWithoutHoldingsInput
+}
+
+export type HoldingUncheckedCreateWithoutMemberInput = {
+  cost_basis: runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price_as_of: Date | string
+  institution_price_datetime?: Date | string | null
+  institution_value: runtime.Decimal | runtime.DecimalJsLike | number | string
+  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code: string
+  unofficial_currency_code?: string | null
+  vested_quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  account_id: string
+  security_id: string
+  user_id: string
+  timestamp?: Date | string
+  history?: Prisma.HoldingHistoryUncheckedCreateNestedManyWithoutHoldingInput
+}
+
+export type HoldingCreateOrConnectWithoutMemberInput = {
+  where: Prisma.HoldingWhereUniqueInput
+  create: Prisma.XOR<Prisma.HoldingCreateWithoutMemberInput, Prisma.HoldingUncheckedCreateWithoutMemberInput>
+}
+
+export type HoldingCreateManyMemberInputEnvelope = {
+  data: Prisma.HoldingCreateManyMemberInput | Prisma.HoldingCreateManyMemberInput[]
+  skipDuplicates?: boolean
+}
+
+export type HoldingUpsertWithWhereUniqueWithoutMemberInput = {
+  where: Prisma.HoldingWhereUniqueInput
+  update: Prisma.XOR<Prisma.HoldingUpdateWithoutMemberInput, Prisma.HoldingUncheckedUpdateWithoutMemberInput>
+  create: Prisma.XOR<Prisma.HoldingCreateWithoutMemberInput, Prisma.HoldingUncheckedCreateWithoutMemberInput>
+}
+
+export type HoldingUpdateWithWhereUniqueWithoutMemberInput = {
+  where: Prisma.HoldingWhereUniqueInput
+  data: Prisma.XOR<Prisma.HoldingUpdateWithoutMemberInput, Prisma.HoldingUncheckedUpdateWithoutMemberInput>
+}
+
+export type HoldingUpdateManyWithWhereWithoutMemberInput = {
+  where: Prisma.HoldingScalarWhereInput
+  data: Prisma.XOR<Prisma.HoldingUpdateManyMutationInput, Prisma.HoldingUncheckedUpdateManyWithoutMemberInput>
+}
+
 export type HoldingCreateWithoutHistoryInput = {
   cost_basis: runtime.Decimal | runtime.DecimalJsLike | number | string
   institution_price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -938,9 +1073,10 @@ export type HoldingCreateWithoutHistoryInput = {
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Date | string
+  account: Prisma.AccountCreateNestedOneWithoutHoldingsInput
   security: Prisma.SecurityCreateNestedOneWithoutHoldingsInput
   user: Prisma.UserCreateNestedOneWithoutHoldingsInput
-  account: Prisma.AccountCreateNestedOneWithoutHoldingsInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutHoldingsInput
 }
 
 export type HoldingUncheckedCreateWithoutHistoryInput = {
@@ -957,8 +1093,9 @@ export type HoldingUncheckedCreateWithoutHistoryInput = {
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id: string
   security_id: string
-  timestamp?: Date | string
   user_id: string
+  member_id: string
+  timestamp?: Date | string
 }
 
 export type HoldingCreateOrConnectWithoutHistoryInput = {
@@ -990,9 +1127,10 @@ export type HoldingUpdateWithoutHistoryInput = {
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account?: Prisma.AccountUpdateOneRequiredWithoutHoldingsNestedInput
   security?: Prisma.SecurityUpdateOneRequiredWithoutHoldingsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutHoldingsNestedInput
-  account?: Prisma.AccountUpdateOneRequiredWithoutHoldingsNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutHoldingsNestedInput
 }
 
 export type HoldingUncheckedUpdateWithoutHistoryInput = {
@@ -1009,8 +1147,9 @@ export type HoldingUncheckedUpdateWithoutHistoryInput = {
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
   security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type HoldingCreateWithoutSecurityInput = {
@@ -1026,9 +1165,10 @@ export type HoldingCreateWithoutSecurityInput = {
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutHoldingsInput
   history?: Prisma.HoldingHistoryCreateNestedManyWithoutHoldingInput
   account: Prisma.AccountCreateNestedOneWithoutHoldingsInput
+  user: Prisma.UserCreateNestedOneWithoutHoldingsInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutHoldingsInput
 }
 
 export type HoldingUncheckedCreateWithoutSecurityInput = {
@@ -1044,8 +1184,9 @@ export type HoldingUncheckedCreateWithoutSecurityInput = {
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id: string
-  timestamp?: Date | string
   user_id: string
+  member_id: string
+  timestamp?: Date | string
   history?: Prisma.HoldingHistoryUncheckedCreateNestedManyWithoutHoldingInput
 }
 
@@ -1088,8 +1229,9 @@ export type HoldingCreateManyAccountInput = {
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   security_id: string
-  timestamp?: Date | string
   user_id: string
+  member_id: string
+  timestamp?: Date | string
 }
 
 export type HoldingUpdateWithoutAccountInput = {
@@ -1105,9 +1247,10 @@ export type HoldingUpdateWithoutAccountInput = {
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.HoldingHistoryUpdateManyWithoutHoldingNestedInput
   security?: Prisma.SecurityUpdateOneRequiredWithoutHoldingsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutHoldingsNestedInput
-  history?: Prisma.HoldingHistoryUpdateManyWithoutHoldingNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutHoldingsNestedInput
 }
 
 export type HoldingUncheckedUpdateWithoutAccountInput = {
@@ -1123,8 +1266,9 @@ export type HoldingUncheckedUpdateWithoutAccountInput = {
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.HoldingHistoryUncheckedUpdateManyWithoutHoldingNestedInput
 }
 
@@ -1141,8 +1285,9 @@ export type HoldingUncheckedUpdateManyWithoutAccountInput = {
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type HoldingCreateManyUserInput = {
@@ -1159,6 +1304,7 @@ export type HoldingCreateManyUserInput = {
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id: string
   security_id: string
+  member_id: string
   timestamp?: Date | string
 }
 
@@ -1175,9 +1321,10 @@ export type HoldingUpdateWithoutUserInput = {
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  security?: Prisma.SecurityUpdateOneRequiredWithoutHoldingsNestedInput
   history?: Prisma.HoldingHistoryUpdateManyWithoutHoldingNestedInput
   account?: Prisma.AccountUpdateOneRequiredWithoutHoldingsNestedInput
+  security?: Prisma.SecurityUpdateOneRequiredWithoutHoldingsNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutHoldingsNestedInput
 }
 
 export type HoldingUncheckedUpdateWithoutUserInput = {
@@ -1194,6 +1341,7 @@ export type HoldingUncheckedUpdateWithoutUserInput = {
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
   security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.HoldingHistoryUncheckedUpdateManyWithoutHoldingNestedInput
 }
@@ -1212,6 +1360,81 @@ export type HoldingUncheckedUpdateManyWithoutUserInput = {
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
   security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type HoldingCreateManyMemberInput = {
+  cost_basis: runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price_as_of: Date | string
+  institution_price_datetime?: Date | string | null
+  institution_value: runtime.Decimal | runtime.DecimalJsLike | number | string
+  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code: string
+  unofficial_currency_code?: string | null
+  vested_quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  account_id: string
+  security_id: string
+  user_id: string
+  timestamp?: Date | string
+}
+
+export type HoldingUpdateWithoutMemberInput = {
+  cost_basis?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price_as_of?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  institution_price_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  institution_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vested_quantity?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.HoldingHistoryUpdateManyWithoutHoldingNestedInput
+  account?: Prisma.AccountUpdateOneRequiredWithoutHoldingsNestedInput
+  security?: Prisma.SecurityUpdateOneRequiredWithoutHoldingsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutHoldingsNestedInput
+}
+
+export type HoldingUncheckedUpdateWithoutMemberInput = {
+  cost_basis?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price_as_of?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  institution_price_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  institution_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vested_quantity?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
+  security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.HoldingHistoryUncheckedUpdateManyWithoutHoldingNestedInput
+}
+
+export type HoldingUncheckedUpdateManyWithoutMemberInput = {
+  cost_basis?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  institution_price_as_of?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  institution_price_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  institution_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.StringFieldUpdateOperationsInput | string
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vested_quantity?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
+  security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1228,8 +1451,9 @@ export type HoldingCreateManySecurityInput = {
   vested_value: runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id: string
-  timestamp?: Date | string
   user_id: string
+  member_id: string
+  timestamp?: Date | string
 }
 
 export type HoldingUpdateWithoutSecurityInput = {
@@ -1245,9 +1469,10 @@ export type HoldingUpdateWithoutSecurityInput = {
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutHoldingsNestedInput
   history?: Prisma.HoldingHistoryUpdateManyWithoutHoldingNestedInput
   account?: Prisma.AccountUpdateOneRequiredWithoutHoldingsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutHoldingsNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutHoldingsNestedInput
 }
 
 export type HoldingUncheckedUpdateWithoutSecurityInput = {
@@ -1263,8 +1488,9 @@ export type HoldingUncheckedUpdateWithoutSecurityInput = {
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.HoldingHistoryUncheckedUpdateManyWithoutHoldingNestedInput
 }
 
@@ -1281,8 +1507,9 @@ export type HoldingUncheckedUpdateManyWithoutSecurityInput = {
   vested_value?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1330,12 +1557,14 @@ export type HoldingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   quantity?: boolean
   account_id?: boolean
   security_id?: boolean
-  timestamp?: boolean
   user_id?: boolean
-  security?: boolean | Prisma.SecurityDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  member_id?: boolean
+  timestamp?: boolean
   history?: boolean | Prisma.Holding$historyArgs<ExtArgs>
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
+  security?: boolean | Prisma.SecurityDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  member?: boolean | Prisma.HouseholdMemberDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.HoldingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["holding"]>
 
@@ -1353,11 +1582,13 @@ export type HoldingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   quantity?: boolean
   account_id?: boolean
   security_id?: boolean
-  timestamp?: boolean
   user_id?: boolean
+  member_id?: boolean
+  timestamp?: boolean
+  account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   security?: boolean | Prisma.SecurityDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
+  member?: boolean | Prisma.HouseholdMemberDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["holding"]>
 
 export type HoldingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1374,11 +1605,13 @@ export type HoldingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   quantity?: boolean
   account_id?: boolean
   security_id?: boolean
-  timestamp?: boolean
   user_id?: boolean
+  member_id?: boolean
+  timestamp?: boolean
+  account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   security?: boolean | Prisma.SecurityDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
+  member?: boolean | Prisma.HouseholdMemberDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["holding"]>
 
 export type HoldingSelectScalar = {
@@ -1395,36 +1628,41 @@ export type HoldingSelectScalar = {
   quantity?: boolean
   account_id?: boolean
   security_id?: boolean
-  timestamp?: boolean
   user_id?: boolean
+  member_id?: boolean
+  timestamp?: boolean
 }
 
-export type HoldingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"cost_basis" | "institution_price" | "institution_price_as_of" | "institution_price_datetime" | "institution_value" | "annual_return_rate" | "iso_currency_code" | "unofficial_currency_code" | "vested_quantity" | "vested_value" | "quantity" | "account_id" | "security_id" | "timestamp" | "user_id", ExtArgs["result"]["holding"]>
+export type HoldingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"cost_basis" | "institution_price" | "institution_price_as_of" | "institution_price_datetime" | "institution_value" | "annual_return_rate" | "iso_currency_code" | "unofficial_currency_code" | "vested_quantity" | "vested_value" | "quantity" | "account_id" | "security_id" | "user_id" | "member_id" | "timestamp", ExtArgs["result"]["holding"]>
 export type HoldingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  security?: boolean | Prisma.SecurityDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   history?: boolean | Prisma.Holding$historyArgs<ExtArgs>
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
+  security?: boolean | Prisma.SecurityDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  member?: boolean | Prisma.HouseholdMemberDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.HoldingCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type HoldingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   security?: boolean | Prisma.SecurityDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
+  member?: boolean | Prisma.HouseholdMemberDefaultArgs<ExtArgs>
 }
 export type HoldingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   security?: boolean | Prisma.SecurityDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
+  member?: boolean | Prisma.HouseholdMemberDefaultArgs<ExtArgs>
 }
 
 export type $HoldingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Holding"
   objects: {
-    security: Prisma.$SecurityPayload<ExtArgs>
-    user: Prisma.$UserPayload<ExtArgs>
     history: Prisma.$HoldingHistoryPayload<ExtArgs>[]
     account: Prisma.$AccountPayload<ExtArgs>
+    security: Prisma.$SecurityPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
+    member: Prisma.$HouseholdMemberPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     cost_basis: runtime.Decimal
@@ -1440,8 +1678,9 @@ export type $HoldingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     quantity: runtime.Decimal
     account_id: string
     security_id: string
-    timestamp: Date
     user_id: string
+    member_id: string
+    timestamp: Date
   }, ExtArgs["result"]["holding"]>
   composites: {}
 }
@@ -1836,10 +2075,11 @@ readonly fields: HoldingFieldRefs;
  */
 export interface Prisma__HoldingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  security<T extends Prisma.SecurityDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SecurityDefaultArgs<ExtArgs>>): Prisma.Prisma__SecurityClient<runtime.Types.Result.GetResult<Prisma.$SecurityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   history<T extends Prisma.Holding$historyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Holding$historyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HoldingHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   account<T extends Prisma.AccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountDefaultArgs<ExtArgs>>): Prisma.Prisma__AccountClient<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  security<T extends Prisma.SecurityDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SecurityDefaultArgs<ExtArgs>>): Prisma.Prisma__SecurityClient<runtime.Types.Result.GetResult<Prisma.$SecurityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  member<T extends Prisma.HouseholdMemberDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HouseholdMemberDefaultArgs<ExtArgs>>): Prisma.Prisma__HouseholdMemberClient<runtime.Types.Result.GetResult<Prisma.$HouseholdMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1882,8 +2122,9 @@ export interface HoldingFieldRefs {
   readonly quantity: Prisma.FieldRef<"Holding", 'Decimal'>
   readonly account_id: Prisma.FieldRef<"Holding", 'String'>
   readonly security_id: Prisma.FieldRef<"Holding", 'String'>
-  readonly timestamp: Prisma.FieldRef<"Holding", 'DateTime'>
   readonly user_id: Prisma.FieldRef<"Holding", 'String'>
+  readonly member_id: Prisma.FieldRef<"Holding", 'String'>
+  readonly timestamp: Prisma.FieldRef<"Holding", 'DateTime'>
 }
     
 
