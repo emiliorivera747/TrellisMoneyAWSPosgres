@@ -63,6 +63,7 @@ export async function upsertUser(currentUser: SupabaseUserSyncData) {
  * @throws Will throw an error if the database transaction fails.
  */
 export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
+  
   const { id, email, user_metadata } = currentUser;
   const fullName = user_metadata.full_name?.trim();
 

@@ -8,7 +8,9 @@ import { getPriceIdBySlug } from "@/lib/plan-cache";
 // Utils
 import { hasActiveSubscription } from "@/features/auth/utils/callbackHelpers";
 
+// Types
 import { Subscription } from "@/app/generated/prisma/client";
+
 /**
  * Handles the OAuth callback, exchanging the code for a session, updating the database,
  * and redirecting to Stripe or the next URL.
