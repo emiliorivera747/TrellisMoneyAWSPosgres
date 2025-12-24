@@ -29,19 +29,15 @@ import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCa
 const SelectOwnerStep = () => {
   const { householdResponse, isLoadingHousehold, isErrorHousehold } =
     useFetchHouseholdMembers();
-  const { goToRoute } = useConnectionContext();
 
   return (
     <div className="h-full gap-3 flex flex-col">
       {isLoadingHousehold ? (
         <MemberCardSkeleton length={6} />
       ) : (
-        <MemberCards
-          members={householdResponse?.data?.members}
-          handleSetRoute={goToRoute}
-        />
+        <MemberCards members={householdResponse?.data?.members} />
       )}
-      <AddMemberCard handleSetRoute={goToRoute} />
+      <AddMemberCard />
     </div>
   );
 };

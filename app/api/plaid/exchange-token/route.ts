@@ -29,13 +29,18 @@ interface ExchangeTokenRequestBody {
  * @returns A JSON response with the access token or an error message
  */
 export async function POST(req: NextRequest) {
-  return withAuth(req, async (request, user) => {
+  return withAuth(req, async (request) => {
     const { public_token, metadata, user_id }: ExchangeTokenRequestBody =
       await request.json();
     const institution_id = metadata.institution?.institution_id;
     if (!institution_id) return FailResponse("Institution ID is missing", 400);
 
     try {
+
+      //TODO
+      // Make sure this user has the privledge to add the user to their household
+
+
       // ----- Get Item From the database -----
       const itemDB = await getItemByUserAndInstitutionId(
         user_id,

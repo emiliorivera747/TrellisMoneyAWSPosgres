@@ -13,8 +13,6 @@ export interface StepProps {
 
 export interface MemberCardProp {
   members: Member[];
-  clickFn?: (id: string) => void;
-  handleSetRoute: (route: string) => void;
 }
 export interface AddMemberProps {
   handleSetRoute: (route: string) => void;

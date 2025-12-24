@@ -1,13 +1,14 @@
-import { AddMemberProps } from "@/features/accounts/types/household";
 import { Avatar } from "@/components/ui/avatar";
+import { useConnectionContext } from "@/features/accounts/context/ConnectionContext";
 
 // AddMemberCard component renders a card UI for adding a new household member.
 // It accepts `householdResponse` and `clickFn` as props from StepProps.
-const AddMemberCard = ({ handleSetRoute }: AddMemberProps) => {
+const AddMemberCard = () => {
+  const { goToRoute } = useConnectionContext();
   return (
     <div
       className="flex flex-row gap-4 items-center border rounded-[12px] px-4 py-[1rem] hover:bg-tertiary-200 font-light cursor-pointer"
-      onClick={() => handleSetRoute("add-member")}
+      onClick={() => goToRoute("add-member")}
     >
       {/* Avatar component displays an icon for adding a new member */}
       <Avatar className="border border-tertiary-500 flex items-center justify-center">
