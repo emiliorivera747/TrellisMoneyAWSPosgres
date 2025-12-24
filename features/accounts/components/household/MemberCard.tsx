@@ -29,34 +29,37 @@ const MemberCards = ({ members }: MemberCardProp) => {
 
   if (!members) return null;
 
-  const handleSelectingMember = (user_id: string) => {
-    start(user_id);
+  const handleSelectingMember = (id: string | null) => {
+    if (id) start(id);
     close();
   };
 
   return (
     <div key={1} className="flex flex-col gap-3">
-      {members.map(({ name, url, user_id }: Member, index: number) => {
-        return (
-          <div
-            key={`${user_id}-${index}`}
-            className="flex flex-row gap-4 items-center border rounded-[12px] px-4 py-[1rem] hover:bg-tertiary-200 font-light cursor-pointer"
-            onClick={() => handleSelectingMember(user_id)}
-          >
-            <Avatar>
-              <AvatarImage src={url ? url : ""} />
-              <AvatarFallback
-                className={`${
-                  index % 2 === 0 ? "bg-primary-800" : "bg-secondary-800"
-                } text-white`}
-              >
-                {name ? name[0].toUpperCase() : "D"}
-              </AvatarFallback>
-            </Avatar>
-            <div key={`${user_id}-${index}`}>{name}</div>
-          </div>
-        );
-      })}
+      {members.map(
+        ({ name, url, user_id, member_id }: Member, index: number) => {
+          let id = user_id ? user_id : member_id;
+          return (
+            <div
+              key={`${user_id}-${index}`}
+              className="flex flex-row gap-4 items-center border rounded-[12px] px-4 py-[1rem] hover:bg-tertiary-200 font-light cursor-pointer"
+              onClick={() => handleSelectingMember(id)}
+            >
+              <Avatar>
+                <AvatarImage src={url ? url : ""} />
+                <AvatarFallback
+                  className={`${
+                    index % 2 === 0 ? "bg-primary-800" : "bg-secondary-800"
+                  } text-white`}
+                >
+                  {name ? name[0].toUpperCase() : "D"}
+                </AvatarFallback>
+              </Avatar>
+              <div key={`${user_id}-${index}`}>{name}</div>
+            </div>
+          );
+        }
+      )}
     </div>
   );
 };

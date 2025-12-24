@@ -27,6 +27,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       
       return NextResponse.json({ data, status: "success" }, { status: 200 });
     } catch (error) {
+      console.error(error);
       return NextResponse.json(
         { error: ERROR_MESSAGES.LINK_TOKEN_ERROR },
         { status: 500 }

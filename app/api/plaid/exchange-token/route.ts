@@ -19,7 +19,7 @@ import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 interface ExchangeTokenRequestBody {
   public_token: string;
   metadata: PlaidLinkOnSuccessMetadata;
-  user_id: string;
+  member_id: string;
 }
 /**
  * Handles the POST request to exchange a public token for an access token
@@ -30,7 +30,7 @@ interface ExchangeTokenRequestBody {
  */
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request) => {
-    const { public_token, metadata, user_id }: ExchangeTokenRequestBody =
+    const { public_token, metadata, member_id }: ExchangeTokenRequestBody =
       await request.json();
     const institution_id = metadata.institution?.institution_id;
     if (!institution_id) return FailResponse("Institution ID is missing", 400);
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     try {
 
       //TODO
-      // Make sure this user has the privledge to add the user to their household
+      // Make sure this user has the priveledge to add the user to their household
 
 
       // ----- Get Item From the database -----

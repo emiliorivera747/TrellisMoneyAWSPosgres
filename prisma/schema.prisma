@@ -33,22 +33,31 @@ model Account {
   holder_category          String?
   balance                  Balance?         @relation(fields: [balance_id], references: [balance_id], onDelete: Cascade)
   balance_id               String?           @unique
+
+  //----- Relations -----//
   user                     User             @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
   user_id                  String
-  timestamp                DateTime?         @default(now()) @db.Timestamptz(3)
-  history                  AccountHistory[]
-  holdings                 Holding[]
+
+  member                   HouseholdMember  @relation(fields: [member_id], references: [member_id])
+  member_id                String
+
   household                Household?       @relation(fields: [household_id], references: [household_id], onDelete: Cascade)
   household_id             String
+
   item                     Item             @relation(fields: [item_id], references: [item_id], onDelete: Cascade)
   item_id                  String
+
+  history                  AccountHistory[]
+  holdings                 Holding[]
+
+  //--------Timestamp------//
+  timestamp                DateTime?         @default(now()) @db.Timestamptz(3)
   updated_at               DateTime?         @default(now()) @db.Timestamptz(3)
   created_at               DateTime?         @default(now()) @db.Timestamptz(3)
 }
 
 model AccountHistory {
   id                       Int       @id @default(autoincrement())
-  account_id               String
   name                     String
   type                     String
   available                Decimal
@@ -56,9 +65,16 @@ model AccountHistory {
   limit                    Decimal
   iso_currency_code        String
   unofficial_currency_code String
+
   user_id                  String?
-  timestamp                DateTime  @default(now()) @db.Timestamptz(3)
+  member_id                String?
+
+  // ----- Relations -----
+  account_id               String
   account                  Account  @relation(fields: [account_id], references: [account_id], onDelete: Cascade)
+
+  // ----- Timestamp -----
+  timestamp                DateTime  @default(now()) @db.Timestamptz(3)
 }
 
 model Balance {
@@ -80,7 +96,7 @@ model Balance {
 model User {
   user_id        String             @id @default(uuid())
 
-  //             Other
+  //----- Other -----//
   email          String             @unique
   name           String?
   email_verified Boolean?           @default(false)
@@ -89,18 +105,19 @@ model User {
   customer_id    String?            @unique
   profile        Profile?
 
-  //             Financial
+  //----- Financial -----//
   securities     Security[]
   holdings       Holding[]
   accounts       Account[]
   items          Item[]
 
-  //             Stripe
+  //----- Stripe -----//
   subscriptions  Subscription[]
+
 
   memberships    HouseholdMember[] @relation("UserMemberships")
 
-  //             Timestamp
+  //----- Timestamp -----//
   created_at     DateTime           @default(now()) @db.Timestamptz(3)
   updated_at     DateTime           @default(now()) @updatedAt @db.Timestamptz(3)
 }
@@ -110,7 +127,7 @@ model User {
 // ###################################################### ITEM ##########################################
 
 model Item {
-  item_id                 String     @id
+  item_id                 String           @id
   institution_id          String
   institution_name        String?
   webhook                 String?
@@ -118,7 +135,6 @@ model Item {
   request_id              String
   update_type             String
   consent_expiration_time String
-  created_at              DateTime   @default(now()) @db.Timestamptz(3)
   available_products      String[]
   billed_products         String[]
   products                String[]
@@ -127,11 +143,21 @@ model Item {
   consented_data_scopes   String[]
   consented_use_cases     String[]
   access_token            String
-  user                    User      @relation(fields: [user_id], references: [user_id])
-  user_id                 String
+
   accounts                Account[]
-  household               Household @relation(fields: [household_id], references: [household_id])
+
+  // ----- Relations -----
+  member_id               String
+  member                  HouseholdMember @relation(fields: [member_id], references: [member_id])
+
+  user_id                 String
+  user                    User            @relation(fields: [user_id], references: [user_id])
+
+  household               Household       @relation(fields: [household_id], references: [household_id])
   household_id            String
+
+  // ----- Timestamp -----
+  created_at              DateTime         @default(now()) @db.Timestamptz(3)
 }
 
 model TransactionStatus {
@@ -207,20 +233,19 @@ model Subscription {
   cancel_at            Int?
   cancel_at_period_end Boolean             @default(false)
 
-  created_at           Int?
-  updated_at           Int?
-
-  canceled_at          Int?
-
-  //                   Relations
+  // ----- Relations -----
   user                 User               @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
   price                Price?             @relation(fields: [price_id], references: [price_id])
+
+  // ----- Timestamp
+  created_at           Int?
+  updated_at           Int?
+  canceled_at          Int?
 }
 
 model Price {
   price_id                 String          @id
 
-  product_id               String
 
   currency                 String
   unit_amount              BigInt
@@ -231,12 +256,15 @@ model Price {
 
   active                   Boolean         @default(false)
 
+  // ----- Relations -----
+  product_id               String
+  product                  Product        @relation(fields: [product_id], references: [product_id])
+
+  subscriptions            Subscription[]
+
+  // ----- Timestamp -----
   created_at               DateTime        @default(now())
   updated_at               DateTime        @updatedAt
-
-  //                       Relations
-  product                  Product        @relation(fields: [product_id], references: [product_id])
-  subscriptions            Subscription[]
 }
 
 model Product {
@@ -245,15 +273,16 @@ model Product {
   description String?
   active      Boolean   @default(true)
 
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
 
   prices      Price[]
+
+  // ----- Timestamp -----
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 }
 
 
 // ###################################################### PROFILE ##########################################
-
 model Profile {
   id      Int      @id @default(autoincrement())
   bio     String?
@@ -311,14 +340,20 @@ model HouseholdMember {
   name          String
   role          HouseholdRole  @default(MEMBER)
   dob           DateTime?
-  email         String?         
+  email         String?
 
   invited_email String?
   invite_status String         @default("pending")
 
-  //            Relations
+  // ----- Relations-----
   household     Household     @relation(fields: [household_id], references: [household_id])
   household_id  String
+
+  // ----- Financials----
+  securities    Security[]
+  holdings      Holding[]
+  accounts      Account[]
+  items         Item[]
 
   user          User?         @relation("UserMemberships", fields: [user_id], references: [user_id])
   user_id       String?
@@ -345,14 +380,22 @@ model Holding {
   vested_quantity            Decimal?
   vested_value               Decimal
   quantity                   Decimal
-  security                   Security         @relation(fields: [security_id], references: [security_id], onDelete: Cascade)
-  user                       User             @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  history                    HoldingHistory[]
+
+  // ----- Relations -----
   account_id                 String
   security_id                String
-  timestamp                  DateTime          @default(now()) @db.Timestamptz(3)
   user_id                    String
-  history                    HoldingHistory[]
+  member_id                  String
+
   account                    Account          @relation(fields: [account_id], references: [account_id], onDelete: Cascade)
+  security                   Security         @relation(fields: [security_id], references: [security_id], onDelete: Cascade)
+  user                       User             @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  member                     HouseholdMember  @relation(fields: [member_id], references: [member_id], onDelete: Cascade)
+
+  // ----- Timestamps -----
+  timestamp                  DateTime          @default(now()) @db.Timestamptz(3)
 
   @@id(name: "holding_id", [security_id, user_id, account_id])
 }
@@ -370,12 +413,17 @@ model HoldingHistory {
   vested_quantity            Decimal?
   vested_value               Decimal
   quantity                   Decimal
+
   account_id                 String
   security_id                String
+  user_id                    String
+  member_id                  String
+
+  holding                    Holding   @relation(fields: [security_id, user_id, account_id], references: [security_id, user_id, account_id], onDelete: Cascade) // Composite foreign key
+
+  //----- Timestamp ----
   created_at                 DateTime   @default(now()) @db.Timestamptz(3)
   updated_at                 DateTime   @default(now()) @db.Timestamptz(3)
-  user_id                    String
-  holding                    Holding   @relation(fields: [security_id, user_id, account_id], references: [security_id, user_id, account_id], onDelete: Cascade) // Composite foreign key
 }
 
 
@@ -403,12 +451,21 @@ model Security {
   sector                   String?
   industry                 String?
   option_contract_id       Int?
+
   holdings                 Holding[]
+
+  // ----- Relations -----
   user                     User              @relation(fields: [user_id], references: [user_id])
   user_id                  String
-  timestamp                DateTime?          @default(now()) @db.Timestamptz(3)
+
+  member                   HouseholdMember   @relation(fields: [member_id], references: [member_id])
+  member_id                String
+
   fixed_income             FixedIncome?
   history                  SecurityHistory[]
+
+  // ----- Timestamp -----
+  timestamp                DateTime?          @default(now()) @db.Timestamptz(3)
 }
 
 model SecurityHistory {

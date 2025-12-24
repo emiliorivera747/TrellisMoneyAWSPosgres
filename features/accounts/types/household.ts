@@ -1,6 +1,7 @@
 export interface Member {
   user_id: string;
   head_of_household_id: string;
+  member_id?: string;
   name: string;
   url: string;
 }
