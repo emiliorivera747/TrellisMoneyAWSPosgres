@@ -34,32 +34,31 @@ const AddMemberForm = () => {
   };
 
   return (
-    <div>
-      <button
-        className="text-xs text-tertiary-700 flex items-center justify-center font-light gap-1 hover:underline"
-        onClick={() => goToRoute("owner")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-3"
+    <div className="h-full flex flex-col px-6 ">
+      <div className="mb-6 my-2">
+        <button
+          className="text-xs text-tertiary-700 flex items-center justify-center font-light gap-1 hover:underline  border-tertiary-200 "
+          onClick={() => goToRoute("owner")}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"
-          />
-        </svg>
-        Account Owner
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-3"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"
+            />
+          </svg>
+          Account Owner
+        </button>
+      </div>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit || (() => {}))}
-          className="h-full flex flex-col px-6 pt-6"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit || (() => {}))} className="">
           <h1 className="text-tertiary-700 font-light pb-2">
             Provide member details below
           </h1>
@@ -69,7 +68,6 @@ const AddMemberForm = () => {
               control: form.control as any,
             }))}
           />
-
           <PrimarySubmitButton ref={buttonRef} className="mt-4" />
         </form>
       </Form>

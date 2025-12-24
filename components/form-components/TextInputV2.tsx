@@ -41,11 +41,11 @@ const TextInput = <TFieldValues extends FieldValues>({
   defaultValue = "",
   pt = "pt-[1.05882rem]",
   px = "px-[1rem]",
-  h = "h-[3.2941176471rem]",
+  h = "h-[3.4rem]",
   w = "w-full",
 }: TextInputV2Props<TFieldValues>) => {
   return (
-    <div className="relative my-2">
+    <div className="relative my-[0.4rem]">
       <input
         type={type}
         id={id}
