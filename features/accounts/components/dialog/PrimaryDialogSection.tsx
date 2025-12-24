@@ -24,9 +24,9 @@ const PrimaryDialogSection = ({
   currentStep: { description?: string; content: React.ReactNode };
 }) => {
   return (
-    <div className=" h-[20rem] px-4 overflow-scroll">
+    <div className=" h-[20rem] px-6 overflow-scroll">
       {currentStep.description && (
-        <DialogDescription className="flex items-center pb-4">
+        <DialogDescription className="text-tertiary-700 font-light text-[1rem] pt-2 pb-5">
           {currentStep.description}
         </DialogDescription>
       )}

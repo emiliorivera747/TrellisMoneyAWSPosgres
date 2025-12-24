@@ -41,7 +41,6 @@ const SelectOwnerStep = () => {
           handleSetRoute={goToRoute}
         />
       )}
-
       <AddMemberCard handleSetRoute={goToRoute} />
     </div>
   );

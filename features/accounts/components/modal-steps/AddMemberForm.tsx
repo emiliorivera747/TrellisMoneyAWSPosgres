@@ -20,6 +20,9 @@ import { useConnectionContext } from "../../context/ConnectionContext";
 // Services
 import { householdService } from "../../services/householdServices";
 
+// Headers
+import PrimaryModalHeader from "@/features/accounts/components/headers/PrimaryModalHeader";
+
 const AddMemberForm = () => {
   const { goToRoute, start } = useConnectionContext();
 
@@ -39,16 +42,14 @@ const AddMemberForm = () => {
       <BackToRouteButton route={"owner"} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit || (() => {}))} className="">
-          <h1 className="text-tertiary-700 font-light text-[1rem]">
-            Provide member details below
-          </h1>
+          <PrimaryModalHeader title="Provide member details below" />
           <FormFieldGenerator
             fields={memberFields.map((field) => ({
               ...field,
               control: form.control as any,
             }))}
           />
-          <PrimarySubmitButton ref={buttonRef} className="mt-4" />
+          <PrimarySubmitButton ref={buttonRef} className="mt-8" />
         </form>
       </Form>
     </div>
