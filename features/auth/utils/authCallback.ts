@@ -77,7 +77,6 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
     : email?.split("@")[0] + "'s Household";
 
   await prisma.$transaction(async (tx) => {
-    
     // 1. Create household (no created_by yet)
     const household = await tx.household.create({
       data: {
@@ -91,7 +90,7 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
         name: fullName ?? "Unknown",
         email: email ?? undefined,
         role: "ADMIN",
-        user: id ? { connect: { user_id: id } } : undefined,
+        user: { connect: { user_id: id } },
         household: { connect: { household_id: household.household_id } },
       },
     });
@@ -100,7 +99,7 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
     await tx.household.update({
       where: { household_id: household.household_id },
       data: {
-        created_by: { connect: { member_id: adminMember.member_id } },
+        created_by_member_id: adminMember.member_id,
       },
     });
 

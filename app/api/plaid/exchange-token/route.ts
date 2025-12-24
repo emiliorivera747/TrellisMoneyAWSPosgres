@@ -15,6 +15,7 @@ import { addItem } from "@/utils/prisma/item/addItem";
 import { addAccounts } from "@/utils/prisma/accounts/addAccounts";
 import { logError } from "@/utils/api-helpers/errors/logError";
 import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
+import { canUserEditMembersHousehold } from "@/utils/prisma/user/user-household/userHousehold";
 
 interface ExchangeTokenRequestBody {
   public_token: string;
@@ -29,17 +30,18 @@ interface ExchangeTokenRequestBody {
  * @returns A JSON response with the access token or an error message
  */
 export async function POST(req: NextRequest) {
-  return withAuth(req, async (request) => {
+  return withAuth(req, async (request, user) => {
     const { public_token, metadata, member_id }: ExchangeTokenRequestBody =
       await request.json();
+
     const institution_id = metadata.institution?.institution_id;
+
     if (!institution_id) return FailResponse("Institution ID is missing", 400);
 
     try {
-
-      //TODO
       // Make sure this user has the priveledge to add the user to their household
-
+      if (!canUserEditMembersHousehold(user.id))
+        return FailResponse("User does not have permission to make changes", 403);
 
       // ----- Get Item From the database -----
       const itemDB = await getItemByUserAndInstitutionId(

@@ -34,3 +34,24 @@ export const getItemByUserAndInstitutionId = async (
 
   return item;
 };
+
+/**
+ * Retrieves the first item from the database that matches the specified member ID and institution ID.
+ *
+ * @param member_id - The unique identifier of the member.
+ * @param institution_id - The unique identifier of the institution.
+ * @returns A promise that resolves to the item if found, or `null` if no matching item exists.
+ */
+export const getItemWithMemberAndInstitutionId = async (
+  member_id: string,
+  institution_id: string
+) => {
+  const item = await prisma.item.findFirst({
+    where: {
+      member_id,
+      institution_id,
+    },
+  });
+
+  return item;
+};
