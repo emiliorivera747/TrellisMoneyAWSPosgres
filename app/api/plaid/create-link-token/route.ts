@@ -14,15 +14,16 @@ const ERROR_MESSAGES = {
 export async function POST(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request) => {
     try {
+      
       /**
        * Get the user we want to get the link token for
        */
-      const { user_id } = await request.json();
-      const linkTokenResponse = await getLinkToken(user_id);
+      const { member_id } = await request.json();
+      const linkTokenResponse = await getLinkToken(member_id);
 
       const data = {
         link_token: linkTokenResponse,
-        user_id,
+        member_id,
       };
       
       return NextResponse.json({ data, status: "success" }, { status: 200 });

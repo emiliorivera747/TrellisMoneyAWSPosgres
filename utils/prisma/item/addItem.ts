@@ -2,6 +2,14 @@ import prisma from "@/lib/prisma";
 import { ItemGetResponse } from "plaid";
 import { AxiosResponse } from "axios";
 
+interface AddItemProps {
+  user_id: string;
+  member_id: string;
+  item: AxiosResponse<ItemGetResponse, any>;
+  access_token: string;
+  household_id: string;
+}
+
 /**
  * Adds the item to the database.
  *
@@ -10,13 +18,15 @@ import { AxiosResponse } from "axios";
  * @param access_token - The access token associated with the item
  * @returns The created item record or an error
  */
-export const addItem = async (
-  user_id: string,
-  item: AxiosResponse<ItemGetResponse, any>,
-  access_token: string,
-  household_id: string
-) => {
-  // Create a new item record in the database
+export const addItem = async ({
+  user_id,
+  member_id,
+  household_id,
+  item,
+  access_token,
+
+}: AddItemProps) => {
+
   const res = await prisma.item.create({
     data: {
       item_id: item.data.item.item_id,
@@ -34,6 +44,9 @@ export const addItem = async (
       user: {
         connect: { user_id },
       },
+      member: {
+        connect: { member_id },
+      },
       household: {
         connect: { household_id },
       },
@@ -41,5 +54,6 @@ export const addItem = async (
       request_id: item.data.request_id,
     },
   });
+
   return res;
 };

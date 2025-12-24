@@ -4,7 +4,7 @@ import { client } from "@/config/plaidClient";
 import { withAuth } from "@/lib/protected";
 
 // Utils
-import { getItemByUserAndInstitutionId } from "@/utils/prisma/item/getItem";
+import { getItemWithMemberAndInstitutionId } from "@/utils/prisma/item/getItem";
 import {
   FailResponse,
   SuccessResponse,
@@ -39,13 +39,16 @@ export async function POST(req: NextRequest) {
     if (!institution_id) return FailResponse("Institution ID is missing", 400);
 
     try {
-      // Make sure this user has the priveledge to add the user to their household
+      // ----- Does the user have permission -----
       if (!canUserEditMembersHousehold(user.id))
-        return FailResponse("User does not have permission to make changes", 403);
+        return FailResponse(
+          "User does not have permission to make changes",
+          403
+        );
 
       // ----- Get Item From the database -----
-      const itemDB = await getItemByUserAndInstitutionId(
-        user_id,
+      const itemDB = await getItemWithMemberAndInstitutionId(
+        member_id,
         institution_id
       );
 
@@ -72,24 +75,36 @@ export async function POST(req: NextRequest) {
       const household_id = membership.household_id;
 
       // ------ Add the new item to the database ------
-      const addedItem = await addItem(
+      if (!household_id) {
+        logError("Household ID is null");
+        return FailResponse("Household ID is missing", 400);
+      }
+
+      const user_id = user.id;
+
+      const addedItem = await addItem({
+        member_id,
         user_id,
+        household_id,
         item,
         access_token,
-        household_id
-      );
+      });
+
       if (!addedItem) {
         logError("Failed to add item");
         return FailResponse("Failed to add household", 400);
       }
 
       // ----- Match the accounts to the item -----
-      const addedAccount = await addAccounts(
+      const addedAccount = await addAccounts({
         user_id,
-        item.data.item.item_id,
-        metadata.accounts,
-        household_id
-      );
+        item_id: item.data.item.item_id,
+        accounts: metadata.accounts,
+        household_id,
+        member_id,
+      });
+
+      
       if (!addedAccount) {
         logError("Failed to add accounts");
         return FailResponse("Failed to add accounts", 400);

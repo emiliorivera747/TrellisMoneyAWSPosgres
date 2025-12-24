@@ -1,6 +1,12 @@
 import prisma from "@/lib/prisma";
 import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
-
+interface AddAccountsParams {
+  user_id: string;
+  item_id: string;
+  accounts: PlaidLinkOnSuccessMetadata["accounts"];
+  household_id: string;
+  member_id: string;
+}
 
 /**
  * Adds accounts to the database for the given item.
@@ -9,16 +15,13 @@ import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
  * @param accounts - The accounts to be added
  * @returns The added accounts
  */
-export const addAccounts = async (
-  user_id: string,
-  item_id: string,
-  accounts: PlaidLinkOnSuccessMetadata["accounts"],
-  household_id: string
-) => {
-  console.log("user_id:", user_id);
-  console.log("item_id:", item_id);
-  console.log("accounts:", accounts);
-  console.log("household_id:", household_id);
+export const addAccounts = async ({
+  user_id,
+  item_id,
+  accounts,
+  household_id,
+  member_id,
+}: AddAccountsParams) => {
 
   const accountAdded = [];
 
@@ -28,6 +31,11 @@ export const addAccounts = async (
         user: {
           connect: {
             user_id: user_id,
+          },
+        },
+        member: {
+          connect: {
+            member_id: member_id,
           },
         },
         item: {
