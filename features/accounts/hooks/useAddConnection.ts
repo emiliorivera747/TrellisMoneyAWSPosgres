@@ -28,11 +28,16 @@ export const useAddConnection = () => {
 
   const { currentStep, goToRoute } = useMultistepForm(steps);
 
+  const open = () => setIsDialogOpen(true);
+  const close = () => setIsDialogOpen(false);
+
   return {
     isDialogOpen,
     steps,
     setIsDialogOpen,
     goToRoute,
     currentStep,
+    open,
+    close,
   };
 };

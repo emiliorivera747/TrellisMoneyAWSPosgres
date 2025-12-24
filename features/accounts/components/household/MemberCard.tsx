@@ -1,6 +1,5 @@
 import { Member, MemberCardProp } from "@/features/accounts/types/household";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCardSkeleton";
 
 /**
  * A functional component that renders a list of household members as clickable cards.
@@ -37,9 +36,13 @@ const MemberCards = ({ members, clickFn }: MemberCardProp) => {
           >
             <Avatar>
               <AvatarImage src={url ? url : ""} />
-              <AvatarFallback className="bg-primary-800 text-white">
+                <AvatarFallback
+                className={`${
+                  index % 2 === 0 ? "bg-primary-800" : "bg-secondary-800"
+                } text-white`}
+                >
                 {name ? name[0].toUpperCase() : "D"}
-              </AvatarFallback>
+                </AvatarFallback>
             </Avatar>
             <div key={`${user_id}-${index}`}>{name}</div>
           </div>

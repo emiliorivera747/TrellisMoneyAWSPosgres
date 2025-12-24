@@ -23,8 +23,38 @@ import { householdService } from "../../services/householdServices";
 // Headers
 import PrimaryModalHeader from "@/features/accounts/components/headers/PrimaryModalHeader";
 
+/**
+ * A React functional component that renders a form for adding a new household member.
+ * This component utilizes the `useForm` hook with Zod schema validation to manage form state
+ * and validation. Upon successful submission, it triggers the creation of a household member
+ * and starts a connection using the provided `start` function from the `useConnectionContext` hook.
+ *
+ * @component
+ *
+ * @returns {JSX.Element} The rendered AddMemberForm component.
+ *
+ * @remarks
+ * - The form fields are dynamically generated using the `FormFieldGenerator` component.
+ * - The `PrimaryModalHeader` component is used to display the form title.
+ * - The `PrimarySubmitButton` is used to submit the form.
+ * - The `BackToRouteButton` allows navigation back to the "owner" route.
+ *
+ * @example
+ * ```tsx
+ * <AddMemberForm />
+ * ```
+ *
+ * @dependencies
+ * - `useConnectionContext`: A custom hook to manage connection-related logic.
+ * - `useForm`: A hook from `react-hook-form` for form state management.
+ * - `zodResolver`: A resolver for integrating Zod schema validation with `react-hook-form`.
+ * - `householdService.createHouseholdMember`: A service function to create a new household member.
+ *
+ * @internal
+ * This component is part of the modal steps in the "Add Member" feature.
+ */
 const AddMemberForm = () => {
-  const { goToRoute, start } = useConnectionContext();
+  const { start} = useConnectionContext();
 
   const buttonRef = useRef(null);
 
@@ -34,7 +64,9 @@ const AddMemberForm = () => {
 
   const onSubmit = async (data: AddMemberFormSchema) => {
     const res = await householdService.createHouseholdMember(data);
-    if (res.ok) start(res.data.member.member_id);
+    if (res.status === "success"){
+      start(res.data.member.member_id);
+    } 
   };
 
   return (
