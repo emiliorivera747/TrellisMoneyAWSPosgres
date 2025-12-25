@@ -46,7 +46,9 @@ export const ConnectionProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  
   const { start, error } = usePlaidConnectionFlowfrom();
+  
   const {
     isDialogOpen,
     steps,

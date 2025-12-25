@@ -29,7 +29,7 @@ const MemberCards = ({ members }: MemberCardProp) => {
 
   if (!members) return null;
 
-  const handleSelectingMember = (id: string | null) => {
+  const handleSelectingMember = (id: string | null | undefined) => {
     if (id) start(id);
     close();
   };
@@ -43,7 +43,7 @@ const MemberCards = ({ members }: MemberCardProp) => {
             <div
               key={`${user_id}-${index}`}
               className="flex flex-row gap-4 items-center border rounded-[12px] px-4 py-[1rem] hover:bg-tertiary-200 font-light cursor-pointer"
-              onClick={() => handleSelectingMember(id)}
+              onClick={() => handleSelectingMember(member_id)}
             >
               <Avatar>
                 <AvatarImage src={url ? url : ""} />

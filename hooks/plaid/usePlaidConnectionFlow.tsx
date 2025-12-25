@@ -25,8 +25,9 @@ import plaidService from "@/features/plaid-link/services/plaidServices";
  * }
  */
 const usePlaidConnectionFlow = () => {
+  
   const [linkToken, setLinkToken] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [memberId, setMemberId] = useState<string | null>(null);
 
   const { open, ready, error } = usePlaidLink({
     token: linkToken ?? null,
@@ -34,11 +35,11 @@ const usePlaidConnectionFlow = () => {
       publicToken: string,
       metadata: PlaidLinkOnSuccessMetadata
     ) => {
-      if (userId) {
+      if (memberId) {
         await plaidService.exchangeToken({
           public_token: publicToken,
           metadata,
-          user_id: userId
+          member_id: memberId,
         });
       } else {
         console.error("User ID is null. Cannot exchange token.");
@@ -46,11 +47,11 @@ const usePlaidConnectionFlow = () => {
     },
   });
 
-  const start = async (userId: string) => {
+  const start = async (memberId: string) => {
     setLinkToken(null);
-    const res = await plaidService.createLinkToken(userId);
+    const res = await plaidService.createLinkToken(memberId);
     setLinkToken(res.data.link_token);
-    setUserId(userId);
+    setMemberId(memberId);
   };
 
   useEffect(() => {

@@ -22,10 +22,10 @@ const getIdentity = async () => {
 /**
  * Plaid service to create link token
  */
-const createLinkToken = async (user_id: string) => {
+const createLinkToken = async (member_id: string) => {
   const res = await fetch(`${API_URL}/create-link-token`, {
     method: "POST",
-    body: JSON.stringify({ user_id }),
+    body: JSON.stringify({ member_id}),
     headers: { "Content-Type": "application/json" },
   });
   if (!res.ok) throw new Error("Failed to create link token");
@@ -37,7 +37,7 @@ const createLinkToken = async (user_id: string) => {
  */
 const exchangeToken = async ({
   public_token,
-  user_id,
+  member_id,
   metadata,
 }: ExchangeTokenProps) => {
   const response = await fetch(`${API_URL}/exchange-token`, {
@@ -45,7 +45,7 @@ const exchangeToken = async ({
     body: JSON.stringify({
       public_token,
       metadata,
-      user_id,
+      member_id,
     }),
     headers: {
       "Content-Type": "application/json",
