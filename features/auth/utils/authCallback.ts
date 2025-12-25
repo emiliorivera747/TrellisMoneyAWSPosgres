@@ -87,7 +87,7 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
     // 2. Create admin member and connect both sides in one call
     const adminMember = await tx.householdMember.create({
       data: {
-        name: fullName ?? "Unknown",
+        name: user_metadata.full_name?.trim() || "Unknown",
         email: email ?? undefined,
         role: "ADMIN",
         user: { connect: { user_id: id } },
