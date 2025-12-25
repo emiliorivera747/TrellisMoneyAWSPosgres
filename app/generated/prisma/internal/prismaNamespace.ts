@@ -2185,10 +2185,10 @@ export const HouseholdMemberScalarFieldEnum = {
   role: 'role',
   dob: 'dob',
   email: 'email',
-  invited_email: 'invited_email',
-  invite_status: 'invite_status',
   household_id: 'household_id',
-  user_id: 'user_id'
+  user_id: 'user_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type HouseholdMemberScalarFieldEnum = (typeof HouseholdMemberScalarFieldEnum)[keyof typeof HouseholdMemberScalarFieldEnum]

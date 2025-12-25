@@ -116,7 +116,7 @@ model User {
   subscriptions  Subscription[]
 
 
-  memberships    HouseholdMember[] @relation("UserMemberships")
+  memberships    HouseholdMember[] 
 
   //----- Timestamp -----//
   created_at     DateTime           @default(now()) @db.Timestamptz(3)

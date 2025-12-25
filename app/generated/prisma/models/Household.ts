@@ -398,12 +398,10 @@ export type HouseholdUncheckedCreateNestedManyWithoutCreated_byInput = {
   connect?: Prisma.HouseholdWhereUniqueInput | Prisma.HouseholdWhereUniqueInput[]
 }
 
-export type HouseholdUpdateOneWithoutMembersNestedInput = {
+export type HouseholdUpdateOneRequiredWithoutMembersNestedInput = {
   create?: Prisma.XOR<Prisma.HouseholdCreateWithoutMembersInput, Prisma.HouseholdUncheckedCreateWithoutMembersInput>
   connectOrCreate?: Prisma.HouseholdCreateOrConnectWithoutMembersInput
   upsert?: Prisma.HouseholdUpsertWithoutMembersInput
-  disconnect?: Prisma.HouseholdWhereInput | boolean
-  delete?: Prisma.HouseholdWhereInput | boolean
   connect?: Prisma.HouseholdWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.HouseholdUpdateToOneWithWhereWithoutMembersInput, Prisma.HouseholdUpdateWithoutMembersInput>, Prisma.HouseholdUncheckedUpdateWithoutMembersInput>
 }
