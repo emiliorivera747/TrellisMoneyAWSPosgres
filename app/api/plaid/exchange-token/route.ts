@@ -108,7 +108,6 @@ export async function POST(req: NextRequest) {
           item_id,
           accountError
         );
-
         console.error(accountError, { item_id, member_id });
       }
 
