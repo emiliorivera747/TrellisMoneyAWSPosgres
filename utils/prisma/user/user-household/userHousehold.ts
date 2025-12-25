@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 
 interface HouseholdAccessCheck {
-  member_id: string;
+  household_id: string;
   user_id: string;
 }
 
@@ -17,27 +17,18 @@ interface HouseholdAccessCheck {
  * Assumes a user typically belongs to one household (uses first match).
  * If users can belong to multiple households, consider adding role-based checks.
  */
-export const canUserEditMembersHousehold = async ({
+export const authorizeHouseholdAction = async ({
   user_id,
-  member_id,
-}: HouseholdAccessCheck): Promise<{
-  allowed: boolean;
-  household_id?: string;
-}> => {
-  
-  const userMembership = await prisma.householdMember.findFirst({
+  household_id,
+}: HouseholdAccessCheck): Promise<boolean> => {
+  const membership = await prisma.householdMember.findUnique({
     where: {
-      user_id,
-      role: "ADMIN",
-      household: {
-        members: { some: { member_id } },
+      household_id_user_id: {
+        household_id,
+        user_id,
       },
     },
-    select: { household_id: true },
+    select: { role: true },
   });
-
-  return {
-    allowed: !!userMembership,
-    household_id: userMembership?.household_id ?? undefined,
-  };
+  return membership?.role === "ADMIN";
 };

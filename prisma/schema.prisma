@@ -128,20 +128,20 @@ model User {
 
 model Item {
   item_id                 String           @id
-  institution_id          String
+  institution_id          String?
   institution_name        String?
   webhook                 String?
   auth_method             String?
   request_id              String
-  update_type             String
-  consent_expiration_time String
-  available_products      String[]
-  billed_products         String[]
-  products                String[]
-  error                   String?
-  consented_products      String[]
-  consented_data_scopes   String[]
-  consented_use_cases     String[]
+  update_type             String?
+  consent_expiration_time String?
+  available_products      String[]         @default([])
+  billed_products         String[]         @default([])
+  products                String[]         @default([])
+  error                   String?          
+  consented_products      String[]         @default([])
+  consented_data_scopes   String[]         @default([])
+  consented_use_cases     String[]         @default([])
   access_token            String
 
   accounts                Account[]
@@ -331,7 +331,7 @@ model Household {
   accounts             Account[]
 
   // ----- Relations -----
-  created_by           HouseholdMember?   @relation("HouseholdCreator", fields: [created_by_member_id], references: [member_id])
+  created_by           HouseholdMember?  @relation("HouseholdCreator", fields: [created_by_member_id], references: [member_id])
   created_by_member_id String?
 
   // ----- Timestamp -----
@@ -353,7 +353,7 @@ model HouseholdMember {
   invite_status      String         @default("pending")
 
   // ----- Relations -----
-  household          Household?     @relation(fields: [household_id], references: [household_id])
+  household          Household?    @relation(fields: [household_id], references: [household_id])
   household_id       String?
 
   created_households Household[]   @relation("HouseholdCreator")

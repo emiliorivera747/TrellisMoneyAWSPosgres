@@ -1,13 +1,12 @@
 import prisma from "@/lib/prisma";
-import { ItemGetResponse } from "plaid";
-import { AxiosResponse } from "axios";
 
 interface AddItemProps {
   user_id: string;
   member_id: string;
-  item: AxiosResponse<ItemGetResponse, any>;
+  item_id: string;
   access_token: string;
   household_id: string;
+  request_id: string;
 }
 
 /**
@@ -22,24 +21,13 @@ export const addItem = async ({
   user_id,
   member_id,
   household_id,
-  item,
+  item_id,
   access_token,
+  request_id,
 }: AddItemProps) => {
-
   const res = await prisma.item.create({
     data: {
-      item_id: item.data.item.item_id,
-      institution_id: item.data.item.institution_id || "",
-      webhook: item.data.item.webhook || "",
-      available_products: item.data.item.available_products,
-      billed_products: item.data.item.billed_products,
-      products: item.data.item.products,
-      consented_products: item.data.item.consented_products,
-      consent_expiration_time: item.data.item.consent_expiration_time || "",
-      update_type: item.data.item.update_type,
-      created_at: item.data.item.created_at,
-      consented_use_cases: item.data.item.consented_use_cases,
-      consented_data_scopes: item.data.item.consented_data_scopes,
+      item_id: item_id,
       user: {
         connect: { user_id },
       },
@@ -49,8 +37,8 @@ export const addItem = async ({
       household: {
         connect: { household_id },
       },
+      request_id,
       access_token,
-      request_id: item.data.request_id,
     },
   });
 
