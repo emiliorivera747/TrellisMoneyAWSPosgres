@@ -44,10 +44,13 @@ export async function POST(req: NextRequest) {
 
     try {
       // ----- Get household from the member_id -----
-      const household_id = await getHouseholdIdByMembership(member_id);
+      const household_id = await getHouseholdIdByMembership(member_id, user_id);
       if (!household_id) {
-        logError("Household ID is missing");
-        return FailResponse("Household ID is missing", 400);
+        logError("Invalid member");
+        return FailResponse(
+          "You can only link institutions to your own profile",
+          403
+        );
       }
 
       // ----- Is the user allowed to make changes to household? -----
@@ -75,26 +78,45 @@ export async function POST(req: NextRequest) {
       const response = await client.itemPublicTokenExchange({ public_token });
       const { access_token, item_id, request_id } = response.data;
 
-      // ------ Add item to the database ------
-      await addItem({
-        member_id,
-        user_id,
-        household_id,
-        item_id,
-        access_token,
-        request_id,
-      });
+      try {
+        // ------ Add item to the database ------
+        await addItem({
+          member_id,
+          user_id,
+          household_id,
+          item_id,
+          access_token,
+          request_id,
+        });
+      } catch (error) {
+        console.error("Failed to save Plaid Item", error);
+        return ErrorResponse("Failed to link institution", 500);
+      }
 
-      // ----- Match accounts to the item -----
-      await addAccounts({
-        user_id,
-        item_id,
-        accounts: metadata.accounts,
-        household_id,
-        member_id,
-      });
+      // ----- Add accounts -----
+      try {
+        await addAccounts({
+          user_id,
+          item_id,
+          accounts: metadata.accounts,
+          household_id,
+          member_id,
+        });
+      } catch (accountError) {
+        console.warn(
+          "Initial account sync failed for item_id:",
+          item_id,
+          accountError
+        );
 
-      return SuccessResponse({ item_id }, "Item was successfully added!");
+        console.error(accountError, { item_id, member_id });
+      }
+
+      // Success — access_token is safely stored
+      return SuccessResponse(
+        { item_id },
+        "Institution linked successfully. Account details will update soon."
+      );
     } catch (error) {
       console.error(error);
       return ErrorResponse(error, 500);

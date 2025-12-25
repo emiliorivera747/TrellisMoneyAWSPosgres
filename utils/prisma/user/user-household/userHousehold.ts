@@ -21,7 +21,7 @@ export const authorizeHouseholdAction = async ({
   user_id,
   household_id,
 }: HouseholdAccessCheck): Promise<boolean> => {
-  const membership = await prisma.householdMember.findUnique({
+  const member = await prisma.householdMember.findUnique({
     where: {
       household_id_user_id: {
         household_id,
@@ -30,5 +30,5 @@ export const authorizeHouseholdAction = async ({
     },
     select: { role: true },
   });
-  return membership?.role === "ADMIN";
+  return !!member && ["ADMIN", "MEMBER"].includes(member.role);
 };

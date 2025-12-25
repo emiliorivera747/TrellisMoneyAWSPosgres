@@ -15,6 +15,7 @@ datasource db {
 
 
 // ###################################################### ACCOUNT ##########################################
+
 model Account {
   account_id               String            @id
   name                     String?
@@ -122,8 +123,6 @@ model User {
   updated_at     DateTime           @default(now()) @updatedAt @db.Timestamptz(3)
 }
 
-
-
 // ###################################################### ITEM ##########################################
 
 model Item {
@@ -138,7 +137,7 @@ model Item {
   available_products      String[]         @default([])
   billed_products         String[]         @default([])
   products                String[]         @default([])
-  error                   String?          
+  error                   String?
   consented_products      String[]         @default([])
   consented_data_scopes   String[]         @default([])
   consented_use_cases     String[]         @default([])
@@ -283,6 +282,7 @@ model Product {
 
 
 // ###################################################### PROFILE ##########################################
+
 model Profile {
   id      Int      @id @default(autoincrement())
   bio     String?
@@ -314,6 +314,7 @@ model Owner {
 
 
 // ###################################################### HOUSEHOLD ##########################################
+
 enum HouseholdRole {
     ADMIN
     MEMBER
@@ -349,15 +350,13 @@ model HouseholdMember {
   dob                DateTime?
   email              String?
 
-  invited_email      String?
-  invite_status      String         @default("pending")
-
   // ----- Relations -----
-  household          Household?    @relation(fields: [household_id], references: [household_id])
-  household_id       String?
+  household          Household     @relation(fields: [household_id], references: [household_id])
+  household_id       String
 
   created_households Household[]   @relation("HouseholdCreator")
-  user               User?         @relation("UserMemberships", fields: [user_id], references: [user_id])
+  
+  user               User?         @relation(fields: [user_id], references: [user_id])
   user_id            String?
 
   // ----- Financials ----
@@ -366,8 +365,11 @@ model HouseholdMember {
   accounts           Account[]
   items              Item[]
 
+  // ----- Timestamps -----
+  created_at         DateTime       @default(now())
+  updated_at         DateTime       @updatedAt
+
   @@unique([household_id, user_id])
-  @@unique([household_id, invited_email])
   @@index([household_id])
   @@index([user_id])
 }

@@ -21,6 +21,7 @@ export const addAccounts = async ({
   accounts,
   household_id,
   member_id,
+  
 }: AddAccountsParams) => {
 
   const accountAdded = [];
