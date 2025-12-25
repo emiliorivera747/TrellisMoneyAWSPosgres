@@ -1,4 +1,5 @@
 import { Decimal } from "decimal.js";
+import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 
 import {
   AccountBalance,
@@ -274,4 +275,10 @@ export interface LinkProps {
 
 export interface GroupedAccounts {
   [key: string]: Account[];
+}
+
+export interface ExchangeTokenRequestBody {
+  public_token: string;
+  metadata: PlaidLinkOnSuccessMetadata;
+  member_id: string;
 }

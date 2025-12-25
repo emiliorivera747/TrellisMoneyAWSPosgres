@@ -12,15 +12,12 @@ import {
 import { addItem } from "@/utils/prisma/item/addItem";
 import { addAccounts } from "@/utils/prisma/accounts/addAccounts";
 import { logError } from "@/utils/api-helpers/errors/logError";
-import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 import { authorizeHouseholdAction } from "@/utils/prisma/user/user-household/userHousehold";
 import { getHouseholdIdByMembership } from "@/utils/prisma/household-member/members";
 
-interface ExchangeTokenRequestBody {
-  public_token: string;
-  metadata: PlaidLinkOnSuccessMetadata;
-  member_id: string;
-}
+// Types
+import { ExchangeTokenRequestBody } from "@/types/plaid";
+
 /**
  * Handles the POST request to exchange a public token for an access token
  * and store the item in the database.
@@ -30,25 +27,28 @@ interface ExchangeTokenRequestBody {
  */
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
+    const user_id = user.id;
+
     const { member_id, metadata, public_token }: ExchangeTokenRequestBody =
       await request.json();
 
     if (
       !member_id ||
-      !metadata ||
       !public_token ||
-      !metadata.institution ||
-      !Array.isArray(metadata.accounts) ||
-      metadata.accounts.length === 0
-    )
+      !metadata?.institution ||
+      !metadata?.accounts?.length
+    ) {
+      logError("Key fields are missing");
       return FailResponse("Key fields are missing", 400);
-
-    const user_id = user.id;
+    }
 
     try {
       // ----- Get household from the member_id -----
       const household_id = await getHouseholdIdByMembership(member_id);
-      if (!household_id) return FailResponse("Household ID is missing", 400);
+      if (!household_id) {
+        logError("Household ID is missing");
+        return FailResponse("Household ID is missing", 400);
+      }
 
       // ----- Is the user allowed to make changes to household? -----
       const allowed = await authorizeHouseholdAction({
@@ -63,27 +63,29 @@ export async function POST(req: NextRequest) {
         institution_id: metadata?.institution?.institution_id,
       });
 
-      if (itemDB)
+      if (itemDB) {
+        logError("This institution is already linked for this member");
         return FailResponse(
           "This institution is already linked for this member",
           400
         );
+      }
 
       // ----- Exchange the public token for an access token -----
       const response = await client.itemPublicTokenExchange({ public_token });
       const { access_token, item_id, request_id } = response.data;
 
-      // ------ Add the new item to the database ------
+      // ------ Add item to the database ------
       await addItem({
         member_id,
         user_id,
         household_id,
         item_id,
         access_token,
-        request_id
+        request_id,
       });
 
-      // ----- Match the accounts to the item -----
+      // ----- Match accounts to the item -----
       await addAccounts({
         user_id,
         item_id,

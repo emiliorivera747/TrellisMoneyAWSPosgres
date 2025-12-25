@@ -27,16 +27,10 @@ export const addItem = async ({
 }: AddItemProps) => {
   const res = await prisma.item.create({
     data: {
-      item_id: item_id,
-      user: {
-        connect: { user_id },
-      },
-      member: {
-        connect: { member_id },
-      },
-      household: {
-        connect: { household_id },
-      },
+      item_id,
+      user: { connect: { user_id } },
+      member: { connect: { member_id } },
+      household: { connect: { household_id } },
       request_id,
       access_token,
     },
