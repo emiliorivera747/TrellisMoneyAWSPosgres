@@ -9,18 +9,23 @@ import useGroupAccounts from "@/features/accounts/hooks/useGroupAccounts";
 import { UseAccountsResponse } from "@/types/hooks";
 
 import { useRemoveItem } from "../react-query/items/useRemoveItem";
+import { noAccountsError } from "@/utils/api-helpers/errors/accountErrors";
 
 /**
  * Custom hook to handle the accounts page state
  */
 export const useAccounts = (): UseAccountsResponse => {
-  const { accountsResponse, isLoadingAccounts, isErrorAccounts } =
-    useFetchAccounts();
+  const {
+    accountsResponse,
+    isLoadingAccounts,
+    isErrorAccounts,
+    accountsError,
+  } = useFetchAccounts();
 
   const { mutateItem, itemIsPending, itemHasError } = useRemoveItem();
 
-  const accounts = accountsResponse?.data?.accounts || null;
-  const { groups } = useGroupAccounts({ accounts: accounts || [] });
+  // const accounts = accountsResponse?.data?.accounts || null;
+  // const { groups } = useGroupAccounts({ accounts: accounts || [] });
   const [filter, setFilter] = useState<string>("net-worth");
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(
@@ -43,7 +48,7 @@ export const useAccounts = (): UseAccountsResponse => {
     filter,
     startDate,
     endDate,
-    groups,
+    // groups,
     itemIsPending,
     itemHasError,
     mutateItem,
@@ -54,5 +59,6 @@ export const useAccounts = (): UseAccountsResponse => {
     accountsResponse,
     isLoadingAccounts,
     isErrorAccounts,
+    accountsError
   };
 };

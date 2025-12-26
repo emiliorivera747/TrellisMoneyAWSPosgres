@@ -8,11 +8,13 @@ import { Account } from "@/app/generated/prisma/client";
  */
 export const useFetchAccounts: () => {
   accountsResponse: ApiResponse<{ accounts: Account[] }> | undefined;
+  accountsError: Error | null;
   isLoadingAccounts: boolean;
   isErrorAccounts: boolean;
 } = () => {
   const {
     data: accountsResponse,
+    error: accountsError,
     isLoading: isLoadingAccounts,
     isError: isErrorAccounts,
   } = useQuery({
@@ -23,5 +25,5 @@ export const useFetchAccounts: () => {
     retry: 1,
   });
 
-  return { accountsResponse, isLoadingAccounts, isErrorAccounts };
+  return { accountsResponse, accountsError, isLoadingAccounts, isErrorAccounts };
 };
