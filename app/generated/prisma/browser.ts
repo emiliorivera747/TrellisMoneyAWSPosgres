@@ -83,11 +83,6 @@ export type Product = Prisma.ProductModel
  */
 export type Profile = Prisma.ProfileModel
 /**
- * Model Owner
- * 
- */
-export type Owner = Prisma.OwnerModel
-/**
  * Model Household
  * 
  */
@@ -117,3 +112,8 @@ export type Security = Prisma.SecurityModel
  * 
  */
 export type SecurityHistory = Prisma.SecurityHistoryModel
+/**
+ * Model Owner
+ * 
+ */
+export type Owner = Prisma.OwnerModel

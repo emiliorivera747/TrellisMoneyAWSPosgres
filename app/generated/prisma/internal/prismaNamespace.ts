@@ -397,13 +397,13 @@ export const ModelName = {
   Price: 'Price',
   Product: 'Product',
   Profile: 'Profile',
-  Owner: 'Owner',
   Household: 'Household',
   HouseholdMember: 'HouseholdMember',
   Holding: 'Holding',
   HoldingHistory: 'HoldingHistory',
   Security: 'Security',
-  SecurityHistory: 'SecurityHistory'
+  SecurityHistory: 'SecurityHistory',
+  Owner: 'Owner'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account" | "accountHistory" | "balance" | "user" | "item" | "transactionStatus" | "webhookStatus" | "optionContract" | "fixedIncome" | "subscription" | "price" | "product" | "profile" | "owner" | "household" | "householdMember" | "holding" | "holdingHistory" | "security" | "securityHistory"
+    modelProps: "account" | "accountHistory" | "balance" | "user" | "item" | "transactionStatus" | "webhookStatus" | "optionContract" | "fixedIncome" | "subscription" | "price" | "product" | "profile" | "household" | "householdMember" | "holding" | "holdingHistory" | "security" | "securityHistory" | "owner"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1385,80 +1385,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Owner: {
-      payload: Prisma.$OwnerPayload<ExtArgs>
-      fields: Prisma.OwnerFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.OwnerFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.OwnerFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
-        }
-        findFirst: {
-          args: Prisma.OwnerFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.OwnerFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
-        }
-        findMany: {
-          args: Prisma.OwnerFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>[]
-        }
-        create: {
-          args: Prisma.OwnerCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
-        }
-        createMany: {
-          args: Prisma.OwnerCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.OwnerCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>[]
-        }
-        delete: {
-          args: Prisma.OwnerDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
-        }
-        update: {
-          args: Prisma.OwnerUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
-        }
-        deleteMany: {
-          args: Prisma.OwnerDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.OwnerUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.OwnerUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>[]
-        }
-        upsert: {
-          args: Prisma.OwnerUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
-        }
-        aggregate: {
-          args: Prisma.OwnerAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateOwner>
-        }
-        groupBy: {
-          args: Prisma.OwnerGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OwnerGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.OwnerCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OwnerCountAggregateOutputType> | number
-        }
-      }
-    }
     Household: {
       payload: Prisma.$HouseholdPayload<ExtArgs>
       fields: Prisma.HouseholdFieldRefs
@@ -1903,6 +1829,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Owner: {
+      payload: Prisma.$OwnerPayload<ExtArgs>
+      fields: Prisma.OwnerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OwnerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OwnerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
+        }
+        findFirst: {
+          args: Prisma.OwnerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OwnerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
+        }
+        findMany: {
+          args: Prisma.OwnerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+        }
+        create: {
+          args: Prisma.OwnerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
+        }
+        createMany: {
+          args: Prisma.OwnerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OwnerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+        }
+        delete: {
+          args: Prisma.OwnerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
+        }
+        update: {
+          args: Prisma.OwnerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
+        }
+        deleteMany: {
+          args: Prisma.OwnerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OwnerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OwnerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+        }
+        upsert: {
+          args: Prisma.OwnerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OwnerPayload>
+        }
+        aggregate: {
+          args: Prisma.OwnerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOwner>
+        }
+        groupBy: {
+          args: Prisma.OwnerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OwnerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OwnerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OwnerCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2144,34 +2144,9 @@ export const ProfileScalarFieldEnum = {
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
 
 
-export const OwnerScalarFieldEnum = {
-  owner_id: 'owner_id',
-  name: 'name',
-  phone_number: 'phone_number',
-  phone_type: 'phone_type',
-  phone_primary: 'phone_primary',
-  email: 'email',
-  email_type: 'email_type',
-  email_primary: 'email_primary',
-  street: 'street',
-  region: 'region',
-  address: 'address',
-  city: 'city',
-  state: 'state',
-  postal_code: 'postal_code',
-  country: 'country',
-  address_primary: 'address_primary',
-  accountId: 'accountId',
-  timestamp: 'timestamp'
-} as const
-
-export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof OwnerScalarFieldEnum]
-
-
 export const HouseholdScalarFieldEnum = {
   household_id: 'household_id',
   name: 'name',
-  created_by_member_id: 'created_by_member_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -2186,6 +2161,7 @@ export const HouseholdMemberScalarFieldEnum = {
   dob: 'dob',
   email: 'email',
   household_id: 'household_id',
+  created_household_id: 'created_household_id',
   user_id: 'user_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -2210,6 +2186,7 @@ export const HoldingScalarFieldEnum = {
   security_id: 'security_id',
   user_id: 'user_id',
   member_id: 'member_id',
+  household_id: 'household_id',
   timestamp: 'timestamp'
 } as const
 
@@ -2233,6 +2210,7 @@ export const HoldingHistoryScalarFieldEnum = {
   security_id: 'security_id',
   user_id: 'user_id',
   member_id: 'member_id',
+  household_id: 'household_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -2263,6 +2241,7 @@ export const SecurityScalarFieldEnum = {
   option_contract_id: 'option_contract_id',
   user_id: 'user_id',
   member_id: 'member_id',
+  household_id: 'household_id',
   timestamp: 'timestamp'
 } as const
 
@@ -2295,6 +2274,30 @@ export const SecurityHistoryScalarFieldEnum = {
 } as const
 
 export type SecurityHistoryScalarFieldEnum = (typeof SecurityHistoryScalarFieldEnum)[keyof typeof SecurityHistoryScalarFieldEnum]
+
+
+export const OwnerScalarFieldEnum = {
+  owner_id: 'owner_id',
+  name: 'name',
+  phone_number: 'phone_number',
+  phone_type: 'phone_type',
+  phone_primary: 'phone_primary',
+  email: 'email',
+  email_type: 'email_type',
+  email_primary: 'email_primary',
+  street: 'street',
+  region: 'region',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  postal_code: 'postal_code',
+  country: 'country',
+  address_primary: 'address_primary',
+  accountId: 'accountId',
+  timestamp: 'timestamp'
+} as const
+
+export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof OwnerScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2581,13 +2584,13 @@ export type GlobalOmitConfig = {
   price?: Prisma.PriceOmit
   product?: Prisma.ProductOmit
   profile?: Prisma.ProfileOmit
-  owner?: Prisma.OwnerOmit
   household?: Prisma.HouseholdOmit
   householdMember?: Prisma.HouseholdMemberOmit
   holding?: Prisma.HoldingOmit
   holdingHistory?: Prisma.HoldingHistoryOmit
   security?: Prisma.SecurityOmit
   securityHistory?: Prisma.SecurityHistoryOmit
+  owner?: Prisma.OwnerOmit
 }
 
 /* Types for Logging */

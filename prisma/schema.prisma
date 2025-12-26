@@ -95,15 +95,15 @@ model Balance {
 // ###################################################### USER ##########################################
 
 model User {
-  user_id        String             @id @default(uuid())
+  user_id        String            @id @default(uuid())
 
   //----- Other -----//
-  email          String             @unique
+  email          String            @unique
   name           String?
-  email_verified Boolean?           @default(false)
-  phone_verified Boolean?           @default(false)
+  email_verified Boolean?          @default(false)
+  phone_verified Boolean?          @default(false)
   phone          String?
-  customer_id    String?            @unique
+  customer_id    String?           @unique
   profile        Profile?
 
   //----- Financial -----//
@@ -115,11 +115,11 @@ model User {
   //----- Stripe -----//
   subscriptions  Subscription[]
 
-  membership    HouseholdMember
+  membership     HouseholdMember?
 
   //----- Timestamp -----//
-  created_at     DateTime           @default(now()) @db.Timestamptz(3)
-  updated_at     DateTime           @default(now()) @updatedAt @db.Timestamptz(3)
+  created_at     DateTime          @default(now()) @db.Timestamptz(3)
+  updated_at     DateTime          @default(now()) @updatedAt @db.Timestamptz(3)
 }
 
 // ###################################################### ITEM ##########################################
@@ -235,7 +235,7 @@ model Subscription {
   user                 User               @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
   price                Price?             @relation(fields: [price_id], references: [price_id])
 
-  // ----- Timestamp
+  // ----- Timestamp -----
   created_at           Int?
   updated_at           Int?
   canceled_at          Int?
@@ -288,29 +288,6 @@ model Profile {
   user_id String   @unique
 }
 
-model Owner {
-  owner_id        String     @id
-  name            String?
-  phone_number    String?
-  phone_type      String?
-  phone_primary   Boolean?
-  email           String
-  email_type      String?
-  email_primary   Boolean?
-  street          String?
-  region          String?
-  address         String?
-  city            String?
-  state           String?
-  postal_code     String?
-  country         String?
-  address_primary Boolean?
-  accountId       String
-  timestamp       DateTime?  @default(now())
-}
-
-
-
 // ###################################################### HOUSEHOLD ##########################################
 
 enum HouseholdRole {
@@ -318,55 +295,56 @@ enum HouseholdRole {
     MEMBER
     GUEST
 }
+
 model Household {
 
-  household_id         String             @id @default(uuid())
+  household_id String             @id @default(uuid())
+  name         String             @default("Our Household")
+  members      HouseholdMember[]
 
-  name                 String             @default("Our Household")
-
-  members              HouseholdMember[]
-  items                Item[]
-  accounts             Account[]
+  // ----- Financials ----
+  securities   Security[]
+  holdings     Holding[]
+  accounts     Account[]
+  items        Item[]
 
   // ----- Relations -----
-  created_by           HouseholdMember?  @relation("HouseholdCreator", fields: [created_by_member_id], references: [member_id])
-  created_by_member_id String?
+  created_by   HouseholdMember?  @relation("HouseholdCreator")
 
   // ----- Timestamp -----
-  created_at           DateTime           @default(now())
-  updated_at           DateTime           @updatedAt
-
-  @@index([created_by_member_id])
+  created_at   DateTime           @default(now())
+  updated_at   DateTime           @updatedAt
 }
 
 model HouseholdMember {
-  member_id          String         @id @default(uuid())
+  member_id            String         @id @default(uuid())
 
-  name               String
-  role               HouseholdRole  @default(MEMBER)
-  dob                DateTime?
-  email              String?
+  name                 String
+  role                 HouseholdRole  @default(MEMBER)
+  dob                  DateTime?
+  email                String?
 
   // ----- Relations -----
-  household          Household     @relation(fields: [household_id], references: [household_id])
-  household_id       String        @unique
+  household            Household?    @relation(fields: [household_id], references: [household_id])
+  household_id         String?        @unique
 
-  created_households Household   @relation("HouseholdCreator")
-  
-  user               User?         @relation(fields: [user_id], references: [user_id])
-  user_id            String?
+  created_household    Household?    @relation("HouseholdCreator", fields: [created_household_id], references: [household_id])
+  created_household_id String?        @unique
+
+  user                 User?         @relation(fields: [user_id], references: [user_id])
+  user_id              String?        @unique
 
   // ----- Financials ----
-  securities         Security[]
-  holdings           Holding[]
-  accounts           Account[]
-  items              Item[]
+  securities           Security[]
+  holdings             Holding[]
+  accounts             Account[]
+  items                Item[]
 
   // ----- Timestamps -----
-  created_at         DateTime       @default(now())
-  updated_at         DateTime       @updatedAt
+  created_at           DateTime       @default(now())
+  updated_at           DateTime       @updatedAt
 
-  @@unique([household_id, email]) // Ensure no duplicate emails within the same household
+  @@unique([household_id, email])
   @@unique([household_id, user_id])
   @@index([household_id])
   @@index([user_id])
@@ -393,12 +371,15 @@ model Holding {
   account_id                 String
   security_id                String
   user_id                    String
-  member_id                  String
+  member_id                  String            @unique
+  household_id               String?
+
 
   account                    Account          @relation(fields: [account_id], references: [account_id], onDelete: Cascade)
   security                   Security         @relation(fields: [security_id], references: [security_id], onDelete: Cascade)
   user                       User             @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
   member                     HouseholdMember  @relation(fields: [member_id], references: [member_id], onDelete: Cascade)
+  household                  Household?       @relation(fields: [household_id], references: [household_id], onDelete: Cascade)
 
   // ----- Timestamps -----
   timestamp                  DateTime          @default(now()) @db.Timestamptz(3)
@@ -424,6 +405,7 @@ model HoldingHistory {
   security_id                String
   user_id                    String
   member_id                  String
+  household_id               String
 
   holding                    Holding   @relation(fields: [security_id, user_id, account_id], references: [security_id, user_id, account_id], onDelete: Cascade) // Composite foreign key
 
@@ -431,8 +413,6 @@ model HoldingHistory {
   created_at                 DateTime   @default(now()) @db.Timestamptz(3)
   updated_at                 DateTime   @default(now()) @db.Timestamptz(3)
 }
-
-
 
 // ###################################################### SECURITY ##########################################
 
@@ -467,6 +447,9 @@ model Security {
   member                   HouseholdMember   @relation(fields: [member_id], references: [member_id])
   member_id                String
 
+  household                Household         @relation(fields: [household_id], references: [household_id])
+  household_id             String
+
   fixed_income             FixedIncome?
   history                  SecurityHistory[]
 
@@ -498,4 +481,25 @@ model SecurityHistory {
   timestamp                DateTime   @default(now()) @db.Timestamptz(3)
   security                 Security  @relation(fields: [security_id], references: [security_id])
   security_id              String
+}
+
+model Owner {
+  owner_id        String     @id
+  name            String?
+  phone_number    String?
+  phone_type      String?
+  phone_primary   Boolean?
+  email           String
+  email_type      String?
+  email_primary   Boolean?
+  street          String?
+  region          String?
+  address         String?
+  city            String?
+  state           String?
+  postal_code     String?
+  country         String?
+  address_primary Boolean?
+  accountId       String
+  timestamp       DateTime?  @default(now())
 }

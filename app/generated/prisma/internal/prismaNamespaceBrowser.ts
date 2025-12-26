@@ -64,13 +64,13 @@ export const ModelName = {
   Price: 'Price',
   Product: 'Product',
   Profile: 'Profile',
-  Owner: 'Owner',
   Household: 'Household',
   HouseholdMember: 'HouseholdMember',
   Holding: 'Holding',
   HoldingHistory: 'HoldingHistory',
   Security: 'Security',
-  SecurityHistory: 'SecurityHistory'
+  SecurityHistory: 'SecurityHistory',
+  Owner: 'Owner'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -291,34 +291,9 @@ export const ProfileScalarFieldEnum = {
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
 
 
-export const OwnerScalarFieldEnum = {
-  owner_id: 'owner_id',
-  name: 'name',
-  phone_number: 'phone_number',
-  phone_type: 'phone_type',
-  phone_primary: 'phone_primary',
-  email: 'email',
-  email_type: 'email_type',
-  email_primary: 'email_primary',
-  street: 'street',
-  region: 'region',
-  address: 'address',
-  city: 'city',
-  state: 'state',
-  postal_code: 'postal_code',
-  country: 'country',
-  address_primary: 'address_primary',
-  accountId: 'accountId',
-  timestamp: 'timestamp'
-} as const
-
-export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof OwnerScalarFieldEnum]
-
-
 export const HouseholdScalarFieldEnum = {
   household_id: 'household_id',
   name: 'name',
-  created_by_member_id: 'created_by_member_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -333,6 +308,7 @@ export const HouseholdMemberScalarFieldEnum = {
   dob: 'dob',
   email: 'email',
   household_id: 'household_id',
+  created_household_id: 'created_household_id',
   user_id: 'user_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -357,6 +333,7 @@ export const HoldingScalarFieldEnum = {
   security_id: 'security_id',
   user_id: 'user_id',
   member_id: 'member_id',
+  household_id: 'household_id',
   timestamp: 'timestamp'
 } as const
 
@@ -380,6 +357,7 @@ export const HoldingHistoryScalarFieldEnum = {
   security_id: 'security_id',
   user_id: 'user_id',
   member_id: 'member_id',
+  household_id: 'household_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -410,6 +388,7 @@ export const SecurityScalarFieldEnum = {
   option_contract_id: 'option_contract_id',
   user_id: 'user_id',
   member_id: 'member_id',
+  household_id: 'household_id',
   timestamp: 'timestamp'
 } as const
 
@@ -442,6 +421,30 @@ export const SecurityHistoryScalarFieldEnum = {
 } as const
 
 export type SecurityHistoryScalarFieldEnum = (typeof SecurityHistoryScalarFieldEnum)[keyof typeof SecurityHistoryScalarFieldEnum]
+
+
+export const OwnerScalarFieldEnum = {
+  owner_id: 'owner_id',
+  name: 'name',
+  phone_number: 'phone_number',
+  phone_type: 'phone_type',
+  phone_primary: 'phone_primary',
+  email: 'email',
+  email_type: 'email_type',
+  email_primary: 'email_primary',
+  street: 'street',
+  region: 'region',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  postal_code: 'postal_code',
+  country: 'country',
+  address_primary: 'address_primary',
+  accountId: 'accountId',
+  timestamp: 'timestamp'
+} as const
+
+export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof OwnerScalarFieldEnum]
 
 
 export const SortOrder = {
