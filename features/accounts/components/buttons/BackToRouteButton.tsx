@@ -19,9 +19,9 @@ const BackToRouteButton = ({ route }: { route: string }) => {
   const { goToRoute } = useConnectionContext();
 
   return (
-    <div className="mb-4 my-1">
+    <div className=" mb-2 my-1">
       <button
-        className="text-xs text-tertiary-700 flex items-center justify-center font-light gap-1 hover:underline  border-tertiary-200 "
+        className="text-xs text-tertiary-700 flex items-center justify-center font-light gap-1 hover:underline  border-tertiary-400 border rounded-[12px] py-2 px-4"
         onClick={() => goToRoute(route)}
       >
         <svg

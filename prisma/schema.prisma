@@ -115,8 +115,7 @@ model User {
   //----- Stripe -----//
   subscriptions  Subscription[]
 
-
-  memberships    HouseholdMember[] 
+  membership    HouseholdMember
 
   //----- Timestamp -----//
   created_at     DateTime           @default(now()) @db.Timestamptz(3)
@@ -319,7 +318,6 @@ enum HouseholdRole {
     MEMBER
     GUEST
 }
-
 model Household {
 
   household_id         String             @id @default(uuid())
@@ -351,9 +349,9 @@ model HouseholdMember {
 
   // ----- Relations -----
   household          Household     @relation(fields: [household_id], references: [household_id])
-  household_id       String
+  household_id       String        @unique
 
-  created_households Household[]   @relation("HouseholdCreator")
+  created_households Household   @relation("HouseholdCreator")
   
   user               User?         @relation(fields: [user_id], references: [user_id])
   user_id            String?

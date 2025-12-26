@@ -1,7 +1,6 @@
 import MemberCards from "@/features/accounts/components/household/MemberCard";
 import AddMemberCard from "@/features/accounts/components/household/AddMemberCard";
 import { useFetchHouseholdMembers } from "@/features/accounts/hooks/useFetchHousehold";
-import { useConnectionContext } from "@/features/accounts/context/ConnectionContext";
 import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCardSkeleton";
 
 /**

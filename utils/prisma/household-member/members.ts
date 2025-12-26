@@ -46,16 +46,18 @@ export const getHouseholdIdByMembership = async (
   member_id: string,
   user_id: string
 ): Promise<string | null> => {
+  
+  console.log("member_id", member_id, "user_id", user_id);
+
   const membership = await prisma.householdMember.findUnique({
     where: { member_id },
-    select: {
-      household_id: true,
-      user_id: true,
-    },
+    include: {
+      household: true,
+      user: true,
+    }
   });
 
   if (!membership || membership.user_id !== user_id) return null;
 
   return membership.household_id;
 };
-
