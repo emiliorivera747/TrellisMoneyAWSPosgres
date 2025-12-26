@@ -2147,6 +2147,7 @@ export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeo
 export const HouseholdScalarFieldEnum = {
   household_id: 'household_id',
   name: 'name',
+  created_by_id: 'created_by_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -2161,7 +2162,6 @@ export const HouseholdMemberScalarFieldEnum = {
   dob: 'dob',
   email: 'email',
   household_id: 'household_id',
-  created_household_id: 'created_household_id',
   user_id: 'user_id',
   created_at: 'created_at',
   updated_at: 'updated_at'

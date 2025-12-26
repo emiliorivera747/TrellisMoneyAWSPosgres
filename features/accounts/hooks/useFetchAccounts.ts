@@ -1,12 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { accountServices } from "@/features/accounts/services/accountServices";
+import { ApiResponse } from "@/types/api-responses/accounts";
+import { Account } from "@/app/generated/prisma/client";
 
 /**
  * Custom hook to fetch accounts data using react-query.
- *
- * @returns {Object} - An object containing accounts data, loading state, and error state.
  */
-export const useFetchAccounts = () => {
+export const useFetchAccounts: () => {
+  accountsResponse: ApiResponse<{ accounts: Account[] }> | undefined;
+  isLoadingAccounts: boolean;
+  isErrorAccounts: boolean;
+} = () => {
   const {
     data: accountsResponse,
     isLoading: isLoadingAccounts,

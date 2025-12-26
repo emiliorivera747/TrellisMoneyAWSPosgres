@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
 
       if (!items || items.length === 0) {
         console.error("No items found for the given household ID", items);
-        return ErrorResponse("No items found for the given household ID", 404);
+        return FailResponse("No items found for the given household ID", 404);
       }
 
       /**

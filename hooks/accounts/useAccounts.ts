@@ -20,7 +20,7 @@ export const useAccounts = (): UseAccountsResponse => {
   const { mutateItem, itemIsPending, itemHasError } = useRemoveItem();
 
   const accounts = accountsResponse?.data?.accounts || null;
-  const { groups } = useGroupAccounts({ accounts });
+  const { groups } = useGroupAccounts({ accounts: accounts || [] });
   const [filter, setFilter] = useState<string>("net-worth");
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(

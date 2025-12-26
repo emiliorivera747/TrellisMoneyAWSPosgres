@@ -25,7 +25,7 @@ const AccountsList = () => {
     };
 
   if (isLoadingAccounts) return <div>Loading...</div>;
-  if (isErrorAccounts) return <div>Error</div>;
+  if (isErrorAccounts) return <div>{}</div>;
   if (!groups || Object.keys(groups).length === 0) return <NoAccountsFound />;
 
   console.log(groups)

@@ -64,24 +64,15 @@ export async function upsertUser(currentUser: SupabaseUserSyncData) {
  * @throws Will throw an error if the database transaction fails.
  */
 export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
+  
   const { id, email, user_metadata } = currentUser;
   const fullName = user_metadata.full_name?.trim();
 
-  /**
-   * Create household name
-   */
-  const householdName = fullName
-    ? fullName.endsWith("s")
-      ? `${fullName}' Household`
-      : `${fullName}'s Household`
-    : email?.split("@")[0] + "'s Household";
-
   await prisma.$transaction(async (tx) => {
+    
     // 1. Create household (no created_by yet)
     const household = await tx.household.create({
-      data: {
-        name: householdName,
-      },
+      data: { name: createHouseholdName(fullName, email) },
     });
 
     // 2. Create admin member and connect both sides in one call
@@ -94,13 +85,10 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
         household: { connect: { household_id: household.household_id } },
       },
     });
-
-    // 3. Now link the creator (unfortunately still needed)
+    // 3. Set the created_by field in the household
     await tx.household.update({
       where: { household_id: household.household_id },
-      data: {
-        created_by_member_id: adminMember.member_id,
-      },
+      data: { created_by: { connect: { member_id: adminMember.member_id } } },
     });
 
     return household;
@@ -169,4 +157,17 @@ export const updateOrCreateUser = async (currentUser: SupabaseUserSyncData) => {
     },
   });
   return userDB;
+};
+
+const createHouseholdName = (
+  fullName: string | undefined,
+  email: string | undefined
+) => {
+  const householdName = fullName
+    ? fullName.endsWith("s")
+      ? `${fullName}' Household`
+      : `${fullName}'s Household`
+    : email?.split("@")[0] + "'s Household";
+
+  return householdName;
 };
