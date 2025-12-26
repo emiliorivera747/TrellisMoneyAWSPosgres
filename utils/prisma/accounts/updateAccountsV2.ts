@@ -7,17 +7,29 @@ import { AccountSubtype, AccountType } from "plaid";
 import { AccountBaseWithItemId } from "@/types/plaid";
 
 // Helpers
-import { getUser } from "@/services/supabase/getUser";
 import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
+
+import { Account } from "@/app/generated/prisma/client";
 
 /**
  * Update the accounts in the database
  * Optimized to use batch operations via $transaction to reduce database round-trips
  */
-export async function updateAccounts(accountBase: AccountBaseWithItemId[][]) {
+export async function updateAccounts(
+  accountBase: AccountBaseWithItemId[][],
+  householdAccounts: Account[]
+) {
   const accounts = accountBase.flat();
-  const user = await getUser();
-  const user_id = user?.id || "";
+  const map = new Map();
+  const n = householdAccounts.length;
+
+  for (let i = 0; i < n; i++) {
+    let account = householdAccounts[i];
+    map.set(account.account_id, {
+      user_id: account.user_id,
+      member_id: account.member_id,
+    });
+  }
 
   // Prepare all balance and account operations
   const balanceOperations = [];
@@ -56,24 +68,21 @@ export async function updateAccounts(accountBase: AccountBaseWithItemId[][]) {
         },
       })
     );
-
+    const account_id = account.account_id;
     // Queue account upsert operation
     accountOperations.push(
       prisma.account.upsert({
-        where: { account_id: account.account_id },
+        where: { account_id },
         update: {
           ...accountData,
           updated_at: new Date(),
         },
         create: {
-          account_id: getValueOrDefault(account?.account_id, ""),
+          member: { connect: { member_id: map.get(account_id).member_id } },
+          account_id: getValueOrDefault(account_id, ""),
           ...accountData,
-          user: {
-            connect: { user_id },
-          },
-          item: {
-            connect: { item_id: account?.item_id ?? "" },
-          },
+          user: { connect: { user_id: map.get(account_id).user_id } },
+          item: { connect: { item_id: account?.item_id ?? "" } },
           balance: {
             connect: { balance_id: account?.account_id ?? "" },
           },

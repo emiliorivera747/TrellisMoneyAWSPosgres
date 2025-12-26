@@ -1,14 +1,18 @@
 import { NextRequest } from "next/server";
+
+import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
+
+import { withAuth } from "@/lib/protected";
+
+// Utils
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 import {
   SuccessResponse,
   ErrorResponse,
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
 import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
-import { withAuth } from "@/lib/protected";
-import { getHouseholdItemsByUserId } from "@/utils/prisma/item/getItem";
-import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
+import { getHouseholdsByUserId } from "@/utils/prisma/household/household";
 
 /**
  * Handles the GET request for retrieving accounts associated with a household.
@@ -35,7 +39,9 @@ import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerError
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      const items = await getHouseholdItemsByUserId(user.id);
+      const households = await getHouseholdsByUserId(user.id);
+      const items = households.flatMap((households) => households.items);
+
       if (!items || items.length === 0) {
         console.error("No items found for the given household ID", items);
         return ErrorResponse("No items found for the given household ID", 404);
@@ -46,11 +52,14 @@ export async function GET(req: NextRequest) {
        */
       const accounts = await getAccountsFromPlaid(items);
 
+      const householdAccounts = households.flatMap(
+        (households) => households.accounts
+      );
+
       /**
        *  Store the accounts in the database
        */
-      const updatedAccounts = await updateAccounts(accounts);
-
+      const updatedAccounts = await updateAccounts(accounts, householdAccounts);
       if (!updateAccounts) return FailResponse("Failed to update account", 500);
 
       return SuccessResponse(

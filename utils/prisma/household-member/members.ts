@@ -46,7 +46,6 @@ export const getHouseholdIdByMembership = async (
   member_id: string,
   user_id: string
 ): Promise<string | null> => {
-  
   const membership = await prisma.householdMember.findUnique({
     where: { member_id },
     select: {
@@ -59,3 +58,4 @@ export const getHouseholdIdByMembership = async (
 
   return membership.household_id;
 };
+
