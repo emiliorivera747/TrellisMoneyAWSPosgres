@@ -8,15 +8,23 @@ import { Account } from "@/app/generated/prisma/client";
  * @returns {Promise<ApiResponse<{accounts: Account[]}>>} A promise that resolves to the API response containing account data.
  * @throws {Error} If the fetch operation fails or the response is not OK.
  */
-const fetchAccounts = async (): Promise<ApiResponse<{ accounts: Account[] }>> => {
+const fetchAccounts = async (): Promise<
+  ApiResponse<{ accounts: Account[] }>
+> => {
+  
   const res = await fetch(`${API_URL}/accounts`);
 
-  if (!res.ok) {
-    const errorMessage = `Failed to fetch accounts: ${res.status} ${res.statusText}`;
-    throw new Error(errorMessage);
-  }
+  if (!res.ok)
+    throw new Error(
+      `Failed to fetch accounts: ${res.status} ${res.statusText}`
+    );
 
   const data: ApiResponse<{ accounts: Account[] }> = await res.json();
+
+  if (!data || !data.data || !Array.isArray(data.data.accounts)) {
+    throw new Error("Invalid data structure received from the API");
+  }
+
   return data;
 };
 

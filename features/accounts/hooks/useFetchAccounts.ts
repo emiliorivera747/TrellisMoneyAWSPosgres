@@ -25,5 +25,10 @@ export const useFetchAccounts: () => {
     retry: 1,
   });
 
-  return { accountsResponse, accountsError, isLoadingAccounts, isErrorAccounts };
+  return {
+    accountsResponse,
+    accountsError,
+    isLoadingAccounts,
+    isErrorAccounts,
+  };
 };

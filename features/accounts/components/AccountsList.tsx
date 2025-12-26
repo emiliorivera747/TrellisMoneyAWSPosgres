@@ -34,7 +34,6 @@ const AccountsList = () => {
     groups: Record<string, Account[]>;
   };
 
-  console.log(accountsResponse);
   if (isLoadingAccounts) return <div>Loading...</div>;
   if (isErrorAccounts) return <div>{accountsError?.message}</div>;
   if (!groups || Object.keys(groups).length === 0) return <NoAccountsFound />;

@@ -9,25 +9,28 @@ import { Account, GroupedAccounts } from "@/types/plaid";
  * @param accounts - The accounts to group
  * @returns
  */
-const useGroupAccounts = ({ accounts }: { accounts: Account[] }) => {
-  const [groups, setGroups] = useState<GroupedAccounts>({});
+const useGroupAccounts = ({
+  accounts,
+}: {
+  accounts: Account[] | undefined;
+}) => {
+  const [groups, setGroups] = useState<GroupedAccounts | undefined>({});
 
   useEffect(() => {
     const groupedAccounts = accounts?.reduce(
       (acc: { [key: string]: Account[] }, account) => {
-        
         const { type } = account;
 
         if (!type) return acc;
 
         if (!acc[type]) acc[type] = [];
-        
+
         acc[type].push(account);
         return acc;
       },
       {}
     );
-    setGroups(groupedAccounts);
+    setGroups(groupedAccounts ? groupedAccounts : {});
   }, [accounts]);
 
   return { groups };

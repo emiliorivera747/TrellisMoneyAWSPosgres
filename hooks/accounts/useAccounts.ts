@@ -24,8 +24,10 @@ export const useAccounts = (): UseAccountsResponse => {
 
   const { mutateItem, itemIsPending, itemHasError } = useRemoveItem();
 
-  // const accounts = accountsResponse?.data?.accounts || null;
-  // const { groups } = useGroupAccounts({ accounts: accounts || [] });
+  const accounts = accountsResponse?.data?.accounts;
+  const { groups } = useGroupAccounts({ accounts });
+  
+  
   const [filter, setFilter] = useState<string>("net-worth");
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(
@@ -48,7 +50,7 @@ export const useAccounts = (): UseAccountsResponse => {
     filter,
     startDate,
     endDate,
-    // groups,
+    groups,
     itemIsPending,
     itemHasError,
     mutateItem,
@@ -59,6 +61,6 @@ export const useAccounts = (): UseAccountsResponse => {
     accountsResponse,
     isLoadingAccounts,
     isErrorAccounts,
-    accountsError
+    accountsError,
   };
 };
