@@ -18,20 +18,16 @@ import prisma from "@/lib/prisma";
  * console.log(items);
  * ```
  */
-export const getHouseholdsByUserId = async (user_id: string) => {
-  const households = await prisma.household.findMany({
-    where: {
-      members: {
-        some: {
-          user_id,
-        },
-      },
-    },
-    include: {
-      items: true,
-      members: true,
-      accounts: true,
+export const getMemberByUserId = async (user_id: string) => {
+  const member = await prisma.householdMember.findUnique({
+    where: { user_id },
+    include: { 
+      household: {
+        include: { accounts: true }
+      }, 
+      items: true 
     },
   });
-  return households;
+  if (!member) return null;
+  return member;
 };

@@ -12,7 +12,7 @@ import {
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
-import { getHouseholdsByUserId } from "@/utils/prisma/household/household";
+import { getMemberByUserId } from "@/utils/prisma/household/household";
 
 /**
  * Handles the GET request for retrieving accounts associated with a household.
@@ -39,9 +39,10 @@ import { getHouseholdsByUserId } from "@/utils/prisma/household/household";
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      
-      const households = await getHouseholdsByUserId(user.id);
-      const items = households.flatMap((households) => households.items);
+      const member = await getMemberByUserId(user.id);
+      if (!member) return FailResponse("Failed to get member from user", 404);
+
+      const { household, items } = member;
 
       if (!items || items.length === 0) {
         console.error("No items found for the given household ID", items);
@@ -53,15 +54,15 @@ export async function GET(req: NextRequest) {
        */
       const accounts = await getAccountsFromPlaid(items);
 
-      const householdAccounts = households.flatMap(
-        (households) => households.accounts
-      );
-
       /**
        *  Store the accounts in the database
        */
-      const updatedAccounts = await updateAccounts(accounts, householdAccounts);
-      if (!updateAccounts) return FailResponse("Failed to update account", 500);
+      const updatedAccounts = await updateAccounts(
+        accounts,
+        household?.accounts || []
+      );
+
+      if (!updatedAccounts) return FailResponse("Failed to update account", 500);
 
       return SuccessResponse(
         { accounts: updatedAccounts },
