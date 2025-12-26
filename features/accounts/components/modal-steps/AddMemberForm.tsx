@@ -54,7 +54,7 @@ import PrimaryModalHeader from "@/features/accounts/components/headers/PrimaryMo
  * This component is part of the modal steps in the "Add Member" feature.
  */
 const AddMemberForm = () => {
-  const { start} = useConnectionContext();
+  const { start } = useConnectionContext();
 
   const buttonRef = useRef(null);
 
@@ -64,24 +64,26 @@ const AddMemberForm = () => {
 
   const onSubmit = async (data: AddMemberFormSchema) => {
     const res = await householdService.createHouseholdMember(data);
-    if (res.status === "success"){
+    if (res.status === "success") {
       start(res.data.member.member_id);
-    } 
+    }
   };
 
   return (
-    <div className="h-full flex flex-col px-6 ">
+    <div className="h-full flex flex-col px-6">
       <BackToRouteButton route={"owner"} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit || (() => {}))} className="">
           <PrimaryModalHeader title="Provide member details below" />
-          <FormFieldGenerator
-            fields={memberFields.map((field) => ({
-              ...field,
-              control: form.control as any,
-            }))}
-          />
-          <PrimarySubmitButton ref={buttonRef} className="mt-8" />
+          <div className="flex flex-col gap-[0.4rem] pt-1">
+            <FormFieldGenerator
+              fields={memberFields.map((field) => ({
+                ...field,
+                control: form.control as any,
+              }))}
+            />
+          </div>
+          <PrimarySubmitButton ref={buttonRef} className="mt-4" />
         </form>
       </Form>
     </div>

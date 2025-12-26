@@ -6,7 +6,7 @@
  * @returns {JSX.Element} A styled `<h1>` element representing the modal header.
  */
 const PrimaryModalHeader = ({ title }: { title: string }) => {
-  return <h1 className="text-tertiary-700 font-light text-[1rem]">{title}</h1>;
+  return <h1 className="text-tertiary-700 font-light text-[1rem] pb-2">{title}</h1>;
 };
 
 export default PrimaryModalHeader;

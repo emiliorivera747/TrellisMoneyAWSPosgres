@@ -368,6 +368,7 @@ model HouseholdMember {
   created_at         DateTime       @default(now())
   updated_at         DateTime       @updatedAt
 
+  @@unique([household_id, email]) // Ensure no duplicate emails within the same household
   @@unique([household_id, user_id])
   @@index([household_id])
   @@index([user_id])

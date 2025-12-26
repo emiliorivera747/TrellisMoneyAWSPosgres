@@ -45,15 +45,15 @@ const TextInput = <TFieldValues extends FieldValues>({
   w = "w-full",
 }: TextInputV2Props<TFieldValues>) => {
   return (
-    <div className="relative my-3">
+    <div className="relative my-[0.2rem]">
       <input
         type={type}
         id={id}
         {...control.register(name)}
         className={`border-box rounded-[12px] align-text-bottom ${w} ${px} ${pt} ${h} border leading-[1.23536] ${
           control._formState.errors[name]
-            ? "border-red-500 bg-[#fff5f5] text-red-500"
-            : "border-tertiary-600 bg-zinc-50"
+            ? "border-red-500 bg-[#FBFBFB] text-red-500"
+            : "border-tertiary-600 bg-[#FBFBFB]"
         } rounded-[12px] focus:outline-none focus:ring-2 ${
           control._formState.errors[name]
             ? "focus:ring-red-500"

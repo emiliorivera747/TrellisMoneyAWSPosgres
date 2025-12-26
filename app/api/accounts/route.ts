@@ -39,6 +39,7 @@ import { getHouseholdsByUserId } from "@/utils/prisma/household/household";
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
+      
       const households = await getHouseholdsByUserId(user.id);
       const items = households.flatMap((households) => households.items);
 

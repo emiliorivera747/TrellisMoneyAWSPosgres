@@ -21,7 +21,7 @@ export async function updateAccounts(
 ) {
   const accounts = accountBase.flat();
   const map = new Map();
-  const n = householdAccounts.length;
+  const n = householdAccounts?.length;
 
   for (let i = 0; i < n; i++) {
     let account = householdAccounts[i];

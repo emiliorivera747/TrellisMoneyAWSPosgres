@@ -25,7 +25,7 @@ const AddConnection = () => {
 
   return (
     <>
-      <div className=" w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem] my-4">
+      <div className="w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem] my-4">
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger>
             <AddAccount />

@@ -244,6 +244,7 @@ export type HouseholdMemberOrderByWithRelationInput = {
 
 export type HouseholdMemberWhereUniqueInput = Prisma.AtLeast<{
   member_id?: string
+  household_id_email?: Prisma.HouseholdMemberHousehold_idEmailCompoundUniqueInput
   household_id_user_id?: Prisma.HouseholdMemberHousehold_idUser_idCompoundUniqueInput
   AND?: Prisma.HouseholdMemberWhereInput | Prisma.HouseholdMemberWhereInput[]
   OR?: Prisma.HouseholdMemberWhereInput[]
@@ -263,7 +264,7 @@ export type HouseholdMemberWhereUniqueInput = Prisma.AtLeast<{
   holdings?: Prisma.HoldingListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   items?: Prisma.ItemListRelationFilter
-}, "member_id" | "household_id_user_id">
+}, "member_id" | "household_id_email" | "household_id_user_id">
 
 export type HouseholdMemberOrderByWithAggregationInput = {
   member_id?: Prisma.SortOrder
@@ -415,6 +416,11 @@ export type HouseholdMemberOrderByRelationAggregateInput = {
 export type HouseholdMemberNullableScalarRelationFilter = {
   is?: Prisma.HouseholdMemberWhereInput | null
   isNot?: Prisma.HouseholdMemberWhereInput | null
+}
+
+export type HouseholdMemberHousehold_idEmailCompoundUniqueInput = {
+  household_id: string
+  email: string
 }
 
 export type HouseholdMemberHousehold_idUser_idCompoundUniqueInput = {
