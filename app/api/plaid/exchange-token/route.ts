@@ -12,7 +12,10 @@ import {
 import { addItem } from "@/utils/prisma/item/addItem";
 import { addAccounts } from "@/utils/prisma/accounts/addAccounts";
 import { logError } from "@/utils/api-helpers/errors/logError";
-import prisma from "@/lib/prisma";
+import {
+  getHouseholdIdByMembership,
+  hasHouseholdPermission,
+} from "@/utils/prisma/household-member/members";
 
 // Types
 import { ExchangeTokenRequestBody } from "@/types/plaid";
@@ -42,27 +45,18 @@ export async function POST(req: NextRequest) {
     }
 
     try {
+      
       // ----- Get household from the member_id -----
-      const householdMember = await prisma.householdMember.findUnique({
-        where: { member_id },
-        select: { household_id: true },
-      });
-      if (!householdMember?.household_id)
+      const household_id = await getHouseholdIdByMembership(member_id);
+      if (!household_id)
         return FailResponse("Could not match member to household", 400);
-      const household_id = householdMember.household_id;
 
-      // Get the memeber who is in the household and has the user id
-      const actingMember = await prisma.householdMember.findUnique({
-        where: {
-          household_id_user_id: {
-            household_id,
-            user_id,
-          },
-        },
-        select: { role: true },
-      });
-      if (!actingMember || !["ADMIN", "MEMBER"].includes(actingMember.role))
+      // ----- Is member authorized -----
+      const allowed = await hasHouseholdPermission({ user_id, household_id });
+      if (!allowed) {
+        logError("Permission denied");
         return FailResponse("Permission denied", 403);
+      }
 
       // ----- Get Item From the database -----
       const itemDB = await getItemWithMemberAndInstitutionId({
