@@ -54,6 +54,42 @@ export const getItemWithMemberAndInstitutionId = async ({
       institution_id,
     },
   });
-
   return item;
+};
+
+/**
+ * Retrieves a list of items associated with a specific household ID.
+ *
+ * @param household_id - The unique identifier of the household.
+ * @returns A promise that resolves to an array of items associated with the given household ID.
+ */
+export const getItemByHouseholdId = async (household_id: string) => {
+  const items = await prisma.item.findMany({
+    where: { household_id },
+  });
+  return items;
+};
+
+/**
+ * Retrieves all items associated with households that belong to a specific user.
+ *
+ * @param user_id - The unique identifier of the user.
+ * @returns A promise that resolves to an array of items associated with the user's households.
+ */
+export const getHouseholdItemsByUserId = async (user_id: string) => {
+  const households = await prisma.household.findMany({
+    where: {
+      members: {
+        some: {
+          user_id,
+        },
+      },
+    },
+    include: {
+      items: true,
+    },
+  });
+
+  const items = households.flatMap((household) => household.items);
+  return items;
 };

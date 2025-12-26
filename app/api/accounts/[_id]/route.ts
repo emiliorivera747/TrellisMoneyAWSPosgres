@@ -1,14 +1,15 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 import { withAuth } from "@/lib/protected";
+ß
 
 /**
- * 
+ *
  * Makes updates to accounts based on the account id
- * 
- * @param req 
+ *
+ * @param req
  * @param param1 search params
- * @returns 
+ * @returns
  */
 export async function PATCH(
   req: NextRequest,
@@ -48,9 +49,9 @@ export async function PATCH(
         },
         { status: 200 }
       );
-
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
 
       return NextResponse.json(
         {
