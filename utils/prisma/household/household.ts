@@ -21,11 +21,10 @@ import prisma from "@/lib/prisma";
 export const getMemberByUserId = async (user_id: string) => {
   const member = await prisma.householdMember.findUnique({
     where: { user_id },
-    include: { 
+    include: {
       household: {
-        include: { accounts: true }
-      }, 
-      items: true 
+        include: { accounts: true, items: true },
+      },
     },
   });
   if (!member) return null;

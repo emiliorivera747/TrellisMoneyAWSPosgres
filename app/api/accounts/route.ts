@@ -42,12 +42,16 @@ export async function GET(req: NextRequest) {
       const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to get member from user", 404);
 
-      const { household, items } = member;
+      const { household } = member;
+      const items = household?.items;
 
       if (!items || items.length === 0) {
         console.error("No items found for the given household ID", items);
         return FailResponse("No items found for the given household ID", 404);
       }
+
+      console.log("Items", items);
+
 
       /**
        *  Go through each item and fetch the accounts
@@ -62,7 +66,8 @@ export async function GET(req: NextRequest) {
         household?.accounts || []
       );
 
-      if (!updatedAccounts) return FailResponse("Failed to update account", 500);
+      if (!updatedAccounts)
+        return FailResponse("Failed to update account", 500);
 
       return SuccessResponse(
         { accounts: updatedAccounts },

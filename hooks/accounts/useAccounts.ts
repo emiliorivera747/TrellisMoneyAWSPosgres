@@ -25,7 +25,7 @@ export const useAccounts = (): UseAccountsResponse => {
   const { mutateItem, itemIsPending, itemHasError } = useRemoveItem();
 
   const accounts = accountsResponse?.data?.accounts;
-  const { groups } = useGroupAccounts({ accounts });
+  const { groups = {} } = useGroupAccounts({ accounts });
   
   
   const [filter, setFilter] = useState<string>("net-worth");

@@ -327,7 +327,7 @@ model HouseholdMember {
 
   // ----- Relations -----
   household         Household?    @relation(fields: [household_id], references: [household_id])
-  household_id      String?        @unique
+  household_id      String?        
 
   created_household Household?    @relation("HouseholdCreator")
 

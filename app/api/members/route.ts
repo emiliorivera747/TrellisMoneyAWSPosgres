@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
 import { withAuth } from "@/lib/protected";
 import {
   SuccessResponse,
@@ -10,50 +9,28 @@ import {
 import { getUserHouseholdMembership } from "@/utils/prisma/household-member/members";
 import { logError } from "@/utils/api-helpers/errors/logError";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
+import prisma from "@/lib/prisma";
 
 /**
  * GET /api/members
  */
 export async function GET(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
+    const user_id = user.id;
     try {
-      // ----- Retreive the membership -----
-      const membership = await getUserHouseholdMembership(user.id);
-     
-      if (!membership) {
-        logError("Household membership not found");
-        return FailResponse("Household membership not found", 400);
-      }
-
-      // ----- Retrieve the household -----
-      const household = await prisma.household.findUnique({
-        where: {
-          household_id: membership.household_id,
-        },
+      const householdMember = await prisma.householdMember.findUnique({
+        where: { user_id },
         include: {
-          members: true,
+          household: {
+            include: {
+              members: true,
+            },
+          },
         },
       });
-
-      /**
-       * If household exists then return the members of the household
-       * otherwise return the current user.
-       */
-      if (household) {
-        return SuccessResponse({
-          members: household.members,
-        });
-      } else {
-        const userDB = await prisma.user.findUnique({
-          where: {
-            user_id: user.id,
-          },
-        });
-
-        return SuccessResponse({
-          members: [userDB],
-        });
-      }
+      return SuccessResponse({
+        members: householdMember?.household?.members,
+      });
     } catch (error) {
       const errorMessage = getServerErrorMessage(error);
       logError(errorMessage);
@@ -77,17 +54,16 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       // ----- Validate that both name and email are provided -----
       if (!name || !email)
         return FailResponse("Name and email are required", 404);
+
       if (!user_id) return FailResponse("Failled to get user ID", 404);
 
       // ----- Retreive the membership -----
-      const membership = await getUserHouseholdMembership(user_id);
-      if (!membership) {
-        logError("Household membership not found");
-        return FailResponse("Household membership not found", 400);
-      }
-
+      const householdMember = await prisma.householdMember.findUnique({
+        where: { user_id },
+        select: { household_id: true },
+      });
       // ----- Create a new household member with the provided name and email -----
-      const household_id = membership.household_id;
+      const household_id = householdMember?.household_id;
       const newMember = await prisma.householdMember.create({
         data: {
           name,
