@@ -114,29 +114,9 @@ const PrimaryGraphHeader = ({
           payloadForLines={linePayloads}
           tooltipData={tooltipData}
         />
-
         {withInflationTag && linePayloads.length === 1 && (
-          <div className="text-[0.7rem] text-tertiary-1000 gap-1 w-[25%] flex items-start justify-end pt-5 bg-blue-300">
+          <div className="text-[0.7rem] text-tertiary-1000 gap-1 w-[25%] flex items-start justify-end pt-5">
             <InflationTag linePayload={linePayloads[0]} />
-            <div className="flex items-center gap-2  text-[0.7rem] ">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-3"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
-                />
-              </svg>
-              <span className="text-xs text-tertiary-800 font-light">
-                With inflation
-              </span>
-            </div>
           </div>
         )}
       </div>

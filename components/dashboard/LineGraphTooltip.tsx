@@ -3,7 +3,7 @@ import { Tooltip } from "@visx/tooltip";
 import { formatDate } from "@/utils/helper-functions/formatting/formatDate";
 import { getDate } from "@/utils/helper-functions/accessors/accessors";
 import { LineGraphTooltipProps } from "@/types/graphs";
-const defaultMargin = { top: 6};
+const defaultMargin = { top: 0};
 
 /**
  *
@@ -19,9 +19,9 @@ const LineGraphTooltip = ({
 }: LineGraphTooltipProps) => {
   if (!tooltipData) return null;
   return (
-    <div>
+    <div className="">
       <Tooltip
-        top={margin.top + 95}
+        top={margin.top + 140}
         left={tooltipLeft - 10}
         style={{
           ...defaultStyles,

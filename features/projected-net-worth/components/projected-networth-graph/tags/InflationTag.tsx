@@ -1,4 +1,3 @@
-import React from "react";
 import { GetSvgV2 } from "@/utils/helper-functions/svg/GetSvgV2";
 import {
   InflationCategory,

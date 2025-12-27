@@ -61,7 +61,7 @@ const ProjectedNetWorthGraph = () => {
   const dataForLines = createLinePayLoads(selectedFilter, filteredData);
 
   return (
-    <div className="grid-rows-[22rem_6rem] grid border-b border-tertiary-300">
+    <div className="grid-rows-[24rem_6rem] grid border-b border-tertiary-300">
       <ResponsiveLineGraphContainer
         className={"h-[25rem] w-full border-box"}
         ref={containerRef}
