@@ -14,7 +14,7 @@ const ProjectedAssetsContainer = ({
 
       }}
       className={`${
-        assets?.length === 0 ? "h-[25rem]" : "h-screen"
+        assets?.length === 0 ? "h-[20rem]" : "h-screen"
       } max-h-screen sticky rounded-[12px]`}
     >
       {children}
