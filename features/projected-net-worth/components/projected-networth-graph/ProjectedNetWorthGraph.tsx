@@ -1,7 +1,7 @@
 "use client";
 
 //React
-import React, { useRef, useMemo } from "react";
+import { useRef, useMemo } from "react";
 
 //components
 import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphV2";

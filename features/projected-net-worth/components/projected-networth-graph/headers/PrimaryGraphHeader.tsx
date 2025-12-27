@@ -43,15 +43,17 @@ const PrimaryGraphHeader = ({
   return (
     <header className="flex flex-col w-full h-auto">
       <div className="flex flex-row text-[1.4rem] gap-2 w-full justify-between">
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-4">
           <GraphHeaders label="Future Projection" />
-          <SelectYearMenuButton
-            selectedYear={selectedYear}
-            years={years}
-            retirementYear={retirementYear}
-            setSelectedYear={handleYearSelection}
-            editRetirementYear={editRetirementYear}
-          />
+          <div className="flex items-center">
+            <SelectYearMenuButton
+              selectedYear={selectedYear}
+              years={years}
+              retirementYear={retirementYear}
+              setSelectedYear={handleYearSelection}
+              editRetirementYear={editRetirementYear}
+            />
+          </div>
         </div>
 
         <AlertDialog>

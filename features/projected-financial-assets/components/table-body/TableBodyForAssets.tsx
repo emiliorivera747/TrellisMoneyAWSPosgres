@@ -15,7 +15,6 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
  */
 const TableBodyForAssets = () => {
   const { assets, form, mode } = useDashboardContext();
-  console.log("assets", assets);
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
 
   useEffect(() => {

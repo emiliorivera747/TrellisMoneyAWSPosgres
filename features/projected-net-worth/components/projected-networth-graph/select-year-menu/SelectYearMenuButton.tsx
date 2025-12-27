@@ -21,10 +21,9 @@ interface PrimaryYearMenuProps {
   editRetirementYear: (year: number) => void;
 }
 
-
 /**
  * Select Year menu button
- * 
+ *
  */
 const SelectYearMenuButton = ({
   years,
@@ -35,12 +34,12 @@ const SelectYearMenuButton = ({
 }: PrimaryYearMenuProps) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className=" font-normal outline-none flex items-center justify-center gap-2 transition duration-500 ease-in-out border border-transparent border-tertiary-500 rounded-[12px]  px-3  hover:bg-tertiary-100 hover:border-tertiary-1000 text-tertiary-900 text-[1rem]">
+      <DropdownMenuTrigger className="outline-none flex items-center justify-center gap-2 transition duration-500 ease-in-out border  py-2 px-3  hover:bg-tertiary-100 text-tertiary-900 text-[1rem] border-tertiary-200 font-light rounded-[12px]">
         {selectedYear}
         {GetSvgV2({
           path: "m19.5 8.25-7.5 7.5-7.5-7.5",
           strokeWidth: 2,
-          size: "size-4",
+          size: "size-3",
         })}
       </DropdownMenuTrigger>
       <DropdownMenuContent

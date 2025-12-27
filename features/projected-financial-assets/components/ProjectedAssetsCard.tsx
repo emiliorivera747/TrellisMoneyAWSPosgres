@@ -42,7 +42,7 @@ const ProjectedAssetsCard = () => {
         style={{
           border: "1px solid rgb(221, 221, 221)",
         }}
-        className={`grid no-scrollbars rounded-[12px]  ${
+        className={`grid no-scrollbars rounded-[12px] pb-6 ${
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
         } absolute w-full text-[#343a40] h-auto overflow-y-hidden`}
       >

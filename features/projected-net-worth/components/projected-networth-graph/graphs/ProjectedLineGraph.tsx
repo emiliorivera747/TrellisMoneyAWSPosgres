@@ -1,5 +1,3 @@
-import React from "react";
-
 //Visx
 import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
