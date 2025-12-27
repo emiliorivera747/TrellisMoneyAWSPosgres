@@ -64,8 +64,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         return FailResponse("Accounts not found for the household", 404);
       }
 
-      
-
       /**
        * Get the user's accounts
        */
@@ -86,7 +84,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         member.household_id
       );
 
-      console.log(account_holdings_securities[0])
       const projected_net_worth = await generateProjectedNetWorthV3(
         account_holdings_securities[0].accounts,
         start_year,
@@ -96,18 +93,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       );
 
       const projected_assets = await generateProjectedFinancialAssets({
-        start_year: start_year,
-        end_year: end_year,
+        start_year,
+        end_year,
         with_inflation: searchParams.get("with_inflation") === "true",
         annual_inflation_rate: default_inflation_rate,
         accounts: account_holdings_securities[0].accounts,
       });
 
       return SuccessResponse(
-        {
-          projected_net_worth: projected_net_worth,
-          projected_assets: projected_assets,
-        },
+        { projected_net_worth, projected_assets },
         "Accounts, holdings, and securities updated successfully."
       );
     } catch (error) {

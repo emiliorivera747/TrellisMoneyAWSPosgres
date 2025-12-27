@@ -81,6 +81,6 @@ export const ErrorResponse = (
 
   return NextResponse.json(
     { message, status: "error" },
-    { status: statusCode }
+    { status: statusCode || 500 }
   );
 };

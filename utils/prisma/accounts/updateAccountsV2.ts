@@ -8,7 +8,6 @@ import { AccountBaseWithItemId } from "@/types/plaid";
 
 // Helpers
 import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
-
 import { Account } from "@/app/generated/prisma/client";
 
 /**

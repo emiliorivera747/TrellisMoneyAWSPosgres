@@ -9,6 +9,7 @@ import {
   getExistingHoldings,
 } from "@/utils/prisma/investments/holdingService";
 import { Account } from "@/app/generated/prisma/client";
+import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 
 /**
  *
@@ -28,10 +29,10 @@ export const updateHoldingsAndSecurities = async (
 ) => {
   const accountMap = new Map<string, { user_id: string; member_id: string }>();
   const securityMap = new Map<string, { member_id: string }>();
-  const n = accountsDb?.length;
-  const m = holdings?.length;
+  const totalAccounts = accountsDb?.length;
+  const numberOfHoldings = holdings?.length;
 
-  for (let i = 0; i < n; i++) {
+  for (let i = 0; i < totalAccounts; i++) {
     const account = accountsDb[i];
     accountMap.set(account.account_id, {
       user_id: account.user_id,
@@ -39,7 +40,7 @@ export const updateHoldingsAndSecurities = async (
     });
   }
 
-  for (let i = 0; i < m; i++) {
+  for (let i = 0; i < numberOfHoldings; i++) {
     const holding = holdings[i];
     const accountInfo = accountMap.get(holding.account_id);
     if (accountInfo) {
@@ -109,12 +110,6 @@ export const updateHoldingsAndSecurities = async (
     //   await Promise.all(historyPromises);
     // }
   } catch (error) {
-    if (error instanceof Error) {
-      console.log("Transaction error:", error.message);
-    }
-    return NextResponse.json(
-      { error: "Error updating holdings and securities" },
-      { status: 500 }
-    );
+    return ErrorResponse(error);
   }
 };
