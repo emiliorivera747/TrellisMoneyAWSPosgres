@@ -1,5 +1,5 @@
-import {useQuery} from '@tanstack/react-query';
-import {networthService} from '@/features/net-worth/services/networthService';
+import { useQuery } from "@tanstack/react-query";
+import { networthService } from "@/features/net-worth/services/networthService";
 
 /**
  * Custom hook to fetch net worth data.
@@ -8,10 +8,14 @@ import {networthService} from '@/features/net-worth/services/networthService';
  * @returns {object} - Contains net worth data, error, and loading state.
  */
 export const useFetchNetWorth = () => {
-    const {data: netWorthData, error: netWorthError, isLoading: netWorthLoading} = useQuery({
-        queryKey: ['netWorth'],
-        queryFn: networthService.getNetWorth,
-    });
-    
-    return {netWorthData, netWorthError, netWorthLoading};
+  const {
+    data: netWorthData,
+    error: netWorthError,
+    isLoading: netWorthLoading,
+  } = useQuery({
+    queryKey: ["netWorth"],
+    queryFn: networthService.getNetWorth,
+  });
+
+  return { netWorthData, netWorthError, netWorthLoading };
 };
