@@ -1,5 +1,3 @@
-import React from "react";
-
 //UI
 import {
   DropdownMenu,
@@ -34,7 +32,7 @@ const SelectYearMenuButton = ({
 }: PrimaryYearMenuProps) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="outline-none flex items-center justify-center gap-2 transition duration-500 ease-in-out border  py-2 px-3  hover:bg-tertiary-100 text-tertiary-900 text-[1rem] border-tertiary-200 font-light rounded-[12px]">
+      <DropdownMenuTrigger className="outline-none flex items-center justify-center gap-2 transition duration-500 ease-in-out border  px-3  hover:bg-tertiary-100 text-tertiary-900 text-[1rem] border-tertiary-200 font-light rounded-[12px] py-1">
         {selectedYear}
         {GetSvgV2({
           path: "m19.5 8.25-7.5 7.5-7.5-7.5",

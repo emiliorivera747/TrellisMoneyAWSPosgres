@@ -48,6 +48,8 @@ const useFetchProjections = ({
       ),
     enabled: !!selectedYear,
   });
+
+
   return {
     futureProjectionData,
     futureProjectionError,

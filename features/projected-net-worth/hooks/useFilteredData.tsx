@@ -22,7 +22,7 @@ const useFilteredData = (
   const [filteredData, setFilteredData] = useState<{ value: string; lineData: SecurityData[] }[]>([]);
 
   useEffect(() => {
-    if (futureProjectionData === null) return;
+    if (!futureProjectionData) return;
     
     const projectedNetWorthsData = futureProjectionData?.projected_net_worth;
    

@@ -2,8 +2,8 @@ import React from "react";
 import InformationIcon from "@/components/information-icon/InformationIcon";
 const GraphHeaders = ({ label }: { label: string }) => {
   return (
-    <div className="flex items-center justify-center text-[1.4rem] gap-1">
-      <span className="tracking-wider font-light text-tertiary-900 italic ">
+    <div className="flex items-center justify-center text-[1.5rem] gap-1">
+      <span className="tracking-wider font-light text-tertiary-900 ">
         {label}
       </span>
       {/* <InformationIcon
