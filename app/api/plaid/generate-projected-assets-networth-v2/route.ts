@@ -64,6 +64,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         return FailResponse("Accounts not found for the household", 404);
       }
 
+      
+
       /**
        * Get the user's accounts
        */
@@ -71,7 +73,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       await getInvestmentsPlaid(
         items,
         timestamp || "",
-        member.household?.accounts
+        member.household?.accounts,
+        user.id
       );
 
       if (!member?.household_id) {

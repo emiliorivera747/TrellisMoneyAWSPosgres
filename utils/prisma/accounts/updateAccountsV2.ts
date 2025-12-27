@@ -20,7 +20,10 @@ export async function updateAccounts(
   householdAccounts: Account[]
 ) {
   const accounts = accountBase.flat();
-  const map = new Map<string, { user_id: string; member_id: string }>();
+  const map = new Map<
+    string,
+    { user_id: string; member_id: string; item_id: string }
+  >();
   const n = householdAccounts?.length;
 
   for (let i = 0; i < n; i++) {
@@ -28,6 +31,7 @@ export async function updateAccounts(
     map.set(account.account_id, {
       user_id: account.user_id,
       member_id: account.member_id,
+      item_id: account.item_id,
     });
   }
 
@@ -69,6 +73,9 @@ export async function updateAccounts(
       })
     );
     const account_id = account.account_id;
+    const member_id = map.get(account_id)?.member_id;
+    const user_id = map.get(account_id)?.user_id;
+    const item_id = map.get(account_id)?.item_id;
     // Queue account upsert operation
     accountOperations.push(
       prisma.account.upsert({
@@ -78,11 +85,11 @@ export async function updateAccounts(
           updated_at: new Date(),
         },
         create: {
-          member: { connect: { member_id: map.get(account_id).member_id } },
+          member: { connect: { member_id } },
           account_id: getValueOrDefault(account_id, ""),
           ...accountData,
-          user: { connect: { user_id: map.get(account_id).user_id } },
-          item: { connect: { item_id: account?.item_id ?? "" } },
+          user: { connect: { user_id } },
+          item: { connect: { item_id } },
           balance: {
             connect: { balance_id: account?.account_id ?? "" },
           },

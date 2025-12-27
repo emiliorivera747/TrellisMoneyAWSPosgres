@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { Security, Holding } from "plaid";
-import { getUser } from "@/services/supabase/getUser";
 import {
   getExistingSecurities,
   upsertSecurities,
@@ -24,15 +23,16 @@ export const updateHoldingsAndSecurities = async (
   holdings: Holding[],
   securities: Security[],
   timestamp: string,
-  accountsDb: Account[]
+  accountsDb: Account[],
+  user_id: string
 ) => {
-  const accountMap = new Map();
-  const securityMap = new Map();
+  const accountMap = new Map<string, { user_id: string; member_id: string }>();
+  const securityMap = new Map<string, { member_id: string }>();
   const n = accountsDb?.length;
   const m = holdings?.length;
 
   for (let i = 0; i < n; i++) {
-    let account = accountsDb[i];
+    const account = accountsDb[i];
     accountMap.set(account.account_id, {
       user_id: account.user_id,
       member_id: account.member_id,
@@ -40,17 +40,14 @@ export const updateHoldingsAndSecurities = async (
   }
 
   for (let i = 0; i < m; i++) {
-    let holding = holdings[i];
-    securityMap.set(holding.security_id, {
-      member_id: accountMap.get(holding.account_id).member_id,
-    });
+    const holding = holdings[i];
+    const accountInfo = accountMap.get(holding.account_id);
+    if (accountInfo) {
+      securityMap.set(holding.security_id, {
+        member_id: accountInfo.member_id,
+      });
+    }
   }
-
-  /**
-   * User Information
-   */
-  const user = await getUser();
-  const user_id = user?.id || "";
 
   /**
    * Retrieve all existing Securities and Holdings in parallel
@@ -63,15 +60,21 @@ export const updateHoldingsAndSecurities = async (
   /**
    * Upsert securities and holdings, and get their history
    */
-  await upsertSecurities(
+  await upsertSecurities({
     securities,
     user_id,
     timestamp,
     securityMap,
-    accountsDb[0].household_id
-  );
+    household_id: accountsDb[0].household_id,
+  });
 
-  await upsertHoldings(holdings, user_id, timestamp, accountMap);
+  await upsertHoldings({
+    holdings,
+    user_id,
+    timestamp,
+    accountMap,
+    household_id: accountsDb[0].household_id,
+  });
 
   // // Add missing properties to holdingHistory
   // const holdingHistory = rawHoldingHistory.map((history) => ({

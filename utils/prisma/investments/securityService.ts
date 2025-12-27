@@ -1,10 +1,17 @@
 import prisma from "@/lib/prisma";
 import { Security } from "plaid";
-import { SecurityHistory } from "@/types/prisma";
 import { Security as SecurityPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
-import { Decimal } from "decimal.js";
+import { Decimal } from "@prisma/client/runtime/library";
+
+interface UpsertSecuritiesParams {
+  securities: Security[];
+  user_id: string;
+  timestamp: string;
+  securityMap: Map<string, { member_id: string }>;
+  household_id: string;
+}
 
 /**
  * Compares the securities from plaid with the securities in the database
@@ -25,82 +32,82 @@ export const getExistingSecurities = async (securities: Security[]) => {
 /**
  *  Upserts the securities into the database and returns the security history
  */
-export const upsertSecurities = async (
-  securities: Security[],
-  user_id: string,
-  timestamp: string,
-  securityMap: Map<string, { member_id: string }>,
-  household_id: string,
-): Promise<{
-  securityHistory: SecurityHistory[];
-  securityUpserts: Promise<SecurityPrisma>[];
+export const upsertSecurities = async ({
+  securities,
+  user_id,
+  timestamp,
+  securityMap,
+  household_id,
+}: UpsertSecuritiesParams): Promise<{
+  securityUpserts: SecurityPrisma[];
 }> => {
-  const securityHistory: SecurityHistory[] = [];
-
-  const securityUpserts = securities.map((security) =>
-    prisma.security.upsert({
-      where: { security_id: security.security_id },
-      update: {
-        ...getSecurityUpdateFields(security),
-        timestamp: isoToUTC(timestamp),
-      },
-      create: {
-        ...getSecurityCreateFields(security),
-        timestamp: isoToUTC(timestamp),
-        user_id: user_id,
-        member_id: securityMap.get(security.security_id)?.member_id || "",
-        household_id,
-      },
-    })
-  );
   
-  return { securityHistory, securityUpserts };
+  const securityUpserts = await Promise.all(
+    securities.map(
+      async (security) =>
+        await prisma.security.upsert({
+          where: { security_id: security.security_id },
+          update: {
+            ...getSecurityUpdateFields(security),
+            timestamp: isoToUTC(timestamp),
+          },
+          create: {
+            ...getSecurityCreateFields(security),
+            timestamp: isoToUTC(timestamp),
+            user_id: user_id,
+            member_id: securityMap.get(security.security_id)?.member_id || "",
+            household_id,
+          },
+        })
+    )
+  );
+  return { securityUpserts };
 };
 
-// /**
-//  * Adds the security history to the security history array
-//  * if the security does not exist in the database or if the price has changed
-//  *
-//  * @param securityHistory
-//  * @param securitiesMap
-//  * @param security
-//  */
-// const addSecurityHistory = async (
-//   securityHistory: SecurityHistory[],
-//   securitiesMap: Map<
-//     string,
-//     { security_id: string; close_price: number | Decimal | null }
-//   >,
-//   security: Security
-// ) => {
-//   const existing = securitiesMap.get(security.security_id);
-//   const newPrice = getValueOrDefault(security.close_price, 0);
-//   if (
-//     !existing ||
-//     Math.abs(Number(existing?.close_price) - Number(newPrice)) > 0.01
-//   ) {
-//     const historyFields = getSecurityHistoryFields(security);
-//     securityHistory.push(historyFields);
-//   }
-// };
+/**
+ * Adds the security history to the security history array
+ * if the security does not exist in the database or if the price has changed
+ *
+ * @param securityHistory
+ * @param securitiesMap
+ * @param security
+ */
+const addSecurityHistory = async (
+  securityHistory: any[],
+  securitiesMap: Map<
+    string,
+    { security_id: string; close_price: number | Decimal | null }
+  >,
+  security: Security
+) => {
+  const existing = securitiesMap.get(security.security_id);
+  const newPrice = getValueOrDefault(security.close_price, 0);
+  if (
+    !existing ||
+    Math.abs(Number(existing?.close_price) - Number(newPrice)) > 0.01
+  ) {
+    const historyFields = getSecurityHistoryFields(security);
+    securityHistory.push(historyFields);
+  }
+};
 
-// /**
-//  *
-//  * Get the security history create fields
-//  *
-//  * @param security
-//  * @returns
-//  */
-// const getSecurityHistoryFields = (security: Security) => ({
-//   security_id: security.security_id,
-//   name: getValueOrDefault(security?.name, ""),
-//   close_price: getValueOrDefault(security?.close_price, 0),
-//   close_price_as_of: isoToUTC(security?.close_price_as_of),
-//   ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
-//   update_datetime: isoToUTC(
-//     security?.update_datetime || new Date().toISOString()
-//   ),
-// });
+/**
+ *
+ * Get the security history create fields
+ *
+ * @param security
+ * @returns
+ */
+const getSecurityHistoryFields = (security: Security) => ({
+  security_id: security.security_id,
+  name: getValueOrDefault(security?.name, ""),
+  close_price: getValueOrDefault(security?.close_price, 0),
+  close_price_as_of: isoToUTC(security?.close_price_as_of),
+  ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
+  update_datetime: isoToUTC(
+    security?.update_datetime || new Date().toISOString()
+  ),
+});
 
 /**
  *

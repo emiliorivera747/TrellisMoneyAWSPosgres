@@ -16,9 +16,9 @@ import { Account } from "@/app/generated/prisma/client";
 export const getInvestmentsPlaid = async (
   items: ItemPrisma[],
   timestamp: string,
-  accountsDB: Account[]
+  accountsDB: Account[],
+  user_id: string
 ) => {
-  
   /**
    *  Get all of the access tokens from the items
    */
@@ -45,8 +45,9 @@ export const getInvestmentsPlaid = async (
     await updateHoldingsAndSecurities(
       item.holdings,
       item.securities,
-      timestamp, 
-      accountsDB
+      timestamp,
+      accountsDB,
+      user_id
     );
   });
 

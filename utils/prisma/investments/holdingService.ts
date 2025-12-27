@@ -3,8 +3,6 @@ import { Holding } from "plaid";
 import { Holding as HoldingPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
-import { Decimal } from "decimal.js";
-import { HoldingHistory } from "@/types/prisma";
 import { getUser } from "@/services/supabase/getUser";
 
 /**
@@ -17,41 +15,45 @@ import { getUser } from "@/services/supabase/getUser";
  * @param user_id
  * @returns
  */
-export const upsertHoldings = async (
-  holdings: Holding[],
-  user_id: string,
-  timestamp: string,
-  holdingsMap: Map<string, { account_id: string; member_id: string }>
-): Promise<{
-  // holdingHistory: HoldingHistory[];
-  holdingUpserts: Promise<HoldingPrisma>[];
+export const upsertHoldings = async ({
+  holdings,
+  user_id,
+  timestamp,
+  accountMap,
+  household_id,
+}: {
+  holdings: Holding[];
+  user_id: string;
+  timestamp: string;
+  accountMap: Map<string, { user_id: string; member_id: string }>;
+  household_id: string;
+}): Promise<{
+  holdingUpserts: HoldingPrisma[];
 }> => {
-  const holdingHistory: HoldingHistory[] = [];
-
-  const holdingUpserts = holdings.map((holding) =>
-    prisma.holding.upsert({
-      where: {
-        holding_id: {
-          security_id: holding.security_id,
-          account_id: holding.account_id,
-          user_id: user_id,
+  const holdingUpserts = await Promise.all(
+    holdings.map((holding) =>
+      prisma.holding.upsert({
+        where: {
+          holding_id: {
+            security_id: holding.security_id,
+            account_id: holding.account_id,
+            user_id: user_id,
+          },
         },
-      },
-      update: {
-        ...getHoldingUpdateFields(holding),
-      },
-      create: {
-        ...getHoldingCreateFields(holding),
-        user_id,
-        member_id: holdingsMap.get(holding.account_id)?.member_id || "",
-      },
-    })
+        update: {
+          ...getHoldingUpdateFields(holding),
+          member_id: accountMap.get(holding.account_id)?.member_id || "",
+          household_id,
+        },
+        create: {
+          ...getHoldingCreateFields(holding),
+          user_id,
+          member_id: accountMap.get(holding.account_id)?.member_id || "",
+          household_id,
+        },
+      })
+    )
   );
-
-  // holdings.forEach((holding) => {
-  //   addHoldingHistory(holdingHistory, holdingsMap, holding, user_id);
-  // });
-
   return { holdingUpserts };
 };
 
