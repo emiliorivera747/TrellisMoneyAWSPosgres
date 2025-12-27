@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { TableBody } from "@/components/ui/table";
 
-//Components
+// Components
 import AssetGroup from "@/features/projected-financial-assets/components/table-body/AssetGroup";
 
 // Context
@@ -14,11 +14,11 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
  * @returns table body for assets
  */
 const TableBodyForAssets = () => {
-  const {assets, form, mode } = useDashboardContext();
+  const { assets, form, mode } = useDashboardContext();
+  console.log("assets", assets);
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
-  
-  useEffect(() => {
 
+  useEffect(() => {
     // Group assets by type
     const grouped = Object.groupBy(assets, (asset) => asset.type);
 

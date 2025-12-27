@@ -371,7 +371,7 @@ model Holding {
   account_id                 String
   security_id                String
   user_id                    String
-  member_id                  String            @unique
+  member_id                  String           
   household_id               String?
 
 

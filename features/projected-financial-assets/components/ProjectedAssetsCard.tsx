@@ -1,5 +1,5 @@
 // React
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 // Containers
 import ProjectedAssetsContainer from "@/features/projected-financial-assets/components/containers/ProjectedAssetsContainer";

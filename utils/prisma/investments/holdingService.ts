@@ -4,6 +4,7 @@ import { Holding as HoldingPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { getUser } from "@/services/supabase/getUser";
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
 /**
  *
@@ -30,31 +31,37 @@ export const upsertHoldings = async ({
 }): Promise<{
   holdingUpserts: HoldingPrisma[];
 }> => {
-  const holdingUpserts = await Promise.all(
-    holdings.map((holding) =>
-      prisma.holding.upsert({
-        where: {
-          holding_id: {
-            security_id: holding.security_id,
-            account_id: holding.account_id,
-            user_id: user_id,
-          },
-        },
-        update: {
-          ...getHoldingUpdateFields(holding),
-          member_id: accountMap.get(holding.account_id)?.member_id || "",
-          household_id,
-        },
-        create: {
-          ...getHoldingCreateFields(holding),
-          user_id,
-          member_id: accountMap.get(holding.account_id)?.member_id || "",
-          household_id,
-        },
-      })
-    )
-  );
-  return { holdingUpserts };
+  try {
+    const holdingUpserts = await Promise.all(
+      holdings.map(
+        async (holding) =>
+          await prisma.holding.upsert({
+            where: {
+              holding_id: {
+                security_id: holding.security_id,
+                account_id: holding.account_id,
+                user_id: user_id,
+              },
+            },
+            update: {
+              ...getHoldingUpdateFields(holding),
+              member_id: accountMap.get(holding.account_id)?.member_id || "",
+              household_id,
+            },
+            create: {
+              ...getHoldingCreateFields(holding),
+              user_id,
+              member_id: accountMap.get(holding.account_id)?.member_id || "",
+              household_id,
+            },
+          })
+      )
+    );
+    return { holdingUpserts };
+  } catch (error) {
+    console.error(getServerErrorMessage(error));
+    throw new Error(getServerErrorMessage(error));
+  }
 };
 
 /**

@@ -50,13 +50,13 @@ export const updateHoldingsAndSecurities = async (
     }
   }
 
-  /**
-   * Retrieve all existing Securities and Holdings in parallel
-   */
-  const [existingSecurities, existingHoldings] = await Promise.all([
-    getExistingSecurities(securities),
-    getExistingHoldings(holdings),
-  ]);
+  // /**
+  //  * Retrieve all existing Securities and Holdings in parallel
+  //  */
+  // const [existingSecurities, existingHoldings] = await Promise.all([
+  //   getExistingSecurities(securities),
+  //   getExistingHoldings(holdings),
+  // ]);
 
   /**
    * Upsert securities and holdings, and get their history
@@ -110,6 +110,7 @@ export const updateHoldingsAndSecurities = async (
     //   await Promise.all(historyPromises);
     // }
   } catch (error) {
-    return ErrorResponse(error);
+    console.error("An error occurred while updating holdings and securities:", error);
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 };

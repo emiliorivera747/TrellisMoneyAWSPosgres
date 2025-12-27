@@ -1,6 +1,3 @@
-// React
-import React from "react";
-
 // Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import AssetsForm from "@/features/projected-financial-assets/components/AssetFrom";

@@ -1,9 +1,10 @@
-import prisma from "@/lib/prisma";
 import { Security } from "plaid";
 import { Security as SecurityPrisma } from "@/types/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
-import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Decimal } from "@prisma/client/runtime/library";
+import prisma from "@/lib/prisma";
+import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
 interface UpsertSecuritiesParams {
   securities: Security[];
@@ -41,27 +42,31 @@ export const upsertSecurities = async ({
 }: UpsertSecuritiesParams): Promise<{
   securityUpserts: SecurityPrisma[];
 }> => {
-  
-  const securityUpserts = await Promise.all(
-    securities.map(
-      async (security) =>
-        await prisma.security.upsert({
-          where: { security_id: security.security_id },
-          update: {
-            ...getSecurityUpdateFields(security),
-            timestamp: isoToUTC(timestamp),
-          },
-          create: {
-            ...getSecurityCreateFields(security),
-            timestamp: isoToUTC(timestamp),
-            user_id: user_id,
-            member_id: securityMap.get(security.security_id)?.member_id || "",
-            household_id,
-          },
-        })
-    )
-  );
-  return { securityUpserts };
+  try {
+    const securityUpserts = await Promise.all(
+      securities.map(
+        async (security) =>
+          await prisma.security.upsert({
+            where: { security_id: security.security_id },
+            update: {
+              ...getSecurityUpdateFields(security),
+              timestamp: isoToUTC(timestamp),
+            },
+            create: {
+              ...getSecurityCreateFields(security),
+              timestamp: isoToUTC(timestamp),
+              user_id: user_id,
+              member_id: securityMap.get(security.security_id)?.member_id || "",
+              household_id,
+            },
+          })
+      )
+    );
+    return { securityUpserts };
+  } catch (error) {
+    console.error("Error upserting securities:", getServerErrorMessage(error));
+    throw new Error(getServerErrorMessage(error));
+  }
 };
 
 /**

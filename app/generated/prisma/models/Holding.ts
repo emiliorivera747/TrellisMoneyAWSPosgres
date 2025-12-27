@@ -371,7 +371,6 @@ export type HoldingOrderByWithRelationInput = {
 }
 
 export type HoldingWhereUniqueInput = Prisma.AtLeast<{
-  member_id?: string
   holding_id?: Prisma.HoldingHolding_idCompoundUniqueInput
   AND?: Prisma.HoldingWhereInput | Prisma.HoldingWhereInput[]
   OR?: Prisma.HoldingWhereInput[]
@@ -390,6 +389,7 @@ export type HoldingWhereUniqueInput = Prisma.AtLeast<{
   account_id?: Prisma.StringFilter<"Holding"> | string
   security_id?: Prisma.StringFilter<"Holding"> | string
   user_id?: Prisma.StringFilter<"Holding"> | string
+  member_id?: Prisma.StringFilter<"Holding"> | string
   household_id?: Prisma.StringNullableFilter<"Holding"> | string | null
   timestamp?: Prisma.DateTimeFilter<"Holding"> | Date | string
   history?: Prisma.HoldingHistoryListRelationFilter
@@ -398,7 +398,7 @@ export type HoldingWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   member?: Prisma.XOR<Prisma.HouseholdMemberScalarRelationFilter, Prisma.HouseholdMemberWhereInput>
   household?: Prisma.XOR<Prisma.HouseholdNullableScalarRelationFilter, Prisma.HouseholdWhereInput> | null
-}, "holding_id" | "member_id">
+}, "holding_id">
 
 export type HoldingOrderByWithAggregationInput = {
   cost_basis?: Prisma.SortOrder
