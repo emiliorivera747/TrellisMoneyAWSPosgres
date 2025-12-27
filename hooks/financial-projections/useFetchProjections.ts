@@ -7,6 +7,24 @@ interface useFetchProjectionsProps {
   selectedFilter: string;
 }
 
+/**
+ * Custom hook to fetch financial projections based on the selected year and filter.
+ *
+ * @param {Object} params - The parameters for fetching projections.
+ * @param {number} params.selectedYear - The year for which projections are to be fetched.
+ * @param {string} params.selectedFilter - The filter criteria for the projections.
+ *
+ * @returns {Object} An object containing the following:
+ * - `futureProjectionData`: The fetched projection data.
+ * - `futureProjectionError`: Any error encountered during the fetch operation.
+ * - `futureProjectionLoading`: A boolean indicating whether the fetch operation is in progress.
+ *
+ * @example
+ * const { futureProjectionData, futureProjectionError, futureProjectionLoading } = useFetchProjections({
+ *   selectedYear: 2023,
+ *   selectedFilter: "networth",
+ * });
+ */
 const useFetchProjections = ({
   selectedYear,
   selectedFilter,

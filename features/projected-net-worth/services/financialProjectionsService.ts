@@ -1,4 +1,4 @@
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/plaid`;
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 const generateProjectedNetWorth = async (
   start_year: number,
