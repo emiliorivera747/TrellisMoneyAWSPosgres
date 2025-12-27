@@ -1,6 +1,6 @@
 // Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
-import AssetsForm from "@/features/projected-financial-assets/components/AssetFrom";
+import AssetsCard from "@/features/projected-financial-assets/components/AssetFrom";
 import NetValueDisplay from "@/components/dashboard/NetValueDisplay";
 import Footer from "@/components/footers/Footer";
 
@@ -87,7 +87,7 @@ export const DashboardContent = () => {
         </PrimaryDashboardSection>
       </div>
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
-        <AssetsForm form={form} onSubmit={onSubmit} />
+        <AssetsCard form={form} onSubmit={onSubmit} />
       </div>
     </div>
   );

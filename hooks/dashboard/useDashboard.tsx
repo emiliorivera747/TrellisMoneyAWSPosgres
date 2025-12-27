@@ -98,7 +98,7 @@ export const useDashboard = (): DashboardState => {
 
   const assets = useMemo(() => {
     return futureProjectionData?.projected_assets?.[0]?.data || [];
-  }, []);
+  }, [futureProjectionData]);
 
   return useMemo(
     () => ({

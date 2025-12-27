@@ -16,7 +16,7 @@ interface AssetsFormProps {
  * @param param0
  * @returns
  */
-const AssetsForm: React.FC<AssetsFormProps> = ({ form, onSubmit }) => {
+const AssetsCard: React.FC<AssetsFormProps> = ({ form, onSubmit }) => {
   return (
     <Form {...form}>
       <form
@@ -29,4 +29,4 @@ const AssetsForm: React.FC<AssetsFormProps> = ({ form, onSubmit }) => {
   );
 };
 
-export default AssetsForm;
+export default AssetsCard;

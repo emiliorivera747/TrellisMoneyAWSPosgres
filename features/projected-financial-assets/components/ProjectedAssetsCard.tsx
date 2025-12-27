@@ -31,6 +31,8 @@ const ProjectedAssetsCard = () => {
     assets,
   } = useDashboardContext();
 
+  console.log("assets", assets);
+
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   if (isLoadingAssets || futureProjectionLoading)
