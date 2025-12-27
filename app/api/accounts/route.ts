@@ -50,9 +50,6 @@ export async function GET(req: NextRequest) {
         return FailResponse("No items found for the given household ID", 404);
       }
 
-      console.log("Items", items);
-
-
       /**
        *  Go through each item and fetch the accounts
        */
