@@ -31,8 +31,6 @@ const ProjectedAssetsCard = () => {
     assets,
   } = useDashboardContext();
 
-  console.log("assets", assets);
-
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   if (isLoadingAssets || futureProjectionLoading)
@@ -41,9 +39,12 @@ const ProjectedAssetsCard = () => {
   return (
     <ProjectedAssetsContainer assets={assets}>
       <div
-        className={`grid no-scrollbars ${
+        style={{
+          border: "1px solid rgb(221, 221, 221)",
+        }}
+        className={`grid no-scrollbars rounded-[12px]  ${
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
-        } absolute w-full text-[#343a40] h-full overflow-y-hidden`}
+        } absolute w-full text-[#343a40] h-auto overflow-y-hidden`}
       >
         <ProjectedHoldingCardPrimaryHeader
           year={selectedYear}
