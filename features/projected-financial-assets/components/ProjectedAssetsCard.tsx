@@ -39,14 +39,14 @@ const ProjectedAssetsCard = () => {
   return (
     <ProjectedAssetsContainer assets={assets}>
       <div
-        className={`grid  no-scrollbars ${
+        className={`grid no-scrollbars ${
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
         } absolute w-full text-[#343a40] h-full overflow-y-hidden`}
       >
         <ProjectedHoldingCardPrimaryHeader
           year={selectedYear}
           mode={mode}
-          setMode={handleModeChange}
+          setMode={assets?.length > 0 ? handleModeChange : () => {}}
         />
         <AssetsTable />
         {mode === "edit" && (
