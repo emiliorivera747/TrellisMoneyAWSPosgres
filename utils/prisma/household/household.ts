@@ -18,15 +18,25 @@ import prisma from "@/lib/prisma";
  * console.log(items);
  * ```
  */
-export const getMemberByUserId = async (user_id: string) => {
+export const getMemberByUserId = async (
+  user_id: string,
+  householdInclude?: { accounts?: boolean; items?: boolean }
+) => {
+  const defaultInclude = {
+    household: {
+      include: { accounts: true, items: true },
+    },
+  };
+
+  const include = householdInclude
+    ? { household: { include: householdInclude } }
+    : defaultInclude;
+
   const member = await prisma.householdMember.findUnique({
     where: { user_id },
-    include: {
-      household: {
-        include: { accounts: true, items: true },
-      },
-    },
+    include,
   });
+
   if (!member) return null;
   return member;
 };
