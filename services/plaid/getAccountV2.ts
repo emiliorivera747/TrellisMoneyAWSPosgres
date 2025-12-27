@@ -1,4 +1,3 @@
-
 import { client } from "@/config/plaidClient";
 import { AccountBaseWithItemId } from "@/types/plaid";
 import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
@@ -21,7 +20,6 @@ export const getAccounts = async (
   const accounts = await Promise.all(
     accessTokens.map(async (token) => {
       const response = await client.accountsGet({ access_token: token });
-
       return response.data.accounts.map((account) => ({
         ...account,
         item_id: response.data.item.item_id,
@@ -41,13 +39,10 @@ export const getAccounts = async (
 export const getAccountsFromPlaid = async (
   items: Item[]
 ): Promise<AccountBaseWithItemId[][]> => {
-  
   const accessTokens = await getAllAccessTokens(items);
-
   const accounts = await Promise.all(
     accessTokens.map(async (token) => {
       const response = await client.accountsGet({ access_token: token });
-
       return response.data.accounts.map((account) => ({
         ...account,
         item_id: response.data.item.item_id,

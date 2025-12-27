@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 //Visx
 import { withTooltip, defaultStyles } from "@visx/tooltip";
@@ -17,7 +17,6 @@ import TimeValueGraphHeader, {
 } from "@/components/dashboard/HeaderTimeValueGraph";
 import InfoIconV2 from "@/components/information-icon/InfoIconV2";
 import { netWorthInfo } from "@/features/projected-net-worth/utils/data/netWorthInfo";
-import Filter from "@/components/dashboard/Filter";
 import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";
 
 //Types

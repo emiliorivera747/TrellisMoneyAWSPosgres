@@ -20,7 +20,7 @@ export async function updateAccounts(
   householdAccounts: Account[]
 ) {
   const accounts = accountBase.flat();
-  const map = new Map();
+  const map = new Map<string, { user_id: string; member_id: string }>();
   const n = householdAccounts?.length;
 
   for (let i = 0; i < n; i++) {

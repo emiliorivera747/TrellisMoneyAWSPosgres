@@ -21,12 +21,9 @@ export const upsertHoldings = async (
   holdings: Holding[],
   user_id: string,
   timestamp: string,
-  holdingsMap: Map<
-    string,
-    { security_id: string; account_id: string; quantity: Decimal }
-  >
+  holdingsMap: Map<string, { account_id: string; member_id: string }>
 ): Promise<{
-  holdingHistory: HoldingHistory[];
+  // holdingHistory: HoldingHistory[];
   holdingUpserts: Promise<HoldingPrisma>[];
 }> => {
   const holdingHistory: HoldingHistory[] = [];
@@ -45,16 +42,17 @@ export const upsertHoldings = async (
       },
       create: {
         ...getHoldingCreateFields(holding),
-        user_id: user_id,
+        user_id,
+        member_id: holdingsMap.get(holding.account_id)?.member_id || "",
       },
     })
   );
 
-  holdings.forEach((holding) => {
-    addHoldingHistory(holdingHistory, holdingsMap, holding, user_id);
-  });
+  // holdings.forEach((holding) => {
+  //   addHoldingHistory(holdingHistory, holdingsMap, holding, user_id);
+  // });
 
-  return { holdingHistory, holdingUpserts };
+  return { holdingUpserts };
 };
 
 /**
@@ -78,53 +76,50 @@ export const getExistingHoldings = async (holdings: Holding[]) => {
   return res;
 };
 
-/**
- * Adds the holding history to the holding history array
- *
- */
-const addHoldingHistory = (
-  holdingHistory: HoldingHistory[],
-  holdingsMap: Map<
-    string,
-    { security_id: string; account_id: string; quantity: Decimal }
-  >,
-  holding: Holding,
-  user_id: string
-) => {
-  const key = `${holding.security_id}:${holding.account_id}`;
-  const existing = holdingsMap.get(key);
-  const newQuantity = holding.quantity;
+// /**
+//  * Adds the holding history to the holding history array
+//  *
+//  */
+// const addHoldingHistory = (
+//   holdingHistory: HoldingHistory[],
+//   holdingsMap: Map<string, { member_id: string; user_id: string }>,
+//   holding: Holding,
+//   user_id: string
+// ) => {
+//   const key = `${holding.security_id}:${holding.account_id}`;
+//   const existing = holdingsMap.get(key);
+//   const newQuantity = holding.quantity;
 
-  const diff = Math.abs(Number(existing?.quantity) - Number(newQuantity));
+//   const diff = Math.abs(Number(existing?.quantity) - Number(newQuantity));
 
-  if (!existing || diff > 0.01) {
-    const historyFields = getHoldingHistoryFields(holding, user_id);
-    holdingHistory.push(historyFields);
-  }
-};
+//   if (!existing || diff > 0.01) {
+//     const historyFields = getHoldingHistoryFields(holding, user_id);
+//     holdingHistory.push(historyFields);
+//   }
+// };
 
-/**
- * Get the holding history create fields
- */
-const getHoldingHistoryFields = (holding: Holding, user_id: string) => ({
-  user_id,
-  cost_basis: getValueOrDefault(holding?.cost_basis, 0),
-  institution_price: getValueOrDefault(holding?.institution_price, 0),
-  annual_return_rate: 0.06,
-  institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
-  institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
-  institution_value: getValueOrDefault(holding?.institution_value, 0),
-  iso_currency_code: holding.iso_currency_code || "USD",
-  unofficial_currency_code: getValueOrDefault(
-    holding?.unofficial_currency_code,
-    "USD"
-  ),
-  vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
-  vested_value: getValueOrDefault(holding?.vested_value, 0),
-  quantity: getValueOrDefault(holding?.quantity, 0),
-  security_id: holding.security_id,
-  account_id: holding.account_id,
-});
+// /**
+//  * Get the holding history create fields
+//  */
+// const getHoldingHistoryFields = (holding: Holding, user_id: string) => ({
+//   user_id,
+//   cost_basis: getValueOrDefault(holding?.cost_basis, 0),
+//   institution_price: getValueOrDefault(holding?.institution_price, 0),
+//   annual_return_rate: 0.06,
+//   institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
+//   institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
+//   institution_value: getValueOrDefault(holding?.institution_value, 0),
+//   iso_currency_code: holding.iso_currency_code || "USD",
+//   unofficial_currency_code: getValueOrDefault(
+//     holding?.unofficial_currency_code,
+//     "USD"
+//   ),
+//   vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
+//   vested_value: getValueOrDefault(holding?.vested_value, 0),
+//   quantity: getValueOrDefault(holding?.quantity, 0),
+//   security_id: holding.security_id,
+//   account_id: holding.account_id,
+// });
 
 /**
  * Get the holding update fields

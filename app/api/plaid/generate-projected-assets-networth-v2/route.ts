@@ -13,17 +13,20 @@ import {
 } from "@/utils/api-helpers/errors/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/dates/getDates";
-import { getAccountsHoldingsSecurities } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
+import { getAccountsHoldingsSecuritiesV2 } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
 import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV3";
-import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
-import { getAccounts } from "@/services/plaid/getAccountV2";
-import { getInvestments } from "@/utils/prisma/investments/getInvestments";
-
-// Types
-import { ItemPrisma } from "@/types/prisma";
+import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
+import { getInvestmentsPlaid } from "@/utils/prisma/investments/getInvestments";
 
 // Auth
 import { withAuth } from "@/lib/protected";
+
+import {
+  FailResponse,
+  SuccessResponse,
+} from "@/utils/api-helpers/api-responses/response";
+import { getMemberByUserId } from "@/utils/prisma/household/household";
+import { logError } from "@/utils/api-helpers/errors/logError";
 
 const default_inflation_rate = 0.025;
 
@@ -48,18 +51,39 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       const { start_year, end_year } = getDates(searchParams);
       validateTimestamp(timestamp);
 
+      const member = await getMemberByUserId(user.id);
+      if (!member) return FailResponse("Failed to find member", 404);
+      const items = member?.household?.items;
+      if (!items) {
+        logError("Items not found for household");
+        return FailResponse("Items not found for household", 404);
+      }
+
+      if (!member.household?.accounts) {
+        logError("Accounts not found for the household");
+        return FailResponse("Accounts not found for the household", 404);
+      }
+
       /**
        * Get the user's accounts
        */
-      const items: ItemPrisma[] = await getItemsByUserId(user?.id || "");
-      await getAccounts(items);
-      await getInvestments(items, timestamp || "");
-
-      // Get the user's updated holdings and securities
-      const account_holdings_securities = await getAccountsHoldingsSecurities(
-        user?.id || ""
+      await getAccountsFromPlaid(items);
+      await getInvestmentsPlaid(
+        items,
+        timestamp || "",
+        member.household?.accounts
       );
 
+      if (!member?.household_id) {
+        logError("Accounts not found for the household");
+        return FailResponse("Accounts not found for the household", 404);
+      }
+
+      const account_holdings_securities = await getAccountsHoldingsSecuritiesV2(
+        member.household_id
+      );
+
+      console.log(account_holdings_securities[0])
       const projected_net_worth = await generateProjectedNetWorthV3(
         account_holdings_securities[0].accounts,
         start_year,
@@ -76,15 +100,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         accounts: account_holdings_securities[0].accounts,
       });
 
-      return NextResponse.json(
+      return SuccessResponse(
         {
-          message: "Accounts, holdings, and securities updated successfully.",
-          data: {
-            projected_net_worth: projected_net_worth,
-            projected_assets: projected_assets,
-          },
+          projected_net_worth: projected_net_worth,
+          projected_assets: projected_assets,
         },
-        { status: 200 }
+        "Accounts, holdings, and securities updated successfully."
       );
     } catch (error) {
       if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);

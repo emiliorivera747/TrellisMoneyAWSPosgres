@@ -4,6 +4,7 @@ import { ItemPrisma } from "@/types/prisma";
 import { updateHoldingsAndSecurities } from "@/utils/prisma/investments/updateHoldingsAndSecurities";
 import { updateItem } from "@/utils/prisma/item/updateItems";
 import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
+import { Account } from "@/app/generated/prisma/client";
 
 /**
  *
@@ -12,9 +13,10 @@ import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
  * @param items
  * @returns
  */
-export const getInvestments = async (
+export const getInvestmentsPlaid = async (
   items: ItemPrisma[],
-  timestamp: string
+  timestamp: string,
+  accountsDB: Account[]
 ) => {
   
   /**
@@ -39,14 +41,14 @@ export const getInvestments = async (
    */
   investmentsForEachItem.forEach(async (item) => {
     await updateItem(item.item);
-    await updateAccounts([item.accounts]);
+    await updateAccounts([item.accounts], accountsDB);
     await updateHoldingsAndSecurities(
       item.holdings,
       item.securities,
-      timestamp
+      timestamp, 
+      accountsDB
     );
   });
-
 
   return investmentsForEachItem;
 };
