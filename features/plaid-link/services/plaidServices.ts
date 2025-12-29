@@ -51,7 +51,6 @@ const exchangeToken = async ({
       "Content-Type": "application/json",
     },
   });
-
   return response;
 };
 

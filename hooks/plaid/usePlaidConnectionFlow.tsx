@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { usePlaidLink, PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 import plaidService from "@/features/plaid-link/services/plaidServices";
+import useExchangeToken from "@/hooks/react-query/plaid/useExchangeToken";
 
 /**
  * Custom hook to manage the Plaid connection flow.
@@ -25,9 +26,10 @@ import plaidService from "@/features/plaid-link/services/plaidServices";
  * }
  */
 const usePlaidConnectionFlow = () => {
-  
   const [linkToken, setLinkToken] = useState<string | null>(null);
   const [memberId, setMemberId] = useState<string | null>(null);
+  const { exchangeTokenMutate, isExchanging, hasExchangeError } =
+    useExchangeToken();
 
   const { open, ready, error } = usePlaidLink({
     token: linkToken ?? null,
@@ -36,7 +38,7 @@ const usePlaidConnectionFlow = () => {
       metadata: PlaidLinkOnSuccessMetadata
     ) => {
       if (memberId) {
-        await plaidService.exchangeToken({
+        exchangeTokenMutate({
           public_token: publicToken,
           metadata,
           member_id: memberId,
