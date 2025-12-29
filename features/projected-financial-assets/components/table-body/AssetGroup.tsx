@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Activity } from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { FormField, FormItem } from "@/components/ui/form";
 import NumberInputV2 from "@/components/form-components/NumberInputV2";
@@ -52,8 +52,15 @@ const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
       onClick={handleRowClick}
     >
       <AssetName asset={asset} />
-      {mode === "edit" && <GrowthRateCellInput asset={asset} form={form} />}
-      {mode === "view" && <GrowthRateCellText asset={asset} />}
+
+      <Activity mode={mode === "edit" ? "visible" : "hidden"}>
+        <GrowthRateCellInput asset={asset} form={form} />
+      </Activity>
+      
+      <Activity mode={mode === "edit" ? "hidden" : "visible"}>
+        <GrowthRateCellText asset={asset} />
+      </Activity>
+
       <ProjectionCell value={asset.projection} />
     </TableRow>
   );
