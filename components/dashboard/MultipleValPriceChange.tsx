@@ -1,4 +1,3 @@
-import React from "react";
 import ValueAndPriceChange from "@/components/dashboard/ValueAndPriceChange";
 
 //Types
