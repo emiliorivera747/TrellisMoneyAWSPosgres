@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/toast/use-toast";
 import plaidService from "@/features/plaid-link/services/plaidServices";
-import { ExchangeTokenProps } from "@/types/plaidServices";
 
 /**
  * Custom hook for exchanging a token using the Plaid service.
