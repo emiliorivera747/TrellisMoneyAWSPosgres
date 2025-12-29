@@ -1,5 +1,5 @@
 // React
-import { useRef } from "react";
+import { useRef, Activity } from "react";
 
 // Containers
 import ProjectedAssetsContainer from "@/features/projected-financial-assets/components/containers/ProjectedAssetsContainer";
@@ -44,7 +44,7 @@ const ProjectedAssetsCard = () => {
         }}
         className={`grid no-scrollbars rounded-[12px] pb-6 ${
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
-        } absolute w-full text-[#343a40] h-auto overflow-y-hidden`}
+        } absolute w-full text-[#343a40] h-auto max-h-[90vh] overflow-y-hidden`}
       >
         <ProjectedHoldingCardPrimaryHeader
           year={selectedYear}
@@ -52,7 +52,7 @@ const ProjectedAssetsCard = () => {
           setMode={assets?.length > 0 ? handleModeChange : () => {}}
         />
         <AssetsTable />
-        {mode === "edit" && (
+        <Activity mode={mode === "edit" ? "visible" : "hidden"}>
           <div className="flex justify-center items-center">
             <PrimarySubmitButton
               text={"Update"}
@@ -61,7 +61,8 @@ const ProjectedAssetsCard = () => {
               isLoading={isLoadingAssets}
             />
           </div>
-        )}
+        </Activity>
+
         {/* If there are not assets */}
         {assets?.length === 0 && <NoAssetsTable />}
       </div>

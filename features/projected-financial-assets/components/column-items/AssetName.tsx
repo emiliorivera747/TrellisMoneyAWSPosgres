@@ -34,8 +34,8 @@ const AssetName = ({ asset }: { asset: Assets }) => {
   }
 
   return (
-    <TableCell className=" pl-6 text-[0.8rem] w-[8rem]">
-      <div className="flex flex-col text-tertiary-1000 font-bold">
+    <TableCell className="pl-6 text-[0.8rem] w-[8rem] overflow-x-scroll">
+      <div className="flex flex-col text-tertiary-1000 font-bold ">
         {nameElement}
         {(asset?.shares ?? 0) >= 1 && (
           <span className="font-normal text-tertiary-1000">
@@ -47,7 +47,7 @@ const AssetName = ({ asset }: { asset: Assets }) => {
         {(asset?.shares ?? 0) < 1 && (
           <span className="font-normal text-tertiary-1000">
             {investmentTypes.includes(asset?.subtype)
-              ? asset.shares + " Shares"
+              ? Number(asset.shares).toFixed(10)+ " Shares"
               : "$" + Number(asset.total) + " Cash"}
           </span>
         )}
