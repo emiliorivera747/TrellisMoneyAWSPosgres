@@ -1,11 +1,8 @@
 // Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import AssetsCard from "@/features/projected-financial-assets/components/AssetFrom";
-import NetValueDisplay from "@/components/dashboard/NetValueDisplay";
 import Footer from "@/components/footers/Footer";
 import NetValueItems from "@/features/dashboard/components/NetValueItems";
-
-import { NET_VALUE_ITEMS } from "@/features/dashboard/config/netValueItems";
 
 // Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
