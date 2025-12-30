@@ -10,13 +10,18 @@ import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSect
 // Context
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 
+// Hooks
+import { useFetchNetWorth } from "@/features/net-worth/hooks/useFetchNetWorth";
+
 /**
  * Displays all of the components in the dashboard
  * @returns JSX.Element
  */
 export const DashboardContent = () => {
-  const { netWorthData, netWorthLoading, form, onSubmit } =
-    useDashboardContext();
+  const { form, onSubmit } = useDashboardContext();
+
+  const { netWorthData, netWorthHasError, netWorthLoading, netWorthError } =
+    useFetchNetWorth();
 
   return (
     <div className="w-full box-border max-h-screen overflow-y-scroll flex flex-row gap-4">
@@ -26,6 +31,8 @@ export const DashboardContent = () => {
           <NetValueItems
             netWorthLoading={netWorthLoading}
             netWorthData={netWorthData}
+            netWorthHasError={netWorthHasError}
+            netWorthError={netWorthError}
           />
           <Footer />
         </PrimaryDashboardSection>

@@ -24,21 +24,28 @@ const currentYear = Number(new Date().getFullYear().toString());
 
 // Context
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
+import { FutureProjectionData } from "@/types/futureProjections";
+
+interface ProjectedNetWorthGraphProps {
+  futureProjectionData: FutureProjectionData;
+  futureProjectionError?: Error | null;
+  futureProjectionHasError: boolean;
+  futureProjectionLoading: boolean;
+}
 
 /**
  * Projects the future net worth of the user based on the data provided
  *
  */
-const ProjectedNetWorthGraph = () => {
+const ProjectedNetWorthGraph = ({
+  futureProjectionData,
+  futureProjectionError,
+  futureProjectionHasError,
+  futureProjectionLoading
+}: ProjectedNetWorthGraphProps) => {
   const containerRef = useRef(null);
 
-  const {
-    selectedYear,
-    selectedFilter,
-    futureProjectionData,
-    futureProjectionLoading,
-    futureProjectionError,
-  } = useDashboardContext();
+  const { selectedYear, selectedFilter } = useDashboardContext();
 
   /**
    *  Returns the filtered data based on the projectionData and selected filter.
@@ -56,7 +63,7 @@ const ProjectedNetWorthGraph = () => {
   );
 
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
-  if (futureProjectionError) return <ProjectedNetWorthGraphError />;
+  if (futureProjectionHasError) return <ProjectedNetWorthGraphError />;
 
   const dataForLines = createLinePayLoads(selectedFilter, filteredData);
 

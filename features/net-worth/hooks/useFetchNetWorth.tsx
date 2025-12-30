@@ -10,6 +10,7 @@ import { networthService } from "@/features/net-worth/services/networthService";
 export const useFetchNetWorth = () => {
   const {
     data: netWorthData,
+    isError: netWorthHasError,
     error: netWorthError,
     isLoading: netWorthLoading,
   } = useQuery({
@@ -17,5 +18,5 @@ export const useFetchNetWorth = () => {
     queryFn: networthService.getNetWorth,
   });
 
-  return { netWorthData, netWorthError, netWorthLoading };
+  return { netWorthData, netWorthError, netWorthLoading, netWorthHasError };
 };

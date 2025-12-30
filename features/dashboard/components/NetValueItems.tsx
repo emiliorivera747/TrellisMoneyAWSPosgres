@@ -19,12 +19,18 @@ import NetValueDisplay from "@/components/dashboard/NetValueDisplay";
 const NetValueItems = ({
   netWorthData,
   netWorthLoading,
+  netWorthError,
+  netWorthHasError,
 }: {
   netWorthData: {
     data: { netWorth: number; assets: number; liabilities: number };
-  } | null;
+  };
   netWorthLoading: boolean;
+  netWorthError?: Error | null;
+  netWorthHasError: boolean;
 }) => {
+  if (netWorthHasError)
+    return <div>There was an error {netWorthError?.message}</div>;
   return (
     <div className="grid grid-cols-2 gap-6 border-b pb-8 border-tertiary-300">
       {NET_VALUE_ITEMS.map((item, index) => (
