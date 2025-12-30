@@ -1,4 +1,3 @@
-
 /**
  * A functional React component that displays an error message
  * when there is an issue fetching data for the Projected Net Worth Graph.
@@ -9,7 +8,11 @@
  *
  * @returns {JSX.Element} A styled div element that displays the error message.
  */
-const ProjectedNetWorthGraphError = ({ error }: { error: Error | null }) => {
+const ProjectedNetWorthGraphError = ({
+  error,
+}: {
+  error: Error | null | undefined;
+}) => {
   return (
     <div className="h-[30rem] border border-tertiary-400 p-4 rounded-xl font-semibold flex items-center justify-center text-lg">
       There was an error fetching the data: {error?.message}

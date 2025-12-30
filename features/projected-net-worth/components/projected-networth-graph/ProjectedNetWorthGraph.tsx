@@ -27,7 +27,7 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 import { FutureProjectionData } from "@/types/futureProjections";
 
 interface ProjectedNetWorthGraphProps {
-  futureProjectionData: FutureProjectionData;
+  futureProjectionData: FutureProjectionData | undefined;
   futureProjectionError?: Error | null;
   futureProjectionHasError: boolean;
   futureProjectionLoading: boolean;
@@ -41,7 +41,7 @@ const ProjectedNetWorthGraph = ({
   futureProjectionData,
   futureProjectionError,
   futureProjectionHasError,
-  futureProjectionLoading
+  futureProjectionLoading,
 }: ProjectedNetWorthGraphProps) => {
   const containerRef = useRef(null);
 
@@ -63,7 +63,8 @@ const ProjectedNetWorthGraph = ({
   );
 
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
-  if (futureProjectionHasError) return <ProjectedNetWorthGraphError />;
+  if (futureProjectionHasError)
+    return <ProjectedNetWorthGraphError error={futureProjectionError} />;
 
   const dataForLines = createLinePayLoads(selectedFilter, filteredData);
 

@@ -33,6 +33,7 @@ const useFetchProjections = ({
     data: futureProjectionData,
     error: futureProjectionError,
     isLoading: futureProjectionLoading,
+    isError: futureProjectionHasError,
   } = useQuery({
     queryKey: [
       "projectedAssetsAndNetworth",
@@ -49,11 +50,11 @@ const useFetchProjections = ({
     enabled: !!selectedYear,
   });
 
-
   return {
     futureProjectionData,
     futureProjectionError,
     futureProjectionLoading,
+    futureProjectionHasError,
   };
 };
 
