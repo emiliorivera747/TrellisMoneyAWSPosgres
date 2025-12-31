@@ -55,9 +55,11 @@ const ProjectedAssetsCard = () => {
           mode={mode}
           setMode={assets?.length > 0 ? handleModeChange : () => {}}
         />
+
         <AssetsTable />
+
         <UpdateButton />
-        {/* If there are not assets */}
+        
         {assets?.length === 0 && <NoAssetsTable />}
       </div>
     </ProjectedAssetsContainer>

@@ -100,8 +100,11 @@ const PrimaryGraphHeader = ({
               Filters
             </button>
           </DialogTrigger>
-          <DialogContent className="shadow-lg">
+          <DialogContent className="shadow-lg" aria-describedby="dialog-description">
             <DialogHeader title={"Filters"} />
+            <p id="dialog-description" className="sr-only">
+              Select and apply filters to customize the graph data.
+            </p>
             <RenderFilters
               selectedFilter={selectedFilter}
               handleFilterChange={handleFilterSelection}

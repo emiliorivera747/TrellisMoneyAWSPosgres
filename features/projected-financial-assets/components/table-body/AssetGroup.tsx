@@ -56,8 +56,8 @@ const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
       <Activity mode={mode === "edit" ? "visible" : "hidden"}>
         <GrowthRateCellInput asset={asset} form={form} />
       </Activity>
-      
-      <Activity mode={mode === "edit" ? "hidden" : "visible"}>
+
+      <Activity mode={mode === "view" ? "visible" : "hidden"}>
         <GrowthRateCellText asset={asset} />
       </Activity>
 
