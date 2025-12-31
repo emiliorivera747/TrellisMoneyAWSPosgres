@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-const currentYear = Number(new Date().getFullYear().toString());
 import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
 
 interface useFetchProjectionsProps {
@@ -7,6 +6,7 @@ interface useFetchProjectionsProps {
   selectedFilter: string;
 }
 
+const currentYear = Number(new Date().getFullYear().toString());
 /**
  * Custom hook to fetch financial projections based on the selected year and filter.
  *

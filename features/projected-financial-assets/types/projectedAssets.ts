@@ -10,7 +10,7 @@ export interface ProjectedAssets {
 
 export interface ProjectedNetworth {
   data: NetWorthData[];
-  value: string;
+  close: string;
 }
 
 export interface NetWorthData {

@@ -4,6 +4,7 @@
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
 import { ProjectedAssets} from "@/features/projected-financial-assets/types/projectedAssets";
 import { FutureProjectionData } from "@/types/futureProjections";
+
 /**
  * Handles form submission to update the annual return rate.
  *
@@ -34,8 +35,6 @@ export const handleFormSubmission = (
   const updatedAssets = updateAssets(currentProjectedAsset?.data, data, user);
   mutate(updatedAssets);
 };
-
-
 
 /**
  * Returns the current projected asset.

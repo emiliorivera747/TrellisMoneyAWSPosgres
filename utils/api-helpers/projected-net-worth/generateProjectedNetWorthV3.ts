@@ -1,5 +1,6 @@
 import { Account } from "@/types/plaid";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import { NetWorthData } from "@/features/projected-financial-assets/types/projectedAssets";
 
 // Helpers
 import {
@@ -22,13 +23,16 @@ export const generateProjectedNetWorthV3 = async (
   end_year: number,
   with_inflation: boolean,
   annual_inflation_rate: number
-): Promise<{ date: Date; close: number }[]> => {
-  const projectedNetWorth: { date: Date; close: number }[] = [];
+): Promise<NetWorthData[]> => {
+  const projectedNetWorth: NetWorthData[] = [];
 
   // Early return for empty holdings or invalid dates
   if (!accounts.length || end_year < start_year) return [];
   const hm: { [key: number]: number } = {};
-  const groups = Object.groupBy(accounts, (account) => account.type as AccountType);
+  const groups = Object.groupBy(
+    accounts,
+    (account) => account.type as AccountType
+  );
 
   for (let key in groups) {
     const accounts = groups[key as AccountType];
@@ -70,7 +74,6 @@ export const generateProjectedNetWorthV3 = async (
       );
     }
   }
-  
   pushProjectedNetWorthToEachDay(projectedNetWorth, start_year, end_year, hm);
   return projectedNetWorth;
 };
@@ -108,7 +111,7 @@ const pushProjectedNetWorthToEachDay = (
     const interpolationFactor = dayOfYear / 365;
     const interpolatedValue =
       previousValue + (nextValue - previousValue) * interpolationFactor;
-    
+
     const date = new Date(year, 0, 1 + dayOfYear);
 
     projectedNetWorth.push({
@@ -139,8 +142,8 @@ const populateHashMapWithFvHoldings = (
   annual_inflation_rate: number
 ) => {
   // Pre-calculate holding data for reuse across years
-  const holdingsData = accounts.flatMap(account => 
-    (account.holdings ?? []).map(holding => getFormulaValues(holding))
+  const holdingsData = accounts.flatMap((account) =>
+    (account.holdings ?? []).map((holding) => getFormulaValues(holding))
   );
 
   const yearRange = end_year - start_year + 1;
@@ -148,7 +151,7 @@ const populateHashMapWithFvHoldings = (
   // Calculate future values for each year
   for (let i = 0; i < yearRange; i++) {
     let total = 0;
-    
+
     for (const { quantity, close_price, annual_return_rate } of holdingsData) {
       if (with_inflation) {
         total += future_value_with_inflation_fn(
@@ -159,15 +162,10 @@ const populateHashMapWithFvHoldings = (
           i
         );
       } else {
-        total += future_value_fn(
-          quantity,
-          close_price,
-          annual_return_rate,
-          i
-        );
+        total += future_value_fn(quantity, close_price, annual_return_rate, i);
       }
     }
-    
+
     const year = start_year + i;
     hm[year] = (hm[year] || 0) + total;
   }
@@ -194,10 +192,10 @@ const populateHashMapWithFvAccounts = (
   annual_inflation_rate: number
 ) => {
   // Pre-calculate account data for reuse
-  const accountsData = accounts.map(account => ({
+  const accountsData = accounts.map((account) => ({
     current_amount: account.current ?? 0,
     annual_return_rate: account.annual_return_rate ?? 0,
-    isNegative: account.type === "loan" || account.type === "credit"
+    isNegative: account.type === "loan" || account.type === "credit",
   }));
 
   const yearRange = end_year - start_year + 1;
@@ -206,9 +204,13 @@ const populateHashMapWithFvAccounts = (
   for (let i = 0; i < yearRange; i++) {
     let total = 0;
 
-    for (const { current_amount, annual_return_rate, isNegative } of accountsData) {
+    for (const {
+      current_amount,
+      annual_return_rate,
+      isNegative,
+    } of accountsData) {
       let fv: number;
-      
+
       if (with_inflation) {
         fv = future_value_with_inflation_fn(
           1,
@@ -218,14 +220,9 @@ const populateHashMapWithFvAccounts = (
           i
         );
       } else {
-        fv = future_value_fn(
-          1,
-          current_amount,
-          annual_return_rate,
-          i
-        );
+        fv = future_value_fn(1, current_amount, annual_return_rate, i);
       }
-      
+
       total += isNegative ? -fv : fv;
     }
 

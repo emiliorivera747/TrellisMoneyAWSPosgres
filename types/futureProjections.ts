@@ -9,7 +9,7 @@ export interface FutureProjectionData {
    * The projected assets
    */
   projected_assets: ProjectedAssets[];
-
+  
   /**
    * The projected net worth
    */

@@ -1,6 +1,6 @@
 import { LinePayload } from "@/types/graphs";
 import { FutureProjectionData } from "@/types/futureProjections";
-import { InflationFilters } from "@/features/projected-net-worth/types/filters";
+
 export interface SecurityData {
   date: Date;
   close: number;
@@ -78,16 +78,6 @@ export interface ProjectedLineGraphProps {
   editRetirementYear: (year: number) => void;
 }
 
-// export interface ProjectedNetWorthGraphProps {
-//   projectionData?: ProjectedNetWorth[] | null;
-//   projectionLoading: boolean;
-//   projectionError: Error | null;
-//   selectedYear: number;
-//   handleYearSelection: (year: number) => void;
-//   handleFilterChange: (key: InflationFilters) => void;
-//   selectedFilter: InflationFilters;
-// }
-
 export interface projectionData {
   noInflationData: { data: SecurityData[] };
   inflationData: { data: SecurityData[] };
@@ -102,7 +92,7 @@ export interface PrimaryGraphHeaderProps {
 }
 
 export interface ProjectedNetWorthGraphProps {
-  futureProjectionData: FutureProjectionData | undefined;
+  futureProjectionData: FutureProjectionData | undefined | Error;
   futureProjectionError?: Error | null;
   futureProjectionHasError: boolean;
   futureProjectionLoading: boolean;

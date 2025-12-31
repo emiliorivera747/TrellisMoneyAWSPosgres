@@ -38,7 +38,7 @@ export const useDashboard = (): DashboardState => {
   } = useFetchProjections({
     selectedYear,
     selectedFilter,
-  });
+  }); 
 
   const { netWorthData, netWorthError, netWorthLoading } = useFetchNetWorth();
 

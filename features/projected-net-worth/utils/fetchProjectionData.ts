@@ -1,5 +1,10 @@
 // Services
 import financialProjectionService from "@/features/projected-net-worth/services/financialProjectionsService";
+import {
+  FinancialAssets,
+  NetWorthData,
+} from "@/features/projected-financial-assets/types/projectedAssets";
+import { ProjectedAssets } from "@/types/futureProjections";
 
 export const fetchProjectionData = async (
   startDate: number,
@@ -38,6 +43,26 @@ export const fetchProjectionData = async (
   }
 };
 
+/**
+ * Fetches projection data for projected net worth and assets based on the specified filter.
+ *
+ * @param startDate - The start date for the projection data (as a timestamp).
+ * @param endDate - The end date for the projection data (as a timestamp).
+ * @param filter - The filter to determine the type of projection data to fetch.
+ *                 Possible values:
+ *                 - "isNoInflation": Fetch data without considering inflation.
+ *                 - "isInflation": Fetch data considering inflation.
+ *                 - "isBoth": Fetch both inflation and no-inflation data.
+ *
+ * @returns A promise that resolves to an object containing the projected net worth and assets.
+ *          The structure of the returned object is:
+ *          {
+ *            projected_net_worth: Array<{ value: string, data: any }>,
+ *            projected_assets: Array<{ value: string, data: any }>
+ *          }
+ *
+ * @throws Will throw an error if the filter value is invalid.
+ */
 export const fetchProjections = async (
   startDate: number,
   endDate: number,
@@ -54,12 +79,16 @@ export const fetchProjections = async (
 
     return {
       projected_net_worth: [
-        { value: "isNoInflation", data: projected_net_worth },
+        {
+          value: "isNoInflation",
+          data: projected_net_worth as NetWorthData,
+        },
       ],
-      projected_assets: [{ value: "isNoInflation", data: projected_assets }],
+      projected_assets: [
+        { value: "isNoInflation", data: projected_assets as ProjectedAssets },
+      ],
     };
   } else if (filter === "isInflation") {
-
     const res =
       await financialProjectionService.generateProjectedAssetsAndNetworth(
         startDate,
@@ -71,12 +100,16 @@ export const fetchProjections = async (
 
     return {
       projected_net_worth: [
-        { value: "isInflation", data: projected_net_worth },
+        {
+          value: "isInflation",
+          data: projected_net_worth as NetWorthData,
+        },
       ],
-      projected_assets: [{ value: "isInflation", data: projected_assets }],
+      projected_assets: [
+        { value: "isInflation", data: projected_assets as ProjectedAssets },
+      ],
     };
   } else if (filter === "isBoth") {
-    
     const noInflationData =
       await financialProjectionService.generateProjectedAssetsAndNetworth(
         startDate,
@@ -103,12 +136,24 @@ export const fetchProjections = async (
 
     return {
       projected_net_worth: [
-        { value: "isInflation", data: projected_net_worth_inflation },
-        { value: "isNoInflation", data: projected_net_worth_no_inflation },
+        {
+          value: "isInflation",
+          data: projected_net_worth_inflation as NetWorthData,
+        },
+        {
+          value: "isNoInflation",
+          data: projected_net_worth_no_inflation as NetWorthData,
+        },
       ],
       projected_assets: [
-        { value: "isInflation", data: projected_assets_inflation },
-        { value: "isNoInflation", data: projected_assets_no_inflation },
+        {
+          value: "isInflation",
+          data: projected_assets_inflation as FinancialAssets,
+        },
+        {
+          value: "isNoInflation",
+          data: projected_assets_no_inflation as FinancialAssets,
+        },
       ],
     };
   } else {
