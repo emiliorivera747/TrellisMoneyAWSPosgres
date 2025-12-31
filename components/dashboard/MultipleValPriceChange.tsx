@@ -7,7 +7,6 @@ import { TooltipPayload } from "@/types/graphs";
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
-import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 interface MultipleValPriceChangeProps {
   payloadForLines: LinePayload[];
@@ -64,7 +63,7 @@ const MultipleValPriceChange = ({
               subHeaderTailwindCss={`${tailwindPrimaryTextColor} font-semibold text-[0.7rem]`}
               lineName={getLineName(line)}
             />
-            <div className="flex items-center justify-center gap-2  text-[0.7rem] rounded-[10px]  w-[10rem] cursor-pointer border  border-tertiary-300 px-2  mt-2 hover:bg-tertiary-200 py-[0.5rem] ">
+            <div className="flex items-center justify-center gap-2  text-[0.7rem] rounded-full  w-[10rem] cursor-pointer border  border-tertiary-300 px-[0.2rem]  mt-2 hover:bg-tertiary-200 py-[0.4rem] ">
               {!withInflation(line) ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +96,7 @@ const MultipleValPriceChange = ({
                   />
                 </svg>
               ) : null}
-              <span className="text-[0.75rem]  transition duration-300  rounded-[12px] hover:text-tertiary-1000 hover:border-tertiary-200 flex flex-row justify-center items-center text-center ">
+              <span className="text-[0.75rem] transition duration-300 rounded-[12px] hover:text-tertiary-1000 hover:border-tertiary-200 flex flex-row justify-center items-center text-center">
                 {!withInflation(line)
                   ? "With inflation"
                   : "Without inflation"}
