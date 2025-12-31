@@ -2,9 +2,9 @@ import financialAssetsService from "@/features/projected-financial-assets/servic
 
 export const fetchFinancialAssets = async (startDate: number, endDate: number, filter: string) => {
     switch (filter) {
-      case "isNoInflation":
+      case "withNoInflation":
         return financialAssetsService.getFinancialAssets(startDate, endDate, false);
-      case "isInflation":
+      case "withInflation":
         return financialAssetsService.getFinancialAssets(startDate, endDate, true);
       case "isBoth":
         const noInflationData = await financialAssetsService.getFinancialAssets(startDate, endDate, false);

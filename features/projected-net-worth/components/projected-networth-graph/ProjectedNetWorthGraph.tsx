@@ -67,7 +67,7 @@ const ProjectedNetWorthGraph = ({
         ref={containerRef}
         GraphComponent={ProjectedLineGraph}
         linePayloads={dataForLines}
-        withInlfationTag={selectedFilter === "isInflation"}
+        withInlfationTag={selectedFilter === "withInflation"}
         years={years}
       />
     </div>

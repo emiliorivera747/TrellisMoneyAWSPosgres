@@ -11,13 +11,13 @@ export const fetchProjectionData = async (
   filter: string
 ) => {
   switch (filter) {
-    case "isNoInflation":
+    case "withNoInflation":
       return financialProjectionService.generateProjectedNetWorth(
         startDate,
         endDate,
         false
       );
-    case "isInflation":
+    case "withInflation":
       return financialProjectionService.generateProjectedNetWorth(
         startDate,
         endDate,
@@ -49,8 +49,8 @@ export const fetchProjectionData = async (
  * @param endDate - The end date for the projection data (as a timestamp).
  * @param filter - The filter to determine the type of projection data to fetch.
  *                 Possible values:
- *                 - "isNoInflation": Fetch data without considering inflation.
- *                 - "isInflation": Fetch data considering inflation.
+ *                 - "withNoInflation": Fetch data without considering inflation.
+ *                 - "withInflation": Fetch data considering inflation.
  *                 - "isBoth": Fetch both inflation and no-inflation data.
  *
  * @returns A promise that resolves to an object containing the projected net worth and assets.
@@ -67,7 +67,7 @@ export const fetchProjections = async (
   endDate: number,
   filter: string
 ) => {
-  if (filter === "isNoInflation") {
+  if (filter === "withNoInflation") {
     const res =
       await financialProjectionService.generateProjectedAssetsAndNetworth(
         startDate,
@@ -79,13 +79,13 @@ export const fetchProjections = async (
     return {
       projected_net_worth: [
         {
-          value: "isNoInflation",
+          value: "withNoInflation",
           data: projected_net_worth,
         },
       ],
-      projected_assets: [{ value: "isNoInflation", data: projected_assets }],
+      projected_assets: [{ value: "withNoInflation", data: projected_assets }],
     };
-  } else if (filter === "isInflation") {
+  } else if (filter === "withInflation") {
     const res =
       await financialProjectionService.generateProjectedAssetsAndNetworth(
         startDate,
@@ -98,11 +98,11 @@ export const fetchProjections = async (
     return {
       projected_net_worth: [
         {
-          value: "isInflation",
+          value: "withInflation",
           data: projected_net_worth,
         },
       ],
-      projected_assets: [{ value: "isInflation", data: projected_assets }],
+      projected_assets: [{ value: "withInflation", data: projected_assets }],
     };
   } else if (filter === "isBoth") {
     const noInflationData =
@@ -132,21 +132,21 @@ export const fetchProjections = async (
     return {
       projected_net_worth: [
         {
-          value: "isInflation",
+          value: "withInflation",
           data: projected_net_worth_inflation,
         },
         {
-          value: "isNoInflation",
+          value: "withNoInflation",
           data: projected_net_worth_no_inflation,
         },
       ],
       projected_assets: [
         {
-          value: "isInflation",
+          value: "withInflation",
           data: projected_assets_inflation as FinancialAssets[],
         },
         {
-          value: "isNoInflation",
+          value: "withNoInflation",
           data: projected_assets_no_inflation as FinancialAssets[],
         },
       ],

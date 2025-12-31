@@ -26,7 +26,7 @@ const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
 export const useDashboard = (): DashboardState => {
   const [selectedYear, setSelectedYear] = useState<number>(currentYear + 40);
   const [selectedFilter, setSelectedFilter] =
-    useState<InflationFilters>("isNoInflation");
+    useState<InflationFilters>("withNoInflation");
   const [retirementYear, setRetirementYear] = useState(DEFAULT_RETIREMENT_YEAR);
 
   const {

@@ -1,4 +1,4 @@
-export type InflationFilters = "isInflation" | "isNoInflation" | "isBoth";
+export type InflationFilters = "withInflation" | "withNoInflation" | "isBoth";
 
 export interface LineGraphFilterButtonsProps {
   selectedFilter: InflationFilters;

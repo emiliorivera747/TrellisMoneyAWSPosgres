@@ -14,7 +14,7 @@ const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
  *
  * @returns An object containing the state properties and methods:
  * - `selectedYear`: The currently selected year (default is `DEFAULT_RETIREMENT_YEAR`).
- * - `selectedFilter`: The currently selected filter (default is `"isNoInflation"`).
+ * - `selectedFilter`: The currently selected filter (default is `"withNoInflation"`).
  * - `retirementYear`: The retirement year (default is `DEFAULT_RETIREMENT_YEAR`).
  * - `mode`: The current mode, either `"view"` or `"edit"` (default is `"view"`).
  * - `setSelectedYear`: A function to update the `selectedYear`.
@@ -27,7 +27,7 @@ export const createDashboardFilterSlice: StateCreator<DashboardFiltersSlice> = (
   set
 ) => ({
   selectedYear: DEFAULT_RETIREMENT_YEAR,
-  selectedFilter: "isNoInflation",
+  selectedFilter: "withNoInflation",
   retirementYear: DEFAULT_RETIREMENT_YEAR,
   mode: "view",
 

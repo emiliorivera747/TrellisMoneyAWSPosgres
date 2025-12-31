@@ -20,9 +20,9 @@ export interface DashboardState {
   /**
    * The selected filter for the dashboard
    * may be one of the following:
-   * - isNoInflation
+   * - withNoInflation
    * - isBoth
-   * - isInflation
+   * - withInflation
    */
   selectedFilter: InflationFilters;
 
