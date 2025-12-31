@@ -14,13 +14,16 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 import { useFetchNetWorth } from "@/features/net-worth/hooks/useFetchNetWorth";
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 
+// Selectors
+import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
+
 /**
  * Displays all of the components in the dashboard
  * @returns JSX.Element
  */
 export const DashboardContent = () => {
-  const { form, onSubmit, selectedYear, selectedFilter } =
-    useDashboardContext();
+  const { selectedYear, selectedFilter } = useDashboardFilters();
+  const { form, onSubmit } = useDashboardContext();
 
   /**
    * Both Request will be made in parallel
@@ -42,7 +45,6 @@ export const DashboardContent = () => {
     <div className="w-full box-border max-h-screen overflow-y-scroll flex flex-row gap-4">
       <div className="p-4 w-[70%] mt-[2%] max-h-screen">
         <PrimaryDashboardSection>
-          
           <ProjectedNetWorthGraph
             futureProjectionData={futureProjectionData}
             futureProjectionHasError={futureProjectionHasError}
