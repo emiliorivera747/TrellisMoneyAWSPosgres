@@ -1,4 +1,5 @@
 import { LinePayload } from "@/types/graphs";
+import { FutureProjectionData } from "@/types/futureProjections";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 export interface SecurityData {
   date: Date;
@@ -98,4 +99,11 @@ export interface PrimaryGraphHeaderProps {
   tooltipData: any;
   withInflationTag?: boolean;
   years: number[];
+}
+
+export interface ProjectedNetWorthGraphProps {
+  futureProjectionData: FutureProjectionData | undefined;
+  futureProjectionError?: Error | null;
+  futureProjectionHasError: boolean;
+  futureProjectionLoading: boolean;
 }

@@ -1,6 +1,5 @@
 import GraphHeaders from "@/components/headers/GraphHeaders";
 import MultipleValPriceChange from "@/components/dashboard/MultipleValPriceChange";
-import { LinePayload } from "@/types/graphs";
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
 import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/filters/RenderFilters";

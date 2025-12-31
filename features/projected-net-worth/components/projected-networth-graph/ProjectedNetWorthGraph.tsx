@@ -22,18 +22,10 @@ import useFilteredData from "@/features/projected-net-worth/hooks/useFilteredDat
 const defaultYearsIntoTheFuture = 100;
 const currentYear = Number(new Date().getFullYear().toString());
 
-// Types
-import { FutureProjectionData } from "@/types/futureProjections";
-
 // Selectors
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 
-interface ProjectedNetWorthGraphProps {
-  futureProjectionData: FutureProjectionData | undefined;
-  futureProjectionError?: Error | null;
-  futureProjectionHasError: boolean;
-  futureProjectionLoading: boolean;
-}
+import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 /**
  * Projects the future net worth of the user based on the data provided
@@ -46,7 +38,6 @@ const ProjectedNetWorthGraph = ({
   futureProjectionLoading,
 }: ProjectedNetWorthGraphProps) => {
   const containerRef = useRef(null);
-
   const { selectedYear, selectedFilter } = useDashboardFilters();
 
   /**
