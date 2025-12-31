@@ -49,17 +49,13 @@ const ProjectedAssetsCard = () => {
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
         } absolute w-full text-[#343a40] h-auto max-h-[90vh] overflow-y-hidden`}
       >
-        {/* Assets car header*/}
         <AssetsCardPrimaryHeader
           year={selectedYear}
           mode={mode}
           setMode={assets?.length > 0 ? handleModeChange : () => {}}
         />
-
         <AssetsTable />
-
         <UpdateButton />
-        
         {assets?.length === 0 && <NoAssetsTable />}
       </div>
     </ProjectedAssetsContainer>

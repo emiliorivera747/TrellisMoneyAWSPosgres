@@ -7,9 +7,6 @@ import NetValueItems from "@/features/dashboard/components/NetValueItems";
 // Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
 
-// Context
-import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
-
 // Hooks
 import { useFetchNetWorth } from "@/features/net-worth/hooks/useFetchNetWorth";
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
@@ -18,12 +15,6 @@ import useFetchProjections from "@/hooks/financial-projections/useFetchProjectio
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 
 import { useForm, UseFormReturn } from "react-hook-form";
-
-import useFetchUser from "@/hooks/user/useFetchUser";
-
-import { handleFormSubmission } from "@/features/projected-financial-assets/utils/handleAssetFormSubmission";
-
-import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 
 interface FormData {
   [key: string]: number;
@@ -35,15 +26,6 @@ interface FormData {
  */
 export const DashboardContent = () => {
   const { selectedYear, selectedFilter } = useDashboardFilters();
-  const { user, error: userError } = useFetchUser();
-
-  const form = useForm<FormData, any, undefined>({
-    defaultValues: {},
-  }) as UseFormReturn<FormData, any, undefined>;
-
-  const { handleModeChange } = useDashboardContext();
-
-  const { mutateAssets } = useUpdateAssets();
 
   /**
    * Both Request will be made in parallel
@@ -60,18 +42,6 @@ export const DashboardContent = () => {
     selectedYear,
     selectedFilter,
   });
-
-  const onSubmit = (data: FormData) => {
-    console.log("DATA", data);
-    handleFormSubmission(
-      data,
-      futureProjectionData,
-      selectedFilter,
-      user,
-      mutateAssets
-    );
-    handleModeChange("view");
-  };
 
   return (
     <div className="w-full box-border max-h-screen overflow-y-scroll flex flex-row gap-4">
@@ -96,7 +66,7 @@ export const DashboardContent = () => {
 
       {/* Secondary Dashboard Section */}
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
-        <AssetsCard form={form} onSubmit={onSubmit} />
+        <AssetsCard  />
       </div>
     </div>
   );

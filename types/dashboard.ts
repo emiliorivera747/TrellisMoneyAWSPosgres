@@ -111,7 +111,7 @@ export interface DashboardState {
    * @param asset
    * @returns
    */
-  mutateAsset: (asset: any) => void;
+  mutateAssets: (asset: any) => void;
 
   /**
    *

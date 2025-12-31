@@ -73,28 +73,30 @@ const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
  * @param param0
  * @returns growth rate cell
  */
-const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => (
-  <TableCell className="flex justify-center items-end mt-3 w-[1/3]">
-    <FormField
-      key={`${asset.name}-${asset.account_id}-${asset.security_id}`}
-      control={form.control}
-      name={`${asset.name}-${asset.account_id}-${asset.security_id}`}
-      render={({ field }) => (
-        <FormItem>
-          <NumberInputV2
-            key={`${asset.name}-${asset.account_id}-${asset.security_id}`}
-            defaultValue={((asset.annual_growth_rate ?? 0) * 100).toFixed(0)}
-            className="text-[0.85rem] pl-2"
-            min={-100}
-            max={100}
-            step={0.1}
-            {...field}
-          />
-        </FormItem>
-      )}
-    />
-  </TableCell>
-);
+const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => {
+  return (
+    <TableCell className="flex justify-center items-end mt-3 w-[1/3]">
+      <FormField
+        key={`${asset.name}-${asset.account_id}-${asset.security_id}`}
+        control={form.control}
+        name={`${asset.name}-${asset.account_id}-${asset.security_id}`}
+        render={({ field }) => (
+          <FormItem>
+            <NumberInputV2
+              key={`${asset.name}-${asset.account_id}-${asset.security_id}`}
+              defaultValue={((asset.annual_growth_rate ?? 0) * 100).toFixed(0)}
+              className="text-[0.85rem] pl-2"
+              min={-100}
+              max={100}
+              step={0.1}
+              {...field}
+            />
+          </FormItem>
+        )}
+      />
+    </TableCell>
+  );
+};
 
 /**
  * Display the growth rate cell text

@@ -10,7 +10,7 @@ import { FutureProjectionData } from "@/types/futureProjections";
  * @param projectionData - Data related to projected assets.
  * @param selectedFilter - Currently selected filter.
  * @param user - Current user information.
- * @param mutateAsset - Function to mutate asset data.
+ * @param mutateAssets - Function to mutate asset data.
  * @param mutateAccount - Function to mutate account data.
  */
 export const handleFormSubmission = (

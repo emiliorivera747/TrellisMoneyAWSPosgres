@@ -5,10 +5,8 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/hooks/user/useFetchUser";
-import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 import { handleFormSubmission } from "@/features/projected-financial-assets/utils/handleAssetFormSubmission";
 import { DashboardState } from "@/types/dashboard";
-
 
 const currentYear = Number(new Date().getFullYear().toString());
 
@@ -38,11 +36,7 @@ export const useDashboard = (): DashboardState => {
     selectedFilter,
   });
 
-  const {
-    mutate: mutateAsset,
-    isLoadingAssets,
-    isErrorAssets,
-  } = useUpdateAssets();
+  const { mutateAssets, isLoadingAssets, isErrorAssets } = useUpdateAssets();
 
   const { user, error: userError } = useFetchUser();
 
@@ -84,11 +78,11 @@ export const useDashboard = (): DashboardState => {
         futureProjectionData,
         selectedFilter,
         user,
-        mutateAsset
+        mutateAssets
       );
       setMode("view");
     },
-    [futureProjectionData, selectedFilter, user, mutateAsset]
+    [futureProjectionData, selectedFilter, user, mutateAssets]
   );
 
   const assets = useMemo(() => {
@@ -111,7 +105,7 @@ export const useDashboard = (): DashboardState => {
       retirementYear,
       editRetirementYear,
       handleModeChange,
-      mutateAsset,
+      mutateAssets,
       handleYearSelection,
       handleFilterChange,
       onSubmit,
@@ -131,7 +125,7 @@ export const useDashboard = (): DashboardState => {
       retirementYear,
       editRetirementYear,
       handleModeChange,
-      mutateAsset,
+      mutateAssets,
       handleYearSelection,
       handleFilterChange,
       onSubmit,

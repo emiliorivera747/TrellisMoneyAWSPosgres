@@ -3,6 +3,7 @@
 import React from "react";
 import { Form } from "@/components/ui/form";
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
+import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 
 interface AssetsFormProps {
   form: any;
@@ -14,9 +15,11 @@ interface AssetsFormProps {
  * AssetsForm component is in charge of rendering the form for the projected assets.
  *
  * @param param0
- * @returns
- */
 const AssetsCard: React.FC<AssetsFormProps> = ({ form, onSubmit }) => {
+ */
+const AssetsCard: React.FC<AssetsFormProps> = () => {
+  const { form, onSubmit } = useDashboardContext();
+
   return (
     <Form {...form}>
       <form
