@@ -61,27 +61,27 @@ export interface DashboardState {
    */
   isLoadingAssets: boolean;
 
-  /**
-   * Net worth data included assets and liabilities
-   */
-  netWorthData: {
-    data: { netWorth: number; assets: number; liabilities: number };
-  } | null;
+  // /**
+  //  * Net worth data included assets and liabilities
+  //  */
+  // netWorthData: {
+  //   data: { netWorth: number; assets: number; liabilities: number };
+  // } | null;
 
   /**
    * Assets data
    */
   assets: Assets[];
 
-  /**
-   * The error for the net worth data
-   */
-  netWorthError: any;
+  // /**
+  //  * The error for the net worth data
+  //  */
+  // netWorthError: any;
 
-  /**
-   * The loading state for the net worth data
-   */
-  netWorthLoading: boolean;
+  // /**
+  //  * The loading state for the net worth data
+  //  */
+  // netWorthLoading: boolean;
 
   /**
    * The mode for the asset card

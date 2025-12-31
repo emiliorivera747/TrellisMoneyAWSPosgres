@@ -9,8 +9,6 @@ import useGenerateToken from "@/hooks/plaid/useGenerateToken";
 import { handleFormSubmission } from "@/features/projected-financial-assets/utils/handleAssetFormSubmission";
 import { DashboardState } from "@/types/dashboard";
 
-// Hooks
-import { useFetchNetWorth } from "@/features/net-worth/hooks/useFetchNetWorth";
 
 const currentYear = Number(new Date().getFullYear().toString());
 
@@ -38,9 +36,7 @@ export const useDashboard = (): DashboardState => {
   } = useFetchProjections({
     selectedYear,
     selectedFilter,
-  }); 
-
-  const { netWorthData, netWorthError, netWorthLoading } = useFetchNetWorth();
+  });
 
   const {
     mutate: mutateAsset,
@@ -113,9 +109,6 @@ export const useDashboard = (): DashboardState => {
       isLoadingAssets,
       form,
       mode,
-      netWorthData,
-      netWorthError,
-      netWorthLoading,
       assets,
       retirementYear,
       editRetirementYear,
@@ -137,9 +130,6 @@ export const useDashboard = (): DashboardState => {
       isLoadingAssets,
       form,
       mode,
-      netWorthData,
-      netWorthError,
-      netWorthLoading,
       assets,
       retirementYear,
       editRetirementYear,
