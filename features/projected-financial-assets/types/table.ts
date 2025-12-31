@@ -1,13 +1,14 @@
 import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
-import { AssetsWithType } from "@/types/assets";
+import { AssetCardMode } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+
 export interface TableBodyForAssetsProps {
   assets: Assets[];
   form: any;
-  mode: "edit" | "view";
+  mode: AssetCardMode;
 }
 
-export interface AssetsTableProps{
+export interface AssetsTableProps {
   assets: Assets[];
   form: any;
-  mode: "edit" | "view";
+  mode: AssetCardMode;
 }

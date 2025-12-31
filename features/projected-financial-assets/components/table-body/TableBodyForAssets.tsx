@@ -6,6 +6,7 @@ import AssetGroup from "@/features/projected-financial-assets/components/table-b
 
 // Context
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
+import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 
 /**
  *  Displays the groups of assets as well as the assets in each group.
@@ -14,7 +15,8 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
  * @returns table body for assets
  */
 const TableBodyForAssets = () => {
-  const { assets, form, mode } = useDashboardContext();
+  const { assets, form } = useDashboardContext();
+  const { mode } = useDashboardFilters();
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
 
   useEffect(() => {

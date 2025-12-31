@@ -1,6 +1,8 @@
 import { FieldValues } from "react-hook-form";
 import { Decimal } from "decimal.js";
 
+export type AssetCardMode = "edit" | "view";
+
 export type AccountType =
   | "depository"
   | "investment"
@@ -36,7 +38,7 @@ export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
   selectedYear: number;
   form: any;
   isLoading: boolean;
-  mode: "edit" | "view";
+  mode: AssetCardMode;
   handleModeChange: () => void;
 }
 
@@ -52,14 +54,14 @@ export interface AssetName {
 export interface AssetRowProps {
   asset: Assets;
   form: any;
-  mode: "edit" | "view";
+  mode: AssetCardMode;
 }
 
 export interface AssetGroupProps {
   assetType: string;
   assets: Assets[];
   form: any;
-  mode: "edit" | "view";
+  mode: AssetCardMode;
 }
 
 export interface ProjectionCellProps {

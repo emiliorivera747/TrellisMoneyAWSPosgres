@@ -2,7 +2,7 @@ import { Activity, useRef } from "react";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButtonV2";
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
-
+import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 /**
  * UpdateButton Component
  *
@@ -29,7 +29,7 @@ import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
  */
 const UpdateButton = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { mode } = useDashboardContext();
+  const { mode } = useDashboardFilters();
   const { isLoadingAssets } = useUpdateAssets();
 
   return (

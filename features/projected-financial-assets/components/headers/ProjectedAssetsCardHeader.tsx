@@ -8,6 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { useDashboardFilters , useDashboardFiltersWithActions} from "@/stores/slices/dashboardFilters.selectors";
+
 type mode = "edit" | "view";
 type setMode = (mode: "edit" | "view") => void;
 
@@ -85,18 +87,13 @@ const MenuButton = ({
   );
 };
 
-export const AssetsCardPrimaryHeader = ({
-  year,
-  mode,
-  setMode,
-}: {
-  year: number;
-  mode: mode;
-  setMode: setMode;
-}) => {
+export const AssetsCardPrimaryHeader = () => {
+  const {mode, selectedYear} = useDashboardFilters();
+  const {setMode} = useDashboardFiltersWithActions();
+
   return (
     <div className="font-bold text-zinc-900 flex items-center justify-between">
-      <HeaderTitle year={year} />
+      <HeaderTitle year={selectedYear} />
       <HeaderDropdown mode={mode} setMode={setMode} />
     </div>
   );

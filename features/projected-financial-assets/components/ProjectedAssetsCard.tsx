@@ -23,9 +23,9 @@ import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
  * @returns projected assets card
  */
 const ProjectedAssetsCard = () => {
-  const { mode, handleModeChange, assets } = useDashboardContext();
-  const { selectedYear, selectedFilter } = useDashboardFilters();
+  const { assets } = useDashboardContext();
 
+  const { selectedYear, selectedFilter, mode } = useDashboardFilters();
   const { isLoadingAssets, isErrorAssets, assetError } = useUpdateAssets();
 
   const { futureProjectionLoading } = useFetchProjections({
@@ -34,7 +34,7 @@ const ProjectedAssetsCard = () => {
   });
 
   if (isErrorAssets) return <AssetErrors error={assetError} />;
-  
+
   if (isLoadingAssets || futureProjectionLoading)
     return <ProjectedAssetsCardSkeleton />;
 
@@ -48,11 +48,7 @@ const ProjectedAssetsCard = () => {
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
         } absolute w-full text-[#343a40] h-auto max-h-[90vh] overflow-y-hidden`}
       >
-        <AssetsCardPrimaryHeader
-          year={selectedYear}
-          mode={mode}
-          setMode={assets?.length > 0 ? handleModeChange : () => {}}
-        />
+        <AssetsCardPrimaryHeader />
         <AssetsTable />
         <UpdateButton />
         {assets?.length === 0 && <NoAssetsTable />}

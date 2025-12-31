@@ -38,9 +38,18 @@ export const useDashboard = (): DashboardState => {
 
   const { mutateAssets, isLoadingAssets, isErrorAssets } = useUpdateAssets();
 
+  const { user, error: userError } = useFetchUser();
+
   const form = useForm<FormData, any, undefined>({
     defaultValues: {},
   }) as UseFormReturn<FormData, any, undefined>;
+
+  const [mode, setMode] = useState<"edit" | "view">("view");
+
+  const handleModeChange = useCallback((mode: "edit" | "view") => {
+    setMode(mode);
+  }, []);
+
 
   const assets = useMemo(() => {
     return futureProjectionData?.projected_assets?.[0]?.data || [];
@@ -53,9 +62,14 @@ export const useDashboard = (): DashboardState => {
       futureProjectionData,
       futureProjectionError,
       futureProjectionLoading,
+      user,
+      userError,
       isLoadingAssets,
       form,
+      mode,
       assets,
+      retirementYear,
+      handleModeChange,
       mutateAssets,
     }),
     [
@@ -64,10 +78,15 @@ export const useDashboard = (): DashboardState => {
       futureProjectionData,
       futureProjectionError,
       futureProjectionLoading,
+      user,
+      userError,
       isLoadingAssets,
       form,
+      mode,
       assets,
       retirementYear,
+      handleModeChange,
+      mutateAssets,
     ]
   );
 };

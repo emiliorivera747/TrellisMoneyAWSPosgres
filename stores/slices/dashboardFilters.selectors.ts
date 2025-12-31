@@ -38,5 +38,6 @@ export const useDashboardFiltersWithActions = () =>
       mode: state.mode,
       setSelectedYear: state.setSelectedYear,
       toggleMode: state.toggleMode,
+      setMode: state.setMode, // Added functionality to set the mode
     }))
   );
