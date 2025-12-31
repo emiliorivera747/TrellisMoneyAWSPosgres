@@ -17,7 +17,7 @@ import useFetchProjections from "@/hooks/financial-projections/useFetchProjectio
 // Selectors
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 
-import { useForm, SubmitHandler, UseFormReturn } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 
 import useFetchUser from "@/hooks/user/useFetchUser";
 
