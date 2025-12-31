@@ -1,13 +1,14 @@
 import React from "react";
 
 //types
-import {LineGraphFilterButtonProps} from '@/features/projected-net-worth/types/filters'
+import { LineGraphFilterButtonProps } from "@/features/projected-net-worth/types/filters";
+
 
 const LineGraphFilterButton = ({
   label,
   isSelected,
   svg_path,
-  color ,
+  color,
   onClick,
 }: LineGraphFilterButtonProps) => {
   return (

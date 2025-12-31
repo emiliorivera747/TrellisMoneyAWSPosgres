@@ -3,6 +3,7 @@ import { filterConfig } from "@/features/projected-net-worth/config/filterConfig
 
 //Components
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
+import { DialogClose } from "@/components/ui/dialog";
 
 //Types
 import { LineGraphFilterButtonsProps } from "@/features/projected-net-worth/types/filters";
@@ -21,7 +22,7 @@ const RenderFilters = ({
   handleFilterChange,
 }: LineGraphFilterButtonsProps) => {
   return (
-    <div className="grid grid-cols-3 gap-3 py-2">
+    <div className="grid grid-rows-3 gap-3 py-2 px-8">
       {filterConfig.map(
         (
           filter: {
@@ -32,14 +33,15 @@ const RenderFilters = ({
           },
           index
         ) => (
-          <LineGraphFilterButton
-            key={index}
-            isSelected={selectedFilter === filter.key}
-            svg_path={filter.svg_path}
-            label={filter.label}
-            onClick={() => handleFilterChange(filter.key)}
-            color={filter.color}
-          />
+     
+            <LineGraphFilterButton
+              key={index}
+              isSelected={selectedFilter === filter.key}
+              svg_path={filter.svg_path}
+              label={filter.label}
+              onClick={()=>handleFilterChange(filter.key)}
+              color={filter.color}
+            />
         )
       )}
     </div>

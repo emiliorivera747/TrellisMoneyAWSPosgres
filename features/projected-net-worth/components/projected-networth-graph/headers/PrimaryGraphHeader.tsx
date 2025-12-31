@@ -1,19 +1,13 @@
+"use client";
+import { useState } from "react";
 import GraphHeaders from "@/components/headers/GraphHeaders";
 import MultipleValPriceChange from "@/components/dashboard/MultipleValPriceChange";
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
 import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/filters/RenderFilters";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import DialogHeader from "@/features/accounts/components/headers/DialogHeader";
 
 import {
   useDashboardFilters,
@@ -21,6 +15,8 @@ import {
 } from "@/stores/slices/dashboardFilters.selectors";
 
 import { PrimaryGraphHeaderProps } from "@/features/projected-net-worth/types/graphComponents";
+
+import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 /**
  * PrimaryGraphHeader component renders the header section for the projected net worth graph.
@@ -61,6 +57,14 @@ const PrimaryGraphHeader = ({
     useDashboardFilters();
   const { setSelectedFilter, setRetirementYear, setSelectedYear } =
     useDashboardFilterActions();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleFilterSelection = (filter: InflationFilters) => {
+    setSelectedFilter(filter)
+    setIsDialogOpen(false);
+  };
+
   return (
     <header className="flex flex-col w-full h-auto">
       <div className="flex flex-row text-[1.4rem] gap-2 w-full justify-between">
@@ -76,9 +80,9 @@ const PrimaryGraphHeader = ({
             />
           </div>
         </div>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <button className=" text-tertiary-1000 border border-tertiary-300 text-xs flex flex-row justify-center gap-2 p-3 px-4 rounded-[12px] hover:bg-tertiary-200 items-center">
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <button className="text-tertiary-1000 border border-tertiary-300 text-xs flex flex-row justify-center gap-2 p-3 px-4 rounded-[12px] hover:bg-tertiary-200 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -95,40 +99,15 @@ const PrimaryGraphHeader = ({
               </svg>
               Filters
             </button>
-          </AlertDialogTrigger>
-          <AlertDialogContent className="shadow-lg">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="mb-6 border-b border-tertiary-400 pb-4 flex justify-between items-center">
-                Filters
-                <AlertDialogCancel className="border-none shadow-none rounded-full p-3 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.8}
-                    stroke="currentColor"
-                    className="size-8"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18 18 6M6 6l12 12"
-                    />
-                  </svg>
-                </AlertDialogCancel>
-              </AlertDialogTitle>
-              <RenderFilters
-                selectedFilter={selectedFilter}
-                handleFilterChange={setSelectedFilter}
-              />
-            </AlertDialogHeader>
-            <AlertDialogFooter className="pt-6">
-              <AlertDialogAction className="bg-tertiary-1000 py-6 rounded-[12px]">
-                Continue
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+          </DialogTrigger>
+          <DialogContent className="shadow-lg">
+            <DialogHeader title={"Filters"} />
+            <RenderFilters
+              selectedFilter={selectedFilter}
+              handleFilterChange={handleFilterSelection}
+            />
+          </DialogContent>
+        </Dialog>
       </div>
       <div className="flex flex-row">
         <MultipleValPriceChange
