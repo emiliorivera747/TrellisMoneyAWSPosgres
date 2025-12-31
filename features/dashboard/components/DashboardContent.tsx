@@ -1,6 +1,3 @@
-"use client";
-import { useState, useCallback, useMemo } from "react";
-
 // Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import AssetsCard from "@/features/projected-financial-assets/components/AssetFrom";
@@ -32,26 +29,21 @@ interface FormData {
   [key: string]: number;
 }
 
-
 /**
  * Displays all of the components in the dashboard
  * @returns JSX.Element
  */
 export const DashboardContent = () => {
-  const { selectedYear, selectedFilter, } = useDashboardFilters();
+  const { selectedYear, selectedFilter } = useDashboardFilters();
   const { user, error: userError } = useFetchUser();
 
   const form = useForm<FormData, any, undefined>({
     defaultValues: {},
   }) as UseFormReturn<FormData, any, undefined>;
 
-  const {handleModeChange} = useDashboardContext()
-  
-  const {
-    mutate: mutateAsset,
-    isLoadingAssets,
-    isErrorAssets,
-  } = useUpdateAssets();
+  const { handleModeChange } = useDashboardContext();
+
+  const { mutateAssets } = useUpdateAssets();
 
   /**
    * Both Request will be made in parallel
@@ -69,19 +61,16 @@ export const DashboardContent = () => {
     selectedFilter,
   });
 
-  const onSubmit = useCallback<SubmitHandler<FormData>>(
-    (data) => {
-      handleFormSubmission(
-        data,
-        futureProjectionData,
-        selectedFilter,
-        user,
-        mutateAsset
-      );
-      handleModeChange("view");
-    },
-    [futureProjectionData, selectedFilter, user, mutateAsset]
-  );
+  const onSubmit = (data: FormData) => {
+    handleFormSubmission(
+      data,
+      futureProjectionData,
+      selectedFilter,
+      user,
+      mutateAssets
+    );
+    handleModeChange("view");
+  };
 
   return (
     <div className="w-full box-border max-h-screen overflow-y-scroll flex flex-row gap-4">

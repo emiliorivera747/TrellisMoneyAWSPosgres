@@ -8,6 +8,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+type mode = "edit" | "view";
+type setMode = (mode: "edit" | "view") => void;
+
 const HeaderTitle = ({ year }: { year: number }) => (
   <div>
     <span className="text-sm tracking-wider pl-6">Projections</span>
@@ -19,8 +22,8 @@ const HeaderDropdown = ({
   mode,
   setMode,
 }: {
-  mode: "edit" | "view";
-  setMode: () => void;
+  mode: mode;
+  setMode: setMode;
 }) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
@@ -53,12 +56,12 @@ const HeaderDropdown = ({
       <DropdownMenuSeparator />
       {mode === "view" && (
         <DropdownMenuItem className="focus:bg-tertiary-400/50 rounded transition-all duration-300 focus:font-semibold">
-          <MenuButton setMode={setMode}>Edit</MenuButton>
+          <MenuButton setMode={() => setMode("edit")}>Edit</MenuButton>
         </DropdownMenuItem>
       )}
       {mode === "edit" && (
         <DropdownMenuItem className="focus:bg-tertiary-400/50 rounded transition-all duration-300 focus:font-semibold">
-          <MenuButton setMode={setMode}>View</MenuButton>
+          <MenuButton setMode={() => setMode("view")}>View</MenuButton>
         </DropdownMenuItem>
       )}
     </DropdownMenuContent>
@@ -75,21 +78,21 @@ const MenuButton = ({
   return (
     <button
       className=" rounded h-full w-full text-[0.8rem] text-tertiary-800 items-start flex justify-start "
-      onClick={() => setMode()}
+      onClick={setMode}
     >
       {children}
     </button>
   );
 };
 
-export const ProjectedHoldingCardPrimaryHeader = ({
+export const AssetsCardPrimaryHeader = ({
   year,
   mode,
   setMode,
 }: {
   year: number;
-  mode: "edit" | "view";
-  setMode: () => void;
+  mode: mode;
+  setMode: setMode;
 }) => {
   return (
     <div className="font-bold text-zinc-900 flex items-center justify-between">

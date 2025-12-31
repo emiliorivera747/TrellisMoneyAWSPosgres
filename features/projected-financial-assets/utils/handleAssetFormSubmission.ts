@@ -1,8 +1,6 @@
-
-
 //Functions
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
-import { ProjectedAssets} from "@/features/projected-financial-assets/types/projectedAssets";
+import { ProjectedAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 import { FutureProjectionData } from "@/types/futureProjections";
 
 /**
@@ -20,15 +18,16 @@ export const handleFormSubmission = (
   projectionData: FutureProjectionData | undefined | null,
   selectedFilter: string,
   user: any,
-  mutate: (asset: any) => void,
+  mutate: (asset: any) => void
 ) => {
-
   if (!projectionData) return;
 
-  const currentProjectedAsset = getCurrentProjectedAsset(
-    projectionData,
-    selectedFilter
-  ) || projectionData.projected_assets[0];
+  console.log("data", data);
+  console.log("projectionData", projectionData);
+
+  const currentProjectedAsset =
+    getCurrentProjectedAsset(projectionData, selectedFilter) ||
+    projectionData.projected_assets[0];
 
   if (!currentProjectedAsset) return;
 
@@ -47,7 +46,6 @@ const getCurrentProjectedAsset = (
   selectedFilter: string
 ) => {
   return projectionData?.projected_assets?.find(
-    (payload: ProjectedAssets) =>
-      payload.value === selectedFilter
+    (payload: ProjectedAssets) => payload.value === selectedFilter
   );
 };

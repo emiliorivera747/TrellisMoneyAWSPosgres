@@ -13,9 +13,10 @@ const useUpdateAssets = () => {
 
   const queryClient = useQueryClient();
   const {
-    mutate,
+    mutate: mutateAssets,
     isPending: isLoadingAssets,
     isError: isErrorAssets,
+    error: assetError,
   } = useMutation({
     mutationFn: assetService.updateAllAssets,
     onSuccess: () => {
@@ -35,7 +36,7 @@ const useUpdateAssets = () => {
       });
     },
   });
-  return { mutate, isLoadingAssets, isErrorAssets };
+  return { mutateAssets, isLoadingAssets, isErrorAssets, assetError};
 };
 
 export default useUpdateAssets;

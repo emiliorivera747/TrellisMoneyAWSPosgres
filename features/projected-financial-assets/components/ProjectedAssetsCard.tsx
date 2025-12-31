@@ -7,16 +7,15 @@ import ProjectedAssetsContainer from "@/features/projected-financial-assets/comp
 // Components
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButtonV2";
 import AssetsTable from "@/features/projected-financial-assets/components/tables/AssetsTable";
-import { ProjectedHoldingCardPrimaryHeader } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
+import { AssetsCardPrimaryHeader } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
 import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
 import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
 
 // Context hook
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
-
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
-
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
+import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 
 /**
  *
@@ -26,10 +25,10 @@ import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors"
  * @returns projected assets card
  */
 const ProjectedAssetsCard = () => {
-  const { isLoadingAssets, mode, handleModeChange, assets } =
-    useDashboardContext();
-
+  const { mode, handleModeChange, assets } = useDashboardContext();
   const { selectedYear, selectedFilter } = useDashboardFilters();
+
+  const { isLoadingAssets, isErrorAssets, assetError } = useUpdateAssets();
 
   const { futureProjectionLoading } = useFetchProjections({
     selectedYear,
@@ -38,6 +37,10 @@ const ProjectedAssetsCard = () => {
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  if (isErrorAssets)
+    return (
+      <div>There was an Error: {assetError?.message || "Unknown error"}</div>
+    );
   if (isLoadingAssets || futureProjectionLoading)
     return <ProjectedAssetsCardSkeleton />;
 
@@ -51,8 +54,8 @@ const ProjectedAssetsCard = () => {
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
         } absolute w-full text-[#343a40] h-auto max-h-[90vh] overflow-y-hidden`}
       >
-        
-        <ProjectedHoldingCardPrimaryHeader
+        {/* Assets car header*/}
+        <AssetsCardPrimaryHeader
           year={selectedYear}
           mode={mode}
           setMode={assets?.length > 0 ? handleModeChange : () => {}}
@@ -60,6 +63,7 @@ const ProjectedAssetsCard = () => {
 
         <AssetsTable />
 
+        {/* Update button */}
         <Activity mode={mode === "edit" ? "visible" : "hidden"}>
           <div className="flex justify-center items-center">
             <PrimarySubmitButton
@@ -70,7 +74,7 @@ const ProjectedAssetsCard = () => {
             />
           </div>
         </Activity>
-
+        
         {/* If there are not assets */}
         {assets?.length === 0 && <NoAssetsTable />}
       </div>
