@@ -38,52 +38,9 @@ export const useDashboard = (): DashboardState => {
 
   const { mutateAssets, isLoadingAssets, isErrorAssets } = useUpdateAssets();
 
-  const { user, error: userError } = useFetchUser();
-
   const form = useForm<FormData, any, undefined>({
     defaultValues: {},
   }) as UseFormReturn<FormData, any, undefined>;
-
-  const [mode, setMode] = useState<"edit" | "view">("view");
-
-  const handleModeChange = useCallback((mode: "edit" | "view") => {
-    setMode(mode);
-  }, []);
-
-  const handleYearSelection = useCallback((year: number) => {
-    setSelectedYear(year);
-  }, []);
-
-  const handleFilterChange = useCallback((filter: InflationFilters) => {
-    setSelectedFilter(filter);
-  }, []);
-
-  /**
-   * Function to edit the retirement year
-   *
-   * @param year
-   */
-  const editRetirementYear = useCallback(
-    (year: number) => {
-      setRetirementYear(year);
-      handleYearSelection(year);
-    },
-    [handleYearSelection]
-  );
-
-  const onSubmit = useCallback<SubmitHandler<FormData>>(
-    (data) => {
-      handleFormSubmission(
-        data,
-        futureProjectionData,
-        selectedFilter,
-        user,
-        mutateAssets
-      );
-      setMode("view");
-    },
-    [futureProjectionData, selectedFilter, user, mutateAssets]
-  );
 
   const assets = useMemo(() => {
     return futureProjectionData?.projected_assets?.[0]?.data || [];
@@ -96,19 +53,10 @@ export const useDashboard = (): DashboardState => {
       futureProjectionData,
       futureProjectionError,
       futureProjectionLoading,
-      user,
-      userError,
       isLoadingAssets,
       form,
-      mode,
       assets,
-      retirementYear,
-      editRetirementYear,
-      handleModeChange,
       mutateAssets,
-      handleYearSelection,
-      handleFilterChange,
-      onSubmit,
     }),
     [
       selectedYear,
@@ -116,19 +64,10 @@ export const useDashboard = (): DashboardState => {
       futureProjectionData,
       futureProjectionError,
       futureProjectionLoading,
-      user,
-      userError,
       isLoadingAssets,
       form,
-      mode,
       assets,
       retirementYear,
-      editRetirementYear,
-      handleModeChange,
-      mutateAssets,
-      handleYearSelection,
-      handleFilterChange,
-      onSubmit,
     ]
   );
 };

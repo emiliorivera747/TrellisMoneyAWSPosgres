@@ -7,6 +7,7 @@ import { AssetsCardPrimaryHeader } from "@/features/projected-financial-assets/c
 import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
 import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
 import UpdateButton from "@/features/projected-financial-assets/components/buttons/UpdateButton";
+import AssetErrors from "@/features/projected-financial-assets/components/errors/AssetErrors";
 
 // Context hook
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
@@ -32,10 +33,8 @@ const ProjectedAssetsCard = () => {
     selectedFilter,
   });
 
-  if (isErrorAssets)
-    return (
-      <div>There was an Error: {assetError?.message || "Unknown error"}</div>
-    );
+  if (isErrorAssets) return <AssetErrors error={assetError} />;
+  
   if (isLoadingAssets || futureProjectionLoading)
     return <ProjectedAssetsCardSkeleton />;
 

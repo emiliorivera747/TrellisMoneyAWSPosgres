@@ -14,17 +14,12 @@ import useFetchProjections from "@/hooks/financial-projections/useFetchProjectio
 // Selectors
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 
-import { useForm, UseFormReturn } from "react-hook-form";
-
-interface FormData {
-  [key: string]: number;
-}
-
 /**
  * Displays all of the components in the dashboard
  * @returns JSX.Element
  */
 export const DashboardContent = () => {
+  
   const { selectedYear, selectedFilter } = useDashboardFilters();
 
   /**
@@ -66,7 +61,7 @@ export const DashboardContent = () => {
 
       {/* Secondary Dashboard Section */}
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
-        <AssetsCard  />
+        <AssetsCard/>
       </div>
     </div>
   );
