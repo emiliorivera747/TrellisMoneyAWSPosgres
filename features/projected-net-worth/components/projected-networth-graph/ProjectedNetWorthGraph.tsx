@@ -22,9 +22,11 @@ import useFilteredData from "@/features/projected-net-worth/hooks/useFilteredDat
 const defaultYearsIntoTheFuture = 100;
 const currentYear = Number(new Date().getFullYear().toString());
 
-// Context
-import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
+// Types
 import { FutureProjectionData } from "@/types/futureProjections";
+
+// Selectors
+import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 
 interface ProjectedNetWorthGraphProps {
   futureProjectionData: FutureProjectionData | undefined;
@@ -45,7 +47,7 @@ const ProjectedNetWorthGraph = ({
 }: ProjectedNetWorthGraphProps) => {
   const containerRef = useRef(null);
 
-  const { selectedYear, selectedFilter } = useDashboardContext();
+  const { selectedYear, selectedFilter } = useDashboardFilters();
 
   /**
    *  Returns the filtered data based on the projectionData and selected filter.

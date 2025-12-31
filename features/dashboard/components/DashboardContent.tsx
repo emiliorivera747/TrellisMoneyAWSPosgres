@@ -51,7 +51,6 @@ export const DashboardContent = () => {
             futureProjectionLoading={futureProjectionLoading}
             futureProjectionError={futureProjectionError}
           />
-
           <NetValueItems
             netWorthLoading={netWorthLoading}
             netWorthData={netWorthData}

@@ -93,4 +93,9 @@ export interface projectionData {
   data: SecurityData[];
 }
 
-
+export interface PrimaryGraphHeaderProps {
+  linePayloads: LinePayload[];
+  tooltipData: any;
+  withInflationTag?: boolean;
+  years: number[];
+}

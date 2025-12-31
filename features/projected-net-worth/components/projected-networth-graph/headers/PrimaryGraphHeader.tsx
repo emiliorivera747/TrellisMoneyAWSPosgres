@@ -1,4 +1,3 @@
-import React from "react";
 import GraphHeaders from "@/components/headers/GraphHeaders";
 import MultipleValPriceChange from "@/components/dashboard/MultipleValPriceChange";
 import { LinePayload } from "@/types/graphs";
@@ -6,7 +5,6 @@ import SelectYearMenuButton from "@/features/projected-net-worth/components/proj
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
 import RenderFilters from "@/features/projected-net-worth/components/projected-networth-graph/filters/RenderFilters";
 
-import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,27 +16,52 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-interface PrimaryGraphHeaderProps {
-  linePayloads: LinePayload[];
-  tooltipData: any;
-  withInflationTag?: boolean;
-  years: number[];
-}
+import {
+  useDashboardFilters,
+  useDashboardFilterActions,
+} from "@/stores/slices/dashboardFilters.selectors";
 
+import { PrimaryGraphHeaderProps } from "@/features/projected-net-worth/types/graphComponents";
+
+/**
+ * PrimaryGraphHeader component renders the header section for the projected net worth graph.
+ * It includes a title, year selection menu, filters, and additional information such as inflation tags.
+ *
+ * @component
+ * @param {PrimaryGraphHeaderProps} props - The props for the PrimaryGraphHeader component.
+ * @param {Array} props.linePayloads - The data payloads for the graph lines.
+ * @param {TooltipData} props.tooltipData - The data used for the tooltip display.
+ * @param {boolean} props.withInflationTag - A flag to determine if the inflation tag should be displayed.
+ * @param {Array<number>} props.years - The list of years available for selection.
+ *
+ * @returns {JSX.Element} The rendered PrimaryGraphHeader component.
+ *
+ * @remarks
+ * - This component uses the `useDashboardFilters` hook to retrieve the current dashboard filter states.
+ * - The `useDashboardFilterActions` hook is used to update the filter states.
+ * - The `SelectYearMenuButton` component allows users to select a year or edit the retirement year.
+ * - The `AlertDialog` component is used to display a modal for filter selection.
+ * - The `MultipleValPriceChange` component displays price changes for multiple values.
+ * - If `withInflationTag` is true and there is only one line payload, an `InflationTag` is displayed.
+ *
+ * @example
+ * <PrimaryGraphHeader
+ *   linePayloads={linePayloads}
+ *   tooltipData={tooltipData}
+ *   withInflationTag={true}
+ *   years={[2023, 2024, 2025]}
+ * />
+ */
 const PrimaryGraphHeader = ({
   linePayloads,
   tooltipData,
   withInflationTag,
   years,
 }: PrimaryGraphHeaderProps) => {
-  const {
-    selectedYear,
-    retirementYear,
-    selectedFilter,
-    handleFilterChange,
-    handleYearSelection,
-    editRetirementYear,
-  } = useDashboardContext();
+  const { selectedYear, retirementYear, selectedFilter } =
+    useDashboardFilters();
+  const { setSelectedFilter, setRetirementYear, setSelectedYear } =
+    useDashboardFilterActions();
   return (
     <header className="flex flex-col w-full h-auto">
       <div className="flex flex-row text-[1.4rem] gap-2 w-full justify-between">
@@ -49,8 +72,8 @@ const PrimaryGraphHeader = ({
               selectedYear={selectedYear}
               years={years}
               retirementYear={retirementYear}
-              setSelectedYear={handleYearSelection}
-              editRetirementYear={editRetirementYear}
+              setSelectedYear={setSelectedYear}
+              editRetirementYear={setRetirementYear}
             />
           </div>
         </div>
@@ -97,7 +120,7 @@ const PrimaryGraphHeader = ({
               </AlertDialogTitle>
               <RenderFilters
                 selectedFilter={selectedFilter}
-                handleFilterChange={handleFilterChange}
+                handleFilterChange={setSelectedFilter}
               />
             </AlertDialogHeader>
             <AlertDialogFooter className="pt-6">
@@ -108,7 +131,6 @@ const PrimaryGraphHeader = ({
           </AlertDialogContent>
         </AlertDialog>
       </div>
-
       <div className="flex flex-row">
         <MultipleValPriceChange
           payloadForLines={linePayloads}
