@@ -1,6 +1,3 @@
-// React
-import React from "react";
-
 //Config
 import { filterConfig } from "@/features/projected-net-worth/config/filterConfig";
 

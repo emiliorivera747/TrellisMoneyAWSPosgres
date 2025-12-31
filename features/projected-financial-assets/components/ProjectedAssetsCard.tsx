@@ -14,6 +14,10 @@ import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/c
 // Context hook
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 
+import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
+
+import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
+
 /**
  *
  * Displays the projected assets card showing the projected year, asset groups, and assets.
@@ -22,14 +26,15 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
  * @returns projected assets card
  */
 const ProjectedAssetsCard = () => {
-  const {
-    futureProjectionLoading,
-    isLoadingAssets,
+  const { isLoadingAssets, mode, handleModeChange, assets } =
+    useDashboardContext();
+
+  const { selectedYear, selectedFilter } = useDashboardFilters();
+
+  const { futureProjectionLoading } = useFetchProjections({
     selectedYear,
-    mode,
-    handleModeChange,
-    assets,
-  } = useDashboardContext();
+    selectedFilter,
+  });
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -46,12 +51,15 @@ const ProjectedAssetsCard = () => {
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
         } absolute w-full text-[#343a40] h-auto max-h-[90vh] overflow-y-hidden`}
       >
+        
         <ProjectedHoldingCardPrimaryHeader
           year={selectedYear}
           mode={mode}
           setMode={assets?.length > 0 ? handleModeChange : () => {}}
         />
+
         <AssetsTable />
+
         <Activity mode={mode === "edit" ? "visible" : "hidden"}>
           <div className="flex justify-center items-center">
             <PrimarySubmitButton

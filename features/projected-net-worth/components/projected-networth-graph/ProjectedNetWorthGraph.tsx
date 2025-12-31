@@ -24,7 +24,6 @@ const currentYear = Number(new Date().getFullYear().toString());
 
 // Selectors
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
-
 import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 /**
