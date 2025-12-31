@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { AuthError } from "@supabase/supabase-js";
-import {User} from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 
 const client = createClient();
 

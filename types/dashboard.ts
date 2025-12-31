@@ -98,7 +98,7 @@ export interface DashboardState {
    *
    * @returns
    */
-  handleModeChange: () => void;
+  handleModeChange: (mode: "edit" | "view") => void;
 
   /**
    * Form for the asset card

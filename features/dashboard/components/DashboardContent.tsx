@@ -1,3 +1,6 @@
+"use client";
+import { useState, useCallback, useMemo } from "react";
+
 // Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import AssetsCard from "@/features/projected-financial-assets/components/AssetFrom";
@@ -17,13 +20,38 @@ import useFetchProjections from "@/hooks/financial-projections/useFetchProjectio
 // Selectors
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 
+import { useForm, SubmitHandler, UseFormReturn } from "react-hook-form";
+
+import useFetchUser from "@/hooks/user/useFetchUser";
+
+import { handleFormSubmission } from "@/features/projected-financial-assets/utils/handleAssetFormSubmission";
+
+import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
+
+interface FormData {
+  [key: string]: number;
+}
+
+
 /**
  * Displays all of the components in the dashboard
  * @returns JSX.Element
  */
 export const DashboardContent = () => {
-  const { selectedYear, selectedFilter } = useDashboardFilters();
-  const { form, onSubmit } = useDashboardContext();
+  const { selectedYear, selectedFilter, } = useDashboardFilters();
+  const { user, error: userError } = useFetchUser();
+
+  const form = useForm<FormData, any, undefined>({
+    defaultValues: {},
+  }) as UseFormReturn<FormData, any, undefined>;
+
+  const {handleModeChange} = useDashboardContext()
+  
+  const {
+    mutate: mutateAsset,
+    isLoadingAssets,
+    isErrorAssets,
+  } = useUpdateAssets();
 
   /**
    * Both Request will be made in parallel
@@ -40,6 +68,20 @@ export const DashboardContent = () => {
     selectedYear,
     selectedFilter,
   });
+
+  const onSubmit = useCallback<SubmitHandler<FormData>>(
+    (data) => {
+      handleFormSubmission(
+        data,
+        futureProjectionData,
+        selectedFilter,
+        user,
+        mutateAsset
+      );
+      handleModeChange("view");
+    },
+    [futureProjectionData, selectedFilter, user, mutateAsset]
+  );
 
   return (
     <div className="w-full box-border max-h-screen overflow-y-scroll flex flex-row gap-4">

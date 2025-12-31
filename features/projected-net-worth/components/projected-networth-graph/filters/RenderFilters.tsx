@@ -3,7 +3,6 @@ import { filterConfig } from "@/features/projected-net-worth/config/filterConfig
 
 //Components
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
-import { DialogClose } from "@/components/ui/dialog";
 
 //Types
 import { LineGraphFilterButtonsProps } from "@/features/projected-net-worth/types/filters";
@@ -12,7 +11,6 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 /**
  *
  * Render filter
- *
  *
  * @param param0
  * @returns
@@ -33,7 +31,6 @@ const RenderFilters = ({
           },
           index
         ) => (
-     
             <LineGraphFilterButton
               key={index}
               isSelected={selectedFilter === filter.key}

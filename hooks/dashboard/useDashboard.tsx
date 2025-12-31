@@ -45,7 +45,6 @@ export const useDashboard = (): DashboardState => {
   } = useUpdateAssets();
 
   const { user, error: userError } = useFetchUser();
-  const { linkToken } = useGenerateToken();
 
   const form = useForm<FormData, any, undefined>({
     defaultValues: {},
@@ -53,8 +52,8 @@ export const useDashboard = (): DashboardState => {
 
   const [mode, setMode] = useState<"edit" | "view">("view");
 
-  const handleModeChange = useCallback(() => {
-    setMode((prevMode) => (prevMode === "edit" ? "view" : "edit"));
+  const handleModeChange = useCallback((mode: "edit" | "view") => {
+    setMode(mode);
   }, []);
 
   const handleYearSelection = useCallback((year: number) => {
@@ -105,7 +104,6 @@ export const useDashboard = (): DashboardState => {
       futureProjectionLoading,
       user,
       userError,
-      linkToken,
       isLoadingAssets,
       form,
       mode,
@@ -126,7 +124,6 @@ export const useDashboard = (): DashboardState => {
       futureProjectionLoading,
       user,
       userError,
-      linkToken,
       isLoadingAssets,
       form,
       mode,
