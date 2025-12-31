@@ -1,6 +1,6 @@
 // Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
-import AssetsCard from "@/features/projected-financial-assets/components/AssetFrom";
+import AssetsCard from "@/features/projected-financial-assets/components/AssetsForm";
 import Footer from "@/components/footers/Footer";
 import NetValueItems from "@/features/dashboard/components/NetValueItems";
 
@@ -62,6 +62,7 @@ export const DashboardContent = () => {
   });
 
   const onSubmit = (data: FormData) => {
+    console.log("DATA", data);
     handleFormSubmission(
       data,
       futureProjectionData,
@@ -74,6 +75,7 @@ export const DashboardContent = () => {
 
   return (
     <div className="w-full box-border max-h-screen overflow-y-scroll flex flex-row gap-4">
+      {/* Primary Dashboard Seciton */}
       <div className="p-4 w-[70%] mt-[2%] max-h-screen">
         <PrimaryDashboardSection>
           <ProjectedNetWorthGraph
@@ -91,6 +93,8 @@ export const DashboardContent = () => {
           <Footer />
         </PrimaryDashboardSection>
       </div>
+
+      {/* Secondary Dashboard Section */}
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
         <AssetsCard form={form} onSubmit={onSubmit} />
       </div>

@@ -1,15 +1,12 @@
-// React
-import { useRef, Activity } from "react";
-
 // Containers
 import ProjectedAssetsContainer from "@/features/projected-financial-assets/components/containers/ProjectedAssetsContainer";
 
 // Components
-import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButtonV2";
 import AssetsTable from "@/features/projected-financial-assets/components/tables/AssetsTable";
 import { AssetsCardPrimaryHeader } from "@/features/projected-financial-assets/components/headers/ProjectedAssetsCardHeader";
 import NoAssetsTable from "@/features/projected-financial-assets/components/tables/NoAssetsTable";
 import ProjectedAssetsCardSkeleton from "@/features/projected-financial-assets/components/skeleton/ProjectedAssetsCardSkeleton";
+import UpdateButton from "@/features/projected-financial-assets/components/buttons/UpdateButton";
 
 // Context hook
 import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
@@ -35,8 +32,6 @@ const ProjectedAssetsCard = () => {
     selectedFilter,
   });
 
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
   if (isErrorAssets)
     return (
       <div>There was an Error: {assetError?.message || "Unknown error"}</div>
@@ -60,21 +55,8 @@ const ProjectedAssetsCard = () => {
           mode={mode}
           setMode={assets?.length > 0 ? handleModeChange : () => {}}
         />
-
         <AssetsTable />
-
-        {/* Update button */}
-        <Activity mode={mode === "edit" ? "visible" : "hidden"}>
-          <div className="flex justify-center items-center">
-            <PrimarySubmitButton
-              text={"Update"}
-              className="w-[8rem] font-semibold text-sm h-[3rem]"
-              ref={buttonRef}
-              isLoading={isLoadingAssets}
-            />
-          </div>
-        </Activity>
-        
+        <UpdateButton />
         {/* If there are not assets */}
         {assets?.length === 0 && <NoAssetsTable />}
       </div>
