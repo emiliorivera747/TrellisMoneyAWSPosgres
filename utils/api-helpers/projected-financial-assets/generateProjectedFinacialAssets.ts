@@ -6,7 +6,7 @@ import { AccountType
  } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 import {
-  future_value_with_inflation_fn,
+  future_value_includes_inflation_fn,
   future_value_fn,
   getFormulaValues,
 } from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
@@ -25,7 +25,7 @@ interface financialAssests {
 export const generateProjectedFinancialAssets = async (
     start_year: number,
     end_year: number,
-    with_inflation: boolean = false,
+    includes_inflation: boolean = false,
     annual_inflation_rate: number,
     holdings: Holding[]
 ): Promise<financialAssests[] | []> => {
@@ -40,8 +40,8 @@ export const generateProjectedFinancialAssets = async (
         const { quantity, close_price, annual_return_rate } = getFormulaValues(holding);
 
         let fv;
-        if (with_inflation) {
-            fv = future_value_with_inflation_fn(
+        if (includes_inflation) {
+            fv = future_value_includes_inflation_fn(
                 quantity,
                 close_price,
                 annual_return_rate,

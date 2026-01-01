@@ -120,7 +120,7 @@ export const calculateFutureValue = ({
  * @param {number} params.annual_return_rate - The expected annual return rate (as a decimal, e.g., 0.05 for 5%).
  * @param {number} params.annual_inflation_rate - The expected annual inflation rate (as a decimal, e.g., 0.02 for 2%).
  * @param {number} params.years - The number of years over which the investment will grow.
- * @param {boolean} params.with_inflation - Whether to adjust the calculation for inflation.
+ * @param {boolean} params.includes_inflation - Whether to adjust the calculation for inflation.
  *
  * @returns {number} The calculated future value of the investment.
  */

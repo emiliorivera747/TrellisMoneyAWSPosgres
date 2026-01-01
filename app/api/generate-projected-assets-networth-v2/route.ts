@@ -81,14 +81,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         account_holdings_securities[0].accounts,
         start_year,
         end_year,
-        searchParams.get("with_inflation") === "true",
+        searchParams.get("includes_inflation") === "true",
         default_inflation_rate
       );
 
       const projected_assets = await generateProjectedAssets({
         start_year,
         end_year,
-        with_inflation: searchParams.get("with_inflation") === "true",
+        includes_inflation: searchParams.get("includes_inflation") === "true",
         annual_inflation_rate: default_inflation_rate,
         accounts: account_holdings_securities[0].accounts,
       });

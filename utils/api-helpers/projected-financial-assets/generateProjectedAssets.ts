@@ -27,7 +27,7 @@ import { Assets } from "@/types/assets";
 export const generateProjectedAssets = async ({
   start_year,
   end_year,
-  with_inflation = false,
+  includes_inflation = false,
   annual_inflation_rate,
   accounts = [],
 }: ProjectionParams): Promise<Assets[]> => {
@@ -40,7 +40,7 @@ export const generateProjectedAssets = async ({
   return Object.entries(groups).flatMap(([type, accountList]) => {
     const config: ProjectionConfig = {
       years,
-      with_inflation,
+      includes_inflation,
       annual_inflation_rate,
       type: type as AccountType,
     };
@@ -55,7 +55,7 @@ export const generateProjectedAssets = async ({
  */
 const calculateAccountAssets = (
   accounts: Account[],
-  { years, with_inflation, annual_inflation_rate, type }: ProjectionConfig
+  { years, includes_inflation, annual_inflation_rate, type }: ProjectionConfig
 ): Assets[] =>
   accounts.map((account) => {
     const annual_return_rate = account.annual_return_rate ?? 0;
@@ -65,7 +65,7 @@ const calculateAccountAssets = (
       annual_inflation_rate,
       annual_return_rate,
       years,
-      include_inflation: with_inflation,
+      include_inflation: includes_inflation,
     });
 
     return createFinancialAsset({
@@ -86,7 +86,7 @@ const calculateAccountAssets = (
  */
 const calculateInvestmentAssets = (
   accounts: Account[],
-  { years, with_inflation, annual_inflation_rate, type }: ProjectionConfig
+  { years, includes_inflation, annual_inflation_rate, type }: ProjectionConfig
 ): Assets[] => {
   const aggregates = aggregateHoldingsByTicker(accounts);
   const cashHoldings = accounts.flatMap(
@@ -112,7 +112,7 @@ const calculateInvestmentAssets = (
         annual_return_rate,
         annual_inflation_rate,
         years,
-        include_inflation: with_inflation,
+        include_inflation: includes_inflation,
       }),
       security_id: holding?.security?.security_id || "",
       account_id: holding.account_id || "",
@@ -126,7 +126,7 @@ const calculateInvestmentAssets = (
   const aggregatesRes = Array.from(aggregates.values()).map((aggregate) =>
     transformAggregateToFinancialAsset(aggregate, {
       years,
-      with_inflation,
+      includes_inflation,
       annual_inflation_rate,
       type,
     })
@@ -184,7 +184,7 @@ const aggregateHoldingsByTicker = (
  */
 const transformAggregateToFinancialAsset = (
   aggregate: HoldingAggregate,
-  { years, with_inflation, annual_inflation_rate, type }: ProjectionConfig
+  { years, includes_inflation, annual_inflation_rate, type }: ProjectionConfig
 ): Assets => {
   const {
     security_id,
@@ -201,7 +201,7 @@ const transformAggregateToFinancialAsset = (
     annual_return_rate,
     annual_inflation_rate,
     years,
-    include_inflation: with_inflation,
+    include_inflation: includes_inflation,
   });
 
   return createFinancialAsset({

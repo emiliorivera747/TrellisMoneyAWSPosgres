@@ -16,7 +16,7 @@ import Decimal from "decimal.js";
  * @param accounts
  * @param start_year
  * @param end_year
- * @param with_inflation
+ * @param includes_inflation
  * @param annual_inflation_rate
  * @param type
  * @returns
@@ -25,7 +25,7 @@ export const calculate_fv_accounts = (
   accounts: Account[],
   start_year: number,
   end_year: number,
-  with_inflation: boolean,
+  includes_inflation: boolean,
   annual_inflation_rate: number,
   type: AccountType
 ) => {
@@ -38,7 +38,7 @@ export const calculate_fv_accounts = (
       present_value: Number(current),
       annual_inflation_rate,
       annual_return_rate: annual_return_rate ?? 0,
-      include_inflation: with_inflation,
+      include_inflation: includes_inflation,
       years: end_year - start_year,
     });
 
@@ -65,7 +65,7 @@ export const calculate_fv_accounts = (
  * @param accounts
  * @param start_year
  * @param end_year
- * @param with_inflation
+ * @param includes_inflation
  * @param annual_inflation_rate
  * @param type
  * @returns
@@ -74,7 +74,7 @@ export const calculate_fv_holdings = (
   accounts: Account[],
   start_year: number,
   end_year: number,
-  with_inflation: boolean,
+  includes_inflation: boolean,
   annual_inflation_rate: number,
   type: AccountType
 ) => {
@@ -89,7 +89,7 @@ export const calculate_fv_holdings = (
         present_value: Number(quantity) * Number(close_price),
         annual_inflation_rate,
         annual_return_rate,
-        include_inflation: with_inflation,
+        include_inflation: includes_inflation,
         years: end_year - start_year,
       });
 

@@ -20,7 +20,7 @@ export const generateProjectedNetWorth = async (
   accounts: Account[],
   start_year: number,
   end_year: number,
-  with_inflation: boolean,
+  includes_inflation: boolean,
   annual_inflation_rate: number
 ): Promise<NetWorthData[]> => {
   const projectedNetWorth: NetWorthData[] = [];
@@ -43,7 +43,7 @@ export const generateProjectedNetWorth = async (
         start_year,
         end_year,
         accounts ?? [],
-        with_inflation,
+        includes_inflation,
         annual_inflation_rate
       );
     } else if (key === "depository") {
@@ -52,7 +52,7 @@ export const generateProjectedNetWorth = async (
         start_year,
         end_year,
         accounts ?? [],
-        with_inflation,
+        includes_inflation,
         annual_inflation_rate
       );
     } else if (key === "loan") {
@@ -61,7 +61,7 @@ export const generateProjectedNetWorth = async (
         start_year,
         end_year,
         accounts ?? [],
-        with_inflation,
+        includes_inflation,
         annual_inflation_rate
       );
     } else if (key === "credit") {
@@ -70,7 +70,7 @@ export const generateProjectedNetWorth = async (
         start_year,
         end_year,
         accounts ?? [],
-        with_inflation,
+        includes_inflation,
         annual_inflation_rate
       );
     }
@@ -139,7 +139,7 @@ const populateHashMapWithFvHoldings = (
   start_year: number,
   end_year: number,
   accounts: Account[],
-  with_inflation: boolean,
+  includes_inflation: boolean,
   annual_inflation_rate: number
 ) => {
   // Pre-calculate holding data for reuse across years
@@ -162,7 +162,7 @@ const populateHashMapWithFvHoldings = (
         annual_inflation_rate,
         annual_return_rate,
         years: i,
-        include_inflation: with_inflation,
+        include_inflation: includes_inflation,
       });
     }
     const year = start_year + i;
@@ -187,7 +187,7 @@ const populateHashMapWithFvAccounts = (
   start_year: number,
   end_year: number,
   accounts: Account[],
-  with_inflation: boolean,
+  includes_inflation: boolean,
   annual_inflation_rate: number
 ) => {
   // Pre-calculate account data for reuse
@@ -214,7 +214,7 @@ const populateHashMapWithFvAccounts = (
         present_value: current_amount,
         annual_inflation_rate,
         annual_return_rate,
-        include_inflation: with_inflation,
+        include_inflation: includes_inflation,
         years: i,
       });
 

@@ -6,10 +6,10 @@ import { API_URL } from "@/utils/global-variables/globals";
 const getFinancialAssets = async (
   start_year: number,
   end_year: number,
-  with_inflation: boolean
+  includes_inflation: boolean
 ) => {
   const response = await fetch(
-    `${API_URL}/plaid/generate-financial-assets?start_date=${start_year}&end_date=${end_year}&with_inflation=${with_inflation}`,
+    `${API_URL}/plaid/generate-financial-assets?start_date=${start_year}&end_date=${end_year}&includes_inflation=${includes_inflation}`,
     {
       method: "POST",
       headers: {

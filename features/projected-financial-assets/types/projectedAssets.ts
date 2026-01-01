@@ -38,7 +38,7 @@ export interface FinancialAssets {
 
 export interface ProjectionConfig {
   years: number;
-  with_inflation: boolean;
+  includes_inflation: boolean;
   annual_inflation_rate: number;
   type: AccountType;
 }
@@ -47,7 +47,7 @@ export interface ProjectionConfig {
 export interface ProjectionParams {
   start_year: number;
   end_year: number;
-  with_inflation?: boolean;
+  includes_inflation?: boolean;
   annual_inflation_rate: number;
   accounts?: Account[];
 }
