@@ -1,10 +1,8 @@
 import { Account } from "@/types/plaid";
 import {
-  FinancialAssets,
   ProjectionConfig,
   ProjectionParams,
 } from "@/features/projected-financial-assets/types/projectedAssets";
-
 
 import { getHoldingNameV2 } from "@/utils/api-helpers/holdings/holdingAccessors";
 import {
@@ -20,16 +18,19 @@ import {
 import Decimal from "decimal.js";
 import { createFinancialAsset } from "@/utils/api-helpers/projected-financial-assets/createFinancialAsset";
 
+// Type
+import { Assets } from "@/types/assets";
+
 /**
  * Generates projected financial assets for accounts.
  */
-export const generateProjectedFinancialAssets = async ({
+export const generateProjectedAssets = async ({
   start_year,
   end_year,
   with_inflation = false,
   annual_inflation_rate,
   accounts = [],
-}: ProjectionParams): Promise<FinancialAssets[]> => {
+}: ProjectionParams): Promise<Assets[]> => {
   if (start_year > end_year || !Number.isFinite(annual_inflation_rate))
     return [];
 
@@ -55,7 +56,7 @@ export const generateProjectedFinancialAssets = async ({
 const calculateAccountAssets = (
   accounts: Account[],
   { years, with_inflation, annual_inflation_rate, type }: ProjectionConfig
-): FinancialAssets[] =>
+): Assets[] =>
   accounts.map((account) => {
     const annual_return_rate = account.annual_return_rate ?? 0;
     const current_amount = account.current ?? 0;
@@ -87,13 +88,16 @@ const calculateAccountAssets = (
 const calculateInvestmentAssets = (
   accounts: Account[],
   { years, with_inflation, annual_inflation_rate, type }: ProjectionConfig
-): FinancialAssets[] => {
+): Assets[] => {
   const aggregates = aggregateHoldingsByTicker(accounts);
-  const cashHoldings = accounts.flatMap(({ holdings = [], name: accountName }) =>
-    holdings.filter((holding) => holding?.security?.type === "cash").map((holding) => ({
-      ...holding,
-      accountName,
-    }))
+  const cashHoldings = accounts.flatMap(
+    ({ holdings = [], name: accountName }) =>
+      holdings
+        .filter((holding) => holding?.security?.type === "cash")
+        .map((holding) => ({
+          ...holding,
+          accountName,
+        }))
   );
 
   // Add cash holdings to the aggregates
@@ -130,7 +134,7 @@ const calculateInvestmentAssets = (
   );
 
   // Transform aggregates into financial assets
-  return [...aggregatesRes, ...cashAssets]
+  return [...aggregatesRes, ...cashAssets];
 };
 
 /**
@@ -145,7 +149,7 @@ const aggregateHoldingsByTicker = (
     holdings.forEach((holding) => {
       const ticker_symbol = holding?.security?.ticker_symbol ?? "";
       const subtype = holding?.security?.type || "unknown";
-      if (!ticker_symbol || subtype === "cash" ) return;
+      if (!ticker_symbol || subtype === "cash") return;
 
       const { quantity, annual_return_rate, institutional_value } =
         getFormulaValues(holding);
@@ -182,7 +186,7 @@ const aggregateHoldingsByTicker = (
 const transformAggregateToFinancialAsset = (
   aggregate: HoldingAggregate,
   { years, with_inflation, annual_inflation_rate, type }: ProjectionConfig
-): FinancialAssets => {
+): Assets => {
   const {
     security_id,
     name,

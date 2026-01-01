@@ -7,7 +7,7 @@ import {
   getInstitutionalValue,
 } from "@/utils/api-helpers/holdings/holdingAccessors";
 
-import {FutureValueParams} from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import { FutureValueParams } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 /**
  *
@@ -98,8 +98,6 @@ export const future_value_fn_v2 = (
 
   return Number(pv) * growthFactor;
 };
-
-
 
 /**
  * Calculates future value with or without inflation.

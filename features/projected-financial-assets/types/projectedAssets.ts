@@ -51,3 +51,16 @@ export interface ProjectionParams {
   annual_inflation_rate: number;
   accounts?: Account[];
 }
+
+export interface ProjectedAssets {
+  name: string;
+  annual_growth_rate: number | null | Decimal;
+  projection: number | null | Decimal;
+  security_id: string | undefined | null;
+  account_id: string | undefined;
+  type: AccountType;
+  subtype?: string;
+  total?: number | null | Decimal;
+  shares: number | null | Decimal;
+  user_id?: string | undefined;
+}

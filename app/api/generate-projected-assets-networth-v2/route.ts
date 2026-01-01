@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 // Functions
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
-import { generateProjectedFinancialAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedFinacialAssetsV2";
+import { generateProjectedAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedAssets";
 
 // Helpers
 import {
@@ -93,7 +93,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         default_inflation_rate
       );
 
-      const projected_assets = await generateProjectedFinancialAssets({
+      const projected_assets = await generateProjectedAssets({
         start_year,
         end_year,
         with_inflation: searchParams.get("with_inflation") === "true",

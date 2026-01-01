@@ -1,7 +1,10 @@
 import Decimal from "decimal.js";
-import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
+import {
+  FinancialAssets,
+  ProjectedAssets,
+} from "@/features/projected-financial-assets/types/projectedAssets";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
-
+import { Assets } from "@/types/assets";
 
 interface createFinancialAssetParams {
   name: string;
@@ -15,12 +18,11 @@ interface createFinancialAssetParams {
   shares: Decimal;
 }
 
-
 /**
  * Factory function to create FinancialAssets objects
- * 
- * @param param0 
- * @returns 
+ *
+ * @param param0
+ * @returns
  */
 export const createFinancialAsset = ({
   name,
@@ -32,7 +34,7 @@ export const createFinancialAsset = ({
   subtype,
   total,
   shares,
-}: createFinancialAssetParams): FinancialAssets => ({
+}: createFinancialAssetParams): Assets => ({
   name,
   annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
   projection: new Decimal(projection).toDecimalPlaces(2),
