@@ -16,6 +16,10 @@ export const useFetchNetWorth = () => {
   } = useQuery({
     queryKey: ["netWorth"],
     queryFn: networthService.getNetWorth,
+    staleTime: 5 * 60 * 1000,         // 5 minutes 
+    gcTime: 30 * 60 * 1000,           // 30 minutes 
+    refetchOnMount: false,            
+    refetchOnWindowFocus: false,      
   });
 
   return { netWorthData, netWorthError, netWorthLoading, netWorthHasError };

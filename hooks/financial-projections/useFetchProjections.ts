@@ -45,7 +45,10 @@ const useFetchProjections = ({
     ],
     queryFn: () => fetchProjections(currentYear, selectedYear, selectedFilter),
     enabled: !!selectedYear,
-    refetchOnMount: false,
+    staleTime: 5 * 60 * 1000,         // 5 minutes 
+    gcTime: 30 * 60 * 1000,           // 30 minutes 
+    refetchOnMount: false,            
+    refetchOnWindowFocus: false,      
   });
 
   const assets = useMemo(
