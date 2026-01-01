@@ -26,7 +26,6 @@ import {
   SuccessResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { getMemberByUserId } from "@/utils/prisma/household/household";
-import { logError } from "@/utils/api-helpers/errors/logError";
 
 const default_inflation_rate = 0.025;
 
@@ -39,7 +38,6 @@ const default_inflation_rate = 0.025;
 export async function POST(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
-      
       /**
        * Get the timestamp from the request body
        */
@@ -54,16 +52,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
       const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to find member", 404);
-      const items = member?.household?.items;
-      if (!items) {
-        logError("Items not found for household");
-        return FailResponse("Items not found for household", 404);
-      }
 
-      if (!member.household?.accounts) {
-        logError("Accounts not found for the household");
+      const items = member?.household?.items;
+      if (!items) return FailResponse("Items not found for household", 404);
+
+      if (!member.household?.accounts)
         return FailResponse("Accounts not found for the household", 404);
-      }
 
       /**
        * Get the user's accounts
@@ -76,10 +70,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         user.id
       );
 
-      if (!member?.household_id) {
-        logError("Accounts not found for the household");
+      if (!member?.household_id)
         return FailResponse("Accounts not found for the household", 404);
-      }
 
       const account_holdings_securities = await getAccountsHoldingsSecuritiesV2(
         member.household_id

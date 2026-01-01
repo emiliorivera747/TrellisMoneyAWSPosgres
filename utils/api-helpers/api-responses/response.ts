@@ -51,6 +51,8 @@ export const FailResponse = (
   message: string,
   statusCode: number
 ) => {
+  console.error("API Failure:", message);
+
   const body: ApiResponse = {
     message,
     status: "fail",
