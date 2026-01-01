@@ -1,11 +1,11 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState} from "react";
 import { TableBody } from "@/components/ui/table";
 
 // Components
 import AssetGroup from "@/features/projected-financial-assets/components/table-body/AssetGroup";
 
 // Context
-import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
+import { useAssetsFormContext } from "@/context/dashboard/AssetsDashboardProvider";
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
@@ -17,7 +17,7 @@ import useFetchProjections from "@/hooks/financial-projections/useFetchProjectio
  * @returns table body for assets
  */
 const TableBodyForAssets = () => {
-  const { form } = useDashboardContext();
+  const { form } = useAssetsFormContext();
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
   const { selectedYear, selectedFilter, mode } = useDashboardFilters();
   const { assets } = useFetchProjections({

@@ -4,7 +4,7 @@
 import { DashboardContent } from "@/features/dashboard/components/DashboardContent";
 
 // Context
-import { DashboardProvider } from "@/context/dashboard/DashboardProvider";
+import { AssetsDashboardProvider } from "@/context/dashboard/AssetsDashboardProvider";
 
 /**
  *
@@ -15,9 +15,9 @@ import { DashboardProvider } from "@/context/dashboard/DashboardProvider";
  */
 const Dashboard = () => {
   return (
-    <DashboardProvider>
+    <AssetsDashboardProvider>
       <DashboardContent />
-    </DashboardProvider>
+    </AssetsDashboardProvider>
   );
 };
 

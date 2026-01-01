@@ -14,7 +14,6 @@ import useFetchProjections from "@/hooks/financial-projections/useFetchProjectio
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 
-
 /**
  *
  * Displays the projected assets card showing the projected year, asset groups, and assets.

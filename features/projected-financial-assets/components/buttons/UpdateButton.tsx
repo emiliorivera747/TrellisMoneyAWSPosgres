@@ -1,6 +1,5 @@
 import { Activity, useRef } from "react";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButtonV2";
-import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 
 /**
@@ -30,7 +29,6 @@ import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors"
 const UpdateButton = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { mode } = useDashboardFilters();
-  const { isLoadingAssets } = useUpdateAssets();
 
   return (
     <Activity mode={mode === "edit" ? "visible" : "hidden"}>
@@ -39,7 +37,6 @@ const UpdateButton = () => {
           text={"Update"}
           className="w-[8rem] font-semibold text-sm h-[3rem]"
           ref={buttonRef}
-          isLoading={isLoadingAssets}
         />
       </div>
     </Activity>

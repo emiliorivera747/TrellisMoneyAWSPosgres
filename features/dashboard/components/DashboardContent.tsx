@@ -61,7 +61,6 @@ export const DashboardContent = () => {
       {/* Secondary Dashboard Section */}
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
         <AssetsCard
-          selectedYear={selectedYear}
           selectedFilter={selectedFilter}
           futureProjectionData={futureProjectionData}
         />

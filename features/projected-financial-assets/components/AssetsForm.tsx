@@ -2,7 +2,7 @@
 import { Form } from "@/components/ui/form";
 import { SubmitHandler } from "react-hook-form";
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
-import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
+import { useAssetsFormContext } from "@/context/dashboard/AssetsDashboardProvider";
 
 //Functions
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
@@ -23,13 +23,11 @@ const AssetsCard: React.FC<AssetsFormProps> = ({ form, onSubmit }) => {
 const AssetsCard = ({
   futureProjectionData,
   selectedFilter,
-  selectedYear,
 }: {
   futureProjectionData: any;
   selectedFilter: any;
-  selectedYear: any;
 }) => {
-  const { form } = useDashboardContext();
+  const { form } = useAssetsFormContext();
   const { user } = useFetchUser();
   const { mutateAssets } = useUpdateAssets();
   const { setMode } = useDashboardFiltersWithActions();
