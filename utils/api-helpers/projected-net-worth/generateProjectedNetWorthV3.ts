@@ -4,8 +4,7 @@ import { NetWorthData } from "@/features/projected-financial-assets/types/projec
 
 // Helpers
 import {
-  future_value_with_inflation_fn,
-  future_value_fn,
+  getFutureValue,
   getFormulaValues,
 } from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
 
@@ -145,7 +144,6 @@ const populateHashMapWithFvHoldings = (
   with_inflation: boolean,
   annual_inflation_rate: number
 ) => {
-  
   // Pre-calculate holding data for reuse across years
   const holdingsData = accounts.flatMap((account) =>
     (account.holdings ?? []).map((holding) => {
@@ -161,17 +159,25 @@ const populateHashMapWithFvHoldings = (
     let total = 0;
 
     for (const { quantity, close_price, annual_return_rate } of holdingsData) {
-      if (with_inflation) {
-        total += future_value_with_inflation_fn(
-          quantity,
-          close_price,
-          annual_return_rate,
-          annual_inflation_rate,
-          i
-        );
-      } else {
-        total += future_value_fn(quantity, close_price, annual_return_rate, i);
-      }
+      // if (with_inflation) {
+      //   total += future_value_with_inflation_fn(
+      //     quantity,
+      //     close_price,
+      //     annual_return_rate,
+      //     annual_inflation_rate,
+      //     i
+      //   );
+      // } else {
+      //   total += future_value_fn(quantity, close_price, annual_return_rate, i);
+      // }
+
+      getFutureValue({
+        present_value: Number(quantity) * Number(close_price),
+        annual_inflation_rate,
+        annual_return_rate,
+        years: i,
+        with_inflation,
+      });
     }
     const year = start_year + i;
     hm.set(year, (hm.get(year) || 0) + total);

@@ -3,8 +3,7 @@ import { Account } from "@/types/plaid";
 import { getHoldingName } from "@/utils/api-helpers/holdings/holdingAccessors";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import {
-    calculateFutureValueAdjustedForInflationV2,
-    calculateFutureValue,
+  
     getFormulaValues,
   } from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
 

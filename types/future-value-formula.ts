@@ -30,14 +30,21 @@ export interface FutureValueParams {
    * The number of years over which the future value is calculated.
    */
   years: number;
-
-  /**
-   * Does it include inflation
-   */
-  with_inflation?: boolean;
 }
 
 export interface InflationAdjustedFutureValueParams extends FutureValueParams {
+  /**
+   * Estimated annual inflation rate.
+   */
+  annual_inflation_rate: Numeric;
+}
+
+export interface FutureValueInflationOption extends FutureValueParams {
+  /**
+   * A flag indicating whether to include inflation in the future value calculation.
+   */
+  include_inflation: boolean;
+
   /**
    * Estimated annual inflation rate.
    */

@@ -10,6 +10,7 @@ import {
 import {
   FutureValueParams,
   InflationAdjustedFutureValueParams,
+  FutureValueInflationOption,
 } from "@/types/future-value-formula";
 
 /**
@@ -128,10 +129,10 @@ export const getFutureValue = ({
   annual_return_rate,
   annual_inflation_rate,
   years,
-  with_inflation,
-}: InflationAdjustedFutureValueParams): number => {
+  include_inflation,
+}: FutureValueInflationOption): number => {
   const pv = getPresentValue(present_value);
-  return with_inflation
+  return include_inflation
     ? calculateInflationAdjustedFutureValue({
         present_value: pv,
         annual_return_rate,
@@ -144,7 +145,6 @@ export const getFutureValue = ({
         years,
       });
 };
-
 
 /**
  * Calculates and returns a set of formula values for a given holding.
