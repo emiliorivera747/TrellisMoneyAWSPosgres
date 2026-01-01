@@ -10,13 +10,16 @@ import { useToast } from "@/hooks/toast/use-toast";
  */
 const useUpdateAssets = () => {
   const { toast } = useToast();
-
   const queryClient = useQueryClient();
   const {
     mutate: mutateAssets,
     isPending: isLoadingAssets,
     isError: isErrorAssets,
     error: assetError,
+    isSuccess: isSuccessAssets,
+    isIdle,
+    mutateAsync: mutateAssetsAsync,
+    reset: reset,
   } = useMutation({
     mutationFn: assetService.updateAllAssets,
     onSuccess: () => {
@@ -29,14 +32,29 @@ const useUpdateAssets = () => {
         variant: "success",
       });
     },
-    onError: () => {
+    onError: (error) => {
       toast({
         variant: "destructive",
         title: "Something went wrong when upating Projections",
+        description:
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred. Please try again.",
       });
     },
+
+    retry: 1,
   });
-  return { mutateAssets, isLoadingAssets, isErrorAssets, assetError};
+  return {
+    mutateAssets,
+    isLoadingAssets,
+    isErrorAssets,
+    assetError,
+    isSuccessAssets,
+    isIdle,
+    reset,
+    mutateAssetsAsync,
+  };
 };
 
 export default useUpdateAssets;

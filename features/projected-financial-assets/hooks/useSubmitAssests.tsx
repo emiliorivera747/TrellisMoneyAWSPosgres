@@ -7,10 +7,10 @@ import useFetchUser from "@/hooks/user/useFetchUser";
 // Types
 import { FutureProjectionData } from "../types/projectedAssets";
 import { ProjectedAssets } from "@/types/futureProjections";
+import { FormData } from "@/types/dashboard";
 
 // Selectors
 import { useDashboardFiltersWithActions } from "@/stores/slices/dashboardFilters.selectors";
-import { FormData } from "@/hooks/dashboard/useDashboard";
 
 /**
  * Custom hook `useSubmitAssests` for handling the submission of projected financial assets.
@@ -44,42 +44,64 @@ import { FormData } from "@/hooks/dashboard/useDashboard";
 const useSubmitAssests = ({
   futureProjectionData,
   selectedFilter,
+  onSuccess,
 }: {
   futureProjectionData?: FutureProjectionData | null;
   selectedFilter: string;
+  onSuccess?: () => void;
 }) => {
-  const { mutateAssets, isLoadingAssets, isErrorAssets, assetError } =
-    useUpdateAssets();
+  const {
+    mutateAssetsAsync,
+    isLoadingAssets,
+    isErrorAssets,
+    assetError,
+    isSuccessAssets,
+  } = useUpdateAssets();
+
   const { user } = useFetchUser();
   const { setMode } = useDashboardFiltersWithActions();
 
   const onSubmit = useCallback<SubmitHandler<FormData>>(
-    (data) => {
-     
+    async (data) => {
       if (!futureProjectionData || !user) return;
 
       const currentAssetGroup = getCurrentProjectedAsset(
         futureProjectionData,
         selectedFilter
       );
-      
+
       if (!currentAssetGroup?.data) return;
 
-      const updatedAssets = updateAssets(
-        currentAssetGroup?.data,
-        data,
-        user
-      );
+      const updatedAssets = updateAssets(currentAssetGroup?.data, data, user);
 
       if (!updatedAssets) return;
 
-      mutateAssets(updatedAssets);
-      setMode("view");
+      try {
+        await mutateAssetsAsync(updatedAssets);
+        setMode("view");
+        onSuccess?.();
+      } catch (err) {
+        console.error("Asset update failed:", err);
+      }
     },
-    [futureProjectionData, selectedFilter, user, mutateAssets, setMode]
+    [
+      futureProjectionData,
+      selectedFilter,
+      user,
+      mutateAssetsAsync,
+      setMode,
+      onSuccess,
+    ]
   );
-  return { onSubmit, isLoadingAssets, isErrorAssets, assetError };
+  return {
+    onSubmit,
+    isLoadingAssets,
+    isErrorAssets,
+    assetError,
+    isSuccessAssets,
+  };
 };
+
 export default useSubmitAssests;
 
 /**
@@ -96,6 +118,5 @@ const getCurrentProjectedAsset = (
     (payload: ProjectedAssets) => payload.value === selectedFilter
   );
   if (assets) return assets;
-
   return futureProjectionData?.projected_assets[0];
 };

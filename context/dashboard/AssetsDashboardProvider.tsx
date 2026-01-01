@@ -39,11 +39,9 @@ export const AssetsDashboardProvider: React.FC<{ children: ReactNode }> = ({
  */
 export const useAssetsFormContext = () => {
   const assestContext = useContext(AssetsFormContext);
-
   if (!assestContext)
     throw new Error(
       "useDashboardContext must be used within a DashboardProvider"
     );
-
   return assestContext;
 };

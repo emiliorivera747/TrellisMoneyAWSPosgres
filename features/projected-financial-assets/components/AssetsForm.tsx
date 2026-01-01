@@ -22,6 +22,7 @@ const AssetsCard = ({
   const { onSubmit } = useSubmitAssests({
     futureProjectionData,
     selectedFilter,
+    onSuccess: () => form.reset(),
   });
 
   return (
