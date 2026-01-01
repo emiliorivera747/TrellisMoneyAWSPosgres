@@ -86,11 +86,3 @@ export interface HoldingAggregate {
   subtype: string;
   account_id: string;
 }
-
-export interface FutureValueParams {
-  value: number | Decimal;
-  annual_return_rate: number | Decimal;
-  annual_inflation_rate: number | Decimal;
-  years: number;
-  with_inflation: boolean;
-}
