@@ -71,11 +71,10 @@ const useSubmitAssests = ({
       );
 
       if (!currentAssetGroup?.data) return;
-
       const updatedAssets = updateAssets(currentAssetGroup?.data, data, user);
-
       if (!updatedAssets) return;
 
+      // Mutate, Set Mode, and onSuccess function
       try {
         await mutateAssetsAsync(updatedAssets);
         setMode("view");

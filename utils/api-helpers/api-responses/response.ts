@@ -71,7 +71,7 @@ export const FailResponse = (
  *          and a status of "error", along with the specified HTTP status code.
  */
 export const ErrorResponse = (
-  error: unknown,
+  error?: unknown,
   statusCode: number = 500
 ) => {
   console.error("API Error:", error);

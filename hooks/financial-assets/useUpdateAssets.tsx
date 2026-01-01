@@ -42,7 +42,6 @@ const useUpdateAssets = () => {
             : "An unexpected error occurred. Please try again.",
       });
     },
-
     retry: 1,
   });
   return {

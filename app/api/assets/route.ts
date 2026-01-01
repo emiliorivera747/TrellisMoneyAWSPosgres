@@ -2,19 +2,24 @@ import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 import { withAuth } from "@/lib/protected";
-
+import {
+  SuccessResponse,
+  ErrorResponse,
+} from "@/utils/api-helpers/api-responses/response";
 
 /**
- * 
+ *
  * This route is used to update the financial assets of a user.
- * 
- * @param req 
- * @returns 
+ *
+ * @param req
+ * @returns
  */
 export async function PATCH(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
       const assets = await request.json();
+
+      console.log("assets", assets);
 
       /**
        * Get all of the holdings associated with the user
@@ -32,16 +37,16 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
        */
       assets.forEach((asset: FinancialAssets) => {
         const key = `${asset.security_id}-${asset.account_id}`;
-        if (!hashmap.has(key)) {
-          hashmap.set(key, asset);
-        }
+        if (!hashmap.has(key)) hashmap.set(key, asset);
       });
 
       /**
        * Update all holdings associated with the user
        */
       holdings.map(async (holding) => {
-        const asset = hashmap.get(holding.security_id + "-" + holding.account_id);
+        const asset = hashmap.get(
+          holding.security_id + "-" + holding.account_id
+        );
 
         if (asset) {
           await prisma.holding.update({
@@ -76,24 +81,9 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
         }
       });
 
-      return NextResponse.json(
-        {
-          message: "Success",
-          data: res,
-        },
-        { status: 200 }
-      );
+      return SuccessResponse(res, "Successfull updated assets");
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-
-      return NextResponse.json(
-        {
-          message: errorMessage,
-          data: "Server error",
-        },
-        { status: 500 }
-      );
+      return ErrorResponse();
     } finally {
       await prisma.$disconnect();
     }

@@ -39,6 +39,7 @@ const default_inflation_rate = 0.025;
 export async function POST(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
+      
       /**
        * Get the timestamp from the request body
        */

@@ -2,7 +2,6 @@ import { API_URL } from "@/utils/global-variables/globals";
 import { Holding} from "@/types/plaid";
 import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 
-
 /**
  * Function to update user asset.
  * 

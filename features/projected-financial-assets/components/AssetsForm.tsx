@@ -24,7 +24,6 @@ const AssetsCard = ({
     selectedFilter,
     onSuccess: () => form.reset(),
   });
-
   return (
     <Form {...form}>
       <form
