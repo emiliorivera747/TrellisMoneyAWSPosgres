@@ -28,7 +28,9 @@ export const generateProjectedNetWorthV3 = async (
 
   // Early return for empty holdings or invalid dates
   if (!accounts.length || end_year < start_year) return [];
-  const hm: { [key: number]: number } = {};
+
+  const hm = new Map<number, number>();
+
   const groups = Object.groupBy(
     accounts,
     (account) => account.type as AccountType
@@ -74,7 +76,9 @@ export const generateProjectedNetWorthV3 = async (
       );
     }
   }
+
   pushProjectedNetWorthToEachDay(projectedNetWorth, start_year, end_year, hm);
+
   return projectedNetWorth;
 };
 
@@ -92,7 +96,7 @@ const pushProjectedNetWorthToEachDay = (
   projectedNetWorth: { date: Date; close: number }[],
   start_year: number,
   end_year: number,
-  hm: { [key: number]: number }
+  hm: Map<number, number>
 ) => {
   const days = (end_year - start_year) * 365;
 
@@ -104,8 +108,8 @@ const pushProjectedNetWorthToEachDay = (
     if (year === end_year && dayOfYear >= 30) break;
 
     // Get values for interpolation
-    const previousValue = hm[year] || 0;
-    const nextValue = hm[year + 1] || previousValue;
+    const previousValue = hm.get(year) || 0;
+    const nextValue = hm.get(year + 1) || previousValue;
 
     // Linearly interpolate between the current year's value and next year's value
     const interpolationFactor = dayOfYear / 365;
@@ -134,7 +138,7 @@ const pushProjectedNetWorthToEachDay = (
  * @returns
  */
 const populateHashMapWithFvHoldings = (
-  hm: { [key: number]: number },
+  hm: Map<number, number>,
   start_year: number,
   end_year: number,
   accounts: Account[],
@@ -143,7 +147,10 @@ const populateHashMapWithFvHoldings = (
 ) => {
   // Pre-calculate holding data for reuse across years
   const holdingsData = accounts.flatMap((account) =>
-    (account.holdings ?? []).map((holding) => getFormulaValues(holding))
+    (account.holdings ?? []).map((holding) => {
+      // console.log("holding", holding);
+      return getFormulaValues(holding);
+    })
   );
 
   const yearRange = end_year - start_year + 1;
@@ -167,7 +174,7 @@ const populateHashMapWithFvHoldings = (
     }
 
     const year = start_year + i;
-    hm[year] = (hm[year] || 0) + total;
+    hm.set(year, (hm.get(year) || 0) + total);
   }
 };
 
@@ -184,7 +191,7 @@ const populateHashMapWithFvHoldings = (
  * @returns
  */
 const populateHashMapWithFvAccounts = (
-  hm: { [key: number]: number },
+  hm: Map<number, number>,
   start_year: number,
   end_year: number,
   accounts: Account[],
@@ -227,6 +234,7 @@ const populateHashMapWithFvAccounts = (
     }
 
     const year = start_year + i;
-    hm[year] = (hm[year] || 0) + total;
+
+    hm.set(year, (hm.get(year) || 0) + total);
   }
 };
