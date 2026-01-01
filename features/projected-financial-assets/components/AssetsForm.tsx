@@ -8,8 +8,6 @@ import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
 import { ProjectedAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 import { FutureProjectionData } from "@/types/futureProjections";
-import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
-import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/hooks/user/useFetchUser";
 
@@ -20,28 +18,43 @@ import useFetchUser from "@/hooks/user/useFetchUser";
  * @param param0
 const AssetsCard: React.FC<AssetsFormProps> = ({ form, onSubmit }) => {
  */
-const AssetsCard = () => {
+const AssetsCard = ({
+  futureProjectionData,
+  selectedFilter,
+  selectedYear,
+}: {
+  futureProjectionData: any;
+  selectedFilter: any;
+  selectedYear: any;
+}) => {
   const { form } = useDashboardContext();
-  const { selectedYear, selectedFilter } = useDashboardFilters();
-  const { futureProjectionData: projectionData } = useFetchProjections({
-    selectedYear,
-    selectedFilter,
-  });
   const { user } = useFetchUser();
   const { mutateAssets } = useUpdateAssets();
 
+
+  /**
+   * 
+   * Updates Assets
+   * 
+   * @param data 
+   * @returns 
+   */
   const onSubmit: SubmitHandler<unknown> = (data) => {
     const formData = data as Record<string, number>;
 
-    if (!projectionData) return;
+    if (!futureProjectionData) return;
     const currentProjectedAsset =
-      getCurrentProjectedAsset(projectionData, selectedFilter) ||
-      projectionData.projected_assets[0];
-  
+      getCurrentProjectedAsset(futureProjectionData, selectedFilter) ||
+      futureProjectionData.projected_assets[0];
+
     if (!currentProjectedAsset) return;
-    const updatedAssets = updateAssets(currentProjectedAsset?.data, formData, user);
+    const updatedAssets = updateAssets(
+      currentProjectedAsset?.data,
+      formData,
+      user
+    );
     if (updatedAssets) mutateAssets(updatedAssets);
-  }
+  };
 
   return (
     <Form {...form}>
@@ -57,19 +70,17 @@ const AssetsCard = () => {
 
 export default AssetsCard;
 
-
-
 /**
  * Returns the current projected asset.
  *
- * @param projectionData - Data related to projected assets.
+ * @param futureProjectionData - Data related to projected assets.
  * @param selectedFilter - Currently selected filter.
  */
 const getCurrentProjectedAsset = (
-  projectionData: FutureProjectionData | undefined | null,
+  futureProjectionData: FutureProjectionData | undefined | null,
   selectedFilter: string
 ) => {
-  return projectionData?.projected_assets?.find(
+  return futureProjectionData?.projected_assets?.find(
     (payload: ProjectedAssets) => payload.value === selectedFilter
   );
 };

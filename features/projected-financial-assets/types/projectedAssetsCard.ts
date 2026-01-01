@@ -27,10 +27,10 @@ export interface Assets {
   amount?: number;
   security_id?: string;
   account_id?: string;
-  projection: number;
-  type: AccountType;
-  total: number | null;
-  subtype: string;
+  projection?: number;
+  type?: AccountType;
+  total?: number | null;
+  subtype?: string;
 }
 
 export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
@@ -43,7 +43,7 @@ export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
 }
 
 export interface ProjectedAssetsContainerProps {
-  assets: Assets[];
+  assets: Assets[] | [];
   children: React.ReactNode;
 }
 

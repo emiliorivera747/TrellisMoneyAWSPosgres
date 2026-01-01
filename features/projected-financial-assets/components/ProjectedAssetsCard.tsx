@@ -10,10 +10,10 @@ import UpdateButton from "@/features/projected-financial-assets/components/butto
 import AssetErrors from "@/features/projected-financial-assets/components/errors/AssetErrors";
 
 // Context hook
-import { useDashboardContext } from "@/context/dashboard/DashboardProvider";
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
+
 
 /**
  *
@@ -23,12 +23,10 @@ import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
  * @returns projected assets card
  */
 const ProjectedAssetsCard = () => {
-  const { assets } = useDashboardContext();
-
   const { selectedYear, selectedFilter, mode } = useDashboardFilters();
   const { isLoadingAssets, isErrorAssets, assetError } = useUpdateAssets();
 
-  const { futureProjectionLoading } = useFetchProjections({
+  const { assets, futureProjectionLoading } = useFetchProjections({
     selectedYear,
     selectedFilter,
   });
@@ -41,16 +39,13 @@ const ProjectedAssetsCard = () => {
   return (
     <ProjectedAssetsContainer assets={assets}>
       <div
-        style={{
-          border: "1px solid rgb(221, 221, 221)",
-        }}
-        className={`grid no-scrollbars rounded-[12px] pb-6 ${
+        className={`grid no-scrollbars rounded-[12px] pb-6 border border-tertiary-400 ${
           mode === "edit" ? "grid-rows-[4rem_1fr_6rem]" : "grid-rows-[4rem_1fr]"
         } absolute w-full text-[#343a40] h-auto max-h-[90vh] overflow-y-hidden`}
       >
         <AssetsCardPrimaryHeader />
         <AssetsTable />
-        <UpdateButton />
+        {/* <UpdateButton /> */}
         {assets?.length === 0 && <NoAssetsTable />}
       </div>
     </ProjectedAssetsContainer>

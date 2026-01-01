@@ -19,7 +19,6 @@ import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors"
  * @returns JSX.Element
  */
 export const DashboardContent = () => {
-  
   const { selectedYear, selectedFilter } = useDashboardFilters();
 
   /**
@@ -61,7 +60,11 @@ export const DashboardContent = () => {
 
       {/* Secondary Dashboard Section */}
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
-        <AssetsCard/>
+        <AssetsCard
+          selectedYear={selectedYear}
+          selectedFilter={selectedFilter}
+          futureProjectionData={futureProjectionData}
+        />
       </div>
     </div>
   );

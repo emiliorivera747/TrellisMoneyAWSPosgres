@@ -1,5 +1,7 @@
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
+import { getAssets } from "@/features/projected-financial-assets/utils/extractAssets";
 
 interface useFetchProjectionsProps {
   selectedYear: number;
@@ -41,16 +43,17 @@ const useFetchProjections = ({
       selectedYear,
       selectedFilter,
     ],
-    queryFn: () =>
-      fetchProjections(
-        Number(currentYear),
-        Number(selectedYear),
-        selectedFilter
-      ),
+    queryFn: () => fetchProjections(currentYear, selectedYear, selectedFilter),
     enabled: !!selectedYear,
+    refetchOnMount: false,
   });
 
+  const assets = useMemo(
+    () => getAssets(futureProjectionData),
+    [futureProjectionData]
+  );
   return {
+    assets,
     futureProjectionData,
     futureProjectionError,
     futureProjectionLoading,
