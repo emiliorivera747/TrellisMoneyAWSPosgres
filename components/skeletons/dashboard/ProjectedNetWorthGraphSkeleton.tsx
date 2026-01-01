@@ -21,14 +21,14 @@ import GraphHeaders from "@/components/headers/GraphHeaders";
  */
 const ProjectedNetWorthGraphSkeleton = () => {
   return (
-    <div className="h-full pb-8">
+    <div className="h-full">
       <div className="flex flex-col gap-1">
         <div className="font-medium text-tertiary-900 flex items-center gap-2 justify-start">
           <GraphHeaders label={"Future Projection"} />
           <div className="bg-tertiary-200 rounded h-8 w-24 animate-pulse p-[0.2rem]"></div>
         </div>
       </div>
-      <div className="h-[28rem] w-full bg-tertiary-300 rounded animate-pulse"></div>
+      <div className="h-[27rem] w-full bg-tertiary-300 rounded animate-pulse"></div>
     </div>
   );
 };

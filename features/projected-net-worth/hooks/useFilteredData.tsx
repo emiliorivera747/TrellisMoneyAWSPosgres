@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 
-import { FutureProjectionData, ProjectedNetworth } from "@/types/futureProjections";
+import { FutureProjectionData } from "@/types/futureProjections";
 import { SecurityData } from "@/types/graphs";
 
 // Functions
 import { filterProjectionData } from "@/features/projected-net-worth/utils/filterData";
-
 
 /**
  * Custom hook to filter the projection data based on the selected year.
@@ -14,25 +13,31 @@ import { filterProjectionData } from "@/features/projected-net-worth/utils/filte
  * @returns The filtered data.
  */
 const useFilteredData = (
-  futureProjectionData: FutureProjectionData | null | undefined,
+  futureProjectionData: FutureProjectionData | null | undefined | Error,
   selectedYear: number,
   selectedFilter: string
 ) => {
+  if (futureProjectionData instanceof Error) return;
 
-  const [filteredData, setFilteredData] = useState<{ value: string; lineData: SecurityData[] }[]>([]);
+  const [filteredData, setFilteredData] = useState<
+    { value: string; lineData: SecurityData[] }[]
+  >([]);
 
   useEffect(() => {
     if (!futureProjectionData) return;
-    
+
     const projectedNetWorthsData = futureProjectionData?.projected_net_worth;
-   
+
     if (!projectedNetWorthsData || projectedNetWorthsData.length === 0) {
       setFilteredData([]);
       return;
     }
 
     const filtered = projectedNetWorthsData?.map((projectedNetWorth) => {
-      const filtered = filterProjectionData(projectedNetWorth.data, selectedYear);
+      const filtered = filterProjectionData(
+        projectedNetWorth.data,
+        selectedYear
+      );
       return { value: projectedNetWorth.value, lineData: filtered };
     });
     setFilteredData(filtered);
