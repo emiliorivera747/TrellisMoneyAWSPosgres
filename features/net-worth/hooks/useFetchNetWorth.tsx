@@ -21,6 +21,5 @@ export const useFetchNetWorth = () => {
     refetchOnMount: false,            
     refetchOnWindowFocus: false,      
   });
-
   return { netWorthData, netWorthError, netWorthLoading, netWorthHasError };
 };

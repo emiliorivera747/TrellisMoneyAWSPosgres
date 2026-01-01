@@ -45,7 +45,7 @@ const ProjectedAssetsCard = () => {
       >
         <AssetsCardPrimaryHeader />
         <AssetsTable />
-        {/* <UpdateButton /> */}
+        <UpdateButton />
         {assets?.length === 0 && <NoAssetsTable />}
       </div>
     </ProjectedAssetsContainer>

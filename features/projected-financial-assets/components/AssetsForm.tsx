@@ -11,6 +11,8 @@ import { FutureProjectionData } from "@/types/futureProjections";
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/hooks/user/useFetchUser";
 
+import { useDashboardFiltersWithActions } from "@/stores/slices/dashboardFilters.selectors";
+
 /**
  *
  * AssetsForm component is in charge of rendering the form for the projected assets.
@@ -30,14 +32,14 @@ const AssetsCard = ({
   const { form } = useDashboardContext();
   const { user } = useFetchUser();
   const { mutateAssets } = useUpdateAssets();
-
+  const { setMode } = useDashboardFiltersWithActions();
 
   /**
-   * 
+   *
    * Updates Assets
-   * 
-   * @param data 
-   * @returns 
+   *
+   * @param data
+   * @returns
    */
   const onSubmit: SubmitHandler<unknown> = (data) => {
     const formData = data as Record<string, number>;
@@ -53,7 +55,10 @@ const AssetsCard = ({
       formData,
       user
     );
-    if (updatedAssets) mutateAssets(updatedAssets);
+    if (updatedAssets) {
+      mutateAssets(updatedAssets);
+      setMode("view");
+    }
   };
 
   return (
