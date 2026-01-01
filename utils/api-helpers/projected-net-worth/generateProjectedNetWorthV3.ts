@@ -75,9 +75,7 @@ export const generateProjectedNetWorthV3 = async (
       );
     }
   }
-
   pushProjectedNetWorthToEachDay(projectedNetWorth, start_year, end_year, hm);
-
   return projectedNetWorth;
 };
 
@@ -159,24 +157,12 @@ const populateHashMapWithFvHoldings = (
     let total = 0;
 
     for (const { quantity, close_price, annual_return_rate } of holdingsData) {
-      // if (with_inflation) {
-      //   total += future_value_with_inflation_fn(
-      //     quantity,
-      //     close_price,
-      //     annual_return_rate,
-      //     annual_inflation_rate,
-      //     i
-      //   );
-      // } else {
-      //   total += future_value_fn(quantity, close_price, annual_return_rate, i);
-      // }
-
-      getFutureValue({
+      total += getFutureValue({
         present_value: Number(quantity) * Number(close_price),
         annual_inflation_rate,
         annual_return_rate,
         years: i,
-        with_inflation,
+        include_inflation: with_inflation,
       });
     }
     const year = start_year + i;
@@ -224,23 +210,17 @@ const populateHashMapWithFvAccounts = (
     } of accountsData) {
       let fv: number;
 
-      if (with_inflation) {
-        fv = future_value_with_inflation_fn(
-          1,
-          current_amount,
-          annual_return_rate,
-          annual_inflation_rate,
-          i
-        );
-      } else {
-        fv = future_value_fn(1, current_amount, annual_return_rate, i);
-      }
+      fv = getFutureValue({
+        present_value: current_amount,
+        annual_inflation_rate,
+        annual_return_rate,
+        include_inflation: with_inflation,
+        years: i,
+      });
 
       total += isNegative ? -fv : fv;
     }
-
     const year = start_year + i;
-
     hm.set(year, (hm.get(year) || 0) + total);
   }
 };
