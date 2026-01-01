@@ -1,4 +1,7 @@
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
+export interface FormData {
+  [key: string]: number;
+}
 
 /**
  *  State for the dashboard page
@@ -8,8 +11,7 @@ export interface AssetsFormState {
   /**
    * Form for the asset card
    */
-  form: ReturnType<typeof useForm>;
-
+  form: UseFormReturn<FormData>;
 }
 
 export interface NetValueDisplayCardProps {

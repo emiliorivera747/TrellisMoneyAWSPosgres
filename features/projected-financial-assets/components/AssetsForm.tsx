@@ -1,25 +1,16 @@
 "use client";
 import { Form } from "@/components/ui/form";
-import { SubmitHandler } from "react-hook-form";
 import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import { useAssetsFormContext } from "@/context/dashboard/AssetsDashboardProvider";
 
 //Functions
-import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
-import { ProjectedAssets } from "@/features/projected-financial-assets/types/projectedAssets";
-import { FutureProjectionData } from "@/types/futureProjections";
-import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
-import useFetchUser from "@/hooks/user/useFetchUser";
-
-import { useDashboardFiltersWithActions } from "@/stores/slices/dashboardFilters.selectors";
 import { AssetsDashboardProvider } from "@/context/dashboard/AssetsDashboardProvider";
+import useSubmitAssests from "@/features/projected-financial-assets/hooks/useSubmitAssests";
 
 /**
  *
  * AssetsForm component is in charge of rendering the form for the projected assets.
  *
- * @param param0
-const AssetsCard: React.FC<AssetsFormProps> = ({ form, onSubmit }) => {
  */
 const AssetsCard = ({
   futureProjectionData,
@@ -29,37 +20,11 @@ const AssetsCard = ({
   selectedFilter: any;
 }) => {
   const { form } = useAssetsFormContext();
-  const { user } = useFetchUser();
-  const { mutateAssets } = useUpdateAssets();
-  const { setMode } = useDashboardFiltersWithActions();
 
-  /**
-   *
-   * Updates Assets
-   *
-   * @param data
-   * @returns
-   */
-  const onSubmit: SubmitHandler<unknown> = (data) => {
-    if (!futureProjectionData) return;
-
-    const currentProjectedAsset = getCurrentProjectedAsset(
-      futureProjectionData,
-      selectedFilter
-    );
-    if (!currentProjectedAsset) return;
-
-    const updatedAssets = updateAssets(
-      currentProjectedAsset?.data,
-      data as Record<string, number>,
-      user
-    );
-
-    if (updatedAssets) {
-      mutateAssets(updatedAssets);
-      setMode("view");
-    }
-  };
+  const { onSubmit } = useSubmitAssests({
+    futureProjectionData,
+    selectedFilter,
+  });
 
   return (
     <AssetsDashboardProvider>
@@ -76,21 +41,3 @@ const AssetsCard = ({
 };
 
 export default AssetsCard;
-
-/**
- * Returns the current projected asset.
- *
- * @param futureProjectionData - Data related to projected assets.
- * @param selectedFilter - Currently selected filter.
- */
-const getCurrentProjectedAsset = (
-  futureProjectionData: FutureProjectionData | undefined | null,
-  selectedFilter: string
-) => {
-  const assets = futureProjectionData?.projected_assets?.find(
-    (payload: ProjectedAssets) => payload.value === selectedFilter
-  );
-  if (assets) return assets;
-
-  return futureProjectionData?.projected_assets[0];
-};

@@ -1,5 +1,5 @@
 "use client";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { AssetsFormState } from "@/types/dashboard";
 
 export interface FormData {
@@ -11,9 +11,9 @@ export interface FormData {
  * @returns Dashboard state and functions to handle the dashboard
  */
 export const useAssetsForm = (): AssetsFormState => {
-  const form = useForm<FormData, any, undefined>({
+  const form = useForm<FormData>({
     defaultValues: {},
-  }) as UseFormReturn<FormData, any, undefined>;
+  });
 
   return { form };
 };
