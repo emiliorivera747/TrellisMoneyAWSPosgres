@@ -10,7 +10,6 @@ import { ProjectedAssets } from "@/types/futureProjections";
 
 // Selectors
 import { useDashboardFiltersWithActions } from "@/stores/slices/dashboardFilters.selectors";
-
 import { FormData } from "@/hooks/dashboard/useDashboard";
 
 /**
@@ -56,17 +55,19 @@ const useSubmitAssests = ({
 
   const onSubmit = useCallback<SubmitHandler<FormData>>(
     (data) => {
+     
       if (!futureProjectionData || !user) return;
 
       const currentAssetGroup = getCurrentProjectedAsset(
         futureProjectionData,
         selectedFilter
       );
+      
       if (!currentAssetGroup?.data) return;
 
       const updatedAssets = updateAssets(
         currentAssetGroup?.data,
-        data as Record<string, number>,
+        data,
         user
       );
 

@@ -29,7 +29,6 @@ import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors"
 const UpdateButton = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { mode } = useDashboardFilters();
-
   return (
     <Activity mode={mode === "edit" ? "visible" : "hidden"}>
       <div className="flex justify-center items-center">

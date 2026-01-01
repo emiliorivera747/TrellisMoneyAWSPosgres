@@ -27,7 +27,6 @@ const TableBodyForAssets = () => {
 
   useEffect(() => {
     const grouped = Object.groupBy(assets, (asset) => asset.type);
-
     const sortedGroups = Object.fromEntries(
       Object.entries(grouped).map(([type, groupAssets]) => {
         const sortedAssets = [...groupAssets].sort((a, b) => {

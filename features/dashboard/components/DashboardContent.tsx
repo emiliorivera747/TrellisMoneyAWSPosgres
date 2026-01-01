@@ -3,6 +3,7 @@ import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/pr
 import AssetsCard from "@/features/projected-financial-assets/components/AssetsForm";
 import Footer from "@/components/footers/Footer";
 import NetValueItems from "@/features/dashboard/components/NetValueItems";
+import { AssetsDashboardProvider } from "@/context/dashboard/AssetsDashboardProvider";
 
 // Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
@@ -60,10 +61,12 @@ export const DashboardContent = () => {
 
       {/* Secondary Dashboard Section */}
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
-        <AssetsCard
-          selectedFilter={selectedFilter}
-          futureProjectionData={futureProjectionData}
-        />
+        <AssetsDashboardProvider>
+          <AssetsCard
+            selectedFilter={selectedFilter}
+            futureProjectionData={futureProjectionData}
+          />
+        </AssetsDashboardProvider>
       </div>
     </div>
   );
