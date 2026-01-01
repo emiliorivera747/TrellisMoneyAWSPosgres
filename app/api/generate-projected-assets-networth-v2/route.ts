@@ -14,7 +14,7 @@ import {
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/dates/getDates";
 import { getAccountsHoldingsSecuritiesV2 } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
-import { generateProjectedNetWorthV3 } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorthV3";
+import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
 import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
 import { getInvestmentsPlaid } from "@/utils/prisma/investments/getInvestments";
 
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         member.household_id
       );
 
-      const projected_net_worth = await generateProjectedNetWorthV3(
+      const projected_net_worth = await generateProjectedNetWorth(
         account_holdings_securities[0].accounts,
         start_year,
         end_year,

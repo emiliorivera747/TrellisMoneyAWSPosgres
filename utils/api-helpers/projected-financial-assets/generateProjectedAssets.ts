@@ -11,8 +11,8 @@ import {
 } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 import {
-  calculateFutureValue,
   getFormulaValues,
+  getFutureValue,
 } from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
 
 import Decimal from "decimal.js";
@@ -59,14 +59,13 @@ const calculateAccountAssets = (
 ): Assets[] =>
   accounts.map((account) => {
     const annual_return_rate = account.annual_return_rate ?? 0;
-    const current_amount = account.current ?? 0;
 
-    const projection = calculateFutureValue({
-      value: current_amount,
-      annual_return_rate,
+    const projection = getFutureValue({
+      present_value: account.current ?? 0,
       annual_inflation_rate,
+      annual_return_rate,
       years,
-      with_inflation,
+      include_inflation: with_inflation,
     });
 
     return createFinancialAsset({
@@ -108,12 +107,12 @@ const calculateInvestmentAssets = (
     return createFinancialAsset({
       name: holding.accountName + " - Cash",
       annual_return_rate,
-      projection: calculateFutureValue({
-        value: institutional_value,
+      projection: getFutureValue({
+        present_value: institutional_value,
         annual_return_rate,
         annual_inflation_rate,
         years,
-        with_inflation,
+        include_inflation: with_inflation,
       }),
       security_id: holding?.security?.security_id || "",
       account_id: holding.account_id || "",
@@ -197,12 +196,12 @@ const transformAggregateToFinancialAsset = (
     account_id,
   } = aggregate;
 
-  const projection = calculateFutureValue({
-    value: institution_value,
+  const projection = getFutureValue({
+    present_value: institution_value,
     annual_return_rate,
     annual_inflation_rate,
     years,
-    with_inflation,
+    include_inflation: with_inflation,
   });
 
   return createFinancialAsset({

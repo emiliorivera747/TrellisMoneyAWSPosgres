@@ -1,5 +1,12 @@
-import { Holding } from "@/types/plaid";
-import { Decimal } from "decimal.js";
+import { Account } from "@/types/plaid";
+import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import { NetWorthData } from "@/features/projected-financial-assets/types/projectedAssets";
+
+// Helpers
+import {
+  getFutureValue,
+  getFormulaValues,
+} from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
 
 /**
  * Generates the projected net worth over a range of years based on the provided holdings.
@@ -7,81 +14,213 @@ import { Decimal } from "decimal.js";
  * @param {Holding[]} holdings - An array of holding objects, each containing quantity, security, and annual return rate.
  * @param {Date} start_year - The start date for the projection.
  * @param {Date} end_year - The end date for the projection.
- * @returns {Promise<{ year: number, close: number }[]>} - A promise that resolves to an array of objects, each representing the projected net worth for a specific year.
+ * @returns {Promise<{ year: Date, close: number }[]>} - A promise that resolves to an array of objects, each representing the projected net worth for a specific year.
  */
 export const generateProjectedNetWorth = async (
-  holdings: Holding[],
+  accounts: Account[],
   start_year: number,
-  end_year: number
-): Promise<{ year: number; close: number; }[]> => {
-  const projectedNetWorth = [];
- 
-  const n = (end_year +1) - start_year;
-  
+  end_year: number,
+  with_inflation: boolean,
+  annual_inflation_rate: number
+): Promise<NetWorthData[]> => {
+  const projectedNetWorth: NetWorthData[] = [];
+
   // Early return for empty holdings or invalid dates
-  if (!holdings.length || end_year < start_year) {
-    return [];
-  }
+  if (!accounts.length || end_year < start_year) return [];
 
-  /**
-   * Loop through each year in the range and calculate the projected net worth for that year.
-   */
-  for (let i = 0; i < n; i++) {
-    let total = 0;
-  
-    /**
-     * Loop through each holding and calculate the future value of the holding for the current year.
-     */
-    for (const holding of holdings) {
-      const { quantity, close_price, annual_return_rate } =
-        getFormulaValues(holding);
-      let fv = future_value_fn(quantity, close_price, annual_return_rate, i);
-      total += fv;
+  const hm = new Map<number, number>();
+
+  const groups = Object.groupBy(
+    accounts,
+    (account) => account.type as AccountType
+  );
+
+  for (let key in groups) {
+    const accounts = groups[key as AccountType];
+    if (key === "investment") {
+      populateHashMapWithFvHoldings(
+        hm,
+        start_year,
+        end_year,
+        accounts ?? [],
+        with_inflation,
+        annual_inflation_rate
+      );
+    } else if (key === "depository") {
+      populateHashMapWithFvAccounts(
+        hm,
+        start_year,
+        end_year,
+        accounts ?? [],
+        with_inflation,
+        annual_inflation_rate
+      );
+    } else if (key === "loan") {
+      populateHashMapWithFvAccounts(
+        hm,
+        start_year,
+        end_year,
+        accounts ?? [],
+        with_inflation,
+        annual_inflation_rate
+      );
+    } else if (key === "credit") {
+      populateHashMapWithFvAccounts(
+        hm,
+        start_year,
+        end_year,
+        accounts ?? [],
+        with_inflation,
+        annual_inflation_rate
+      );
     }
-
-    projectedNetWorth.push({
-      year: start_year + i,
-      close: total,
-    });
   }
-
+  pushProjectedNetWorthToEachDay(projectedNetWorth, start_year, end_year, hm);
   return projectedNetWorth;
 };
 
 /**
  *
- * @param quantity
- * @param close_price
- * @param annual_return_rate
- * @param growthFactor
+ * populates the projected net worth for each day
+ * Optimized to reduce redundant calculations and improve efficiency
+ *
+ * @param projectedNetWorth
+ * @param start_year
+ * @param end_year
+ * @param hm
+ */
+const pushProjectedNetWorthToEachDay = (
+  projectedNetWorth: { date: Date; close: number }[],
+  start_year: number,
+  end_year: number,
+  hm: Map<number, number>
+) => {
+  const days = (end_year - start_year) * 365;
+
+  for (let i = 0; i <= days; i++) {
+    const year = start_year + Math.floor(i / 365);
+    const dayOfYear = i % 365;
+
+    // Early exit if we're past the first month of the last year
+    if (year === end_year && dayOfYear >= 30) break;
+
+    // Get values for interpolation
+    const previousValue = hm.get(year) || 0;
+    const nextValue = hm.get(year + 1) || previousValue;
+
+    // Linearly interpolate between the current year's value and next year's value
+    const interpolationFactor = dayOfYear / 365;
+    const interpolatedValue =
+      previousValue + (nextValue - previousValue) * interpolationFactor;
+
+    const date = new Date(year, 0, 1 + dayOfYear);
+
+    projectedNetWorth.push({
+      date: date,
+      close: Math.round(interpolatedValue * 100) / 100,
+    });
+  }
+};
+
+/**
+ *
+ * populates the hashmap with the projected net worth
+ * for each year
+ * Optimized to pre-calculate holdings data outside the year loop
+ *
+ * @param hm
+ * @param start_year
+ * @param end_year
+ * @param accounts
  * @returns
  */
-const future_value_fn = (
-  quantity: number | Decimal,
-  close_price: number | Decimal,
-  annual_return_rate: number | Decimal,
-  years: number
+const populateHashMapWithFvHoldings = (
+  hm: Map<number, number>,
+  start_year: number,
+  end_year: number,
+  accounts: Account[],
+  with_inflation: boolean,
+  annual_inflation_rate: number
 ) => {
-  const growthFactor = Math.pow(1 + Number(annual_return_rate), years);
-  return Number(quantity) * Number(close_price) * growthFactor;
+  // Pre-calculate holding data for reuse across years
+  const holdingsData = accounts.flatMap((account) =>
+    (account.holdings ?? []).map((holding) => {
+      // console.log("holding", holding);
+      return getFormulaValues(holding);
+    })
+  );
+
+  const yearRange = end_year - start_year + 1;
+
+  // Calculate future values for each year
+  for (let i = 0; i < yearRange; i++) {
+    let total = 0;
+
+    for (const { quantity, close_price, annual_return_rate } of holdingsData) {
+      total += getFutureValue({
+        present_value: Number(quantity) * Number(close_price),
+        annual_inflation_rate,
+        annual_return_rate,
+        years: i,
+        include_inflation: with_inflation,
+      });
+    }
+    const year = start_year + i;
+    hm.set(year, (hm.get(year) || 0) + total);
+  }
 };
 
-const getQuantity = (holding: Holding) => {
-  return holding?.quantity ? holding.quantity : 0;
-};
+/**
+ *
+ * populates the hashmap with the projected net worth
+ * for each year
+ * Optimized to pre-calculate account data and remove redundant conditions
+ *
+ * @param hm
+ * @param start_year
+ * @param end_year
+ * @param accounts
+ * @returns
+ */
+const populateHashMapWithFvAccounts = (
+  hm: Map<number, number>,
+  start_year: number,
+  end_year: number,
+  accounts: Account[],
+  with_inflation: boolean,
+  annual_inflation_rate: number
+) => {
+  // Pre-calculate account data for reuse
+  const accountsData = accounts.map((account) => ({
+    current_amount: account.current ?? 0,
+    annual_return_rate: account.annual_return_rate ?? 0,
+    isNegative: account.type === "loan" || account.type === "credit",
+  }));
 
-const getClosePrice = (holding: Holding) => {
-  return holding?.security?.close_price ? holding.security.close_price : 0;
-};
+  const yearRange = end_year - start_year + 1;
 
-const getAnnualReturnRate = (holding: Holding) => {
-  return holding?.annual_return_rate ? holding.annual_return_rate : 0;
-};
+  // Calculate future values for each year
+  for (let i = 0; i < yearRange; i++) {
+    let total = 0;
 
-const getFormulaValues = (holding: Holding) => {
-  return {
-    quantity: getQuantity(holding),
-    close_price: getClosePrice(holding),
-    annual_return_rate: getAnnualReturnRate(holding),
-  };
+    for (const {
+      current_amount,
+      annual_return_rate,
+      isNegative,
+    } of accountsData) {
+      let fv: number;
+
+      fv = getFutureValue({
+        present_value: current_amount,
+        annual_inflation_rate,
+        annual_return_rate,
+        include_inflation: with_inflation,
+        years: i,
+      });
+
+      total += isNegative ? -fv : fv;
+    }
+    const year = start_year + i;
+    hm.set(year, (hm.get(year) || 0) + total);
+  }
 };
