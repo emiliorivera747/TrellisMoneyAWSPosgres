@@ -1,4 +1,5 @@
 "use client";
+
 // Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
 import AssetsCard from "@/features/projected-financial-assets/components/AssetsForm";

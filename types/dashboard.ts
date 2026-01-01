@@ -7,11 +7,12 @@ export interface FormData {
  *  State for the dashboard page
  */
 export interface AssetsFormState {
-
   /**
    * Form for the asset card
    */
   form: UseFormReturn<FormData>;
+
+  resetForm: () => void;
 }
 
 export interface NetValueDisplayCardProps {

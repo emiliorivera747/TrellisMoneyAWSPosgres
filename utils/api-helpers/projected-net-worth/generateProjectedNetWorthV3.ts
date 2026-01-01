@@ -145,6 +145,7 @@ const populateHashMapWithFvHoldings = (
   with_inflation: boolean,
   annual_inflation_rate: number
 ) => {
+  
   // Pre-calculate holding data for reuse across years
   const holdingsData = accounts.flatMap((account) =>
     (account.holdings ?? []).map((holding) => {
@@ -172,7 +173,6 @@ const populateHashMapWithFvHoldings = (
         total += future_value_fn(quantity, close_price, annual_return_rate, i);
       }
     }
-
     const year = start_year + i;
     hm.set(year, (hm.get(year) || 0) + total);
   }
