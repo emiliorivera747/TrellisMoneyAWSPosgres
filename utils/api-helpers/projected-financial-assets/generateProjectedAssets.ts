@@ -1,6 +1,6 @@
 import { Account } from "@/types/plaid";
 import {
-  ProjectionConfig,
+  AssetsProjectionConfig,
   ProjectionParams,
 } from "@/features/projected-financial-assets/types/projectedAssets";
 
@@ -31,14 +31,13 @@ export const generateProjectedAssets = async ({
   annual_inflation_rate,
   accounts = [],
 }: ProjectionParams): Promise<Assets[]> => {
-  if (start_year > end_year || !Number.isFinite(annual_inflation_rate))
-    return [];
+  if (start_year > end_year || !annual_inflation_rate) return [];
 
   const years = end_year - start_year;
   const groups = Object.groupBy(accounts, ({ type }) => type || "unknown");
 
   return Object.entries(groups).flatMap(([type, accountList]) => {
-    const config: ProjectionConfig = {
+    const config: AssetsProjectionConfig = {
       years,
       includes_inflation,
       annual_inflation_rate,
@@ -55,7 +54,7 @@ export const generateProjectedAssets = async ({
  */
 const calculateAccountAssets = (
   accounts: Account[],
-  { years, includes_inflation, annual_inflation_rate, type }: ProjectionConfig
+  { years, includes_inflation, annual_inflation_rate, type }: AssetsProjectionConfig
 ): Assets[] =>
   accounts.map((account) => {
     const annual_return_rate = account.annual_return_rate ?? 0;
@@ -86,7 +85,7 @@ const calculateAccountAssets = (
  */
 const calculateInvestmentAssets = (
   accounts: Account[],
-  { years, includes_inflation, annual_inflation_rate, type }: ProjectionConfig
+  { years, includes_inflation, annual_inflation_rate, type }: AssetsProjectionConfig
 ): Assets[] => {
   const aggregates = aggregateHoldingsByTicker(accounts);
   const cashHoldings = accounts.flatMap(
@@ -184,7 +183,7 @@ const aggregateHoldingsByTicker = (
  */
 const transformAggregateToFinancialAsset = (
   aggregate: HoldingAggregate,
-  { years, includes_inflation, annual_inflation_rate, type }: ProjectionConfig
+  { years, includes_inflation, annual_inflation_rate, type }: AssetsProjectionConfig
 ): Assets => {
   const {
     security_id,

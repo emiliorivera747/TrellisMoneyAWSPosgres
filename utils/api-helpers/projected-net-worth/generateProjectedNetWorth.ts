@@ -145,7 +145,6 @@ const populateHashMapWithFvHoldings = (
   // Pre-calculate holding data for reuse across years
   const holdingsData = accounts.flatMap((account) =>
     (account.holdings ?? []).map((holding) => {
-      // console.log("holding", holding);
       return getFormulaValues(holding);
     })
   );

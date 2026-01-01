@@ -36,7 +36,7 @@ export interface FinancialAssets {
   user_id?: string | undefined;
 }
 
-export interface ProjectionConfig {
+export interface AssetsProjectionConfig {
   years: number;
   includes_inflation: boolean;
   annual_inflation_rate: number;
