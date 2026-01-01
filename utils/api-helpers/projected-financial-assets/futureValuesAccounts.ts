@@ -38,7 +38,7 @@ export const calculate_fv_accounts = (
       present_value: Number(current),
       annual_inflation_rate,
       annual_return_rate: annual_return_rate ?? 0,
-      include_inflation: includes_inflation,
+      includes_inflation: includes_inflation,
       years: end_year - start_year,
     });
 
@@ -89,7 +89,7 @@ export const calculate_fv_holdings = (
         present_value: Number(quantity) * Number(close_price),
         annual_inflation_rate,
         annual_return_rate,
-        include_inflation: includes_inflation,
+        includes_inflation: includes_inflation,
         years: end_year - start_year,
       });
 

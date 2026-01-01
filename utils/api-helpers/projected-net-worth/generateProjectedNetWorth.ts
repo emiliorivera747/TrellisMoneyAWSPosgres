@@ -161,7 +161,7 @@ const populateHashMapWithFvHoldings = (
         annual_inflation_rate,
         annual_return_rate,
         years: i,
-        include_inflation: includes_inflation,
+        includes_inflation: includes_inflation,
       });
     }
     const year = start_year + i;
@@ -213,7 +213,7 @@ const populateHashMapWithFvAccounts = (
         present_value: current_amount,
         annual_inflation_rate,
         annual_return_rate,
-        include_inflation: includes_inflation,
+        includes_inflation: includes_inflation,
         years: i,
       });
 

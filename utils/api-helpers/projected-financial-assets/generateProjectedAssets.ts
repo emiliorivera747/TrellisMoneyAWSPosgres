@@ -20,6 +20,7 @@ import { createFinancialAsset } from "@/utils/api-helpers/projected-financial-as
 
 // Type
 import { Assets } from "@/types/assets";
+import { GenerateAssetsFromAccountsParams } from "@/types/projectedAssets";
 
 /**
  * Generates projected financial assets for accounts.
@@ -37,36 +38,46 @@ export const generateProjectedAssets = async ({
   const groups = Object.groupBy(accounts, ({ type }) => type || "unknown");
 
   return Object.entries(groups).flatMap(([type, accountList]) => {
-    const config: AssetsProjectionConfig = {
-      years,
-      includes_inflation,
-      annual_inflation_rate,
-      type: type as AccountType,
-    };
     return type === "investment"
-      ? calculateInvestmentAssets(accountList ?? [], config)
-      : calculateAccountAssets(accountList ?? [], config);
+      ? generateAssetsFromInvestments({
+          accounts: accountList ?? [],
+          years,
+          includes_inflation,
+          annual_inflation_rate,
+          type,
+        })
+      : generateAssetsFromAccounts({
+          accounts: accountList ?? [],
+          years,
+          includes_inflation,
+          annual_inflation_rate,
+          type: type as AccountType,
+        });
   });
 };
 
 /**
  * Calculates future value for non-investment accounts.
  */
-const calculateAccountAssets = (
-  accounts: Account[],
-  { years, includes_inflation, annual_inflation_rate, type }: AssetsProjectionConfig
-): Assets[] =>
+const generateAssetsFromAccounts = ({
+  accounts,
+  years,
+  includes_inflation,
+  annual_inflation_rate,
+  type,
+}: GenerateAssetsFromAccountsParams): Assets[] =>
   accounts.map((account) => {
+    
     const annual_return_rate = account.annual_return_rate ?? 0;
-
+    
     const projection = getFutureValue({
       present_value: account.current ?? 0,
       annual_inflation_rate,
       annual_return_rate,
       years,
-      include_inflation: includes_inflation,
+      includes_inflation,
     });
-
+   
     return createFinancialAsset({
       name: account.name || "",
       annual_return_rate,
@@ -83,11 +94,15 @@ const calculateAccountAssets = (
 /**
  * Calculates future value for investment holdings, consolidating by ticker symbol.
  */
-const calculateInvestmentAssets = (
-  accounts: Account[],
-  { years, includes_inflation, annual_inflation_rate, type }: AssetsProjectionConfig
-): Assets[] => {
+const generateAssetsFromInvestments = ({
+  accounts,
+  years,
+  includes_inflation,
+  annual_inflation_rate,
+  type,
+}: GenerateAssetsFromAccountsParams): Assets[] => {
   const aggregates = aggregateHoldingsByTicker(accounts);
+
   const cashHoldings = accounts.flatMap(
     ({ holdings = [], name: accountName }) =>
       holdings
@@ -111,7 +126,7 @@ const calculateInvestmentAssets = (
         annual_return_rate,
         annual_inflation_rate,
         years,
-        include_inflation: includes_inflation,
+        includes_inflation: includes_inflation,
       }),
       security_id: holding?.security?.security_id || "",
       account_id: holding.account_id || "",
@@ -183,7 +198,12 @@ const aggregateHoldingsByTicker = (
  */
 const transformAggregateToFinancialAsset = (
   aggregate: HoldingAggregate,
-  { years, includes_inflation, annual_inflation_rate, type }: AssetsProjectionConfig
+  {
+    years,
+    includes_inflation,
+    annual_inflation_rate,
+    type,
+  }: AssetsProjectionConfig
 ): Assets => {
   const {
     security_id,
@@ -200,7 +220,7 @@ const transformAggregateToFinancialAsset = (
     annual_return_rate,
     annual_inflation_rate,
     years,
-    include_inflation: includes_inflation,
+    includes_inflation: includes_inflation,
   });
 
   return createFinancialAsset({

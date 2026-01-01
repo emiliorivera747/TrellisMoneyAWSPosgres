@@ -43,7 +43,7 @@ export interface FutureValueInflationOption extends FutureValueParams {
   /**
    * A flag indicating whether to include inflation in the future value calculation.
    */
-  include_inflation: boolean;
+  includes_inflation: boolean;
 
   /**
    * Estimated annual inflation rate.

@@ -129,10 +129,10 @@ export const getFutureValue = ({
   annual_return_rate,
   annual_inflation_rate,
   years,
-  include_inflation,
+  includes_inflation,
 }: FutureValueInflationOption): number => {
   const pv = getPresentValue(present_value);
-  return include_inflation
+  return includes_inflation
     ? calculateInflationAdjustedFutureValue({
         present_value: pv,
         annual_return_rate,
