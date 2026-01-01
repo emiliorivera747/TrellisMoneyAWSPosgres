@@ -55,7 +55,7 @@ const ProjectedNetWorthGraph = ({
   );
 
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
-  if (futureProjectionHasError)
+  if (futureProjectionHasError || !filteredData )
     return <ProjectedNetWorthGraphError error={futureProjectionError} />;
 
   const dataForLines = createLinePayLoads(selectedFilter, filteredData);
