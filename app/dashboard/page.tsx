@@ -3,9 +3,6 @@
 // Components
 import { DashboardContent } from "@/features/dashboard/components/DashboardContent";
 
-// Context
-import { AssetsDashboardProvider } from "@/context/dashboard/AssetsDashboardProvider";
-
 /**
  *
  * Dashboard page is in charge of retrieving all of the financial data and displaying the
@@ -14,11 +11,7 @@ import { AssetsDashboardProvider } from "@/context/dashboard/AssetsDashboardProv
  * @returns
  */
 const Dashboard = () => {
-  return (
-    <AssetsDashboardProvider>
-      <DashboardContent />
-    </AssetsDashboardProvider>
-  );
+  return <DashboardContent />;
 };
 
 export default Dashboard;

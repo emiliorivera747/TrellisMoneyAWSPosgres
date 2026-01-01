@@ -12,6 +12,7 @@ import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/hooks/user/useFetchUser";
 
 import { useDashboardFiltersWithActions } from "@/stores/slices/dashboardFilters.selectors";
+import { AssetsDashboardProvider } from "@/context/dashboard/AssetsDashboardProvider";
 
 /**
  *
@@ -40,19 +41,20 @@ const AssetsCard = ({
    * @returns
    */
   const onSubmit: SubmitHandler<unknown> = (data) => {
-    const formData = data as Record<string, number>;
-
     if (!futureProjectionData) return;
-    const currentProjectedAsset =
-      getCurrentProjectedAsset(futureProjectionData, selectedFilter) ||
-      futureProjectionData.projected_assets[0];
 
+    const currentProjectedAsset = getCurrentProjectedAsset(
+      futureProjectionData,
+      selectedFilter
+    );
     if (!currentProjectedAsset) return;
+
     const updatedAssets = updateAssets(
       currentProjectedAsset?.data,
-      formData,
+      data as Record<string, number>,
       user
     );
+
     if (updatedAssets) {
       mutateAssets(updatedAssets);
       setMode("view");
@@ -60,14 +62,16 @@ const AssetsCard = ({
   };
 
   return (
-    <Form {...form}>
-      <form
-        className="grid grid-rows-[1fr_6rem] gap-6 col-span-10 sm:col-span-3 sm:row-span-1 w-[23rem] border-box overflow-hidden"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <ProjectedAssetsCard />
-      </form>
-    </Form>
+    <AssetsDashboardProvider>
+      <Form {...form}>
+        <form
+          className="grid grid-rows-[1fr_6rem] gap-6 col-span-10 sm:col-span-3 sm:row-span-1 w-[23rem] border-box overflow-hidden"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <ProjectedAssetsCard />
+        </form>
+      </Form>
+    </AssetsDashboardProvider>
   );
 };
 
@@ -83,7 +87,10 @@ const getCurrentProjectedAsset = (
   futureProjectionData: FutureProjectionData | undefined | null,
   selectedFilter: string
 ) => {
-  return futureProjectionData?.projected_assets?.find(
+  const assets = futureProjectionData?.projected_assets?.find(
     (payload: ProjectedAssets) => payload.value === selectedFilter
   );
+  if (assets) return assets;
+
+  return futureProjectionData?.projected_assets[0];
 };

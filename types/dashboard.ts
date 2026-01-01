@@ -1,9 +1,5 @@
 import { useForm } from "react-hook-form";
 
-interface CustomFormData {
-  [key: string]: any;
-}
-
 /**
  *  State for the dashboard page
  */

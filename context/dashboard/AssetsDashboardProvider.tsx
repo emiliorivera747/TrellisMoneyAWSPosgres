@@ -13,7 +13,6 @@ export const AssetsDashboardProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const dashboardState = useAssetsForm();
-
   return (
     <AssetsFormContext.Provider value={dashboardState}>
       {children}

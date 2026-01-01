@@ -61,7 +61,7 @@ const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
         <GrowthRateCellText asset={asset} />
       </Activity>
 
-      <ProjectionCell value={asset.projection} />
+      <ProjectionCell value={asset.projection ?? 0} />
     </TableRow>
   );
 };

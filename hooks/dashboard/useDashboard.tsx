@@ -1,11 +1,9 @@
 "use client";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { AssetsFormState} from "@/types/dashboard";
+import { AssetsFormState } from "@/types/dashboard";
 
-
-// Define form data type (customize as needed)
-interface FormData {
-  [key: string]: number; // Example: adjust based on your actual form fields
+export interface FormData {
+  [key: string]: number;
 }
 
 /**
