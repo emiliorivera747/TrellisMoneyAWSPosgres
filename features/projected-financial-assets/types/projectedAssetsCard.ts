@@ -77,7 +77,7 @@ export interface GrowthRateCellPropsText {
   asset: Assets;
 }
 
-export interface HoldingAggregate {
+export interface GroupedHolding {
   security_id: string;
   name: string;
   quantity: Decimal;

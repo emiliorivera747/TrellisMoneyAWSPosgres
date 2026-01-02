@@ -103,10 +103,20 @@ export const createHoldingHistory = async (
  */
 export const getAllHoldingsWithIds = async (user_id: string) => {
   const userHoldings = await prisma.holding.findMany({
-    where: {
-      user_id: user_id,
-    },
+    where: { user_id: user_id },
   });
-
   return userHoldings;
+};
+
+/**
+ * Retrieves a list of holdings associated with a specific household ID.
+ *
+ * @param household_id - The unique identifier of the household whose holdings are to be retrieved.
+ * @returns A promise that resolves to an array of holdings associated with the given household ID.
+ */
+export const getHoldingsWithHouseholdId = async (household_id: string) => {
+  const holdings = await prisma.holding.findMany({
+    where: { household_id },
+  });
+  return holdings;
 };

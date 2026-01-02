@@ -7,7 +7,7 @@ import {
 import { getHoldingNameV2 } from "@/utils/api-helpers/holdings/holdingAccessors";
 import {
   AccountType,
-  HoldingAggregate,
+  GroupedHolding,
 } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 import {
@@ -101,8 +101,9 @@ const generateAssetsFromInvestments = ({
   annual_inflation_rate,
   type,
 }: GenerateAssetsFromAccountsParams): Assets[] => {
-  const aggregates = groupHoldingsByTickerSymbol(accounts);
-
+  
+  const groupedHoldings = groupHoldingsByTickerSymbol(accounts);
+  
   const cashHoldings = accounts.flatMap(
     ({ holdings = [], name: accountName }) =>
       holdings
@@ -137,7 +138,7 @@ const generateAssetsFromInvestments = ({
     });
   });
 
-  const aggregatesRes = Array.from(aggregates.values()).map((aggregate) =>
+  const aggregatesRes = Array.from(groupedHoldings.values()).map((aggregate) =>
     transformAggregateToFinancialAsset(aggregate, {
       years,
       includes_inflation,
@@ -155,36 +156,62 @@ const generateAssetsFromInvestments = ({
  */
 const groupHoldingsByTickerSymbol = (
   accounts: Account[]
-): Map<string, HoldingAggregate> => {
-  const aggregates = new Map<string, HoldingAggregate>();
-  accounts.forEach(({ holdings = [], name, account_id }) =>
-    holdings.forEach((holding) => {
-      const ticker_symbol = holding?.security?.ticker_symbol ?? "";
-      const subtype = holding?.security?.type || "unknown";
-      if (!ticker_symbol || subtype === "cash") return;
+): Map<string, GroupedHolding> => {
+  const holdings = accounts.flatMap((account) => account.holdings);
+  const groupedHoldingsMap = new Map<string, GroupedHolding>();
 
-      const { quantity, annual_return_rate, institutional_value } =
-        getFormulaValues(holding);
+  for (let holding of holdings) {
+    const ticker_symbol = holding?.security?.ticker_symbol ?? "";
+    const subtype = holding?.security?.type || "unknown";
+    if (!ticker_symbol || subtype === "cash" || !holding) continue;
+    const { quantity, annual_return_rate, institutional_value } =
+      getFormulaValues(holding);
 
-      const aggregate = aggregates.get(ticker_symbol) || {
-        security_id: holding?.security?.security_id || "",
-        name: getHoldingNameV2(holding, name || ""),
-        quantity: new Decimal(0),
-        institution_value: new Decimal(0),
-        annual_return_rate: new Decimal(annual_return_rate || 0).toNumber(),
-        subtype: holding?.security?.type || "unknown",
-        account_id: holding.account_id || account_id,
-      };
+    const groupedHolding = groupedHoldingsMap.get(ticker_symbol) || {
+      security_id: holding?.security?.security_id || "",
+      name: getHoldingNameV2(holding, ""),
+      quantity: new Decimal(0),
+      institution_value: new Decimal(0),
+      annual_return_rate: new Decimal(annual_return_rate || 0).toNumber(),
+      subtype: holding?.security?.type || "unknown",
+      account_id: holding.account_id || "",
+    };
 
-      aggregate.quantity = aggregate.quantity.plus(quantity || 0);
-      aggregate.institution_value = aggregate.institution_value.plus(
-        institutional_value || 0
-      );
-      aggregates.set(ticker_symbol, aggregate);
-    })
-  );
+    groupedHolding.quantity = groupedHolding.quantity.plus(quantity || 0);
+    groupedHolding.institution_value = groupedHolding.institution_value.plus(
+      institutional_value || 0
+    );
 
-  return aggregates;
+    groupedHoldingsMap.set(ticker_symbol, groupedHolding);
+
+    // accounts.forEach(({ holdings = [], name, account_id }) =>
+    //   holdings.forEach((holding) => {
+    //     const ticker_symbol = holding?.security?.ticker_symbol ?? "";
+    //     const subtype = holding?.security?.type || "unknown";
+    //     if (!ticker_symbol || subtype === "cash") return;
+
+    //     const { quantity, annual_return_rate, institutional_value } =
+    //       getFormulaValues(holding);
+
+    //     const aggregate = aggregates.get(ticker_symbol) || {
+    //       security_id: holding?.security?.security_id || "",
+    //       name: getHoldingNameV2(holding, name || ""),
+    //       quantity: new Decimal(0),
+    //       institution_value: new Decimal(0),
+    //       annual_return_rate: new Decimal(annual_return_rate || 0).toNumber(),
+    //       subtype: holding?.security?.type || "unknown",
+    //       account_id: holding.account_id || account_id,
+    //     };
+
+    //     aggregate.quantity = aggregate.quantity.plus(quantity || 0);
+    //     aggregate.institution_value = aggregate.institution_value.plus(
+    //       institutional_value || 0
+    //     );
+    //     aggregates.set(ticker_symbol, aggregate);
+    //   })
+    // );
+  }
+  return groupedHoldingsMap;
 };
 
 /**
@@ -195,7 +222,7 @@ const groupHoldingsByTickerSymbol = (
  * Transforms a holding aggregate into a financial asset.
  */
 const transformAggregateToFinancialAsset = (
-  aggregate: HoldingAggregate,
+  aggregate: GroupedHolding,
   {
     years,
     includes_inflation,
