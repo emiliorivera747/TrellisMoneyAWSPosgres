@@ -7,6 +7,7 @@ import {
   getFutureValue,
   getFormulaValues,
 } from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
+import { PopulateMapWithFvParams } from "@/types/projected-net-worth";
 
 /**
  * Generates the projected net worth over a range of years based on the provided holdings.
@@ -25,41 +26,40 @@ export const generateProjectedNetWorth = async (
 ): Promise<NetWorthData[]> => {
   const projectedNetWorth: NetWorthData[] = [];
 
-  // Early return for empty holdings or invalid dates
+  /** 
+   * Early exit
+   */
   if (!accounts.length || end_year < start_year) return [];
 
   const projectionsMap = new Map<number, number>();
 
-  const groups = Object.groupBy(
-    accounts,
-    (account) => account.type as AccountType
-  );
+  const groups = createGroups(accounts);
 
   for (let key in groups) {
     const accounts = groups[key as AccountType];
     if (key === "investment") {
-      populateHashMapWithFvHoldings(
+      populateMapWithFvHoldings({
         projectionsMap,
         start_year,
         end_year,
-        accounts ?? [],
+        accounts: accounts ?? [],
         includes_inflation,
-        annual_inflation_rate
-      );
+        annual_inflation_rate,
+      });
     } else if (
       key === "depository" ||
       key === "loan" ||
       key === "credit" ||
       key === "other"
     ) {
-      populateHashMapWithFvAccounts(
+      populateMapWithFvAccounts({
         projectionsMap,
         start_year,
         end_year,
-        accounts ?? [],
+        accounts: accounts ?? [],
         includes_inflation,
-        annual_inflation_rate
-      );
+        annual_inflation_rate,
+      });
     }
   }
   // console.log("projectionsMap", projectionsMap);
@@ -70,6 +70,48 @@ export const generateProjectedNetWorth = async (
     projectionsMap
   );
   return projectedNetWorth;
+};
+
+/**
+ * Groups an array of accounts by their account type.
+ *
+ * @param accounts - An array of `Account` objects to be grouped.
+ * @returns An object where the keys are `AccountType` values and the values are arrays of `Account` objects
+ *          that belong to each respective account type.
+ *
+ * @remarks
+ * This function uses `Object.groupBy` to group the accounts based on their `type` property.
+ * Ensure that the `Account` type and `AccountType` enum are properly defined in your codebase.
+ *
+ * @example
+ * ```typescript
+ * const accounts: Account[] = [
+ *   { id: 1, type: 'savings', balance: 1000 },
+ *   { id: 2, type: 'checking', balance: 500 },
+ *   { id: 3, type: 'savings', balance: 2000 },
+ * ];
+ *
+ * const groupedAccounts = createGroups(accounts);
+ * console.log(groupedAccounts);
+ * // Output:
+ * // {
+ * //   savings: [
+ * //     { id: 1, type: 'savings', balance: 1000 },
+ * //     { id: 3, type: 'savings', balance: 2000 }
+ * //   ],
+ * //   checking: [
+ * //     { id: 2, type: 'checking', balance: 500 }
+ * //   ]
+ * // }
+ * ```
+ */
+const createGroups = (accounts: Account[]) => {
+  const groups = Object.groupBy(
+    accounts,
+    (account) => account.type as AccountType
+  );
+
+  return groups;
 };
 
 /**
@@ -133,14 +175,14 @@ const pushProjectedNetWorthToEachDay = (
  * @param accounts
  * @returns
  */
-const populateHashMapWithFvHoldings = (
-  projectionsMap: Map<number, number>,
-  start_year: number,
-  end_year: number,
-  accounts: Account[],
-  includes_inflation: boolean,
-  annual_inflation_rate: number
-) => {
+const populateMapWithFvHoldings = ({
+  projectionsMap,
+  start_year,
+  end_year,
+  accounts,
+  includes_inflation,
+  annual_inflation_rate,
+}: PopulateMapWithFvParams) => {
   // Pre-calculate holding data for reuse across years
   const holdingsData = accounts.flatMap((account) =>
     (account.holdings ?? []).map((holding) => {
@@ -180,14 +222,14 @@ const populateHashMapWithFvHoldings = (
  * @param accounts
  * @returns
  */
-const populateHashMapWithFvAccounts = (
-  projectionsMap: Map<number, number>,
-  start_year: number,
-  end_year: number,
-  accounts: Account[],
-  includes_inflation: boolean,
-  annual_inflation_rate: number
-) => {
+const populateMapWithFvAccounts = ({
+  projectionsMap,
+  start_year,
+  end_year,
+  accounts,
+  includes_inflation,
+  annual_inflation_rate,
+}: PopulateMapWithFvParams) => {
   // Pre-calculate account data for reuse
   const accountsData = accounts.map((account) => ({
     current_amount: account.current ?? 0,
@@ -200,7 +242,6 @@ const populateHashMapWithFvAccounts = (
   // Calculate future values for each year
   for (let i = 0; i < yearRange; i++) {
     let total = 0;
-
     for (const {
       current_amount,
       annual_return_rate,
@@ -213,7 +254,6 @@ const populateHashMapWithFvAccounts = (
         includes_inflation: includes_inflation,
         years: i,
       });
-
       total += isNegative ? -fv : fv;
     }
     const year = start_year + i;
