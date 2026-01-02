@@ -24,19 +24,14 @@ export const generateProjectedNetWorth = async (
   includes_inflation: boolean,
   annual_inflation_rate: number
 ): Promise<NetWorthData[]> => {
-  const projectedNetWorth: NetWorthData[] = [];
 
-  /** 
-   * Early exit
-   */
   if (!accounts.length || end_year < start_year) return [];
-
   const projectionsMap = new Map<number, number>();
-
   const groups = createGroups(accounts);
 
   for (let key in groups) {
     const accounts = groups[key as AccountType];
+
     if (key === "investment") {
       populateMapWithFvHoldings({
         projectionsMap,
@@ -62,61 +57,37 @@ export const generateProjectedNetWorth = async (
       });
     }
   }
-  // console.log("projectionsMap", projectionsMap);
-  pushProjectedNetWorthToEachDay(
-    projectedNetWorth,
+
+  const projectedNetWorth = generateDailyProjectedNetWorth(
     start_year,
     end_year,
     projectionsMap
   );
+
   return projectedNetWorth;
 };
 
 /**
- * Groups an array of accounts by their account type.
+ * Groups accounts by their type.
  *
- * @param accounts - An array of `Account` objects to be grouped.
- * @returns An object where the keys are `AccountType` values and the values are arrays of `Account` objects
- *          that belong to each respective account type.
- *
- * @remarks
- * This function uses `Object.groupBy` to group the accounts based on their `type` property.
- * Ensure that the `Account` type and `AccountType` enum are properly defined in your codebase.
+ * @param accounts - Array of `Account` objects.
+ * @returns Object with `AccountType` keys and arrays of `Account` objects.
  *
  * @example
- * ```typescript
- * const accounts: Account[] = [
+ * const accounts = [
  *   { id: 1, type: 'savings', balance: 1000 },
  *   { id: 2, type: 'checking', balance: 500 },
- *   { id: 3, type: 'savings', balance: 2000 },
  * ];
- *
- * const groupedAccounts = createGroups(accounts);
- * console.log(groupedAccounts);
- * // Output:
- * // {
- * //   savings: [
- * //     { id: 1, type: 'savings', balance: 1000 },
- * //     { id: 3, type: 'savings', balance: 2000 }
- * //   ],
- * //   checking: [
- * //     { id: 2, type: 'checking', balance: 500 }
- * //   ]
- * // }
- * ```
+ * const grouped = createGroups(accounts);
+ * // { savings: [{ id: 1, ... }], checking: [{ id: 2, ... }] }
  */
 const createGroups = (accounts: Account[]) => {
-  const groups = Object.groupBy(
-    accounts,
-    (account) => account.type as AccountType
-  );
-
-  return groups;
+  return Object.groupBy(accounts, (account) => account.type as AccountType);
 };
 
 /**
  *
- * populates the projected net worth for each day
+ * Populates the projected net worth for each day
  * Optimized to reduce redundant calculations and improve efficiency
  *
  * @param projectedNetWorth
@@ -124,43 +95,39 @@ const createGroups = (accounts: Account[]) => {
  * @param end_year
  * @param projectionsMap
  */
-const pushProjectedNetWorthToEachDay = (
-  projectedNetWorth: { date: Date; close: number }[],
-  start_year: number,
-  end_year: number,
+const generateDailyProjectedNetWorth = (
+  startYear: number,
+  endYear: number,
   projectionsMap: Map<number, number>
 ) => {
-  const days = (end_year - start_year) * 365;
+  const projectedNetWorth: NetWorthData[] = [];
 
-  // In pushProjectedNetWorthToEachDay
-  for (let i = 0; i <= days; i++) {
-    const year = start_year + Math.floor(i / 365);
-    const dayOfYear = i % 365;
+  for (let year = startYear; year < endYear; year++) {
+    const currentProjectedValue = projectionsMap.get(year) ?? 0;
+    const nextYearProjectedValue =
+      projectionsMap.get(year + 1) ?? currentProjectedValue;
 
-    // Remove or comment out this line - almost never wanted
-    // if (year === end_year && dayOfYear >= 30) break;
+    for (let day = 0; day < 365; day++) {
+      const t = day / 365;
+      const delta = (nextYearProjectedValue - currentProjectedValue) * t;
+      const value = currentProjectedValue + delta;
 
-    const value = projectionsMap.get(year) ?? 0;
+      const date = new Date(year, 0, 1);
+      date.setDate(day + 1);
 
-    // If you really want smooth line between years:
-    let interpolatedValue = value;
-    if (year < end_year) {
-      const next = projectionsMap.get(year + 1) ?? value;
-      const f = dayOfYear / 365;
-      interpolatedValue += (next - value) * f;
+      projectedNetWorth.push({
+        date,
+        close: Math.round(value * 100) / 100,
+      });
     }
-
-    const date = new Date(year, 0, 1);
-    date.setDate(date.getDate() + dayOfYear);
-
-    projectedNetWorth.push({
-      date,
-      close: Math.round(interpolatedValue * 100) / 100,
-    });
-
-    // Optional: early exit at end of last year
-    if (year === end_year && dayOfYear >= 364) break;
   }
+
+  projectedNetWorth.push({
+    date: new Date(endYear, 0, 1),
+    close: Math.round((projectionsMap.get(endYear) ?? 0) * 100) / 100,
+  });
+
+  return projectedNetWorth;
 };
 
 /**
@@ -240,7 +207,7 @@ const populateMapWithFvAccounts = ({
   const yearRange = end_year - start_year + 1;
 
   // Calculate future values for each year
-  for (let i = 0; i < yearRange; i++) {
+  for (let i = 0; i <= yearRange; i++) {
     let total = 0;
     for (const {
       current_amount,
