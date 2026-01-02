@@ -44,7 +44,7 @@ export const calculate_fv_accounts = (
 
     res.push({
       name: account.name,
-      annual_growth_rate: new Decimal(annual_return_rate ?? 0).toDecimalPlaces(
+      annual_return_rate: new Decimal(annual_return_rate ?? 0).toDecimalPlaces(
         2
       ),
       projection: new Decimal(fv).toDecimalPlaces(2),
@@ -95,7 +95,7 @@ export const calculate_fv_holdings = (
 
       res.push({
         name: getHoldingName(holding),
-        annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
+        annual_return_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
         projection: new Decimal(fv).toDecimalPlaces(2),
         security_id: holding.security_id,
         account_id: holding.account_id,

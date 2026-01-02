@@ -18,7 +18,7 @@ export async function PATCH(
   return withAuth(req, async (request, user) => {
     try {
       const body = await request.json();
-      const { user_id, annual_growth_rate } = body;
+      const { user_id, annual_return_rate } = body;
       const { _id } = await params;
 
       // Validate inputs
@@ -38,7 +38,7 @@ export async function PATCH(
           user_id: user?.id || user_id, // Use authenticated user ID if available
         },
         data: {
-          annual_return_rate: annual_growth_rate,
+          annual_return_rate: annual_return_rate,
         },
       });
 

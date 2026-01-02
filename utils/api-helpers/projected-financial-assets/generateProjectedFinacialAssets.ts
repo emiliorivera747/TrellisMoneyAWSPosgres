@@ -14,7 +14,7 @@ import Decimal from "decimal.js";
 
 interface financialAssests {
     name: string;
-    annual_growth_rate: Decimal;
+    annual_return_rate: Decimal;
     projection: Decimal;
     security_id: string | undefined;
     account_id: string | undefined;
@@ -54,7 +54,7 @@ export const generateProjectedFinancialAssets = async (
 
         assets.push({
             name: getHoldingName(holding),
-            annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
+            annual_return_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
             projection: new Decimal(fv).toDecimalPlaces(2),
             security_id: holding.security_id,
             account_id: holding.account_id,

@@ -22,7 +22,7 @@ export type SecurityType =
   | "other";
 export interface Assets {
   name: string;
-  annual_growth_rate?: number | null;
+  annual_return_rate?: number | null;
   shares?: number;
   amount?: number;
   security_id?: string;

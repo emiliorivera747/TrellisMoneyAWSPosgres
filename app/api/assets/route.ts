@@ -54,13 +54,13 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
               },
             },
             data: {
-              annual_return_rate: asset.annual_growth_rate,
+              annual_return_rate: asset.annual_return_rate,
             },
           });
       }
 
       const res = assets.map(async (asset: Assets) => {
-        const { account_id, user_id, annual_growth_rate, type } = asset;
+        const { account_id, user_id, annual_return_rate, type } = asset;
 
         if (type !== "investment") {
           await prisma.account.update({
@@ -69,7 +69,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
               user_id: user_id ?? "",
             },
             data: {
-              annual_return_rate: annual_growth_rate,
+              annual_return_rate: annual_return_rate,
             },
           });
         }

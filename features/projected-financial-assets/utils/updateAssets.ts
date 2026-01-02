@@ -10,7 +10,7 @@ function updateAssets(
   const res = assets.map((asset) => {
     const newVal =
       data[`${asset.name}-${asset.account_id}-${asset.security_id}`];
-    if (newVal) asset.annual_growth_rate = newVal / 100;
+    if (newVal) asset.annual_return_rate = newVal / 100;
     return {
       ...asset,
       user_id: user?.id ?? "",

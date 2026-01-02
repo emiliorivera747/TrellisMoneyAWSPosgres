@@ -36,7 +36,7 @@ export const createFinancialAsset = ({
   shares,
 }: createFinancialAssetParams): Assets => ({
   name,
-  annual_growth_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
+  annual_return_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
   projection: new Decimal(projection).toDecimalPlaces(2),
   security_id,
   account_id,

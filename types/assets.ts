@@ -4,7 +4,7 @@ import Decimal from "decimal.js";
 
 export interface Assets {
   name: string;
-  annual_growth_rate: number | Decimal;
+  annual_return_rate: number | Decimal;
   projection: number | Decimal;
   security_id: string | undefined;
   account_id: string | undefined;
