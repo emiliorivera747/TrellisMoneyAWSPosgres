@@ -11,7 +11,7 @@ import {
 } from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
 
 import Decimal from "decimal.js";
-import { createFinancialAsset } from "@/utils/api-helpers/projected-financial-assets/createFinancialAsset";
+import { constructAsset } from "@/utils/api-helpers/projected-financial-assets/createFinancialAsset";
 
 // Type
 import { Assets } from "@/types/assets";
@@ -38,7 +38,7 @@ export const generateProjectedAssets = async ({
   const years = end_year - start_year;
   const groups = Object.groupBy(accounts, ({ type }) => type || "unknown");
 
-  return Object.entries(groups).flatMap(([type, accountList]) => {
+  const assets = Object.entries(groups).flatMap(([type, accountList]) => {
     return type === "investment"
       ? generateAssetsFromInvestments({
           accounts: accountList ?? [],
@@ -55,6 +55,7 @@ export const generateProjectedAssets = async ({
           type: type as AccountType,
         });
   });
+  return assets;
 };
 
 /**
@@ -69,6 +70,7 @@ const generateAssetsFromAccounts = ({
 }: GenerateAssetsFromAccountsParams): Assets[] =>
   accounts.map((account) => {
     const annual_return_rate = account.annual_return_rate ?? 0;
+
     const projection = getFutureValue({
       present_value: account.current ?? 0,
       annual_inflation_rate,
@@ -77,16 +79,17 @@ const generateAssetsFromAccounts = ({
       includes_inflation,
     });
 
-    return createFinancialAsset({
+    return constructAsset({
       name: account.name || "",
       annual_return_rate,
       projection,
-      security_id: null,
+      security_id: undefined,
       account_id: account.account_id,
       type,
       subtype: "cash",
       total: account?.balance?.current ?? 0,
       shares: new Decimal(0),
+      accounts: [account.account_id],
     });
   });
 
@@ -151,25 +154,27 @@ const cashHoldingsToAssets = ({
     const { quantity, annual_return_rate, institutional_value } =
       getFormulaValues(holding);
 
-    return createFinancialAsset({
+    const projection = getFutureValue({
+      present_value: institutional_value,
+      annual_return_rate,
+      annual_inflation_rate,
+      years,
+      includes_inflation,
+    });
+
+    return constructAsset({
       name: holding.accountName + " - Cash",
       annual_return_rate,
-      projection: getFutureValue({
-        present_value: institutional_value,
-        annual_return_rate,
-        annual_inflation_rate,
-        years,
-        includes_inflation,
-      }),
+      projection,
       security_id: holding?.security?.security_id || "",
       account_id: holding.account_id || "",
       type,
       subtype: "cash",
       total: institutional_value,
       shares: new Decimal(quantity || 0),
+      accounts: [holding.account_id || ""],
     });
   });
-
   return cashAssets;
 };
 
@@ -244,14 +249,16 @@ const groupHoldingsByTickerSymbol = (
       annual_return_rate: new Decimal(annual_return_rate || 0).toNumber(),
       subtype: holding?.security?.type || "unknown",
       account_id: holding.account_id || "",
+      accounts: [holding.account_id],
     };
 
     groupedHolding.quantity = groupedHolding.quantity.plus(quantity || 0);
-
     groupedHolding.institution_value = groupedHolding.institution_value.plus(
       institutional_value || 0
     );
-
+    groupedHolding.accounts = Array.from(
+      new Set([...groupedHolding.accounts, holding.account_id || ""])
+    );
     groupedHoldingsMap.set(ticker_symbol, groupedHolding);
   }
   return groupedHoldingsMap;
@@ -279,6 +286,7 @@ const groupedHoldingToAsset = ({
     annual_return_rate,
     subtype,
     account_id,
+    accounts,
   } = grouped_holding;
 
   const projection = getFutureValue({
@@ -289,15 +297,16 @@ const groupedHoldingToAsset = ({
     includes_inflation: includes_inflation,
   });
 
-  return createFinancialAsset({
+  return constructAsset({
     name,
     annual_return_rate,
     projection,
     security_id,
     account_id,
-    type,
+    type: type ?? "Other",
     subtype,
     total: institution_value,
     shares: quantity,
+    accounts,
   });
 };

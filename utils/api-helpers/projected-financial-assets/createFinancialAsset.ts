@@ -1,21 +1,18 @@
 import Decimal from "decimal.js";
-import {
-  FinancialAssets,
-  ProjectedAssets,
-} from "@/features/projected-financial-assets/types/projectedAssets";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import { Assets } from "@/types/assets";
 
-interface createFinancialAssetParams {
+interface ConstructAssetParams {
   name: string;
   annual_return_rate: number | Decimal;
   projection: number;
-  security_id: string | null;
+  security_id: string | undefined;
   account_id: string;
-  type: AccountType | null | undefined;
+  type: AccountType;
   subtype: string;
   total: number | Decimal;
   shares: Decimal;
+  accounts: string[];
 }
 
 /**
@@ -24,7 +21,7 @@ interface createFinancialAssetParams {
  * @param param0
  * @returns
  */
-export const createFinancialAsset = ({
+export const constructAsset = ({
   name,
   annual_return_rate,
   projection,
@@ -34,7 +31,8 @@ export const createFinancialAsset = ({
   subtype,
   total,
   shares,
-}: createFinancialAssetParams): Assets => ({
+  accounts,
+}: ConstructAssetParams): Assets => ({
   name,
   annual_return_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
   projection: new Decimal(projection).toDecimalPlaces(2),
@@ -43,5 +41,6 @@ export const createFinancialAsset = ({
   type,
   subtype,
   total: new Decimal(total).toDecimalPlaces(2),
-  shares: shares,
+  shares,
+  accounts,
 });

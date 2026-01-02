@@ -21,6 +21,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
       const assets: Assets[] = await request.json();
+      console.log(assets)
 
       const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to get member from user", 404);
@@ -37,13 +38,14 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
       const assetMap = new Map<string, Assets>();
 
       for (let asset of assets) {
-        const key = `${asset.security_id}`;
+        const key = `${asset}-${asset.security_id}`;
         if (assetMap.has(key)) continue;
         assetMap.set(key, asset);
       }
 
       for (let holding of holdings) {
         const asset = assetMap.get(`${holding.security_id}`);
+
         if (asset)
           await prisma.holding.update({
             where: {

@@ -1,4 +1,4 @@
-import { Account, Holding} from "@/types/plaid";
+import { Account, Holding } from "@/types/plaid";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import { Decimal } from "decimal.js";
 export interface GenerateAssetsFromAccountsParams {
@@ -17,6 +17,7 @@ export interface GroupedHolding {
   annual_return_rate: number;
   subtype: string;
   account_id: string;
+  accounts: (undefined | string)[];
 }
 
 export interface GroupedHoldingToAssetsParams {

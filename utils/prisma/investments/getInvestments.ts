@@ -40,6 +40,7 @@ export const getInvestmentsPlaid = async (
    *  Store Holdings and Securities in the database
    */
   investmentsForEachItem.forEach(async (item) => {
+    // console.log("holdings", item.holdings);
     await updateItem(item.item);
     await updateAccounts([item.accounts], accountsDB);
     await updateHoldingsAndSecurities(

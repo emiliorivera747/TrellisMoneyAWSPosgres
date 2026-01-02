@@ -85,6 +85,5 @@ export interface GroupedHolding {
   annual_return_rate: number;
   subtype: string;
   account_id: string;
+  accounts: (string | undefined)[];
 }
-
-
