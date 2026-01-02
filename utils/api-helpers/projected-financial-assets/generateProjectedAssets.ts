@@ -36,6 +36,7 @@ export const generateProjectedAssets = async ({
 
   const years = end_year - start_year;
   const groups = Object.groupBy(accounts, ({ type }) => type || "unknown");
+  console.log("groups", groups);
 
   return Object.entries(groups).flatMap(([type, accountList]) => {
     return type === "investment"
@@ -67,9 +68,8 @@ const generateAssetsFromAccounts = ({
   type,
 }: GenerateAssetsFromAccountsParams): Assets[] =>
   accounts.map((account) => {
-    
     const annual_return_rate = account.annual_return_rate ?? 0;
-    
+
     const projection = getFutureValue({
       present_value: account.current ?? 0,
       annual_inflation_rate,
@@ -77,7 +77,7 @@ const generateAssetsFromAccounts = ({
       years,
       includes_inflation,
     });
-   
+
     return createFinancialAsset({
       name: account.name || "",
       annual_return_rate,
@@ -101,7 +101,7 @@ const generateAssetsFromInvestments = ({
   annual_inflation_rate,
   type,
 }: GenerateAssetsFromAccountsParams): Assets[] => {
-  const aggregates = aggregateHoldingsByTicker(accounts);
+  const aggregates = groupHoldingsByTickerSymbol(accounts);
 
   const cashHoldings = accounts.flatMap(
     ({ holdings = [], name: accountName }) =>
@@ -153,11 +153,10 @@ const generateAssetsFromInvestments = ({
 /**
  * Aggregates holdings by ticker symbol.
  */
-const aggregateHoldingsByTicker = (
+const groupHoldingsByTickerSymbol = (
   accounts: Account[]
 ): Map<string, HoldingAggregate> => {
   const aggregates = new Map<string, HoldingAggregate>();
-
   accounts.forEach(({ holdings = [], name, account_id }) =>
     holdings.forEach((holding) => {
       const ticker_symbol = holding?.security?.ticker_symbol ?? "";
@@ -181,7 +180,6 @@ const aggregateHoldingsByTicker = (
       aggregate.institution_value = aggregate.institution_value.plus(
         institutional_value || 0
       );
-
       aggregates.set(ticker_symbol, aggregate);
     })
   );

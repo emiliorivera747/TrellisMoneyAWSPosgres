@@ -13,7 +13,7 @@ import {
 } from "@/utils/api-helpers/errors/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/dates/getDates";
-import { getAccountsHoldingsSecuritiesV2 } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
+import { getAccountsExapanded } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
 import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
 import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
 import { getInvestmentsPlaid } from "@/utils/prisma/investments/getInvestments";
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       if (!member?.household_id)
         return FailResponse("Accounts not found for the household", 404);
 
-      const account_holdings_securities = await getAccountsHoldingsSecuritiesV2(
+      const account_holdings_securities = await getAccountsExapanded(
         member.household_id
       );
 
