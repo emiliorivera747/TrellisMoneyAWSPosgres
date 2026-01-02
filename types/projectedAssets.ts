@@ -1,4 +1,4 @@
-import { Account } from "@/types/plaid";
+import { Account, Holding} from "@/types/plaid";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import { Decimal } from "decimal.js";
 export interface GenerateAssetsFromAccountsParams {
@@ -29,6 +29,14 @@ export interface GroupedHoldingToAssetsParams {
 
 export interface GroupedHoldingsToAssetsParams {
   grouped_holdings: GroupedHolding[];
+  years: number;
+  includes_inflation: boolean;
+  annual_inflation_rate: number;
+  type: AccountType;
+}
+
+export interface CashHoldingsToAssets {
+  cash_holdings: (Holding & { accountName: string })[];
   years: number;
   includes_inflation: boolean;
   annual_inflation_rate: number;

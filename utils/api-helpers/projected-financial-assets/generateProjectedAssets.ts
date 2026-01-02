@@ -1,6 +1,4 @@
-import { Account } from "@/types/plaid";
 import { ProjectionParams } from "@/features/projected-financial-assets/types/projectedAssets";
-
 import { getHoldingNameV2 } from "@/utils/api-helpers/holdings/holdingAccessors";
 import {
   AccountType,
@@ -21,7 +19,9 @@ import {
   GenerateAssetsFromAccountsParams,
   GroupedHoldingToAssetsParams,
   GroupedHoldingsToAssetsParams,
+  CashHoldingsToAssets,
 } from "@/types/projectedAssets";
+import { Account } from "@/types/plaid";
 
 /**
  * Generates projected financial assets for accounts.
@@ -103,20 +103,51 @@ const generateAssetsFromInvestments = ({
   /**
    * Group all holdings together and sum quantities.
    */
-  const groupedHolding = groupHoldingsByTickerSymbol(accounts);
+  const groupedHoldings = groupHoldingsByTickerSymbol(accounts);
 
-  const cashHoldings = accounts.flatMap(
-    ({ holdings = [], name: accountName }) =>
-      holdings
-        .filter((holding) => holding?.security?.type === "cash")
-        .map((holding) => ({
-          ...holding,
-          accountName,
-        }))
-  );
+  /**
+   * Get the cash holdings
+   */
+  const cashHoldings = getCashHoldingsFromAccounts(accounts);
 
-  // Add cash holdings to the aggregates
-  const cashAssets = cashHoldings.map((holding) => {
+  /**
+   * Get the cash assets
+   */
+  const cashAssets = cashHoldingsToAssets({
+    cash_holdings: cashHoldings,
+    years,
+    includes_inflation,
+    annual_inflation_rate,
+    type,
+  });
+
+  /**
+   * Get grouped holding values
+   */
+  const groupedHoldingValues = Array.from(groupedHoldings.values());
+
+  /**
+   * Get the holding assets
+   */
+  const holdingAssets = groupedHoldingsToAssets({
+    grouped_holdings: groupedHoldingValues,
+    years,
+    includes_inflation,
+    annual_inflation_rate,
+    type,
+  });
+
+  return [...holdingAssets, ...cashAssets];
+};
+
+const cashHoldingsToAssets = ({
+  cash_holdings,
+  annual_inflation_rate,
+  years,
+  type,
+  includes_inflation,
+}: CashHoldingsToAssets) => {
+  const cashAssets = cash_holdings.map((holding) => {
     const { quantity, annual_return_rate, institutional_value } =
       getFormulaValues(holding);
 
@@ -128,7 +159,7 @@ const generateAssetsFromInvestments = ({
         annual_return_rate,
         annual_inflation_rate,
         years,
-        includes_inflation: includes_inflation,
+        includes_inflation,
       }),
       security_id: holding?.security?.security_id || "",
       account_id: holding.account_id || "",
@@ -139,17 +170,30 @@ const generateAssetsFromInvestments = ({
     });
   });
 
-  const groupedHoldingValues = Array.from(groupedHolding.values());
+  return cashAssets;
+};
 
-  const holdingAssets = groupedHoldingsToAssets({
-    grouped_holdings: groupedHoldingValues,
-    years,
-    includes_inflation,
-    annual_inflation_rate,
-    type,
-  });
-
-  return [...holdingAssets, ...cashAssets];
+/**
+ * Extracts and returns an array of cash holdings from a list of accounts.
+ *
+ * This function iterates through the provided accounts, filters the holdings
+ * to include only those with a security type of "cash", and maps them to include
+ * the account name for each holding.
+ *
+ * @param {Account[]} accounts - An array of account objects, each containing holdings and an account name.
+ * @returns {Array} An array of cash holdings, each enriched with the account name.
+ */
+const getCashHoldingsFromAccounts = (accounts: Account[]) => {
+  const cashHoldings = accounts.flatMap(
+    ({ holdings = [], name: accountName }) =>
+      holdings
+        .filter((holding) => holding?.security?.type === "cash")
+        .map((holding) => ({
+          ...holding,
+          accountName: accountName || "",
+        }))
+  );
+  return cashHoldings;
 };
 
 /**
