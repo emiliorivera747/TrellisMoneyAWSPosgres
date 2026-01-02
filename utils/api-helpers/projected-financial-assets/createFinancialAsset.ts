@@ -12,7 +12,7 @@ interface createFinancialAssetParams {
   projection: number;
   security_id: string | null;
   account_id: string;
-  type: AccountType;
+  type: AccountType | null | undefined;
   subtype: string;
   total: number | Decimal;
   shares: Decimal;

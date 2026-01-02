@@ -20,6 +20,7 @@ import { Assets } from "@/types/assets";
 import {
   GenerateAssetsFromAccountsParams,
   GroupedHoldingToAssetsParams,
+  GroupedHoldingsToAssetsParams,
 } from "@/types/projectedAssets";
 
 /**
@@ -44,7 +45,7 @@ export const generateProjectedAssets = async ({
           years,
           includes_inflation,
           annual_inflation_rate,
-          type,
+          type: type || "unknown",
         })
       : generateAssetsFromAccounts({
           accounts: accountList ?? [],
@@ -68,7 +69,6 @@ const generateAssetsFromAccounts = ({
 }: GenerateAssetsFromAccountsParams): Assets[] =>
   accounts.map((account) => {
     const annual_return_rate = account.annual_return_rate ?? 0;
-
     const projection = getFutureValue({
       present_value: account.current ?? 0,
       annual_inflation_rate,
@@ -100,15 +100,11 @@ const generateAssetsFromInvestments = ({
   annual_inflation_rate,
   type,
 }: GenerateAssetsFromAccountsParams): Assets[] => {
-
-
   /**
    * Group all holdings together and sum quantities.
    */
-  const groupedHoldings = groupHoldingsByTickerSymbol(accounts);
+  const groupedHolding = groupHoldingsByTickerSymbol(accounts);
 
-
-  
   const cashHoldings = accounts.flatMap(
     ({ holdings = [], name: accountName }) =>
       holdings
@@ -143,18 +139,41 @@ const generateAssetsFromInvestments = ({
     });
   });
 
-  const aggregatesRes = Array.from(groupedHoldings.values()).map((aggregate) =>
-    groupedHoldingToAssets({
-      aggregate,
+  const groupedHoldingValues = Array.from(groupedHolding.values());
+
+  const holdingAssets = groupedHoldingsToAssets({
+    grouped_holdings: groupedHoldingValues,
+    years,
+    includes_inflation,
+    annual_inflation_rate,
+    type,
+  });
+
+  return [...holdingAssets, ...cashAssets];
+};
+
+/**
+ * Converts the grouped holdings to assets
+ *
+ * @param param0
+ * @returns
+ */
+const groupedHoldingsToAssets = ({
+  grouped_holdings,
+  years,
+  includes_inflation,
+  annual_inflation_rate,
+  type,
+}: GroupedHoldingsToAssetsParams): Assets[] => {
+  return grouped_holdings.map((grouped_holding) =>
+    groupedHoldingToAsset({
+      grouped_holding,
       years,
       includes_inflation,
       annual_inflation_rate,
       type,
     })
   );
-
-  // Transform aggregates into financial assets
-  return [...aggregatesRes, ...cashAssets];
 };
 
 /**
@@ -201,8 +220,8 @@ const groupHoldingsByTickerSymbol = (
 /**
  * Transforms a holding aggregate into a asset.
  */
-const groupedHoldingToAssets = ({
-  aggregate,
+const groupedHoldingToAsset = ({
+  grouped_holding,
   years,
   includes_inflation,
   annual_inflation_rate,
@@ -216,7 +235,7 @@ const groupedHoldingToAssets = ({
     annual_return_rate,
     subtype,
     account_id,
-  } = aggregate;
+  } = grouped_holding;
 
   const projection = getFutureValue({
     present_value: institution_value,
