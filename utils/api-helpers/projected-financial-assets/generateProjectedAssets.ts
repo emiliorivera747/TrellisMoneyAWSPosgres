@@ -1,8 +1,5 @@
 import { Account } from "@/types/plaid";
-import {
-  AssetsProjectionConfig,
-  ProjectionParams,
-} from "@/features/projected-financial-assets/types/projectedAssets";
+import { ProjectionParams } from "@/features/projected-financial-assets/types/projectedAssets";
 
 import { getHoldingNameV2 } from "@/utils/api-helpers/holdings/holdingAccessors";
 import {
@@ -20,7 +17,10 @@ import { createFinancialAsset } from "@/utils/api-helpers/projected-financial-as
 
 // Type
 import { Assets } from "@/types/assets";
-import { GenerateAssetsFromAccountsParams } from "@/types/projectedAssets";
+import {
+  GenerateAssetsFromAccountsParams,
+  GroupedHoldingToAssetsParams,
+} from "@/types/projectedAssets";
 
 /**
  * Generates projected financial assets for accounts.
@@ -36,7 +36,6 @@ export const generateProjectedAssets = async ({
 
   const years = end_year - start_year;
   const groups = Object.groupBy(accounts, ({ type }) => type || "unknown");
-  console.log("groups", groups);
 
   return Object.entries(groups).flatMap(([type, accountList]) => {
     return type === "investment"
@@ -101,8 +100,14 @@ const generateAssetsFromInvestments = ({
   annual_inflation_rate,
   type,
 }: GenerateAssetsFromAccountsParams): Assets[] => {
-  
+
+
+  /**
+   * Group all holdings together and sum quantities.
+   */
   const groupedHoldings = groupHoldingsByTickerSymbol(accounts);
+
+
   
   const cashHoldings = accounts.flatMap(
     ({ holdings = [], name: accountName }) =>
@@ -139,7 +144,8 @@ const generateAssetsFromInvestments = ({
   });
 
   const aggregatesRes = Array.from(groupedHoldings.values()).map((aggregate) =>
-    transformAggregateToFinancialAsset(aggregate, {
+    groupedHoldingToAssets({
+      aggregate,
       years,
       includes_inflation,
       annual_inflation_rate,
@@ -178,38 +184,12 @@ const groupHoldingsByTickerSymbol = (
     };
 
     groupedHolding.quantity = groupedHolding.quantity.plus(quantity || 0);
+
     groupedHolding.institution_value = groupedHolding.institution_value.plus(
       institutional_value || 0
     );
 
     groupedHoldingsMap.set(ticker_symbol, groupedHolding);
-
-    // accounts.forEach(({ holdings = [], name, account_id }) =>
-    //   holdings.forEach((holding) => {
-    //     const ticker_symbol = holding?.security?.ticker_symbol ?? "";
-    //     const subtype = holding?.security?.type || "unknown";
-    //     if (!ticker_symbol || subtype === "cash") return;
-
-    //     const { quantity, annual_return_rate, institutional_value } =
-    //       getFormulaValues(holding);
-
-    //     const aggregate = aggregates.get(ticker_symbol) || {
-    //       security_id: holding?.security?.security_id || "",
-    //       name: getHoldingNameV2(holding, name || ""),
-    //       quantity: new Decimal(0),
-    //       institution_value: new Decimal(0),
-    //       annual_return_rate: new Decimal(annual_return_rate || 0).toNumber(),
-    //       subtype: holding?.security?.type || "unknown",
-    //       account_id: holding.account_id || account_id,
-    //     };
-
-    //     aggregate.quantity = aggregate.quantity.plus(quantity || 0);
-    //     aggregate.institution_value = aggregate.institution_value.plus(
-    //       institutional_value || 0
-    //     );
-    //     aggregates.set(ticker_symbol, aggregate);
-    //   })
-    // );
   }
   return groupedHoldingsMap;
 };
@@ -219,17 +199,15 @@ const groupHoldingsByTickerSymbol = (
  */
 
 /**
- * Transforms a holding aggregate into a financial asset.
+ * Transforms a holding aggregate into a asset.
  */
-const transformAggregateToFinancialAsset = (
-  aggregate: GroupedHolding,
-  {
-    years,
-    includes_inflation,
-    annual_inflation_rate,
-    type,
-  }: AssetsProjectionConfig
-): Assets => {
+const groupedHoldingToAssets = ({
+  aggregate,
+  years,
+  includes_inflation,
+  annual_inflation_rate,
+  type,
+}: GroupedHoldingToAssetsParams): Assets => {
   const {
     security_id,
     name,

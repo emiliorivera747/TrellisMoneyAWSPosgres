@@ -86,3 +86,11 @@ export interface GroupedHolding {
   subtype: string;
   account_id: string;
 }
+
+export interface GroupedHoldingToAssetsParams{
+  grouped_holding: GroupedHolding;
+  years: number;
+  includes_inflation: boolean;
+  annual_inflation_rate: number;
+  type?: AccountType;
+}
