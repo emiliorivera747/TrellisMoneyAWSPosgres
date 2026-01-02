@@ -87,7 +87,8 @@ export const calculateFutureValueForStock = ({
 }: FutureValueParams) => {
   const growthFactor = Math.pow(1 + Number(annual_return_rate), years);
   const pv = Number(quantity) * Number(close_price);
-  return pv * growthFactor;
+  const fv = pv * growthFactor;
+  return fv;
 };
 
 /**
@@ -132,7 +133,7 @@ export const getFutureValue = ({
   includes_inflation,
 }: FutureValueInflationOption): number => {
   const pv = getPresentValue(present_value);
-  return includes_inflation
+  const fv = includes_inflation
     ? calculateInflationAdjustedFutureValue({
         present_value: pv,
         annual_return_rate,
@@ -144,6 +145,7 @@ export const getFutureValue = ({
         annual_return_rate,
         years,
       });
+  return fv;
 };
 
 /**
@@ -175,6 +177,5 @@ export const getFormulaValues = (holding: Holding) => {
 const getPresentValue = (present_value: Decimal | number | undefined) => {
   const valueNumber =
     present_value instanceof Decimal ? present_value.toNumber() : present_value;
-
   return valueNumber;
 };

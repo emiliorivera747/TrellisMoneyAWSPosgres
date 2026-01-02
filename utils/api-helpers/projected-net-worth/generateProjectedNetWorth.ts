@@ -1,5 +1,5 @@
 import { Account } from "@/types/plaid";
-import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import { AccountType } from "plaid";
 import { NetWorthData } from "@/features/projected-financial-assets/types/projectedAssets";
 
 // Helpers
@@ -28,7 +28,7 @@ export const generateProjectedNetWorth = async (
   // Early return for empty holdings or invalid dates
   if (!accounts.length || end_year < start_year) return [];
 
-  const hm = new Map<number, number>();
+  const projectionsMap = new Map<number, number>();
 
   const groups = Object.groupBy(
     accounts,
@@ -39,34 +39,21 @@ export const generateProjectedNetWorth = async (
     const accounts = groups[key as AccountType];
     if (key === "investment") {
       populateHashMapWithFvHoldings(
-        hm,
+        projectionsMap,
         start_year,
         end_year,
         accounts ?? [],
         includes_inflation,
         annual_inflation_rate
       );
-    } else if (key === "depository") {
+    } else if (
+      key === "depository" ||
+      key === "loan" ||
+      key === "credit" ||
+      key === "other"
+    ) {
       populateHashMapWithFvAccounts(
-        hm,
-        start_year,
-        end_year,
-        accounts ?? [],
-        includes_inflation,
-        annual_inflation_rate
-      );
-    } else if (key === "loan") {
-      populateHashMapWithFvAccounts(
-        hm,
-        start_year,
-        end_year,
-        accounts ?? [],
-        includes_inflation,
-        annual_inflation_rate
-      );
-    } else if (key === "credit") {
-      populateHashMapWithFvAccounts(
-        hm,
+        projectionsMap,
         start_year,
         end_year,
         accounts ?? [],
@@ -75,7 +62,13 @@ export const generateProjectedNetWorth = async (
       );
     }
   }
-  pushProjectedNetWorthToEachDay(projectedNetWorth, start_year, end_year, hm);
+  // console.log("projectionsMap", projectionsMap);
+  pushProjectedNetWorthToEachDay(
+    projectedNetWorth,
+    start_year,
+    end_year,
+    projectionsMap
+  );
   return projectedNetWorth;
 };
 
@@ -87,38 +80,44 @@ export const generateProjectedNetWorth = async (
  * @param projectedNetWorth
  * @param start_year
  * @param end_year
- * @param hm
+ * @param projectionsMap
  */
 const pushProjectedNetWorthToEachDay = (
   projectedNetWorth: { date: Date; close: number }[],
   start_year: number,
   end_year: number,
-  hm: Map<number, number>
+  projectionsMap: Map<number, number>
 ) => {
   const days = (end_year - start_year) * 365;
 
+  // In pushProjectedNetWorthToEachDay
   for (let i = 0; i <= days; i++) {
     const year = start_year + Math.floor(i / 365);
     const dayOfYear = i % 365;
 
-    // Early exit if we're past the first month of the last year
-    if (year === end_year && dayOfYear >= 30) break;
+    // Remove or comment out this line - almost never wanted
+    // if (year === end_year && dayOfYear >= 30) break;
 
-    // Get values for interpolation
-    const previousValue = hm.get(year) || 0;
-    const nextValue = hm.get(year + 1) || previousValue;
+    const value = projectionsMap.get(year) ?? 0;
 
-    // Linearly interpolate between the current year's value and next year's value
-    const interpolationFactor = dayOfYear / 365;
-    const interpolatedValue =
-      previousValue + (nextValue - previousValue) * interpolationFactor;
+    // If you really want smooth line between years:
+    let interpolatedValue = value;
+    if (year < end_year) {
+      const next = projectionsMap.get(year + 1) ?? value;
+      const f = dayOfYear / 365;
+      interpolatedValue += (next - value) * f;
+    }
 
-    const date = new Date(year, 0, 1 + dayOfYear);
+    const date = new Date(year, 0, 1);
+    date.setDate(date.getDate() + dayOfYear);
 
     projectedNetWorth.push({
-      date: date,
+      date,
       close: Math.round(interpolatedValue * 100) / 100,
     });
+
+    // Optional: early exit at end of last year
+    if (year === end_year && dayOfYear >= 364) break;
   }
 };
 
@@ -128,14 +127,14 @@ const pushProjectedNetWorthToEachDay = (
  * for each year
  * Optimized to pre-calculate holdings data outside the year loop
  *
- * @param hm
+ * @param projectionsMap
  * @param start_year
  * @param end_year
  * @param accounts
  * @returns
  */
 const populateHashMapWithFvHoldings = (
-  hm: Map<number, number>,
+  projectionsMap: Map<number, number>,
   start_year: number,
   end_year: number,
   accounts: Account[],
@@ -149,23 +148,23 @@ const populateHashMapWithFvHoldings = (
     })
   );
 
-  const yearRange = end_year - start_year + 1;
+  const yearRange = end_year - start_year;
 
   // Calculate future values for each year
-  for (let i = 0; i < yearRange; i++) {
+  for (let i = 0; i <= yearRange; i++) {
     let total = 0;
 
-    for (const { quantity, close_price, annual_return_rate } of holdingsData) {
+    for (const { annual_return_rate, institutional_value } of holdingsData) {
       total += getFutureValue({
-        present_value: Number(quantity) * Number(close_price),
+        present_value: institutional_value,
         annual_inflation_rate,
         annual_return_rate,
         years: i,
-        includes_inflation: includes_inflation,
+        includes_inflation,
       });
     }
-    const year = start_year + i;
-    hm.set(year, (hm.get(year) || 0) + total);
+    let year = start_year + i;
+    projectionsMap.set(year, (projectionsMap.get(year) || 0) + total);
   }
 };
 
@@ -175,14 +174,14 @@ const populateHashMapWithFvHoldings = (
  * for each year
  * Optimized to pre-calculate account data and remove redundant conditions
  *
- * @param hm
+ * @param projectionsMap
  * @param start_year
  * @param end_year
  * @param accounts
  * @returns
  */
 const populateHashMapWithFvAccounts = (
-  hm: Map<number, number>,
+  projectionsMap: Map<number, number>,
   start_year: number,
   end_year: number,
   accounts: Account[],
@@ -207,9 +206,7 @@ const populateHashMapWithFvAccounts = (
       annual_return_rate,
       isNegative,
     } of accountsData) {
-      let fv: number;
-
-      fv = getFutureValue({
+      let fv = getFutureValue({
         present_value: current_amount,
         annual_inflation_rate,
         annual_return_rate,
@@ -220,6 +217,6 @@ const populateHashMapWithFvAccounts = (
       total += isNegative ? -fv : fv;
     }
     const year = start_year + i;
-    hm.set(year, (hm.get(year) || 0) + total);
+    projectionsMap.set(year, (projectionsMap.get(year) || 0) + total);
   }
 };

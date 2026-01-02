@@ -1,11 +1,14 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
-import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
+import { Assets } from "@/types/assets";
 import { withAuth } from "@/lib/protected";
 import {
   SuccessResponse,
   ErrorResponse,
+  FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
+import { getMemberByUserId } from "@/utils/prisma/household/household";
+import { getHoldingsWithHouseholdId } from "@/utils/prisma/holding/holdings";
 
 /**
  *
@@ -17,38 +20,31 @@ import {
 export async function PATCH(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
-      const assets = await request.json();
+      const assets: Assets[] = await request.json();
 
-      console.log("assets", assets);
+      const member = await getMemberByUserId(user.id);
+      if (!member) return FailResponse("Failed to get member from user", 404);
 
-      /**
-       * Get all of the holdings associated with the user
-       */
-      const holdings = await prisma.holding.findMany({
-        where: {
-          user_id: assets[0].user_id,
-        },
-      });
+      const { household } = member;
+      if (!household?.household_id)
+        FailResponse("The members household was not found", 404);
 
-      const hashmap = new Map<string, FinancialAssets>();
+      const holdings = await getHoldingsWithHouseholdId(
+        household?.household_id ?? ""
+      );
+      if (!holdings) return FailResponse("The holdings were not found", 404);
 
-      /**
-       * Create a hashmap of all the assets associated with the user
-       */
-      assets.forEach((asset: FinancialAssets) => {
-        const key = `${asset.security_id}-${asset.account_id}`;
-        if (!hashmap.has(key)) hashmap.set(key, asset);
-      });
+      const assetMap = new Map<string, Assets>();
 
-      /**
-       * Update all holdings associated with the user
-       */
-      holdings.map(async (holding) => {
-        const asset = hashmap.get(
-          holding.security_id + "-" + holding.account_id
-        );
+      for (let asset of assets) {
+        const key = `${asset.security_id}`;
+        if (assetMap.has(key)) continue;
+        assetMap.set(key, asset);
+      }
 
-        if (asset) {
+      for (let holding of holdings) {
+        const asset = assetMap.get(`${holding.security_id}`);
+        if (asset)
           await prisma.holding.update({
             where: {
               holding_id: {
@@ -61,13 +57,11 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
               annual_return_rate: asset.annual_growth_rate,
             },
           });
-        }
-      });
+      }
 
-      const res = assets.map(async (asset: FinancialAssets) => {
+      const res = assets.map(async (asset: Assets) => {
         const { account_id, user_id, annual_growth_rate, type } = asset;
 
-        // Only update if the asset is not an investment type
         if (type !== "investment") {
           await prisma.account.update({
             where: {
@@ -84,8 +78,6 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
       return SuccessResponse(res, "Successfull updated assets");
     } catch (error) {
       return ErrorResponse();
-    } finally {
-      await prisma.$disconnect();
     }
   });
 }
