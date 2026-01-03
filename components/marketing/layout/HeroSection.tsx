@@ -1,7 +1,5 @@
 // components/layout/HeroSection.tsx
-import React from "react";
 import Link from "next/link";
-
 interface HeroSectionProps {
   isAuthenticated: boolean;
 }
