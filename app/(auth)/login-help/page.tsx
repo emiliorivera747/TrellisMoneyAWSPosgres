@@ -19,7 +19,7 @@ import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryA
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 
 //Server Actions
-import { confirmReset } from "../actions/actions";
+import { confirmReset } from "../../actions/actions";
 import { State } from "@/types/serverActionState";
 
 //Schema
