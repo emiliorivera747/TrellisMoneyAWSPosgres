@@ -68,7 +68,7 @@ const MultipleValPriceChange = ({
                 <span className="w-[0.35rem] h-[0.35rem] rounded-full bg-secondary-800"></span>
               ) : null}
               {withInflation(line) ? (
-                <span className="w-[0.35rem] h-[0.35rem] rounded-full bg-primary-600"></span>
+                <span className="w-[0.35rem] h-[0.35rem] rounded-full bg-red-600"></span>
               ) : null}
               <span className="text-tertiary-700 font-light text-[0.75rem] transition duration-300 rounded-[12px] hover:text-tertiary-1000 hover:border-tertiary-200 flex flex-row justify-center items-center text-center hover:underline">
                 {!withInflation(line) ? "With Inflation" : "Without Inflation"}
