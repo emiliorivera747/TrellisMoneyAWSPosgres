@@ -20,7 +20,7 @@ const RenderFilters = ({
   handleFilterChange,
 }: LineGraphFilterButtonsProps) => {
   return (
-    <div className="grid grid-rows-3 gap-3 py-2 px-8">
+    <div className="grid grid-rows-3 gap-3 py-2 px-8 pb-10">
       {filterConfig.map(
         (
           filter: {

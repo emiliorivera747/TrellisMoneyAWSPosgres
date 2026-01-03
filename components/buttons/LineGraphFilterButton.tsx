@@ -3,7 +3,6 @@ import React from "react";
 //types
 import { LineGraphFilterButtonProps } from "@/features/projected-net-worth/types/filters";
 
-
 const LineGraphFilterButton = ({
   label,
   isSelected,
@@ -20,16 +19,10 @@ const LineGraphFilterButton = ({
           : "text-tertiary-800 border-tertiary-300 "
       }`}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke={color ? color : "currentColor"}
-        className="size-6"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d={svg_path} />
-      </svg>
+      <span
+        style={{ backgroundColor: color }}
+        className={`w-[0.4rem] h-[0.4rem] rounded-full`}
+      ></span>
       {label}
     </button>
   );

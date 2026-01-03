@@ -63,41 +63,15 @@ const MultipleValPriceChange = ({
               subHeaderTailwindCss={`${tailwindPrimaryTextColor} font-semibold text-[0.7rem]`}
               lineName={getLineName(line)}
             />
-            <div className="flex items-center justify-start gap-2  text-[0.7rem] rounded-full  w-[10rem] cursor-pointer mt-[0.2rem]">
+            <div className="flex items-center justify-start gap-2  text-[0.7rem] rounded-full  w-[10rem] cursor-pointer mt-[0.2rem] ml-[0.17rem]">
               {!withInflation(line) ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-4 text-secondary-1000"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
-                  />
-                </svg>
+                <span className="w-[0.35rem] h-[0.35rem] rounded-full bg-secondary-800"></span>
               ) : null}
               {withInflation(line) ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-4 text-red-800"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181"
-                  />
-                </svg>
+                <span className="w-[0.35rem] h-[0.35rem] rounded-full bg-primary-600"></span>
               ) : null}
-              <span className="text-tertiary-800 font-normal text-[0.75rem] transition duration-300 rounded-[12px] hover:text-tertiary-1000 hover:border-tertiary-200 flex flex-row justify-center items-center text-center hover:underline">
-                {!withInflation(line) ? "With inflation" : "Without inflation"}
+              <span className="text-tertiary-700 font-light text-[0.75rem] transition duration-300 rounded-[12px] hover:text-tertiary-1000 hover:border-tertiary-200 flex flex-row justify-center items-center text-center hover:underline">
+                {!withInflation(line) ? "With Inflation" : "Without Inflation"}
               </span>
             </div>
           </div>
