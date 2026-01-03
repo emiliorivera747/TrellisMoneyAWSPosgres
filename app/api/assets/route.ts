@@ -21,7 +21,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
       const assets: Assets[] = await request.json();
-      console.log(assets)
+      console.log(assets);
 
       const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to get member from user", 404);
@@ -38,13 +38,16 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
       const assetMap = new Map<string, Assets>();
 
       for (let asset of assets) {
-        const key = `${asset}-${asset.security_id}`;
-        if (assetMap.has(key)) continue;
-        assetMap.set(key, asset);
+        for (let account of asset.accounts) {
+          const key = `${account}-${asset.security_id}`;
+          if (assetMap.has(key)) continue;
+          assetMap.set(key, asset);
+        }
       }
 
       for (let holding of holdings) {
-        const asset = assetMap.get(`${holding.security_id}`);
+        const asset = assetMap.get(`${holding.account_id}-${holding.security_id}`);
+        const annual_return_rate = asset?.annual_return_rate;
 
         if (asset)
           await prisma.holding.update({
@@ -55,9 +58,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
                 user_id: holding.user_id,
               },
             },
-            data: {
-              annual_return_rate: asset.annual_return_rate,
-            },
+            data: { annual_return_rate },
           });
       }
 

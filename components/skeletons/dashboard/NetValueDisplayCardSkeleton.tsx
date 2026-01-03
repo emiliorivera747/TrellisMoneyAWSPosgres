@@ -28,7 +28,7 @@ import React from "react";
  */
 const NetValueDisplaySkeleton = () => {
   return (
-    <div className="border border-tertiary-400 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-3 rounded-[12px] animate-pulse">
+    <div className="overflow-hidden border border-tertiary-400 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-3 rounded-[12px] animate-pulse box-border">
       <div className="flex flex-row justify-between w-full">
         <div className="flex flex-row items-center gap-2">
           <div className="h-5 w-32 bg-tertiary-200 rounded"></div>
