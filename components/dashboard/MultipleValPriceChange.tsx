@@ -65,13 +65,13 @@ const MultipleValPriceChange = ({
             />
             <div className="flex items-center justify-start gap-2  text-[0.7rem] rounded-full  w-[10rem] cursor-pointer mt-[0.2rem] ml-[0.17rem]">
               {!withInflation(line) ? (
-                <span className="w-[0.35rem] h-[0.35rem] rounded-full bg-secondary-800"></span>
+                <span className="w-[0.5rem] h-[0.2rem] rounded-full bg-secondary-800"></span>
               ) : null}
               {withInflation(line) ? (
-                <span className="w-[0.35rem] h-[0.35rem] rounded-full bg-red-600"></span>
+                <span className="w-[0.5rem] h-[0.2rem] rounded-full bg-red-600"></span>
               ) : null}
               <span className="text-tertiary-700 font-light text-[0.75rem] transition duration-300 rounded-[12px] hover:text-tertiary-1000 hover:border-tertiary-200 flex flex-row justify-center items-center text-center hover:underline">
-                {!withInflation(line) ? "With Inflation" : "Without Inflation"}
+                {!withInflation(line) ? "Not adjusted for inflation" : "Adjusted for inflation"}
               </span>
             </div>
           </div>
