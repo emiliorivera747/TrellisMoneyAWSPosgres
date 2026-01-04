@@ -7,7 +7,9 @@ const page = () => {
   return (
     <section className="h-screen overflow-scroll">
       <header className="mt-8 px-4">
-        <h1 className="text-xs">{JSON.stringify(investmentsResponse?.data)}</h1>
+        <pre className="text-xs whitespace-pre-wrap">
+          {JSON.stringify(investmentsResponse?.data, null, 2)}
+        </pre>
       </header>
     </section>
   );

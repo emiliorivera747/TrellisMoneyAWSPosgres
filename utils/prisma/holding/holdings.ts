@@ -47,15 +47,29 @@ export const updateOrCreateHolding = async ({
       timestamp: isoToUTC(timestamp),
     },
     create: {
-      user_id: getValueOrDefault(user_id, ""),
-      account_id: getValueOrDefault(holding?.account_id, ""),
+      user: {
+        connect: { user_id: user_id },
+      },
+      account: {
+        connect: { account_id: getValueOrDefault(holding?.account_id, "") },
+      },
+      security: {
+        connect: { security_id: getValueOrDefault(holding?.security_id, "") },
+      },
+      member: {
+        connect: {
+          member_id: getValueOrDefault(
+            holdingsMap.get(`${holding.account_id}-${holding.security_id}`),
+            ""
+          ),
+        },
+      },
       cost_basis: getValueOrDefault(holding?.cost_basis, 0),
       institution_price: getValueOrDefault(holding?.institution_price, 0),
       institution_value: getValueOrDefault(holding?.institution_value, 0),
       quantity: getValueOrDefault(holding?.quantity, 0),
       vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
       vested_value: getValueOrDefault(holding?.vested_value, 0),
-      security_id: getValueOrDefault(holding?.security_id, ""),
       institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
       institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
       iso_currency_code: getValueOrDefault(holding?.iso_currency_code, ""),
@@ -64,10 +78,6 @@ export const updateOrCreateHolding = async ({
         ""
       ),
       timestamp: isoToUTC(timestamp),
-      member_id: getValueOrDefault(
-        holdingsMap.get(`${holding.account_id}-${holding.security_id}`),
-        ""
-      ),
     },
   });
 };
