@@ -2,6 +2,8 @@ import { NextRequest } from "next/server";
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { withAuth } from "@/lib/protected";
 
+import prisma from "@/lib/prisma";
+
 // Util
 import { getMemberByUserId } from "@/utils/prisma/household/household";
 import {
@@ -62,14 +64,20 @@ export async function GET(req: NextRequest) {
        * Fetch the investment holdings data for the user's items
        * based on the provided timestamp.
        */
-      const investments = await getInvestmentsWithItemsPlaid({
+      await getInvestmentsWithItemsPlaid({
         items,
         timestamp: timestamp || "",
         user_id: user.id,
         holdings,
       });
+
+      const household = await prisma.household.findUnique({
+        where: { household_id: member.household_id },
+        include: { accounts: { include: { holdings: { include: { security: true } } } } },
+      });
+
       return SuccessResponse(
-        { investments },
+        { household },
         "Successfully retrieved Investment"
       );
     } catch (error) {
