@@ -67,7 +67,7 @@ export const getInvestmentsWithItemsPlaid = async ({
   items,
   timestamp,
   user_id,
-  holdings,
+  holdings: holdingsDB,
 }: GetInvestmentsWithItemsPlaid) => {
   // Extract access tokens from the provided items
   const accessTokens = getAllAccessTokens(items);
@@ -80,6 +80,13 @@ export const getInvestmentsWithItemsPlaid = async ({
   // Update the database with fetched holdings and related data
   investmentsForEachItem.forEach(async (item) => {
     await updateItem(item.item);
-    await updateHoldings(item.holdings, timestamp);
+    await updateHoldings({
+      holdings: item.holdings,
+      timestamp,
+      user_id,
+      holdingsDB,
+    });
   });
+
+  return investmentsForEachItem;
 };

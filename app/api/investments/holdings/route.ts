@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
       const member = await getMemberByUserId(user.id, {
         accounts: true,
         items: true,
-        holding: true,
+        holdings: true,
       });
       if (!member) return FailResponse("Failed to get member from user", 404);
 
@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
       if (!items || items.length === 0)
         return FailResponse("No items found for the given household ID", 404);
 
-      const holdings = member.household?.holding;
+      const holdings = member.household?.holdings;
       if (!holdings)
         return FailResponse("No items found for the given household ID", 404);
 
@@ -68,8 +68,10 @@ export async function GET(req: NextRequest) {
         user_id: user.id,
         holdings,
       });
-
-      return SuccessResponse(investments);
+      return SuccessResponse(
+        { investments },
+        "Successfully retrieved Investment"
+      );
     } catch (error) {
       return ErrorResponse(error);
     }

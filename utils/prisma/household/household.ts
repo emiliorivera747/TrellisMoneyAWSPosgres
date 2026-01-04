@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { Household } from "@/app/generated/prisma/client";
 
 /**
  * Retrieves household members' items associated with a specific user ID.
@@ -20,11 +21,11 @@ import prisma from "@/lib/prisma";
  */
 export const getMemberByUserId = async (
   user_id: string,
-  householdInclude?: { accounts?: boolean; items?: boolean; holding: true }
-) => {
+  householdInclude?: { accounts?: boolean; items?: boolean; holdings?: boolean }
+): Promise<any> => {
   const defaultInclude = {
     household: {
-      include: { accounts: true, items: true, holding: true },
+      include: { accounts: true, items: true },
     },
   };
 

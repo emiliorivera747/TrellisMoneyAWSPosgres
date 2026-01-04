@@ -27,7 +27,6 @@ export const SuccessResponse = <T>(
     message,
     status: "success",
   };
-
   return NextResponse.json(body, { status: statusCode });
 };
 
