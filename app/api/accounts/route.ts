@@ -45,10 +45,8 @@ export async function GET(req: NextRequest) {
       const { household } = member;
       const items = household?.items;
 
-      if (!items || items.length === 0) {
-        console.error("No items found for the given household ID", items);
+      if (!items || items.length === 0)
         return FailResponse("No items found for the given household ID", 404);
-      }
 
       /**
        *  Go through each item and fetch the accounts

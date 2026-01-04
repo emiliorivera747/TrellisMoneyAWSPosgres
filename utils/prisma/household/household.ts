@@ -20,11 +20,11 @@ import prisma from "@/lib/prisma";
  */
 export const getMemberByUserId = async (
   user_id: string,
-  householdInclude?: { accounts?: boolean; items?: boolean }
+  householdInclude?: { accounts?: boolean; items?: boolean; holding: true }
 ) => {
   const defaultInclude = {
     household: {
-      include: { accounts: true, items: true },
+      include: { accounts: true, items: true, holding: true },
     },
   };
 

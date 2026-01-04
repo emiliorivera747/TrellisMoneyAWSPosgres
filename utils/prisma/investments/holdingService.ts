@@ -53,6 +53,7 @@ export const upsertHoldings = async ({
               user_id,
               member_id: accountMap.get(holding.account_id)?.member_id || "",
               household_id,
+              timestamp
             },
           })
       )

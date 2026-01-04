@@ -1,10 +1,17 @@
-import { client } from "@/config/plaidClient";
 import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
-import { ItemPrisma } from "@/types/prisma";
 import { updateHoldingsAndSecurities } from "@/utils/prisma/investments/updateHoldingsAndSecurities";
 import { updateItem } from "@/utils/prisma/item/updateItems";
 import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
-import { Account } from "@/app/generated/prisma/client";
+
+// Services
+import { getAllHoldingsWithAccessTokens } from "@/services/plaid/holdings/holdings";
+
+// Utils
+import { updateHoldings } from "@/utils/prisma/holding/updateHoldings";
+
+// Types
+import { Account, Item } from "@/app/generated/prisma/client";
+import { Holding } from "@/app/generated/prisma/client";
 
 /**
  *
@@ -14,7 +21,7 @@ import { Account } from "@/app/generated/prisma/client";
  * @returns
  */
 export const getInvestmentsPlaid = async (
-  items: ItemPrisma[],
+  items: Item[],
   timestamp: string,
   accountsDB: Account[],
   user_id: string
@@ -22,35 +29,57 @@ export const getInvestmentsPlaid = async (
   /**
    *  Get all of the access tokens from the items
    */
-  const accessTokens = await getAllAccessTokens(items);
+  const accessTokens = getAllAccessTokens(items);
 
   /**
    *  Go through each item and fetch the investments
    */
-  const investmentsForEachItem = await Promise.all(
-    accessTokens.map(async (token) => {
-      const response = await client.investmentsHoldingsGet({
-        access_token: token,
-      });
-      return response.data;
-    })
+  const investmentsForEachItem = await getAllHoldingsWithAccessTokens(
+    accessTokens
   );
 
   /**
    *  Store Holdings and Securities in the database
    */
   investmentsForEachItem.forEach(async (item) => {
-    // console.log("holdings", item.holdings);
     await updateItem(item.item);
     await updateAccounts([item.accounts], accountsDB);
-    await updateHoldingsAndSecurities(
-      item.holdings,
-      item.securities,
+    await updateHoldingsAndSecurities({
+      holdings: item.holdings,
+      securities: item.securities,
       timestamp,
-      accountsDB,
-      user_id
-    );
+      accountsDb: accountsDB,
+      user_id,
+    });
   });
 
   return investmentsForEachItem;
+};
+
+interface GetInvestmentsWithItemsPlaid {
+  items: Item[];
+  timestamp: string;
+  user_id: string;
+  holdings: Holding[];
+}
+
+export const getInvestmentsWithItemsPlaid = async ({
+  items,
+  timestamp,
+  user_id,
+  holdings,
+}: GetInvestmentsWithItemsPlaid) => {
+  // Extract access tokens from the provided items
+  const accessTokens = getAllAccessTokens(items);
+
+  // Fetch investment data for each access token
+  const investmentsForEachItem = await getAllHoldingsWithAccessTokens(
+    accessTokens
+  );
+
+  // Update the database with fetched holdings and related data
+  investmentsForEachItem.forEach(async (item) => {
+    await updateItem(item.item);
+    await updateHoldings(item.holdings, timestamp);
+  });
 };

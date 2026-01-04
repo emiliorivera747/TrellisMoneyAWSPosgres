@@ -1,15 +1,15 @@
-import { NextResponse } from "next/server";
 import { Security, Holding } from "plaid";
-import {
-  getExistingSecurities,
-  upsertSecurities,
-} from "@/utils/prisma/investments/securityService";
-import {
-  upsertHoldings,
-  getExistingHoldings,
-} from "@/utils/prisma/investments/holdingService";
+import { upsertSecurities } from "@/utils/prisma/investments/securityService";
+import { upsertHoldings } from "@/utils/prisma/investments/holdingService";
 import { Account } from "@/app/generated/prisma/client";
-import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
+
+interface UpdateHoldingsAndSecuritiesParams {
+  holdings: Holding[];
+  securities: Security[];
+  timestamp: string;
+  accountsDb: Account[];
+  user_id: string;
+}
 
 /**
  *
@@ -20,13 +20,13 @@ import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
  * @param securities
  * @param timestamp
  */
-export const updateHoldingsAndSecurities = async (
-  holdings: Holding[],
-  securities: Security[],
-  timestamp: string,
-  accountsDb: Account[],
-  user_id: string
-) => {
+export const updateHoldingsAndSecurities = async ({
+  holdings,
+  securities,
+  timestamp,
+  accountsDb,
+  user_id,
+}: UpdateHoldingsAndSecuritiesParams) => {
   const accountMap = new Map<string, { user_id: string; member_id: string }>();
   const securityMap = new Map<string, { member_id: string }>();
   const totalAccounts = accountsDb?.length;
@@ -110,7 +110,10 @@ export const updateHoldingsAndSecurities = async (
     //   await Promise.all(historyPromises);
     // }
   } catch (error) {
-    console.error("An error occurred while updating holdings and securities:", error);
+    console.error(
+      "An error occurred while updating holdings and securities:",
+      error
+    );
     throw new Error(error instanceof Error ? error.message : String(error));
   }
 };

@@ -3,6 +3,12 @@ import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueO
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Holding } from "@/types/plaid";
 
+interface UpdateOrCreateHoldingProps {
+  holding: Holding;
+  timestamp: string;
+  user_id: string;
+  holdingsMap: Map<string, string>;
+}
 /**
  *
  * Will update or create a holding record in the database
@@ -10,17 +16,18 @@ import { Holding } from "@/types/plaid";
  * @param holding
  * @param timestamp
  */
-export const updateOrCreateHolding = async (
-  holding: Holding,
-  timestamp: string,
-  user_id: string
-) => {
+export const updateOrCreateHolding = async ({
+  holding,
+  timestamp,
+  user_id,
+  holdingsMap,
+}: UpdateOrCreateHoldingProps) => {
   await prisma.holding.upsert({
     where: {
       holding_id: {
         account_id: getValueOrDefault(holding?.account_id, ""),
         security_id: getValueOrDefault(holding?.security_id, ""),
-        user_id: user_id,
+        user_id,
       },
     },
     update: {
@@ -57,6 +64,10 @@ export const updateOrCreateHolding = async (
         ""
       ),
       timestamp: isoToUTC(timestamp),
+      member_id: getValueOrDefault(
+        holdingsMap.get(`${holding.account_id}-${holding.security_id}`),
+        ""
+      ),
     },
   });
 };
@@ -67,32 +78,32 @@ export const updateOrCreateHolding = async (
  * @param holding
  * @param timestamp
  */
-export const createHoldingHistory = async (
-  holding: Holding,
-  timestamp: string,
-  user_id: string
-) => {
-  await prisma.holdingHistory.create({
-    data: {
-      cost_basis: getValueOrDefault(holding?.cost_basis, 0),
-      institution_price: getValueOrDefault(holding?.institution_price, 0),
-      institution_value: getValueOrDefault(holding?.institution_value, 0),
-      quantity: getValueOrDefault(holding?.quantity, 0),
-      vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
-      vested_value: getValueOrDefault(holding?.vested_value, 0),
-      institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
-      institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
-      iso_currency_code: getValueOrDefault(holding?.iso_currency_code, ""),
-      unofficial_currency_code: getValueOrDefault(
-        holding?.unofficial_currency_code,
-        ""
-      ),
-      account_id: getValueOrDefault(holding?.account_id, ""),
-      security_id: getValueOrDefault(holding?.security_id, ""),
-      user_id: user_id,
-    },
-  });
-};
+// export const createHoldingHistory = async (
+//   holding: Holding,
+//   timestamp: string,
+//   user_id: string
+// ) => {
+//   await prisma.holdingHistory.create({
+//     data: {
+//       cost_basis: getValueOrDefault(holding?.cost_basis, 0),
+//       institution_price: getValueOrDefault(holding?.institution_price, 0),
+//       institution_value: getValueOrDefault(holding?.institution_value, 0),
+//       quantity: getValueOrDefault(holding?.quantity, 0),
+//       vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
+//       vested_value: getValueOrDefault(holding?.vested_value, 0),
+//       institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
+//       institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
+//       iso_currency_code: getValueOrDefault(holding?.iso_currency_code, ""),
+//       unofficial_currency_code: getValueOrDefault(
+//         holding?.unofficial_currency_code,
+//         ""
+//       ),
+//       account_id: getValueOrDefault(holding?.account_id, ""),
+//       security_id: getValueOrDefault(holding?.security_id, ""),
+//       user_id: user_id,
+//     },
+//   });
+// };
 
 /**
  *

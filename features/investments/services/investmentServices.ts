@@ -4,7 +4,7 @@ const fetchInvestments = async () => {
   const timestamp = new Date().toISOString();
 
   const res = await fetch(
-    `${API_URL}/plaid/investments/holdings?timestamp=${timestamp}`,
+    `${API_URL}/investments/holdings?timestamp=${timestamp}`,
     {
       method: "GET",
       cache: "no-store",
