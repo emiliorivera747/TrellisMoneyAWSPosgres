@@ -1,9 +1,14 @@
-"use client";
+'use client';
+import { useEffect } from "react";
 import { useInvestments } from "@/hooks/investments/useInvestments";
 
 const page = () => {
   const { investmentsResponse, isLoadingInvestments, isErrorInvestments } =
     useInvestments();
+
+  useEffect(()=>{
+
+  },[investmentsResponse.])
   return (
     <section className="h-screen overflow-scroll">
       <header className="mt-8 px-4">

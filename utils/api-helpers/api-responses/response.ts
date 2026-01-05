@@ -2,12 +2,7 @@
 
 import { NextResponse } from "next/server";
 
-type ApiResponse<T = null> = {
-  data?: T;
-  message?: string;
-  status: "success" | "fail" | "error";
-};
-
+import { ApiResponse } from "@/types/api-responses/accounts";
 /**
  * Generates a standardized success response for API requests.
  *
@@ -46,10 +41,7 @@ export const SuccessResponse = <T>(
  * const response = FailResponse("Invalid request data", 400);
  * ```
  */
-export const FailResponse = (
-  message: string,
-  statusCode: number
-) => {
+export const FailResponse = (message: string, statusCode: number) => {
   console.error("API Failure:", message);
 
   const body: ApiResponse = {
@@ -71,10 +63,7 @@ export const FailResponse = (
  * @returns A `NextResponse` object containing a JSON payload with the error message
  *          and a status of "error", along with the specified HTTP status code.
  */
-export const ErrorResponse = (
-  error?: unknown,
-  statusCode: number = 500
-) => {
+export const ErrorResponse = (error?: unknown, statusCode: number = 500) => {
   console.error("API Error:", error);
 
   const message =
