@@ -1,7 +1,7 @@
 import { create, StateCreator } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { createDashboardFilterSlice } from "@/stores/slices/dashboardFilters";
+import { createDashboardFilterSlice } from "@/stores/slices/dashboard/dashboardFilters";
 
 export type DashboardStore = ReturnType<typeof createDashboardFilterSlice>;
 

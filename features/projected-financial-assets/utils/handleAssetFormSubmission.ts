@@ -3,7 +3,7 @@ import updateAssets from "@/features/projected-financial-assets/utils/updateAsse
 import { ProjectedAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 import { FutureProjectionData } from "@/types/futureProjections";
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
-import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
+import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/hooks/user/useFetchUser";
 

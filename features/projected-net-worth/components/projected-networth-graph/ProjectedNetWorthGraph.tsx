@@ -23,7 +23,7 @@ const defaultYearsIntoTheFuture = 100;
 const currentYear = Number(new Date().getFullYear().toString());
 
 // Selectors
-import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
+import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 /**

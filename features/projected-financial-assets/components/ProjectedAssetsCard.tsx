@@ -11,7 +11,7 @@ import AssetErrors from "@/features/projected-financial-assets/components/errors
 
 // Context hook
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
-import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
+import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 
 /**

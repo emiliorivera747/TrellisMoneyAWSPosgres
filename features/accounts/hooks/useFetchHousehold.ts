@@ -19,6 +19,5 @@ export const useFetchHouseholdMembers = () => {
     refetchOnWindowFocus: false,
     retry: 1,
   });
-
   return { householdResponse, isLoadingHousehold, isErrorHousehold };
 };

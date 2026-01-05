@@ -11,7 +11,7 @@ import {
 import {
   useDashboardFilters,
   useDashboardFiltersWithActions,
-} from "@/stores/slices/dashboardFilters.selectors";
+} from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 type mode = "edit" | "view";
 type setMode = (mode: "edit" | "view") => void;

@@ -10,7 +10,7 @@ import { ProjectedAssets } from "@/types/futureProjections";
 import { FormData } from "@/types/dashboard";
 
 // Selectors
-import { useDashboardFiltersWithActions } from "@/stores/slices/dashboardFilters.selectors";
+import { useDashboardFiltersWithActions } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 /**
  * Custom hook `useSubmitAssests` for handling the submission of projected financial assets.

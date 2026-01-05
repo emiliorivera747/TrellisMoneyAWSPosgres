@@ -6,7 +6,7 @@ import AssetGroup from "@/features/projected-financial-assets/components/table-b
 
 // Context
 import { useAssetsFormContext } from "@/context/dashboard/AssetsDashboardProvider";
-import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
+import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 

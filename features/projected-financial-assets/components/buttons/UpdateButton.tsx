@@ -1,6 +1,6 @@
 import { Activity, useRef } from "react";
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButtonV2";
-import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
+import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 /**
  * UpdateButton Component

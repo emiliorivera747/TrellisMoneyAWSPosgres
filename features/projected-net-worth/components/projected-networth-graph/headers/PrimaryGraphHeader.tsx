@@ -12,7 +12,7 @@ import DialogHeader from "@/features/accounts/components/headers/DialogHeader";
 import {
   useDashboardFilters,
   useDashboardFilterActions,
-} from "@/stores/slices/dashboardFilters.selectors";
+} from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 import { PrimaryGraphHeaderProps } from "@/features/projected-net-worth/types/graphComponents";
 

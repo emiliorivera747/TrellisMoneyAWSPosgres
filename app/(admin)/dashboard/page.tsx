@@ -15,7 +15,7 @@ import { useFetchNetWorth } from "@/features/net-worth/hooks/useFetchNetWorth";
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 
 // Selectors
-import { useDashboardFilters } from "@/stores/slices/dashboardFilters.selectors";
+import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 /**
  * Displays all of the components in the dashboard
