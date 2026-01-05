@@ -1,4 +1,5 @@
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
+import { AccountGraphFilter } from "@/features/accounts/types/graph";
 import { curveMonotoneX } from "@visx/curve";
 import { ReactNode } from "react";
 
@@ -279,7 +280,7 @@ export interface GraphFilterConfig {
   /**
    * The key of the filter.
    */
-  key: string;
+  key: AccountGraphFilter;
   /**
    * The label of the filter.
    */
@@ -295,15 +296,6 @@ export interface GraphFilterConfig {
 }
 
 export interface LineGraphFilterButtonsProps {
-  /**
-   * The key of the filter.
-   */
-  selectedFilter: string;
-  /**
-   * The label of the filter.
-   */
-  handleFilterChange: (key: string) => void;
-
   /**
    * Configuration for the filter.
    */
@@ -321,15 +313,6 @@ export interface LineGraphFilterButtonsProps {
 }
 
 export interface GraphFilterButtonWithModalProps {
-  /**
-   * The key of the filter.
-   */
-  selectedFilter: string;
-  /**
-   * The label of the filter.
-   */
-  handleFilterChange: (key: string) => void;
-
   /**
    * Configuration for the filter.
    */

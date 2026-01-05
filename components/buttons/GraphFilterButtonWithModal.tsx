@@ -15,8 +15,6 @@ import { GraphFilterButtonWithModalProps } from "@/types/graphs";
 
 const GraphFilterButtonWithModal = ({
   filterConfig,
-  selectedFilter,
-  handleFilterChange,
   ref,
   className,
 }: GraphFilterButtonWithModalProps) => {
@@ -64,8 +62,6 @@ const GraphFilterButtonWithModal = ({
             </AlertDialogCancel>
           </AlertDialogTitle>
           <Filter
-            selectedFilter={selectedFilter}
-            handleFilterChange={handleFilterChange}
             filterConfig={filterConfig}
             className={className}
             ref={ref}

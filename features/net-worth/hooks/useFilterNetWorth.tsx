@@ -5,31 +5,25 @@ import { useEffect, useState } from "react";
 import { colorConfigs } from "@/features/projected-net-worth/utils/data/lineColors";
 
 // Types
-import { UseFilterNetWorthProps } from "@/features/net-worth/types/hooks";
 import { LinePayload } from "@/types/graphs";
 
 // Utils
 import { getNetWorthDataByFilter } from "@/features/net-worth/utils/data/networth/mockNetWorthData";
 
+import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountFilters.selectors";
+
 /**
- * Custom hook to filter net worth data based on the provided filter and date range.
+ * Hook to filter net worth data by filter and date range.
  *
- * @param {UseFilterNetWorthProps} props - The properties for filtering net worth data.
- * @param {string} props.filter - The filter to apply to the net worth data.
- * @param {Date} props.startDate - The start date for filtering the net worth data.
- * @param {Date} props.endDate - The end date for filtering the net worth data.
- * @param {React.Dispatch<React.SetStateAction<any>>} props.setFilteredData - The state setter function to update the filtered data.
+ * @param {UseFilterNetWorthProps} props - Filtering properties.
  */
-export const useFilterNetWorth = ({
-  filter,
-  startDate,
-  endDate,
-}: UseFilterNetWorthProps) => {
-  
+export const useFilterNetWorth = () => {
   const [filteredData, setFilteredData] = useState<LinePayload[] | []>([]);
-  
+  const { selectedFilter, startDate, endDate } =
+    useAccountsFiltersWithActions();
+
   useEffect(() => {
-    const data = getNetWorthDataByFilter(filter);
+    const data = getNetWorthDataByFilter(selectedFilter);
 
     const filteredData = data.map((netWorthItem, index) => {
       return {
@@ -42,8 +36,7 @@ export const useFilterNetWorth = ({
     });
 
     setFilteredData(filteredData);
-  }, [filter, startDate, endDate]);
+  }, [selectedFilter, startDate, endDate]);
 
-  
   return { filteredData };
 };

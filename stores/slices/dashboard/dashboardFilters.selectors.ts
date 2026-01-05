@@ -1,9 +1,9 @@
-import { useDashboardStore } from "@/stores";
+import { useStore } from "@/stores";
 import { useShallow } from "zustand/react/shallow";
 
 // ── State (data only) ────────────────────────────────────────
 export const useDashboardFilters = () =>
-  useDashboardStore(
+  useStore(
     useShallow((state) => ({
       selectedYear: state.selectedYear,
       selectedFilter: state.selectedFilter,
@@ -14,7 +14,7 @@ export const useDashboardFilters = () =>
 
 // ── Actions only (very stable – almost never change) ─────────
 export const useDashboardFilterActions = () =>
-  useDashboardStore(
+  useStore(
     useShallow((state) => ({
       setSelectedYear: state.setSelectedYear,
       setSelectedFilter: state.setSelectedFilter,
@@ -24,14 +24,13 @@ export const useDashboardFilterActions = () =>
   );
 
 // ── Very granular (optional, great for tiny components) ──────
-export const useSelectedYear = () =>
-  useDashboardStore((state) => state.selectedYear);
+export const useSelectedYear = () => useStore((state) => state.selectedYear);
 
-export const useMode = () => useDashboardStore((state) => state.mode);
+export const useMode = () => useStore((state) => state.mode);
 
 // ── Combined (sometimes convenient) ──────────────────────────
 export const useDashboardFiltersWithActions = () =>
-  useDashboardStore(
+  useStore(
     useShallow((state) => ({
       selectedYear: state.selectedYear,
       selectedFilter: state.selectedFilter,

@@ -3,14 +3,16 @@ import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
 import { LineGraphFilterButtonsProps } from "@/types/graphs";
 import { cn } from "@/lib/utils";
 
+import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountFilters.selectors";
+
 const Filter = ({
   filterConfig,
-  selectedFilter,
-  handleFilterChange,
   ref,
   className,
 }: LineGraphFilterButtonsProps) => {
   const defaultClass = "grid grid-cols-3 gap-3 py-2";
+  const { selectedFilter, setSelectedFilter } =
+  useAccountsFiltersWithActions();
   return (
     <div ref={ref} className={cn(defaultClass, className)}>
       {filterConfig.map((filter, index) => (
@@ -19,7 +21,7 @@ const Filter = ({
           isSelected={selectedFilter === filter.key}
           svg_path={filter.svg_path}
           label={filter.label}
-          onClick={() => handleFilterChange(filter.key)}
+          onClick={() => setSelectedFilter(filter.key)}
           color={filter.color}
         />
       ))}

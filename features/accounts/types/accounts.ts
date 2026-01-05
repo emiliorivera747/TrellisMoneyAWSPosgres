@@ -14,3 +14,4 @@ export interface AccountGroupedByType {
 export interface UseGroupAccountsProps {
   accounts: Account[];
 }
+

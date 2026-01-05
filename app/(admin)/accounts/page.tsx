@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 // Components
 import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2";
@@ -21,9 +21,6 @@ import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth"
 import useGroupAccounts from "@/features/accounts/hooks/useGroupAccounts";
 import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
 
-// Config
-import { dateFilterConfig } from "@/features/accounts/config/dateFilterConfig";
-
 /**
  *
  * Responsible for showing all of the accounts
@@ -33,11 +30,6 @@ import { dateFilterConfig } from "@/features/accounts/config/dateFilterConfig";
  */
 const page = () => {
   const graphRef = useRef<HTMLDivElement>(null);
-  const [filter, setFilter] = useState<string>("net-worth");
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(
-    new Date(new Date().setFullYear(new Date().getFullYear() + 1))
-  );
 
   const {
     accountsResponse,
@@ -49,12 +41,7 @@ const page = () => {
   const accounts = accountsResponse?.data?.accounts;
   const { groups = {} } = useGroupAccounts({ accounts });
 
-  const handleDateFilterChange = (newStartData: Date, newEndData: Date) => {
-    setStartDate(newStartData);
-    setEndDate(newEndData);
-  };
-
-  const { filteredData } = useFilterNetWorth({ filter, startDate, endDate });
+  const { filteredData } = useFilterNetWorth();
 
   return (
     <section className="h-screen mx-[2%] overflow-y-scroll no-scrollbar flex flex-row gap-8">
@@ -66,10 +53,7 @@ const page = () => {
             GraphComponent={NetWorthGraph}
             linePayloads={filteredData}
           />
-          <DateFilter
-            handleDateFilterChange={handleDateFilterChange}
-            dateFilter={dateFilterConfig}
-          />
+          <DateFilter />
         </div>
         <div className=" pt-8 w-full gap-8">
           <AccountsList

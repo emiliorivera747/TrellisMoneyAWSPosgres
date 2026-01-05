@@ -30,7 +30,6 @@ import { getTailwindColors } from "@/utils/helper-functions/graph/getTailwindCol
 //TooltipData
 type TooltipData = TooltipPayload[];
 
-
 // Config
 import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
 
@@ -51,8 +50,6 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
     if (checkLinePayloads(linePayloads) === false) return <NoLinePayloads />;
-
-    // const { filter, handleFilterChange } = useAccountsContext();
 
     const svgRef = useRef<SVGSVGElement>(null);
     const filterRef = useRef<HTMLDivElement>(null);
@@ -105,8 +102,6 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
             <div className="flex justify-end">
               <GraphFilterButtonWithModal
                 filterConfig={filterConfig}
-                selectedFilter={filter}
-                handleFilterChange={handleFilterChange}
                 ref={filterRef}
                 className="grid grid-cols-2"
               />

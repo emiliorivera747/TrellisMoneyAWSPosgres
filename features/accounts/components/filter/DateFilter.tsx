@@ -1,6 +1,9 @@
-import React from "react";
 import LineGraphTimeButton from "@/components/buttons/LineGraphTimeButton";
-import { DateFilterProps } from "@/types/graphs";
+import { useAccountsFiltersActions } from "@/stores/slices/accounts/accountFilters.selectors";
+import {
+  dateFilterConfig,
+  DateFilterConfigItem,
+} from "@/features/accounts/config/dateFilterConfig";
 
 /**
  *
@@ -8,20 +11,22 @@ import { DateFilterProps } from "@/types/graphs";
  *
  * @returns {JSX.Element}
  */
-const DateFilter = ({
-  dateFilter,
-  handleDateFilterChange,
-}: DateFilterProps) => {
+const DateFilter = () => {
+  const { setStartDate, setEndDate } = useAccountsFiltersActions();
+
+  const handleDateFilterChange = (filter: DateFilterConfigItem) => {
+    setStartDate(filter.startDate);
+    setEndDate(filter.endDate);
+  };
+
   return (
     <div className="flex flex-row items-center absolute bottom-8  ">
-      {dateFilter.map((filter, index) => {
+      {dateFilterConfig.map((filter, index) => {
         return (
           <LineGraphTimeButton
             key={index}
             label={filter.label}
-            onClick={() =>
-              handleDateFilterChange(filter.startData, filter.endData)
-            }
+            onClick={() => handleDateFilterChange(filter)}
           />
         );
       })}
