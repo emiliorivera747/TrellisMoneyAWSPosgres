@@ -15,8 +15,6 @@ import TimeValueGraphHeader, {
   ValueChangeHeader,
   TotalYears,
 } from "@/components/dashboard/HeaderTimeValueGraph";
-import InfoIconV2 from "@/components/information-icon/InfoIconV2";
-import { netWorthInfo } from "@/features/projected-net-worth/utils/data/netWorthInfo";
 import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";
 import GraphHeader from "@/components/headers/GraphHeader";
 
