@@ -11,6 +11,9 @@ import UserProfileAvatarMenu from "@/features/user-account/components/UserProfil
 import Link from "next/link";
 import Image from "next/image";
 
+// Components
+import AddConnection from "@/features/accounts/components/AddConnection";
+
 /**
  * SideNavigationBar component renders a responsive side navigation bar
  * with navigation items and a user profile menu.

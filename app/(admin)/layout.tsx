@@ -2,6 +2,14 @@ import SideNavigationBar from "@/components/navigation/SideNavigationBar";
 import { Toaster } from "@/components/ui/toaster";
 
 
+/**
+ * Layout component that provides a structured layout for the application.
+ *
+ * @param {Object} props - The props object.
+ * @param {React.ReactNode} props.children - The child components to be rendered within the layout.
+ *
+ * @returns {JSX.Element} A layout with a side navigation bar, main content area, and a toaster notification.
+ */
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="max-h-screen pl-[2%] sm:pl-[2%]  border-box w-screen">
