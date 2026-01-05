@@ -8,9 +8,7 @@ import SideNavItemLink from "@/components/navigation/SideNavItemLink";
 import { navigationItems } from "@/utils/mock/data/navigation-bar-data/navigationItems";
 
 import UserProfileAvatarMenu from "@/features/user-account/components/UserProfileAvatarMenu";
-
 import Link from "next/link";
-
 import Image from "next/image";
 
 /**
@@ -71,6 +69,28 @@ const SideNavigationBar: React.FC = () => {
               />
             </li>
           ))}
+          <li className="flex items-center justify-center cursor-pointer sm:mb-4 w-full">
+            <span
+              className={` border border-tertiary-300  h-[3rem] rounded-[12px]  px-4 2xl:p-2 border-box 2xl:flex-row 2xl:w-28 2xl:justify-start 2xl:text-[3rem] items-center text-[2rem] sm:h-[3rem] sm:w-[3rem] 2xl:rounded-[12px] rounded:[12px] sm:rounded-[100%] flex flex-col text-center justify-center gap-2 hover:bg-tertiary-300 transition duration-500 ease-in-out  
+
+        `}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6 text-tertiary-1000"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+            </span>
+          </li>
         </ul>
         <UserProfileAvatarMenu />
       </nav>
