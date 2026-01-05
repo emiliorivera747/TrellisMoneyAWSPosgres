@@ -20,7 +20,6 @@ import { ReactNode } from "react";
 const AddConnection = ({ children }: { children: ReactNode }) => {
   const { isDialogOpen, error, setIsDialogOpen, currentStep } =
     useConnectionContext();
-
   if (error) return <ConnectionError message={error.message} />;
 
   return (

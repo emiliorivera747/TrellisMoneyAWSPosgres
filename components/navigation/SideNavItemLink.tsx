@@ -37,7 +37,7 @@ const SideNavItemLink: React.FC<SideNavItemLinkProps> = ({
         `}
       >
         {GetSvgWithPath(svg_d, currentPath === href ? 1.8 : 1)}
-        <span className="sm:hidden 2xl:inline text-[0.7rem] mt-1 2xl:w-3/4 ">
+        <span className="sm:hidden 2xl:inline text-[0.7rem] mt-1 2xl:w-3/4">
           {label}
         </span>
       </Link>
