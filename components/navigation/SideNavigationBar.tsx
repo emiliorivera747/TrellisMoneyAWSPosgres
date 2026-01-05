@@ -12,8 +12,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 // Components
-import AddConnection from "@/features/accounts/components/AddConnection";
-import { ConnectionProvider } from "@/features/accounts/context/ConnectionContext";
 import AddConnectionButton from "@/features/add-connections/components/AddConnectionButton";
 
 /**
