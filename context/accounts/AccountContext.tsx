@@ -3,7 +3,6 @@ import { createContext, useContext } from "react";
 
 // Hooks
 import { useAccounts } from "@/hooks/accounts/useAccounts";
-
 const AccountsContext = createContext<any>(null);
 
 /**

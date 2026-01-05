@@ -9,12 +9,12 @@ import useGroupAccounts from "@/features/accounts/hooks/useGroupAccounts";
 import { UseAccountsResponse } from "@/types/hooks";
 
 import { useRemoveItem } from "../react-query/items/useRemoveItem";
-import { noAccountsError } from "@/utils/api-helpers/errors/accountErrors";
 
 /**
  * Custom hook to handle the accounts page state
  */
 export const useAccounts = (): UseAccountsResponse => {
+  
   const {
     accountsResponse,
     isLoadingAccounts,

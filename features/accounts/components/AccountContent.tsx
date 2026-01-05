@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { dateFilterConfig } from "@/features/accounts/config/dateFilterConfig";
+import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
 
 // Components
 import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2";
@@ -19,6 +20,9 @@ import { ConnectionProvider } from "@/features/add-connections/context/Connectio
 // Types
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
 
+// Hooks
+import useGroupAccounts from "@/features/accounts/hooks/useGroupAccounts";
+
 /**
  *
  * Responsible for showing all of the accounts
@@ -28,6 +32,16 @@ import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth"
  */
 const AccountContent = () => {
   const graphRef = useRef<HTMLDivElement>(null);
+
+  const {
+    accountsResponse,
+    isLoadingAccounts,
+    isErrorAccounts,
+    accountsError,
+  } = useFetchAccounts();
+
+  const accounts = accountsResponse?.data?.accounts;
+  const { groups = {} } = useGroupAccounts({ accounts });
 
   const { filter, startDate, endDate, handleDateFilterChange } =
     useAccountsContext();
@@ -50,7 +64,12 @@ const AccountContent = () => {
           />
         </div>
         <div className=" pt-8 w-full gap-8">
-          <AccountsList />
+          <AccountsList
+            groups={groups}
+            isLoadingAccounts={isLoadingAccounts}
+            isErrorAccounts={isErrorAccounts}
+            accountsError={accountsError}
+          />
         </div>
       </PrimaryAccountSection>
       <div className="h-full w-[18rem] sticky top-0  justify-start flex flex-col gap-4 pt-12">
