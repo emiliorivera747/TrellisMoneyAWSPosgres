@@ -13,6 +13,29 @@ import Link from "next/link";
 
 import Image from "next/image";
 
+/**
+ * SideNavigationBar component renders a responsive side navigation bar
+ * with navigation items and a user profile menu.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered side navigation bar component.
+ *
+ * @remarks
+ * - Utilizes `usePathname` to determine the current path for highlighting active links.
+ * - Displays a logo at the top and dynamically renders navigation items.
+ * - Includes a user profile avatar menu at the bottom.
+ *
+ * @dependencies
+ * - `Link` from `next/link` for navigation.
+ * - `Image` from `next/image` for rendering the logo.
+ * - `SideNavItemLink` for individual navigation items.
+ * - `UserProfileAvatarMenu` for the user profile menu.
+ *
+ * @example
+ * ```tsx
+ * <SideNavigationBar />
+ * ```
+ */
 const SideNavigationBar: React.FC = () => {
   const pathname = usePathname();
   const currentPath = pathname;
