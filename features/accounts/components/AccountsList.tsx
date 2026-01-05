@@ -38,8 +38,6 @@ const AccountsList = () => {
   if (isErrorAccounts) return <div>{accountsError?.message}</div>;
   if (!groups || Object.keys(groups).length === 0) return <NoAccountsFound />;
 
-  console.log(groups);
-
   return (
     <div className="pb-10">
       {Object.entries(groups).map(([type, accounts]) => {

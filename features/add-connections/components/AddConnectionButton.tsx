@@ -1,5 +1,5 @@
-import AddConnection from "@/features/accounts/components/AddConnection";
-import { ConnectionProvider } from "@/features/accounts/context/ConnectionContext";
+import AddConnection from "@/features/add-connections/AddConnection";
+import { ConnectionProvider } from "@/features/add-connections/context/ConnectionContext";
 import CustomTooltip from "@/components/tooltip/CustomTooltip";
 
 const AddConnectionButton = ({ label = "Add Account" }: { label?: string }) => {

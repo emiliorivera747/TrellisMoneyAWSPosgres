@@ -9,7 +9,7 @@ import PrimaryDialogSection from "@/features/accounts/components/dialog/PrimaryD
 import ConnectionError from "@/features/accounts/components/errors/ConnectionError";
 
 // Context
-import { useConnectionContext } from "@/features/accounts/context/ConnectionContext";
+import { useConnectionContext } from "@/features/add-connections/context/ConnectionContext";
 import { ReactNode } from "react";
 
 /**

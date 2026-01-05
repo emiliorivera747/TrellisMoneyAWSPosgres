@@ -1,5 +1,5 @@
 import { Avatar } from "@/components/ui/avatar";
-import { useConnectionContext } from "@/features/accounts/context/ConnectionContext";
+import { useConnectionContext } from "@/features/add-connections/context/ConnectionContext";
 
 // AddMemberCard component renders a card UI for adding a new household member.
 // It accepts `householdResponse` and `clickFn` as props from StepProps.

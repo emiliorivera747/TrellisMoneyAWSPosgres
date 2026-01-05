@@ -6,7 +6,7 @@ import { dateFilterConfig } from "@/features/accounts/config/dateFilterConfig";
 import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2";
 import NetWorthGraph from "@/features/net-worth/components/net-worth-graph/NetWorthGraph";
 import DateFilter from "@/features/accounts/components/DateFilter";
-import AddConnection from "@/features/accounts/components/AddConnection";
+import AddConnection from "@/features/add-connections/AddConnection";
 import AccountsList from "@/features/accounts/components/AccountsList";
 import PrimaryAccountSection from "@/features/accounts/components/PrimaryAccountSection";
 import AssetsAndLiabilitiesCard from "@/features/accounts/components/AssetsAndLiabilitiesCard";
@@ -14,7 +14,7 @@ import AddAccount from "./buttons/AddAccount";
 
 // Context
 import { useAccountsContext } from "@/context/accounts/AccountContext";
-import { ConnectionProvider } from "@/features/accounts/context/ConnectionContext";
+import { ConnectionProvider } from "@/features/add-connections/context/ConnectionContext";
 
 // Types
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
@@ -53,7 +53,7 @@ const AccountContent = () => {
           <AccountsList />
         </div>
       </PrimaryAccountSection>
-      <div className="h-full w-[25%] sticky top-0  justify-start flex flex-col gap-4 pt-12">
+      <div className="h-full w-[18rem] sticky top-0  justify-start flex flex-col gap-4 pt-12">
         <AssetsAndLiabilitiesCard />
         <ConnectionProvider>
           <AddConnection>
