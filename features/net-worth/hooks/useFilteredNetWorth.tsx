@@ -17,7 +17,7 @@ import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountF
  *
  * @param {UseFilterNetWorthProps} props - Filtering properties.
  */
-export const useFilterNetWorth = () => {
+export const useFilteredNetWorth = () => {
   const [filteredData, setFilteredData] = useState<LinePayload[] | []>([]);
   const { selectedFilter, startDate, endDate } =
     useAccountsFiltersWithActions();
