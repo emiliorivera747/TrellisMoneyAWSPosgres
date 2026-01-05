@@ -1,19 +1,16 @@
-'use client';
+"use client";
 import { useEffect } from "react";
-import { useInvestments } from "@/hooks/investments/useInvestments";
-
+import useFetchHoldings from "@/hooks/react-query/holdings/useFetchHoldings";
 const page = () => {
-  const { investmentsResponse, isLoadingInvestments, isErrorInvestments } =
-    useInvestments();
+  const { holdingshData, holdingsError, holdingsLoading, holdingsHasError } =
+    useFetchHoldings();
 
-  useEffect(()=>{
-
-  },[investmentsResponse.])
+  useEffect(() => {}, [holdingshData]);
   return (
     <section className="h-screen overflow-scroll">
       <header className="mt-8 px-4">
         <pre className="text-xs whitespace-pre-wrap">
-          {JSON.stringify(investmentsResponse?.data, null, 2)}
+          {JSON.stringify(holdingshData?.data, null, 2)}
         </pre>
       </header>
     </section>
