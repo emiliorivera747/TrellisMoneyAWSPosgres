@@ -1,11 +1,11 @@
 "use client";
 import { useRef } from "react";
 
-//Visx
+// Visx
 import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
-//
-//Components
+
+// Components
 import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
 import LineGraphTimeValue from "@/components/dashboard/LineGraphTimeValue";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
@@ -18,16 +18,17 @@ import TimeValueGraphHeader, {
 import InfoIconV2 from "@/components/information-icon/InfoIconV2";
 import { netWorthInfo } from "@/features/projected-net-worth/utils/data/netWorthInfo";
 import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";
+import GraphHeader from "@/components/headers/GraphHeader";
 
-//Types
+// Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
-//Utils
+// Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
 import { TooltipPayload } from "@/types/graphs";
 import { getTailwindColors } from "@/utils/helper-functions/graph/getTailwindColors";
 
-//TooltipData
+// TooltipData
 type TooltipData = TooltipPayload[];
 
 // Config
@@ -70,18 +71,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
                   <div key={index} className="flex flex-col">
                     <div className="flex">
                       <div className="flex items-center">
-                        <Title
-                          className={`${payloadLen > 1 ? "text-[1.2rem]" : ""}`}
-                        >
-                          {linePayload.value}
-                        </Title>
-                        <InfoIconV2
-                          modalTitle="Net Worth"
-                          modalDescriptionT="Net worth is the total value of an individual's or entity's assets minus their liabilities. It represents financial wealth at a specific point in time."
-                          modalDescriptionB="A positive net worth indicates financial stability, while a negative net worth suggests debt exceeds assets. Tracking net worth helps assess financial healthciplined budgeting, and strategic investments can grow net worth over time."
-                          modalData={netWorthInfo}
-                          ref={svgRef}
-                        />
+                        <GraphHeader label={"Net Worth"} />
                       </div>
                     </div>
                     <Value

@@ -1,4 +1,4 @@
-import GraphHeaders from "@/components/headers/GraphHeaders";
+import GraphHeaders from "@/components/headers/GraphHeader";
 
 /**
  * A skeleton component that serves as a placeholder for the Projected Net Worth Graph

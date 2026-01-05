@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import GraphHeaders from "@/components/headers/GraphHeaders";
+import GraphHeaders from "@/components/headers/GraphHeader";
 import MultipleValPriceChange from "@/components/dashboard/MultipleValPriceChange";
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";

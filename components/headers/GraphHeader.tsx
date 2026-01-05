@@ -1,6 +1,11 @@
-import React from "react";
-import InformationIcon from "@/components/information-icon/InformationIcon";
-const GraphHeaders = ({ label }: { label: string }) => {
+/**
+ * A functional component that renders a styled header with a label.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.label - The text to display as the header label.
+ * @returns {JSX.Element} A styled header element.
+ */
+const GraphHeader = ({ label }: { label: string }) => {
   return (
     <div className="flex items-center justify-center text-[1.5rem] gap-1">
       <span className="tracking-wider font-light text-tertiary-900 ">
@@ -15,4 +20,4 @@ const GraphHeaders = ({ label }: { label: string }) => {
   );
 };
 
-export default GraphHeaders;
+export default GraphHeader;
