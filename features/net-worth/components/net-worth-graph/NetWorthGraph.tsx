@@ -53,7 +53,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     if (width < 10) return null;
     if (checkLinePayloads(linePayloads) === false) return <NoLinePayloads />;
 
-    const { filter, handleFilterChange } = useAccountsContext();
+    // const { filter, handleFilterChange } = useAccountsContext();
 
     const svgRef = useRef<SVGSVGElement>(null);
     const filterRef = useRef<HTMLDivElement>(null);

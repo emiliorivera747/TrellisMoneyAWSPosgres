@@ -1,7 +1,7 @@
 // Components
 import AccountListHeader from "@/features/accounts/components/headers/AccountListHeader";
-import Accountcard from "@/features/accounts/components/AccountCard";
-import NoAccountsFound from "@/features/accounts/components/NoAccountsFound";
+import Accountcard from "@/features/accounts/components/cards/AccountCard";
+import NoAccountsFound from "@/features/accounts/components/cards/NoAccountsFound";
 
 // Types
 import { Account } from "@/app/generated/prisma/client";

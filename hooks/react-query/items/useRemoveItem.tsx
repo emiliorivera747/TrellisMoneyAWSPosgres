@@ -14,6 +14,7 @@ export const useRemoveItem = () => {
     mutate: mutateItem,
     isPending: itemIsPending,
     isError: itemHasError,
+    error: itemError
   } = useMutation({
     mutationFn: itemService.removeItem,
     onSuccess: () => {
@@ -32,5 +33,5 @@ export const useRemoveItem = () => {
     },
   });
 
-  return { mutateItem, itemIsPending, itemHasError };
+  return { mutateItem, itemIsPending, itemHasError, itemError};
 };
