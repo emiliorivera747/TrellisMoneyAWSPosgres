@@ -1,7 +1,6 @@
 import SideNavigationBar from "@/components/navigation/SideNavigationBar";
 import { Toaster } from "@/components/ui/toaster";
 
-
 /**
  * Layout component that provides a structured layout for the application.
  *
