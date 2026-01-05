@@ -272,11 +272,6 @@ export interface LinkProps {
   className?: string;
   itemId?: string | null;
 }
-
-export interface GroupedAccounts {
-  [key: string]: Account[];
-}
-
 export interface ExchangeTokenRequestBody {
   public_token: string;
   metadata: PlaidLinkOnSuccessMetadata;

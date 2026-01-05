@@ -1,6 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Account, GroupedAccounts } from "@/types/plaid";
+import { Account } from "@/types/plaid";
+
+import {
+  AccountGroupedByType,
+  UseGroupAccountsProps,
+} from "@/features/accounts/types/accounts";
 
 /**
  *
@@ -9,20 +14,16 @@ import { Account, GroupedAccounts } from "@/types/plaid";
  * @param accounts - The accounts to group
  * @returns
  */
-const useGroupAccounts = ({
-  accounts,
-}: {
-  accounts: Account[] | undefined;
-}) => {
-  const [groups, setGroups] = useState<GroupedAccounts | undefined>({});
+const useGroupAccounts = ({ accounts }: UseGroupAccountsProps) => {
+  const [groups, setGroups] = useState<AccountGroupedByType | {}>({});
 
   useEffect(() => {
     const groupedAccounts = accounts?.reduce(
       (acc: { [key: string]: Account[] }, account) => {
         const { type } = account;
-
+        
         if (!type) return acc;
-
+        
         if (!acc[type]) acc[type] = [];
 
         acc[type].push(account);
