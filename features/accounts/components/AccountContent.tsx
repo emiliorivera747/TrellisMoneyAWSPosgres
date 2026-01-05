@@ -53,7 +53,6 @@ const AccountContent = () => {
           <AccountsList />
         </div>
       </PrimaryAccountSection>
-
       <div className="h-full w-[25%] sticky top-0  justify-start flex flex-col gap-4 pt-12">
         <AssetsAndLiabilitiesCard />
         <ConnectionProvider>

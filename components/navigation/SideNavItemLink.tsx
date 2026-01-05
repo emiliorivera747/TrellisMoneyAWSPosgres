@@ -1,6 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import { SideNavItemLinkProps, TooltipProps } from "@/types/navigationbar";
+import { SideNavItemLinkProps } from "@/types/navigationbar";
+
+// Components
+import CustomTooltip from "@/components/tooltip/CustomTooltip";
 
 const GetSvgWithPath = (path: string, strokeWidth: number) => (
   <svg
@@ -22,7 +25,7 @@ const SideNavItemLink: React.FC<SideNavItemLinkProps> = ({
   label,
 }) => {
   return (
-    <CustomTooltip title={label}>
+    <CustomTooltip label={label}>
       <Link
         href={href}
         className={`h-[3rem] rounded-[12px]  px-4 2xl:p-2 border-box 2xl:flex-row 2xl:w-28 2xl:justify-start 2xl:text-[3rem] items-center text-[2rem] sm:h-[3rem] sm:w-[3rem] 2xl:rounded-[12px] rounded:[12px] sm:rounded-[100%] flex flex-col text-center justify-center gap-2 hover:bg-tertiary-300 transition duration-500 ease-in-out  
@@ -39,17 +42,6 @@ const SideNavItemLink: React.FC<SideNavItemLinkProps> = ({
         </span>
       </Link>
     </CustomTooltip>
-  );
-};
-
-const CustomTooltip: React.FC<TooltipProps> = ({ title, children }) => {
-  return (
-    <div className="relative group transition delay-300">
-      {children}
-      <div className="absolute top-[100%] left-1/2 transform -translate-x-1/2 mb-2 sm:hidden group-hover:block sm:bg-tertiary-800 text-white text-[0.6rem] rounded py-1 px-2 transition delay-300 2xl:bg-transparent bg-transparent ">
-        {title}
-      </div>
-    </div>
   );
 };
 

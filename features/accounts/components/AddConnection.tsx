@@ -24,17 +24,13 @@ const AddConnection = ({ children }: { children: ReactNode }) => {
   if (error) return <ConnectionError message={error.message} />;
 
   return (
-    <>
-      <div className="w-[18rem] flex flex-col rounded-[12px] bg-white h-[10rem] my-4">
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger>{children}</DialogTrigger>
-          <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
-            <DialogHeader title={currentStep.title ?? "Untitled"} />
-            <PrimaryDialogSection currentStep={currentStep} />
-          </DialogContent>
-        </Dialog>
-      </div>
-    </>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <DialogTrigger>{children}</DialogTrigger>
+      <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
+        <DialogHeader title={currentStep.title ?? "Untitled"} />
+        <PrimaryDialogSection currentStep={currentStep} />
+      </DialogContent>
+    </Dialog>
   );
 };
 

@@ -5,6 +5,6 @@ export interface SideNavItemLinkProps {
   label: string;
 }
 export interface TooltipProps {
-  title: string;
+  label: string;
   children: React.ReactNode;
 }

@@ -46,9 +46,8 @@ export const ConnectionProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  
   const { start, error } = usePlaidConnectionFlowfrom();
-  
+
   const {
     isDialogOpen,
     steps,
@@ -91,6 +90,6 @@ export const ConnectionProvider = ({
 export const useConnectionContext = () => {
   const connectionContext = useContext(ConnectionContext);
   if (!connectionContext)
-    throw "useConnectionContext must be used within a DashboardProvider";
+    throw "useConnectionContext must be used within a connection context";
   return connectionContext;
 };
