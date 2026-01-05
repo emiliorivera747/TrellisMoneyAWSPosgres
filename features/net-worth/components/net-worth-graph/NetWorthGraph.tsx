@@ -30,7 +30,6 @@ import { getTailwindColors } from "@/utils/helper-functions/graph/getTailwindCol
 //TooltipData
 type TooltipData = TooltipPayload[];
 
-import { useAccountsContext } from "@/context/accounts/AccountContext";
 
 // Config
 import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";

@@ -5,14 +5,13 @@ import { useRef, useState } from "react";
 import ResponsiveLineGraphV2 from "@/components/dashboard/ResponsiveLineGraphV2";
 import NetWorthGraph from "@/features/net-worth/components/net-worth-graph/NetWorthGraph";
 import DateFilter from "@/features/accounts/components/filter/DateFilter";
-import AddConnection from "@/features/add-connections/AddConnection";
 import AccountsList from "@/features/accounts/components/list/AccountsList";
 import PrimaryAccountSection from "@/features/accounts/components/sections/PrimaryAccountSection";
 import AssetsAndLiabilitiesCard from "@/features/accounts/components/cards/AssetsAndLiabilitiesCard";
-import AddAccount from "@/features/accounts/components/buttons/AddAccount";
+import AddConnectionButtonAccount from "@/features/accounts/components/buttons/AddConnectionButtonAccount";
 
-// Context
-import { ConnectionProvider } from "@/features/add-connections/context/ConnectionContext";
+// Section
+import SecondaryAccountSection from "@/features/accounts/components/sections/SecondaryAccountSection";
 
 // Types
 import { useFilterNetWorth } from "@/features/net-worth/hooks/useFilterNetWorth";
@@ -48,7 +47,7 @@ const page = () => {
 
   const accounts = accountsResponse?.data?.accounts;
   const { groups = {} } = useGroupAccounts({ accounts });
-  
+
   const handleDateFilterChange = (newStartData: Date, newEndData: Date) => {
     setStartDate(newStartData);
     setEndDate(newEndData);
@@ -80,14 +79,11 @@ const page = () => {
           />
         </div>
       </PrimaryAccountSection>
-      <div className="h-full w-[18rem] sticky top-0  justify-start flex flex-col gap-4 pt-12">
+
+      <SecondaryAccountSection>
         <AssetsAndLiabilitiesCard />
-        <ConnectionProvider>
-          <AddConnection>
-            <AddAccount />
-          </AddConnection>
-        </ConnectionProvider>
-      </div>
+        <AddConnectionButtonAccount />
+      </SecondaryAccountSection>
     </section>
   );
 };
