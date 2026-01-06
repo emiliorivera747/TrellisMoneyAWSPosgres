@@ -97,6 +97,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         { projected_net_worth, projected_assets },
         "Accounts, holdings, and securities updated successfully."
       );
+      
     } catch (error) {
       if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
       if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
