@@ -141,3 +141,28 @@ export const getHoldingsWithHouseholdId = async (household_id: string) => {
   });
   return holdings;
 };
+
+interface GetHoldingWithIdProps {
+  user_id: string;
+  account_id: string;
+  security_id: string;
+}
+
+
+export const getHoldingWithId = async ({
+  user_id,
+  account_id,
+  security_id,
+}: GetHoldingWithIdProps) => {
+  const holding = await prisma.holding.findUnique({
+    where: {
+      holding_id: {
+        account_id,
+        security_id,
+        user_id,
+      },
+    },
+  });
+
+  return holding;
+};
