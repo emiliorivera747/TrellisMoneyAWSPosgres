@@ -8,7 +8,7 @@ import { holdingService } from "@/services/holdings/holdingsService";
  */
 const useFetchHoldings = () => {
   const {
-    data: holdingshData,
+    data: holdingsData,
     isError: holdingsHasError,
     error: holdingsError,
     isLoading: holdingsLoading,
@@ -20,7 +20,7 @@ const useFetchHoldings = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-  return { holdingshData, holdingsError, holdingsLoading, holdingsHasError };
+  return { holdingsData, holdingsError, holdingsLoading, holdingsHasError };
 };
 
 export default useFetchHoldings;
