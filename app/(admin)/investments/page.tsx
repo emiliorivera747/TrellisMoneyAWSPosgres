@@ -3,14 +3,12 @@ import { useEffect, useState } from "react";
 import useFetchHoldings from "@/hooks/react-query/holdings/useFetchHoldings";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 
-import Link from "next/link";
-
 const page = () => {
   const { holdingsData, holdingsError, holdingsLoading, holdingsHasError } =
     useFetchHoldings();
 
   const [groupedHoldings, setGroupedHolding] = useState<
-    { name: string; totalShares: number; totalInstitutionValue: number; holding_id: string | undefined }[]
+    { name: string; totalShares: number; totalInstitutionValue: number }[]
   >([]);
 
   useEffect(() => {
@@ -34,7 +32,6 @@ const page = () => {
         name: key,
         totalShares,
         totalInstitutionValue,
-        holding_id: (holdings ?? [])[0]?.household_id,
       };
     });
 
@@ -53,11 +50,10 @@ const page = () => {
         </header>
         <pre className="text-xs whitespace-pre-wrap flex flex-col gap-2">
           {groupedHoldings?.map(
-            ({ name, totalShares, totalInstitutionValue, holding_id }) => {
+            ({ name, totalShares, totalInstitutionValue }) => {
               return (
-                <Link
-                  href={`/investments/${holding_id}`}
-                  className="grid grid-cols-2 border rounded-[12px] py-[0.5rem] w-[30rem] items-center hover:shadow-md cursor-pointer"
+                <div
+                  className="grid grid-cols-2 border rounded-[12px] py-[0.5rem] w-[30rem] items-center"
                   key={name}
                 >
                   <span className="px-4 flex flex-col gap-2">
@@ -69,7 +65,7 @@ const page = () => {
                   <span className="font-semibold flex justify-end px-4 text-[0.8rem]">
                     {convertToMoney(totalInstitutionValue)}
                   </span>
-                </Link>
+                </div>
               );
             }
           )}
