@@ -55,8 +55,14 @@ const page = () => {
           ({ item_id, institution_name, member }) => {
             return (
               <div key={item_id} className="flex gap-2 w-full">
-                <div className="rounded-[12px] border border-tertiary-400 py-3 px-8 box-border w-[80%] overflow-x-scroll font-light text-tertiary-900">
-                  {institution_name} - {member.name ?? member.email}
+                <div className="rounded-[12px] border border-tertiary-400 py-3 px-8 box-border w-[80%] overflow-x-scroll font-light text-tertiary-900 flex gap-2">
+                  <span className="font-semibold">{institution_name}</span>{" "}
+                  {/* <div className="flex items-center justify-center">
+                    <span className="h-[0.4rem] w-[0.4rem] bg-tertiary-800 rounded-full font-extralight"></span>
+                  </div> */}
+                  <span className="font-normal text-tertiary-700">
+                    {member.name ?? member.email}
+                  </span>
                 </div>
                 <TooltipProvider>
                   <Tooltip>
