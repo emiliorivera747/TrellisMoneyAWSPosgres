@@ -14,13 +14,9 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="max-h-screen ml-[2%] sm:ml-[2%] 2xl:ml-[10%] border-box">
-      <div className="flex sm:flex-row flex-col">
-        <main className=" sm:w-full flex flex-row">
-          <div className="mt-[2%] flex flex-row">
-            <AccountSideNav />
-            {children}
-          </div>
-        </main>
+      <div className="mt-[2rem] flex flex-row">
+        <AccountSideNav />
+        {children}
         <Toaster />
       </div>
     </div>
