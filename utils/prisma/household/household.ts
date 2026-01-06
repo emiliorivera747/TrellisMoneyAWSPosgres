@@ -21,8 +21,12 @@ import { Household } from "@/app/generated/prisma/client";
  */
 export const getMemberByUserId = async (
   user_id: string,
-  householdInclude?: { accounts?: boolean; items?: boolean; holdings?: boolean }
-): Promise<any> => {
+  householdInclude?: {
+    accounts?: boolean;
+    items?: boolean | { include: { member: boolean } };
+    holdings?: boolean;
+  }
+) => {
   const defaultInclude = {
     household: {
       include: { accounts: true, items: true },

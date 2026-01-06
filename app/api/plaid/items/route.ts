@@ -7,6 +7,8 @@ import {
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
+import { getMemberByUserId } from "@/utils/prisma/household/household";
+import { Item } from "@/app/generated/prisma/client";
 
 /**
  * Handles the POST request to create a new item in the database.
@@ -103,28 +105,27 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      const items = await prisma.item.findMany({
-        where: { user_id: user.id },
-        select: {
-          access_token: false,
-          item_id: true,
-          institution_id: true,
-          available_products: true,
-          billed_products: true,
-          products: true,
-          error: true,
-          update_type: true,
-          consent_expiration_time: true,
-          institution_name: true,
-          webhook: true,
-          auth_method: true,
-          consented_products: true,
-          consented_data_scopes: true,
-          consented_use_cases: true,
-          request_id: true,
+      
+      const member = await getMemberByUserId(user.id, {
+        accounts: true,
+        items: {
+          include: {
+            member: true,
+          },
         },
+      },);
+      
+      if (!member) return FailResponse("Failed to get member from user", 404);
+      
+      const items = member.household?.items?.map((item: Item) => {
+        const { access_token, ...rest } = item;
+        return {
+          ...rest,
+        };
       });
-      if (!items) FailResponse("Failed to get items", 404);
+      
+      if (!items) return FailResponse("Failed to get items", 404);
+
       return SuccessResponse({ items });
     } catch (error) {
       return ErrorResponse(getServerErrorMessage(error));
