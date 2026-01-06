@@ -15,7 +15,7 @@ import FormFieldGenerator from "@/components/form-builder/FormFieldsGenerator";
 
 // Data
 import { memberFields } from "@/features/accounts/data/MemberFormFields";
-import { useConnectionContext } from "../../../add-connections/context/ConnectionContext";
+import { useConnectionContext } from "../../../manage-connections/context/ConnectionContext";
 
 // Services
 import { householdService } from "../../services/householdServices";

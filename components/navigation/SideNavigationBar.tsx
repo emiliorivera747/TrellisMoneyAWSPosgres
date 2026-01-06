@@ -12,7 +12,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 // Components
-import AddConnectionButton from "@/features/add-connections/components/AddConnectionButton";
+import AddConnectionButton from "@/features/manage-connections/components/AddConnectionButton";
 
 /**
  * SideNavigationBar component renders a responsive side navigation bar

@@ -1,6 +1,6 @@
-import { ConnectionProvider } from "@/features/add-connections/context/ConnectionContext";
+import { ConnectionProvider } from "@/features/manage-connections/context/ConnectionContext";
 import AddAccount from "@/features/accounts/components/buttons/AddAccount";
-import AddConnection from "@/features/add-connections/AddConnection";
+import AddConnection from "@/features/manage-connections/AddConnection";
 
 /**
  * A React functional component that renders a button for adding a connection.

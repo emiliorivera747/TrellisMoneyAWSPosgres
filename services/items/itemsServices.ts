@@ -1,4 +1,6 @@
 import { API_URL } from "@/utils/global-variables/globals";
+import { ApiResponse } from "@/types/api-responses";
+import { Item } from "@/app/generated/prisma/client";
 
 /**
  * Removes an item by its unique identifier.
@@ -25,8 +27,18 @@ const removeItem = async (item_id: string) => {
   return res.json();
 };
 
+interface GetItemsResponse extends ApiResponse<{ items: Item[] }> {}
+
+const getItems = async (): Promise<GetItemsResponse> => {
+  const res = await fetch(`${API_URL}/plaid/items`);
+  if (!res.ok)
+    throw new Error(`HTTP error! Status: ${res.status} ${res.statusText}`);
+  return res.json();
+};
+
 const itemService = {
   removeItem,
+  getItems,
 };
 
 export default itemService;

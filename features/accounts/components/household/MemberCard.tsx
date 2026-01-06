@@ -1,6 +1,6 @@
 import { Member, MemberCardProp } from "@/features/accounts/types/household";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useConnectionContext } from "@/features/add-connections/context/ConnectionContext";
+import { useConnectionContext } from "@/features/manage-connections/context/ConnectionContext";
 
 /**
  * A functional component that renders a list of household members as clickable cards.

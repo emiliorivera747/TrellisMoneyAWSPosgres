@@ -1,4 +1,4 @@
-import { useConnectionContext } from "@/features/add-connections/context/ConnectionContext";
+import { useConnectionContext } from "@/features/manage-connections/context/ConnectionContext";
 
 /**
  * A button component that navigates to a specified route when clicked.
