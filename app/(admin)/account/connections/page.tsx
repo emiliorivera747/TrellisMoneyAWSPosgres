@@ -2,6 +2,9 @@
 import { useRemoveItem } from "@/hooks/react-query/items/useRemoveItem";
 import useFetchItems from "@/hooks/react-query/items/useFetchItems";
 
+// Skelton
+import ManageConnectionSkeleton from "@/features/manage-connections/components/ManageConnectionSkeleton";
+
 /**
  * Page component for managing connections.
  *
@@ -30,9 +33,8 @@ const page = () => {
   const { itemsResponse, itemsError, itemsLoading, itemsHasError } =
     useFetchItems();
 
-  if (itemsLoading) return <div>Loading...</div>;
+  if (itemsLoading) return <ManageConnectionSkeleton />;
   if (itemHasError) return <div>There was an Error when removing</div>;
-  console.log(itemsResponse?.data?.items);
 
   return (
     <div className="mt-[1rem]">
@@ -46,15 +48,15 @@ const page = () => {
         {itemsResponse?.data?.items.map(({ item_id, institution_name }) => {
           return (
             <div key={item_id} className="flex gap-2 w-full">
-              <div className="rounded-[12px] border border-tertiary-400 py-4 px-8 box-border w-[80%] overflow-x-scroll font-semibold text-tertiary-800">
+              <div className="rounded-[12px] border border-tertiary-400 py-3 px-8 box-border w-[80%] overflow-x-scroll font-semibold text-tertiary-800">
                 {institution_name}
               </div>
               <button
                 disabled={itemIsPending}
-                className="bg-[#e03131] hover:bg-[#c92a2a] font-semibold  hover:font-extrabold text-white px-4  rounded-[12px] w-[6rem] inline-block"
+                className="bg-[#e03131] hover:bg-[#c92a2a] font-normal  hover:font-extrabold text-white px-4  rounded-[12px] w-[6rem] inline-block transition-all duration-700 ease-in-out"
                 onClick={() => mutateItem(item_id)}
               >
-                delete
+                Delete
               </button>
             </div>
           );
