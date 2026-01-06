@@ -1,4 +1,4 @@
-import { ItemPrisma } from "@/types/prisma";
+import { Item } from "@/app/generated/prisma/client";
 
 /**
  *
@@ -7,7 +7,7 @@ import { ItemPrisma } from "@/types/prisma";
  * @param items
  * @returns
  */
-export const getAllAccessTokens = (items: ItemPrisma[]) => {
+export const getAllAccessTokens = (items: Item[]) => {
   const accessTokens = items
     .map((item) => item.access_token)
     .filter((token): token is string => token !== null && token !== undefined);

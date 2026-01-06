@@ -39,7 +39,7 @@ export const getAccounts = async (
 export const getAccountsFromPlaid = async (
   items: Item[]
 ): Promise<AccountBaseWithItemId[][]> => {
-  const accessTokens = await getAllAccessTokens(items);
+  const accessTokens = getAllAccessTokens(items);
   const accounts = await Promise.all(
     accessTokens.map(async (token) => {
       const response = await client.accountsGet({ access_token: token });

@@ -39,6 +39,7 @@ import { getMemberByUserId } from "@/utils/prisma/household/household";
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
+    
       const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to get member from user", 404);
 

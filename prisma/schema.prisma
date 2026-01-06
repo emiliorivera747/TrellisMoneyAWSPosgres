@@ -125,21 +125,23 @@ model User {
 // ###################################################### ITEM ##########################################
 
 model Item {
-  item_id                 String           @id
-  institution_id          String?
-  institution_name        String?
-  webhook                 String?
-  auth_method             String?
-  request_id              String
-  update_type             String?
-  consent_expiration_time String?
   available_products      String[]         @default([])
   billed_products         String[]         @default([])
   products                String[]         @default([])
   error                   String?
+  institution_id          String?
+  institution_name        String?
+  item_id                 String           @id
+  update_type             String?
   consented_products      String[]         @default([])
   consented_data_scopes   String[]         @default([])
   consented_use_cases     String[]         @default([])
+  consent_expiration_time String?
+
+  webhook                 String?
+  auth_method             String?
+  request_id              String
+
   access_token            String
 
   accounts                Account[]

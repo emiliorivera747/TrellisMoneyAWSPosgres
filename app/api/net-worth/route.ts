@@ -12,6 +12,9 @@ import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
 import { calculateNetWorth } from "@/utils/api-helpers/net-worth/calculateNetWorth";
 import prisma from "@/lib/prisma";
 
+import { getItemsFromPlaid } from "@/services/plaid/items/items";
+import { updateItemsWithPlaidItems } from "@/utils/prisma/item/updateItems";
+
 /**
  *
  * The API calculates the user net worth
@@ -28,7 +31,10 @@ export async function GET(req: NextRequest) {
       const items = member?.household?.items;
       if (!items) return FailResponse("Items not found for household", 404);
 
-      const plaidAccounts = await getAccountsFromPlaid(items);
+      const plaidItems = await getItemsFromPlaid(items);
+      const updateItems =await updateItemsWithPlaidItems(plaidItems);
+
+      const plaidAccounts = await getAccountsFromPlaid(updateItems);
       await updateAccounts(plaidAccounts, member?.household?.accounts || []);
 
       if (!member.household_id)

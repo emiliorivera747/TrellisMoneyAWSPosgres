@@ -17,6 +17,13 @@ export const useRemoveItem = () => {
     error: itemError
   } = useMutation({
     mutationFn: itemService.removeItem,
+    onMutate: () => {
+      toast({
+        title: "Deleting connection",
+        description: "Please wait while the connection is being deleted...",
+        variant: "default",
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       toast({

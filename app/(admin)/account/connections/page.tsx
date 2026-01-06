@@ -26,14 +26,13 @@ import useFetchItems from "@/hooks/react-query/items/useFetchItems";
  * - Tailwind CSS classes for styling.
  */
 const page = () => {
-
   const { mutateItem, itemIsPending, itemHasError } = useRemoveItem();
-
   const { itemsResponse, itemsError, itemsLoading, itemsHasError } =
     useFetchItems();
 
   if (itemsLoading) return <div>Deleting...</div>;
   if (itemHasError) return <div>There was an Error when removing</div>;
+  console.log(itemsResponse?.data?.items);
 
   return (
     <div className="mt-[3%]">
@@ -43,15 +42,15 @@ const page = () => {
       <p className="text-sm text-gray-500">
         Here you can manage your connections.
       </p>
-
       <div className=" w-full h-full flex flex-col items-center justify-start pt-6 gap-4">
-        {itemsResponse?.data?.items.map(({ item_id }) => {
+        {itemsResponse?.data?.items.map(({ item_id, institution_name }) => {
           return (
             <div key={item_id} className="flex gap-2 w-full">
               <div className="rounded-[12px] border border-tertiary-400 py-4 px-4 box-border w-[80%] overflow-x-scroll">
-                Item Id: {item_id}
+                {institution_name}
               </div>
               <button
+                disabled={itemIsPending}
                 className="bg-red-600 hover:bg-red-700 font-sembibold  hover:font-bold text-white px-4  rounded-[12px] w-[20%] inline-block"
                 onClick={() => mutateItem(item_id)}
               >
