@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SideNavItemLinkProps } from "@/types/navigationbar";
 
 // Components
-import CustomTooltip from "@/components/tooltip/CustomTooltip";
+import CustomTooltip from "@/components/tooltip/Tooltip";
 
 const GetSvgWithPath = (path: string, strokeWidth: number) => (
   <svg

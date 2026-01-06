@@ -1,6 +1,6 @@
 import AddConnection from "@/features/manage-connections/AddConnection";
 import { ConnectionProvider } from "@/features/manage-connections/context/ConnectionContext";
-import CustomTooltip from "@/components/tooltip/CustomTooltip";
+import CustomTooltip from "@/components/tooltip/Tooltip";
 
 const AddConnectionButton = ({ label = "Add Account" }: { label?: string }) => {
   return (
