@@ -65,7 +65,7 @@ const page = () => {
                   <Tooltip>
                     <TooltipTrigger>
                       <div
-                        className="font-normal p-4 rounded-[12px] transition-all duration-700 ease-in-out flex items-center justify-center hover:bg-[#c92a2a] hover:text-white text-[#e03131]"
+                        className="font-normal p-5 rounded-[12px] transition-all duration-700 ease-in-out flex items-center justify-center hover:bg-[#c92a2a] hover:text-white text-[#c92a2a]"
                         onClick={() => mutateItem(item_id)}
                       >
                         <svg
@@ -74,7 +74,7 @@ const page = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="size-6 "
+                          className="size-6"
                         >
                           <path
                             strokeLinecap="round"
