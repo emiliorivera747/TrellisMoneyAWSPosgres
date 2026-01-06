@@ -55,12 +55,9 @@ const page = () => {
           ({ item_id, institution_name, member }) => {
             return (
               <div key={item_id} className="flex gap-2 w-full">
-                <div className="rounded-[12px] border border-tertiary-400 py-3 px-8 box-border w-[80%] overflow-x-scroll font-light text-tertiary-900 flex gap-2">
+                <div className="rounded-[12px] border border-tertiary-400 py-2 px-6 box-border w-[80%] overflow-x-scroll font-light text-tertiary-900 flex  flex-col">
                   <span className="font-semibold">{institution_name}</span>{" "}
-                  {/* <div className="flex items-center justify-center">
-                    <span className="h-[0.4rem] w-[0.4rem] bg-tertiary-800 rounded-full font-extralight"></span>
-                  </div> */}
-                  <span className="font-normal text-tertiary-700">
+                  <span className="font-normal text-tertiary-700 text-[0.9rem]">
                     {member.name ?? member.email}
                   </span>
                 </div>
@@ -68,7 +65,7 @@ const page = () => {
                   <Tooltip>
                     <TooltipTrigger>
                       <div
-                        className="bg-[#e03131] hover:bg-[#c92a2a] font-normal hover:font-extrabold text-white px-4 rounded-[12px] transition-all duration-700 ease-in-out h-full flex items-center justify-center"
+                        className="font-normal p-4 rounded-[12px] transition-all duration-700 ease-in-out flex items-center justify-center hover:bg-[#c92a2a] hover:text-white text-[#e03131]"
                         onClick={() => mutateItem(item_id)}
                       >
                         <svg
@@ -77,7 +74,7 @@ const page = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="size-6"
+                          className="size-6 "
                         >
                           <path
                             strokeLinecap="round"
