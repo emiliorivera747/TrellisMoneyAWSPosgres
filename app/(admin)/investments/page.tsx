@@ -4,39 +4,37 @@ import useFetchHoldings from "@/hooks/react-query/holdings/useFetchHoldings";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 
 const page = () => {
-  const { holdingshData, holdingsError, holdingsLoading, holdingsHasError } = useFetchHoldings();
+  const { holdingsData, holdingsError, holdingsLoading, holdingsHasError } =
+    useFetchHoldings();
 
   const [groupedHoldings, setGroupedHolding] = useState<
-    {
-      name: string;
-      totalShares: number;
-      totalInstitutionValue: number;
-      holding_id: string | undefined;
-    }[]
+    { name: string; totalShares: number; totalInstitutionValue: number }[]
   >([]);
 
   useEffect(() => {
-    const accounts = holdingshData?.data?.household?.accounts;
+    const accounts = holdingsData?.data?.household.accounts; // Adjusted to use the correct property
     const holdings = accounts?.flatMap((account) => account?.holdings);
+
     const groups = Object.groupBy(
       holdings ?? [],
-      (holding) => holding.security.ticker_symbol ?? "Unknown"
+      (holding) => holding.security?.ticker_symbol ?? "Unknown"
     );
 
     const groupedResults = Object.entries(groups).map(([key, holdings]) => {
       const totalShares = (holdings ?? []).reduce(
-        (acc, val) => acc + Number(val?.quantity ?? 0), // Assuming 'quantity' is the correct property
+        (acc, holding) => acc + Number(holding?.quantity ?? 0),
         0
       );
+
       const totalInstitutionValue = (holdings ?? []).reduce(
-        (acc, val) => acc + (Number(val.institution_value) ?? 0),
+        (acc, holding) => acc + (Number(holding?.institution_value) ?? 0),
         0
       );
+
       return {
         name: key,
         totalShares,
         totalInstitutionValue,
-        holding_id: (holdings ?? [])[0]?.household_id,
       };
     });
 
@@ -55,14 +53,13 @@ const page = () => {
         </header>
         <pre className="text-xs whitespace-pre-wrap flex flex-col gap-2">
           {groupedHoldings?.map(
-            ({ name, totalShares, totalInstitutionValue, holding_id }) => {
+            ({ name, totalShares, totalInstitutionValue }) => {
               return (
-                <Link
-                  href={`/investments/${holding_id}`}
-                  className="grid grid-cols-2 border rounded-[12px] py-[0.5rem] w-[30rem] items-center hover:shadow-md cursor-pointer"
+                <div
+                  className="grid grid-cols-2 border rounded-[12px] py-[0.5rem] w-[30rem] items-center"
                   key={name}
                 >
-                  <span className="px-4 flex flex-col gap-2">
+                  <span className="px-4 flex flex-col gap-1">
                     {name}
                     <span className="font-extralight text-tertiary-800">
                       {convertToMoney(totalShares)} shares
@@ -71,12 +68,10 @@ const page = () => {
                   <span className="font-semibold flex justify-end px-4 text-[0.8rem]">
                     {convertToMoney(totalInstitutionValue)}
                   </span>
-                </Link>
+                </div>
               );
             }
           )}
-
-          {/* {JSON.stringify(holdingsData, null, 2)} */}
         </pre>
       </header>
     </section>

@@ -8,19 +8,19 @@ import { holdingService } from "@/services/holdings/holdingsService";
  */
 const useFetchHoldings = () => {
   const {
-    data: holdingshData,
+    data: holdingsData,
     isError: holdingsHasError,
     error: holdingsError,
     isLoading: holdingsLoading,
   } = useQuery({
     queryKey: ["holdigns"],
     queryFn: holdingService.getHoldings,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 30 * 60 * 1000, // 30 minutes
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-  return { holdingshData, holdingsError, holdingsLoading, holdingsHasError };
+  return { holdingsData, holdingsError, holdingsLoading, holdingsHasError };
 };
 
 export default useFetchHoldings;

@@ -1,46 +1,15 @@
-import { Decimal } from "decimal.js";
-import { PlaidError, Products, ItemUpdateTypeEnum } from "plaid";
-import { Account } from "@/types/plaid";
-export interface SecurityHistory {
-  security_id: string;
-  close_price: number | Decimal;
-  close_price_as_of: string | null | Date;
-  update_datetime: string | null | Date;
-  iso_currency_code?: string | null;
-  unofficial_currency_code?: string | null;
+import {
+  Security,
+  Household,
+  Account,
+  Holding,
+} from "@/app/generated/prisma/client";
+export interface HoldingWithSecurityExpanded extends Holding {
+  security: Security;
 }
-
-export interface HoldingHistory {
-  security_id: string;
-  account_id: string;
-  user_id: string;
-  quantity: number | Decimal;
-  cost_basis: number | Decimal;
-  annual_return_rate: number | Decimal;
-  annual_inflation_rate?: number | null | Decimal;
-  institution_price: number | Decimal;
-  institution_price_as_of: string | Date;
-  institution_price_datetime: string | Date;
-  institution_value: number | Decimal;
-  vested_value: number | Decimal;
-  iso_currency_code: string;
+export interface AccountWithHoldingExpanded extends Account {
+  holdings: HoldingWithSecurityExpanded[];
 }
-
-export interface ItemPrisma {
-  item_id: string;
-  institution_id?: string | null | undefined;
-  institution_name?: string | null;
-  webhook?: string | null;
-  error: PlaidError | null | string;
-  available_products?: Array<Products | string>;
-  billed_products?: Array<Products | string>;
-  products?: Array<Products | string>;
-  consented_products?: Array<Products | string>;
-  request_id?: string | null;
-  update_type?: string | null;
-  consent_expiration_time?: string | null;
-  accountId?: string | null;
-  account?: Account | null;
-  access_token?: string | null;
-  update_time?: ItemUpdateTypeEnum;
+export interface HouseholdWithAccountsExpanded extends Household {
+  accounts: AccountWithHoldingExpanded[];
 }
