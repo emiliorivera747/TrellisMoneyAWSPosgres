@@ -5,9 +5,8 @@ import { useShallow } from "zustand/react/shallow";
 export const useDashboardFilters = () =>
   useStore(
     useShallow((state) => ({
-      selectedYear: state.selectedYear,
-      selectedFilter: state.selectedFilter,
-      retirementYear: state.retirementYear,
+      selectedProjectedYear: state.selectedProjectedYear,
+      selectedInflationFilter: state.selectedInflationFilter,
       mode: state.mode,
     }))
   );
@@ -16,27 +15,25 @@ export const useDashboardFilters = () =>
 export const useDashboardFilterActions = () =>
   useStore(
     useShallow((state) => ({
-      setSelectedYear: state.setSelectedYear,
-      setSelectedFilter: state.setSelectedFilter,
-      setRetirementYear: state.setRetirementYear,
+      setSelectedProjectedYear: state.setSelectedProjectedYear,
+      setSelectedInflationFilter: state.setSelectedInflationFilter,
       toggleMode: state.toggleMode,
     }))
   );
 
 // ── Very granular (optional, great for tiny components) ──────
-export const useSelectedYear = () => useStore((state) => state.selectedYear);
-
+export const useSelectedYear = () => useStore((state) => state.selectedProjectedYear);
 export const useMode = () => useStore((state) => state.mode);
 
 // ── Combined (sometimes convenient) ──────────────────────────
 export const useDashboardFiltersWithActions = () =>
   useStore(
     useShallow((state) => ({
-      selectedYear: state.selectedYear,
-      selectedFilter: state.selectedFilter,
+      selectedProjectedYear: state.selectedProjectedYear,
+      selectedInflationFilter: state.selectedInflationFilter,
       mode: state.mode,
-      setSelectedYear: state.setSelectedYear,
+      setSelectedProjectedYear: state.setSelectedProjectedYear,
       toggleMode: state.toggleMode,
-      setMode: state.setMode, // Added functionality to set the mode
+      setMode: state.setMode, 
     }))
   );

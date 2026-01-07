@@ -91,7 +91,7 @@ const MenuButton = ({
 };
 
 export const AssetsCardPrimaryHeader = () => {
-  const { mode, selectedYear } = useDashboardFilters();
+  const { mode, selectedProjectedYear: selectedYear } = useDashboardFilters();
   const { setMode } = useDashboardFiltersWithActions();
 
   return (

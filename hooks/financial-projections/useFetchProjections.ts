@@ -2,10 +2,11 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
 import { getAssets } from "@/features/projected-financial-assets/utils/extractAssets";
+import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 interface useFetchProjectionsProps {
-  selectedYear: number;
-  selectedFilter: string;
+  selectedProjectedYear: number;
+  selectedInflationFilter: InflationFilters;
 }
 
 const currentYear = Number(new Date().getFullYear().toString());
@@ -28,8 +29,8 @@ const currentYear = Number(new Date().getFullYear().toString());
  * });
  */
 const useFetchProjections = ({
-  selectedYear,
-  selectedFilter,
+  selectedProjectedYear,
+  selectedInflationFilter,
 }: useFetchProjectionsProps) => {
   const {
     data: futureProjectionData,
@@ -39,16 +40,20 @@ const useFetchProjections = ({
   } = useQuery({
     queryKey: [
       "projectedAssetsAndNetworth",
-      currentYear,
-      selectedYear,
-      selectedFilter,
+      selectedProjectedYear,
+      selectedInflationFilter,
     ],
-    queryFn: () => fetchProjections(currentYear, selectedYear, selectedFilter),
-    enabled: !!selectedYear,
-    staleTime: 5 * 60 * 1000,         // 5 minutes 
-    gcTime: 30 * 60 * 1000,           // 30 minutes 
-    refetchOnMount: false,            
-    refetchOnWindowFocus: false,      
+    queryFn: () =>
+      fetchProjections(
+        currentYear,
+        selectedProjectedYear,
+        selectedInflationFilter
+      ),
+    enabled: !!selectedProjectedYear,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   const assets = useMemo(

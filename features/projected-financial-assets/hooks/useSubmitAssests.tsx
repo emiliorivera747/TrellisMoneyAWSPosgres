@@ -8,6 +8,7 @@ import useFetchUser from "@/hooks/user/useFetchUser";
 import { FutureProjectionData } from "../types/projectedAssets";
 import { ProjectedAssets } from "@/types/futureProjections";
 import { FormData } from "@/types/dashboard";
+import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 // Selectors
 import { useDashboardFiltersWithActions } from "@/stores/slices/dashboard/dashboardFilters.selectors";
@@ -43,11 +44,11 @@ import { useDashboardFiltersWithActions } from "@/stores/slices/dashboard/dashbo
  */
 const useSubmitAssests = ({
   futureProjectionData,
-  selectedFilter,
+  selectedProjectionFilter,
   onSuccess,
 }: {
   futureProjectionData?: FutureProjectionData | null;
-  selectedFilter: string;
+  selectedProjectionFilter: InflationFilters;
   onSuccess?: () => void;
 }) => {
   const {
@@ -67,7 +68,7 @@ const useSubmitAssests = ({
 
       const currentAssetGroup = getCurrentProjectedAsset(
         futureProjectionData,
-        selectedFilter
+        selectedProjectionFilter
       );
 
       if (!currentAssetGroup?.data) return;
@@ -85,7 +86,7 @@ const useSubmitAssests = ({
     },
     [
       futureProjectionData,
-      selectedFilter,
+      selectedProjectionFilter,
       user,
       mutateAssetsAsync,
       setMode,

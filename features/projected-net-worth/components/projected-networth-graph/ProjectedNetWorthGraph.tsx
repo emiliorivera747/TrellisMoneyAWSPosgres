@@ -37,7 +37,7 @@ const ProjectedNetWorthGraph = ({
   futureProjectionLoading,
 }: ProjectedNetWorthGraphProps) => {
   const containerRef = useRef(null);
-  const { selectedYear, selectedFilter } = useDashboardFilters();
+  const { selectedProjectedYear: selectedYear, selectedInflationFilter: selectedFilter } = useDashboardFilters();
 
   /**
    *  Returns the filtered data based on the projectionData and selected filter.

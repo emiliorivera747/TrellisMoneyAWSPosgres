@@ -1,7 +1,8 @@
 import { StateCreator } from "zustand";
 import { DashboardFiltersSlice } from "@/types/stores/dashboard";
-const currentYear = Number(new Date().getFullYear().toString());
-const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
+
+const CURRENT_YEAR = 2026;
+const DEFAULT_RETIREMENT_YEAR = CURRENT_YEAR + 40;
 
 /**
  * Zustand slice for managing dashboard filters state.
@@ -12,18 +13,12 @@ const DEFAULT_RETIREMENT_YEAR = currentYear + 40;
 export const createDashboardFilterSlice: StateCreator<DashboardFiltersSlice> = (
   set
 ) => ({
-  selectedYear: DEFAULT_RETIREMENT_YEAR,
-  selectedFilter: "withNoInflation",
-  retirementYear: DEFAULT_RETIREMENT_YEAR,
+  selectedProjectedYear: DEFAULT_RETIREMENT_YEAR,
+  selectedInflationFilter: "withNoInflation",
   mode: "view",
 
-  setSelectedYear: (year) => set({ selectedYear: year }),
-  setSelectedFilter: (filter) => set({ selectedFilter: filter }),
-  setRetirementYear: (year) =>
-    set({
-      retirementYear: year,
-      selectedYear: year,
-    }),
+  setSelectedProjectedYear: (year) => set({ selectedProjectedYear: year }),
+  setSelectedInflationFilter: (filter) => set({ selectedInflationFilter: filter }),
   toggleMode: () =>
     set((state) => ({ mode: state.mode === "edit" ? "view" : "edit" })),
   setMode: (mode) => set({ mode }),

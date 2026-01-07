@@ -18,10 +18,10 @@ import useFetchUser from "@/hooks/user/useFetchUser";
  * @param mutateAccount - Function to mutate account data.
  */
 export const handleFormSubmission = (data: Record<string, number>) => {
-  const { selectedYear, selectedFilter } = useDashboardFilters();
+  const { selectedProjectedYear: selectedYear, selectedInflationFilter: selectedFilter } = useDashboardFilters();
   const { futureProjectionData: projectionData } = useFetchProjections({
-    selectedYear,
-    selectedFilter,
+    selectedProjectedYear: selectedYear,
+    selectedInflationFilter: selectedFilter,
   });
   const { user } = useFetchUser();
   const { mutateAssets } = useUpdateAssets();

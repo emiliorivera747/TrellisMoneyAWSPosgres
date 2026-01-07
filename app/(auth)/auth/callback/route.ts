@@ -23,17 +23,18 @@ export async function GET(request: Request) {
 
   // -----If no code is provided, redirect to error page -----
   if (!code) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-
   const supabase = await createClient();
 
   // ----- Exchange OAuth code for a session -----
   const { data, error: exchangeTokenError } =
     await supabase.auth.exchangeCodeForSession(code);
 
-  if (exchangeTokenError || !data?.session?.user) {
-    console.error("Supabase code exchange failed:", exchangeTokenError);
-    return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-  }
+  if (exchangeTokenError || !data?.session?.user)
+    return logErrorAndRedirect({
+      origin,
+      error: exchangeTokenError ?? undefined,
+      message: "Supabase code exchange failed",
+    });
 
   const currentUser = data.session.user;
 
@@ -53,10 +54,11 @@ export async function GET(request: Request) {
     try {
       const price_id = await getPriceIdBySlug(plan);
 
-      if (!price_id) {
-        console.error("Price id was not found", price_id);
-        return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-      }
+      if (!price_id)
+        return logErrorAndRedirect({
+          origin,
+          message: "Price id was not found",
+        });
 
       const success_url = next?.startsWith("http") ? next : `${origin}${next}`;
       const cancel_url = `${origin}/sign-up?plan=${plan}`;
@@ -69,8 +71,10 @@ export async function GET(request: Request) {
       });
 
       if (!checkoutUrl) {
-        console.error("Checkout URL is null");
-        return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+        return logErrorAndRedirect({
+          origin,
+          message: "Checkout URL is null",
+        });
       }
 
       return NextResponse.redirect(checkoutUrl);
@@ -85,3 +89,17 @@ export async function GET(request: Request) {
 
   return NextResponse.redirect(redirectTo);
 }
+
+const logErrorAndRedirect = ({
+  origin,
+  error,
+  message,
+}: {
+  origin: string;
+  error?: Error;
+  message?: string;
+}) => {
+  if (message) console.error("Error message:", message);
+  if (error) console.error("Error details:", error.message, error.stack);
+  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+};

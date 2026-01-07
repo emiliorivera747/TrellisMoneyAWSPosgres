@@ -22,7 +22,7 @@ import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.
  * @returns JSX.Element
  */
 const DashboardContent = () => {
-  const { selectedYear, selectedFilter } = useDashboardFilters();
+  const { selectedProjectedYear, selectedInflationFilter} = useDashboardFilters();
 
   /**
    * Both Request will be made in parallel
@@ -36,8 +36,8 @@ const DashboardContent = () => {
     futureProjectionLoading,
     futureProjectionHasError,
   } = useFetchProjections({
-    selectedYear,
-    selectedFilter,
+    selectedProjectedYear,
+    selectedInflationFilter,
   });
 
   return (
@@ -65,7 +65,7 @@ const DashboardContent = () => {
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
         <AssetsDashboardProvider>
           <AssetsCard
-            selectedFilter={selectedFilter}
+            selectedProjectionFilter={selectedInflationFilter}
             futureProjectionData={futureProjectionData}
           />
         </AssetsDashboardProvider>

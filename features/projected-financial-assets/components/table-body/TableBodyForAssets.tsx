@@ -19,10 +19,10 @@ import useFetchProjections from "@/hooks/financial-projections/useFetchProjectio
 const TableBodyForAssets = () => {
   const { form } = useAssetsFormContext();
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
-  const { selectedYear, selectedFilter, mode } = useDashboardFilters();
+  const { selectedProjectedYear: selectedYear, selectedInflationFilter: selectedFilter, mode } = useDashboardFilters();
   const { assets } = useFetchProjections({
-    selectedYear,
-    selectedFilter,
+    selectedProjectedYear: selectedYear,
+    selectedInflationFilter: selectedFilter,
   });
 
   useEffect(() => {

@@ -36,7 +36,6 @@ import { hasActiveSubscription } from "@/utils/api-helpers/stripe/subscriptions"
  * ```
  */
 export async function updateSession(request: NextRequest) {
-  
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -74,6 +73,7 @@ export async function updateSession(request: NextRequest) {
 
     // ---- Get subscription -----
     const subscription = await getSubscriptionMinimalData(user.id);
+    console.log("Subscription", subscription);
 
     if (!hasActiveSubscription(subscription))
       return NextResponse.redirect(new URL("/subscriptions", request.url));

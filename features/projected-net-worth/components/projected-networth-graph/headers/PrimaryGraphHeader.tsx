@@ -53,9 +53,9 @@ const PrimaryGraphHeader = ({
   withInflationTag,
   years,
 }: PrimaryGraphHeaderProps) => {
-  const { selectedYear, retirementYear, selectedFilter } =
+  const { selectedProjectedYear: selectedYear, retirementYear, selectedInflationFilter: selectedFilter } =
     useDashboardFilters();
-  const { setSelectedFilter, setRetirementYear, setSelectedYear } =
+  const { setSelectedInflationFilter: setSelectedFilter, setRetirementYear, setSelectedProjectedYear: setSelectedYear } =
     useDashboardFilterActions();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
