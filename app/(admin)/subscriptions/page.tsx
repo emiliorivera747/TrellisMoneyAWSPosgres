@@ -25,7 +25,7 @@ const SubscriptionPage = () => {
   if (isPendingPlans) return <PricingSectionSkeleton />;
 
   return (
-    <div className="min-h-screen h-auto">
+    <div className="h-screen overflow-scroll">
       <PrimaryHeader label={"Choose a membership"} />
       <SecondaryHeader label={"Manage your finances. Cancel anytime."} />
       <div className="flex flex-row flex-wrap items-center justify-center gap-8 mt-8">
