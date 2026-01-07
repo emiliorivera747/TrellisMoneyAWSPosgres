@@ -6,11 +6,11 @@ export const PROTECTED_PATHS = [
   "/profile",
   "/account",
   "/accounts",
-  "/plaid-connections",
   "/investments",
   "/investment-goals",
   "/api/plaid/:path*",
   "/api/stripe/:path*",
+  "/plaid-connections",
 ];
 
 export async function proxy(request: NextRequest) {

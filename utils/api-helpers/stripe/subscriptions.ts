@@ -15,9 +15,7 @@ export const hasActiveSubscription = (
   sub: MinmalSubscription | null
 ): boolean => {
   if (!sub) return false;
-
   const now = Math.floor(Date.now() / 1000);
-
   return (
     ["active", "trialing"].includes(sub.status) &&
     (!sub.cancel_at || sub.cancel_at > now)

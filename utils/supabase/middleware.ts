@@ -36,6 +36,7 @@ import { hasActiveSubscription } from "@/utils/api-helpers/stripe/subscriptions"
  * ```
  */
 export async function updateSession(request: NextRequest) {
+  
   let supabaseResponse = NextResponse.next({
     request,
   });

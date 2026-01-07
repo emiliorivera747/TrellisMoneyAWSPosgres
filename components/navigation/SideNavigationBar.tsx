@@ -41,6 +41,14 @@ const SideNavigationBar: React.FC = () => {
   const pathname = usePathname();
   const currentPath = pathname;
 
+  // Mock function to check if the user is subscribed
+  const isUserSubscribed = (): boolean => {
+    // Replace this with your actual logic to check subscription status
+    return true; // Example: return true if subscribed, false otherwise
+  };
+
+  const userSubscribed = isUserSubscribed();
+
   return (
     <aside className=" sm:border-tertiary-200 flex flex-col sm:flex-row justify-start w-full sm:justify-center sm:w-24 2xl:w-48 min-w-24 sticky text-white sm:border-r border-tertiary-300 border-box h-screen">
       <nav className=" flex flex-row sm:flex-col  pb-4 justify-between items-center my-[3.2rem]">
@@ -62,7 +70,9 @@ const SideNavigationBar: React.FC = () => {
           {navigationItems.map((item, index) => (
             <li
               key={item.label + index}
-              className="flex items-center justify-center cursor-pointer sm:mb-4 w-full"
+              className={`flex items-center justify-center cursor-pointer sm:mb-4 w-full ${
+                !userSubscribed && item.requiresSubscription ? "opacity-50 pointer-events-none" : ""
+              }`}
             >
               <SideNavItemLink
                 href={item.link}
