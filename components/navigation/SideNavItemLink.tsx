@@ -23,20 +23,23 @@ const SideNavItemLink: React.FC<SideNavItemLinkProps> = ({
   svg_d,
   currentPath,
   label,
+  isSubscribed,
 }) => {
   return (
-    <CustomTooltip label={label}>
+    <CustomTooltip label={isSubscribed ? label : "Subscribe to access"}>
       <Link
-        href={href}
-        className={`h-[3rem] rounded-[12px]  px-4 2xl:p-2 border-box 2xl:flex-row 2xl:w-28 2xl:justify-start 2xl:text-[3rem] items-center text-[2rem] sm:h-[3rem] sm:w-[3rem] 2xl:rounded-[12px] rounded:[12px] sm:rounded-[100%] flex flex-col text-center justify-center gap-2 hover:bg-tertiary-300 transition duration-500 ease-in-out  
-        ${
-          currentPath === href
+        href={isSubscribed ? href : "#"}
+        className={`h-[3rem] rounded-[12px] px-4 2xl:p-2 border-box 2xl:flex-row 2xl:w-28 2xl:justify-start 2xl:text-[3rem] items-center text-[2rem] sm:h-[3rem] sm:w-[3rem] 2xl:rounded-[12px] rounded:[12px] sm:rounded-[100%] flex flex-col text-center justify-center gap-2 ${
+          isSubscribed
+            ? "hover:bg-tertiary-300 transition duration-500 ease-in-out"
+            : "cursor-not-allowed opacity-50"
+        } ${
+          currentPath === href && isSubscribed
             ? "text-tertiary-1000 font-bold"
             : "text-tertiary-800"
-        }
-        `}
+        }`}
       >
-        {GetSvgWithPath(svg_d, currentPath === href ? 1.8 : 1)}
+        {GetSvgWithPath(svg_d, currentPath === href && isSubscribed ? 1.8 : 1)}
         <span className="sm:hidden 2xl:inline text-[0.7rem] mt-1 2xl:w-3/4">
           {label}
         </span>

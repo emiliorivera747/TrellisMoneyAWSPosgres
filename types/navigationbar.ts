@@ -3,6 +3,7 @@ export interface SideNavItemLinkProps {
   svg_d: string;
   currentPath: string;
   label: string;
+  isSubscribed: boolean;
 }
 export interface TooltipProps {
   label: string;

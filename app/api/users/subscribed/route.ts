@@ -18,7 +18,7 @@ export const GET = async (req: NextRequest) => {
       const subscription = await getSubscriptionMinimalData(user.id);
       const subscribed = hasActiveSubscription(subscription);
       return NextResponse.json(
-        { subscribed: subscribed, status: "success" },
+        { subscribed, status: "success" },
         { status: 200 }
       );
     } catch (error) {
