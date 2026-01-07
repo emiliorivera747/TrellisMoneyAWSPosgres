@@ -53,6 +53,15 @@ const SideNavigationBar: React.FC = () => {
   } = useSubscription();
 
   if (isLoadingSubscription) return <SideNavSkeleton />;
+  
+  if (subscriptionHasError) {
+    console.error(
+      subscriptionError,
+      typeof Error
+        ? subscriptionError?.message
+        : "An Error occurred when checking the user's subscription"
+    );
+  }
 
   return (
     <aside className=" sm:border-tertiary-200 flex flex-col sm:flex-row justify-start w-full sm:justify-center sm:w-24 2xl:w-48 min-w-24 sticky text-white sm:border-r border-tertiary-300 border-box h-screen">
