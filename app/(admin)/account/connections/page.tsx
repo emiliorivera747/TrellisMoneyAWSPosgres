@@ -55,7 +55,7 @@ const page = () => {
           ({ item_id, institution_name, member }) => {
             return (
               <div key={item_id} className="flex gap-2 w-full">
-                <div className="rounded-[12px] border border-tertiary-400 py-2 px-6 box-border w-[80%] overflow-x-scroll font-light text-tertiary-900 flex  flex-col">
+                <div className="rounded-[12px] border border-tertiary-400 py-2 px-6 box-border w-[80%] overflow-x-scroll font-light text-tertiary-900 flex  flex-col ">
                   <span className="font-semibold">{institution_name}</span>{" "}
                   <span className="font-normal text-tertiary-700 text-[0.9rem]">
                     {member.name ?? member.email}
@@ -65,7 +65,7 @@ const page = () => {
                   <Tooltip>
                     <TooltipTrigger>
                       <div
-                        className="font-normal p-5 rounded-[12px] transition-all duration-700 ease-in-out flex items-center justify-center hover:bg-[#c92a2a] hover:text-white text-[#c92a2a]"
+                        className="font-normal p-5 rounded-[12px] transition-all duration-700 ease-in-out flex items-center justify-center hover:bg-[#c92a2a] hover:text-white text-[#c92a2a] "
                         onClick={() => mutateItem(item_id)}
                       >
                         <svg
@@ -99,7 +99,7 @@ const page = () => {
           }
         )}
         {itemsResponse?.data?.items?.length === 0 && (
-          <div className="text-tertiary-700 text-lg">
+          <div className="w-full text-tertiary-700 text-lg border px-6 py-4 rounded-[12px]">
             No Items found at the moment
           </div>
         )}

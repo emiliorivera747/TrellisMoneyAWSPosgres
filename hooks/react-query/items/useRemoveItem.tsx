@@ -14,7 +14,7 @@ export const useRemoveItem = () => {
     mutate: mutateItem,
     isPending: itemIsPending,
     isError: itemHasError,
-    error: itemError
+    error: itemError,
   } = useMutation({
     mutationFn: itemService.removeItem,
     onMutate: () => {
@@ -26,6 +26,7 @@ export const useRemoveItem = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      queryClient.invalidateQueries({ queryKey: ["items"] });
       toast({
         title: "Connection",
         description: "Successfully deleted connection",
@@ -40,5 +41,5 @@ export const useRemoveItem = () => {
     },
   });
 
-  return { mutateItem, itemIsPending, itemHasError, itemError};
+  return { mutateItem, itemIsPending, itemHasError, itemError };
 };
