@@ -1,0 +1,63 @@
+// ###################################################### HOLDING ##########################################
+
+model Holding {
+  cost_basis                 Decimal
+  institution_price          Decimal
+  institution_price_as_of    DateTime          @db.Timestamptz(3)
+  institution_price_datetime DateTime?         @db.Timestamptz(3)
+  institution_value          Decimal
+  annual_return_rate         Decimal?          @default(0.06)
+  iso_currency_code          String
+  unofficial_currency_code   String?
+  vested_quantity            Decimal?
+  vested_value               Decimal
+  quantity                   Decimal
+
+  history                    HoldingHistory[]
+
+  // ----- Relations -----
+  account_id                 String
+  security_id                String
+  user_id                    String
+  member_id                  String           
+  household_id               String?
+
+
+  account                    Account          @relation(fields: [account_id], references: [account_id], onDelete: Cascade)
+  security                   Security         @relation(fields: [security_id], references: [security_id], onDelete: Cascade)
+  user                       User             @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  member                     HouseholdMember  @relation(fields: [member_id], references: [member_id], onDelete: Cascade)
+  household                  Household?       @relation(fields: [household_id], references: [household_id], onDelete: Cascade)
+
+  // ----- Timestamps -----
+  timestamp                  DateTime          @default(now()) @db.Timestamptz(3)
+
+  @@id(name: "holding_id", [security_id, user_id, account_id])
+}
+
+model HoldingHistory {
+  id                         Int        @id @default(autoincrement())
+  cost_basis                 Decimal
+  institution_price          Decimal
+  annual_return_rate         Decimal?   @default(0.06)
+  institution_price_as_of    DateTime   @db.Timestamptz(3)
+  institution_price_datetime DateTime?  @db.Timestamptz(3)
+  institution_value          Decimal
+  iso_currency_code          String?
+  unofficial_currency_code   String?
+  vested_quantity            Decimal?
+  vested_value               Decimal
+  quantity                   Decimal
+
+  account_id                 String
+  security_id                String
+  user_id                    String
+  member_id                  String
+  household_id               String
+
+  holding                    Holding   @relation(fields: [security_id, user_id, account_id], references: [security_id, user_id, account_id], onDelete: Cascade) // Composite foreign key
+
+  // ----- Timestamp ----
+  created_at                 DateTime   @default(now()) @db.Timestamptz(3)
+  updated_at                 DateTime   @default(now()) @db.Timestamptz(3)
+}

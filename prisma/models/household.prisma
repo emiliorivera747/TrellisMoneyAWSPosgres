@@ -1,0 +1,61 @@
+
+// ###################################################### HOUSEHOLD ##########################################
+enum HouseholdRole {
+    ADMIN
+    MEMBER
+    GUEST
+}
+
+model Household {
+
+  household_id  String             @id @default(uuid())
+  name          String             @default("Our Household")
+  members       HouseholdMember[]
+
+  // ----- Financials ----
+  securities    Security[]
+  holdings      Holding[]
+  accounts      Account[]
+  items         Item[]
+
+  // ----- Relations -----
+  created_by    HouseholdMember?  @relation("HouseholdCreator", fields: [created_by_id], references: [member_id])
+  created_by_id String?            @unique
+
+  // ----- Timestamp -----
+  created_at    DateTime           @default(now())
+  updated_at    DateTime           @updatedAt
+}
+
+model HouseholdMember {
+  member_id         String         @id @default(uuid())
+
+  name              String
+  role              HouseholdRole  @default(MEMBER)
+  dob               DateTime?
+  email             String?
+
+  // ----- Relations -----
+  household         Household?    @relation(fields: [household_id], references: [household_id])
+  household_id      String?
+
+  created_household Household?    @relation("HouseholdCreator")
+
+  user              User?         @relation(fields: [user_id], references: [user_id])
+  user_id           String?        @unique
+
+  // ----- Financials ----
+  securities        Security[]
+  holdings          Holding[]
+  accounts          Account[]
+  items             Item[]
+
+  // ----- Timestamps -----
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+
+  @@unique([household_id, email])
+  @@unique([household_id, user_id])
+  @@index([household_id])
+  @@index([user_id])
+}

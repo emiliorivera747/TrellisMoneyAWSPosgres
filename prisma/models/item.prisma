@@ -1,0 +1,68 @@
+// ###################################################### ITEM ##########################################
+
+model Item {
+  available_products      String[]         @default([])
+  billed_products         String[]         @default([])
+  products                String[]         @default([])
+  error                   String?
+  institution_id          String?
+  institution_name        String?
+  item_id                 String           @id
+  update_type             String?
+  consented_products      String[]         @default([])
+  consented_data_scopes   String[]         @default([])
+  consented_use_cases     String[]         @default([])
+  consent_expiration_time String?
+
+  webhook                 String?
+  auth_method             String?
+  request_id              String
+
+  access_token            String
+
+  accounts                Account[]
+
+  // ----- Relations -----
+  member_id               String
+  member                  HouseholdMember @relation(fields: [member_id], references: [member_id])
+
+  user_id                 String
+  user                    User            @relation(fields: [user_id], references: [user_id])
+
+  household               Household       @relation(fields: [household_id], references: [household_id])
+  household_id            String
+
+  // ----- Timestamp -----
+  created_at              DateTime         @default(now()) @db.Timestamptz(3)
+}
+
+model TransactionStatus {
+  id                     Int       @id @default(autoincrement())
+  last_successful_update DateTime  @db.Timestamptz(3)
+  last_failed_update     DateTime  @db.Timestamptz(3)
+}
+
+model WebhookStatus {
+  id        Int       @id @default(autoincrement())
+  sent_at   DateTime  @db.Timestamptz(3)
+  code_sent String
+}
+
+model OptionContract {
+  id                         Int      @id @default(autoincrement())
+  contract_type              String
+  expiration_date            String
+  strike_price               Decimal
+  underlying_security_ticker String
+}
+
+model FixedIncome {
+  id                    Int       @id @default(autoincrement())
+  yield_rate_percentage Decimal?
+  yield_rate_type       String?
+  maturity_date         String?
+  issue_date            String?
+  face_value            Decimal?
+  security              Security @relation(fields: [securityId], references: [security_id])
+  securityId            String    @unique
+}
