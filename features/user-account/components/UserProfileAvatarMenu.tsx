@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useTheme } from "next-themes"
+import { useTheme } from "next-themes";
 
 // Next Js
 import Link from "next/link";
@@ -17,10 +17,13 @@ import useFetchUser from "@/hooks/user/useFetchUser";
 import { getProfileHoverCardConfig } from "@/features/user-account/config/profileHoverCardConfig";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
 
-const UserProfileAvatarMenu = () => {
+const UserProfileAvatarMenu = ({ isSubscribed }: { isSubscribed: boolean }) => {
   const { theme, setTheme } = useTheme();
   const { user } = useFetchUser();
-  const signOutButtonRef = useRef<HTMLButtonElement>(null) as React.RefObject<HTMLButtonElement>;
+  const signOutButtonRef = useRef<HTMLButtonElement>(
+    null
+  ) as React.RefObject<HTMLButtonElement>;
+
   return (
     <HoverCard>
       <HoverCardTrigger>
@@ -39,30 +42,33 @@ const UserProfileAvatarMenu = () => {
           <div className="border-b border-tertiary-400 mx-2 mb-2">
             <h1 className="text-sm pb-1">Membership status</h1>
             <p className="text-tertiary-900 font-bold text-md pb-4">
-              Trellis Money {`Premium`}
+              Trellis Money {isSubscribed ? "Premium" : "Free"}
             </p>
           </div>
-          {getProfileHoverCardConfig.map(
-            ({ url, label }, index) => {
-              return (
-                <Link
-                  href={`${url}`}
-                  key={index}
-                  className=" hover:backdrop-blur hover:bg-tertiary-600/10 px-2 py-2 rounded-md block transition-all ease-in-out duration-300 w-full "
-                >
-                  {label}
-                </Link>
-              );
-            }
-          )}
 
-            <button onClick={() => {
-            theme === "dark" ? setTheme("light") : setTheme("dark");
+          {getProfileHoverCardConfig.map(({ url, label }, index) => {
+            return (
+              <Link
+                href={isSubscribed ? url : "#"}
+                key={index}
+                className={`hover:backdrop-blur hover:bg-tertiary-600/10 px-2 py-2 rounded-md block transition-all ease-in-out duration-300 w-full ${
+                  isSubscribed ? "" : "cursor-not-allowed opacity-50"
+                }`}
+              >
+                {label}
+              </Link>
+            );
+          })}
+
+          <button
+            onClick={() => {
+              theme === "dark" ? setTheme("light") : setTheme("dark");
             }}
             className="hover:backdrop-blur hover:bg-tertiary-600/40 px-2 py-2 rounded-md transition-all ease-in-out duration-300 w-full border-none items-start flex justify-start text-left"
-            >
-            {(theme ? theme.charAt(0).toUpperCase() + theme.slice(1) : "Light")} mode
-            </button>
+          >
+            {theme ? theme.charAt(0).toUpperCase() + theme.slice(1) : "Light"}{" "}
+            mode
+          </button>
 
           <SignOutButton
             ref={signOutButtonRef}

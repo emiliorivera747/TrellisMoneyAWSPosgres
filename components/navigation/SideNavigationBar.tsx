@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 // Icons
@@ -7,13 +6,15 @@ import SideNavItemLink from "@/components/navigation/SideNavItemLink";
 
 //Data
 import { navigationItems } from "@/utils/mock/data/navigation-bar-data/navigationItems";
-
 import UserProfileAvatarMenu from "@/features/user-account/components/UserProfileAvatarMenu";
 import Link from "next/link";
 import Image from "next/image";
 
 // Components
 import AddConnectionButton from "@/features/manage-connections/components/AddConnectionButton";
+
+// Hooks
+import useSubscription from "@/hooks/react-query/subscription/useSubscription";
 
 /**
  * SideNavigationBar component renders a responsive side navigation bar
@@ -41,23 +42,19 @@ import AddConnectionButton from "@/features/manage-connections/components/AddCon
 const SideNavigationBar: React.FC = () => {
   const pathname = usePathname();
   const currentPath = pathname;
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
-  useEffect(() => {
-    const fetchSubscription = async () => {
-      const res = await fetch("/users/subscribed");
-      const data = await res.json();
-      setIsSubscribed(data.subscribed);
-    };
-    fetchSubscription();
-  }, []);
+  const {
+    subscriptionResponse,
+    subscriptionError,
+    subscriptionHasError,
+    isLoadingSubscription,
+  } = useSubscription();
 
   return (
     <aside className=" sm:border-tertiary-200 flex flex-col sm:flex-row justify-start w-full sm:justify-center sm:w-24 2xl:w-48 min-w-24 sticky text-white sm:border-r border-tertiary-300 border-box h-screen">
       <nav className=" flex flex-row sm:flex-col  pb-4 justify-between items-center my-[3.2rem]">
         <ul className="flex flex-row sm:flex-col w-full sm:justify-normal sm:items-start items-center">
           <li className="h-[3rem] w-[3rem] sm:mb-2 hover:bg-tertiary-300 rounded-[100%] flex items-center justify-center">
-            {isSubscribed ? (
+            {subscriptionResponse?.subscribed ? (
               <Link
                 href="/dashboard"
                 className="flex items-center justify-center h-full w-full"
@@ -92,15 +89,19 @@ const SideNavigationBar: React.FC = () => {
                 currentPath={currentPath}
                 svg_d={item.svg_d}
                 label={item.label}
-                isSubscribed={isSubscribed}
+                isSubscribed={subscriptionResponse?.subscribed ?? false}
               />
             </li>
           ))}
           <li className="flex items-center justify-center cursor-pointer sm:mb-4 w-full">
-            {isSubscribed && <AddConnectionButton />}
+            {subscriptionResponse?.subscribed && <AddConnectionButton />}
           </li>
         </ul>
-        <UserProfileAvatarMenu />
+        {
+          <UserProfileAvatarMenu
+            isSubscribed={subscriptionResponse?.subscribed ?? false}
+          />
+        }
       </nav>
     </aside>
   );

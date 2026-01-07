@@ -19,7 +19,6 @@ const useFetchItems = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-
   return { itemsResponse, itemsError, itemsLoading, itemsHasError };
 };
 
