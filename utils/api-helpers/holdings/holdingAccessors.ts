@@ -72,7 +72,7 @@ export const getClosePrice = (holding: Holding) => {
  * @returns
  */
 export const getAnnualReturnRate = (holding: Holding) => {
-  return holding?.expected_expected_annual_return_rate ? holding.expected_expected_annual_return_rate : 0;
+  return holding?.expected_annual_return_rate ? holding.expected_annual_return_rate : 0;
 };
 
 /**

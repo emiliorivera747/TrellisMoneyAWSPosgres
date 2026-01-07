@@ -32,19 +32,19 @@ export const calculate_fv_accounts = (
   const res = [];
 
   for (const account of accounts) {
-    const { expected_expected_annual_return_rate, current } = account;
+    const { expected_annual_return_rate, current } = account;
 
     let fv = getFutureValue({
       present_value: Number(current),
       annual_inflation_rate,
-      expected_expected_annual_return_rate: expected_expected_annual_return_rate ?? 0,
+      expected_annual_return_rate: expected_annual_return_rate ?? 0,
       includes_inflation: includes_inflation,
       years: end_year - start_year,
     });
 
     res.push({
       name: account.name,
-      expected_expected_annual_return_rate: new Decimal(expected_expected_annual_return_rate ?? 0).toDecimalPlaces(
+      expected_annual_return_rate: new Decimal(expected_annual_return_rate ?? 0).toDecimalPlaces(
         2
       ),
       projection: new Decimal(fv).toDecimalPlaces(2),
@@ -82,20 +82,20 @@ export const calculate_fv_holdings = (
   for (const account of accounts) {
     const holdings = account.holdings ?? [];
     for (const holding of holdings) {
-      const { quantity, close_price, expected_expected_annual_return_rate } =
+      const { quantity, close_price, expected_annual_return_rate } =
         getFormulaValues(holding);
 
       let fv = getFutureValue({
         present_value: Number(quantity) * Number(close_price),
         annual_inflation_rate,
-        expected_expected_annual_return_rate,
+        expected_annual_return_rate,
         includes_inflation: includes_inflation,
         years: end_year - start_year,
       });
 
       res.push({
         name: getHoldingName(holding),
-        expected_expected_annual_return_rate: new Decimal(expected_expected_annual_return_rate).toDecimalPlaces(2),
+        expected_annual_return_rate: new Decimal(expected_annual_return_rate).toDecimalPlaces(2),
         projection: new Decimal(fv).toDecimalPlaces(2),
         security_id: holding.security_id,
         account_id: holding.account_id,

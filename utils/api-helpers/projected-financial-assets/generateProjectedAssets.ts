@@ -69,19 +69,19 @@ const generateAssetsFromAccounts = ({
   type,
 }: GenerateAssetsFromAccountsParams): Assets[] =>
   accounts.map((account) => {
-    const expected_expected_annual_return_rate = account.expected_expected_annual_return_rate ?? 0;
+    const expected_annual_return_rate = account.expected_annual_return_rate ?? 0;
 
     const projection = getFutureValue({
       present_value: account.current ?? 0,
       annual_inflation_rate,
-      expected_expected_annual_return_rate,
+      expected_annual_return_rate,
       years,
       includes_inflation,
     });
 
     return constructAsset({
       name: account.name || "",
-      expected_expected_annual_return_rate,
+      expected_annual_return_rate,
       projection,
       security_id: undefined,
       account_id: account.account_id,
@@ -151,12 +151,12 @@ const cashHoldingsToAssets = ({
   includes_inflation,
 }: CashHoldingsToAssets) => {
   const cashAssets = cash_holdings.map((holding) => {
-    const { quantity, expected_expected_annual_return_rate, institutional_value } =
+    const { quantity, expected_annual_return_rate, institutional_value } =
       getFormulaValues(holding);
 
     const projection = getFutureValue({
       present_value: institutional_value,
-      expected_expected_annual_return_rate,
+      expected_annual_return_rate,
       annual_inflation_rate,
       years,
       includes_inflation,
@@ -164,7 +164,7 @@ const cashHoldingsToAssets = ({
 
     return constructAsset({
       name: holding.accountName + " - Cash",
-      expected_expected_annual_return_rate,
+      expected_annual_return_rate,
       projection,
       security_id: holding?.security?.security_id || "",
       account_id: holding.account_id || "",
@@ -238,7 +238,7 @@ const groupHoldingsByTickerSymbol = (
     const ticker_symbol = holding?.security?.ticker_symbol ?? "";
     const subtype = holding?.security?.type || "unknown";
     if (!ticker_symbol || subtype === "cash" || !holding) continue;
-    const { quantity, expected_expected_annual_return_rate, institutional_value } =
+    const { quantity, expected_annual_return_rate, institutional_value } =
       getFormulaValues(holding);
 
     const groupedHolding = groupedHoldingsMap.get(ticker_symbol) || {
@@ -246,7 +246,7 @@ const groupHoldingsByTickerSymbol = (
       name: getHoldingNameV2(holding, ""),
       quantity: new Decimal(0),
       institution_value: new Decimal(0),
-      expected_expected_annual_return_rate: new Decimal(expected_expected_annual_return_rate || 0).toNumber(),
+      expected_annual_return_rate: new Decimal(expected_annual_return_rate || 0).toNumber(),
       subtype: holding?.security?.type || "unknown",
       account_id: holding.account_id || "",
       accounts: [holding.account_id],
@@ -283,7 +283,7 @@ const groupedHoldingToAsset = ({
     name,
     quantity,
     institution_value,
-    expected_expected_annual_return_rate,
+    expected_annual_return_rate,
     subtype,
     account_id,
     accounts,
@@ -291,7 +291,7 @@ const groupedHoldingToAsset = ({
 
   const projection = getFutureValue({
     present_value: institution_value,
-    expected_expected_annual_return_rate,
+    expected_annual_return_rate,
     annual_inflation_rate,
     years,
     includes_inflation: includes_inflation,
@@ -299,7 +299,7 @@ const groupedHoldingToAsset = ({
 
   return constructAsset({
     name,
-    expected_expected_annual_return_rate,
+    expected_annual_return_rate,
     projection,
     security_id,
     account_id,

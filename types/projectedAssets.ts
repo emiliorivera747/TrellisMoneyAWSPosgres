@@ -14,7 +14,7 @@ export interface GroupedHolding {
   name: string;
   quantity: Decimal;
   institution_value: Decimal;
-  expected_expected_annual_return_rate: number;
+  expected_annual_return_rate: number;
   subtype: string;
   account_id: string;
   accounts: (undefined | string)[];

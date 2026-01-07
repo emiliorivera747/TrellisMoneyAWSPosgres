@@ -3,7 +3,7 @@ import Decimal from "decimal.js";
 
 export interface Assets {
   name: string;
-  expected_expected_annual_return_rate: number | Decimal;
+  expected_annual_return_rate: number | Decimal;
   projection: number | Decimal;
   security_id: string | undefined;
   account_id: string | undefined;
