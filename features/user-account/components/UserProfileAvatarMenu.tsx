@@ -36,7 +36,7 @@ const UserProfileAvatarMenu = ({ isSubscribed }: { isSubscribed: boolean }) => {
       </HoverCardTrigger>
       <HoverCardContent
         align="start"
-        className="backdrop-blur bg-tertiary-300/40  text-tertiary-900 text-sm"
+        className="backdrop-blur-sm bg-tertiary-300/20  text-tertiary-900 text-sm"
       >
         <div className="flex flex-col gap-1">
           <div className="border-b border-tertiary-400 mx-2 mb-2">

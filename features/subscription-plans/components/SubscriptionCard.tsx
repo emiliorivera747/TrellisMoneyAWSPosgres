@@ -33,7 +33,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   footerDescription,
 }) => {
   return (
-    <div className="subscription-card border rounded-[12px] shadow-md p-6 px-8 flex flex-col items-center backdrop-blur bg-tertiary-300/40 w-[20rem] sm:w-[25rem] hover:shadow-2xl">
+    <div className=" isolation-isolate border rounded-[12px] shadow-md p-6 px-8 flex flex-col items-center backdrop-blur bg-tertiary-300/40 w-[20rem] sm:w-[25rem] hover:shadow-2xl">
       <h2 className="text-xl font-bold mb-2 text-tertiary-1000">{title}</h2>
       <p className=" text-tertiary-800 text-md font-semibold mb-4">{price}</p>
       <ul className="mb-4 w-full ">
