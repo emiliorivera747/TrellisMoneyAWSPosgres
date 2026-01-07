@@ -1,5 +1,3 @@
-// ###################################################### USER ##########################################
-
 model User {
   user_id        String            @id @default(uuid())
 
@@ -20,7 +18,6 @@ model User {
 
   //----- Stripe -----//
   subscriptions  Subscription[]
-
   membership     HouseholdMember?
 
   //----- Timestamp -----//

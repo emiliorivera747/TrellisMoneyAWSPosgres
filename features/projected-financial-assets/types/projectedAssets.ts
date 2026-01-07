@@ -25,7 +25,7 @@ export interface FutureProjectionData {
 
 export interface FinancialAssets {
   name: string;
-  annual_return_rate: number | null | Decimal;
+  expected_expected_annual_return_rate: number | null | Decimal;
   projection: number | null | Decimal;
   security_id: string | undefined | null;
   account_id: string | undefined;
@@ -54,7 +54,7 @@ export interface ProjectionParams {
 
 export interface ProjectedAssets {
   name: string;
-  annual_return_rate: number | null | Decimal;
+  expected_expected_annual_return_rate: number | null | Decimal;
   projection: number | null | Decimal;
   security_id: string | undefined | null;
   account_id: string | undefined;

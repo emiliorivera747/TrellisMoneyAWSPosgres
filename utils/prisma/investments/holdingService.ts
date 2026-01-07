@@ -115,7 +115,7 @@ export const getExistingHoldings = async (holdings: Holding[]) => {
 //   user_id,
 //   cost_basis: getValueOrDefault(holding?.cost_basis, 0),
 //   institution_price: getValueOrDefault(holding?.institution_price, 0),
-//   annual_return_rate: 0.06,
+//   expected_expected_annual_return_rate: 0.06,
 //   institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
 //   institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
 //   institution_value: getValueOrDefault(holding?.institution_value, 0),

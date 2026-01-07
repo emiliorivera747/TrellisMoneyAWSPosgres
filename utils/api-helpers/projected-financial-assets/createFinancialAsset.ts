@@ -4,7 +4,7 @@ import { Assets } from "@/types/assets";
 
 interface ConstructAssetParams {
   name: string;
-  annual_return_rate: number | Decimal;
+  expected_expected_annual_return_rate: number | Decimal;
   projection: number;
   security_id: string | undefined;
   account_id: string;
@@ -23,7 +23,7 @@ interface ConstructAssetParams {
  */
 export const constructAsset = ({
   name,
-  annual_return_rate,
+  expected_expected_annual_return_rate,
   projection,
   security_id,
   account_id,
@@ -34,7 +34,7 @@ export const constructAsset = ({
   accounts,
 }: ConstructAssetParams): Assets => ({
   name,
-  annual_return_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
+  expected_expected_annual_return_rate: new Decimal(expected_expected_annual_return_rate).toDecimalPlaces(2),
   projection: new Decimal(projection).toDecimalPlaces(2),
   security_id,
   account_id,

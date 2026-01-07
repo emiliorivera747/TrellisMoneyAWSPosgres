@@ -47,7 +47,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
 
       for (let holding of holdings) {
         const asset = assetMap.get(`${holding.account_id}-${holding.security_id}`);
-        const annual_return_rate = asset?.annual_return_rate;
+        const expected_expected_annual_return_rate = asset?.expected_expected_annual_return_rate;
 
         if (asset)
           await prisma.holding.update({
@@ -58,12 +58,12 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
                 user_id: holding.user_id,
               },
             },
-            data: { annual_return_rate },
+            data: { expected_expected_annual_return_rate },
           });
       }
 
       const res = assets.map(async (asset: Assets) => {
-        const { account_id, user_id, annual_return_rate, type } = asset;
+        const { account_id, user_id, expected_expected_annual_return_rate, type } = asset;
 
         if (type !== "investment") {
           await prisma.account.update({
@@ -72,7 +72,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
               user_id: user_id ?? "",
             },
             data: {
-              annual_return_rate: annual_return_rate,
+              expected_expected_annual_return_rate: expected_expected_annual_return_rate,
             },
           });
         }

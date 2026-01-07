@@ -22,7 +22,7 @@ export type SecurityType =
   | "other";
 export interface Assets {
   name: string;
-  annual_return_rate?: number | null;
+  expected_expected_annual_return_rate?: number | null;
   shares?: number;
   amount?: number;
   security_id?: string;
@@ -82,7 +82,7 @@ export interface GroupedHolding {
   name: string;
   quantity: Decimal;
   institution_value: Decimal;
-  annual_return_rate: number;
+  expected_expected_annual_return_rate: number;
   subtype: string;
   account_id: string;
   accounts: (string | undefined)[];

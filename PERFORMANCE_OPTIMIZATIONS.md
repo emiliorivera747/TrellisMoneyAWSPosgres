@@ -168,7 +168,7 @@ for (const account of accounts) {
   const holdings = account.holdings ?? [];
   for (let i = 0; i < end_year - start_year + 1; i++) {
     for (const holding of holdings) {
-      const { quantity, close_price, annual_return_rate } = getFormulaValues(holding);
+      const { quantity, close_price, expected_expected_annual_return_rate } = getFormulaValues(holding);
       // Calculate future value...
     }
   }
@@ -180,7 +180,7 @@ const holdingsData = accounts.flatMap(account =>
 );
 
 for (let i = 0; i < yearRange; i++) {
-  for (const { quantity, close_price, annual_return_rate } of holdingsData) {
+  for (const { quantity, close_price, expected_expected_annual_return_rate } of holdingsData) {
     // Calculate future value...
   }
 }

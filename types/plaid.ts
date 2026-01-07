@@ -64,7 +64,7 @@ export interface Account {
   official_name?: string | undefined | null;
   subtype: string | undefined | null;
   verification_status?: string | undefined | null;
-  annual_return_rate?: number | null | Decimal;
+  expected_expected_annual_return_rate?: number | null | Decimal;
   current?: number | null | Decimal;
   name: string | null;
   type: string | null;
@@ -179,7 +179,7 @@ export interface Holding {
   account_id?: string;
   holding_id?: string;
   cost_basis?: number | null | Decimal;
-  annual_return_rate?: number | null | Decimal;
+  expected_expected_annual_return_rate?: number | null | Decimal;
   annual_inflation_rate?: number | null | Decimal;
   institution_price?: number | Decimal;
   institution_price_as_of?: string | null | Date;

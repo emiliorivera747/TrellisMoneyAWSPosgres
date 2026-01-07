@@ -24,7 +24,7 @@ export interface FutureValueParams {
    * The estimated annual return rate.
    * Can be a number or a Decimal type.
    */
-  annual_return_rate: Numeric;
+  expected_expected_annual_return_rate: Numeric;
 
   /**
    * The number of years over which the future value is calculated.

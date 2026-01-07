@@ -1,5 +1,3 @@
-// ###################################################### ITEM ##########################################
-
 model Item {
   available_products      String[]         @default([])
   billed_products         String[]         @default([])

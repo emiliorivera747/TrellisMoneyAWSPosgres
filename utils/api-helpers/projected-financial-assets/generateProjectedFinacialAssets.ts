@@ -14,7 +14,7 @@ import Decimal from "decimal.js";
 
 interface financialAssests {
     name: string;
-    annual_return_rate: Decimal;
+    expected_expected_annual_return_rate: Decimal;
     projection: Decimal;
     security_id: string | undefined;
     account_id: string | undefined;
@@ -37,24 +37,24 @@ export const generateProjectedFinancialAssets = async (
 
     // Loop through the holdings and calculate the projected net worth for the end year
     for (const holding of holdings) {
-        const { quantity, close_price, annual_return_rate } = getFormulaValues(holding);
+        const { quantity, close_price, expected_expected_annual_return_rate } = getFormulaValues(holding);
 
         let fv;
         if (includes_inflation) {
             fv = future_value_includes_inflation_fn(
                 quantity,
                 close_price,
-                annual_return_rate,
+                expected_expected_annual_return_rate,
                 annual_inflation_rate,
                 end_year - start_year
             );
         } else {
-            fv = future_value_fn(quantity, close_price, annual_return_rate, end_year - start_year);
+            fv = future_value_fn(quantity, close_price, expected_expected_annual_return_rate, end_year - start_year);
         }
 
         assets.push({
             name: getHoldingName(holding),
-            annual_return_rate: new Decimal(annual_return_rate).toDecimalPlaces(2),
+            expected_expected_annual_return_rate: new Decimal(expected_expected_annual_return_rate).toDecimalPlaces(2),
             projection: new Decimal(fv).toDecimalPlaces(2),
             security_id: holding.security_id,
             account_id: holding.account_id,

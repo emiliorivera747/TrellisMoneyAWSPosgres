@@ -1,5 +1,3 @@
-// ###################################################### SUBSCRIPTION ##########################################
-
 enum SubscriptionStatus {
   incomplete
   incomplete_expired

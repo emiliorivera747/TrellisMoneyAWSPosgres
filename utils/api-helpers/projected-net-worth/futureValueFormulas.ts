@@ -24,7 +24,7 @@ import {
  * @param {Object} params - The parameters for the calculation.
  * @param {number} params.quantity - The quantity of the investment (e.g., number of shares).
  * @param {number} params.close_price - The price per unit of the investment at the start.
- * @param {number} params.annual_return_rate - The annual return rate of the investment (as a decimal, e.g., 0.05 for 5%).
+ * @param {number} params.expected_expected_annual_return_rate - The annual return rate of the investment (as a decimal, e.g., 0.05 for 5%).
  * @param {number} params.annual_inflation_rate - The annual inflation rate (as a decimal, e.g., 0.02 for 2%).
  * @param {number} params.years - The number of years the investment is held.
  * @returns {number} The future value of the investment adjusted for inflation.
@@ -32,11 +32,11 @@ import {
 export const calculateInflationAdjustedFutureValueForStock = ({
   quantity,
   close_price,
-  annual_return_rate,
+  expected_expected_annual_return_rate,
   annual_inflation_rate,
   years,
 }: InflationAdjustedFutureValueParams) => {
-  const growthFactor = Math.pow(1 + Number(annual_return_rate), years);
+  const growthFactor = Math.pow(1 + Number(expected_expected_annual_return_rate), years);
   const inflationFactor = Math.pow(1 + Number(annual_inflation_rate), years);
   const pv = Number(quantity) * Number(close_price);
   const fv = pv * growthFactor;
@@ -52,18 +52,18 @@ export const calculateInflationAdjustedFutureValueForStock = ({
  *
  * @param {Object} params - The parameters for the calculation.
  * @param {number} params.present_value - The current value of the investment.
- * @param {number} params.annual_return_rate - The annual rate of return as a decimal (e.g., 0.05 for 5%).
+ * @param {number} params.expected_expected_annual_return_rate - The annual rate of return as a decimal (e.g., 0.05 for 5%).
  * @param {number} params.annual_inflation_rate - The annual inflation rate as a decimal (e.g., 0.02 for 2%).
  * @param {number} params.years - The number of years over which the investment grows.
  * @returns {number} The future value of the investment adjusted for inflation.
  */
 export const calculateInflationAdjustedFutureValue = ({
   present_value,
-  annual_return_rate,
+  expected_expected_annual_return_rate,
   annual_inflation_rate,
   years,
 }: InflationAdjustedFutureValueParams) => {
-  const growthFactor = Math.pow(1 + Number(annual_return_rate), years);
+  const growthFactor = Math.pow(1 + Number(expected_expected_annual_return_rate), years);
   const inflationFactor = Math.pow(1 + Number(annual_inflation_rate), years);
   const fv = Number(present_value) * growthFactor;
   return fv / inflationFactor;
@@ -75,17 +75,17 @@ export const calculateInflationAdjustedFutureValue = ({
  * @param {Object} params - The parameters for the calculation.
  * @param {number} params.quantity - The number of stock units owned.
  * @param {number} params.close_price - The closing price of the stock.
- * @param {number} params.annual_return_rate - The expected annual return rate (as a decimal, e.g., 0.05 for 5%).
+ * @param {number} params.expected_expected_annual_return_rate - The expected annual return rate (as a decimal, e.g., 0.05 for 5%).
  * @param {number} params.years - The number of years the investment will grow.
  * @returns {number} The future value of the stock investment.
  */
 export const calculateFutureValueForStock = ({
   quantity,
   close_price,
-  annual_return_rate,
+  expected_expected_annual_return_rate,
   years,
 }: FutureValueParams) => {
-  const growthFactor = Math.pow(1 + Number(annual_return_rate), years);
+  const growthFactor = Math.pow(1 + Number(expected_expected_annual_return_rate), years);
   const pv = Number(quantity) * Number(close_price);
   const fv = pv * growthFactor;
   return fv;
@@ -99,16 +99,16 @@ export const calculateFutureValueForStock = ({
  *
  * @param {Object} params - The parameters for the calculation.
  * @param {number} params.present_value - The current value of the investment.
- * @param {number} params.annual_return_rate - The annual rate of return as a decimal (e.g., 0.05 for 5%).
+ * @param {number} params.expected_expected_annual_return_rate - The annual rate of return as a decimal (e.g., 0.05 for 5%).
  * @param {number} params.years - The number of years over which the investment grows.
  * @returns {number} The future value of the investment.
  */
 export const calculateFutureValue = ({
   present_value,
-  annual_return_rate,
+  expected_expected_annual_return_rate,
   years,
 }: FutureValueParams) => {
-  const growthFactor = Math.pow(1 + Number(annual_return_rate), years);
+  const growthFactor = Math.pow(1 + Number(expected_expected_annual_return_rate), years);
   return Number(present_value) * growthFactor;
 };
 
@@ -118,7 +118,7 @@ export const calculateFutureValue = ({
  *
  * @param {Object} params - The parameters for the future value calculation.
  * @param {number} params.present_value - The current value of the investment.
- * @param {number} params.annual_return_rate - The expected annual return rate (as a decimal, e.g., 0.05 for 5%).
+ * @param {number} params.expected_expected_annual_return_rate - The expected annual return rate (as a decimal, e.g., 0.05 for 5%).
  * @param {number} params.annual_inflation_rate - The expected annual inflation rate (as a decimal, e.g., 0.02 for 2%).
  * @param {number} params.years - The number of years over which the investment will grow.
  * @param {boolean} params.includes_inflation - Whether to adjust the calculation for inflation.
@@ -127,7 +127,7 @@ export const calculateFutureValue = ({
  */
 export const getFutureValue = ({
   present_value,
-  annual_return_rate,
+  expected_expected_annual_return_rate,
   annual_inflation_rate,
   years,
   includes_inflation,
@@ -136,13 +136,13 @@ export const getFutureValue = ({
   const fv = includes_inflation
     ? calculateInflationAdjustedFutureValue({
         present_value: pv,
-        annual_return_rate,
+        expected_expected_annual_return_rate,
         annual_inflation_rate,
         years,
       })
     : calculateFutureValue({
         present_value: pv,
-        annual_return_rate,
+        expected_expected_annual_return_rate,
         years,
       });
   return fv;
@@ -155,14 +155,14 @@ export const getFutureValue = ({
  * @returns An object containing the following calculated values:
  * - `quantity`: The quantity of the holding.
  * - `close_price`: The closing price of the holding.
- * - `annual_return_rate`: The annual return rate of the holding.
+ * - `expected_expected_annual_return_rate`: The annual return rate of the holding.
  * - `institutional_value`: The institutional value of the holding.
  */
 export const getFormulaValues = (holding: Holding) => {
   return {
     quantity: getQuantity(holding),
     close_price: getClosePrice(holding),
-    annual_return_rate: getAnnualReturnRate(holding),
+    expected_expected_annual_return_rate: getAnnualReturnRate(holding),
     institutional_value: getInstitutionalValue(holding),
   };
 };

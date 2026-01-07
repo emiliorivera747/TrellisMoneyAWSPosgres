@@ -163,11 +163,11 @@ const populateMapWithFvHoldings = ({
   for (let i = 0; i <= yearRange; i++) {
     let total = 0;
 
-    for (const { annual_return_rate, institutional_value } of holdingsData) {
+    for (const { expected_expected_annual_return_rate, institutional_value } of holdingsData) {
       total += getFutureValue({
         present_value: institutional_value,
         annual_inflation_rate,
-        annual_return_rate,
+        expected_expected_annual_return_rate,
         years: i,
         includes_inflation,
       });
@@ -200,7 +200,7 @@ const populateMapWithFvAccounts = ({
   // Pre-calculate account data for reuse
   const accountsData = accounts.map((account) => ({
     current_amount: account.current ?? 0,
-    annual_return_rate: account.annual_return_rate ?? 0,
+    expected_expected_annual_return_rate: account.expected_expected_annual_return_rate ?? 0,
     isNegative: account.type === "loan" || account.type === "credit",
   }));
 
@@ -211,13 +211,13 @@ const populateMapWithFvAccounts = ({
     let total = 0;
     for (const {
       current_amount,
-      annual_return_rate,
+      expected_expected_annual_return_rate,
       isNegative,
     } of accountsData) {
       let fv = getFutureValue({
         present_value: current_amount,
         annual_inflation_rate,
-        annual_return_rate,
+        expected_expected_annual_return_rate,
         includes_inflation: includes_inflation,
         years: i,
       });

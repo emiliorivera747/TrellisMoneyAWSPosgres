@@ -1,12 +1,15 @@
-// ###################################################### HOLDING ##########################################
-
 model Holding {
+  holding_id                 String            @id @default(uuid())
+
   cost_basis                 Decimal
   institution_price          Decimal
   institution_price_as_of    DateTime          @db.Timestamptz(3)
   institution_price_datetime DateTime?         @db.Timestamptz(3)
   institution_value          Decimal
-  annual_return_rate         Decimal?          @default(0.06)
+  
+  expected_expected_annual_return_rate         Decimal?          @default(0.06)
+  
+  
   iso_currency_code          String
   unofficial_currency_code   String?
   vested_quantity            Decimal?
@@ -19,7 +22,7 @@ model Holding {
   account_id                 String
   security_id                String
   user_id                    String
-  member_id                  String           
+  member_id                  String
   household_id               String?
 
 
@@ -39,7 +42,7 @@ model HoldingHistory {
   id                         Int        @id @default(autoincrement())
   cost_basis                 Decimal
   institution_price          Decimal
-  annual_return_rate         Decimal?   @default(0.06)
+  expected_expected_annual_return_rate         Decimal?   @default(0.06)
   institution_price_as_of    DateTime   @db.Timestamptz(3)
   institution_price_datetime DateTime?  @db.Timestamptz(3)
   institution_value          Decimal
