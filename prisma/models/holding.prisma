@@ -41,6 +41,8 @@ model Holding {
   /// Expected annualized return assumption for projections (e.g. 0.0600 = 6%)
   expected_annual_return_rate Decimal          @default(0.06) @db.Decimal(5, 4)
 
+  // history                     HoldingHistory
+
   user_id                     String
   member_id                   String
   household_id                String?
@@ -66,42 +68,42 @@ model Holding {
 
 
 
-model HoldingHistory {
-  id                         Int        @id @default(autoincrement())
+// model HoldingHistory {
+//   id                         Int        @id @default(autoincrement())
 
-  /// Snapshot of cost basis at this point in time
-  cost_basis                 Decimal    @db.Decimal(20, 2)
+//   /// Snapshot of cost basis at this point in time
+//   cost_basis                 Decimal    @db.Decimal(20, 2)
 
-  institution_price          Decimal    @db.Decimal(20, 8)
-  institution_price_as_of    DateTime   @db.Timestamptz(3)
-  institution_price_datetime DateTime?  @db.Timestamptz(3)
-  institution_value          Decimal    @db.Decimal(20, 2)
+//   institution_price          Decimal    @db.Decimal(20, 8)
+//   institution_price_as_of    DateTime   @db.Timestamptz(3)
+//   institution_price_datetime DateTime?  @db.Timestamptz(3)
+//   institution_value          Decimal    @db.Decimal(20, 2)
 
-  /// Currency at the time of the snapshot
-  iso_currency_code          String?
-  unofficial_currency_code   String?
+//   /// Currency at the time of the snapshot
+//   iso_currency_code          String?
+//   unofficial_currency_code   String?
 
-  vested_quantity            Decimal?   @db.Decimal(20, 8)
-  vested_value               Decimal    @db.Decimal(20, 2)
-  quantity                   Decimal    @db.Decimal(20, 8)
+//   vested_quantity            Decimal?   @db.Decimal(20, 8)
+//   vested_value               Decimal    @db.Decimal(20, 2)
+//   quantity                   Decimal    @db.Decimal(20, 8)
 
-  /// Denormalized identifiers preserved for point-in-time historical accuracy
-  account_id                 String
-  security_id                String
-  user_id                    String
-  member_id                  String
-  household_id               String?
+//   /// Denormalized identifiers preserved for point-in-time historical accuracy
+//   account_id                 String
+//   security_id                String
+//   user_id                    String
+//   member_id                  String
+//   household_id               String?
 
-  holding_id                 String
-  holding                    Holding   @relation(fields: [holding_id], references: [holding_id], onDelete: Cascade)
+//   holding_id                 String?
+//   holding                    Holding?   @relation(fields: [holding_id], references: [holding_id])
 
-  // ----- Timestamps -----
-  created_at                 DateTime   @default(now()) @db.Timestamptz(3)
-  updated_at                 DateTime   @updatedAt @db.Timestamptz(3)
+//   // ----- Timestamps -----
+//   created_at                 DateTime   @default(now()) @db.Timestamptz(3)
+//   updated_at                 DateTime   @updatedAt @db.Timestamptz(3)
 
-  /// One snapshot per holding per market date
-  @@unique([holding_id,      institution_price_as_of])
+//   /// One snapshot per holding per market date
+//   @@unique([holding_id,      institution_price_as_of])
 
-  @@index([holding_id])
-  @@index([holding_id, created_at(sort: Desc)])
-}
+//   @@index([holding_id])
+//   @@index([holding_id, created_at(sort: Desc)])
+// }

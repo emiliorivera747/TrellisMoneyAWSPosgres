@@ -411,6 +411,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type UserCountOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -447,11 +452,6 @@ export type UserMinOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
 }
 
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
-}
-
 export type UserCreateNestedOneWithoutAccountsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutAccountsInput, Prisma.UserUncheckedCreateWithoutAccountsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutAccountsInput
@@ -466,50 +466,18 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
-export type NullableBoolFieldUpdateOperationsInput = {
-  set?: boolean | null
-}
-
-export type UserCreateNestedOneWithoutItemsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutItemsInput, Prisma.UserUncheckedCreateWithoutItemsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutItemsInput
+export type UserCreateNestedOneWithoutHoldingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutHoldingsInput, Prisma.UserUncheckedCreateWithoutHoldingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHoldingsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutItemsInput, Prisma.UserUncheckedCreateWithoutItemsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutItemsInput
-  upsert?: Prisma.UserUpsertWithoutItemsInput
+export type UserUpdateOneRequiredWithoutHoldingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutHoldingsInput, Prisma.UserUncheckedCreateWithoutHoldingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHoldingsInput
+  upsert?: Prisma.UserUpsertWithoutHoldingsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutItemsInput, Prisma.UserUpdateWithoutItemsInput>, Prisma.UserUncheckedUpdateWithoutItemsInput>
-}
-
-export type UserCreateNestedOneWithoutSubscriptionsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutSubscriptionsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionsInput
-  upsert?: Prisma.UserUpsertWithoutSubscriptionsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.UserUpdateWithoutSubscriptionsInput>, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
-}
-
-export type UserCreateNestedOneWithoutProfileInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutProfileNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileInput
-  upsert?: Prisma.UserUpsertWithoutProfileInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProfileInput, Prisma.UserUpdateWithoutProfileInput>, Prisma.UserUncheckedUpdateWithoutProfileInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutHoldingsInput, Prisma.UserUpdateWithoutHoldingsInput>, Prisma.UserUncheckedUpdateWithoutHoldingsInput>
 }
 
 export type UserCreateNestedOneWithoutMembershipInput = {
@@ -528,18 +496,32 @@ export type UserUpdateOneWithoutMembershipNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMembershipInput, Prisma.UserUpdateWithoutMembershipInput>, Prisma.UserUncheckedUpdateWithoutMembershipInput>
 }
 
-export type UserCreateNestedOneWithoutHoldingsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutHoldingsInput, Prisma.UserUncheckedCreateWithoutHoldingsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHoldingsInput
+export type UserCreateNestedOneWithoutItemsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutItemsInput, Prisma.UserUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutItemsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutHoldingsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutHoldingsInput, Prisma.UserUncheckedCreateWithoutHoldingsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHoldingsInput
-  upsert?: Prisma.UserUpsertWithoutHoldingsInput
+export type UserUpdateOneRequiredWithoutItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutItemsInput, Prisma.UserUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutItemsInput
+  upsert?: Prisma.UserUpsertWithoutItemsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutHoldingsInput, Prisma.UserUpdateWithoutHoldingsInput>, Prisma.UserUncheckedUpdateWithoutHoldingsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutItemsInput, Prisma.UserUpdateWithoutItemsInput>, Prisma.UserUncheckedUpdateWithoutItemsInput>
+}
+
+export type UserCreateNestedOneWithoutProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileInput
+  upsert?: Prisma.UserUpsertWithoutProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProfileInput, Prisma.UserUpdateWithoutProfileInput>, Prisma.UserUncheckedUpdateWithoutProfileInput>
 }
 
 export type UserCreateNestedOneWithoutSecuritiesInput = {
@@ -554,6 +536,20 @@ export type UserUpdateOneRequiredWithoutSecuritiesNestedInput = {
   upsert?: Prisma.UserUpsertWithoutSecuritiesInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSecuritiesInput, Prisma.UserUpdateWithoutSecuritiesInput>, Prisma.UserUncheckedUpdateWithoutSecuritiesInput>
+}
+
+export type UserCreateNestedOneWithoutSubscriptionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSubscriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionsInput
+  upsert?: Prisma.UserUpsertWithoutSubscriptionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.UserUpdateWithoutSubscriptionsInput>, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -644,7 +640,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   membership?: Prisma.HouseholdMemberUncheckedUpdateOneWithoutUserNestedInput
 }
 
-export type UserCreateWithoutItemsInput = {
+export type UserCreateWithoutHoldingsInput = {
   user_id?: string
   email: string
   name?: string | null
@@ -656,13 +652,13 @@ export type UserCreateWithoutItemsInput = {
   updated_at?: Date | string
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   securities?: Prisma.SecurityCreateNestedManyWithoutUserInput
-  holdings?: Prisma.HoldingCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  items?: Prisma.ItemCreateNestedManyWithoutUserInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   membership?: Prisma.HouseholdMemberCreateNestedOneWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutItemsInput = {
+export type UserUncheckedCreateWithoutHoldingsInput = {
   user_id?: string
   email: string
   name?: string | null
@@ -674,29 +670,29 @@ export type UserUncheckedCreateWithoutItemsInput = {
   updated_at?: Date | string
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutUserInput
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  items?: Prisma.ItemUncheckedCreateNestedManyWithoutUserInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   membership?: Prisma.HouseholdMemberUncheckedCreateNestedOneWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutItemsInput = {
+export type UserCreateOrConnectWithoutHoldingsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutItemsInput, Prisma.UserUncheckedCreateWithoutItemsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutHoldingsInput, Prisma.UserUncheckedCreateWithoutHoldingsInput>
 }
 
-export type UserUpsertWithoutItemsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutItemsInput, Prisma.UserUncheckedUpdateWithoutItemsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutItemsInput, Prisma.UserUncheckedCreateWithoutItemsInput>
+export type UserUpsertWithoutHoldingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutHoldingsInput, Prisma.UserUncheckedUpdateWithoutHoldingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutHoldingsInput, Prisma.UserUncheckedCreateWithoutHoldingsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutItemsInput = {
+export type UserUpdateToOneWithWhereWithoutHoldingsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutItemsInput, Prisma.UserUncheckedUpdateWithoutItemsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutHoldingsInput, Prisma.UserUncheckedUpdateWithoutHoldingsInput>
 }
 
-export type UserUpdateWithoutItemsInput = {
+export type UserUpdateWithoutHoldingsInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -708,13 +704,13 @@ export type UserUpdateWithoutItemsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   securities?: Prisma.SecurityUpdateManyWithoutUserNestedInput
-  holdings?: Prisma.HoldingUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  items?: Prisma.ItemUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   membership?: Prisma.HouseholdMemberUpdateOneWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutItemsInput = {
+export type UserUncheckedUpdateWithoutHoldingsInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -726,182 +722,6 @@ export type UserUncheckedUpdateWithoutItemsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   securities?: Prisma.SecurityUncheckedUpdateManyWithoutUserNestedInput
-  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
-  membership?: Prisma.HouseholdMemberUncheckedUpdateOneWithoutUserNestedInput
-}
-
-export type UserCreateWithoutSubscriptionsInput = {
-  user_id?: string
-  email: string
-  name?: string | null
-  email_verified?: boolean | null
-  phone_verified?: boolean | null
-  phone?: string | null
-  customer_id?: string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
-  securities?: Prisma.SecurityCreateNestedManyWithoutUserInput
-  holdings?: Prisma.HoldingCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  items?: Prisma.ItemCreateNestedManyWithoutUserInput
-  membership?: Prisma.HouseholdMemberCreateNestedOneWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutSubscriptionsInput = {
-  user_id?: string
-  email: string
-  name?: string | null
-  email_verified?: boolean | null
-  phone_verified?: boolean | null
-  phone?: string | null
-  customer_id?: string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
-  securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutUserInput
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  items?: Prisma.ItemUncheckedCreateNestedManyWithoutUserInput
-  membership?: Prisma.HouseholdMemberUncheckedCreateNestedOneWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutSubscriptionsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
-}
-
-export type UserUpsertWithoutSubscriptionsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionsInput, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutSubscriptionsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionsInput, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
-}
-
-export type UserUpdateWithoutSubscriptionsInput = {
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phone_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
-  securities?: Prisma.SecurityUpdateManyWithoutUserNestedInput
-  holdings?: Prisma.HoldingUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  items?: Prisma.ItemUpdateManyWithoutUserNestedInput
-  membership?: Prisma.HouseholdMemberUpdateOneWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutSubscriptionsInput = {
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phone_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
-  securities?: Prisma.SecurityUncheckedUpdateManyWithoutUserNestedInput
-  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  items?: Prisma.ItemUncheckedUpdateManyWithoutUserNestedInput
-  membership?: Prisma.HouseholdMemberUncheckedUpdateOneWithoutUserNestedInput
-}
-
-export type UserCreateWithoutProfileInput = {
-  user_id?: string
-  email: string
-  name?: string | null
-  email_verified?: boolean | null
-  phone_verified?: boolean | null
-  phone?: string | null
-  customer_id?: string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  securities?: Prisma.SecurityCreateNestedManyWithoutUserInput
-  holdings?: Prisma.HoldingCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  items?: Prisma.ItemCreateNestedManyWithoutUserInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
-  membership?: Prisma.HouseholdMemberCreateNestedOneWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutProfileInput = {
-  user_id?: string
-  email: string
-  name?: string | null
-  email_verified?: boolean | null
-  phone_verified?: boolean | null
-  phone?: string | null
-  customer_id?: string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutUserInput
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  items?: Prisma.ItemUncheckedCreateNestedManyWithoutUserInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
-  membership?: Prisma.HouseholdMemberUncheckedCreateNestedOneWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutProfileInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
-}
-
-export type UserUpsertWithoutProfileInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutProfileInput, Prisma.UserUncheckedUpdateWithoutProfileInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutProfileInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutProfileInput, Prisma.UserUncheckedUpdateWithoutProfileInput>
-}
-
-export type UserUpdateWithoutProfileInput = {
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phone_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  securities?: Prisma.SecurityUpdateManyWithoutUserNestedInput
-  holdings?: Prisma.HoldingUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  items?: Prisma.ItemUpdateManyWithoutUserNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
-  membership?: Prisma.HouseholdMemberUpdateOneWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutProfileInput = {
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phone_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  securities?: Prisma.SecurityUncheckedUpdateManyWithoutUserNestedInput
-  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
@@ -996,7 +816,7 @@ export type UserUncheckedUpdateWithoutMembershipInput = {
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutHoldingsInput = {
+export type UserCreateWithoutItemsInput = {
   user_id?: string
   email: string
   name?: string | null
@@ -1008,13 +828,13 @@ export type UserCreateWithoutHoldingsInput = {
   updated_at?: Date | string
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   securities?: Prisma.SecurityCreateNestedManyWithoutUserInput
+  holdings?: Prisma.HoldingCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  items?: Prisma.ItemCreateNestedManyWithoutUserInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
   membership?: Prisma.HouseholdMemberCreateNestedOneWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutHoldingsInput = {
+export type UserUncheckedCreateWithoutItemsInput = {
   user_id?: string
   email: string
   name?: string | null
@@ -1026,29 +846,29 @@ export type UserUncheckedCreateWithoutHoldingsInput = {
   updated_at?: Date | string
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutUserInput
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  items?: Prisma.ItemUncheckedCreateNestedManyWithoutUserInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
   membership?: Prisma.HouseholdMemberUncheckedCreateNestedOneWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutHoldingsInput = {
+export type UserCreateOrConnectWithoutItemsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutHoldingsInput, Prisma.UserUncheckedCreateWithoutHoldingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutItemsInput, Prisma.UserUncheckedCreateWithoutItemsInput>
 }
 
-export type UserUpsertWithoutHoldingsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutHoldingsInput, Prisma.UserUncheckedUpdateWithoutHoldingsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutHoldingsInput, Prisma.UserUncheckedCreateWithoutHoldingsInput>
+export type UserUpsertWithoutItemsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutItemsInput, Prisma.UserUncheckedUpdateWithoutItemsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutItemsInput, Prisma.UserUncheckedCreateWithoutItemsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutHoldingsInput = {
+export type UserUpdateToOneWithWhereWithoutItemsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutHoldingsInput, Prisma.UserUncheckedUpdateWithoutHoldingsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutItemsInput, Prisma.UserUncheckedUpdateWithoutItemsInput>
 }
 
-export type UserUpdateWithoutHoldingsInput = {
+export type UserUpdateWithoutItemsInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1060,13 +880,13 @@ export type UserUpdateWithoutHoldingsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   securities?: Prisma.SecurityUpdateManyWithoutUserNestedInput
+  holdings?: Prisma.HoldingUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  items?: Prisma.ItemUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
   membership?: Prisma.HouseholdMemberUpdateOneWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutHoldingsInput = {
+export type UserUncheckedUpdateWithoutItemsInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1078,6 +898,94 @@ export type UserUncheckedUpdateWithoutHoldingsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   securities?: Prisma.SecurityUncheckedUpdateManyWithoutUserNestedInput
+  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  membership?: Prisma.HouseholdMemberUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutProfileInput = {
+  user_id?: string
+  email: string
+  name?: string | null
+  email_verified?: boolean | null
+  phone_verified?: boolean | null
+  phone?: string | null
+  customer_id?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  securities?: Prisma.SecurityCreateNestedManyWithoutUserInput
+  holdings?: Prisma.HoldingCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  items?: Prisma.ItemCreateNestedManyWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
+  membership?: Prisma.HouseholdMemberCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutProfileInput = {
+  user_id?: string
+  email: string
+  name?: string | null
+  email_verified?: boolean | null
+  phone_verified?: boolean | null
+  phone?: string | null
+  customer_id?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutUserInput
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  items?: Prisma.ItemUncheckedCreateNestedManyWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
+  membership?: Prisma.HouseholdMemberUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
+}
+
+export type UserUpsertWithoutProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutProfileInput, Prisma.UserUncheckedUpdateWithoutProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutProfileInput, Prisma.UserUncheckedUpdateWithoutProfileInput>
+}
+
+export type UserUpdateWithoutProfileInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phone_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  securities?: Prisma.SecurityUpdateManyWithoutUserNestedInput
+  holdings?: Prisma.HoldingUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  items?: Prisma.ItemUpdateManyWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
+  membership?: Prisma.HouseholdMemberUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutProfileInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phone_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  securities?: Prisma.SecurityUncheckedUpdateManyWithoutUserNestedInput
+  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
@@ -1169,6 +1077,94 @@ export type UserUncheckedUpdateWithoutSecuritiesInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   items?: Prisma.ItemUncheckedUpdateManyWithoutUserNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  membership?: Prisma.HouseholdMemberUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSubscriptionsInput = {
+  user_id?: string
+  email: string
+  name?: string | null
+  email_verified?: boolean | null
+  phone_verified?: boolean | null
+  phone?: string | null
+  customer_id?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  securities?: Prisma.SecurityCreateNestedManyWithoutUserInput
+  holdings?: Prisma.HoldingCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  items?: Prisma.ItemCreateNestedManyWithoutUserInput
+  membership?: Prisma.HouseholdMemberCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSubscriptionsInput = {
+  user_id?: string
+  email: string
+  name?: string | null
+  email_verified?: boolean | null
+  phone_verified?: boolean | null
+  phone?: string | null
+  customer_id?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  securities?: Prisma.SecurityUncheckedCreateNestedManyWithoutUserInput
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  items?: Prisma.ItemUncheckedCreateNestedManyWithoutUserInput
+  membership?: Prisma.HouseholdMemberUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSubscriptionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
+}
+
+export type UserUpsertWithoutSubscriptionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionsInput, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSubscriptionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionsInput, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
+}
+
+export type UserUpdateWithoutSubscriptionsInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phone_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  securities?: Prisma.SecurityUpdateManyWithoutUserNestedInput
+  holdings?: Prisma.HoldingUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  items?: Prisma.ItemUpdateManyWithoutUserNestedInput
+  membership?: Prisma.HouseholdMemberUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSubscriptionsInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phone_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  securities?: Prisma.SecurityUncheckedUpdateManyWithoutUserNestedInput
+  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  items?: Prisma.ItemUncheckedUpdateManyWithoutUserNestedInput
   membership?: Prisma.HouseholdMemberUncheckedUpdateOneWithoutUserNestedInput
 }
 

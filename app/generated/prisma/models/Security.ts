@@ -709,6 +709,11 @@ export type SecurityUncheckedUpdateManyInput = {
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
+export type SecurityScalarRelationFilter = {
+  is?: Prisma.SecurityWhereInput
+  isNot?: Prisma.SecurityWhereInput
+}
+
 export type SecurityListRelationFilter = {
   every?: Prisma.SecurityWhereInput
   some?: Prisma.SecurityWhereInput
@@ -717,11 +722,6 @@ export type SecurityListRelationFilter = {
 
 export type SecurityOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type SecurityScalarRelationFilter = {
-  is?: Prisma.SecurityWhereInput
-  isNot?: Prisma.SecurityWhereInput
 }
 
 export type SecurityCountOrderByAggregateInput = {
@@ -815,60 +815,18 @@ export type SecuritySumOrderByAggregateInput = {
   option_contract_id?: Prisma.SortOrder
 }
 
-export type SecurityCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput> | Prisma.SecurityCreateWithoutUserInput[] | Prisma.SecurityUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutUserInput | Prisma.SecurityCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.SecurityCreateManyUserInputEnvelope
-  connect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-}
-
-export type SecurityUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput> | Prisma.SecurityCreateWithoutUserInput[] | Prisma.SecurityUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutUserInput | Prisma.SecurityCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.SecurityCreateManyUserInputEnvelope
-  connect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-}
-
-export type SecurityUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput> | Prisma.SecurityCreateWithoutUserInput[] | Prisma.SecurityUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutUserInput | Prisma.SecurityCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.SecurityUpsertWithWhereUniqueWithoutUserInput | Prisma.SecurityUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.SecurityCreateManyUserInputEnvelope
-  set?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-  disconnect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-  delete?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-  connect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-  update?: Prisma.SecurityUpdateWithWhereUniqueWithoutUserInput | Prisma.SecurityUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.SecurityUpdateManyWithWhereWithoutUserInput | Prisma.SecurityUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.SecurityScalarWhereInput | Prisma.SecurityScalarWhereInput[]
-}
-
-export type SecurityUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput> | Prisma.SecurityCreateWithoutUserInput[] | Prisma.SecurityUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutUserInput | Prisma.SecurityCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.SecurityUpsertWithWhereUniqueWithoutUserInput | Prisma.SecurityUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.SecurityCreateManyUserInputEnvelope
-  set?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-  disconnect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-  delete?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-  connect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
-  update?: Prisma.SecurityUpdateWithWhereUniqueWithoutUserInput | Prisma.SecurityUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.SecurityUpdateManyWithWhereWithoutUserInput | Prisma.SecurityUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.SecurityScalarWhereInput | Prisma.SecurityScalarWhereInput[]
-}
-
-export type SecurityCreateNestedOneWithoutFixed_incomeInput = {
-  create?: Prisma.XOR<Prisma.SecurityCreateWithoutFixed_incomeInput, Prisma.SecurityUncheckedCreateWithoutFixed_incomeInput>
-  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutFixed_incomeInput
+export type SecurityCreateNestedOneWithoutHoldingsInput = {
+  create?: Prisma.XOR<Prisma.SecurityCreateWithoutHoldingsInput, Prisma.SecurityUncheckedCreateWithoutHoldingsInput>
+  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutHoldingsInput
   connect?: Prisma.SecurityWhereUniqueInput
 }
 
-export type SecurityUpdateOneRequiredWithoutFixed_incomeNestedInput = {
-  create?: Prisma.XOR<Prisma.SecurityCreateWithoutFixed_incomeInput, Prisma.SecurityUncheckedCreateWithoutFixed_incomeInput>
-  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutFixed_incomeInput
-  upsert?: Prisma.SecurityUpsertWithoutFixed_incomeInput
+export type SecurityUpdateOneRequiredWithoutHoldingsNestedInput = {
+  create?: Prisma.XOR<Prisma.SecurityCreateWithoutHoldingsInput, Prisma.SecurityUncheckedCreateWithoutHoldingsInput>
+  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutHoldingsInput
+  upsert?: Prisma.SecurityUpsertWithoutHoldingsInput
   connect?: Prisma.SecurityWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SecurityUpdateToOneWithWhereWithoutFixed_incomeInput, Prisma.SecurityUpdateWithoutFixed_incomeInput>, Prisma.SecurityUncheckedUpdateWithoutFixed_incomeInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SecurityUpdateToOneWithWhereWithoutHoldingsInput, Prisma.SecurityUpdateWithoutHoldingsInput>, Prisma.SecurityUncheckedUpdateWithoutHoldingsInput>
 }
 
 export type SecurityCreateNestedManyWithoutHouseholdInput = {
@@ -955,18 +913,30 @@ export type SecurityUncheckedUpdateManyWithoutMemberNestedInput = {
   deleteMany?: Prisma.SecurityScalarWhereInput | Prisma.SecurityScalarWhereInput[]
 }
 
-export type SecurityCreateNestedOneWithoutHoldingsInput = {
-  create?: Prisma.XOR<Prisma.SecurityCreateWithoutHoldingsInput, Prisma.SecurityUncheckedCreateWithoutHoldingsInput>
-  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutHoldingsInput
+export type SecurityCreateNestedOneWithoutFixed_incomeInput = {
+  create?: Prisma.XOR<Prisma.SecurityCreateWithoutFixed_incomeInput, Prisma.SecurityUncheckedCreateWithoutFixed_incomeInput>
+  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutFixed_incomeInput
   connect?: Prisma.SecurityWhereUniqueInput
 }
 
-export type SecurityUpdateOneRequiredWithoutHoldingsNestedInput = {
-  create?: Prisma.XOR<Prisma.SecurityCreateWithoutHoldingsInput, Prisma.SecurityUncheckedCreateWithoutHoldingsInput>
-  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutHoldingsInput
-  upsert?: Prisma.SecurityUpsertWithoutHoldingsInput
+export type SecurityUpdateOneRequiredWithoutFixed_incomeNestedInput = {
+  create?: Prisma.XOR<Prisma.SecurityCreateWithoutFixed_incomeInput, Prisma.SecurityUncheckedCreateWithoutFixed_incomeInput>
+  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutFixed_incomeInput
+  upsert?: Prisma.SecurityUpsertWithoutFixed_incomeInput
   connect?: Prisma.SecurityWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SecurityUpdateToOneWithWhereWithoutHoldingsInput, Prisma.SecurityUpdateWithoutHoldingsInput>, Prisma.SecurityUncheckedUpdateWithoutHoldingsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SecurityUpdateToOneWithWhereWithoutFixed_incomeInput, Prisma.SecurityUpdateWithoutFixed_incomeInput>, Prisma.SecurityUncheckedUpdateWithoutFixed_incomeInput>
+}
+
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type SecurityCreateNestedOneWithoutHistoryInput = {
@@ -983,418 +953,46 @@ export type SecurityUpdateOneRequiredWithoutHistoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SecurityUpdateToOneWithWhereWithoutHistoryInput, Prisma.SecurityUpdateWithoutHistoryInput>, Prisma.SecurityUncheckedUpdateWithoutHistoryInput>
 }
 
-export type SecurityCreateWithoutUserInput = {
-  security_id: string
-  isin?: string | null
-  cusip?: string | null
-  sedol?: string | null
-  institution_security_id?: string | null
-  institution_id?: string | null
-  proxy_security_id?: string | null
-  name?: string | null
-  ticker_symbol?: string | null
-  is_cash_equivalent?: boolean | null
-  type?: string | null
-  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Date | string | null
-  update_datetime?: Date | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  market_identifier_code?: string | null
-  sector?: string | null
-  industry?: string | null
-  option_contract_id?: number | null
-  timestamp?: Date | string | null
-  holdings?: Prisma.HoldingCreateNestedManyWithoutSecurityInput
-  member: Prisma.HouseholdMemberCreateNestedOneWithoutSecuritiesInput
-  household: Prisma.HouseholdCreateNestedOneWithoutSecuritiesInput
-  fixed_income?: Prisma.FixedIncomeCreateNestedOneWithoutSecurityInput
-  history?: Prisma.SecurityHistoryCreateNestedManyWithoutSecurityInput
+export type SecurityCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput> | Prisma.SecurityCreateWithoutUserInput[] | Prisma.SecurityUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutUserInput | Prisma.SecurityCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.SecurityCreateManyUserInputEnvelope
+  connect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
 }
 
-export type SecurityUncheckedCreateWithoutUserInput = {
-  security_id: string
-  isin?: string | null
-  cusip?: string | null
-  sedol?: string | null
-  institution_security_id?: string | null
-  institution_id?: string | null
-  proxy_security_id?: string | null
-  name?: string | null
-  ticker_symbol?: string | null
-  is_cash_equivalent?: boolean | null
-  type?: string | null
-  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Date | string | null
-  update_datetime?: Date | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  market_identifier_code?: string | null
-  sector?: string | null
-  industry?: string | null
-  option_contract_id?: number | null
-  member_id: string
-  household_id: string
-  timestamp?: Date | string | null
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutSecurityInput
-  fixed_income?: Prisma.FixedIncomeUncheckedCreateNestedOneWithoutSecurityInput
-  history?: Prisma.SecurityHistoryUncheckedCreateNestedManyWithoutSecurityInput
+export type SecurityUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput> | Prisma.SecurityCreateWithoutUserInput[] | Prisma.SecurityUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutUserInput | Prisma.SecurityCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.SecurityCreateManyUserInputEnvelope
+  connect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
 }
 
-export type SecurityCreateOrConnectWithoutUserInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  create: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput>
+export type SecurityUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput> | Prisma.SecurityCreateWithoutUserInput[] | Prisma.SecurityUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutUserInput | Prisma.SecurityCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.SecurityUpsertWithWhereUniqueWithoutUserInput | Prisma.SecurityUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.SecurityCreateManyUserInputEnvelope
+  set?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
+  disconnect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
+  delete?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
+  connect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
+  update?: Prisma.SecurityUpdateWithWhereUniqueWithoutUserInput | Prisma.SecurityUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.SecurityUpdateManyWithWhereWithoutUserInput | Prisma.SecurityUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.SecurityScalarWhereInput | Prisma.SecurityScalarWhereInput[]
 }
 
-export type SecurityCreateManyUserInputEnvelope = {
-  data: Prisma.SecurityCreateManyUserInput | Prisma.SecurityCreateManyUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type SecurityUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  update: Prisma.XOR<Prisma.SecurityUpdateWithoutUserInput, Prisma.SecurityUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput>
-}
-
-export type SecurityUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  data: Prisma.XOR<Prisma.SecurityUpdateWithoutUserInput, Prisma.SecurityUncheckedUpdateWithoutUserInput>
-}
-
-export type SecurityUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.SecurityScalarWhereInput
-  data: Prisma.XOR<Prisma.SecurityUpdateManyMutationInput, Prisma.SecurityUncheckedUpdateManyWithoutUserInput>
-}
-
-export type SecurityScalarWhereInput = {
-  AND?: Prisma.SecurityScalarWhereInput | Prisma.SecurityScalarWhereInput[]
-  OR?: Prisma.SecurityScalarWhereInput[]
-  NOT?: Prisma.SecurityScalarWhereInput | Prisma.SecurityScalarWhereInput[]
-  security_id?: Prisma.StringFilter<"Security"> | string
-  isin?: Prisma.StringNullableFilter<"Security"> | string | null
-  cusip?: Prisma.StringNullableFilter<"Security"> | string | null
-  sedol?: Prisma.StringNullableFilter<"Security"> | string | null
-  institution_security_id?: Prisma.StringNullableFilter<"Security"> | string | null
-  institution_id?: Prisma.StringNullableFilter<"Security"> | string | null
-  proxy_security_id?: Prisma.StringNullableFilter<"Security"> | string | null
-  name?: Prisma.StringNullableFilter<"Security"> | string | null
-  ticker_symbol?: Prisma.StringNullableFilter<"Security"> | string | null
-  is_cash_equivalent?: Prisma.BoolNullableFilter<"Security"> | boolean | null
-  type?: Prisma.StringNullableFilter<"Security"> | string | null
-  close_price?: Prisma.DecimalNullableFilter<"Security"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Prisma.DateTimeNullableFilter<"Security"> | Date | string | null
-  update_datetime?: Prisma.DateTimeNullableFilter<"Security"> | Date | string | null
-  iso_currency_code?: Prisma.StringNullableFilter<"Security"> | string | null
-  unofficial_currency_code?: Prisma.StringNullableFilter<"Security"> | string | null
-  market_identifier_code?: Prisma.StringNullableFilter<"Security"> | string | null
-  sector?: Prisma.StringNullableFilter<"Security"> | string | null
-  industry?: Prisma.StringNullableFilter<"Security"> | string | null
-  option_contract_id?: Prisma.IntNullableFilter<"Security"> | number | null
-  user_id?: Prisma.StringFilter<"Security"> | string
-  member_id?: Prisma.StringFilter<"Security"> | string
-  household_id?: Prisma.StringFilter<"Security"> | string
-  timestamp?: Prisma.DateTimeNullableFilter<"Security"> | Date | string | null
-}
-
-export type SecurityCreateWithoutFixed_incomeInput = {
-  security_id: string
-  isin?: string | null
-  cusip?: string | null
-  sedol?: string | null
-  institution_security_id?: string | null
-  institution_id?: string | null
-  proxy_security_id?: string | null
-  name?: string | null
-  ticker_symbol?: string | null
-  is_cash_equivalent?: boolean | null
-  type?: string | null
-  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Date | string | null
-  update_datetime?: Date | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  market_identifier_code?: string | null
-  sector?: string | null
-  industry?: string | null
-  option_contract_id?: number | null
-  timestamp?: Date | string | null
-  holdings?: Prisma.HoldingCreateNestedManyWithoutSecurityInput
-  user: Prisma.UserCreateNestedOneWithoutSecuritiesInput
-  member: Prisma.HouseholdMemberCreateNestedOneWithoutSecuritiesInput
-  household: Prisma.HouseholdCreateNestedOneWithoutSecuritiesInput
-  history?: Prisma.SecurityHistoryCreateNestedManyWithoutSecurityInput
-}
-
-export type SecurityUncheckedCreateWithoutFixed_incomeInput = {
-  security_id: string
-  isin?: string | null
-  cusip?: string | null
-  sedol?: string | null
-  institution_security_id?: string | null
-  institution_id?: string | null
-  proxy_security_id?: string | null
-  name?: string | null
-  ticker_symbol?: string | null
-  is_cash_equivalent?: boolean | null
-  type?: string | null
-  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Date | string | null
-  update_datetime?: Date | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  market_identifier_code?: string | null
-  sector?: string | null
-  industry?: string | null
-  option_contract_id?: number | null
-  user_id: string
-  member_id: string
-  household_id: string
-  timestamp?: Date | string | null
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutSecurityInput
-  history?: Prisma.SecurityHistoryUncheckedCreateNestedManyWithoutSecurityInput
-}
-
-export type SecurityCreateOrConnectWithoutFixed_incomeInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  create: Prisma.XOR<Prisma.SecurityCreateWithoutFixed_incomeInput, Prisma.SecurityUncheckedCreateWithoutFixed_incomeInput>
-}
-
-export type SecurityUpsertWithoutFixed_incomeInput = {
-  update: Prisma.XOR<Prisma.SecurityUpdateWithoutFixed_incomeInput, Prisma.SecurityUncheckedUpdateWithoutFixed_incomeInput>
-  create: Prisma.XOR<Prisma.SecurityCreateWithoutFixed_incomeInput, Prisma.SecurityUncheckedCreateWithoutFixed_incomeInput>
-  where?: Prisma.SecurityWhereInput
-}
-
-export type SecurityUpdateToOneWithWhereWithoutFixed_incomeInput = {
-  where?: Prisma.SecurityWhereInput
-  data: Prisma.XOR<Prisma.SecurityUpdateWithoutFixed_incomeInput, Prisma.SecurityUncheckedUpdateWithoutFixed_incomeInput>
-}
-
-export type SecurityUpdateWithoutFixed_incomeInput = {
-  security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  holdings?: Prisma.HoldingUpdateManyWithoutSecurityNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutSecuritiesNestedInput
-  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutSecuritiesNestedInput
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutSecuritiesNestedInput
-  history?: Prisma.SecurityHistoryUpdateManyWithoutSecurityNestedInput
-}
-
-export type SecurityUncheckedUpdateWithoutFixed_incomeInput = {
-  security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  member_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutSecurityNestedInput
-  history?: Prisma.SecurityHistoryUncheckedUpdateManyWithoutSecurityNestedInput
-}
-
-export type SecurityCreateWithoutHouseholdInput = {
-  security_id: string
-  isin?: string | null
-  cusip?: string | null
-  sedol?: string | null
-  institution_security_id?: string | null
-  institution_id?: string | null
-  proxy_security_id?: string | null
-  name?: string | null
-  ticker_symbol?: string | null
-  is_cash_equivalent?: boolean | null
-  type?: string | null
-  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Date | string | null
-  update_datetime?: Date | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  market_identifier_code?: string | null
-  sector?: string | null
-  industry?: string | null
-  option_contract_id?: number | null
-  timestamp?: Date | string | null
-  holdings?: Prisma.HoldingCreateNestedManyWithoutSecurityInput
-  user: Prisma.UserCreateNestedOneWithoutSecuritiesInput
-  member: Prisma.HouseholdMemberCreateNestedOneWithoutSecuritiesInput
-  fixed_income?: Prisma.FixedIncomeCreateNestedOneWithoutSecurityInput
-  history?: Prisma.SecurityHistoryCreateNestedManyWithoutSecurityInput
-}
-
-export type SecurityUncheckedCreateWithoutHouseholdInput = {
-  security_id: string
-  isin?: string | null
-  cusip?: string | null
-  sedol?: string | null
-  institution_security_id?: string | null
-  institution_id?: string | null
-  proxy_security_id?: string | null
-  name?: string | null
-  ticker_symbol?: string | null
-  is_cash_equivalent?: boolean | null
-  type?: string | null
-  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Date | string | null
-  update_datetime?: Date | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  market_identifier_code?: string | null
-  sector?: string | null
-  industry?: string | null
-  option_contract_id?: number | null
-  user_id: string
-  member_id: string
-  timestamp?: Date | string | null
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutSecurityInput
-  fixed_income?: Prisma.FixedIncomeUncheckedCreateNestedOneWithoutSecurityInput
-  history?: Prisma.SecurityHistoryUncheckedCreateNestedManyWithoutSecurityInput
-}
-
-export type SecurityCreateOrConnectWithoutHouseholdInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  create: Prisma.XOR<Prisma.SecurityCreateWithoutHouseholdInput, Prisma.SecurityUncheckedCreateWithoutHouseholdInput>
-}
-
-export type SecurityCreateManyHouseholdInputEnvelope = {
-  data: Prisma.SecurityCreateManyHouseholdInput | Prisma.SecurityCreateManyHouseholdInput[]
-  skipDuplicates?: boolean
-}
-
-export type SecurityUpsertWithWhereUniqueWithoutHouseholdInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  update: Prisma.XOR<Prisma.SecurityUpdateWithoutHouseholdInput, Prisma.SecurityUncheckedUpdateWithoutHouseholdInput>
-  create: Prisma.XOR<Prisma.SecurityCreateWithoutHouseholdInput, Prisma.SecurityUncheckedCreateWithoutHouseholdInput>
-}
-
-export type SecurityUpdateWithWhereUniqueWithoutHouseholdInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  data: Prisma.XOR<Prisma.SecurityUpdateWithoutHouseholdInput, Prisma.SecurityUncheckedUpdateWithoutHouseholdInput>
-}
-
-export type SecurityUpdateManyWithWhereWithoutHouseholdInput = {
-  where: Prisma.SecurityScalarWhereInput
-  data: Prisma.XOR<Prisma.SecurityUpdateManyMutationInput, Prisma.SecurityUncheckedUpdateManyWithoutHouseholdInput>
-}
-
-export type SecurityCreateWithoutMemberInput = {
-  security_id: string
-  isin?: string | null
-  cusip?: string | null
-  sedol?: string | null
-  institution_security_id?: string | null
-  institution_id?: string | null
-  proxy_security_id?: string | null
-  name?: string | null
-  ticker_symbol?: string | null
-  is_cash_equivalent?: boolean | null
-  type?: string | null
-  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Date | string | null
-  update_datetime?: Date | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  market_identifier_code?: string | null
-  sector?: string | null
-  industry?: string | null
-  option_contract_id?: number | null
-  timestamp?: Date | string | null
-  holdings?: Prisma.HoldingCreateNestedManyWithoutSecurityInput
-  user: Prisma.UserCreateNestedOneWithoutSecuritiesInput
-  household: Prisma.HouseholdCreateNestedOneWithoutSecuritiesInput
-  fixed_income?: Prisma.FixedIncomeCreateNestedOneWithoutSecurityInput
-  history?: Prisma.SecurityHistoryCreateNestedManyWithoutSecurityInput
-}
-
-export type SecurityUncheckedCreateWithoutMemberInput = {
-  security_id: string
-  isin?: string | null
-  cusip?: string | null
-  sedol?: string | null
-  institution_security_id?: string | null
-  institution_id?: string | null
-  proxy_security_id?: string | null
-  name?: string | null
-  ticker_symbol?: string | null
-  is_cash_equivalent?: boolean | null
-  type?: string | null
-  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Date | string | null
-  update_datetime?: Date | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  market_identifier_code?: string | null
-  sector?: string | null
-  industry?: string | null
-  option_contract_id?: number | null
-  user_id: string
-  household_id: string
-  timestamp?: Date | string | null
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutSecurityInput
-  fixed_income?: Prisma.FixedIncomeUncheckedCreateNestedOneWithoutSecurityInput
-  history?: Prisma.SecurityHistoryUncheckedCreateNestedManyWithoutSecurityInput
-}
-
-export type SecurityCreateOrConnectWithoutMemberInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  create: Prisma.XOR<Prisma.SecurityCreateWithoutMemberInput, Prisma.SecurityUncheckedCreateWithoutMemberInput>
-}
-
-export type SecurityCreateManyMemberInputEnvelope = {
-  data: Prisma.SecurityCreateManyMemberInput | Prisma.SecurityCreateManyMemberInput[]
-  skipDuplicates?: boolean
-}
-
-export type SecurityUpsertWithWhereUniqueWithoutMemberInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  update: Prisma.XOR<Prisma.SecurityUpdateWithoutMemberInput, Prisma.SecurityUncheckedUpdateWithoutMemberInput>
-  create: Prisma.XOR<Prisma.SecurityCreateWithoutMemberInput, Prisma.SecurityUncheckedCreateWithoutMemberInput>
-}
-
-export type SecurityUpdateWithWhereUniqueWithoutMemberInput = {
-  where: Prisma.SecurityWhereUniqueInput
-  data: Prisma.XOR<Prisma.SecurityUpdateWithoutMemberInput, Prisma.SecurityUncheckedUpdateWithoutMemberInput>
-}
-
-export type SecurityUpdateManyWithWhereWithoutMemberInput = {
-  where: Prisma.SecurityScalarWhereInput
-  data: Prisma.XOR<Prisma.SecurityUpdateManyMutationInput, Prisma.SecurityUncheckedUpdateManyWithoutMemberInput>
+export type SecurityUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput> | Prisma.SecurityCreateWithoutUserInput[] | Prisma.SecurityUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SecurityCreateOrConnectWithoutUserInput | Prisma.SecurityCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.SecurityUpsertWithWhereUniqueWithoutUserInput | Prisma.SecurityUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.SecurityCreateManyUserInputEnvelope
+  set?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
+  disconnect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
+  delete?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
+  connect?: Prisma.SecurityWhereUniqueInput | Prisma.SecurityWhereUniqueInput[]
+  update?: Prisma.SecurityUpdateWithWhereUniqueWithoutUserInput | Prisma.SecurityUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.SecurityUpdateManyWithWhereWithoutUserInput | Prisma.SecurityUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.SecurityScalarWhereInput | Prisma.SecurityScalarWhereInput[]
 }
 
 export type SecurityCreateWithoutHoldingsInput = {
@@ -1526,6 +1124,336 @@ export type SecurityUncheckedUpdateWithoutHoldingsInput = {
   household_id?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fixed_income?: Prisma.FixedIncomeUncheckedUpdateOneWithoutSecurityNestedInput
+  history?: Prisma.SecurityHistoryUncheckedUpdateManyWithoutSecurityNestedInput
+}
+
+export type SecurityCreateWithoutHouseholdInput = {
+  security_id: string
+  isin?: string | null
+  cusip?: string | null
+  sedol?: string | null
+  institution_security_id?: string | null
+  institution_id?: string | null
+  proxy_security_id?: string | null
+  name?: string | null
+  ticker_symbol?: string | null
+  is_cash_equivalent?: boolean | null
+  type?: string | null
+  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Date | string | null
+  update_datetime?: Date | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  market_identifier_code?: string | null
+  sector?: string | null
+  industry?: string | null
+  option_contract_id?: number | null
+  timestamp?: Date | string | null
+  holdings?: Prisma.HoldingCreateNestedManyWithoutSecurityInput
+  user: Prisma.UserCreateNestedOneWithoutSecuritiesInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutSecuritiesInput
+  fixed_income?: Prisma.FixedIncomeCreateNestedOneWithoutSecurityInput
+  history?: Prisma.SecurityHistoryCreateNestedManyWithoutSecurityInput
+}
+
+export type SecurityUncheckedCreateWithoutHouseholdInput = {
+  security_id: string
+  isin?: string | null
+  cusip?: string | null
+  sedol?: string | null
+  institution_security_id?: string | null
+  institution_id?: string | null
+  proxy_security_id?: string | null
+  name?: string | null
+  ticker_symbol?: string | null
+  is_cash_equivalent?: boolean | null
+  type?: string | null
+  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Date | string | null
+  update_datetime?: Date | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  market_identifier_code?: string | null
+  sector?: string | null
+  industry?: string | null
+  option_contract_id?: number | null
+  user_id: string
+  member_id: string
+  timestamp?: Date | string | null
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutSecurityInput
+  fixed_income?: Prisma.FixedIncomeUncheckedCreateNestedOneWithoutSecurityInput
+  history?: Prisma.SecurityHistoryUncheckedCreateNestedManyWithoutSecurityInput
+}
+
+export type SecurityCreateOrConnectWithoutHouseholdInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  create: Prisma.XOR<Prisma.SecurityCreateWithoutHouseholdInput, Prisma.SecurityUncheckedCreateWithoutHouseholdInput>
+}
+
+export type SecurityCreateManyHouseholdInputEnvelope = {
+  data: Prisma.SecurityCreateManyHouseholdInput | Prisma.SecurityCreateManyHouseholdInput[]
+  skipDuplicates?: boolean
+}
+
+export type SecurityUpsertWithWhereUniqueWithoutHouseholdInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  update: Prisma.XOR<Prisma.SecurityUpdateWithoutHouseholdInput, Prisma.SecurityUncheckedUpdateWithoutHouseholdInput>
+  create: Prisma.XOR<Prisma.SecurityCreateWithoutHouseholdInput, Prisma.SecurityUncheckedCreateWithoutHouseholdInput>
+}
+
+export type SecurityUpdateWithWhereUniqueWithoutHouseholdInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  data: Prisma.XOR<Prisma.SecurityUpdateWithoutHouseholdInput, Prisma.SecurityUncheckedUpdateWithoutHouseholdInput>
+}
+
+export type SecurityUpdateManyWithWhereWithoutHouseholdInput = {
+  where: Prisma.SecurityScalarWhereInput
+  data: Prisma.XOR<Prisma.SecurityUpdateManyMutationInput, Prisma.SecurityUncheckedUpdateManyWithoutHouseholdInput>
+}
+
+export type SecurityScalarWhereInput = {
+  AND?: Prisma.SecurityScalarWhereInput | Prisma.SecurityScalarWhereInput[]
+  OR?: Prisma.SecurityScalarWhereInput[]
+  NOT?: Prisma.SecurityScalarWhereInput | Prisma.SecurityScalarWhereInput[]
+  security_id?: Prisma.StringFilter<"Security"> | string
+  isin?: Prisma.StringNullableFilter<"Security"> | string | null
+  cusip?: Prisma.StringNullableFilter<"Security"> | string | null
+  sedol?: Prisma.StringNullableFilter<"Security"> | string | null
+  institution_security_id?: Prisma.StringNullableFilter<"Security"> | string | null
+  institution_id?: Prisma.StringNullableFilter<"Security"> | string | null
+  proxy_security_id?: Prisma.StringNullableFilter<"Security"> | string | null
+  name?: Prisma.StringNullableFilter<"Security"> | string | null
+  ticker_symbol?: Prisma.StringNullableFilter<"Security"> | string | null
+  is_cash_equivalent?: Prisma.BoolNullableFilter<"Security"> | boolean | null
+  type?: Prisma.StringNullableFilter<"Security"> | string | null
+  close_price?: Prisma.DecimalNullableFilter<"Security"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Prisma.DateTimeNullableFilter<"Security"> | Date | string | null
+  update_datetime?: Prisma.DateTimeNullableFilter<"Security"> | Date | string | null
+  iso_currency_code?: Prisma.StringNullableFilter<"Security"> | string | null
+  unofficial_currency_code?: Prisma.StringNullableFilter<"Security"> | string | null
+  market_identifier_code?: Prisma.StringNullableFilter<"Security"> | string | null
+  sector?: Prisma.StringNullableFilter<"Security"> | string | null
+  industry?: Prisma.StringNullableFilter<"Security"> | string | null
+  option_contract_id?: Prisma.IntNullableFilter<"Security"> | number | null
+  user_id?: Prisma.StringFilter<"Security"> | string
+  member_id?: Prisma.StringFilter<"Security"> | string
+  household_id?: Prisma.StringFilter<"Security"> | string
+  timestamp?: Prisma.DateTimeNullableFilter<"Security"> | Date | string | null
+}
+
+export type SecurityCreateWithoutMemberInput = {
+  security_id: string
+  isin?: string | null
+  cusip?: string | null
+  sedol?: string | null
+  institution_security_id?: string | null
+  institution_id?: string | null
+  proxy_security_id?: string | null
+  name?: string | null
+  ticker_symbol?: string | null
+  is_cash_equivalent?: boolean | null
+  type?: string | null
+  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Date | string | null
+  update_datetime?: Date | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  market_identifier_code?: string | null
+  sector?: string | null
+  industry?: string | null
+  option_contract_id?: number | null
+  timestamp?: Date | string | null
+  holdings?: Prisma.HoldingCreateNestedManyWithoutSecurityInput
+  user: Prisma.UserCreateNestedOneWithoutSecuritiesInput
+  household: Prisma.HouseholdCreateNestedOneWithoutSecuritiesInput
+  fixed_income?: Prisma.FixedIncomeCreateNestedOneWithoutSecurityInput
+  history?: Prisma.SecurityHistoryCreateNestedManyWithoutSecurityInput
+}
+
+export type SecurityUncheckedCreateWithoutMemberInput = {
+  security_id: string
+  isin?: string | null
+  cusip?: string | null
+  sedol?: string | null
+  institution_security_id?: string | null
+  institution_id?: string | null
+  proxy_security_id?: string | null
+  name?: string | null
+  ticker_symbol?: string | null
+  is_cash_equivalent?: boolean | null
+  type?: string | null
+  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Date | string | null
+  update_datetime?: Date | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  market_identifier_code?: string | null
+  sector?: string | null
+  industry?: string | null
+  option_contract_id?: number | null
+  user_id: string
+  household_id: string
+  timestamp?: Date | string | null
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutSecurityInput
+  fixed_income?: Prisma.FixedIncomeUncheckedCreateNestedOneWithoutSecurityInput
+  history?: Prisma.SecurityHistoryUncheckedCreateNestedManyWithoutSecurityInput
+}
+
+export type SecurityCreateOrConnectWithoutMemberInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  create: Prisma.XOR<Prisma.SecurityCreateWithoutMemberInput, Prisma.SecurityUncheckedCreateWithoutMemberInput>
+}
+
+export type SecurityCreateManyMemberInputEnvelope = {
+  data: Prisma.SecurityCreateManyMemberInput | Prisma.SecurityCreateManyMemberInput[]
+  skipDuplicates?: boolean
+}
+
+export type SecurityUpsertWithWhereUniqueWithoutMemberInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  update: Prisma.XOR<Prisma.SecurityUpdateWithoutMemberInput, Prisma.SecurityUncheckedUpdateWithoutMemberInput>
+  create: Prisma.XOR<Prisma.SecurityCreateWithoutMemberInput, Prisma.SecurityUncheckedCreateWithoutMemberInput>
+}
+
+export type SecurityUpdateWithWhereUniqueWithoutMemberInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  data: Prisma.XOR<Prisma.SecurityUpdateWithoutMemberInput, Prisma.SecurityUncheckedUpdateWithoutMemberInput>
+}
+
+export type SecurityUpdateManyWithWhereWithoutMemberInput = {
+  where: Prisma.SecurityScalarWhereInput
+  data: Prisma.XOR<Prisma.SecurityUpdateManyMutationInput, Prisma.SecurityUncheckedUpdateManyWithoutMemberInput>
+}
+
+export type SecurityCreateWithoutFixed_incomeInput = {
+  security_id: string
+  isin?: string | null
+  cusip?: string | null
+  sedol?: string | null
+  institution_security_id?: string | null
+  institution_id?: string | null
+  proxy_security_id?: string | null
+  name?: string | null
+  ticker_symbol?: string | null
+  is_cash_equivalent?: boolean | null
+  type?: string | null
+  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Date | string | null
+  update_datetime?: Date | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  market_identifier_code?: string | null
+  sector?: string | null
+  industry?: string | null
+  option_contract_id?: number | null
+  timestamp?: Date | string | null
+  holdings?: Prisma.HoldingCreateNestedManyWithoutSecurityInput
+  user: Prisma.UserCreateNestedOneWithoutSecuritiesInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutSecuritiesInput
+  household: Prisma.HouseholdCreateNestedOneWithoutSecuritiesInput
+  history?: Prisma.SecurityHistoryCreateNestedManyWithoutSecurityInput
+}
+
+export type SecurityUncheckedCreateWithoutFixed_incomeInput = {
+  security_id: string
+  isin?: string | null
+  cusip?: string | null
+  sedol?: string | null
+  institution_security_id?: string | null
+  institution_id?: string | null
+  proxy_security_id?: string | null
+  name?: string | null
+  ticker_symbol?: string | null
+  is_cash_equivalent?: boolean | null
+  type?: string | null
+  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Date | string | null
+  update_datetime?: Date | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  market_identifier_code?: string | null
+  sector?: string | null
+  industry?: string | null
+  option_contract_id?: number | null
+  user_id: string
+  member_id: string
+  household_id: string
+  timestamp?: Date | string | null
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutSecurityInput
+  history?: Prisma.SecurityHistoryUncheckedCreateNestedManyWithoutSecurityInput
+}
+
+export type SecurityCreateOrConnectWithoutFixed_incomeInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  create: Prisma.XOR<Prisma.SecurityCreateWithoutFixed_incomeInput, Prisma.SecurityUncheckedCreateWithoutFixed_incomeInput>
+}
+
+export type SecurityUpsertWithoutFixed_incomeInput = {
+  update: Prisma.XOR<Prisma.SecurityUpdateWithoutFixed_incomeInput, Prisma.SecurityUncheckedUpdateWithoutFixed_incomeInput>
+  create: Prisma.XOR<Prisma.SecurityCreateWithoutFixed_incomeInput, Prisma.SecurityUncheckedCreateWithoutFixed_incomeInput>
+  where?: Prisma.SecurityWhereInput
+}
+
+export type SecurityUpdateToOneWithWhereWithoutFixed_incomeInput = {
+  where?: Prisma.SecurityWhereInput
+  data: Prisma.XOR<Prisma.SecurityUpdateWithoutFixed_incomeInput, Prisma.SecurityUncheckedUpdateWithoutFixed_incomeInput>
+}
+
+export type SecurityUpdateWithoutFixed_incomeInput = {
+  security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  holdings?: Prisma.HoldingUpdateManyWithoutSecurityNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutSecuritiesNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutSecuritiesNestedInput
+  household?: Prisma.HouseholdUpdateOneRequiredWithoutSecuritiesNestedInput
+  history?: Prisma.SecurityHistoryUpdateManyWithoutSecurityNestedInput
+}
+
+export type SecurityUncheckedUpdateWithoutFixed_incomeInput = {
+  security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutSecurityNestedInput
   history?: Prisma.SecurityHistoryUncheckedUpdateManyWithoutSecurityNestedInput
 }
 
@@ -1661,7 +1589,36 @@ export type SecurityUncheckedUpdateWithoutHistoryInput = {
   fixed_income?: Prisma.FixedIncomeUncheckedUpdateOneWithoutSecurityNestedInput
 }
 
-export type SecurityCreateManyUserInput = {
+export type SecurityCreateWithoutUserInput = {
+  security_id: string
+  isin?: string | null
+  cusip?: string | null
+  sedol?: string | null
+  institution_security_id?: string | null
+  institution_id?: string | null
+  proxy_security_id?: string | null
+  name?: string | null
+  ticker_symbol?: string | null
+  is_cash_equivalent?: boolean | null
+  type?: string | null
+  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Date | string | null
+  update_datetime?: Date | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  market_identifier_code?: string | null
+  sector?: string | null
+  industry?: string | null
+  option_contract_id?: number | null
+  timestamp?: Date | string | null
+  holdings?: Prisma.HoldingCreateNestedManyWithoutSecurityInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutSecuritiesInput
+  household: Prisma.HouseholdCreateNestedOneWithoutSecuritiesInput
+  fixed_income?: Prisma.FixedIncomeCreateNestedOneWithoutSecurityInput
+  history?: Prisma.SecurityHistoryCreateNestedManyWithoutSecurityInput
+}
+
+export type SecurityUncheckedCreateWithoutUserInput = {
   security_id: string
   isin?: string | null
   cusip?: string | null
@@ -1685,90 +1642,35 @@ export type SecurityCreateManyUserInput = {
   member_id: string
   household_id: string
   timestamp?: Date | string | null
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutSecurityInput
+  fixed_income?: Prisma.FixedIncomeUncheckedCreateNestedOneWithoutSecurityInput
+  history?: Prisma.SecurityHistoryUncheckedCreateNestedManyWithoutSecurityInput
 }
 
-export type SecurityUpdateWithoutUserInput = {
-  security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  holdings?: Prisma.HoldingUpdateManyWithoutSecurityNestedInput
-  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutSecuritiesNestedInput
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutSecuritiesNestedInput
-  fixed_income?: Prisma.FixedIncomeUpdateOneWithoutSecurityNestedInput
-  history?: Prisma.SecurityHistoryUpdateManyWithoutSecurityNestedInput
+export type SecurityCreateOrConnectWithoutUserInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  create: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput>
 }
 
-export type SecurityUncheckedUpdateWithoutUserInput = {
-  security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  member_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutSecurityNestedInput
-  fixed_income?: Prisma.FixedIncomeUncheckedUpdateOneWithoutSecurityNestedInput
-  history?: Prisma.SecurityHistoryUncheckedUpdateManyWithoutSecurityNestedInput
+export type SecurityCreateManyUserInputEnvelope = {
+  data: Prisma.SecurityCreateManyUserInput | Prisma.SecurityCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
-export type SecurityUncheckedUpdateManyWithoutUserInput = {
-  security_id?: Prisma.StringFieldUpdateOperationsInput | string
-  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  member_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+export type SecurityUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  update: Prisma.XOR<Prisma.SecurityUpdateWithoutUserInput, Prisma.SecurityUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.SecurityCreateWithoutUserInput, Prisma.SecurityUncheckedCreateWithoutUserInput>
+}
+
+export type SecurityUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.SecurityWhereUniqueInput
+  data: Prisma.XOR<Prisma.SecurityUpdateWithoutUserInput, Prisma.SecurityUncheckedUpdateWithoutUserInput>
+}
+
+export type SecurityUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.SecurityScalarWhereInput
+  data: Prisma.XOR<Prisma.SecurityUpdateManyMutationInput, Prisma.SecurityUncheckedUpdateManyWithoutUserInput>
 }
 
 export type SecurityCreateManyHouseholdInput = {
@@ -1987,6 +1889,116 @@ export type SecurityUncheckedUpdateManyWithoutMemberInput = {
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type SecurityCreateManyUserInput = {
+  security_id: string
+  isin?: string | null
+  cusip?: string | null
+  sedol?: string | null
+  institution_security_id?: string | null
+  institution_id?: string | null
+  proxy_security_id?: string | null
+  name?: string | null
+  ticker_symbol?: string | null
+  is_cash_equivalent?: boolean | null
+  type?: string | null
+  close_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Date | string | null
+  update_datetime?: Date | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  market_identifier_code?: string | null
+  sector?: string | null
+  industry?: string | null
+  option_contract_id?: number | null
+  member_id: string
+  household_id: string
+  timestamp?: Date | string | null
+}
+
+export type SecurityUpdateWithoutUserInput = {
+  security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  holdings?: Prisma.HoldingUpdateManyWithoutSecurityNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutSecuritiesNestedInput
+  household?: Prisma.HouseholdUpdateOneRequiredWithoutSecuritiesNestedInput
+  fixed_income?: Prisma.FixedIncomeUpdateOneWithoutSecurityNestedInput
+  history?: Prisma.SecurityHistoryUpdateManyWithoutSecurityNestedInput
+}
+
+export type SecurityUncheckedUpdateWithoutUserInput = {
+  security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutSecurityNestedInput
+  fixed_income?: Prisma.FixedIncomeUncheckedUpdateOneWithoutSecurityNestedInput
+  history?: Prisma.SecurityHistoryUncheckedUpdateManyWithoutSecurityNestedInput
+}
+
+export type SecurityUncheckedUpdateManyWithoutUserInput = {
+  security_id?: Prisma.StringFieldUpdateOperationsInput | string
+  isin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cusip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sedol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proxy_security_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticker_symbol?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_cash_equivalent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  close_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  close_price_as_of?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  update_datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  market_identifier_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  option_contract_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   household_id?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }

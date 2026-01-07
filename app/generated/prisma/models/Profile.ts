@@ -278,11 +278,6 @@ export type ProfileUncheckedUpdateManyInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type ProfileNullableScalarRelationFilter = {
-  is?: Prisma.ProfileWhereInput | null
-  isNot?: Prisma.ProfileWhereInput | null
-}
-
 export type ProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   bio?: Prisma.SortOrder
@@ -307,6 +302,11 @@ export type ProfileMinOrderByAggregateInput = {
 
 export type ProfileSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+}
+
+export type ProfileNullableScalarRelationFilter = {
+  is?: Prisma.ProfileWhereInput | null
+  isNot?: Prisma.ProfileWhereInput | null
 }
 
 export type ProfileCreateNestedOneWithoutUserInput = {

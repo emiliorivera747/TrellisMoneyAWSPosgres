@@ -30,14 +30,14 @@ export type AccountAvgAggregateOutputType = {
   available: runtime.Decimal | null
   current: runtime.Decimal | null
   limit: runtime.Decimal | null
-  annual_return_rate: runtime.Decimal | null
+  expected_annual_return_rate: runtime.Decimal | null
 }
 
 export type AccountSumAggregateOutputType = {
   available: runtime.Decimal | null
   current: runtime.Decimal | null
   limit: runtime.Decimal | null
-  annual_return_rate: runtime.Decimal | null
+  expected_annual_return_rate: runtime.Decimal | null
 }
 
 export type AccountMinAggregateOutputType = {
@@ -54,7 +54,7 @@ export type AccountMinAggregateOutputType = {
   subtype: string | null
   verification_status: string | null
   persistent_account_id: string | null
-  annual_return_rate: runtime.Decimal | null
+  expected_annual_return_rate: runtime.Decimal | null
   holder_category: string | null
   balance_id: string | null
   user_id: string | null
@@ -80,7 +80,7 @@ export type AccountMaxAggregateOutputType = {
   subtype: string | null
   verification_status: string | null
   persistent_account_id: string | null
-  annual_return_rate: runtime.Decimal | null
+  expected_annual_return_rate: runtime.Decimal | null
   holder_category: string | null
   balance_id: string | null
   user_id: string | null
@@ -106,7 +106,7 @@ export type AccountCountAggregateOutputType = {
   subtype: number
   verification_status: number
   persistent_account_id: number
-  annual_return_rate: number
+  expected_annual_return_rate: number
   holder_category: number
   balance_id: number
   user_id: number
@@ -124,14 +124,14 @@ export type AccountAvgAggregateInputType = {
   available?: true
   current?: true
   limit?: true
-  annual_return_rate?: true
+  expected_annual_return_rate?: true
 }
 
 export type AccountSumAggregateInputType = {
   available?: true
   current?: true
   limit?: true
-  annual_return_rate?: true
+  expected_annual_return_rate?: true
 }
 
 export type AccountMinAggregateInputType = {
@@ -148,7 +148,7 @@ export type AccountMinAggregateInputType = {
   subtype?: true
   verification_status?: true
   persistent_account_id?: true
-  annual_return_rate?: true
+  expected_annual_return_rate?: true
   holder_category?: true
   balance_id?: true
   user_id?: true
@@ -174,7 +174,7 @@ export type AccountMaxAggregateInputType = {
   subtype?: true
   verification_status?: true
   persistent_account_id?: true
-  annual_return_rate?: true
+  expected_annual_return_rate?: true
   holder_category?: true
   balance_id?: true
   user_id?: true
@@ -200,7 +200,7 @@ export type AccountCountAggregateInputType = {
   subtype?: true
   verification_status?: true
   persistent_account_id?: true
-  annual_return_rate?: true
+  expected_annual_return_rate?: true
   holder_category?: true
   balance_id?: true
   user_id?: true
@@ -313,7 +313,7 @@ export type AccountGroupByOutputType = {
   subtype: string | null
   verification_status: string | null
   persistent_account_id: string | null
-  annual_return_rate: runtime.Decimal | null
+  expected_annual_return_rate: runtime.Decimal | null
   holder_category: string | null
   balance_id: string | null
   user_id: string
@@ -362,7 +362,7 @@ export type AccountWhereInput = {
   subtype?: Prisma.StringNullableFilter<"Account"> | string | null
   verification_status?: Prisma.StringNullableFilter<"Account"> | string | null
   persistent_account_id?: Prisma.StringNullableFilter<"Account"> | string | null
-  annual_return_rate?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.StringNullableFilter<"Account"> | string | null
   balance_id?: Prisma.StringNullableFilter<"Account"> | string | null
   user_id?: Prisma.StringFilter<"Account"> | string
@@ -395,7 +395,7 @@ export type AccountOrderByWithRelationInput = {
   subtype?: Prisma.SortOrderInput | Prisma.SortOrder
   verification_status?: Prisma.SortOrderInput | Prisma.SortOrder
   persistent_account_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  annual_return_rate?: Prisma.SortOrderInput | Prisma.SortOrder
+  expected_annual_return_rate?: Prisma.SortOrderInput | Prisma.SortOrder
   holder_category?: Prisma.SortOrderInput | Prisma.SortOrder
   balance_id?: Prisma.SortOrderInput | Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -432,7 +432,7 @@ export type AccountWhereUniqueInput = Prisma.AtLeast<{
   subtype?: Prisma.StringNullableFilter<"Account"> | string | null
   verification_status?: Prisma.StringNullableFilter<"Account"> | string | null
   persistent_account_id?: Prisma.StringNullableFilter<"Account"> | string | null
-  annual_return_rate?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.StringNullableFilter<"Account"> | string | null
   user_id?: Prisma.StringFilter<"Account"> | string
   member_id?: Prisma.StringFilter<"Account"> | string
@@ -464,7 +464,7 @@ export type AccountOrderByWithAggregationInput = {
   subtype?: Prisma.SortOrderInput | Prisma.SortOrder
   verification_status?: Prisma.SortOrderInput | Prisma.SortOrder
   persistent_account_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  annual_return_rate?: Prisma.SortOrderInput | Prisma.SortOrder
+  expected_annual_return_rate?: Prisma.SortOrderInput | Prisma.SortOrder
   holder_category?: Prisma.SortOrderInput | Prisma.SortOrder
   balance_id?: Prisma.SortOrderInput | Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -498,7 +498,7 @@ export type AccountScalarWhereWithAggregatesInput = {
   subtype?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
   verification_status?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
   persistent_account_id?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
-  annual_return_rate?: Prisma.DecimalNullableWithAggregatesFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.DecimalNullableWithAggregatesFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
   balance_id?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
   user_id?: Prisma.StringWithAggregatesFilter<"Account"> | string
@@ -524,7 +524,7 @@ export type AccountCreateInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   timestamp?: Date | string | null
   updated_at?: Date | string | null
@@ -552,7 +552,7 @@ export type AccountUncheckedCreateInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   balance_id?: string | null
   user_id: string
@@ -580,7 +580,7 @@ export type AccountUpdateInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -608,7 +608,7 @@ export type AccountUncheckedUpdateInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -636,7 +636,7 @@ export type AccountCreateManyInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   balance_id?: string | null
   user_id: string
@@ -662,7 +662,7 @@ export type AccountUpdateManyMutationInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -683,7 +683,7 @@ export type AccountUncheckedUpdateManyInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -709,7 +709,7 @@ export type AccountCountOrderByAggregateInput = {
   subtype?: Prisma.SortOrder
   verification_status?: Prisma.SortOrder
   persistent_account_id?: Prisma.SortOrder
-  annual_return_rate?: Prisma.SortOrder
+  expected_annual_return_rate?: Prisma.SortOrder
   holder_category?: Prisma.SortOrder
   balance_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -725,7 +725,7 @@ export type AccountAvgOrderByAggregateInput = {
   available?: Prisma.SortOrder
   current?: Prisma.SortOrder
   limit?: Prisma.SortOrder
-  annual_return_rate?: Prisma.SortOrder
+  expected_annual_return_rate?: Prisma.SortOrder
 }
 
 export type AccountMaxOrderByAggregateInput = {
@@ -742,7 +742,7 @@ export type AccountMaxOrderByAggregateInput = {
   subtype?: Prisma.SortOrder
   verification_status?: Prisma.SortOrder
   persistent_account_id?: Prisma.SortOrder
-  annual_return_rate?: Prisma.SortOrder
+  expected_annual_return_rate?: Prisma.SortOrder
   holder_category?: Prisma.SortOrder
   balance_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -768,7 +768,7 @@ export type AccountMinOrderByAggregateInput = {
   subtype?: Prisma.SortOrder
   verification_status?: Prisma.SortOrder
   persistent_account_id?: Prisma.SortOrder
-  annual_return_rate?: Prisma.SortOrder
+  expected_annual_return_rate?: Prisma.SortOrder
   holder_category?: Prisma.SortOrder
   balance_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -784,7 +784,7 @@ export type AccountSumOrderByAggregateInput = {
   available?: Prisma.SortOrder
   current?: Prisma.SortOrder
   limit?: Prisma.SortOrder
-  annual_return_rate?: Prisma.SortOrder
+  expected_annual_return_rate?: Prisma.SortOrder
 }
 
 export type AccountScalarRelationFilter = {
@@ -873,88 +873,18 @@ export type AccountUncheckedUpdateOneWithoutBalanceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutBalanceInput, Prisma.AccountUpdateWithoutBalanceInput>, Prisma.AccountUncheckedUpdateWithoutBalanceInput>
 }
 
-export type AccountCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput> | Prisma.AccountCreateWithoutUserInput[] | Prisma.AccountUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput | Prisma.AccountCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.AccountCreateManyUserInputEnvelope
-  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+export type AccountCreateNestedOneWithoutHoldingsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutHoldingsInput, Prisma.AccountUncheckedCreateWithoutHoldingsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutHoldingsInput
+  connect?: Prisma.AccountWhereUniqueInput
 }
 
-export type AccountUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput> | Prisma.AccountCreateWithoutUserInput[] | Prisma.AccountUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput | Prisma.AccountCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.AccountCreateManyUserInputEnvelope
-  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-}
-
-export type AccountUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput> | Prisma.AccountCreateWithoutUserInput[] | Prisma.AccountUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput | Prisma.AccountCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutUserInput | Prisma.AccountUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.AccountCreateManyUserInputEnvelope
-  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  update?: Prisma.AccountUpdateWithWhereUniqueWithoutUserInput | Prisma.AccountUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutUserInput | Prisma.AccountUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
-}
-
-export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput> | Prisma.AccountCreateWithoutUserInput[] | Prisma.AccountUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput | Prisma.AccountCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutUserInput | Prisma.AccountUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.AccountCreateManyUserInputEnvelope
-  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  update?: Prisma.AccountUpdateWithWhereUniqueWithoutUserInput | Prisma.AccountUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutUserInput | Prisma.AccountUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
-}
-
-export type AccountCreateNestedManyWithoutItemInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput> | Prisma.AccountCreateWithoutItemInput[] | Prisma.AccountUncheckedCreateWithoutItemInput[]
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutItemInput | Prisma.AccountCreateOrConnectWithoutItemInput[]
-  createMany?: Prisma.AccountCreateManyItemInputEnvelope
-  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-}
-
-export type AccountUncheckedCreateNestedManyWithoutItemInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput> | Prisma.AccountCreateWithoutItemInput[] | Prisma.AccountUncheckedCreateWithoutItemInput[]
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutItemInput | Prisma.AccountCreateOrConnectWithoutItemInput[]
-  createMany?: Prisma.AccountCreateManyItemInputEnvelope
-  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-}
-
-export type AccountUpdateManyWithoutItemNestedInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput> | Prisma.AccountCreateWithoutItemInput[] | Prisma.AccountUncheckedCreateWithoutItemInput[]
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutItemInput | Prisma.AccountCreateOrConnectWithoutItemInput[]
-  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutItemInput | Prisma.AccountUpsertWithWhereUniqueWithoutItemInput[]
-  createMany?: Prisma.AccountCreateManyItemInputEnvelope
-  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  update?: Prisma.AccountUpdateWithWhereUniqueWithoutItemInput | Prisma.AccountUpdateWithWhereUniqueWithoutItemInput[]
-  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutItemInput | Prisma.AccountUpdateManyWithWhereWithoutItemInput[]
-  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
-}
-
-export type AccountUncheckedUpdateManyWithoutItemNestedInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput> | Prisma.AccountCreateWithoutItemInput[] | Prisma.AccountUncheckedCreateWithoutItemInput[]
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutItemInput | Prisma.AccountCreateOrConnectWithoutItemInput[]
-  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutItemInput | Prisma.AccountUpsertWithWhereUniqueWithoutItemInput[]
-  createMany?: Prisma.AccountCreateManyItemInputEnvelope
-  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
-  update?: Prisma.AccountUpdateWithWhereUniqueWithoutItemInput | Prisma.AccountUpdateWithWhereUniqueWithoutItemInput[]
-  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutItemInput | Prisma.AccountUpdateManyWithWhereWithoutItemInput[]
-  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+export type AccountUpdateOneRequiredWithoutHoldingsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutHoldingsInput, Prisma.AccountUncheckedCreateWithoutHoldingsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutHoldingsInput
+  upsert?: Prisma.AccountUpsertWithoutHoldingsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutHoldingsInput, Prisma.AccountUpdateWithoutHoldingsInput>, Prisma.AccountUncheckedUpdateWithoutHoldingsInput>
 }
 
 export type AccountCreateNestedManyWithoutHouseholdInput = {
@@ -1041,18 +971,88 @@ export type AccountUncheckedUpdateManyWithoutMemberNestedInput = {
   deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
 }
 
-export type AccountCreateNestedOneWithoutHoldingsInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutHoldingsInput, Prisma.AccountUncheckedCreateWithoutHoldingsInput>
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutHoldingsInput
-  connect?: Prisma.AccountWhereUniqueInput
+export type AccountCreateNestedManyWithoutItemInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput> | Prisma.AccountCreateWithoutItemInput[] | Prisma.AccountUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutItemInput | Prisma.AccountCreateOrConnectWithoutItemInput[]
+  createMany?: Prisma.AccountCreateManyItemInputEnvelope
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
 }
 
-export type AccountUpdateOneRequiredWithoutHoldingsNestedInput = {
-  create?: Prisma.XOR<Prisma.AccountCreateWithoutHoldingsInput, Prisma.AccountUncheckedCreateWithoutHoldingsInput>
-  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutHoldingsInput
-  upsert?: Prisma.AccountUpsertWithoutHoldingsInput
-  connect?: Prisma.AccountWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutHoldingsInput, Prisma.AccountUpdateWithoutHoldingsInput>, Prisma.AccountUncheckedUpdateWithoutHoldingsInput>
+export type AccountUncheckedCreateNestedManyWithoutItemInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput> | Prisma.AccountCreateWithoutItemInput[] | Prisma.AccountUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutItemInput | Prisma.AccountCreateOrConnectWithoutItemInput[]
+  createMany?: Prisma.AccountCreateManyItemInputEnvelope
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+}
+
+export type AccountUpdateManyWithoutItemNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput> | Prisma.AccountCreateWithoutItemInput[] | Prisma.AccountUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutItemInput | Prisma.AccountCreateOrConnectWithoutItemInput[]
+  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutItemInput | Prisma.AccountUpsertWithWhereUniqueWithoutItemInput[]
+  createMany?: Prisma.AccountCreateManyItemInputEnvelope
+  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  update?: Prisma.AccountUpdateWithWhereUniqueWithoutItemInput | Prisma.AccountUpdateWithWhereUniqueWithoutItemInput[]
+  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutItemInput | Prisma.AccountUpdateManyWithWhereWithoutItemInput[]
+  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+}
+
+export type AccountUncheckedUpdateManyWithoutItemNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput> | Prisma.AccountCreateWithoutItemInput[] | Prisma.AccountUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutItemInput | Prisma.AccountCreateOrConnectWithoutItemInput[]
+  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutItemInput | Prisma.AccountUpsertWithWhereUniqueWithoutItemInput[]
+  createMany?: Prisma.AccountCreateManyItemInputEnvelope
+  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  update?: Prisma.AccountUpdateWithWhereUniqueWithoutItemInput | Prisma.AccountUpdateWithWhereUniqueWithoutItemInput[]
+  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutItemInput | Prisma.AccountUpdateManyWithWhereWithoutItemInput[]
+  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+}
+
+export type AccountCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput> | Prisma.AccountCreateWithoutUserInput[] | Prisma.AccountUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput | Prisma.AccountCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.AccountCreateManyUserInputEnvelope
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+}
+
+export type AccountUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput> | Prisma.AccountCreateWithoutUserInput[] | Prisma.AccountUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput | Prisma.AccountCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.AccountCreateManyUserInputEnvelope
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+}
+
+export type AccountUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput> | Prisma.AccountCreateWithoutUserInput[] | Prisma.AccountUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput | Prisma.AccountCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutUserInput | Prisma.AccountUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.AccountCreateManyUserInputEnvelope
+  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  update?: Prisma.AccountUpdateWithWhereUniqueWithoutUserInput | Prisma.AccountUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutUserInput | Prisma.AccountUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+}
+
+export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput> | Prisma.AccountCreateWithoutUserInput[] | Prisma.AccountUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserInput | Prisma.AccountCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutUserInput | Prisma.AccountUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.AccountCreateManyUserInputEnvelope
+  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  update?: Prisma.AccountUpdateWithWhereUniqueWithoutUserInput | Prisma.AccountUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutUserInput | Prisma.AccountUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
 }
 
 export type AccountCreateWithoutHistoryInput = {
@@ -1069,7 +1069,7 @@ export type AccountCreateWithoutHistoryInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   timestamp?: Date | string | null
   updated_at?: Date | string | null
@@ -1096,7 +1096,7 @@ export type AccountUncheckedCreateWithoutHistoryInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   balance_id?: string | null
   user_id: string
@@ -1139,7 +1139,7 @@ export type AccountUpdateWithoutHistoryInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1166,7 +1166,7 @@ export type AccountUncheckedUpdateWithoutHistoryInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1193,7 +1193,7 @@ export type AccountCreateWithoutBalanceInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   timestamp?: Date | string | null
   updated_at?: Date | string | null
@@ -1220,7 +1220,7 @@ export type AccountUncheckedCreateWithoutBalanceInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   user_id: string
   member_id: string
@@ -1263,7 +1263,7 @@ export type AccountUpdateWithoutBalanceInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1290,7 +1290,7 @@ export type AccountUncheckedUpdateWithoutBalanceInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   member_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1301,355 +1301,6 @@ export type AccountUncheckedUpdateWithoutBalanceInput = {
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   history?: Prisma.AccountHistoryUncheckedUpdateManyWithoutAccountNestedInput
   holdings?: Prisma.HoldingUncheckedUpdateManyWithoutAccountNestedInput
-}
-
-export type AccountCreateWithoutUserInput = {
-  account_id: string
-  name?: string | null
-  type?: string | null
-  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  mask?: string | null
-  official_name?: string | null
-  subtype?: string | null
-  verification_status?: string | null
-  persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: string | null
-  timestamp?: Date | string | null
-  updated_at?: Date | string | null
-  created_at?: Date | string | null
-  balance?: Prisma.BalanceCreateNestedOneWithoutAccountInput
-  member: Prisma.HouseholdMemberCreateNestedOneWithoutAccountsInput
-  household?: Prisma.HouseholdCreateNestedOneWithoutAccountsInput
-  item: Prisma.ItemCreateNestedOneWithoutAccountsInput
-  history?: Prisma.AccountHistoryCreateNestedManyWithoutAccountInput
-  holdings?: Prisma.HoldingCreateNestedManyWithoutAccountInput
-}
-
-export type AccountUncheckedCreateWithoutUserInput = {
-  account_id: string
-  name?: string | null
-  type?: string | null
-  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  mask?: string | null
-  official_name?: string | null
-  subtype?: string | null
-  verification_status?: string | null
-  persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: string | null
-  balance_id?: string | null
-  member_id: string
-  household_id: string
-  item_id: string
-  timestamp?: Date | string | null
-  updated_at?: Date | string | null
-  created_at?: Date | string | null
-  history?: Prisma.AccountHistoryUncheckedCreateNestedManyWithoutAccountInput
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutAccountInput
-}
-
-export type AccountCreateOrConnectWithoutUserInput = {
-  where: Prisma.AccountWhereUniqueInput
-  create: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput>
-}
-
-export type AccountCreateManyUserInputEnvelope = {
-  data: Prisma.AccountCreateManyUserInput | Prisma.AccountCreateManyUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type AccountUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.AccountWhereUniqueInput
-  update: Prisma.XOR<Prisma.AccountUpdateWithoutUserInput, Prisma.AccountUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput>
-}
-
-export type AccountUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.AccountWhereUniqueInput
-  data: Prisma.XOR<Prisma.AccountUpdateWithoutUserInput, Prisma.AccountUncheckedUpdateWithoutUserInput>
-}
-
-export type AccountUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.AccountScalarWhereInput
-  data: Prisma.XOR<Prisma.AccountUpdateManyMutationInput, Prisma.AccountUncheckedUpdateManyWithoutUserInput>
-}
-
-export type AccountScalarWhereInput = {
-  AND?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
-  OR?: Prisma.AccountScalarWhereInput[]
-  NOT?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
-  account_id?: Prisma.StringFilter<"Account"> | string
-  name?: Prisma.StringNullableFilter<"Account"> | string | null
-  type?: Prisma.StringNullableFilter<"Account"> | string | null
-  available?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: Prisma.StringNullableFilter<"Account"> | string | null
-  unofficial_currency_code?: Prisma.StringNullableFilter<"Account"> | string | null
-  mask?: Prisma.StringNullableFilter<"Account"> | string | null
-  official_name?: Prisma.StringNullableFilter<"Account"> | string | null
-  subtype?: Prisma.StringNullableFilter<"Account"> | string | null
-  verification_status?: Prisma.StringNullableFilter<"Account"> | string | null
-  persistent_account_id?: Prisma.StringNullableFilter<"Account"> | string | null
-  annual_return_rate?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: Prisma.StringNullableFilter<"Account"> | string | null
-  balance_id?: Prisma.StringNullableFilter<"Account"> | string | null
-  user_id?: Prisma.StringFilter<"Account"> | string
-  member_id?: Prisma.StringFilter<"Account"> | string
-  household_id?: Prisma.StringFilter<"Account"> | string
-  item_id?: Prisma.StringFilter<"Account"> | string
-  timestamp?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
-  updated_at?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
-  created_at?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
-}
-
-export type AccountCreateWithoutItemInput = {
-  account_id: string
-  name?: string | null
-  type?: string | null
-  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  mask?: string | null
-  official_name?: string | null
-  subtype?: string | null
-  verification_status?: string | null
-  persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: string | null
-  timestamp?: Date | string | null
-  updated_at?: Date | string | null
-  created_at?: Date | string | null
-  balance?: Prisma.BalanceCreateNestedOneWithoutAccountInput
-  user: Prisma.UserCreateNestedOneWithoutAccountsInput
-  member: Prisma.HouseholdMemberCreateNestedOneWithoutAccountsInput
-  household?: Prisma.HouseholdCreateNestedOneWithoutAccountsInput
-  history?: Prisma.AccountHistoryCreateNestedManyWithoutAccountInput
-  holdings?: Prisma.HoldingCreateNestedManyWithoutAccountInput
-}
-
-export type AccountUncheckedCreateWithoutItemInput = {
-  account_id: string
-  name?: string | null
-  type?: string | null
-  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  mask?: string | null
-  official_name?: string | null
-  subtype?: string | null
-  verification_status?: string | null
-  persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: string | null
-  balance_id?: string | null
-  user_id: string
-  member_id: string
-  household_id: string
-  timestamp?: Date | string | null
-  updated_at?: Date | string | null
-  created_at?: Date | string | null
-  history?: Prisma.AccountHistoryUncheckedCreateNestedManyWithoutAccountInput
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutAccountInput
-}
-
-export type AccountCreateOrConnectWithoutItemInput = {
-  where: Prisma.AccountWhereUniqueInput
-  create: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput>
-}
-
-export type AccountCreateManyItemInputEnvelope = {
-  data: Prisma.AccountCreateManyItemInput | Prisma.AccountCreateManyItemInput[]
-  skipDuplicates?: boolean
-}
-
-export type AccountUpsertWithWhereUniqueWithoutItemInput = {
-  where: Prisma.AccountWhereUniqueInput
-  update: Prisma.XOR<Prisma.AccountUpdateWithoutItemInput, Prisma.AccountUncheckedUpdateWithoutItemInput>
-  create: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput>
-}
-
-export type AccountUpdateWithWhereUniqueWithoutItemInput = {
-  where: Prisma.AccountWhereUniqueInput
-  data: Prisma.XOR<Prisma.AccountUpdateWithoutItemInput, Prisma.AccountUncheckedUpdateWithoutItemInput>
-}
-
-export type AccountUpdateManyWithWhereWithoutItemInput = {
-  where: Prisma.AccountScalarWhereInput
-  data: Prisma.XOR<Prisma.AccountUpdateManyMutationInput, Prisma.AccountUncheckedUpdateManyWithoutItemInput>
-}
-
-export type AccountCreateWithoutHouseholdInput = {
-  account_id: string
-  name?: string | null
-  type?: string | null
-  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  mask?: string | null
-  official_name?: string | null
-  subtype?: string | null
-  verification_status?: string | null
-  persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: string | null
-  timestamp?: Date | string | null
-  updated_at?: Date | string | null
-  created_at?: Date | string | null
-  balance?: Prisma.BalanceCreateNestedOneWithoutAccountInput
-  user: Prisma.UserCreateNestedOneWithoutAccountsInput
-  member: Prisma.HouseholdMemberCreateNestedOneWithoutAccountsInput
-  item: Prisma.ItemCreateNestedOneWithoutAccountsInput
-  history?: Prisma.AccountHistoryCreateNestedManyWithoutAccountInput
-  holdings?: Prisma.HoldingCreateNestedManyWithoutAccountInput
-}
-
-export type AccountUncheckedCreateWithoutHouseholdInput = {
-  account_id: string
-  name?: string | null
-  type?: string | null
-  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  mask?: string | null
-  official_name?: string | null
-  subtype?: string | null
-  verification_status?: string | null
-  persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: string | null
-  balance_id?: string | null
-  user_id: string
-  member_id: string
-  item_id: string
-  timestamp?: Date | string | null
-  updated_at?: Date | string | null
-  created_at?: Date | string | null
-  history?: Prisma.AccountHistoryUncheckedCreateNestedManyWithoutAccountInput
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutAccountInput
-}
-
-export type AccountCreateOrConnectWithoutHouseholdInput = {
-  where: Prisma.AccountWhereUniqueInput
-  create: Prisma.XOR<Prisma.AccountCreateWithoutHouseholdInput, Prisma.AccountUncheckedCreateWithoutHouseholdInput>
-}
-
-export type AccountCreateManyHouseholdInputEnvelope = {
-  data: Prisma.AccountCreateManyHouseholdInput | Prisma.AccountCreateManyHouseholdInput[]
-  skipDuplicates?: boolean
-}
-
-export type AccountUpsertWithWhereUniqueWithoutHouseholdInput = {
-  where: Prisma.AccountWhereUniqueInput
-  update: Prisma.XOR<Prisma.AccountUpdateWithoutHouseholdInput, Prisma.AccountUncheckedUpdateWithoutHouseholdInput>
-  create: Prisma.XOR<Prisma.AccountCreateWithoutHouseholdInput, Prisma.AccountUncheckedCreateWithoutHouseholdInput>
-}
-
-export type AccountUpdateWithWhereUniqueWithoutHouseholdInput = {
-  where: Prisma.AccountWhereUniqueInput
-  data: Prisma.XOR<Prisma.AccountUpdateWithoutHouseholdInput, Prisma.AccountUncheckedUpdateWithoutHouseholdInput>
-}
-
-export type AccountUpdateManyWithWhereWithoutHouseholdInput = {
-  where: Prisma.AccountScalarWhereInput
-  data: Prisma.XOR<Prisma.AccountUpdateManyMutationInput, Prisma.AccountUncheckedUpdateManyWithoutHouseholdInput>
-}
-
-export type AccountCreateWithoutMemberInput = {
-  account_id: string
-  name?: string | null
-  type?: string | null
-  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  mask?: string | null
-  official_name?: string | null
-  subtype?: string | null
-  verification_status?: string | null
-  persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: string | null
-  timestamp?: Date | string | null
-  updated_at?: Date | string | null
-  created_at?: Date | string | null
-  balance?: Prisma.BalanceCreateNestedOneWithoutAccountInput
-  user: Prisma.UserCreateNestedOneWithoutAccountsInput
-  household?: Prisma.HouseholdCreateNestedOneWithoutAccountsInput
-  item: Prisma.ItemCreateNestedOneWithoutAccountsInput
-  history?: Prisma.AccountHistoryCreateNestedManyWithoutAccountInput
-  holdings?: Prisma.HoldingCreateNestedManyWithoutAccountInput
-}
-
-export type AccountUncheckedCreateWithoutMemberInput = {
-  account_id: string
-  name?: string | null
-  type?: string | null
-  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: string | null
-  unofficial_currency_code?: string | null
-  mask?: string | null
-  official_name?: string | null
-  subtype?: string | null
-  verification_status?: string | null
-  persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: string | null
-  balance_id?: string | null
-  user_id: string
-  household_id: string
-  item_id: string
-  timestamp?: Date | string | null
-  updated_at?: Date | string | null
-  created_at?: Date | string | null
-  history?: Prisma.AccountHistoryUncheckedCreateNestedManyWithoutAccountInput
-  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutAccountInput
-}
-
-export type AccountCreateOrConnectWithoutMemberInput = {
-  where: Prisma.AccountWhereUniqueInput
-  create: Prisma.XOR<Prisma.AccountCreateWithoutMemberInput, Prisma.AccountUncheckedCreateWithoutMemberInput>
-}
-
-export type AccountCreateManyMemberInputEnvelope = {
-  data: Prisma.AccountCreateManyMemberInput | Prisma.AccountCreateManyMemberInput[]
-  skipDuplicates?: boolean
-}
-
-export type AccountUpsertWithWhereUniqueWithoutMemberInput = {
-  where: Prisma.AccountWhereUniqueInput
-  update: Prisma.XOR<Prisma.AccountUpdateWithoutMemberInput, Prisma.AccountUncheckedUpdateWithoutMemberInput>
-  create: Prisma.XOR<Prisma.AccountCreateWithoutMemberInput, Prisma.AccountUncheckedCreateWithoutMemberInput>
-}
-
-export type AccountUpdateWithWhereUniqueWithoutMemberInput = {
-  where: Prisma.AccountWhereUniqueInput
-  data: Prisma.XOR<Prisma.AccountUpdateWithoutMemberInput, Prisma.AccountUncheckedUpdateWithoutMemberInput>
-}
-
-export type AccountUpdateManyWithWhereWithoutMemberInput = {
-  where: Prisma.AccountScalarWhereInput
-  data: Prisma.XOR<Prisma.AccountUpdateManyMutationInput, Prisma.AccountUncheckedUpdateManyWithoutMemberInput>
 }
 
 export type AccountCreateWithoutHoldingsInput = {
@@ -1666,7 +1317,7 @@ export type AccountCreateWithoutHoldingsInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   timestamp?: Date | string | null
   updated_at?: Date | string | null
@@ -1693,7 +1344,7 @@ export type AccountUncheckedCreateWithoutHoldingsInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   balance_id?: string | null
   user_id: string
@@ -1736,7 +1387,7 @@ export type AccountUpdateWithoutHoldingsInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1763,7 +1414,7 @@ export type AccountUncheckedUpdateWithoutHoldingsInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1776,7 +1427,7 @@ export type AccountUncheckedUpdateWithoutHoldingsInput = {
   history?: Prisma.AccountHistoryUncheckedUpdateManyWithoutAccountNestedInput
 }
 
-export type AccountCreateManyUserInput = {
+export type AccountCreateWithoutHouseholdInput = {
   account_id: string
   name?: string | null
   type?: string | null
@@ -1790,97 +1441,182 @@ export type AccountCreateManyUserInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: string | null
+  timestamp?: Date | string | null
+  updated_at?: Date | string | null
+  created_at?: Date | string | null
+  balance?: Prisma.BalanceCreateNestedOneWithoutAccountInput
+  user: Prisma.UserCreateNestedOneWithoutAccountsInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutAccountsInput
+  item: Prisma.ItemCreateNestedOneWithoutAccountsInput
+  history?: Prisma.AccountHistoryCreateNestedManyWithoutAccountInput
+  holdings?: Prisma.HoldingCreateNestedManyWithoutAccountInput
+}
+
+export type AccountUncheckedCreateWithoutHouseholdInput = {
+  account_id: string
+  name?: string | null
+  type?: string | null
+  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  mask?: string | null
+  official_name?: string | null
+  subtype?: string | null
+  verification_status?: string | null
+  persistent_account_id?: string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   balance_id?: string | null
+  user_id: string
   member_id: string
+  item_id: string
+  timestamp?: Date | string | null
+  updated_at?: Date | string | null
+  created_at?: Date | string | null
+  history?: Prisma.AccountHistoryUncheckedCreateNestedManyWithoutAccountInput
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutAccountInput
+}
+
+export type AccountCreateOrConnectWithoutHouseholdInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutHouseholdInput, Prisma.AccountUncheckedCreateWithoutHouseholdInput>
+}
+
+export type AccountCreateManyHouseholdInputEnvelope = {
+  data: Prisma.AccountCreateManyHouseholdInput | Prisma.AccountCreateManyHouseholdInput[]
+  skipDuplicates?: boolean
+}
+
+export type AccountUpsertWithWhereUniqueWithoutHouseholdInput = {
+  where: Prisma.AccountWhereUniqueInput
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutHouseholdInput, Prisma.AccountUncheckedUpdateWithoutHouseholdInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutHouseholdInput, Prisma.AccountUncheckedCreateWithoutHouseholdInput>
+}
+
+export type AccountUpdateWithWhereUniqueWithoutHouseholdInput = {
+  where: Prisma.AccountWhereUniqueInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutHouseholdInput, Prisma.AccountUncheckedUpdateWithoutHouseholdInput>
+}
+
+export type AccountUpdateManyWithWhereWithoutHouseholdInput = {
+  where: Prisma.AccountScalarWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateManyMutationInput, Prisma.AccountUncheckedUpdateManyWithoutHouseholdInput>
+}
+
+export type AccountScalarWhereInput = {
+  AND?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+  OR?: Prisma.AccountScalarWhereInput[]
+  NOT?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+  account_id?: Prisma.StringFilter<"Account"> | string
+  name?: Prisma.StringNullableFilter<"Account"> | string | null
+  type?: Prisma.StringNullableFilter<"Account"> | string | null
+  available?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.StringNullableFilter<"Account"> | string | null
+  unofficial_currency_code?: Prisma.StringNullableFilter<"Account"> | string | null
+  mask?: Prisma.StringNullableFilter<"Account"> | string | null
+  official_name?: Prisma.StringNullableFilter<"Account"> | string | null
+  subtype?: Prisma.StringNullableFilter<"Account"> | string | null
+  verification_status?: Prisma.StringNullableFilter<"Account"> | string | null
+  persistent_account_id?: Prisma.StringNullableFilter<"Account"> | string | null
+  expected_annual_return_rate?: Prisma.DecimalNullableFilter<"Account"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: Prisma.StringNullableFilter<"Account"> | string | null
+  balance_id?: Prisma.StringNullableFilter<"Account"> | string | null
+  user_id?: Prisma.StringFilter<"Account"> | string
+  member_id?: Prisma.StringFilter<"Account"> | string
+  household_id?: Prisma.StringFilter<"Account"> | string
+  item_id?: Prisma.StringFilter<"Account"> | string
+  timestamp?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
+  updated_at?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
+  created_at?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
+}
+
+export type AccountCreateWithoutMemberInput = {
+  account_id: string
+  name?: string | null
+  type?: string | null
+  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  mask?: string | null
+  official_name?: string | null
+  subtype?: string | null
+  verification_status?: string | null
+  persistent_account_id?: string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: string | null
+  timestamp?: Date | string | null
+  updated_at?: Date | string | null
+  created_at?: Date | string | null
+  balance?: Prisma.BalanceCreateNestedOneWithoutAccountInput
+  user: Prisma.UserCreateNestedOneWithoutAccountsInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutAccountsInput
+  item: Prisma.ItemCreateNestedOneWithoutAccountsInput
+  history?: Prisma.AccountHistoryCreateNestedManyWithoutAccountInput
+  holdings?: Prisma.HoldingCreateNestedManyWithoutAccountInput
+}
+
+export type AccountUncheckedCreateWithoutMemberInput = {
+  account_id: string
+  name?: string | null
+  type?: string | null
+  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  mask?: string | null
+  official_name?: string | null
+  subtype?: string | null
+  verification_status?: string | null
+  persistent_account_id?: string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: string | null
+  balance_id?: string | null
+  user_id: string
   household_id: string
   item_id: string
   timestamp?: Date | string | null
   updated_at?: Date | string | null
   created_at?: Date | string | null
+  history?: Prisma.AccountHistoryUncheckedCreateNestedManyWithoutAccountInput
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutAccountInput
 }
 
-export type AccountUpdateWithoutUserInput = {
-  account_id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  balance?: Prisma.BalanceUpdateOneWithoutAccountNestedInput
-  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutAccountsNestedInput
-  household?: Prisma.HouseholdUpdateOneWithoutAccountsNestedInput
-  item?: Prisma.ItemUpdateOneRequiredWithoutAccountsNestedInput
-  history?: Prisma.AccountHistoryUpdateManyWithoutAccountNestedInput
-  holdings?: Prisma.HoldingUpdateManyWithoutAccountNestedInput
+export type AccountCreateOrConnectWithoutMemberInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutMemberInput, Prisma.AccountUncheckedCreateWithoutMemberInput>
 }
 
-export type AccountUncheckedUpdateWithoutUserInput = {
-  account_id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  member_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  history?: Prisma.AccountHistoryUncheckedUpdateManyWithoutAccountNestedInput
-  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutAccountNestedInput
+export type AccountCreateManyMemberInputEnvelope = {
+  data: Prisma.AccountCreateManyMemberInput | Prisma.AccountCreateManyMemberInput[]
+  skipDuplicates?: boolean
 }
 
-export type AccountUncheckedUpdateManyWithoutUserInput = {
-  account_id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  member_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+export type AccountUpsertWithWhereUniqueWithoutMemberInput = {
+  where: Prisma.AccountWhereUniqueInput
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutMemberInput, Prisma.AccountUncheckedUpdateWithoutMemberInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutMemberInput, Prisma.AccountUncheckedCreateWithoutMemberInput>
 }
 
-export type AccountCreateManyItemInput = {
+export type AccountUpdateWithWhereUniqueWithoutMemberInput = {
+  where: Prisma.AccountWhereUniqueInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutMemberInput, Prisma.AccountUncheckedUpdateWithoutMemberInput>
+}
+
+export type AccountUpdateManyWithWhereWithoutMemberInput = {
+  where: Prisma.AccountScalarWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateManyMutationInput, Prisma.AccountUncheckedUpdateManyWithoutMemberInput>
+}
+
+export type AccountCreateWithoutItemInput = {
   account_id: string
   name?: string | null
   type?: string | null
@@ -1894,7 +1630,34 @@ export type AccountCreateManyItemInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: string | null
+  timestamp?: Date | string | null
+  updated_at?: Date | string | null
+  created_at?: Date | string | null
+  balance?: Prisma.BalanceCreateNestedOneWithoutAccountInput
+  user: Prisma.UserCreateNestedOneWithoutAccountsInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutAccountsInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutAccountsInput
+  history?: Prisma.AccountHistoryCreateNestedManyWithoutAccountInput
+  holdings?: Prisma.HoldingCreateNestedManyWithoutAccountInput
+}
+
+export type AccountUncheckedCreateWithoutItemInput = {
+  account_id: string
+  name?: string | null
+  type?: string | null
+  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  mask?: string | null
+  official_name?: string | null
+  subtype?: string | null
+  verification_status?: string | null
+  persistent_account_id?: string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   balance_id?: string | null
   user_id: string
@@ -1903,85 +1666,114 @@ export type AccountCreateManyItemInput = {
   timestamp?: Date | string | null
   updated_at?: Date | string | null
   created_at?: Date | string | null
+  history?: Prisma.AccountHistoryUncheckedCreateNestedManyWithoutAccountInput
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutAccountInput
 }
 
-export type AccountUpdateWithoutItemInput = {
-  account_id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  balance?: Prisma.BalanceUpdateOneWithoutAccountNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutAccountsNestedInput
-  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutAccountsNestedInput
-  household?: Prisma.HouseholdUpdateOneWithoutAccountsNestedInput
-  history?: Prisma.AccountHistoryUpdateManyWithoutAccountNestedInput
-  holdings?: Prisma.HoldingUpdateManyWithoutAccountNestedInput
+export type AccountCreateOrConnectWithoutItemInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput>
 }
 
-export type AccountUncheckedUpdateWithoutItemInput = {
-  account_id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  member_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  history?: Prisma.AccountHistoryUncheckedUpdateManyWithoutAccountNestedInput
-  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutAccountNestedInput
+export type AccountCreateManyItemInputEnvelope = {
+  data: Prisma.AccountCreateManyItemInput | Prisma.AccountCreateManyItemInput[]
+  skipDuplicates?: boolean
 }
 
-export type AccountUncheckedUpdateManyWithoutItemInput = {
-  account_id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  member_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+export type AccountUpsertWithWhereUniqueWithoutItemInput = {
+  where: Prisma.AccountWhereUniqueInput
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutItemInput, Prisma.AccountUncheckedUpdateWithoutItemInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutItemInput, Prisma.AccountUncheckedCreateWithoutItemInput>
+}
+
+export type AccountUpdateWithWhereUniqueWithoutItemInput = {
+  where: Prisma.AccountWhereUniqueInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutItemInput, Prisma.AccountUncheckedUpdateWithoutItemInput>
+}
+
+export type AccountUpdateManyWithWhereWithoutItemInput = {
+  where: Prisma.AccountScalarWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateManyMutationInput, Prisma.AccountUncheckedUpdateManyWithoutItemInput>
+}
+
+export type AccountCreateWithoutUserInput = {
+  account_id: string
+  name?: string | null
+  type?: string | null
+  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  mask?: string | null
+  official_name?: string | null
+  subtype?: string | null
+  verification_status?: string | null
+  persistent_account_id?: string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: string | null
+  timestamp?: Date | string | null
+  updated_at?: Date | string | null
+  created_at?: Date | string | null
+  balance?: Prisma.BalanceCreateNestedOneWithoutAccountInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutAccountsInput
+  household?: Prisma.HouseholdCreateNestedOneWithoutAccountsInput
+  item: Prisma.ItemCreateNestedOneWithoutAccountsInput
+  history?: Prisma.AccountHistoryCreateNestedManyWithoutAccountInput
+  holdings?: Prisma.HoldingCreateNestedManyWithoutAccountInput
+}
+
+export type AccountUncheckedCreateWithoutUserInput = {
+  account_id: string
+  name?: string | null
+  type?: string | null
+  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  mask?: string | null
+  official_name?: string | null
+  subtype?: string | null
+  verification_status?: string | null
+  persistent_account_id?: string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: string | null
+  balance_id?: string | null
+  member_id: string
+  household_id: string
+  item_id: string
+  timestamp?: Date | string | null
+  updated_at?: Date | string | null
+  created_at?: Date | string | null
+  history?: Prisma.AccountHistoryUncheckedCreateNestedManyWithoutAccountInput
+  holdings?: Prisma.HoldingUncheckedCreateNestedManyWithoutAccountInput
+}
+
+export type AccountCreateOrConnectWithoutUserInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput>
+}
+
+export type AccountCreateManyUserInputEnvelope = {
+  data: Prisma.AccountCreateManyUserInput | Prisma.AccountCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type AccountUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.AccountWhereUniqueInput
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutUserInput, Prisma.AccountUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutUserInput, Prisma.AccountUncheckedCreateWithoutUserInput>
+}
+
+export type AccountUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.AccountWhereUniqueInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutUserInput, Prisma.AccountUncheckedUpdateWithoutUserInput>
+}
+
+export type AccountUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.AccountScalarWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateManyMutationInput, Prisma.AccountUncheckedUpdateManyWithoutUserInput>
 }
 
 export type AccountCreateManyHouseholdInput = {
@@ -1998,7 +1790,7 @@ export type AccountCreateManyHouseholdInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   balance_id?: string | null
   user_id: string
@@ -2023,7 +1815,7 @@ export type AccountUpdateWithoutHouseholdInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2050,7 +1842,7 @@ export type AccountUncheckedUpdateWithoutHouseholdInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2077,7 +1869,7 @@ export type AccountUncheckedUpdateManyWithoutHouseholdInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2102,7 +1894,7 @@ export type AccountCreateManyMemberInput = {
   subtype?: string | null
   verification_status?: string | null
   persistent_account_id?: string | null
-  annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: string | null
   balance_id?: string | null
   user_id: string
@@ -2127,7 +1919,7 @@ export type AccountUpdateWithoutMemberInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2154,7 +1946,7 @@ export type AccountUncheckedUpdateWithoutMemberInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2181,10 +1973,218 @@ export type AccountUncheckedUpdateManyWithoutMemberInput = {
   subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type AccountCreateManyItemInput = {
+  account_id: string
+  name?: string | null
+  type?: string | null
+  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  mask?: string | null
+  official_name?: string | null
+  subtype?: string | null
+  verification_status?: string | null
+  persistent_account_id?: string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: string | null
+  balance_id?: string | null
+  user_id: string
+  member_id: string
+  household_id: string
+  timestamp?: Date | string | null
+  updated_at?: Date | string | null
+  created_at?: Date | string | null
+}
+
+export type AccountUpdateWithoutItemInput = {
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  balance?: Prisma.BalanceUpdateOneWithoutAccountNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAccountsNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutAccountsNestedInput
+  household?: Prisma.HouseholdUpdateOneWithoutAccountsNestedInput
+  history?: Prisma.AccountHistoryUpdateManyWithoutAccountNestedInput
+  holdings?: Prisma.HoldingUpdateManyWithoutAccountNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutItemInput = {
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  history?: Prisma.AccountHistoryUncheckedUpdateManyWithoutAccountNestedInput
+  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutAccountNestedInput
+}
+
+export type AccountUncheckedUpdateManyWithoutItemInput = {
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type AccountCreateManyUserInput = {
+  account_id: string
+  name?: string | null
+  type?: string | null
+  available?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: string | null
+  unofficial_currency_code?: string | null
+  mask?: string | null
+  official_name?: string | null
+  subtype?: string | null
+  verification_status?: string | null
+  persistent_account_id?: string | null
+  expected_annual_return_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: string | null
+  balance_id?: string | null
+  member_id: string
+  household_id: string
+  item_id: string
+  timestamp?: Date | string | null
+  updated_at?: Date | string | null
+  created_at?: Date | string | null
+}
+
+export type AccountUpdateWithoutUserInput = {
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  balance?: Prisma.BalanceUpdateOneWithoutAccountNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutAccountsNestedInput
+  household?: Prisma.HouseholdUpdateOneWithoutAccountsNestedInput
+  item?: Prisma.ItemUpdateOneRequiredWithoutAccountsNestedInput
+  history?: Prisma.AccountHistoryUpdateManyWithoutAccountNestedInput
+  holdings?: Prisma.HoldingUpdateManyWithoutAccountNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutUserInput = {
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  history?: Prisma.AccountHistoryUncheckedUpdateManyWithoutAccountNestedInput
+  holdings?: Prisma.HoldingUncheckedUpdateManyWithoutAccountNestedInput
+}
+
+export type AccountUncheckedUpdateManyWithoutUserInput = {
+  account_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  available?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  current?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  iso_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unofficial_currency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mask?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  official_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verification_status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  persistent_account_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expected_annual_return_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  holder_category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   household_id?: Prisma.StringFieldUpdateOperationsInput | string
   item_id?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2246,7 +2246,7 @@ export type AccountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   subtype?: boolean
   verification_status?: boolean
   persistent_account_id?: boolean
-  annual_return_rate?: boolean
+  expected_annual_return_rate?: boolean
   holder_category?: boolean
   balance_id?: boolean
   user_id?: boolean
@@ -2280,7 +2280,7 @@ export type AccountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   subtype?: boolean
   verification_status?: boolean
   persistent_account_id?: boolean
-  annual_return_rate?: boolean
+  expected_annual_return_rate?: boolean
   holder_category?: boolean
   balance_id?: boolean
   user_id?: boolean
@@ -2311,7 +2311,7 @@ export type AccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   subtype?: boolean
   verification_status?: boolean
   persistent_account_id?: boolean
-  annual_return_rate?: boolean
+  expected_annual_return_rate?: boolean
   holder_category?: boolean
   balance_id?: boolean
   user_id?: boolean
@@ -2342,7 +2342,7 @@ export type AccountSelectScalar = {
   subtype?: boolean
   verification_status?: boolean
   persistent_account_id?: boolean
-  annual_return_rate?: boolean
+  expected_annual_return_rate?: boolean
   holder_category?: boolean
   balance_id?: boolean
   user_id?: boolean
@@ -2354,7 +2354,7 @@ export type AccountSelectScalar = {
   created_at?: boolean
 }
 
-export type AccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"account_id" | "name" | "type" | "available" | "current" | "limit" | "iso_currency_code" | "unofficial_currency_code" | "mask" | "official_name" | "subtype" | "verification_status" | "persistent_account_id" | "annual_return_rate" | "holder_category" | "balance_id" | "user_id" | "member_id" | "household_id" | "item_id" | "timestamp" | "updated_at" | "created_at", ExtArgs["result"]["account"]>
+export type AccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"account_id" | "name" | "type" | "available" | "current" | "limit" | "iso_currency_code" | "unofficial_currency_code" | "mask" | "official_name" | "subtype" | "verification_status" | "persistent_account_id" | "expected_annual_return_rate" | "holder_category" | "balance_id" | "user_id" | "member_id" | "household_id" | "item_id" | "timestamp" | "updated_at" | "created_at", ExtArgs["result"]["account"]>
 export type AccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   balance?: boolean | Prisma.Account$balanceArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2405,7 +2405,7 @@ export type $AccountPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     subtype: string | null
     verification_status: string | null
     persistent_account_id: string | null
-    annual_return_rate: runtime.Decimal | null
+    expected_annual_return_rate: runtime.Decimal | null
     holder_category: string | null
     balance_id: string | null
     user_id: string
@@ -2858,7 +2858,7 @@ export interface AccountFieldRefs {
   readonly subtype: Prisma.FieldRef<"Account", 'String'>
   readonly verification_status: Prisma.FieldRef<"Account", 'String'>
   readonly persistent_account_id: Prisma.FieldRef<"Account", 'String'>
-  readonly annual_return_rate: Prisma.FieldRef<"Account", 'Decimal'>
+  readonly expected_annual_return_rate: Prisma.FieldRef<"Account", 'Decimal'>
   readonly holder_category: Prisma.FieldRef<"Account", 'String'>
   readonly balance_id: Prisma.FieldRef<"Account", 'String'>
   readonly user_id: Prisma.FieldRef<"Account", 'String'>

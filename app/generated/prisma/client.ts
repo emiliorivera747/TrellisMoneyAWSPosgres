@@ -55,10 +55,20 @@ export type AccountHistory = Prisma.AccountHistoryModel
  */
 export type Balance = Prisma.BalanceModel
 /**
- * Model User
+ * Model Holding
  * 
  */
-export type User = Prisma.UserModel
+export type Holding = Prisma.HoldingModel
+/**
+ * Model Household
+ * 
+ */
+export type Household = Prisma.HouseholdModel
+/**
+ * Model HouseholdMember
+ * 
+ */
+export type HouseholdMember = Prisma.HouseholdMemberModel
 /**
  * Model Item
  * 
@@ -85,45 +95,10 @@ export type OptionContract = Prisma.OptionContractModel
  */
 export type FixedIncome = Prisma.FixedIncomeModel
 /**
- * Model Subscription
- * 
- */
-export type Subscription = Prisma.SubscriptionModel
-/**
- * Model Price
- * 
- */
-export type Price = Prisma.PriceModel
-/**
- * Model Product
- * 
- */
-export type Product = Prisma.ProductModel
-/**
  * Model Profile
  * 
  */
 export type Profile = Prisma.ProfileModel
-/**
- * Model Household
- * 
- */
-export type Household = Prisma.HouseholdModel
-/**
- * Model HouseholdMember
- * 
- */
-export type HouseholdMember = Prisma.HouseholdMemberModel
-/**
- * Model Holding
- * 
- */
-export type Holding = Prisma.HoldingModel
-/**
- * Model HoldingHistory
- * 
- */
-export type HoldingHistory = Prisma.HoldingHistoryModel
 /**
  * Model Security
  * 
@@ -139,3 +114,23 @@ export type SecurityHistory = Prisma.SecurityHistoryModel
  * 
  */
 export type Owner = Prisma.OwnerModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model Price
+ * 
+ */
+export type Price = Prisma.PriceModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel

@@ -25,15 +25,15 @@ export type AggregateItem = {
 }
 
 export type ItemMinAggregateOutputType = {
-  item_id: string | null
+  error: string | null
   institution_id: string | null
   institution_name: string | null
+  item_id: string | null
+  update_type: string | null
+  consent_expiration_time: string | null
   webhook: string | null
   auth_method: string | null
   request_id: string | null
-  update_type: string | null
-  consent_expiration_time: string | null
-  error: string | null
   access_token: string | null
   member_id: string | null
   user_id: string | null
@@ -42,15 +42,15 @@ export type ItemMinAggregateOutputType = {
 }
 
 export type ItemMaxAggregateOutputType = {
-  item_id: string | null
+  error: string | null
   institution_id: string | null
   institution_name: string | null
+  item_id: string | null
+  update_type: string | null
+  consent_expiration_time: string | null
   webhook: string | null
   auth_method: string | null
   request_id: string | null
-  update_type: string | null
-  consent_expiration_time: string | null
-  error: string | null
   access_token: string | null
   member_id: string | null
   user_id: string | null
@@ -59,21 +59,21 @@ export type ItemMaxAggregateOutputType = {
 }
 
 export type ItemCountAggregateOutputType = {
-  item_id: number
-  institution_id: number
-  institution_name: number
-  webhook: number
-  auth_method: number
-  request_id: number
-  update_type: number
-  consent_expiration_time: number
   available_products: number
   billed_products: number
   products: number
   error: number
+  institution_id: number
+  institution_name: number
+  item_id: number
+  update_type: number
   consented_products: number
   consented_data_scopes: number
   consented_use_cases: number
+  consent_expiration_time: number
+  webhook: number
+  auth_method: number
+  request_id: number
   access_token: number
   member_id: number
   user_id: number
@@ -84,15 +84,15 @@ export type ItemCountAggregateOutputType = {
 
 
 export type ItemMinAggregateInputType = {
-  item_id?: true
+  error?: true
   institution_id?: true
   institution_name?: true
+  item_id?: true
+  update_type?: true
+  consent_expiration_time?: true
   webhook?: true
   auth_method?: true
   request_id?: true
-  update_type?: true
-  consent_expiration_time?: true
-  error?: true
   access_token?: true
   member_id?: true
   user_id?: true
@@ -101,15 +101,15 @@ export type ItemMinAggregateInputType = {
 }
 
 export type ItemMaxAggregateInputType = {
-  item_id?: true
+  error?: true
   institution_id?: true
   institution_name?: true
+  item_id?: true
+  update_type?: true
+  consent_expiration_time?: true
   webhook?: true
   auth_method?: true
   request_id?: true
-  update_type?: true
-  consent_expiration_time?: true
-  error?: true
   access_token?: true
   member_id?: true
   user_id?: true
@@ -118,21 +118,21 @@ export type ItemMaxAggregateInputType = {
 }
 
 export type ItemCountAggregateInputType = {
-  item_id?: true
-  institution_id?: true
-  institution_name?: true
-  webhook?: true
-  auth_method?: true
-  request_id?: true
-  update_type?: true
-  consent_expiration_time?: true
   available_products?: true
   billed_products?: true
   products?: true
   error?: true
+  institution_id?: true
+  institution_name?: true
+  item_id?: true
+  update_type?: true
   consented_products?: true
   consented_data_scopes?: true
   consented_use_cases?: true
+  consent_expiration_time?: true
+  webhook?: true
+  auth_method?: true
+  request_id?: true
   access_token?: true
   member_id?: true
   user_id?: true
@@ -214,21 +214,21 @@ export type ItemGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 export type ItemGroupByOutputType = {
-  item_id: string
-  institution_id: string | null
-  institution_name: string | null
-  webhook: string | null
-  auth_method: string | null
-  request_id: string
-  update_type: string | null
-  consent_expiration_time: string | null
   available_products: string[]
   billed_products: string[]
   products: string[]
   error: string | null
+  institution_id: string | null
+  institution_name: string | null
+  item_id: string
+  update_type: string | null
   consented_products: string[]
   consented_data_scopes: string[]
   consented_use_cases: string[]
+  consent_expiration_time: string | null
+  webhook: string | null
+  auth_method: string | null
+  request_id: string
   access_token: string
   member_id: string
   user_id: string
@@ -258,21 +258,21 @@ export type ItemWhereInput = {
   AND?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
   OR?: Prisma.ItemWhereInput[]
   NOT?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
-  item_id?: Prisma.StringFilter<"Item"> | string
-  institution_id?: Prisma.StringNullableFilter<"Item"> | string | null
-  institution_name?: Prisma.StringNullableFilter<"Item"> | string | null
-  webhook?: Prisma.StringNullableFilter<"Item"> | string | null
-  auth_method?: Prisma.StringNullableFilter<"Item"> | string | null
-  request_id?: Prisma.StringFilter<"Item"> | string
-  update_type?: Prisma.StringNullableFilter<"Item"> | string | null
-  consent_expiration_time?: Prisma.StringNullableFilter<"Item"> | string | null
   available_products?: Prisma.StringNullableListFilter<"Item">
   billed_products?: Prisma.StringNullableListFilter<"Item">
   products?: Prisma.StringNullableListFilter<"Item">
   error?: Prisma.StringNullableFilter<"Item"> | string | null
+  institution_id?: Prisma.StringNullableFilter<"Item"> | string | null
+  institution_name?: Prisma.StringNullableFilter<"Item"> | string | null
+  item_id?: Prisma.StringFilter<"Item"> | string
+  update_type?: Prisma.StringNullableFilter<"Item"> | string | null
   consented_products?: Prisma.StringNullableListFilter<"Item">
   consented_data_scopes?: Prisma.StringNullableListFilter<"Item">
   consented_use_cases?: Prisma.StringNullableListFilter<"Item">
+  consent_expiration_time?: Prisma.StringNullableFilter<"Item"> | string | null
+  webhook?: Prisma.StringNullableFilter<"Item"> | string | null
+  auth_method?: Prisma.StringNullableFilter<"Item"> | string | null
+  request_id?: Prisma.StringFilter<"Item"> | string
   access_token?: Prisma.StringFilter<"Item"> | string
   member_id?: Prisma.StringFilter<"Item"> | string
   user_id?: Prisma.StringFilter<"Item"> | string
@@ -285,21 +285,21 @@ export type ItemWhereInput = {
 }
 
 export type ItemOrderByWithRelationInput = {
-  item_id?: Prisma.SortOrder
-  institution_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  institution_name?: Prisma.SortOrderInput | Prisma.SortOrder
-  webhook?: Prisma.SortOrderInput | Prisma.SortOrder
-  auth_method?: Prisma.SortOrderInput | Prisma.SortOrder
-  request_id?: Prisma.SortOrder
-  update_type?: Prisma.SortOrderInput | Prisma.SortOrder
-  consent_expiration_time?: Prisma.SortOrderInput | Prisma.SortOrder
   available_products?: Prisma.SortOrder
   billed_products?: Prisma.SortOrder
   products?: Prisma.SortOrder
   error?: Prisma.SortOrderInput | Prisma.SortOrder
+  institution_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  institution_name?: Prisma.SortOrderInput | Prisma.SortOrder
+  item_id?: Prisma.SortOrder
+  update_type?: Prisma.SortOrderInput | Prisma.SortOrder
   consented_products?: Prisma.SortOrder
   consented_data_scopes?: Prisma.SortOrder
   consented_use_cases?: Prisma.SortOrder
+  consent_expiration_time?: Prisma.SortOrderInput | Prisma.SortOrder
+  webhook?: Prisma.SortOrderInput | Prisma.SortOrder
+  auth_method?: Prisma.SortOrderInput | Prisma.SortOrder
+  request_id?: Prisma.SortOrder
   access_token?: Prisma.SortOrder
   member_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -316,20 +316,20 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
   OR?: Prisma.ItemWhereInput[]
   NOT?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
-  institution_id?: Prisma.StringNullableFilter<"Item"> | string | null
-  institution_name?: Prisma.StringNullableFilter<"Item"> | string | null
-  webhook?: Prisma.StringNullableFilter<"Item"> | string | null
-  auth_method?: Prisma.StringNullableFilter<"Item"> | string | null
-  request_id?: Prisma.StringFilter<"Item"> | string
-  update_type?: Prisma.StringNullableFilter<"Item"> | string | null
-  consent_expiration_time?: Prisma.StringNullableFilter<"Item"> | string | null
   available_products?: Prisma.StringNullableListFilter<"Item">
   billed_products?: Prisma.StringNullableListFilter<"Item">
   products?: Prisma.StringNullableListFilter<"Item">
   error?: Prisma.StringNullableFilter<"Item"> | string | null
+  institution_id?: Prisma.StringNullableFilter<"Item"> | string | null
+  institution_name?: Prisma.StringNullableFilter<"Item"> | string | null
+  update_type?: Prisma.StringNullableFilter<"Item"> | string | null
   consented_products?: Prisma.StringNullableListFilter<"Item">
   consented_data_scopes?: Prisma.StringNullableListFilter<"Item">
   consented_use_cases?: Prisma.StringNullableListFilter<"Item">
+  consent_expiration_time?: Prisma.StringNullableFilter<"Item"> | string | null
+  webhook?: Prisma.StringNullableFilter<"Item"> | string | null
+  auth_method?: Prisma.StringNullableFilter<"Item"> | string | null
+  request_id?: Prisma.StringFilter<"Item"> | string
   access_token?: Prisma.StringFilter<"Item"> | string
   member_id?: Prisma.StringFilter<"Item"> | string
   user_id?: Prisma.StringFilter<"Item"> | string
@@ -342,21 +342,21 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
 }, "item_id">
 
 export type ItemOrderByWithAggregationInput = {
-  item_id?: Prisma.SortOrder
-  institution_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  institution_name?: Prisma.SortOrderInput | Prisma.SortOrder
-  webhook?: Prisma.SortOrderInput | Prisma.SortOrder
-  auth_method?: Prisma.SortOrderInput | Prisma.SortOrder
-  request_id?: Prisma.SortOrder
-  update_type?: Prisma.SortOrderInput | Prisma.SortOrder
-  consent_expiration_time?: Prisma.SortOrderInput | Prisma.SortOrder
   available_products?: Prisma.SortOrder
   billed_products?: Prisma.SortOrder
   products?: Prisma.SortOrder
   error?: Prisma.SortOrderInput | Prisma.SortOrder
+  institution_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  institution_name?: Prisma.SortOrderInput | Prisma.SortOrder
+  item_id?: Prisma.SortOrder
+  update_type?: Prisma.SortOrderInput | Prisma.SortOrder
   consented_products?: Prisma.SortOrder
   consented_data_scopes?: Prisma.SortOrder
   consented_use_cases?: Prisma.SortOrder
+  consent_expiration_time?: Prisma.SortOrderInput | Prisma.SortOrder
+  webhook?: Prisma.SortOrderInput | Prisma.SortOrder
+  auth_method?: Prisma.SortOrderInput | Prisma.SortOrder
+  request_id?: Prisma.SortOrder
   access_token?: Prisma.SortOrder
   member_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -371,21 +371,21 @@ export type ItemScalarWhereWithAggregatesInput = {
   AND?: Prisma.ItemScalarWhereWithAggregatesInput | Prisma.ItemScalarWhereWithAggregatesInput[]
   OR?: Prisma.ItemScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ItemScalarWhereWithAggregatesInput | Prisma.ItemScalarWhereWithAggregatesInput[]
-  item_id?: Prisma.StringWithAggregatesFilter<"Item"> | string
-  institution_id?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
-  institution_name?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
-  webhook?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
-  auth_method?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
-  request_id?: Prisma.StringWithAggregatesFilter<"Item"> | string
-  update_type?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
-  consent_expiration_time?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   available_products?: Prisma.StringNullableListFilter<"Item">
   billed_products?: Prisma.StringNullableListFilter<"Item">
   products?: Prisma.StringNullableListFilter<"Item">
   error?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  institution_id?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  institution_name?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  item_id?: Prisma.StringWithAggregatesFilter<"Item"> | string
+  update_type?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   consented_products?: Prisma.StringNullableListFilter<"Item">
   consented_data_scopes?: Prisma.StringNullableListFilter<"Item">
   consented_use_cases?: Prisma.StringNullableListFilter<"Item">
+  consent_expiration_time?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  webhook?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  auth_method?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
+  request_id?: Prisma.StringWithAggregatesFilter<"Item"> | string
   access_token?: Prisma.StringWithAggregatesFilter<"Item"> | string
   member_id?: Prisma.StringWithAggregatesFilter<"Item"> | string
   user_id?: Prisma.StringWithAggregatesFilter<"Item"> | string
@@ -394,21 +394,21 @@ export type ItemScalarWhereWithAggregatesInput = {
 }
 
 export type ItemCreateInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   created_at?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutItemInput
@@ -418,21 +418,21 @@ export type ItemCreateInput = {
 }
 
 export type ItemUncheckedCreateInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   member_id: string
   user_id: string
@@ -442,21 +442,21 @@ export type ItemUncheckedCreateInput = {
 }
 
 export type ItemUpdateInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutItemNestedInput
@@ -466,21 +466,21 @@ export type ItemUpdateInput = {
 }
 
 export type ItemUncheckedUpdateInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   member_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -490,21 +490,21 @@ export type ItemUncheckedUpdateInput = {
 }
 
 export type ItemCreateManyInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   member_id: string
   user_id: string
@@ -513,41 +513,41 @@ export type ItemCreateManyInput = {
 }
 
 export type ItemUpdateManyMutationInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ItemUncheckedUpdateManyInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   member_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -579,21 +579,21 @@ export type StringNullableListFilter<$PrismaModel = never> = {
 }
 
 export type ItemCountOrderByAggregateInput = {
-  item_id?: Prisma.SortOrder
-  institution_id?: Prisma.SortOrder
-  institution_name?: Prisma.SortOrder
-  webhook?: Prisma.SortOrder
-  auth_method?: Prisma.SortOrder
-  request_id?: Prisma.SortOrder
-  update_type?: Prisma.SortOrder
-  consent_expiration_time?: Prisma.SortOrder
   available_products?: Prisma.SortOrder
   billed_products?: Prisma.SortOrder
   products?: Prisma.SortOrder
   error?: Prisma.SortOrder
+  institution_id?: Prisma.SortOrder
+  institution_name?: Prisma.SortOrder
+  item_id?: Prisma.SortOrder
+  update_type?: Prisma.SortOrder
   consented_products?: Prisma.SortOrder
   consented_data_scopes?: Prisma.SortOrder
   consented_use_cases?: Prisma.SortOrder
+  consent_expiration_time?: Prisma.SortOrder
+  webhook?: Prisma.SortOrder
+  auth_method?: Prisma.SortOrder
+  request_id?: Prisma.SortOrder
   access_token?: Prisma.SortOrder
   member_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -602,15 +602,15 @@ export type ItemCountOrderByAggregateInput = {
 }
 
 export type ItemMaxOrderByAggregateInput = {
-  item_id?: Prisma.SortOrder
+  error?: Prisma.SortOrder
   institution_id?: Prisma.SortOrder
   institution_name?: Prisma.SortOrder
+  item_id?: Prisma.SortOrder
+  update_type?: Prisma.SortOrder
+  consent_expiration_time?: Prisma.SortOrder
   webhook?: Prisma.SortOrder
   auth_method?: Prisma.SortOrder
   request_id?: Prisma.SortOrder
-  update_type?: Prisma.SortOrder
-  consent_expiration_time?: Prisma.SortOrder
-  error?: Prisma.SortOrder
   access_token?: Prisma.SortOrder
   member_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -619,15 +619,15 @@ export type ItemMaxOrderByAggregateInput = {
 }
 
 export type ItemMinOrderByAggregateInput = {
-  item_id?: Prisma.SortOrder
+  error?: Prisma.SortOrder
   institution_id?: Prisma.SortOrder
   institution_name?: Prisma.SortOrder
+  item_id?: Prisma.SortOrder
+  update_type?: Prisma.SortOrder
+  consent_expiration_time?: Prisma.SortOrder
   webhook?: Prisma.SortOrder
   auth_method?: Prisma.SortOrder
   request_id?: Prisma.SortOrder
-  update_type?: Prisma.SortOrder
-  consent_expiration_time?: Prisma.SortOrder
-  error?: Prisma.SortOrder
   access_token?: Prisma.SortOrder
   member_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -647,102 +647,6 @@ export type ItemUpdateOneRequiredWithoutAccountsNestedInput = {
   upsert?: Prisma.ItemUpsertWithoutAccountsInput
   connect?: Prisma.ItemWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutAccountsInput, Prisma.ItemUpdateWithoutAccountsInput>, Prisma.ItemUncheckedUpdateWithoutAccountsInput>
-}
-
-export type ItemCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput> | Prisma.ItemCreateWithoutUserInput[] | Prisma.ItemUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutUserInput | Prisma.ItemCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ItemCreateManyUserInputEnvelope
-  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-}
-
-export type ItemUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput> | Prisma.ItemCreateWithoutUserInput[] | Prisma.ItemUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutUserInput | Prisma.ItemCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ItemCreateManyUserInputEnvelope
-  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-}
-
-export type ItemUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput> | Prisma.ItemCreateWithoutUserInput[] | Prisma.ItemUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutUserInput | Prisma.ItemCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ItemUpsertWithWhereUniqueWithoutUserInput | Prisma.ItemUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ItemCreateManyUserInputEnvelope
-  set?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-  disconnect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-  delete?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-  update?: Prisma.ItemUpdateWithWhereUniqueWithoutUserInput | Prisma.ItemUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ItemUpdateManyWithWhereWithoutUserInput | Prisma.ItemUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
-}
-
-export type ItemUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput> | Prisma.ItemCreateWithoutUserInput[] | Prisma.ItemUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutUserInput | Prisma.ItemCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ItemUpsertWithWhereUniqueWithoutUserInput | Prisma.ItemUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ItemCreateManyUserInputEnvelope
-  set?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-  disconnect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-  delete?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
-  update?: Prisma.ItemUpdateWithWhereUniqueWithoutUserInput | Prisma.ItemUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ItemUpdateManyWithWhereWithoutUserInput | Prisma.ItemUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
-}
-
-export type ItemCreateavailable_productsInput = {
-  set: string[]
-}
-
-export type ItemCreatebilled_productsInput = {
-  set: string[]
-}
-
-export type ItemCreateproductsInput = {
-  set: string[]
-}
-
-export type ItemCreateconsented_productsInput = {
-  set: string[]
-}
-
-export type ItemCreateconsented_data_scopesInput = {
-  set: string[]
-}
-
-export type ItemCreateconsented_use_casesInput = {
-  set: string[]
-}
-
-export type ItemUpdateavailable_productsInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
-export type ItemUpdatebilled_productsInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
-export type ItemUpdateproductsInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
-export type ItemUpdateconsented_productsInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
-export type ItemUpdateconsented_data_scopesInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
-export type ItemUpdateconsented_use_casesInput = {
-  set?: string[]
-  push?: string | string[]
 }
 
 export type ItemCreateNestedManyWithoutHouseholdInput = {
@@ -829,22 +733,118 @@ export type ItemUncheckedUpdateManyWithoutMemberNestedInput = {
   deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
 }
 
+export type ItemCreateavailable_productsInput = {
+  set: string[]
+}
+
+export type ItemCreatebilled_productsInput = {
+  set: string[]
+}
+
+export type ItemCreateproductsInput = {
+  set: string[]
+}
+
+export type ItemCreateconsented_productsInput = {
+  set: string[]
+}
+
+export type ItemCreateconsented_data_scopesInput = {
+  set: string[]
+}
+
+export type ItemCreateconsented_use_casesInput = {
+  set: string[]
+}
+
+export type ItemUpdateavailable_productsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type ItemUpdatebilled_productsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type ItemUpdateproductsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type ItemUpdateconsented_productsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type ItemUpdateconsented_data_scopesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type ItemUpdateconsented_use_casesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type ItemCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput> | Prisma.ItemCreateWithoutUserInput[] | Prisma.ItemUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutUserInput | Prisma.ItemCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ItemCreateManyUserInputEnvelope
+  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+}
+
+export type ItemUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput> | Prisma.ItemCreateWithoutUserInput[] | Prisma.ItemUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutUserInput | Prisma.ItemCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ItemCreateManyUserInputEnvelope
+  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+}
+
+export type ItemUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput> | Prisma.ItemCreateWithoutUserInput[] | Prisma.ItemUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutUserInput | Prisma.ItemCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ItemUpsertWithWhereUniqueWithoutUserInput | Prisma.ItemUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ItemCreateManyUserInputEnvelope
+  set?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  disconnect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  delete?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  update?: Prisma.ItemUpdateWithWhereUniqueWithoutUserInput | Prisma.ItemUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ItemUpdateManyWithWhereWithoutUserInput | Prisma.ItemUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
+}
+
+export type ItemUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput> | Prisma.ItemCreateWithoutUserInput[] | Prisma.ItemUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutUserInput | Prisma.ItemCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ItemUpsertWithWhereUniqueWithoutUserInput | Prisma.ItemUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ItemCreateManyUserInputEnvelope
+  set?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  disconnect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  delete?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  connect?: Prisma.ItemWhereUniqueInput | Prisma.ItemWhereUniqueInput[]
+  update?: Prisma.ItemUpdateWithWhereUniqueWithoutUserInput | Prisma.ItemUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ItemUpdateManyWithWhereWithoutUserInput | Prisma.ItemUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
+}
+
 export type ItemCreateWithoutAccountsInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   created_at?: Date | string
   member: Prisma.HouseholdMemberCreateNestedOneWithoutItemsInput
@@ -853,21 +853,21 @@ export type ItemCreateWithoutAccountsInput = {
 }
 
 export type ItemUncheckedCreateWithoutAccountsInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   member_id: string
   user_id: string
@@ -892,21 +892,21 @@ export type ItemUpdateToOneWithWhereWithoutAccountsInput = {
 }
 
 export type ItemUpdateWithoutAccountsInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutItemsNestedInput
@@ -915,21 +915,21 @@ export type ItemUpdateWithoutAccountsInput = {
 }
 
 export type ItemUncheckedUpdateWithoutAccountsInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   member_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -937,120 +937,22 @@ export type ItemUncheckedUpdateWithoutAccountsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type ItemCreateWithoutUserInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
-  available_products?: Prisma.ItemCreateavailable_productsInput | string[]
-  billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
-  products?: Prisma.ItemCreateproductsInput | string[]
-  error?: string | null
-  consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
-  consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
-  consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
-  access_token: string
-  created_at?: Date | string
-  accounts?: Prisma.AccountCreateNestedManyWithoutItemInput
-  member: Prisma.HouseholdMemberCreateNestedOneWithoutItemsInput
-  household: Prisma.HouseholdCreateNestedOneWithoutItemsInput
-}
-
-export type ItemUncheckedCreateWithoutUserInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
-  available_products?: Prisma.ItemCreateavailable_productsInput | string[]
-  billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
-  products?: Prisma.ItemCreateproductsInput | string[]
-  error?: string | null
-  consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
-  consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
-  consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
-  access_token: string
-  member_id: string
-  household_id: string
-  created_at?: Date | string
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutItemInput
-}
-
-export type ItemCreateOrConnectWithoutUserInput = {
-  where: Prisma.ItemWhereUniqueInput
-  create: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput>
-}
-
-export type ItemCreateManyUserInputEnvelope = {
-  data: Prisma.ItemCreateManyUserInput | Prisma.ItemCreateManyUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type ItemUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.ItemWhereUniqueInput
-  update: Prisma.XOR<Prisma.ItemUpdateWithoutUserInput, Prisma.ItemUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput>
-}
-
-export type ItemUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.ItemWhereUniqueInput
-  data: Prisma.XOR<Prisma.ItemUpdateWithoutUserInput, Prisma.ItemUncheckedUpdateWithoutUserInput>
-}
-
-export type ItemUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.ItemScalarWhereInput
-  data: Prisma.XOR<Prisma.ItemUpdateManyMutationInput, Prisma.ItemUncheckedUpdateManyWithoutUserInput>
-}
-
-export type ItemScalarWhereInput = {
-  AND?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
-  OR?: Prisma.ItemScalarWhereInput[]
-  NOT?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
-  item_id?: Prisma.StringFilter<"Item"> | string
-  institution_id?: Prisma.StringNullableFilter<"Item"> | string | null
-  institution_name?: Prisma.StringNullableFilter<"Item"> | string | null
-  webhook?: Prisma.StringNullableFilter<"Item"> | string | null
-  auth_method?: Prisma.StringNullableFilter<"Item"> | string | null
-  request_id?: Prisma.StringFilter<"Item"> | string
-  update_type?: Prisma.StringNullableFilter<"Item"> | string | null
-  consent_expiration_time?: Prisma.StringNullableFilter<"Item"> | string | null
-  available_products?: Prisma.StringNullableListFilter<"Item">
-  billed_products?: Prisma.StringNullableListFilter<"Item">
-  products?: Prisma.StringNullableListFilter<"Item">
-  error?: Prisma.StringNullableFilter<"Item"> | string | null
-  consented_products?: Prisma.StringNullableListFilter<"Item">
-  consented_data_scopes?: Prisma.StringNullableListFilter<"Item">
-  consented_use_cases?: Prisma.StringNullableListFilter<"Item">
-  access_token?: Prisma.StringFilter<"Item"> | string
-  member_id?: Prisma.StringFilter<"Item"> | string
-  user_id?: Prisma.StringFilter<"Item"> | string
-  household_id?: Prisma.StringFilter<"Item"> | string
-  created_at?: Prisma.DateTimeFilter<"Item"> | Date | string
-}
-
 export type ItemCreateWithoutHouseholdInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   created_at?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutItemInput
@@ -1059,21 +961,21 @@ export type ItemCreateWithoutHouseholdInput = {
 }
 
 export type ItemUncheckedCreateWithoutHouseholdInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   member_id: string
   user_id: string
@@ -1107,22 +1009,48 @@ export type ItemUpdateManyWithWhereWithoutHouseholdInput = {
   data: Prisma.XOR<Prisma.ItemUpdateManyMutationInput, Prisma.ItemUncheckedUpdateManyWithoutHouseholdInput>
 }
 
+export type ItemScalarWhereInput = {
+  AND?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
+  OR?: Prisma.ItemScalarWhereInput[]
+  NOT?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
+  available_products?: Prisma.StringNullableListFilter<"Item">
+  billed_products?: Prisma.StringNullableListFilter<"Item">
+  products?: Prisma.StringNullableListFilter<"Item">
+  error?: Prisma.StringNullableFilter<"Item"> | string | null
+  institution_id?: Prisma.StringNullableFilter<"Item"> | string | null
+  institution_name?: Prisma.StringNullableFilter<"Item"> | string | null
+  item_id?: Prisma.StringFilter<"Item"> | string
+  update_type?: Prisma.StringNullableFilter<"Item"> | string | null
+  consented_products?: Prisma.StringNullableListFilter<"Item">
+  consented_data_scopes?: Prisma.StringNullableListFilter<"Item">
+  consented_use_cases?: Prisma.StringNullableListFilter<"Item">
+  consent_expiration_time?: Prisma.StringNullableFilter<"Item"> | string | null
+  webhook?: Prisma.StringNullableFilter<"Item"> | string | null
+  auth_method?: Prisma.StringNullableFilter<"Item"> | string | null
+  request_id?: Prisma.StringFilter<"Item"> | string
+  access_token?: Prisma.StringFilter<"Item"> | string
+  member_id?: Prisma.StringFilter<"Item"> | string
+  user_id?: Prisma.StringFilter<"Item"> | string
+  household_id?: Prisma.StringFilter<"Item"> | string
+  created_at?: Prisma.DateTimeFilter<"Item"> | Date | string
+}
+
 export type ItemCreateWithoutMemberInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   created_at?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutItemInput
@@ -1131,21 +1059,21 @@ export type ItemCreateWithoutMemberInput = {
 }
 
 export type ItemUncheckedCreateWithoutMemberInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   user_id: string
   household_id: string
@@ -1179,112 +1107,94 @@ export type ItemUpdateManyWithWhereWithoutMemberInput = {
   data: Prisma.XOR<Prisma.ItemUpdateManyMutationInput, Prisma.ItemUncheckedUpdateManyWithoutMemberInput>
 }
 
-export type ItemCreateManyUserInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
+export type ItemCreateWithoutUserInput = {
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
+  access_token: string
+  created_at?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutItemInput
+  member: Prisma.HouseholdMemberCreateNestedOneWithoutItemsInput
+  household: Prisma.HouseholdCreateNestedOneWithoutItemsInput
+}
+
+export type ItemUncheckedCreateWithoutUserInput = {
+  available_products?: Prisma.ItemCreateavailable_productsInput | string[]
+  billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
+  products?: Prisma.ItemCreateproductsInput | string[]
+  error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
+  consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
+  consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
+  consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   member_id: string
   household_id: string
   created_at?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutItemInput
 }
 
-export type ItemUpdateWithoutUserInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
-  billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
-  products?: Prisma.ItemUpdateproductsInput | string[]
-  error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
-  consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
-  consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
-  access_token?: Prisma.StringFieldUpdateOperationsInput | string
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  accounts?: Prisma.AccountUpdateManyWithoutItemNestedInput
-  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutItemsNestedInput
-  household?: Prisma.HouseholdUpdateOneRequiredWithoutItemsNestedInput
+export type ItemCreateOrConnectWithoutUserInput = {
+  where: Prisma.ItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput>
 }
 
-export type ItemUncheckedUpdateWithoutUserInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
-  billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
-  products?: Prisma.ItemUpdateproductsInput | string[]
-  error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
-  consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
-  consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
-  access_token?: Prisma.StringFieldUpdateOperationsInput | string
-  member_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutItemNestedInput
+export type ItemCreateManyUserInputEnvelope = {
+  data: Prisma.ItemCreateManyUserInput | Prisma.ItemCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
-export type ItemUncheckedUpdateManyWithoutUserInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
-  billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
-  products?: Prisma.ItemUpdateproductsInput | string[]
-  error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
-  consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
-  consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
-  access_token?: Prisma.StringFieldUpdateOperationsInput | string
-  member_id?: Prisma.StringFieldUpdateOperationsInput | string
-  household_id?: Prisma.StringFieldUpdateOperationsInput | string
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type ItemUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ItemWhereUniqueInput
+  update: Prisma.XOR<Prisma.ItemUpdateWithoutUserInput, Prisma.ItemUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutUserInput, Prisma.ItemUncheckedCreateWithoutUserInput>
+}
+
+export type ItemUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ItemWhereUniqueInput
+  data: Prisma.XOR<Prisma.ItemUpdateWithoutUserInput, Prisma.ItemUncheckedUpdateWithoutUserInput>
+}
+
+export type ItemUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.ItemScalarWhereInput
+  data: Prisma.XOR<Prisma.ItemUpdateManyMutationInput, Prisma.ItemUncheckedUpdateManyWithoutUserInput>
 }
 
 export type ItemCreateManyHouseholdInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   member_id: string
   user_id: string
@@ -1292,21 +1202,21 @@ export type ItemCreateManyHouseholdInput = {
 }
 
 export type ItemUpdateWithoutHouseholdInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutItemNestedInput
@@ -1315,21 +1225,21 @@ export type ItemUpdateWithoutHouseholdInput = {
 }
 
 export type ItemUncheckedUpdateWithoutHouseholdInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   member_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1338,21 +1248,21 @@ export type ItemUncheckedUpdateWithoutHouseholdInput = {
 }
 
 export type ItemUncheckedUpdateManyWithoutHouseholdInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   member_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1360,21 +1270,21 @@ export type ItemUncheckedUpdateManyWithoutHouseholdInput = {
 }
 
 export type ItemCreateManyMemberInput = {
-  item_id: string
-  institution_id?: string | null
-  institution_name?: string | null
-  webhook?: string | null
-  auth_method?: string | null
-  request_id: string
-  update_type?: string | null
-  consent_expiration_time?: string | null
   available_products?: Prisma.ItemCreateavailable_productsInput | string[]
   billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
   products?: Prisma.ItemCreateproductsInput | string[]
   error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
   consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
   access_token: string
   user_id: string
   household_id: string
@@ -1382,21 +1292,21 @@ export type ItemCreateManyMemberInput = {
 }
 
 export type ItemUpdateWithoutMemberInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutItemNestedInput
@@ -1405,21 +1315,21 @@ export type ItemUpdateWithoutMemberInput = {
 }
 
 export type ItemUncheckedUpdateWithoutMemberInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   household_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1428,23 +1338,113 @@ export type ItemUncheckedUpdateWithoutMemberInput = {
 }
 
 export type ItemUncheckedUpdateManyWithoutMemberInput = {
-  item_id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  request_id?: Prisma.StringFieldUpdateOperationsInput | string
-  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
   billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
   products?: Prisma.ItemUpdateproductsInput | string[]
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
   consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
   consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
   access_token?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ItemCreateManyUserInput = {
+  available_products?: Prisma.ItemCreateavailable_productsInput | string[]
+  billed_products?: Prisma.ItemCreatebilled_productsInput | string[]
+  products?: Prisma.ItemCreateproductsInput | string[]
+  error?: string | null
+  institution_id?: string | null
+  institution_name?: string | null
+  item_id: string
+  update_type?: string | null
+  consented_products?: Prisma.ItemCreateconsented_productsInput | string[]
+  consented_data_scopes?: Prisma.ItemCreateconsented_data_scopesInput | string[]
+  consented_use_cases?: Prisma.ItemCreateconsented_use_casesInput | string[]
+  consent_expiration_time?: string | null
+  webhook?: string | null
+  auth_method?: string | null
+  request_id: string
+  access_token: string
+  member_id: string
+  household_id: string
+  created_at?: Date | string
+}
+
+export type ItemUpdateWithoutUserInput = {
+  available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
+  billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
+  products?: Prisma.ItemUpdateproductsInput | string[]
+  error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
+  consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
+  consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
+  access_token?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutItemNestedInput
+  member?: Prisma.HouseholdMemberUpdateOneRequiredWithoutItemsNestedInput
+  household?: Prisma.HouseholdUpdateOneRequiredWithoutItemsNestedInput
+}
+
+export type ItemUncheckedUpdateWithoutUserInput = {
+  available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
+  billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
+  products?: Prisma.ItemUpdateproductsInput | string[]
+  error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
+  consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
+  consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
+  access_token?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
+  household_id?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemUncheckedUpdateManyWithoutUserInput = {
+  available_products?: Prisma.ItemUpdateavailable_productsInput | string[]
+  billed_products?: Prisma.ItemUpdatebilled_productsInput | string[]
+  products?: Prisma.ItemUpdateproductsInput | string[]
+  error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_id?: Prisma.StringFieldUpdateOperationsInput | string
+  update_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consented_products?: Prisma.ItemUpdateconsented_productsInput | string[]
+  consented_data_scopes?: Prisma.ItemUpdateconsented_data_scopesInput | string[]
+  consented_use_cases?: Prisma.ItemUpdateconsented_use_casesInput | string[]
+  consent_expiration_time?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  webhook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  auth_method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  request_id?: Prisma.StringFieldUpdateOperationsInput | string
+  access_token?: Prisma.StringFieldUpdateOperationsInput | string
+  member_id?: Prisma.StringFieldUpdateOperationsInput | string
   household_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1481,21 +1481,21 @@ export type ItemCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.E
 
 
 export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  item_id?: boolean
-  institution_id?: boolean
-  institution_name?: boolean
-  webhook?: boolean
-  auth_method?: boolean
-  request_id?: boolean
-  update_type?: boolean
-  consent_expiration_time?: boolean
   available_products?: boolean
   billed_products?: boolean
   products?: boolean
   error?: boolean
+  institution_id?: boolean
+  institution_name?: boolean
+  item_id?: boolean
+  update_type?: boolean
   consented_products?: boolean
   consented_data_scopes?: boolean
   consented_use_cases?: boolean
+  consent_expiration_time?: boolean
+  webhook?: boolean
+  auth_method?: boolean
+  request_id?: boolean
   access_token?: boolean
   member_id?: boolean
   user_id?: boolean
@@ -1509,21 +1509,21 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  item_id?: boolean
-  institution_id?: boolean
-  institution_name?: boolean
-  webhook?: boolean
-  auth_method?: boolean
-  request_id?: boolean
-  update_type?: boolean
-  consent_expiration_time?: boolean
   available_products?: boolean
   billed_products?: boolean
   products?: boolean
   error?: boolean
+  institution_id?: boolean
+  institution_name?: boolean
+  item_id?: boolean
+  update_type?: boolean
   consented_products?: boolean
   consented_data_scopes?: boolean
   consented_use_cases?: boolean
+  consent_expiration_time?: boolean
+  webhook?: boolean
+  auth_method?: boolean
+  request_id?: boolean
   access_token?: boolean
   member_id?: boolean
   user_id?: boolean
@@ -1535,21 +1535,21 @@ export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  item_id?: boolean
-  institution_id?: boolean
-  institution_name?: boolean
-  webhook?: boolean
-  auth_method?: boolean
-  request_id?: boolean
-  update_type?: boolean
-  consent_expiration_time?: boolean
   available_products?: boolean
   billed_products?: boolean
   products?: boolean
   error?: boolean
+  institution_id?: boolean
+  institution_name?: boolean
+  item_id?: boolean
+  update_type?: boolean
   consented_products?: boolean
   consented_data_scopes?: boolean
   consented_use_cases?: boolean
+  consent_expiration_time?: boolean
+  webhook?: boolean
+  auth_method?: boolean
+  request_id?: boolean
   access_token?: boolean
   member_id?: boolean
   user_id?: boolean
@@ -1561,21 +1561,21 @@ export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectScalar = {
-  item_id?: boolean
-  institution_id?: boolean
-  institution_name?: boolean
-  webhook?: boolean
-  auth_method?: boolean
-  request_id?: boolean
-  update_type?: boolean
-  consent_expiration_time?: boolean
   available_products?: boolean
   billed_products?: boolean
   products?: boolean
   error?: boolean
+  institution_id?: boolean
+  institution_name?: boolean
+  item_id?: boolean
+  update_type?: boolean
   consented_products?: boolean
   consented_data_scopes?: boolean
   consented_use_cases?: boolean
+  consent_expiration_time?: boolean
+  webhook?: boolean
+  auth_method?: boolean
+  request_id?: boolean
   access_token?: boolean
   member_id?: boolean
   user_id?: boolean
@@ -1583,7 +1583,7 @@ export type ItemSelectScalar = {
   created_at?: boolean
 }
 
-export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"item_id" | "institution_id" | "institution_name" | "webhook" | "auth_method" | "request_id" | "update_type" | "consent_expiration_time" | "available_products" | "billed_products" | "products" | "error" | "consented_products" | "consented_data_scopes" | "consented_use_cases" | "access_token" | "member_id" | "user_id" | "household_id" | "created_at", ExtArgs["result"]["item"]>
+export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"available_products" | "billed_products" | "products" | "error" | "institution_id" | "institution_name" | "item_id" | "update_type" | "consented_products" | "consented_data_scopes" | "consented_use_cases" | "consent_expiration_time" | "webhook" | "auth_method" | "request_id" | "access_token" | "member_id" | "user_id" | "household_id" | "created_at", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.Item$accountsArgs<ExtArgs>
   member?: boolean | Prisma.HouseholdMemberDefaultArgs<ExtArgs>
@@ -1611,21 +1611,21 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     household: Prisma.$HouseholdPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    item_id: string
-    institution_id: string | null
-    institution_name: string | null
-    webhook: string | null
-    auth_method: string | null
-    request_id: string
-    update_type: string | null
-    consent_expiration_time: string | null
     available_products: string[]
     billed_products: string[]
     products: string[]
     error: string | null
+    institution_id: string | null
+    institution_name: string | null
+    item_id: string
+    update_type: string | null
     consented_products: string[]
     consented_data_scopes: string[]
     consented_use_cases: string[]
+    consent_expiration_time: string | null
+    webhook: string | null
+    auth_method: string | null
+    request_id: string
     access_token: string
     member_id: string
     user_id: string
@@ -1714,8 +1714,8 @@ export interface ItemDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    * // Get first 10 Items
    * const items = await prisma.item.findMany({ take: 10 })
    * 
-   * // Only select the `item_id`
-   * const itemWithItem_idOnly = await prisma.item.findMany({ select: { item_id: true } })
+   * // Only select the `available_products`
+   * const itemWithAvailable_productsOnly = await prisma.item.findMany({ select: { available_products: true } })
    * 
    */
   findMany<T extends ItemFindManyArgs>(args?: Prisma.SelectSubset<T, ItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -1759,9 +1759,9 @@ export interface ItemDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    *   ]
    * })
    * 
-   * // Create many Items and only return the `item_id`
-   * const itemWithItem_idOnly = await prisma.item.createManyAndReturn({
-   *   select: { item_id: true },
+   * // Create many Items and only return the `available_products`
+   * const itemWithAvailable_productsOnly = await prisma.item.createManyAndReturn({
+   *   select: { available_products: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -1850,9 +1850,9 @@ export interface ItemDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    *   ]
    * })
    * 
-   * // Update zero or more Items and only return the `item_id`
-   * const itemWithItem_idOnly = await prisma.item.updateManyAndReturn({
-   *   select: { item_id: true },
+   * // Update zero or more Items and only return the `available_products`
+   * const itemWithAvailable_productsOnly = await prisma.item.updateManyAndReturn({
+   *   select: { available_products: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -2058,21 +2058,21 @@ export interface Prisma__ItemClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the Item model
  */
 export interface ItemFieldRefs {
-  readonly item_id: Prisma.FieldRef<"Item", 'String'>
-  readonly institution_id: Prisma.FieldRef<"Item", 'String'>
-  readonly institution_name: Prisma.FieldRef<"Item", 'String'>
-  readonly webhook: Prisma.FieldRef<"Item", 'String'>
-  readonly auth_method: Prisma.FieldRef<"Item", 'String'>
-  readonly request_id: Prisma.FieldRef<"Item", 'String'>
-  readonly update_type: Prisma.FieldRef<"Item", 'String'>
-  readonly consent_expiration_time: Prisma.FieldRef<"Item", 'String'>
   readonly available_products: Prisma.FieldRef<"Item", 'String[]'>
   readonly billed_products: Prisma.FieldRef<"Item", 'String[]'>
   readonly products: Prisma.FieldRef<"Item", 'String[]'>
   readonly error: Prisma.FieldRef<"Item", 'String'>
+  readonly institution_id: Prisma.FieldRef<"Item", 'String'>
+  readonly institution_name: Prisma.FieldRef<"Item", 'String'>
+  readonly item_id: Prisma.FieldRef<"Item", 'String'>
+  readonly update_type: Prisma.FieldRef<"Item", 'String'>
   readonly consented_products: Prisma.FieldRef<"Item", 'String[]'>
   readonly consented_data_scopes: Prisma.FieldRef<"Item", 'String[]'>
   readonly consented_use_cases: Prisma.FieldRef<"Item", 'String[]'>
+  readonly consent_expiration_time: Prisma.FieldRef<"Item", 'String'>
+  readonly webhook: Prisma.FieldRef<"Item", 'String'>
+  readonly auth_method: Prisma.FieldRef<"Item", 'String'>
+  readonly request_id: Prisma.FieldRef<"Item", 'String'>
   readonly access_token: Prisma.FieldRef<"Item", 'String'>
   readonly member_id: Prisma.FieldRef<"Item", 'String'>
   readonly user_id: Prisma.FieldRef<"Item", 'String'>

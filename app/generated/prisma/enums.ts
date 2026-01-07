@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const HouseholdRole = {
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER',
+  GUEST: 'GUEST'
+} as const
+
+export type HouseholdRole = (typeof HouseholdRole)[keyof typeof HouseholdRole]
+
+
 export const SubscriptionStatus = {
   incomplete: 'incomplete',
   incomplete_expired: 'incomplete_expired',
@@ -39,12 +48,3 @@ export const UsageType = {
 } as const
 
 export type UsageType = (typeof UsageType)[keyof typeof UsageType]
-
-
-export const HouseholdRole = {
-  ADMIN: 'ADMIN',
-  MEMBER: 'MEMBER',
-  GUEST: 'GUEST'
-} as const
-
-export type HouseholdRole = (typeof HouseholdRole)[keyof typeof HouseholdRole]

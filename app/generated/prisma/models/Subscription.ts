@@ -520,16 +520,6 @@ export type SubscriptionUncheckedUpdateManyInput = {
   canceled_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
-export type SubscriptionListRelationFilter = {
-  every?: Prisma.SubscriptionWhereInput
-  some?: Prisma.SubscriptionWhereInput
-  none?: Prisma.SubscriptionWhereInput
-}
-
-export type SubscriptionOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
 export type SubscriptionCountOrderByAggregateInput = {
   subscription_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -603,58 +593,18 @@ export type SubscriptionSumOrderByAggregateInput = {
   canceled_at?: Prisma.SortOrder
 }
 
-export type SubscriptionCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput> | Prisma.SubscriptionCreateWithoutUserInput[] | Prisma.SubscriptionUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUserInput | Prisma.SubscriptionCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.SubscriptionCreateManyUserInputEnvelope
-  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+export type SubscriptionListRelationFilter = {
+  every?: Prisma.SubscriptionWhereInput
+  some?: Prisma.SubscriptionWhereInput
+  none?: Prisma.SubscriptionWhereInput
 }
 
-export type SubscriptionUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput> | Prisma.SubscriptionCreateWithoutUserInput[] | Prisma.SubscriptionUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUserInput | Prisma.SubscriptionCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.SubscriptionCreateManyUserInputEnvelope
-  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
-}
-
-export type SubscriptionUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput> | Prisma.SubscriptionCreateWithoutUserInput[] | Prisma.SubscriptionUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUserInput | Prisma.SubscriptionCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.SubscriptionUpsertWithWhereUniqueWithoutUserInput | Prisma.SubscriptionUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.SubscriptionCreateManyUserInputEnvelope
-  set?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
-  disconnect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
-  delete?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
-  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
-  update?: Prisma.SubscriptionUpdateWithWhereUniqueWithoutUserInput | Prisma.SubscriptionUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.SubscriptionUpdateManyWithWhereWithoutUserInput | Prisma.SubscriptionUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
-}
-
-export type SubscriptionUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput> | Prisma.SubscriptionCreateWithoutUserInput[] | Prisma.SubscriptionUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUserInput | Prisma.SubscriptionCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.SubscriptionUpsertWithWhereUniqueWithoutUserInput | Prisma.SubscriptionUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.SubscriptionCreateManyUserInputEnvelope
-  set?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
-  disconnect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
-  delete?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
-  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
-  update?: Prisma.SubscriptionUpdateWithWhereUniqueWithoutUserInput | Prisma.SubscriptionUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.SubscriptionUpdateManyWithWhereWithoutUserInput | Prisma.SubscriptionUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
+export type SubscriptionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type EnumSubscriptionStatusFieldUpdateOperationsInput = {
   set?: $Enums.SubscriptionStatus
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -703,82 +653,46 @@ export type SubscriptionUncheckedUpdateManyWithoutPriceNestedInput = {
   deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
 }
 
-export type SubscriptionCreateWithoutUserInput = {
-  subscription_id: string
-  customer_id: string
-  status?: $Enums.SubscriptionStatus
-  start_date?: number | null
-  trial_start?: number | null
-  trial_end?: number | null
-  ended_at?: number | null
-  cancel_at?: number | null
-  cancel_at_period_end?: boolean
-  created_at?: number | null
-  updated_at?: number | null
-  canceled_at?: number | null
-  price?: Prisma.PriceCreateNestedOneWithoutSubscriptionsInput
+export type SubscriptionCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput> | Prisma.SubscriptionCreateWithoutUserInput[] | Prisma.SubscriptionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUserInput | Prisma.SubscriptionCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.SubscriptionCreateManyUserInputEnvelope
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
 }
 
-export type SubscriptionUncheckedCreateWithoutUserInput = {
-  subscription_id: string
-  customer_id: string
-  price_id?: string | null
-  status?: $Enums.SubscriptionStatus
-  start_date?: number | null
-  trial_start?: number | null
-  trial_end?: number | null
-  ended_at?: number | null
-  cancel_at?: number | null
-  cancel_at_period_end?: boolean
-  created_at?: number | null
-  updated_at?: number | null
-  canceled_at?: number | null
+export type SubscriptionUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput> | Prisma.SubscriptionCreateWithoutUserInput[] | Prisma.SubscriptionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUserInput | Prisma.SubscriptionCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.SubscriptionCreateManyUserInputEnvelope
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
 }
 
-export type SubscriptionCreateOrConnectWithoutUserInput = {
-  where: Prisma.SubscriptionWhereUniqueInput
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput>
+export type SubscriptionUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput> | Prisma.SubscriptionCreateWithoutUserInput[] | Prisma.SubscriptionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUserInput | Prisma.SubscriptionCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.SubscriptionUpsertWithWhereUniqueWithoutUserInput | Prisma.SubscriptionUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.SubscriptionCreateManyUserInputEnvelope
+  set?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  delete?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  update?: Prisma.SubscriptionUpdateWithWhereUniqueWithoutUserInput | Prisma.SubscriptionUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.SubscriptionUpdateManyWithWhereWithoutUserInput | Prisma.SubscriptionUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
 }
 
-export type SubscriptionCreateManyUserInputEnvelope = {
-  data: Prisma.SubscriptionCreateManyUserInput | Prisma.SubscriptionCreateManyUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type SubscriptionUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.SubscriptionWhereUniqueInput
-  update: Prisma.XOR<Prisma.SubscriptionUpdateWithoutUserInput, Prisma.SubscriptionUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput>
-}
-
-export type SubscriptionUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.SubscriptionWhereUniqueInput
-  data: Prisma.XOR<Prisma.SubscriptionUpdateWithoutUserInput, Prisma.SubscriptionUncheckedUpdateWithoutUserInput>
-}
-
-export type SubscriptionUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.SubscriptionScalarWhereInput
-  data: Prisma.XOR<Prisma.SubscriptionUpdateManyMutationInput, Prisma.SubscriptionUncheckedUpdateManyWithoutUserInput>
-}
-
-export type SubscriptionScalarWhereInput = {
-  AND?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
-  OR?: Prisma.SubscriptionScalarWhereInput[]
-  NOT?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
-  subscription_id?: Prisma.StringFilter<"Subscription"> | string
-  user_id?: Prisma.StringFilter<"Subscription"> | string
-  customer_id?: Prisma.StringFilter<"Subscription"> | string
-  price_id?: Prisma.StringNullableFilter<"Subscription"> | string | null
-  status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
-  start_date?: Prisma.IntNullableFilter<"Subscription"> | number | null
-  trial_start?: Prisma.IntNullableFilter<"Subscription"> | number | null
-  trial_end?: Prisma.IntNullableFilter<"Subscription"> | number | null
-  ended_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
-  cancel_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
-  cancel_at_period_end?: Prisma.BoolFilter<"Subscription"> | boolean
-  created_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
-  updated_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
-  canceled_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
+export type SubscriptionUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput> | Prisma.SubscriptionCreateWithoutUserInput[] | Prisma.SubscriptionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUserInput | Prisma.SubscriptionCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.SubscriptionUpsertWithWhereUniqueWithoutUserInput | Prisma.SubscriptionUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.SubscriptionCreateManyUserInputEnvelope
+  set?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  delete?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  update?: Prisma.SubscriptionUpdateWithWhereUniqueWithoutUserInput | Prisma.SubscriptionUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.SubscriptionUpdateManyWithWhereWithoutUserInput | Prisma.SubscriptionUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
 }
 
 export type SubscriptionCreateWithoutPriceInput = {
@@ -839,7 +753,43 @@ export type SubscriptionUpdateManyWithWhereWithoutPriceInput = {
   data: Prisma.XOR<Prisma.SubscriptionUpdateManyMutationInput, Prisma.SubscriptionUncheckedUpdateManyWithoutPriceInput>
 }
 
-export type SubscriptionCreateManyUserInput = {
+export type SubscriptionScalarWhereInput = {
+  AND?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
+  OR?: Prisma.SubscriptionScalarWhereInput[]
+  NOT?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
+  subscription_id?: Prisma.StringFilter<"Subscription"> | string
+  user_id?: Prisma.StringFilter<"Subscription"> | string
+  customer_id?: Prisma.StringFilter<"Subscription"> | string
+  price_id?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  status?: Prisma.EnumSubscriptionStatusFilter<"Subscription"> | $Enums.SubscriptionStatus
+  start_date?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  trial_start?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  trial_end?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  ended_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  cancel_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  cancel_at_period_end?: Prisma.BoolFilter<"Subscription"> | boolean
+  created_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  updated_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
+  canceled_at?: Prisma.IntNullableFilter<"Subscription"> | number | null
+}
+
+export type SubscriptionCreateWithoutUserInput = {
+  subscription_id: string
+  customer_id: string
+  status?: $Enums.SubscriptionStatus
+  start_date?: number | null
+  trial_start?: number | null
+  trial_end?: number | null
+  ended_at?: number | null
+  cancel_at?: number | null
+  cancel_at_period_end?: boolean
+  created_at?: number | null
+  updated_at?: number | null
+  canceled_at?: number | null
+  price?: Prisma.PriceCreateNestedOneWithoutSubscriptionsInput
+}
+
+export type SubscriptionUncheckedCreateWithoutUserInput = {
   subscription_id: string
   customer_id: string
   price_id?: string | null
@@ -855,52 +805,30 @@ export type SubscriptionCreateManyUserInput = {
   canceled_at?: number | null
 }
 
-export type SubscriptionUpdateWithoutUserInput = {
-  subscription_id?: Prisma.StringFieldUpdateOperationsInput | string
-  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  start_date?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  trial_start?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  trial_end?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ended_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cancel_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cancel_at_period_end?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  created_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updated_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  canceled_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  price?: Prisma.PriceUpdateOneWithoutSubscriptionsNestedInput
+export type SubscriptionCreateOrConnectWithoutUserInput = {
+  where: Prisma.SubscriptionWhereUniqueInput
+  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput>
 }
 
-export type SubscriptionUncheckedUpdateWithoutUserInput = {
-  subscription_id?: Prisma.StringFieldUpdateOperationsInput | string
-  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
-  price_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  start_date?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  trial_start?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  trial_end?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ended_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cancel_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cancel_at_period_end?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  created_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updated_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  canceled_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+export type SubscriptionCreateManyUserInputEnvelope = {
+  data: Prisma.SubscriptionCreateManyUserInput | Prisma.SubscriptionCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
-export type SubscriptionUncheckedUpdateManyWithoutUserInput = {
-  subscription_id?: Prisma.StringFieldUpdateOperationsInput | string
-  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
-  price_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  start_date?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  trial_start?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  trial_end?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  ended_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cancel_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cancel_at_period_end?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  created_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updated_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  canceled_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+export type SubscriptionUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.SubscriptionWhereUniqueInput
+  update: Prisma.XOR<Prisma.SubscriptionUpdateWithoutUserInput, Prisma.SubscriptionUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutUserInput, Prisma.SubscriptionUncheckedCreateWithoutUserInput>
+}
+
+export type SubscriptionUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.SubscriptionWhereUniqueInput
+  data: Prisma.XOR<Prisma.SubscriptionUpdateWithoutUserInput, Prisma.SubscriptionUncheckedUpdateWithoutUserInput>
+}
+
+export type SubscriptionUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.SubscriptionScalarWhereInput
+  data: Prisma.XOR<Prisma.SubscriptionUpdateManyMutationInput, Prisma.SubscriptionUncheckedUpdateManyWithoutUserInput>
 }
 
 export type SubscriptionCreateManyPriceInput = {
@@ -955,6 +883,70 @@ export type SubscriptionUncheckedUpdateManyWithoutPriceInput = {
   subscription_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   customer_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  start_date?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  trial_start?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  trial_end?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ended_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cancel_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cancel_at_period_end?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updated_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  canceled_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type SubscriptionCreateManyUserInput = {
+  subscription_id: string
+  customer_id: string
+  price_id?: string | null
+  status?: $Enums.SubscriptionStatus
+  start_date?: number | null
+  trial_start?: number | null
+  trial_end?: number | null
+  ended_at?: number | null
+  cancel_at?: number | null
+  cancel_at_period_end?: boolean
+  created_at?: number | null
+  updated_at?: number | null
+  canceled_at?: number | null
+}
+
+export type SubscriptionUpdateWithoutUserInput = {
+  subscription_id?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  start_date?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  trial_start?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  trial_end?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ended_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cancel_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cancel_at_period_end?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updated_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  canceled_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  price?: Prisma.PriceUpdateOneWithoutSubscriptionsNestedInput
+}
+
+export type SubscriptionUncheckedUpdateWithoutUserInput = {
+  subscription_id?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
+  price_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  start_date?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  trial_start?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  trial_end?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ended_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cancel_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cancel_at_period_end?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updated_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  canceled_at?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type SubscriptionUncheckedUpdateManyWithoutUserInput = {
+  subscription_id?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
+  price_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   start_date?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   trial_start?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
