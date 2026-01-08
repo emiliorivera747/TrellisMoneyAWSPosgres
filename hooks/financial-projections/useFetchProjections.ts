@@ -22,9 +22,9 @@ const useFetchProjections = () => {
     isError: futureProjectionHasError,
   } = useQuery({
     queryKey: [
-      "projection",
-      // selectedProjectedYear,
-      // selectedInflationFilter,
+      "projections",
+      selectedProjectedYear,
+      selectedInflationFilter,
     ],
     queryFn: () =>
       fetchProjections(
@@ -38,7 +38,6 @@ const useFetchProjections = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-
 
   return {
     futureProjectionData,

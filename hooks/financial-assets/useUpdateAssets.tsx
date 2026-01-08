@@ -24,7 +24,7 @@ const useUpdateAssets = () => {
     mutationFn: assetService.updateAllAssets,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["projection"],
+        queryKey: ["projections"],
       });
       toast({
         title: "Projections",

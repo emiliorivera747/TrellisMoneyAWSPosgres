@@ -63,12 +63,7 @@ const DashboardContent = () => {
         <AssetsDashboardProvider>
           <AssetsCard
             selectedInflationFilter={selectedInflationFilter}
-            futureProjectionData={
-              futureProjectionData ?? {
-                projected_net_worth: [],
-                projected_assets: [],
-              }
-            }
+            futureProjectionData={futureProjectionData}
           />
         </AssetsDashboardProvider>
       </div>
