@@ -1,5 +1,5 @@
 // Containers
-import ProjectedAssetsContainer from "@/features/projected-financial-assets/components/containers/ProjectedAssetsContainer";
+import ProjectedAssetsContainer from "@/features/projected-financial-assets/components/assets-card/containers/ProjectedAssetsContainer";
 
 // Components
 import AssetsTable from "@/features/projected-financial-assets/components/assets-card/tables/AssetsTable";
@@ -27,7 +27,7 @@ import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 const ProjectedAssetsCard = () => {
   const { mode } = useDashboardFilters();
   const { isLoadingAssets, isErrorAssets, assetError } = useUpdateAssets();
-  const { futureProjectionLoading } = useFetchProjections();
+  const { assets, futureProjectionLoading } = useFetchProjections();
 
   if (isErrorAssets) return <AssetErrors error={assetError} />;
   if (isLoadingAssets || futureProjectionLoading)

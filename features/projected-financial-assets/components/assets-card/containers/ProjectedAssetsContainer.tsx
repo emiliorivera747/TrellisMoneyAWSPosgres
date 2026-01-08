@@ -2,7 +2,7 @@
 import { ProjecteAssetsContainerProps } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 /**
- * A container component for projected assets that adjusts its height 
+ * A container component for projected assets that adjusts its height
  * based on the number of assets provided.
  *
  * @param assets - An array of assets to be displayed.
@@ -12,6 +12,7 @@ const ProjectedAssetsContainer = ({
   assets,
   children,
 }: ProjecteAssetsContainerProps) => {
+  if (!assets) return;
   return (
     <aside
       className={`${

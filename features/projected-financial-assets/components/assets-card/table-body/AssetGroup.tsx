@@ -2,8 +2,8 @@ import React, { Activity } from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { FormField, FormItem } from "@/components/ui/form";
 import NumberInputV2 from "@/components/form-components/NumberInputV2";
-import InvestmentTypeHeader from "../headers/InvestmentTypeHeader";
-import AssetName from "../column-items/AssetName";
+import InvestmentTypeHeader from "@/features/projected-financial-assets/components/headers/InvestmentTypeHeader";
+import AssetName from "@/features/projected-financial-assets/components/assets-card/column-items/AssetName";
 import {
   ProjectedAssetRowProps,
   ProjectedAssetGroupProps,

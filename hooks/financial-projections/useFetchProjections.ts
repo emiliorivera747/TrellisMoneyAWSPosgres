@@ -39,7 +39,13 @@ const useFetchProjections = () => {
     refetchOnWindowFocus: false,
   });
 
+    const assets = useMemo(
+    () => getAssets(futureProjectionData),
+    [futureProjectionData]
+  );
+
   return {
+    assets,
     futureProjectionData,
     futureProjectionError,
     futureProjectionLoading,

@@ -10,8 +10,8 @@ import { useAssetsFormContext } from "@/context/dashboard/AssetsDashboardProvide
 import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
-import { getAssets } from "@/features/projected-financial-assets/utils/extractAssets";
 import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
+
 /**
  *  Displays the groups of assets as well as the assets in each group.
  *
@@ -20,33 +20,29 @@ import { ProjectedAsset } from "@/features/projected-financial-assets/types/proj
  */
 const TableBodyForAssets = () => {
   const { form } = useAssetsFormContext();
-  const [groups, setGroups] = useState<Record<string, ProjectedAsset>>({});
+  const [groups, setGroups] = useState<Record<string, ProjectedAsset[]>>({});
   const { mode } = useDashboardFilters();
+  const { assets } = useFetchProjections();
 
-  // const assets = useMemo(
-  //   () => getAssets(futureProjectionData),
-  //   [futureProjectionData]
-  // );
-
-  // useEffect(() => {
-  //   const grouped = Object.groupBy(assets ?? [], (asset) => asset.type);
-  //   const sortedGroups = Object.fromEntries(
-  //     Object.entries(grouped).map(([type, groupAssets]) => {
-  //       const sortedAssets = [...(groupAssets ?? [])].sort((a, b) => {
-  //         if (a.name && b.name) {
-  //           return a.name.localeCompare(b.name);
-  //         }
-  //         return 0;
-  //       });
-  //       return [type, sortedAssets];
-  //     })
-  //   );
-  //   setGroups(sortedGroups);
-  // }, [assets]);
+  useEffect(() => {
+    const grouped = Object.groupBy(assets ?? [], (asset) => asset.type);
+    const sortedGroups = Object.fromEntries(
+      Object.entries(grouped).map(([type, groupAssets]) => {
+        const sortedAssets = [...(groupAssets ?? [])].sort((a, b) => {
+          if (a.name && b.name) {
+            return a.name.localeCompare(b.name);
+          }
+          return 0;
+        });
+        return [type, sortedAssets];
+      })
+    );
+    setGroups(sortedGroups);
+  }, [assets]);
 
   return (
     <TableBody>
-      {/* {Object.entries(groups)
+      {Object.entries(groups)
         .sort(([typeA], [typeB]) => typeB.localeCompare(typeA))
         .map(([key, assets], i) => {
           return (
@@ -58,7 +54,7 @@ const TableBodyForAssets = () => {
               mode={mode}
             />
           );
-        })} */}
+        })}
     </TableBody>
   );
 };
