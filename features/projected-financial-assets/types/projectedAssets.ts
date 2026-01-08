@@ -1,5 +1,6 @@
 import { Account } from "@/types/plaid";
 import { AccountType } from "plaid";
+import { Decimal } from "decimal.js";
 
 export interface ProjectedAsset {
   name: string;
@@ -12,6 +13,19 @@ export interface ProjectedAsset {
   total?: number | null;
   shares: number | null;
   user_id?: string | undefined;
+}
+export interface ProjectedAssetWithDecimal {
+  name: string;
+  expected_annual_return_rate: number | Decimal | null;
+  projection: number | Decimal | null;
+  security_id: string | undefined | null;
+  account_id: string | undefined;
+  type: AccountType;
+  subtype?: string;
+  total?: number | Decimal | null;
+  shares: number | Decimal | null;
+  user_id?: string | undefined;
+  accounts?:  (string | undefined)[];
 }
 
 export interface ProjectedAssetProjectionConfig {

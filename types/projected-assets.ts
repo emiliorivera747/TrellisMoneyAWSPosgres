@@ -1,5 +1,5 @@
 import { Account, Holding } from "@/types/plaid";
-import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import { AccountType } from "plaid";
 import { Decimal } from "decimal.js";
 export interface GenerateAssetsFromAccountsParams {
   accounts: Account[];

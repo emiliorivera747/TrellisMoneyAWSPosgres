@@ -1,9 +1,5 @@
 import { ProjectionParams } from "@/features/projected-financial-assets/types/projectedAssets";
 import { getHoldingNameV2 } from "@/utils/api-helpers/holdings/holdingAccessors";
-import {
-  AccountType,
-  GroupedHolding,
-} from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 import {
   getFormulaValues,
@@ -14,14 +10,16 @@ import Decimal from "decimal.js";
 import { constructAsset } from "@/utils/api-helpers/projected-financial-assets/createFinancialAsset";
 
 // Type
-import { Assets } from "@/types/assets";
+import { ProjectedAssetWithDecimal } from "@/features/projected-financial-assets/types/projectedAssets";
 import {
   GenerateAssetsFromAccountsParams,
   GroupedHoldingToAssetsParams,
   GroupedHoldingsToAssetsParams,
   CashHoldingsToAssets,
-} from "@/types/projectedAssets";
+} from "@/types/projected-assets";
 import { Account } from "@/types/plaid";
+import { GroupedHolding } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import { AccountType } from "plaid";
 
 /**
  * Generates projected financial assets for accounts.
@@ -32,7 +30,7 @@ export const generateProjectedAssets = async ({
   includes_inflation = false,
   annual_inflation_rate,
   accounts = [],
-}: ProjectionParams): Promise<Assets[]> => {
+}: ProjectionParams): Promise<ProjectedAssetWithDecimal[]> => {
   if (start_year > end_year || !annual_inflation_rate) return [];
 
   const years = end_year - start_year;
@@ -45,7 +43,7 @@ export const generateProjectedAssets = async ({
           years,
           includes_inflation,
           annual_inflation_rate,
-          type: type || "unknown",
+          type: (type || "unknown") as AccountType,
         })
       : generateAssetsFromAccounts({
           accounts: accountList ?? [],
@@ -67,9 +65,10 @@ const generateAssetsFromAccounts = ({
   includes_inflation,
   annual_inflation_rate,
   type,
-}: GenerateAssetsFromAccountsParams): Assets[] =>
+}: GenerateAssetsFromAccountsParams): ProjectedAssetWithDecimal[] =>
   accounts.map((account) => {
-    const expected_annual_return_rate = account.expected_annual_return_rate ?? 0;
+    const expected_annual_return_rate =
+      account.expected_annual_return_rate ?? 0;
 
     const projection = getFutureValue({
       present_value: account.current ?? 0,
@@ -102,7 +101,7 @@ const generateAssetsFromInvestments = ({
   includes_inflation,
   annual_inflation_rate,
   type,
-}: GenerateAssetsFromAccountsParams): Assets[] => {
+}: GenerateAssetsFromAccountsParams): ProjectedAssetWithDecimal[] => {
   /**
    * Group all holdings together and sum quantities.
    */
@@ -213,7 +212,7 @@ const groupedHoldingsToAssets = ({
   includes_inflation,
   annual_inflation_rate,
   type,
-}: GroupedHoldingsToAssetsParams): Assets[] => {
+}: GroupedHoldingsToAssetsParams): ProjectedAssetWithDecimal[] => {
   return grouped_holdings.map((grouped_holding) =>
     groupedHoldingToAsset({
       grouped_holding,
@@ -246,7 +245,9 @@ const groupHoldingsByTickerSymbol = (
       name: getHoldingNameV2(holding, ""),
       quantity: new Decimal(0),
       institution_value: new Decimal(0),
-      expected_annual_return_rate: new Decimal(expected_annual_return_rate || 0).toNumber(),
+      expected_annual_return_rate: new Decimal(
+        expected_annual_return_rate || 0
+      ).toNumber(),
       subtype: holding?.security?.type || "unknown",
       account_id: holding.account_id || "",
       accounts: [holding.account_id],
@@ -277,7 +278,7 @@ const groupedHoldingToAsset = ({
   includes_inflation,
   annual_inflation_rate,
   type,
-}: GroupedHoldingToAssetsParams): Assets => {
+}: GroupedHoldingToAssetsParams): ProjectedAssetWithDecimal => {
   const {
     security_id,
     name,
@@ -303,7 +304,7 @@ const groupedHoldingToAsset = ({
     projection,
     security_id,
     account_id,
-    type: type ?? "Other",
+    type: type ?? AccountType.Other,
     subtype,
     total: institution_value,
     shares: quantity,
