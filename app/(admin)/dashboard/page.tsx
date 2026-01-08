@@ -22,7 +22,7 @@ import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.
  * @returns JSX.Element
  */
 const DashboardContent = () => {
-  const { selectedProjectedYear, selectedInflationFilter} = useDashboardFilters();
+  const { selectedInflationFilter } = useDashboardFilters();
 
   /**
    * Both Request will be made in parallel
@@ -35,10 +35,7 @@ const DashboardContent = () => {
     futureProjectionError,
     futureProjectionLoading,
     futureProjectionHasError,
-  } = useFetchProjections({
-    selectedProjectedYear,
-    selectedInflationFilter,
-  });
+  } = useFetchProjections();
 
   return (
     <div className="w-full box-border max-h-screen overflow-y-scroll flex flex-row gap-4">
@@ -46,7 +43,12 @@ const DashboardContent = () => {
       <div className="p-4 w-[70%] mt-[2%] max-h-screen">
         <PrimaryDashboardSection>
           <ProjectedNetWorthGraph
-            futureProjectionData={futureProjectionData}
+            futureProjectionData={
+              futureProjectionData ?? {
+                projected_net_worth: [],
+                projected_assets: [],
+              }
+            }
             futureProjectionHasError={futureProjectionHasError}
             futureProjectionLoading={futureProjectionLoading}
             futureProjectionError={futureProjectionError}
@@ -65,8 +67,13 @@ const DashboardContent = () => {
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
         <AssetsDashboardProvider>
           <AssetsCard
-            selectedProjectionFilter={selectedInflationFilter}
-            futureProjectionData={futureProjectionData}
+            selectedInflationFilter={selectedInflationFilter}
+            futureProjectionData={
+              futureProjectionData ?? {
+                projected_net_worth: [],
+                projected_assets: [],
+              }
+            }
           />
         </AssetsDashboardProvider>
       </div>

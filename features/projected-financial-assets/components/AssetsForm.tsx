@@ -7,7 +7,7 @@ import { useAssetsFormContext } from "@/context/dashboard/AssetsDashboardProvide
 import useSubmitAssests from "@/features/projected-financial-assets/hooks/useSubmitAssests";
 
 // Type
-import { InflationFilters } from "@/features/projected-net-worth/types/filters";
+import { ProjectedAssetCardFormProps } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
 /**
  *
@@ -16,17 +16,16 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
  */
 const AssetsCard = ({
   futureProjectionData,
-  selectedProjectionFilter,
-}: {
-  futureProjectionData: any;
-  selectedProjectionFilter: InflationFilters;
-}) => {
-  const { form } = useAssetsFormContext();
+  selectedInflationFilter: selectedProjectionFilter,
+}: ProjectedAssetCardFormProps) => {
+  const { form, resetForm } = useAssetsFormContext();
+
   const { onSubmit } = useSubmitAssests({
     futureProjectionData,
     selectedProjectionFilter,
-    onSuccess: () => form.reset(),
+    onSuccess: resetForm,
   });
+
   return (
     <Form {...form}>
       <form

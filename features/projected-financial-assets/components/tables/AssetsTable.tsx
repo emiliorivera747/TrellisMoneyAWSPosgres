@@ -1,6 +1,6 @@
 import { Table } from "@/components/ui/table";
 import TableBodyForAssets from "@/features/projected-financial-assets/components/table-body/TableBodyForAssets";
-import { AssetCardMode } from "../../types/projectedAssetsCard";
+import { ProjectedAssetCardMode } from "../../types/projectedAssetsCard";
 
 const AssetsTable = () => {
   return (

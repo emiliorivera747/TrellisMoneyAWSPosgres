@@ -1,6 +1,6 @@
 import { API_URL } from "@/utils/global-variables/globals";
 import { Holding} from "@/types/plaid";
-import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
+import {  ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
 
 /**
  * Function to update user asset.
@@ -43,7 +43,7 @@ const updateAccount = async (data: Holding) => {
  * @param data - The data to be sent in the request body.
  * @returns 
  */
-const updateAllAssets = async (data: FinancialAssets[]) => {
+const updateAllAssets = async (data: ProjectedAsset[]) => {
   const response = await fetch(`${API_URL}/assets`, {
     method: "PATCH",
     headers: {

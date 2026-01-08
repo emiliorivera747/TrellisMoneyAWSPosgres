@@ -1,36 +1,39 @@
-import { Assets } from "@/types/assets";
-import { NetWorthData } from "@/features/projected-financial-assets/types/projectedAssets";
+import { NetWorthData } from "@/features/projected-net-worth/types/projectedNetWorth";
+import { ProjectedAsset} from "@/features/projected-financial-assets/types/projectedAssets";
 
 /**
  *  Future projection data consits of the projected assets and net worth
  */
 export interface FutureProjectionData {
+ 
   /**
    * The projected assets
    */
-  projected_assets: ProjectedAssets[];
-  
+  projected_assets: ProjectedAssetsWithFilter[];
+
   /**
    * The projected net worth
    */
-  projected_net_worth: ProjectedNetworth[];
+  projected_net_worth: ProjectedNetWorthWithFilter[];
 }
 
 /**
  * Projected assets data
  */
-export interface ProjectedAssets {
+export interface ProjectedAssetsWithFilter {
+  
   /**
    * The projected assets data
    */
-  data: Assets[];
+  data: ProjectedAsset[];
+  
   /**
    * The filtered value of the projected assets
    */
   value: string;
 }
 
-export interface ProjectedNetworth {
+export interface ProjectedNetWorthWithFilter {
   /**
    * The projected net worth data
    */

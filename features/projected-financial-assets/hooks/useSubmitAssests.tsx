@@ -5,8 +5,7 @@ import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/hooks/user/useFetchUser";
 
 // Types
-import { FutureProjectionData } from "../types/projectedAssets";
-import { ProjectedAssets } from "@/types/futureProjections";
+import { FutureProjectionData} from "@/types/futureProjections";
 import { FormData } from "@/types/dashboard";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
@@ -115,7 +114,7 @@ const getCurrentProjectedAsset = (
   selectedFilter: string
 ) => {
   const assets = futureProjectionData?.projected_assets?.find(
-    (payload: ProjectedAssets) => payload.value === selectedFilter
+    (payload) => payload.value === selectedFilter
   );
   if (assets) return assets;
   return futureProjectionData?.projected_assets[0];

@@ -22,13 +22,13 @@ import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
  * @returns projected assets card
  */
 const ProjectedAssetsCard = () => {
-  const { selectedProjectedYear: selectedYear, selectedInflationFilter: selectedFilter, mode } = useDashboardFilters();
+
+  const { mode } =
+    useDashboardFilters();
+
   const { isLoadingAssets, isErrorAssets, assetError } = useUpdateAssets();
 
-  const { assets, futureProjectionLoading } = useFetchProjections({
-    selectedProjectedYear: selectedYear,
-    selectedInflationFilter: selectedFilter,
-  });
+  const { assets, futureProjectionLoading } = useFetchProjections();
 
   if (isErrorAssets) return <AssetErrors error={assetError} />;
 

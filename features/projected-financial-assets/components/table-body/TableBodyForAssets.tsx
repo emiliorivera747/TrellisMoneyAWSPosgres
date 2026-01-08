@@ -1,5 +1,6 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { TableBody } from "@/components/ui/table";
+import { AssetType } from "plaid";
 
 // Components
 import AssetGroup from "@/features/projected-financial-assets/components/table-body/AssetGroup";
@@ -19,17 +20,15 @@ import useFetchProjections from "@/hooks/financial-projections/useFetchProjectio
 const TableBodyForAssets = () => {
   const { form } = useAssetsFormContext();
   const [groups, setGroups] = useState<Record<string, typeof assets>>({});
-  const { selectedProjectedYear: selectedYear, selectedInflationFilter: selectedFilter, mode } = useDashboardFilters();
-  const { assets } = useFetchProjections({
-    selectedProjectedYear: selectedYear,
-    selectedInflationFilter: selectedFilter,
-  });
+  const { mode } = useDashboardFilters();
+  const { assets } = useFetchProjections();
 
   useEffect(() => {
-    const grouped = Object.groupBy(assets, (asset) => asset.type);
+    const grouped = Object.groupBy(assets ?? [], (asset) => asset.type);
+
     const sortedGroups = Object.fromEntries(
       Object.entries(grouped).map(([type, groupAssets]) => {
-        const sortedAssets = [...groupAssets].sort((a, b) => {
+        const sortedAssets = [...(groupAssets ?? [])].sort((a, b) => {
           if (a.name && b.name) {
             return a.name.localeCompare(b.name);
           }
@@ -49,8 +48,8 @@ const TableBodyForAssets = () => {
           return (
             <AssetGroup
               key={i}
-              assetType={key}
-              assets={assets}
+              assetType={key as AssetType}
+              assets={assets ?? []}
               form={form}
               mode={mode}
             />

@@ -1,67 +1,43 @@
 import { FieldValues } from "react-hook-form";
 import { Decimal } from "decimal.js";
+import { InflationFilters } from "@/features/projected-net-worth/types/filters";
+import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
+import { AssetType } from "plaid";
+import { FutureProjectionData } from "@/types/futureProjections";
 
-export type AssetCardMode = "edit" | "view";
+export type ProjectedAssetCardMode = "edit" | "view";
 
-export type AccountType =
-  | "depository"
-  | "investment"
-  | "credit"
-  | "loan"
-  | "Other";
-
-export type SecurityType =
-  | "cash"
-  | "cryptocurrency"
-  | "derivative"
-  | "equity"
-  | "etf"
-  | "fixed income"
-  | "loan"
-  | "mutual fund"
-  | "other";
-export interface Assets {
-  name: string;
-  expected_annual_return_rate?: number | null;
-  shares?: number;
-  amount?: number;
-  security_id?: string;
-  account_id?: string;
-  projection?: number;
-  type?: AccountType;
-  total?: number | null;
-  subtype?: string;
-}
-
-export interface ProjectedAssetsCardProps<TFieldValues extends FieldValues> {
-  assets: Assets[];
+export interface ProjectedProjectedAssetCardProps<
+  TFieldValues extends FieldValues
+> {
+  ProjectedAsset: ProjectedAsset[];
   selectedYear: number;
   form: any;
   isLoading: boolean;
-  mode: AssetCardMode;
+  mode: ProjectedAssetCardMode;
   handleModeChange: () => void;
 }
 
-export interface ProjectedAssetsContainerProps {
-  assets: Assets[] | [];
+export interface ProjectedProjectedAssetContainerProps {
+  ProjectedAsset: ProjectedAsset[];
   children: React.ReactNode;
 }
 
-export interface AssetName {
+export interface ProjectedAssetName {
   name: string;
 }
 
-export interface AssetRowProps {
-  asset: Assets;
+export interface ProjectedAssetRowProps {
+  asset: ProjectedAsset;
   form: any;
-  mode: AssetCardMode;
+  mode: ProjectedAssetCardMode;
 }
 
-export interface AssetGroupProps {
-  assetType: string;
-  assets: Assets[];
+export interface ProjectedAssetGroupProps {
+  assetType: AssetType;
+  assets: ProjectedAsset[];
   form: any;
-  mode: AssetCardMode;
+  mode: ProjectedAssetCardMode;
 }
 
 export interface ProjectionCellProps {
@@ -69,12 +45,12 @@ export interface ProjectionCellProps {
 }
 
 export interface GrowthRateCellPropsInput {
-  asset: Assets;
+  asset: ProjectedAsset;
   form: any;
 }
 
 export interface GrowthRateCellPropsText {
-  asset: Assets;
+  asset: ProjectedAsset;
 }
 
 export interface GroupedHolding {
@@ -86,4 +62,9 @@ export interface GroupedHolding {
   subtype: string;
   account_id: string;
   accounts: (string | undefined)[];
+}
+
+export interface ProjectedAssetCardFormProps {
+  futureProjectionData: FutureProjectionData;
+  selectedInflationFilter: InflationFilters;
 }

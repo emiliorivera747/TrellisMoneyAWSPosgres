@@ -1,9 +1,6 @@
 // Services
 import financialProjectionService from "@/features/projected-net-worth/services/financialProjectionsService";
-import {
-  FinancialAssets,
-  NetWorthData,
-} from "@/features/projected-financial-assets/types/projectedAssets";
+import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
 
 export const fetchProjectionData = async (
   startDate: number,

@@ -5,8 +5,8 @@ import NumberInputV2 from "@/components/form-components/NumberInputV2";
 import InvestmentTypeHeader from "../headers/InvestmentTypeHeader";
 import AssetName from "../column-items/AssetName";
 import {
-  AssetRowProps,
-  AssetGroupProps,
+  ProjectedAssetRowProps,
+  ProjectedAssetGroupProps,
   ProjectionCellProps,
   GrowthRateCellPropsInput,
   GrowthRateCellPropsText,
@@ -22,7 +22,7 @@ import { formatToMoney } from "@/utils/helper-functions/formatting/formatToMoney
  * @param param0
  * @returns group of assets
  */
-const AssetGroup = ({ assetType, assets, form, mode }: AssetGroupProps) => {
+const AssetGroup = ({ assetType, assets, form, mode }: ProjectedAssetGroupProps) => {
   return (
     <React.Fragment>
       <InvestmentTypeHeader assetGroup={assetType} />
@@ -40,7 +40,7 @@ const AssetGroup = ({ assetType, assets, form, mode }: AssetGroupProps) => {
  * @param param0
  * @returns assets in the group
  */
-const AssetRow = ({ asset, form, mode }: AssetRowProps) => {
+const AssetRow = ({ asset, form, mode }: ProjectedAssetRowProps) => {
   const handleRowClick = () => {
     if (mode === "edit") return;
     window.location.href = "/#";

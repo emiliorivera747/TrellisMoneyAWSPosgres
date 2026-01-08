@@ -2,36 +2,18 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
 import { getAssets } from "@/features/projected-financial-assets/utils/extractAssets";
-import { InflationFilters } from "@/features/projected-net-worth/types/filters";
-
-interface useFetchProjectionsProps {
-  selectedProjectedYear: number;
-  selectedInflationFilter: InflationFilters;
-}
+import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 const currentYear = Number(new Date().getFullYear().toString());
 /**
- * Custom hook to fetch financial projections based on the selected year and filter.
+ * Hook to fetch financial projections based on year and filter.
  *
- * @param {Object} params - The parameters for fetching projections.
- * @param {number} params.selectedYear - The year for which projections are to be fetched.
- * @param {string} params.selectedFilter - The filter criteria for the projections.
- *
- * @returns {Object} An object containing the following:
- * - `futureProjectionData`: The fetched projection data.
- * - `futureProjectionError`: Any error encountered during the fetch operation.
- * - `futureProjectionLoading`: A boolean indicating whether the fetch operation is in progress.
- *
- * @example
- * const { futureProjectionData, futureProjectionError, futureProjectionLoading } = useFetchProjections({
- *   selectedYear: 2023,
- *   selectedFilter: "networth",
- * });
+ * @returns {Object} Contains projection data, error, and loading state.
  */
-const useFetchProjections = ({
-  selectedProjectedYear,
-  selectedInflationFilter,
-}: useFetchProjectionsProps) => {
+const useFetchProjections = () => {
+  const { selectedProjectedYear, selectedInflationFilter } =
+    useDashboardFilters();
+
   const {
     data: futureProjectionData,
     error: futureProjectionError,
@@ -60,6 +42,7 @@ const useFetchProjections = ({
     () => getAssets(futureProjectionData),
     [futureProjectionData]
   );
+
   return {
     assets,
     futureProjectionData,
