@@ -7,7 +7,11 @@
  * @returns {JSX.Element} A `div` element containing the error message or a default "Unknown error" message.
  */
 const AssetErrors = ({ error }: { error: null | Error }) => {
-  return <div>There was an Error: {error?.message || "Unknown error"}</div>;
+  return (
+    <div className="border font-light p-4 rounded-[12px]">
+      There was an Error: {error?.message || "Unknown error"}
+    </div>
+  );
 };
 
 export default AssetErrors;

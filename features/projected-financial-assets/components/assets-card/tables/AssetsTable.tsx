@@ -17,6 +17,7 @@ import { ProjectedAsset } from "@/features/projected-financial-assets/types/proj
  * containing asset-related data using the Table and TableBodyForAssets components.
  */
 const AssetsTable = ({ assets }: { assets: ProjectedAsset[] | undefined }) => {
+  
   const { form } = useAssetsFormContext();
   const [groups, setGroups] = useState<Record<string, ProjectedAsset[]>>({});
   const { mode } = useDashboardFilters();
@@ -36,6 +37,7 @@ const AssetsTable = ({ assets }: { assets: ProjectedAsset[] | undefined }) => {
     );
     setGroups(sortedGroups);
   }, [assets]);
+
   return (
     <Table>
       <TableBody>

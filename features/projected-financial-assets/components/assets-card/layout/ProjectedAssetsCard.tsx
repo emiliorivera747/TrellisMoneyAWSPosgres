@@ -27,17 +27,23 @@ import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 const ProjectedAssetsCard = () => {
   const { mode } = useDashboardFilters();
   const { isLoadingAssets, isErrorAssets, assetError } = useUpdateAssets();
-  const { assets, futureProjectionLoading } = useFetchProjections();
+  const {
+    assets,
+    futureProjectionLoading,
+    futureProjectionError,
+    futureProjectionHasError,
+  } = useFetchProjections();
 
-  if (isErrorAssets) return <AssetErrors error={assetError} />;
+  if (isErrorAssets || futureProjectionHasError)
+    return <AssetErrors error={assetError || futureProjectionError} />;
   if (isLoadingAssets || futureProjectionLoading)
     return <ProjectedAssetsCardSkeleton />;
 
   return (
-    <ProjectedAssetsContainer assets={assets ??  []}>
+    <ProjectedAssetsContainer assets={assets ?? []}>
       <AssetsGridLayout mode={mode}>
         <AssetsCardPrimaryHeader />
-        <AssetsTable assets={assets}/>
+        <AssetsTable assets={assets} />
         <UpdateButton />
         {assets?.length === 0 && <NoAssetsTable />}
       </AssetsGridLayout>

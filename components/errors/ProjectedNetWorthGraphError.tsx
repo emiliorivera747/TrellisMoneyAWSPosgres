@@ -14,7 +14,7 @@ const ProjectedNetWorthGraphError = ({
   error: Error | null | undefined;
 }) => {
   return (
-    <div className="h-[30rem] border border-tertiary-400 p-4 rounded-xl font-semibold flex items-center justify-center text-lg">
+    <div className="h-[30rem] border border-tertiary-400 px-10 rounded-xl  flex items-center justify-center text-lg font-light text-tertiary-800">
       There was an error fetching the data: {error?.message}
     </div>
   );
