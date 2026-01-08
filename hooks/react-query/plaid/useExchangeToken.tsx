@@ -31,15 +31,16 @@ const useExchangeToken = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       toast({
-        title: "Token Exchange",
-        description: "Successfully exchanged token",
+        title: "Success",
+        description: "Your account has been successfully linked.",
         variant: "success",
       });
     },
     onError: () => {
       toast({
         variant: "destructive",
-        title: "Failed to exchange token",
+        title: "Error",
+        description: "We couldn't link your account. Please try again.",
       });
     },
   });

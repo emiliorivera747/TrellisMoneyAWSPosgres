@@ -37,15 +37,16 @@ const ProjectedNetWorthGraph = ({
   futureProjectionLoading,
 }: ProjectedNetWorthGraphProps) => {
   const containerRef = useRef(null);
-  const { selectedProjectedYear: selectedYear, selectedInflationFilter: selectedFilter } = useDashboardFilters();
+  const { selectedProjectedYear, selectedInflationFilter } =
+    useDashboardFilters();
 
   /**
    *  Returns the filtered data based on the projectionData and selected filter.
    */
   const filteredData = useFilteredData(
     futureProjectionData,
-    selectedYear,
-    selectedFilter
+    selectedProjectedYear,
+    selectedInflationFilter
   );
 
   const years = useMemo(
@@ -55,10 +56,13 @@ const ProjectedNetWorthGraph = ({
   );
 
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
-  if (futureProjectionHasError || !filteredData )
+  if (futureProjectionHasError || !filteredData)
     return <ProjectedNetWorthGraphError error={futureProjectionError} />;
 
-  const dataForLines = createLinePayLoads(selectedFilter, filteredData);
+  const dataForLines = createLinePayLoads(
+    selectedInflationFilter,
+    filteredData
+  );
 
   return (
     <div className="h-[30rem] grid border-b border-tertiary-300">
@@ -67,7 +71,7 @@ const ProjectedNetWorthGraph = ({
         ref={containerRef}
         GraphComponent={ProjectedLineGraph}
         linePayloads={dataForLines}
-        withInlfationTag={selectedFilter === "withInflation"}
+        withInlfationTag={selectedInflationFilter === "withInflation"}
         years={years}
       />
     </div>
