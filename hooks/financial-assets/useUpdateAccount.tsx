@@ -15,7 +15,7 @@ const useUpdateAccount = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: assetService.updateAccount,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projectedAssetsAndNetworth"] });
+      queryClient.invalidateQueries({ queryKey: ["projection"] });
       toast({
         title: "Projections",
         description: "Successfully updated assets",

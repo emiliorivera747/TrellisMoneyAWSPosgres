@@ -2,7 +2,7 @@
 
 // Components
 import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/projected-networth-graph/ProjectedNetWorthGraph";
-import AssetsCard from "@/features/projected-financial-assets/components/AssetsForm";
+import AssetsCard from "@/features/projected-financial-assets/components/assets-card/assets-form/AssetsForm";
 import Footer from "@/components/footers/Footer";
 import NetValueItems from "@/features/dashboard/components/NetValueItems";
 import { AssetsDashboardProvider } from "@/context/dashboard/AssetsDashboardProvider";
@@ -43,12 +43,7 @@ const DashboardContent = () => {
       <div className="p-4 w-[70%] mt-[2%] max-h-screen">
         <PrimaryDashboardSection>
           <ProjectedNetWorthGraph
-            futureProjectionData={
-              futureProjectionData ?? {
-                projected_net_worth: [],
-                projected_assets: [],
-              }
-            }
+            futureProjectionData={futureProjectionData}
             futureProjectionHasError={futureProjectionHasError}
             futureProjectionLoading={futureProjectionLoading}
             futureProjectionError={futureProjectionError}

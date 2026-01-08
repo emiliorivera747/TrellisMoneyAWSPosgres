@@ -1,6 +1,5 @@
-import React from "react";
 import { Table } from "@/components/ui/table";
-import NoAssets from "@/features/projected-financial-assets/components/NoAssets";
+import NoAssets from "@/features/projected-financial-assets/components/assets-card/table-body/NoAssets";
 
 const NoAssetsTable = () => {
   return (

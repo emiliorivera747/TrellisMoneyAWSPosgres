@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { FieldValues } from "react-hook-form";
 import { Decimal } from "decimal.js";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
@@ -65,6 +66,11 @@ export interface GroupedHolding {
 }
 
 export interface ProjectedAssetCardFormProps {
-  futureProjectionData: FutureProjectionData;
+  futureProjectionData: FutureProjectionData | undefined | Error;
   selectedInflationFilter: InflationFilters;
+}
+
+export interface AssetsGridLayoutProps {
+  mode: ProjectedAssetCardMode;
+  children: ReactNode;
 }

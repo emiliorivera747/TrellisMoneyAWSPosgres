@@ -22,7 +22,12 @@ import { formatToMoney } from "@/utils/helper-functions/formatting/formatToMoney
  * @param param0
  * @returns group of assets
  */
-const AssetGroup = ({ assetType, assets, form, mode }: ProjectedAssetGroupProps) => {
+const AssetGroup = ({
+  assetType,
+  assets,
+  form,
+  mode,
+}: ProjectedAssetGroupProps) => {
   return (
     <React.Fragment>
       <InvestmentTypeHeader assetGroup={assetType} />
@@ -84,7 +89,9 @@ const GrowthRateCellInput = ({ asset, form }: GrowthRateCellPropsInput) => {
           <FormItem>
             <NumberInputV2
               key={`${asset.name}-${asset.account_id}-${asset.security_id}`}
-              defaultValue={((asset.expected_annual_return_rate ?? 0) * 100).toFixed(0)}
+              defaultValue={(
+                (asset.expected_annual_return_rate ?? 0) * 100
+              ).toFixed(0)}
               className="text-[0.85rem] pl-2"
               min={-100}
               max={100}

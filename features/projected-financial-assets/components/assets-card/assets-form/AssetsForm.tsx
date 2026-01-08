@@ -1,7 +1,7 @@
 "use client";
 import { Form } from "@/components/ui/form";
-import ProjectedAssetsCard from "@/features/projected-financial-assets/components/ProjectedAssetsCard";
 import { useAssetsFormContext } from "@/context/dashboard/AssetsDashboardProvider";
+import ProjectedAssetsCard from "@/features/projected-financial-assets/components/assets-card/layout/ProjectedAssetsCard";
 
 // Functions
 import useSubmitAssests from "@/features/projected-financial-assets/hooks/useSubmitAssests";
@@ -16,13 +16,14 @@ import { ProjectedAssetCardFormProps } from "@/features/projected-financial-asse
  */
 const AssetsCard = ({
   futureProjectionData,
-  selectedInflationFilter: selectedProjectionFilter,
+  selectedInflationFilter,
 }: ProjectedAssetCardFormProps) => {
+  
   const { form, resetForm } = useAssetsFormContext();
 
   const { onSubmit } = useSubmitAssests({
     futureProjectionData,
-    selectedProjectionFilter,
+    selectedInflationFilter,
     onSuccess: resetForm,
   });
 
