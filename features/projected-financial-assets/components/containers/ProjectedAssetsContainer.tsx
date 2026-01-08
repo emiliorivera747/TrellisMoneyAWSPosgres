@@ -1,10 +1,17 @@
 //Types
-import { ProjectedAssetsContainerProps } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import { ProjecteAssetsContainerProps } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 
+/**
+ * A container component for projected assets that adjusts its height 
+ * based on the number of assets provided.
+ *
+ * @param assets - An array of assets to be displayed.
+ * @param children - The child components or elements to render inside the container.
+ */
 const ProjectedAssetsContainer = ({
   assets,
   children,
-}: ProjectedAssetsContainerProps) => {
+}: ProjecteAssetsContainerProps) => {
   return (
     <aside
       className={`${

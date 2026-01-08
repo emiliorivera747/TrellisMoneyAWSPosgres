@@ -18,17 +18,17 @@ import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 
 /**
+ * Component that displays the projected assets card, including projected year, asset groups, and assets.
+ * Handles loading, error states, and renders appropriate content based on the data.
  *
- * Displays the projected assets card showing the projected year, asset groups, and assets.
- *
- * @param param0
- * @returns projected assets card
+ * @component
+ * @returns {JSX.Element} The projected assets card layout with assets data or fallback states.
  */
 const ProjectedAssetsCard = () => {
   const { mode } = useDashboardFilters();
   const { isLoadingAssets, isErrorAssets, assetError } = useUpdateAssets();
   const { futureProjectionLoading } = useFetchProjections();
-  
+
   if (isErrorAssets) return <AssetErrors error={assetError} />;
   if (isLoadingAssets || futureProjectionLoading)
     return <ProjectedAssetsCardSkeleton />;

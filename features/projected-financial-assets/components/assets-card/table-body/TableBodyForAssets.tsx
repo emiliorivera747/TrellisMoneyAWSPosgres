@@ -3,7 +3,7 @@ import { TableBody } from "@/components/ui/table";
 import { AssetType } from "plaid";
 
 // Components
-import AssetGroup from "@/features/projected-financial-assets/components/table-body/AssetGroup";
+import AssetGroup from "@/features/projected-financial-assets/components/assets-card/table-body/AssetGroup";
 
 // Context
 import { useAssetsFormContext } from "@/context/dashboard/AssetsDashboardProvider";
@@ -11,8 +11,7 @@ import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.
 
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 import { getAssets } from "@/features/projected-financial-assets/utils/extractAssets";
-import { ProjectedAsset } from "../../types/projectedAssets";
-
+import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
 /**
  *  Displays the groups of assets as well as the assets in each group.
  *
@@ -23,7 +22,6 @@ const TableBodyForAssets = () => {
   const { form } = useAssetsFormContext();
   const [groups, setGroups] = useState<Record<string, ProjectedAsset>>({});
   const { mode } = useDashboardFilters();
-
 
   // const assets = useMemo(
   //   () => getAssets(futureProjectionData),

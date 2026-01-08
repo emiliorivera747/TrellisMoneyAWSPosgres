@@ -8,9 +8,7 @@ import { FutureProjectionData } from "@/types/futureProjections";
 
 export type ProjectedAssetCardMode = "edit" | "view";
 
-export interface ProjectedProjectedAssetCardProps<
-  TFieldValues extends FieldValues
-> {
+export interface ProjectedAssetCardProps<TFieldValues extends FieldValues> {
   ProjectedAsset: ProjectedAsset[];
   selectedYear: number;
   form: any;
@@ -19,8 +17,8 @@ export interface ProjectedProjectedAssetCardProps<
   handleModeChange: () => void;
 }
 
-export interface ProjectedProjectedAssetContainerProps {
-  ProjectedAsset: ProjectedAsset[];
+export interface ProjecteAssetsContainerProps {
+  assets: ProjectedAsset[];
   children: React.ReactNode;
 }
 
