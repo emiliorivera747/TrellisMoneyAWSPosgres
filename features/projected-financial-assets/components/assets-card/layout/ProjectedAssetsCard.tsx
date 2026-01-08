@@ -34,10 +34,10 @@ const ProjectedAssetsCard = () => {
     return <ProjectedAssetsCardSkeleton />;
 
   return (
-    <ProjectedAssetsContainer assets={assets}>
+    <ProjectedAssetsContainer assets={assets ??  []}>
       <AssetsGridLayout mode={mode}>
         <AssetsCardPrimaryHeader />
-        <AssetsTable />
+        <AssetsTable assets={assets}/>
         <UpdateButton />
         {assets?.length === 0 && <NoAssetsTable />}
       </AssetsGridLayout>

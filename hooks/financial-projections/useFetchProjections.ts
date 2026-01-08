@@ -11,7 +11,6 @@ const currentYear = Number(new Date().getFullYear().toString());
  * @returns {Object} Contains projection data, error, and loading state.
  */
 const useFetchProjections = () => {
-  
   const { selectedProjectedYear, selectedInflationFilter } =
     useDashboardFilters();
 
@@ -21,11 +20,7 @@ const useFetchProjections = () => {
     isLoading: futureProjectionLoading,
     isError: futureProjectionHasError,
   } = useQuery({
-    queryKey: [
-      "projections",
-      selectedProjectedYear,
-      selectedInflationFilter,
-    ],
+    queryKey: ["projections", selectedProjectedYear, selectedInflationFilter],
     queryFn: () =>
       fetchProjections(
         currentYear,
@@ -39,7 +34,7 @@ const useFetchProjections = () => {
     refetchOnWindowFocus: false,
   });
 
-    const assets = useMemo(
+  const assets = useMemo(
     () => getAssets(futureProjectionData),
     [futureProjectionData]
   );
