@@ -1,5 +1,5 @@
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/plaid`;
-import { ExchangeTokenProps } from "@/types/plaidServices";
+import { ExchangeTokenProps } from "@/types/services/requests/plaidServices";
 
 /**
  * Plaid service to get identity

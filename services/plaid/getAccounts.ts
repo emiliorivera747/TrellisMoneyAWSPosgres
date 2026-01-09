@@ -1,5 +1,5 @@
-import { Item } from '@/types/plaid';
-import { ItemPrisma } from '@/types/prisma';
+import { Item } from '@/types/services/plaid/plaid';
+import { ItemPrisma } from '@/types/prisma/prisma';
 
 const accountsData = [
       {

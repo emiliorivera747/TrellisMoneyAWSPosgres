@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { PrimaryModalButtonProp } from "@/types/buttons";
+import { PrimaryModalButtonProp } from "@/types/components/buttons/buttons";
 
 /**
  * The primary button that will be used for modals

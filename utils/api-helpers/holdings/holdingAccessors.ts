@@ -1,4 +1,4 @@
-import { Holding } from "@/types/plaid";
+import { Holding } from "@/types/services/plaid/plaid";
 
 /**
  * Quantity getter function

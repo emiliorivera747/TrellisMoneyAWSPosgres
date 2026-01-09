@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-import { FutureProjectionData } from "@/types/futureProjections";
-import { SecurityData } from "@/types/graphs";
+import { FutureProjectionData } from "@/types/future-projections/futureProjections";
+import { SecurityData } from "@/types/components/admin/graphs/graphs";
 
 // Functions
 import { filterProjectionData } from "@/features/projected-net-worth/utils/filterData";

@@ -1,4 +1,4 @@
-import { Account } from "@/types/plaid";
+import { Account } from "@/types/services/plaid/plaid";
 import { FaAirbnb } from "react-icons/fa";
 import {
   AlertDialog,

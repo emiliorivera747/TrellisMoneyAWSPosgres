@@ -1,5 +1,5 @@
 import { API_URL } from "@/utils/global-variables/globals";
-import { Holding} from "@/types/plaid";
+import { Holding} from "@/types/services/plaid/plaid";
 import {  ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
 
 /**

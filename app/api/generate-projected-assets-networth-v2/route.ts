@@ -50,7 +50,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       const { start_year, end_year } = getDates(searchParams);
       validateTimestamp(timestamp);
 
-      const member = await getMemberByUserId(user.id);
+      const member = await getMemberByUserId(user.id, {
+        holdings: true,
+        accounts: true,
+      });
       if (!member) return FailResponse("Failed to find member", 404);
 
       const items = member?.household?.items;
@@ -62,11 +65,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       /**
        * Get the user's accounts
        */
-      await getAccountsFromPlaid(items);
       await getInvestmentsPlaid(
         items,
         timestamp || "",
         member.household?.accounts,
+        member.household?.holdings,
         user.id
       );
 
@@ -97,7 +100,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         { projected_net_worth, projected_assets },
         "Accounts, holdings, and securities updated successfully."
       );
-      
     } catch (error) {
       if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
       if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);

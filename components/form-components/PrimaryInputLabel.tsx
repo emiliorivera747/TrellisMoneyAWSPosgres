@@ -3,7 +3,7 @@ import {
     FieldValues,
   } from "react-hook-form";
 
-import { PrimaryInputLabelProps } from "@/types/forms";
+import { PrimaryInputLabelProps } from "@/types/components/forms/forms";
 
 const PrimaryInputLabel = <TFieldValues extends FieldValues> ({
   id,

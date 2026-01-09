@@ -2,7 +2,7 @@ import React from "react";
 import { Tooltip } from "@visx/tooltip";
 import { formatDate } from "@/utils/helper-functions/formatting/formatDate";
 import { getDate } from "@/utils/helper-functions/accessors/accessors";
-import { LineGraphTooltipProps } from "@/types/graphs";
+import { LineGraphTooltipProps } from "@/types/components/admin/graphs/graphs";
 const defaultMargin = { top: 0};
 
 /**

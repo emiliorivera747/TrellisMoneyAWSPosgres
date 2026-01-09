@@ -10,7 +10,7 @@ import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButtonV2";
 import BackToRouteButton from "@/features/accounts/components/buttons/BackToRouteButton";
 
 // Zod Schemas
-import { AddMemberFormSchema, addMemberFormSchema } from "@/types/form-schemas";
+import { AddMemberFormSchema, addMemberFormSchema } from "@/features/manage-connections/types/form-schemas";
 import FormFieldGenerator from "@/components/form-builder/FormFieldsGenerator";
 
 // Data

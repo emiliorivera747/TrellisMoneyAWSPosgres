@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { localPoint } from "@visx/event";
 import { bisector } from "@visx/vendor/d3-array";
-import { TimeSeriesData } from "@/types/graphs";
-import { LinePayload } from "@/types/graphs";
+import { TimeSeriesData } from "@/types/components/admin/graphs/graphs";
+import { LinePayload } from "@/types/components/admin/graphs/graphs";
 import { getDate } from "@/utils/helper-functions/accessors/accessors";
 
 const bisectDate = bisector<TimeSeriesData, Date>((d) => d.date).left;

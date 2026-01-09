@@ -1,5 +1,5 @@
 import { getColorBasedOnLineDirection } from "@/utils/helper-functions/graph/getColorBasedOnLineDirection";
-import { LinePayload } from "@/types/graphs";
+import { LinePayload } from "@/types/components/admin/graphs/graphs";
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
 
 /**

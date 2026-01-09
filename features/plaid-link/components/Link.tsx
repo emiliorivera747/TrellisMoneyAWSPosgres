@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 import { usePlaidLink } from "react-plaid-link";
 
-import { LinkProps } from "@/types/plaid";
+import { LinkProps } from "@/types/services/plaid/plaid";
 import { cn } from "@/lib/utils";
 
 // Services

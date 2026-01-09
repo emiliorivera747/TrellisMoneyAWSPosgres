@@ -1,4 +1,4 @@
-import { TooltipProps } from "@/types/navigationbar";
+import { TooltipProps } from "@/types/components/navigation/navigationbar";
 
 /**
  * A custom tooltip component that displays a tooltip with a title

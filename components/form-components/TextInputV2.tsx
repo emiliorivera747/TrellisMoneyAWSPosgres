@@ -1,7 +1,7 @@
 "use client";
 import { FieldValues } from "react-hook-form";
 
-import { TextInputV2Props } from "@/types/forms";
+import { TextInputV2Props } from "@/types/components/forms/forms";
 
 import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
 import ErrorForInputs from "@/components/errors/ErrorForInputs";

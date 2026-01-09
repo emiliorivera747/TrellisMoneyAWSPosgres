@@ -10,7 +10,7 @@ import ErrorForInputs from "@/components/errors/ErrorForInputs";
 
 
 //Types
-import { PasswordInputProps } from "@/types/forms";
+import { PasswordInputProps } from "@/types/components/forms/forms";
 
 
 const PasswordInput = <TFieldValues extends FieldValues>({

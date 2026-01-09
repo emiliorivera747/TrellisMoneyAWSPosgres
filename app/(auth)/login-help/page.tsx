@@ -20,7 +20,7 @@ import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 
 //Server Actions
 import { confirmReset } from "../../actions/actions";
-import { State } from "@/types/serverActionState";
+import { State } from "@/types/server/serverActionState";
 
 //Schema
 import {

@@ -10,7 +10,6 @@ import {
 import { getMemberByUserId } from "@/utils/prisma/household/household";
 import { getHoldingsWithHouseholdId } from "@/utils/prisma/holding/holdings";
 
-
 /**
  *
  * This route is used to update the financial assets of a user.
@@ -22,7 +21,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
       const assets: ProjectedAsset[] = await request.json();
-      console.log(assets)
+      console.log(assets);
 
       const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to get member from user", 404);
@@ -39,7 +38,10 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
       const assetMap = new Map<string, ProjectedAsset>();
 
       for (let asset of assets) {
-        for (let account of asset.accounts) {
+        const accounts = asset.accounts;
+        if (!accounts) continue;
+
+        for (let account of accounts) {
           const key = `${account}-${asset.security_id}`;
           if (assetMap.has(key)) continue;
           assetMap.set(key, asset);
@@ -61,7 +63,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
                 user_id: holding.user_id,
               },
             },
-            data: { expected_annual_return_rate },
+            data: { expected_annual_return_rate: expected_annual_return_rate ?? 0 },
           });
       }
 
@@ -75,9 +77,7 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
               account_id: account_id ?? "",
               user_id: user_id ?? "",
             },
-            data: {
-              expected_annual_return_rate: expected_annual_return_rate,
-            },
+            data: { expected_annual_return_rate },
           });
         }
       });

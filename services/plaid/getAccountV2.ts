@@ -1,5 +1,5 @@
 import { client } from "@/config/plaidClient";
-import { AccountBaseWithItemId } from "@/types/plaid";
+import { AccountBaseWithItemId } from "@/types/services/plaid/plaid";
 import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
 import { Item } from "@/app/generated/prisma/client";
 

@@ -1,6 +1,6 @@
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
-import { TimeSeriesData } from "@/types/graphs";
+import { TimeSeriesData } from "@/types/components/admin/graphs/graphs";
 
 /**
  * Get the direction of the line by comparing the first and last stock value

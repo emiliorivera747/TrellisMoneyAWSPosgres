@@ -1,5 +1,5 @@
 import { Security } from "plaid";
-import { Security as SecurityPrisma } from "@/types/plaid";
+import { Security as SecurityPrisma } from "@/types/services/plaid/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import { Decimal } from "@prisma/client/runtime/library";
 import prisma from "@/lib/prisma";
@@ -7,34 +7,19 @@ import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
 interface UpsertSecuritiesParams {
-  securities: Security[];
+  securitiesPlaid: Security[];
   user_id: string;
   timestamp: string;
   securityMap: Map<string, { member_id: string }>;
   household_id: string;
 }
 
-/**
- * Compares the securities from plaid with the securities in the database
- * and returns the securities in the database.
- *
- * @param securities
- */
-export const getExistingSecurities = async (securities: Security[]) => {
-  const res = await prisma.security.findMany({
-    where: {
-      security_id: { in: securities.map((security) => security.security_id) },
-    },
-    select: { security_id: true, close_price: true },
-  });
-  return res;
-};
 
 /**
  *  Upserts the securities into the database and returns the security history
  */
 export const upsertSecurities = async ({
-  securities,
+  securitiesPlaid,
   user_id,
   timestamp,
   securityMap,
@@ -44,12 +29,12 @@ export const upsertSecurities = async ({
 }> => {
   try {
     const securityUpserts = await Promise.all(
-      securities.map(
+      securitiesPlaid.map(
         async (security) =>
           await prisma.security.upsert({
             where: { security_id: security.security_id },
             update: {
-              ...getSecurityUpdateFields(security),
+              ...extractSecurityUpdateData(security),
               timestamp: isoToUTC(timestamp),
             },
             create: {
@@ -68,6 +53,23 @@ export const upsertSecurities = async ({
     throw new Error(getServerErrorMessage(error));
   }
 };
+
+/**
+ * Compares the securities from plaid with the securities in the database
+ * and returns the securities in the database.
+ *
+ * @param securities
+ */
+export const getExistingSecurities = async (securities: Security[]) => {
+  const res = await prisma.security.findMany({
+    where: {
+      security_id: { in: securities.map((security) => security.security_id) },
+    },
+    select: { security_id: true, close_price: true },
+  });
+  return res;
+};
+
 
 /**
  * Adds the security history to the security history array
@@ -157,7 +159,7 @@ const getSecurityCreateFields = (security: Security) => ({
  * @param security
  * @returns
  */
-const getSecurityUpdateFields = (security: Security) => ({
+const extractSecurityUpdateData = (security: Security) => ({
   close_price: getValueOrDefault(security?.close_price, 0),
   close_price_as_of: isoToUTC(security?.close_price_as_of),
   name: getValueOrDefault(security?.name, ""),

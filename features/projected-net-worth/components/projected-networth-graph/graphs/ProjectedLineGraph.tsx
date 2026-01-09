@@ -13,7 +13,7 @@ import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/gr
 
 //Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
-import { TooltipPayload } from "@/types/graphs";
+import { TooltipPayload } from "@/types/components/admin/graphs/graphs";
 
 //TooltipData
 type TooltipData = TooltipPayload[];

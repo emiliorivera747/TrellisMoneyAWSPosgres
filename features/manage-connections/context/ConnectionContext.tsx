@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import usePlaidConnectionFlowfrom from "@/hooks/plaid/usePlaidConnectionFlow";
 import { useAddConnection } from "@/features/accounts/hooks/useAddConnection";
-import { Step } from "@/types/multistep-form";
+import { Step } from "@/types/components/forms/multistep-form";
 
 interface ConnectionContextType {
   start: (userId: string) => Promise<void>;

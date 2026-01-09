@@ -25,7 +25,7 @@ import { signUpSchema } from "@/features/auth/schemas/formSchemas";
 
 // Server actions
 import { signUp} from "@/app/actions/actions";
-import { State } from "@/types/serverActionState";
+import { State } from "@/types/server/serverActionState";
 
 //Hooks
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";

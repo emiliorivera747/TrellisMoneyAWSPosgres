@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-import { Subscription } from "@/types/stripe";
+import { Subscription } from "@/types/services/stripe/stripe";
 
 interface updateUserAndSubscriptionProps {
   user_id: string;

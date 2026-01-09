@@ -1,4 +1,4 @@
-import { FutureProjectionData } from "@/types/futureProjections";
+import { FutureProjectionData } from "@/types/future-projections/futureProjections";
 
 export const getAssets = (
   futureProjectionData: FutureProjectionData | undefined

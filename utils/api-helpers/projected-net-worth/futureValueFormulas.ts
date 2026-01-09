@@ -1,5 +1,5 @@
 import { Decimal } from "decimal.js";
-import { Holding } from "@/types/plaid";
+import { Holding } from "@/types/services/plaid/plaid";
 import {
   getQuantity,
   getClosePrice,
@@ -11,7 +11,7 @@ import {
   FutureValueParams,
   InflationAdjustedFutureValueParams,
   FutureValueInflationOption,
-} from "@/types/future-value-formula";
+} from "@/types/formulas/future-value-formula";
 
 /**
  * Calculates the future value of an investment adjusted for inflation.

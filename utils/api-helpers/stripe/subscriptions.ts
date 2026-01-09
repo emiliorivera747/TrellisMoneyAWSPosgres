@@ -1,4 +1,4 @@
-import { MinmalSubscription } from "@/types/stripe";
+import { MinmalSubscription } from "@/types/services/stripe/stripe";
 
 /**
  * Determines if a subscription is active based on its status and cancellation time.

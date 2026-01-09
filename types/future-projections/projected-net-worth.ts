@@ -1,4 +1,4 @@
-import { Account } from "@/types/plaid";
+import { Account } from "@/types/services/plaid/plaid";
 
 export interface PopulateMapWithFvParams {
   projectionsMap: Map<number, number>;

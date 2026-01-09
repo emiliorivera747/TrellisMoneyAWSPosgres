@@ -1,4 +1,4 @@
-import { TimeSeriesData } from "@/types/graphs";
+import { TimeSeriesData } from "@/types/components/admin/graphs/graphs";
 
 export const getDate: (d: TimeSeriesData) => Date = (d: TimeSeriesData) =>
   d?.date;

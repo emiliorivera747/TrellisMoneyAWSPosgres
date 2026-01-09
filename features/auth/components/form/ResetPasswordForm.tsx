@@ -23,7 +23,7 @@ import {
 
 //Server Actions
 import { resetPassword } from "@/app/actions/actions";
-import { State } from "@/types/serverActionState";
+import { State } from "@/types/server/serverActionState";
 
 //Hooks
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";

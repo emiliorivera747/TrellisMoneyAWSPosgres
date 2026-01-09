@@ -4,7 +4,7 @@ import React, {
   useContext,
   useCallback,
 } from "react";
-import { AssetsFormState } from "@/types/dashboard";
+import { AssetsFormState } from "@/types/components/admin/dashboard/dashboard";
 import { useForm } from "react-hook-form";
 
 export interface FormData {

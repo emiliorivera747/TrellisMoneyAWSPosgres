@@ -16,8 +16,8 @@ import {
   GroupedHoldingToAssetsParams,
   GroupedHoldingsToAssetsParams,
   CashHoldingsToAssets,
-} from "@/types/projected-assets";
-import { Account } from "@/types/plaid";
+} from "@/types/future-projections/projected-assets";
+import { Account } from "@/types/services/plaid/plaid";
 import { GroupedHolding } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import { AccountType } from "plaid";
 

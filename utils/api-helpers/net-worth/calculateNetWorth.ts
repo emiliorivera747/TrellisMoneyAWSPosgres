@@ -1,4 +1,4 @@
-import {Account} from '@/types/plaid';
+import {Account} from '@/types/services/plaid/plaid';
 
 export function calculateNetWorth(accounts: Account[]): { netWorth: number, assets: number, liabilities: number } {
     let netWorth = 0;

@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 
 //Server Actions
 import { resendConfirmation } from "@/app/actions/actions";
-import { State } from "@/types/serverActionState";
+import { State } from "@/types/server/serverActionState";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 //Type

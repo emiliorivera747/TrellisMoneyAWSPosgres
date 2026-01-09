@@ -18,6 +18,5 @@ export const getAllHoldingsWithAccessTokens = async (
       return response.data;
     })
   );
-
   return investmentHoldings;
 };

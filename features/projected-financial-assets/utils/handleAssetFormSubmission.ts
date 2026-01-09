@@ -1,7 +1,7 @@
 //Functions
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
 import { ProjectedAssets } from "@/features/projected-financial-assets/types/projectedAssets";
-import { FutureProjectionData } from "@/types/futureProjections";
+import { FutureProjectionData } from "@/types/future-projections/futureProjections";
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";

@@ -1,5 +1,5 @@
-import { LinePayload } from "@/types/graphs";
-import { FutureProjectionData } from "@/types/futureProjections";
+import { LinePayload } from "@/types/components/admin/graphs/graphs";
+import { FutureProjectionData } from "@/types/future-projections/futureProjections";
 
 export interface SecurityData {
   date: Date;

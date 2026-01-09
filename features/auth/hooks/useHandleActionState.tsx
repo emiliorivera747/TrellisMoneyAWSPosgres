@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { UseFormSetError, FieldValues } from "react-hook-form";
 import { toast } from "react-toastify";
-import { State } from "@/types/serverActionState";
+import { State } from "@/types/server/serverActionState";
 
 // Utility functions
 import { getSupabaseErrorMessage } from "@/features/auth/utils/getSupabaseErrorMessages";

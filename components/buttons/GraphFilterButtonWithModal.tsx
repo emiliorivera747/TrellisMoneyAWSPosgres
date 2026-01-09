@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Filter from "@/components/dashboard/Filter";
-import { GraphFilterButtonWithModalProps } from "@/types/graphs";
+import { GraphFilterButtonWithModalProps } from "@/types/components/admin/graphs/graphs";
 
 const GraphFilterButtonWithModal = ({
   filterConfig,

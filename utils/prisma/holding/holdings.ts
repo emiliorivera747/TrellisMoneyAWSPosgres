@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
-import { Holding } from "@/types/plaid";
+import { Holding } from "@/types/services/plaid/plaid";
 
 interface UpdateOrCreateHoldingProps {
   holding: Holding;

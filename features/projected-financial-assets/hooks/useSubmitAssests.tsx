@@ -5,8 +5,8 @@ import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
 import useFetchUser from "@/hooks/user/useFetchUser";
 
 // Types
-import { FutureProjectionData } from "@/types/futureProjections";
-import { FormData } from "@/types/dashboard";
+import { FutureProjectionData } from "@/types/future-projections/futureProjections";
+import { FormData } from "@/types/components/admin/dashboard/dashboard";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 // Selectors

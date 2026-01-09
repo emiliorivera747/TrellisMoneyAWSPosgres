@@ -13,7 +13,7 @@ import {
   LinePayload,
   TooltipPayload,
   ValueChangeProps,
-} from "@/types/graphs";
+} from "@/types/components/admin/graphs/graphs";
 
 // Functions
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";

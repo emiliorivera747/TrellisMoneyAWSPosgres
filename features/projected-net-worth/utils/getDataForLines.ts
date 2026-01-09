@@ -1,4 +1,4 @@
-import { LinePayload } from "@/types/graphs";
+import { LinePayload } from "@/types/components/admin/graphs/graphs";
 import {
   lineColors1,
   lineColors2,

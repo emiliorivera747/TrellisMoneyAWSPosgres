@@ -1,5 +1,5 @@
 import { API_URL } from "@/utils/global-variables/globals";
-import { AddMemberFormSchema } from "@/types/form-schemas";
+import { AddMemberFormSchema } from "@/features/manage-connections/types/form-schemas";
 
 const fetchHousehold = async () => {
   const res = await fetch(`${API_URL}/members`);

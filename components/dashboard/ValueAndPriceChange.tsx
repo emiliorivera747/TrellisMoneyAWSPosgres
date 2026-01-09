@@ -6,7 +6,7 @@ import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
 
-import {ValueAndPriceChangeProps } from "@/types/graphs";
+import {ValueAndPriceChangeProps } from "@/types/components/admin/graphs/graphs";
 
 
 const ValueAndPriceChange = ({

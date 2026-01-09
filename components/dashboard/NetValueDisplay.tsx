@@ -3,7 +3,7 @@ import Link from "next/link";
 import InformationIcon from "@/components/information-icon/InformationIcon";
 
 // Types
-import { NetValueDisplayCardProps } from "@/types/dashboard";
+import { NetValueDisplayCardProps } from "@/types/components/admin/dashboard/dashboard";
 
 // Helpers
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";

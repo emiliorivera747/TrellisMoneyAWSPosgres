@@ -3,7 +3,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 //Interface
-import { NumberInputV2Props } from "@/types/forms";
+import { NumberInputV2Props } from "@/types/components/forms/forms";
 
 import { useFormField } from "@/components/ui/form";
 

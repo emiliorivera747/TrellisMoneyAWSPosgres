@@ -1,5 +1,5 @@
 
-import {ItemPrisma} from "@/types/prisma";
+import {ItemPrisma} from "@/types/prisma/prisma";
 import { NextResponse } from "next/server";
 
 /**

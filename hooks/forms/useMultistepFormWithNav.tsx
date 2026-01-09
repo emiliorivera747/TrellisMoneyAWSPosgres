@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { UseMultistepFormReturnWithNav, Step } from "@/types/multistep-form";
+import { UseMultistepFormReturnWithNav, Step } from "@/types/components/forms/multistep-form";
 
 /**
  * Allows to you add mutiple steps fo a form

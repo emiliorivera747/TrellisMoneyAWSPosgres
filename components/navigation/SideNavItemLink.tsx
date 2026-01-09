@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { SideNavItemLinkProps } from "@/types/navigationbar";
+import { SideNavItemLinkProps } from "@/types/components/navigation/navigationbar";
 
 // Components
 import CustomTooltip from "@/components/tooltip/Tooltip";

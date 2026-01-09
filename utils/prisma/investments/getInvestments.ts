@@ -12,6 +12,10 @@ import { updateHoldings } from "@/utils/prisma/holding/updateHoldings";
 // Types
 import { Account, Item } from "@/app/generated/prisma/client";
 import { Holding } from "@/app/generated/prisma/client";
+import {
+  Holding as HoldingDB,
+  Account as AccountDB,
+} from "@/app/generated/prisma/browser";
 
 /**
  *
@@ -23,9 +27,11 @@ import { Holding } from "@/app/generated/prisma/client";
 export const getInvestmentsPlaid = async (
   items: Item[],
   timestamp: string,
-  accountsDB: Account[],
+  accountsDB: AccountDB[],
+  holdingsDB: HoldingDB[],
   user_id: string
 ) => {
+
   /**
    *  Get all of the access tokens from the items
    */
@@ -42,13 +48,12 @@ export const getInvestmentsPlaid = async (
    *  Store Holdings and Securities in the database
    */
   investmentsForEachItem.forEach(async (item) => {
-    await updateItem(item.item);
     await updateAccounts([item.accounts], accountsDB);
     await updateHoldingsAndSecurities({
-      holdings: item.holdings,
-      securities: item.securities,
+      holdingsPlaid: item.holdings,
+      securitiesPlaid: item.securities,
       timestamp,
-      accountsDb: accountsDB,
+      holdingsDB,
       user_id,
     });
   });
@@ -79,7 +84,6 @@ export const getInvestmentsWithItemsPlaid = async ({
 
   // Update the database with fetched holdings and related data
   investmentsForEachItem.forEach(async (item) => {
-    await updateItem(item.item);
     await updateHoldings({
       holdings: item.holdings,
       timestamp,

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { AccountBaseWithItemId } from "@/types/plaid";
+import { AccountBaseWithItemId } from "@/types/services/plaid/plaid";
 
 /**
  * Checks whether the account has a balance or not.

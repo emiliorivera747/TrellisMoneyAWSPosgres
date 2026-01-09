@@ -1,6 +1,6 @@
 import React from "react";
 import { Line } from "@visx/shape";
-import { TooltipProps, TimeSeriesData } from "@/types/graphs";
+import { TooltipProps, TimeSeriesData } from "@/types/components/admin/graphs/graphs";
 
 //Accessors
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";

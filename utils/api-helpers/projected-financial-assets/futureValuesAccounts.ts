@@ -1,4 +1,4 @@
-import { Account } from "@/types/plaid";
+import { Account } from "@/types/services/plaid/plaid";
 
 import { getHoldingName } from "@/utils/api-helpers/holdings/holdingAccessors";
 import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";

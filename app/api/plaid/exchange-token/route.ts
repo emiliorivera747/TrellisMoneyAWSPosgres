@@ -18,7 +18,7 @@ import {
 } from "@/utils/prisma/household-member/members";
 
 // Types
-import { ExchangeTokenRequestBody } from "@/types/plaid";
+import { ExchangeTokenRequestBody } from "@/types/services/plaid/plaid";
 
 /**
  * Handles the POST request to exchange a public token for an access token

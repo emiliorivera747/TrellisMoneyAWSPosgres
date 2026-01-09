@@ -1,6 +1,6 @@
-import { MinmalSubscription } from "@/types/stripe";
+import { MinmalSubscription } from "@/types/services/stripe/stripe";
 import { stripe } from "@/lib/stripe";
-import { Subscription } from "@/types/stripe";
+import { Subscription } from "@/types/services/stripe/stripe";
 import Stripe from "stripe";
 
 // Utils

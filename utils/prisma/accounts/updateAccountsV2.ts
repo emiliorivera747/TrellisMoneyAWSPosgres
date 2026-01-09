@@ -4,7 +4,7 @@ import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueO
 import { AccountSubtype, AccountType } from "plaid";
 
 //Types
-import { AccountBaseWithItemId } from "@/types/plaid";
+import { AccountBaseWithItemId } from "@/types/services/plaid/plaid";
 
 // Helpers
 import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";

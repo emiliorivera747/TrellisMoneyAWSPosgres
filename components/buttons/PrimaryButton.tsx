@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormStatus } from "react-dom";
 import DotLoader from "@/components/loading/DotLoader";
-import { PrimaryButtonProps } from "@/types/buttons";
+import { PrimaryButtonProps } from "@/types/components/buttons/buttons";
 
 const PrimaryButton = ({
   bgColor = "bg-blue-500",

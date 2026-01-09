@@ -4,7 +4,7 @@ import { Decimal } from "decimal.js";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
 import { AssetType } from "plaid";
-import { FutureProjectionData } from "@/types/futureProjections";
+import { FutureProjectionData } from "@/types/future-projections/futureProjections";
 
 export type ProjectedAssetCardMode = "edit" | "view";
 

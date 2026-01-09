@@ -1,8 +1,8 @@
 import ValueAndPriceChange from "@/components/dashboard/ValueAndPriceChange";
 
 //Types
-import { LinePayload } from "@/types/graphs";
-import { TooltipPayload } from "@/types/graphs";
+import { LinePayload } from "@/types/components/admin/graphs/graphs";
+import { TooltipPayload } from "@/types/components/admin/graphs/graphs";
 
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";

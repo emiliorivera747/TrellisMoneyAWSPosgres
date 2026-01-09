@@ -1,4 +1,4 @@
-import { Holding, Security } from "@/types/plaid";
+import { Holding, Security } from "@/types/services/plaid/plaid";
 
 const holdingData: Holding[] = [
   {

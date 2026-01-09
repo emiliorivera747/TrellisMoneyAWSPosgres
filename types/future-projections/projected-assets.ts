@@ -1,4 +1,4 @@
-import { Account, Holding } from "@/types/plaid";
+import { Account, Holding } from "@/types/services/plaid/plaid";
 import { AccountType } from "plaid";
 import { Decimal } from "decimal.js";
 export interface GenerateAssetsFromAccountsParams {

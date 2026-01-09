@@ -5,7 +5,7 @@ import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
 import ErrorForInputs from "@/components/errors/ErrorForInputs";
 
 //Interface
-import { TextInputProps } from "@/types/forms";
+import { TextInputProps } from "@/types/components/forms/forms";
 
 const TextInput = <TFieldValues extends FieldValues>({
   type,

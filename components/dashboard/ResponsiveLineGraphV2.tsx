@@ -1,5 +1,5 @@
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import { ResponsiveLineGraphProps } from "@/types/graphs";
+import { ResponsiveLineGraphProps } from "@/types/components/admin/graphs/graphs";
 
 /**
  *

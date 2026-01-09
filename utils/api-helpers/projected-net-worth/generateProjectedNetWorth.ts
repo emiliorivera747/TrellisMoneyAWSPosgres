@@ -1,4 +1,4 @@
-import { Account } from "@/types/plaid";
+import { Account } from "@/types/services/plaid/plaid";
 import { AccountType } from "plaid";
 import { NetWorthData } from "@/features/projected-financial-assets/types/projectedAssets";
 
@@ -7,7 +7,7 @@ import {
   getFutureValue,
   getFormulaValues,
 } from "@/utils/api-helpers/projected-net-worth/futureValueFormulas";
-import { PopulateMapWithFvParams } from "@/types/projected-net-worth";
+import { PopulateMapWithFvParams } from "@/types/future-projections/projected-net-worth";
 
 /**
  * Generates the projected net worth over a range of years based on the provided holdings.

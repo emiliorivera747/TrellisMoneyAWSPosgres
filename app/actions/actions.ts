@@ -18,7 +18,7 @@ import {
   resetPasswordSchema,
   emailVerificationSchema,
 } from "@/features/auth/schemas/formSchemas";
-import { State } from "@/types/serverActionState";
+import { State } from "@/types/server/serverActionState";
 
 /**
  * Handles errors thrown by Zod schema validation.

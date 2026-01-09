@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { Security } from "@/types/plaid";
+import { Security } from "@/types/services/plaid/plaid";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import { getUser } from "@/services/supabase/getUser";

@@ -1,6 +1,6 @@
 import { useFormStatus } from "react-dom";
 import DotLoader from "@/components/loading/DotLoader";
-import { SubmitButtonPropsV2 } from "@/types/buttons";
+import { SubmitButtonPropsV2 } from "@/types/components/buttons/buttons";
 import { cn } from "@/lib/utils";
 
 /**

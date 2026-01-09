@@ -1,10 +1,21 @@
 import prisma from "@/lib/prisma";
-import { Holding } from "plaid";
-import { Holding as HoldingPrisma } from "@/types/plaid";
+import { Holding as HoldingPlaid } from "plaid";
+import { Holding as HoldingPrisma } from "@/types/services/plaid/plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { getUser } from "@/services/supabase/getUser";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
+
+interface UpsertHoldingsProps {
+  holdingsPlaid: HoldingPlaid[];
+  user_id: string;
+  timestamp: string;
+  holdingMap: Map<string, { user_id: string; member_id: string }>;
+}
+
+type UpsertHoldingsResponse = Promise<{
+  holdingUpserts: HoldingPrisma[];
+}>;
 
 /**
  *
@@ -17,43 +28,36 @@ import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerError
  * @returns
  */
 export const upsertHoldings = async ({
-  holdings,
+  holdingsPlaid,
   user_id,
   timestamp,
-  accountMap,
-  household_id,
-}: {
-  holdings: Holding[];
-  user_id: string;
-  timestamp: string;
-  accountMap: Map<string, { user_id: string; member_id: string }>;
-  household_id: string;
-}): Promise<{
-  holdingUpserts: HoldingPrisma[];
-}> => {
+  holdingMap,
+}: UpsertHoldingsProps): UpsertHoldingsResponse => {
   try {
     const holdingUpserts = await Promise.all(
-      holdings.map(
-        async (holding) =>
+      holdingsPlaid.map(
+        async (holdingPlaid) =>
           await prisma.holding.upsert({
             where: {
-              holding_id: {
-                security_id: holding.security_id,
-                account_id: holding.account_id,
+              security_id_user_id_account_id: {
+                security_id: holdingPlaid.security_id,
+                account_id: holdingPlaid.account_id,
                 user_id: user_id,
               },
             },
             update: {
-              ...getHoldingUpdateFields(holding),
-              member_id: accountMap.get(holding.account_id)?.member_id || "",
+              ...getHoldingUpdateFields(holdingPlaid),
+              member_id:
+                holdingMap.get(holdingPlaid.account_id)?.member_id || "",
               household_id,
             },
             create: {
-              ...getHoldingCreateFields(holding),
+              ...getHoldingCreateFields(holdingPlaid),
               user_id,
-              member_id: accountMap.get(holding.account_id)?.member_id || "",
-              household_id,
-              timestamp
+              member_id:
+                holdingMap.get(holdingPlaid.account_id)?.member_id || "",
+              household_id: holdingMap.get(holdingPlaid.account_id),
+              created_at: timestamp,
             },
           })
       )

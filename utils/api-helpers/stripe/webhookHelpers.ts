@@ -1,5 +1,5 @@
 import { stripe } from "@/lib/stripe";
-import { Subscription } from "@/types/stripe";
+import { Subscription } from "@/types/services/stripe/stripe";
 import Stripe from "stripe";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;

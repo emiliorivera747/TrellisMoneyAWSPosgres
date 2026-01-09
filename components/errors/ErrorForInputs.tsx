@@ -1,6 +1,6 @@
 import React from "react";
 import { FieldValues } from "react-hook-form";
-import { ErrorForInputsProps } from "@/types/forms";
+import { ErrorForInputsProps } from "@/types/components/forms/forms";
 
 const ErrorForInputs = <TFieldValues extends FieldValues>({
   fieldName,

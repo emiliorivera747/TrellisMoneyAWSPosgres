@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Account } from "@/types/plaid";
+import { Account } from "@/types/services/plaid/plaid";
 
 import {
   AccountGroupedByType,
