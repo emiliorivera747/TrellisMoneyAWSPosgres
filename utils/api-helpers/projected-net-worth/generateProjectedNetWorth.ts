@@ -1,6 +1,6 @@
 import { Account } from "@/types/services/plaid/plaid";
 import { AccountType } from "plaid";
-import { NetWorthData } from "@/features/projected-financial-assets/types/projectedAssets";
+import { NetWorthData } from "@/features/projected-net-worth/types/projectedNetWorth";
 
 // Helpers
 import {
@@ -11,6 +11,7 @@ import { PopulateMapWithFvParams } from "@/types/future-projections/projected-ne
 
 /**
  * Generates the projected net worth over a range of years based on the provided accounts.
+ * 
  * @export
  * @param {Account[]} accounts - An array of account objects containing holdings and balances.
  * @param {number} start_year - The start year for the projection.
@@ -81,6 +82,7 @@ const createGroups = (accounts: Account[]) => {
 /**
  * Populates the projected net worth for each day.
  * Optimized to reduce redundant calculations and improve efficiency.
+ * 
  * @param {number} startYear - The start year for the projection.
  * @param {number} endYear - The end year for the projection.
  * @param {Map<number, number>} projectionsMap - A map of year to projected value.
@@ -124,6 +126,7 @@ const generateDailyProjectedNetWorth = (
 /**
  * Populates the hashmap with the projected net worth for each year.
  * Optimized to pre-calculate holdings data outside the year loop.
+ * 
  * @param {PopulateMapWithFvParams} params - The parameters for populating the map.
  * @param {Map<number, number>} params.projectionsMap - The map to populate.
  * @param {number} params.start_year - The start year.
@@ -170,6 +173,7 @@ const populateMapWithFvHoldings = ({
 /**
  * Populates the hashmap with the projected net worth for each year.
  * Optimized to pre-calculate account data and remove redundant conditions.
+ * 
  * @param {PopulateMapWithFvParams} params - The parameters for populating the map.
  * @param {Map<number, number>} params.projectionsMap - The map to populate.
  * @param {number} params.start_year - The start year.

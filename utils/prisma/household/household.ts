@@ -1,33 +1,23 @@
 import prisma from "@/lib/prisma";
-import { Household } from "@/app/generated/prisma/client";
+import { Prisma } from "@/app/generated/prisma/browser";
 
 /**
- * Retrieves household members' items associated with a specific user ID.
+ * Fetches items from households where the user is a member.
  *
- * @param user_id - The unique identifier of the user whose household members' items are to be retrieved.
- * @returns A promise that resolves to an array of items belonging to the households
- *          where the user is a member.
- *
- * @remarks
- * This function queries the database to find all households where the specified user
- * is a member. It then retrieves and flattens the items associated with those households.
+ * @param user_id - User's unique ID.
+ * @returns Promise resolving to an array of household items.
  *
  * @example
- * ```typescript
- * const userId = "12345";
- * const items = await getHouseholdMembersByUserId(userId);
+ * const items = await getHouseholdMembersByUserId("12345");
  * console.log(items);
- * ```
  */
-export const getMemberByUserId = async (
+export const getMemberByUserId = async <
+  T extends Prisma.HouseholdMemberInclude
+>(
   user_id: string,
-  householdInclude?: {
-    accounts?: boolean;
-    items?: boolean | { include: { member: boolean } };
-    holdings?: boolean;
-  }
-) => {
-  const defaultInclude = {
+  householdInclude?: T
+): Promise<Prisma.HouseholdMemberGetPayload<{ include: T }> | null> => {
+  const defaultInclude: Prisma.HouseholdMemberInclude = {
     household: {
       include: { accounts: true, items: true },
     },
@@ -39,9 +29,39 @@ export const getMemberByUserId = async (
 
   const member = await prisma.householdMember.findUnique({
     where: { user_id },
-    include,
+    include: include as T,
   });
 
   if (!member) return null;
-  return member;
+  return member as Prisma.HouseholdMemberGetPayload<{ include: T }>;
+};
+
+export const getMemberWithHouseholdByUserId = async <
+  T extends Prisma.HouseholdInclude
+>({
+  user_id,
+  householdInclude,
+}: {
+  user_id: string;
+  householdInclude?: T;
+}): Promise<Prisma.HouseholdMemberGetPayload<{
+  include: { household: { include: T } };
+}> | null> => {
+
+  const defaultInclude: Prisma.HouseholdInclude = {
+    accounts: true,
+    items: true,
+  };
+
+  const include = householdInclude || defaultInclude;
+
+  const member = await prisma.householdMember.findUnique({
+    where: { user_id },
+    include: { household: { include } },
+  });
+
+  if (!member) return null;
+  return member as Prisma.HouseholdMemberGetPayload<{
+    include: { household: { include: T } };
+  }>;
 };

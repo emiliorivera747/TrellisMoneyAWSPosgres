@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 
 // Functions
-import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { generateProjectedAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedAssets";
 
 // Helpers
@@ -15,17 +14,16 @@ import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/dates/getDates";
 import { getAccountsExapanded } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
 import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
-import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
 import { getInvestmentsPlaid } from "@/utils/prisma/investments/getInvestments";
-
-// Auth
-import { withAuth } from "@/lib/protected";
-
 import {
   FailResponse,
   SuccessResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { getMemberByUserId } from "@/utils/prisma/household/household";
+import { getExpandedAccounts } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
+
+// Auth
+import { withAuth } from "@/lib/protected";
+import { getMemberWithHouseholdByUserId } from "@/utils/prisma/household/household";
 
 const default_inflation_rate = 0.025;
 
@@ -38,6 +36,7 @@ const default_inflation_rate = 0.025;
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
+    const user_id = user.id;
     try {
       /**
        * Get the timestamp from the request body
@@ -49,22 +48,35 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
        */
       const { searchParams } = new URL(request.url);
       const { start_year, end_year } = getDates(searchParams);
-      validateTimestamp(timestamp);
 
-      const member = await getMemberByUserId(user.id, {
-        holdings: true,
-        accounts: true,
+      /**
+       * Were we given a timestamp
+       */
+      if (!timestamp) return FailResponse("No timestamp found", 404);
+
+      /**
+       *  Get member
+       */
+      const member = await getMemberWithHouseholdByUserId({
+        user_id,
+        householdInclude: { accounts: true, items: true, holdings: true },
       });
       if (!member) return FailResponse("Failed to find member", 404);
 
+      /**
+       * Get the items
+       */
       const items = member?.household?.items;
       if (!items) return FailResponse("Items not found for household", 404);
 
+      /**
+       * Do we have accounts?
+       */
       if (!member.household?.accounts)
         return FailResponse("Accounts not found for the household", 404);
 
       /**
-       * Get the user's accounts
+       * Get the investments from Plaid
        */
       await getInvestmentsPlaid(
         items,
@@ -75,30 +87,36 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       );
 
       if (!member?.household_id)
-        return FailResponse("Accounts not found for the household", 404);
+        return FailResponse("Household not found for member", 404);
 
-      const account_holdings_securities = await getAccountsExapanded(
-        member.household_id
-      );
+      /**
+       * Get Expanded Accounts
+       */
+      const expandedAccounts = await getExpandedAccounts(member.household_id);
+      if (!expandedAccounts)
+        return FailResponse("Could retrieve exapanded accounts", 404);
 
-      const projected_net_worth = await generateProjectedNetWorth(
-        account_holdings_securities[0].accounts,
+      const projectedNetWorth = await generateProjectedNetWorth(
+        expandedAccounts.accounts,
         start_year,
         end_year,
         searchParams.get("includes_inflation") === "true",
         default_inflation_rate
       );
 
-      const projected_assets = await generateProjectedAssets({
+      const projectedAssets = await generateProjectedAssets({
         start_year,
         end_year,
         includes_inflation: searchParams.get("includes_inflation") === "true",
         annual_inflation_rate: default_inflation_rate,
-        accounts: account_holdings_securities[0].accounts,
+        accounts: expandedAccounts.accounts,
       });
 
       return SuccessResponse(
-        { projected_net_worth, projected_assets },
+        {
+          projected_net_worth: projectedNetWorth,
+          projected_assets: projectedAssets,
+        },
         "Accounts, holdings, and securities updated successfully."
       );
     } catch (error) {

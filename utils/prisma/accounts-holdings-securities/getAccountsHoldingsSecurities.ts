@@ -22,5 +22,25 @@ export const getAccountsExapanded = async (household_id: string) => {
       },
     },
   });
-  return household ? [household] : [];
+  return household ? household : [];
+};
+
+export const getExpandedAccounts = async (household_id: string) => {
+  const household = await prisma.household.findUnique({
+    where: { household_id },
+    select: {
+      accounts: {
+        include: {
+          holdings: {
+            include: {
+              security: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  console.log("Household", household);
+  return household;
 };
