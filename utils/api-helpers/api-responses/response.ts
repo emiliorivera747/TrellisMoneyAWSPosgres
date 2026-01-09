@@ -1,7 +1,7 @@
 // utils/api-helpers/response.ts
 
 import { NextResponse } from "next/server";
-import { ApiResponse } from "@/types/services-responses/api-responses";
+import { ApiResponse } from "@/types/services/responses/api-responses";
 
 /**
  * Generates a standardized success response for API requests.

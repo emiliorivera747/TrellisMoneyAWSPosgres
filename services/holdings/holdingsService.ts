@@ -1,8 +1,8 @@
 import { API_URL } from "@/utils/global-variables/globals";
 
 // Types
-import { ApiResponse } from "@/types/services-responses/api-responses";
-import { HoldingsResponse } from "@/types/services-responses/holdings";
+import { ApiResponse } from "@/types/services/responses/api-responses";
+import { HoldingsResponse } from "@/types/services/responses/holdings";
 
 /**
  * Fetches investment holdings from the API with the current timestamp.

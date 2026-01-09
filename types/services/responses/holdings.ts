@@ -1,4 +1,3 @@
-
 import { HouseholdWithAccountsExpanded } from "@/types/prisma/prisma";
 
 /**

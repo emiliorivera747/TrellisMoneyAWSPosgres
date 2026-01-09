@@ -1,5 +1,5 @@
 import { API_URL } from "@/utils/global-variables/globals";
-import { GetItemsResponse } from "@/types/services-responses/items";
+import { GetItemsResponse } from "@/types/services/responses/items";
 
 /**
  * Removes an item by its unique identifier.

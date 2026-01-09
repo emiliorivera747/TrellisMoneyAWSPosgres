@@ -1,8 +1,7 @@
-import { Prisma } from "@/app/generated/prisma/client";
 import {
   Security,
-  Household,
   Account,
+  Household,
   Holding,
 } from "@/app/generated/prisma/client";
 
@@ -48,13 +47,3 @@ export interface HouseholdWithAccountsExpanded extends Household {
   accounts: AccountWithHoldingExpanded[];
 }
 
-/**
- * Represents an item with expanded member information.
- * @export
- * @typedef {Prisma.ItemGetPayload<{ include: { member: true } }>} ItemWithMembers
- */
-export type ItemWithMembers = Prisma.ItemGetPayload<{
-  include: { 
-    member: true 
-  }
-}>
