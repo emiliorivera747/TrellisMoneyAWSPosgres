@@ -3,33 +3,120 @@ import { AccountGraphFilter } from "@/features/accounts/types/graph";
 import { curveMonotoneX } from "@visx/curve";
 import { ReactNode } from "react";
 
+/**
+ * Represents the properties for a tooltip component in a graph.
+ */
 export interface TooltipProps {
+  /**
+   * The horizontal position of the tooltip, in pixels.
+   */
   tooltipLeft: number;
+
+  /**
+   * The vertical position of the tooltip, in pixels (optional).
+   */
   tooltipTop?: number;
+
+  /**
+   * The margin object defining the spacing around the graph.
+   * - `top`: The top margin, in pixels.
+   * - `right`: The right margin, in pixels.
+   * - `bottom`: The bottom margin, in pixels.
+   * - `left`: The left margin, in pixels.
+   */
   margin: { top: number; right: number; bottom: number; left: number };
+
+  /**
+   * The inner height of the graph, in pixels.
+   */
   innerHeight: number;
+
+  /**
+   * A function that maps a stock value to a scaled value for positioning.
+   * @param arg - The stock value to be scaled.
+   * @returns The scaled value.
+   */
   stockValueScale: (arg: number) => number;
+
+  /**
+   * The data to be displayed in the tooltip, represented as an array of payloads.
+   */
   tooltipData: TooltipPayload[];
+
+  /**
+   * The possible directions for the tooltip to be displayed.
+   */
   directions: Direction[];
 }
 
+/**
+ * Represents the properties for a responsive line graph component.
+ */
 export interface ResponsiveLineGraphProps {
+  /**
+   * The CSS class name(s) to apply to the graph component.
+   */
   className: string;
+
+  /**
+   * The React component to be rendered as the graph.
+   * This component can accept any props.
+   */
   GraphComponent: React.ComponentType<any>;
+
+  /**
+   * A reference to the HTML element, which can be either a button or a div.
+   */
   ref: React.Ref<HTMLButtonElement | HTMLDivElement>;
+
+  /**
+   * Additional properties that can be passed to the graph component.
+   */
   [key: string]: any;
 }
 
+/**
+ * Represents the payload data for a tooltip in a graph.
+ */
 export interface TooltipPayload {
+  /**
+   * The time series data associated with the tooltip.
+   */
   d: TimeSeriesData;
+
+  /**
+   * The color associated with the tooltip's data point or line.
+   */
   color: string;
+
+  /**
+   * The stroke width of the line associated with the tooltip's data point.
+   */
   strokeWidth: number;
+
+  /**
+   * The array of time series data points related to the tooltip.
+   */
   data: TimeSeriesData[];
+
+  /**
+   * The payload data for the line associated with the tooltip.
+   */
   linePayload: LinePayload;
 }
 
+/**
+ * Represents the data structure for time series data used in graphs.
+ */
 export interface TimeSeriesData {
+  /**
+   * The date associated with the data point.
+   */
   date: Date;
+
+  /**
+   * The closing value of the data point.
+   */
   close: number;
 }
 
@@ -115,9 +202,23 @@ export interface tagBgColor {
   flatColor: string;
 }
 
+/**
+ * Represents the color configuration for a subheader in a graph.
+ */
 export interface subheaderColor {
+  /**
+   * The color used to indicate an upward trend or positive change.
+   */
   upColor: string;
+
+  /**
+   * The color used to indicate a downward trend or negative change.
+   */
   downColor: string;
+
+  /**
+   * The color used to indicate a flat or neutral trend.
+   */
   flatColor: string;
 }
 
@@ -165,26 +266,96 @@ export interface ColorConfig {
   subheaderColor: subheaderColor;
 }
 
+/**
+ * Represents the properties for a line graph tooltip component.
+ */
 export interface LineGraphTooltipProps {
+  /**
+   * The margin object defining the spacing around the graph (optional).
+   * - `top`: The top margin, in pixels.
+   */
   margin?: { top: number };
+
+  /**
+   * The horizontal position of the tooltip, in pixels.
+   */
   tooltipLeft: number;
+
+  /**
+   * The default styles applied to the tooltip.
+   */
   defaultStyles: React.CSSProperties;
+
+  /**
+   * The data to be displayed in the tooltip.
+   */
   tooltipData: any;
 }
 
+/**
+ * Represents the properties for a component that displays value and price change graphs.
+ */
 export interface ValueAndPriceChangeProps {
+  /**
+   * The payload data for the tooltip, which provides information about the graph's data points.
+   * Can be `null` if no tooltip data is available.
+   */
   tooltipPayload: TooltipPayload | null;
+
+  /**
+   * The time series data to be displayed in the graph.
+   */
   data: TimeSeriesData[];
+
+  /**
+   * Indicates whether the graph should display years in its labels or data points.
+   * Defaults to `false` if not provided.
+   */
   withYears?: boolean;
+
+  /**
+   * The Tailwind CSS classes to be applied to the main header of the graph.
+   * Can be used for custom styling.
+   */
   mainHeaderTailwindCss?: string;
+
+  /**
+   * The Tailwind CSS classes to be applied to the sub-header of the graph.
+   * Can be used for custom styling.
+   */
   subHeaderTailwindCss?: string;
+
+  /**
+   * Indicates whether additional informational content should be displayed in the graph.
+   * Defaults to `false` if not provided.
+   */
   withInfo?: boolean;
+
+  /**
+   * The name of the line in the graph, used for labeling or identification purposes.
+   */
   lineName?: string;
 }
 
+/**
+ * Represents the properties for a graph component with a header, time values, and tooltip data.
+ */
 export interface HeaderTimeValueGraphProps {
+  /**
+   * The child components or elements to be rendered within the graph component.
+   */
   children: ReactNode;
+
+  /**
+   * The payloads representing the data for the lines in the graph.
+   * Each payload contains information about the line's data points.
+   */
   linePayloads: LinePayload[];
+
+  /**
+   * The data to be displayed in the tooltip, represented as an array of payloads.
+   * Each payload contains information about the data point being hovered over.
+   */
   tooltipData: TooltipPayload[];
 }
 
