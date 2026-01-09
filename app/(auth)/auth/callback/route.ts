@@ -7,7 +7,7 @@ import { getPriceIdBySlug } from "@/lib/plan-cache";
 
 // Utils
 import { hasActiveSubscription } from "@/features/auth/utils/callbackHelpers";
-
+import { logErrorAndRedirect } from "@/utils/api-helpers/errors/logErrorsAndRedirect";
 
 /**
  * Handles the OAuth callback, exchanging the code for a session, updating the database,
@@ -39,7 +39,7 @@ export async function GET(request: Request) {
   // ---- Upsert User ----
   const dbUser = await upsertUser(currentUser);
   if (!dbUser) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-  // const subscriptions: Subscription[] = dbUser.subscriptions;
+  const subscriptions = dbUser.subscriptions;
 
   /**
    *  We can allow the user to be redirected to stripe checkout page when
@@ -48,56 +48,42 @@ export async function GET(request: Request) {
    *        - Supabase email
    *        - No active subscriptions
    */
-  // if (plan && currentUser.email && !hasActiveSubscription(subscriptions)) {
-  //   try {
-  //     const price_id = await getPriceIdBySlug(plan);
+  if (plan && currentUser.email && !hasActiveSubscription(subscriptions)) {
+    try {
+      const price_id = await getPriceIdBySlug(plan);
 
-  //     if (!price_id)
-  //       return logErrorAndRedirect({
-  //         origin,
-  //         message: "Price id was not found",
-  //       });
+      if (!price_id)
+        return logErrorAndRedirect({
+          origin,
+          message: "Price id was not found",
+        });
 
-  //     const success_url = next?.startsWith("http") ? next : `${origin}${next}`;
-  //     const cancel_url = `${origin}/sign-up?plan=${plan}`;
+      const success_url = next?.startsWith("http") ? next : `${origin}${next}`;
+      const cancel_url = `${origin}/sign-up?plan=${plan}`;
 
-  //     const checkoutUrl = await createCheckoutSession({
-  //       customer_email: currentUser.email,
-  //       price_id,
-  //       success_url,
-  //       cancel_url,
-  //     });
+      const checkoutUrl = await createCheckoutSession({
+        customer_email: currentUser.email,
+        price_id,
+        success_url,
+        cancel_url,
+      });
 
-  //     if (!checkoutUrl) {
-  //       return logErrorAndRedirect({
-  //         origin,
-  //         message: "Checkout URL is null",
-  //       });
-  //     }
+      if (!checkoutUrl) {
+        return logErrorAndRedirect({
+          origin,
+          message: "Checkout URL is null",
+        });
+      }
 
-  //     return NextResponse.redirect(checkoutUrl);
-  //   } catch (error) {
-  //     console.error("Error creating checkout session:", error);
-  //     return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-  //   }
-  // }
+      return NextResponse.redirect(checkoutUrl);
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+      return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+    }
+  }
 
   // Redirect to the dashboard
   const redirectTo = next?.startsWith("http") ? next : `${origin}${next}`;
 
   return NextResponse.redirect(redirectTo);
 }
-
-const logErrorAndRedirect = ({
-  origin,
-  error,
-  message,
-}: {
-  origin: string;
-  error?: Error;
-  message?: string;
-}) => {
-  if (message) console.error("Error message:", message);
-  if (error) console.error("Error details:", error.message, error.stack);
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-};

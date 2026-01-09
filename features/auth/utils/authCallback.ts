@@ -1,6 +1,4 @@
-import prisma from "@/lib/prisma";
 import { SupabaseUserSyncData } from "@/features/auth/types/callback";
-import { connect } from "http2";
 
 /**
  * Determines the base redirect URL based on environment and headers.
