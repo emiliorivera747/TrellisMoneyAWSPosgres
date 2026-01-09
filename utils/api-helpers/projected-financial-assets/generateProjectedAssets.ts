@@ -23,6 +23,14 @@ import { AccountType } from "plaid";
 
 /**
  * Generates projected financial assets for accounts.
+ * @export
+ * @param {ProjectionParams} params - The parameters for generating projected assets.
+ * @param {number} params.start_year - The start year for projections.
+ * @param {number} params.end_year - The end year for projections.
+ * @param {boolean} [params.includes_inflation=false] - Whether to include inflation.
+ * @param {number} params.annual_inflation_rate - The annual inflation rate.
+ * @param {Account[]} [params.accounts=[]] - The accounts to generate projections for.
+ * @returns {Promise<ProjectedAssetWithDecimal[]>} A promise that resolves to an array of projected assets.
  */
 export const generateProjectedAssets = async ({
   start_year,
@@ -58,6 +66,8 @@ export const generateProjectedAssets = async ({
 
 /**
  * Calculates future value for non-investment accounts.
+ * @param {GenerateAssetsFromAccountsParams} params - The parameters for generating assets.
+ * @returns {ProjectedAssetWithDecimal[]} An array of projected assets.
  */
 const generateAssetsFromAccounts = ({
   accounts,
@@ -94,6 +104,8 @@ const generateAssetsFromAccounts = ({
 
 /**
  * Calculates future value for investment holdings, consolidating by ticker symbol.
+ * @param {GenerateAssetsFromAccountsParams} params - The parameters for generating assets.
+ * @returns {ProjectedAssetWithDecimal[]} An array of projected assets.
  */
 const generateAssetsFromInvestments = ({
   accounts,
@@ -179,11 +191,9 @@ const cashHoldingsToAssets = ({
 
 /**
  * Extracts and returns an array of cash holdings from a list of accounts.
- *
  * This function iterates through the provided accounts, filters the holdings
  * to include only those with a security type of "cash", and maps them to include
  * the account name for each holding.
- *
  * @param {Account[]} accounts - An array of account objects, each containing holdings and an account name.
  * @returns {Array} An array of cash holdings, each enriched with the account name.
  */
@@ -201,10 +211,9 @@ const getCashHoldingsFromAccounts = (accounts: Account[]) => {
 };
 
 /**
- * Converts the grouped holdings to assets
- *
- * @param param0
- * @returns
+ * Converts the grouped holdings to assets.
+ * @param {GroupedHoldingsToAssetsParams} params - The parameters for converting holdings.
+ * @returns {ProjectedAssetWithDecimal[]} An array of projected assets.
  */
 const groupedHoldingsToAssets = ({
   grouped_holdings,
@@ -226,6 +235,8 @@ const groupedHoldingsToAssets = ({
 
 /**
  * Aggregates holdings by ticker symbol.
+ * @param {Account[]} accounts - The accounts containing holdings.
+ * @returns {Map<string, GroupedHolding>} A map of ticker symbols to grouped holdings.
  */
 const groupHoldingsByTickerSymbol = (
   accounts: Account[]
@@ -270,7 +281,9 @@ const groupHoldingsByTickerSymbol = (
  */
 
 /**
- * Transforms a holding aggregate into a asset.
+ * Transforms a holding aggregate into an asset.
+ * @param {GroupedHoldingToAssetsParams} params - The parameters for converting a grouped holding.
+ * @returns {ProjectedAssetWithDecimal} A projected asset.
  */
 const groupedHoldingToAsset = ({
   grouped_holding,

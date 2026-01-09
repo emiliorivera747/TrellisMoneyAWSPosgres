@@ -5,12 +5,12 @@ import { ApiResponse } from "@/types/services-responses/api-responses";
 
 /**
  * Generates a standardized success response for API requests.
- *
+ * @export
  * @template T - The type of the data being returned in the response.
  * @param {T | null} [data=null] - The data to include in the response. Defaults to `null`.
  * @param {string} [message="Success"] - A message describing the response. Defaults to `"Success"`.
  * @param {number} [statusCode=200] - The HTTP status code for the response. Defaults to `200`.
- * @returns {NextResponse} - A JSON response with the provided data, message, and status.
+ * @returns {NextResponse} A JSON response with the provided data, message, and status.
  */
 export const SuccessResponse = <T>(
   data: T | null = null,
@@ -27,19 +27,10 @@ export const SuccessResponse = <T>(
 
 /**
  * Generates a failure response object to be used in API responses.
- *
- * @param message - A descriptive message explaining the failure.
- * @param statusCode - The HTTP status code associated with the failure.
- * @returns A JSON response object with a "fail" status and the provided message.
- *
- * @remarks
- * This function is designed to standardize the structure of failure responses
- * in the application. It uses `NextResponse.json` to format the response.
- *
- * @example
- * ```typescript
- * const response = FailResponse("Invalid request data", 400);
- * ```
+ * @export
+ * @param {string} message - A descriptive message explaining the failure.
+ * @param {number} statusCode - The HTTP status code associated with the failure.
+ * @returns {NextResponse} A JSON response object with a "fail" status and the provided message.
  */
 export const FailResponse = (message: string, statusCode: number) => {
   console.error("API Failure:", message);
@@ -54,13 +45,13 @@ export const FailResponse = (message: string, statusCode: number) => {
 
 /**
  * Generates a standardized error response for API requests.
- *
- * @param error - The error object or value to be logged and included in the response.
+ * @export
+ * @param {unknown} [error] - The error object or value to be logged and included in the response.
  *                If the error is an instance of `Error`, its message will be used.
  *                Otherwise, a default message "An unexpected error occurred" will be used.
- * @param statusCode - The HTTP status code to be returned with the response.
+ * @param {number} [statusCode=500] - The HTTP status code to be returned with the response.
  *                     Defaults to 500 if not provided.
- * @returns A `NextResponse` object containing a JSON payload with the error message
+ * @returns {NextResponse} A `NextResponse` object containing a JSON payload with the error message
  *          and a status of "error", along with the specified HTTP status code.
  */
 export const ErrorResponse = (error?: unknown, statusCode: number = 500) => {

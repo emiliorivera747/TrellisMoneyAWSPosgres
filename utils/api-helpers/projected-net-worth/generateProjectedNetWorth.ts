@@ -10,12 +10,14 @@ import {
 import { PopulateMapWithFvParams } from "@/types/future-projections/projected-net-worth";
 
 /**
- * Generates the projected net worth over a range of years based on the provided holdings.
- *
- * @param {Holding[]} holdings - An array of holding objects, each containing quantity, security, and annual return rate.
- * @param {Date} start_year - The start date for the projection.
- * @param {Date} end_year - The end date for the projection.
- * @returns {Promise<{ year: Date, close: number }[]>} - A promise that resolves to an array of objects, each representing the projected net worth for a specific year.
+ * Generates the projected net worth over a range of years based on the provided accounts.
+ * @export
+ * @param {Account[]} accounts - An array of account objects containing holdings and balances.
+ * @param {number} start_year - The start year for the projection.
+ * @param {number} end_year - The end year for the projection.
+ * @param {boolean} includes_inflation - Whether to include inflation in the calculations.
+ * @param {number} annual_inflation_rate - The annual inflation rate.
+ * @returns {Promise<NetWorthData[]>} A promise that resolves to an array of objects, each representing the projected net worth for a specific date.
  */
 export const generateProjectedNetWorth = async (
   accounts: Account[],
@@ -69,31 +71,20 @@ export const generateProjectedNetWorth = async (
 
 /**
  * Groups accounts by their type.
- *
- * @param accounts - Array of `Account` objects.
- * @returns Object with `AccountType` keys and arrays of `Account` objects.
- *
- * @example
- * const accounts = [
- *   { id: 1, type: 'savings', balance: 1000 },
- *   { id: 2, type: 'checking', balance: 500 },
- * ];
- * const grouped = createGroups(accounts);
- * // { savings: [{ id: 1, ... }], checking: [{ id: 2, ... }] }
+ * @param {Account[]} accounts - Array of `Account` objects.
+ * @returns {Record<AccountType, Account[]>} Object with `AccountType` keys and arrays of `Account` objects.
  */
 const createGroups = (accounts: Account[]) => {
   return Object.groupBy(accounts, (account) => account.type as AccountType);
 };
 
 /**
- *
- * Populates the projected net worth for each day
- * Optimized to reduce redundant calculations and improve efficiency
- *
- * @param projectedNetWorth
- * @param start_year
- * @param end_year
- * @param projectionsMap
+ * Populates the projected net worth for each day.
+ * Optimized to reduce redundant calculations and improve efficiency.
+ * @param {number} startYear - The start year for the projection.
+ * @param {number} endYear - The end year for the projection.
+ * @param {Map<number, number>} projectionsMap - A map of year to projected value.
+ * @returns {NetWorthData[]} An array of projected net worth data points.
  */
 const generateDailyProjectedNetWorth = (
   startYear: number,
@@ -131,16 +122,15 @@ const generateDailyProjectedNetWorth = (
 };
 
 /**
- *
- * populates the hashmap with the projected net worth
- * for each year
- * Optimized to pre-calculate holdings data outside the year loop
- *
- * @param projectionsMap
- * @param start_year
- * @param end_year
- * @param accounts
- * @returns
+ * Populates the hashmap with the projected net worth for each year.
+ * Optimized to pre-calculate holdings data outside the year loop.
+ * @param {PopulateMapWithFvParams} params - The parameters for populating the map.
+ * @param {Map<number, number>} params.projectionsMap - The map to populate.
+ * @param {number} params.start_year - The start year.
+ * @param {number} params.end_year - The end year.
+ * @param {Account[]} params.accounts - The accounts containing holdings.
+ * @param {boolean} params.includes_inflation - Whether to include inflation.
+ * @param {number} params.annual_inflation_rate - The annual inflation rate.
  */
 const populateMapWithFvHoldings = ({
   projectionsMap,
@@ -178,16 +168,15 @@ const populateMapWithFvHoldings = ({
 };
 
 /**
- *
- * populates the hashmap with the projected net worth
- * for each year
- * Optimized to pre-calculate account data and remove redundant conditions
- *
- * @param projectionsMap
- * @param start_year
- * @param end_year
- * @param accounts
- * @returns
+ * Populates the hashmap with the projected net worth for each year.
+ * Optimized to pre-calculate account data and remove redundant conditions.
+ * @param {PopulateMapWithFvParams} params - The parameters for populating the map.
+ * @param {Map<number, number>} params.projectionsMap - The map to populate.
+ * @param {number} params.start_year - The start year.
+ * @param {number} params.end_year - The end year.
+ * @param {Account[]} params.accounts - The accounts.
+ * @param {boolean} params.includes_inflation - Whether to include inflation.
+ * @param {number} params.annual_inflation_rate - The annual inflation rate.
  */
 const populateMapWithFvAccounts = ({
   projectionsMap,

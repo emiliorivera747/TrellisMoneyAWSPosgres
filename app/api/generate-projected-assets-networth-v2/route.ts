@@ -30,10 +30,11 @@ import { getMemberByUserId } from "@/utils/prisma/household/household";
 const default_inflation_rate = 0.025;
 
 /**
- * POST /api/plaid/generateProjectedNetWorth
- *
- * @param {NextRequest} req
- * @returns {Promise<NextResponse>}
+ * POST /api/generate-projected-assets-networth-v2
+ * Generates projected assets and net worth for a user.
+ * @export
+ * @param {NextRequest} req - The incoming request object.
+ * @returns {Promise<NextResponse>} A response containing projected net worth and assets.
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {

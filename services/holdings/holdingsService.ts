@@ -4,7 +4,11 @@ import { API_URL } from "@/utils/global-variables/globals";
 import { ApiResponse } from "@/types/services-responses/api-responses";
 import { HoldingsResponse } from "@/types/services-responses/holdings";
 
-// Fetches investment holdings from the API with the current timestamp.
+/**
+ * Fetches investment holdings from the API with the current timestamp.
+ * @export
+ * @returns {Promise<ApiResponse<HoldingsResponse>>} A promise that resolves to the holdings response.
+ */
 const getHoldings = async (): Promise<ApiResponse<HoldingsResponse>> => {
   const timestamp = new Date().toISOString();
 
