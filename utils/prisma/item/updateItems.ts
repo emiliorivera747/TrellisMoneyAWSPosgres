@@ -1,7 +1,6 @@
-import { Item as ItemPrisma } from "@/app/generated/prisma/client";
+// import { Item as ItemPrisma } from "@/app/generated/prisma/client";
 import { ItemWithConsentFields } from "plaid";
 
-import prisma from "@/lib/prisma";
 
 /**
  * Updates an item in the database.

@@ -307,11 +307,11 @@ export type MinmalSubscription = {
    * @type {number | null}
    * @memberof MinmalSubscription
    */
-  cancel_at: number | null;
+  cancelAt: number | null;
   /**
    * Whether the subscription will cancel at period end.
    * @type {boolean}
    * @memberof MinmalSubscription
    */
-  cancel_at_period_end: boolean;
+  cancelAtPeriodEnd: boolean;
 };

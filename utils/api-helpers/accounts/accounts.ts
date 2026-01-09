@@ -1,4 +1,4 @@
-import { Account } from "@/app/generated/prisma/client";
+// import { Account } from "@/app/generated/prisma/client";
 
 /**
  * Extracts an array of account IDs from a list of account objects.

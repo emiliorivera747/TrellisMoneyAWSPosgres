@@ -10,12 +10,12 @@ import { getAllHoldingsWithAccessTokens } from "@/services/plaid/holdings/holdin
 import { updateHoldings } from "@/utils/prisma/holding/updateHoldings";
 
 // Types
-import { Account, Item } from "@/app/generated/prisma/client";
-import { Holding } from "@/app/generated/prisma/client";
-import {
-  Holding as HoldingDB,
-  Account as AccountDB,
-} from "@/app/generated/prisma/browser";
+// import { Account, Item } from "@/app/generated/prisma/client";
+// import { Holding } from "@/app/generated/prisma/client";
+// import {
+//   Holding as HoldingDB,
+//   Account as AccountDB,
+// } from "@/app/generated/prisma/browser";
 
 /**
  * Fetch all of the investments associated with the access tokens.

@@ -1,7 +1,7 @@
 import { client } from "@/config/plaidClient";
 import { AccountBaseWithItemId } from "@/types/services/plaid/plaid";
 import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
-import { Item } from "@/app/generated/prisma/client";
+// import { Item } from "@/app/generated/prisma/client";
 
 /**
  * Fetch all of the accounts associated with the access tokens
@@ -11,7 +11,7 @@ import { Item } from "@/app/generated/prisma/client";
  * @returns
  */
 export const getAccounts = async (
-  items: Item[]
+  items: any[]
 ): Promise<AccountBaseWithItemId[][]> => {
   // Get all access tokens from items
   const accessTokens = await getAllAccessTokens(items);
@@ -37,7 +37,7 @@ export const getAccounts = async (
  * @returns
  */
 export const getAccountsFromPlaid = async (
-  items: Item[]
+  items: any[]
 ): Promise<AccountBaseWithItemId[][]> => {
   const accessTokens = getAllAccessTokens(items);
   const accounts = await Promise.all(

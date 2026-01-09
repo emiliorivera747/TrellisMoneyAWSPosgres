@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { accountServices } from "@/features/accounts/services/accountServices";
-import { ApiResponse } from "@/types/api-responses/accounts";
-import { Account } from "@/app/generated/prisma/client";
+import { ApiResponse } from "@/types/services/responses/api-responses";
 
 /**
  * Custom hook to fetch accounts data using react-query.
  */
 export const useFetchAccounts: () => {
-  accountsResponse: ApiResponse<{ accounts: Account[] }> | undefined;
+  accountsResponse: ApiResponse<{ accounts: any[] }> | undefined;
   accountsError: Error | null;
   isLoadingAccounts: boolean;
   isErrorAccounts: boolean;

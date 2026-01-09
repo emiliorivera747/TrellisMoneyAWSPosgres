@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+// import prisma from "@/lib/prisma";
 import { AccountBalance } from "plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import { AccountSubtype, AccountType } from "plaid";
@@ -8,7 +8,7 @@ import { AccountBaseWithItemId } from "@/types/services/plaid/plaid";
 
 // Helpers
 import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
-import { Account } from "@/app/generated/prisma/client";
+// import { Account } from "@/app/generated/prisma/client";
 
 /**
  * Update the accounts in the database

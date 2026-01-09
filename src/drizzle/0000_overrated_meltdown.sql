@@ -1,6 +1,4 @@
--- Current sql file was generated after introspecting the database
--- If you want to run this migration please uncomment this code before executing migrations
-/*
+
 CREATE TYPE "public"."HouseholdRole" AS ENUM('ADMIN', 'MEMBER', 'GUEST');--> statement-breakpoint
 CREATE TYPE "public"."Interval" AS ENUM('day', 'week', 'month', 'year');--> statement-breakpoint
 CREATE TYPE "public"."SubscriptionStatus" AS ENUM('incomplete', 'incomplete_expired', 'trialing', 'active', 'past_due', 'canceled', 'unpaid', 'paused');--> statement-breakpoint

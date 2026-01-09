@@ -4,7 +4,7 @@ import Accountcard from "@/features/accounts/components/cards/AccountCard";
 import NoAccountsFound from "@/features/accounts/components/cards/NoAccountsFound";
 
 // Types
-import { Account } from "@/app/generated/prisma/client";
+// import { Account } from "@/app/generated/prisma/client";
 import { AccountListProps } from "@/features/accounts/types/accounts";
 
 /**
@@ -31,7 +31,7 @@ const AccountsList = ({
         return (
           <div key={type}>
             <AccountListHeader type={type} />
-            {accounts?.map((account: Account) => {
+            {accounts?.map((account) => {
               return <Accountcard key={account.account_id} account={account} />;
             })}
           </div>

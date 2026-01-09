@@ -15,8 +15,6 @@ export default defineConfig({
       rejectUnauthorized: false,
     },
   },
-  // Print all statements
   verbose: true,
-  // Always ask for confirmation
   strict: true,
 });

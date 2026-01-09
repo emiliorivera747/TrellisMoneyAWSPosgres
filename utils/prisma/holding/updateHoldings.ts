@@ -1,7 +1,7 @@
 import { updateOrCreateHolding } from "@/utils/prisma/holding/holdings";
 
 // Types
-import { Holding as HoldingDB } from "@/app/generated/prisma/client";
+// import { Holding as HoldingDB } from "@/app/generated/prisma/client";
 import { Holding } from "plaid";
 
 /**

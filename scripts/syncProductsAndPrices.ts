@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import prisma from "@/lib/prisma";
+// import prisma from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
-import { Interval, UsageType } from "@/app/generated/prisma/client";
+// import { Interval, UsageType } from "@/app/generated/prisma/client";
 
 /**
  * Synchronizes products and their associated prices from Stripe to a local database using Prisma.

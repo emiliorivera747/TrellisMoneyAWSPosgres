@@ -18,6 +18,6 @@ export const hasActiveSubscription = (
   const now = Math.floor(Date.now() / 1000);
   return (
     ["active", "trialing"].includes(sub.status) &&
-    (!sub.cancel_at || sub.cancel_at > now)
+    (!sub.cancelAt || sub.cancelAt > now)
   );
 };

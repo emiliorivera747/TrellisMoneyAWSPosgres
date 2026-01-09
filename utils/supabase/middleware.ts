@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
-import getSubscriptionMinimalData from "@/utils/prisma/stripe/getSubscriptionMinimalData";
+import getSubscriptionMinimalData from "@/utils/drizzle/stripe/getSubscriptionWithMinimalData";
 import { PROTECTED_PATHS } from "@/proxy";
 
 // Util
@@ -68,12 +68,12 @@ export async function updateSession(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   if (isProtectedPath(pathname)) {
+    
     // ----- If user is not logged in the redirect to sign up -----
     if (!user) return NextResponse.redirect(new URL("/sign-up", request.url));
 
     // ---- Get subscription -----
     const subscription = await getSubscriptionMinimalData(user.id);
-    console.log("Subscription", subscription);
 
     if (!hasActiveSubscription(subscription))
       return NextResponse.redirect(new URL("/subscriptions", request.url));

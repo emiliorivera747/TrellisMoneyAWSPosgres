@@ -1,5 +1,5 @@
 import { client } from "@/config/plaidClient";
-import { Item } from "@/app/generated/prisma/client";
+// import { Item } from "@/app/generated/prisma/client";
 
 /**
  * Removes an item from Plaid using the provided access token.
@@ -41,7 +41,7 @@ export const removeItemFromPlaid = async (accessToken: string) => {
  * @param items - An array of items, each containing an access token.
  * @returns A promise that resolves to an array of item details retrieved from Plaid.
  */
-export const getItemsFromPlaid = async (items: Item[]) => {
+export const getItemsFromPlaid = async (items: any[]) => {
   const allItems = await Promise.all(
     items.map(async (item) => {
       const res = await client.itemGet({ access_token: item.access_token });
