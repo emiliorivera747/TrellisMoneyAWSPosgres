@@ -10,7 +10,7 @@ import {
   getSubscriptionItemFromSubscription,
   generateSubscriptionData,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
-import updateUserAndSubscription from "@/utils/prisma/stripe/updateUserAndSubscription";
+import { updateUserAndSubscription } from "@/utils/prisma/stripe/subscriptions";
 
 /**
  * Handles the checkout session completed event from Stripe.
@@ -47,7 +47,7 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
           `No recurring price found for subscription ${subscription.id}`
         );
 
-      const price_id: string = subscriptionItem.price.id;
+      const price_id = subscriptionItem.price.id;
 
       // ---- Get subscription data to update the subscription -----
       const subscriptionData = generateSubscriptionData({

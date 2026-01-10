@@ -8,6 +8,7 @@ import handleCheckoutSessionCompleted from "@/webhooks/stripe/handlers/handleChe
 import handlePaymentActionRequired from "@/webhooks/stripe/handlers/handlePaymentActionRequired";
 import handlePaymentFailed from "@/webhooks/stripe/handlers/handlePaymentFailed";
 import handleSubscriptionUpdated from "@/webhooks/stripe/handlers/handleSubscriptionUpdated";
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
 /**
  * Handles incoming POST requests for Stripe webhooks.
@@ -80,7 +81,8 @@ export async function POST(req: NextRequest) {
     }
     return new Response("Webhook processed successfully", { status: 200 });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    return new Response(`Webhook Error: ${message}`, { status: 400 });
+    return new Response(`Webhook Error: ${getServerErrorMessage(error)}`, {
+      status: 400,
+    });
   }
 }
