@@ -1,19 +1,14 @@
-import { SupabaseUserSyncData } from "@/features/auth/types/callback";
+// Drizzle
 import { db } from "@/src/drizzle/db";
 import { user, household, householdMember } from "@/src/drizzle/schema";
 import { eq } from "drizzle-orm";
-import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
-/**
- * Determines the base redirect URL based on environment and headers.
- */
-export function getRedirectBase(request: Request, origin: string): string {
-  const forwardedHost = request.headers.get("x-forwarded-host");
-  const isLocalEnv = process.env.NODE_ENV === "development";
-  if (isLocalEnv) return origin;
-  if (forwardedHost) return `https://${forwardedHost}`;
-  return origin;
-}
+// Utils
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
+import { createHouseholdName } from "@/utils/helper-functions/formatting/createHouseholdName";
+
+// Types
+import { SupabaseUserSyncData } from "@/features/auth/types/callback";
 
 /**
  * Adds or updates a user in the PostgreSQL database via Prisma.
@@ -37,9 +32,7 @@ export async function upsertUser(currentUser: SupabaseUserSyncData) {
     if (!doesHouseholdExistRes) await createHousehold(currentUser);
 
     return userDB;
-    
   } catch (err) {
-
     const errorMessage = getServerErrorMessage(err);
 
     console.error(
@@ -204,17 +197,4 @@ export const updateOrCreateUser = async (currentUser: SupabaseUserSyncData) => {
   });
 
   return userWithSubs;
-};
-
-const createHouseholdName = (
-  fullName: string | undefined,
-  email: string | undefined
-) => {
-  const householdName = fullName
-    ? fullName.endsWith("s")
-      ? `${fullName}' Household`
-      : `${fullName}'s Household`
-    : email?.split("@")[0] + "'s Household";
-
-  return householdName;
 };

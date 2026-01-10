@@ -1,51 +1,33 @@
 "use client";
-import { PrimaryHeader } from "@/components/marketing/headers/Headers";
 
-import { useSearchParams } from "next/navigation";
+// React
 import { useEffect, useState } from "react";
+
+// Next
+import { useSearchParams } from "next/navigation";
+
+// Header
+import { PrimaryHeader } from "@/components/marketing/headers/Headers";
 
 /**
  * AuthErrorPage Component
  *
- * This component renders an authentication error page that displays an error message
- * based on the query parameters or hash parameters in the URL. It provides a user-friendly
- * interface to inform users about authentication issues and offers a link to navigate back
- * to the home page.
+ * Renders an authentication error page displaying messages based on URL parameters.
+ * Provides a link to navigate back to the home page.
  *
- * @component
- *
- * @returns {JSX.Element} The rendered authentication error page.
- *
- * @remarks
- * - The component uses `useSearchParams` to retrieve query parameters from the URL.
- * - It also parses the URL hash to extract error-related parameters.
- * - The error message is dynamically generated based on the `error` and `error_description` values.
+ * @returns {JSX.Element} The rendered error page.
  *
  * @example
- * ```tsx
- * import AuthErrorPage from './auth-code-error/page';
- *
- * function App() {
- *   return <AuthErrorPage />;
- * }
- * ```
+ * <AuthErrorPage />
  *
  * @dependencies
  * - React hooks: `useState`, `useEffect`
- * - `useSearchParams` for accessing URL query parameters
- *
- * @styles
- * - The component uses Tailwind CSS classes for styling.
- * - Inline styles are applied to the "Go back to home" link for hover effects and box shadow.
+ * - `useSearchParams` for URL query parameters
  *
  * @errorHandling
- * - Handles the following error types:
- *   - `signup_disabled`: Displays a message indicating that signups are disabled.
- *   - `access_denied`: Displays a message indicating access was denied.
- *   - Default: Displays a generic authentication error message.
- *
- * @navigation
- * - Includes a link to navigate back to the home page (`/sign-up`).
+ * - `signup_disabled`: Signups are disabled.
+ * - `access_denied`: Access denied.
+ * - Default: Generic error message.
  */
 export default function AuthErrorPage() {
   const searchParams = useSearchParams();

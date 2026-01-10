@@ -1,28 +1,28 @@
-import { Subscription } from "@/app/generated/prisma/client";
+import { subscription } from "@/src/drizzle/schema";
+
+export type Subscription = typeof subscription.$inferSelect;
 
 /**
- * Determines if there is at least one active subscription in the provided list.
+ * Checks if any subscription is 'trialing' or 'active'.
  *
- * @param subscriptions - An array of `Subscription` objects to check.
- * @returns `true` if there is at least one subscription with a status of 'trialing' or 'active',
- *          otherwise `false`.
- *
- * @remarks
- * - The function returns `false` if the `subscriptions` array is empty or not provided.
- * - The `activeStatuses` array defines the statuses considered as "active".
- *
- * @example
- * ```typescript
- * const subscriptions = [
- *   { status: 'trialing' },
- *   { status: 'canceled' }
- * ];
- * const result = hasActiveSubscription(subscriptions);
- * console.log(result); // Output: true
- * ```
+ * @param subscriptions - Array of `Subscription` objects.
+ * @returns `true` if at least one subscription is active, otherwise `false`.
  */
 export const hasActiveSubscription = (subscriptions: Subscription[]) => {
-    if (!subscriptions || subscriptions.length === 0) return false;
-    const activeStatuses = ['trialing', 'active'];
-    return subscriptions.some(subscription => activeStatuses.includes(subscription.status));
+  if (!subscriptions || subscriptions.length === 0) return false;
+  const activeStatuses = ["trialing", "active"];
+  return subscriptions.some((subscription) =>
+    activeStatuses.includes(subscription.status)
+  );
 };
+
+/**
+ * Determines the base redirect URL based on environment and headers.
+ */
+export function getRedirectBase(request: Request, origin: string): string {
+  const forwardedHost = request.headers.get("x-forwarded-host");
+  const isLocalEnv = process.env.NODE_ENV === "development";
+  if (isLocalEnv) return origin;
+  if (forwardedHost) return `https://${forwardedHost}`;
+  return origin;
+}

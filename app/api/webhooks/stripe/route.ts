@@ -11,21 +11,12 @@ import handleSubscriptionUpdated from "@/webhooks/stripe/handlers/handleSubscrip
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
 /**
- * Handles incoming POST requests for Stripe webhooks.
+ * Processes Stripe webhook events by verifying the signature, parsing the event,
+ * and handling specific event types like `checkout.session.completed` and 
+ * `customer.subscription.deleted`. Logs unhandled events for debugging.
  *
- * This function processes Stripe webhook events by verifying the signature,
- * parsing the event, and handling specific event types such as:
- * - `checkout.session.completed`: Handles successful checkout sessions.
- * - `customer.subscription.deleted`: Handles subscription deletions.
- *
- * If the event type is unhandled, it logs the event type for debugging purposes.
- *
- * @param req - The incoming `NextRequest` object containing the webhook payload and headers.
- * @returns A `Response` object indicating the result of the webhook processing:
- * - `200 OK` if the webhook is processed successfully.
- * - `400 Bad Request` if there is an error, such as a missing signature or invalid payload.
- *
- * @throws Will return a `400 Bad Request` response if an error occurs during processing.
+ * @param req - Incoming `NextRequest` with the webhook payload and headers.
+ * @returns `200 OK` for success, `400 Bad Request` for errors.
  */
 export async function POST(req: NextRequest) {
   try {
