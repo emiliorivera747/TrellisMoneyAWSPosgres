@@ -1,12 +1,16 @@
 import Stripe from "stripe";
+
+// Stripe
 import { getStripeCheckoutSession } from "@/services/stripe/sessions";
+
+// Utils
+import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 import { getUserByEmail } from "@/utils/prisma/user/user";
 import {
   getSubscriptionItemFromSubscription,
   generateSubscriptionData,
 } from "@/utils/api-helpers/stripe/webhookHelpers";
 import updateUserAndSubscription from "@/utils/prisma/stripe/updateUserAndSubscription";
-import { logError } from "@/utils/api-helpers/errors/logError";
 
 /**
  * Handles the checkout session completed event from Stripe.
@@ -16,23 +20,17 @@ import { logError } from "@/utils/api-helpers/errors/logError";
  */
 const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
   try {
-    
     // ----- Get the checkout session -----
     const { subscription, customer, customer_email, mode } =
       await getStripeCheckoutSession(event);
 
     // ----- Does customer have email? -----
-    if (!customer_email) {
-      logError("Customer email not found in session");
-      return;
-    }
+    if (!customer_email)
+      return logErrorAndThrow("Customer email not found in session");
 
     // ----- Find the user -----
     const user = await getUserByEmail(customer_email);
-    if (!user) {
-      logError("User not found");
-      return;
-    }
+    if (!user) return logErrorAndThrow("User not found");
 
     // ----- If we have a subscription -----
     if (
@@ -40,13 +38,14 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
       typeof subscription === "object" &&
       mode === "subscription"
     ) {
+      
       const subscriptionItem =
         getSubscriptionItemFromSubscription(subscription);
 
-      if (!subscriptionItem?.price) {
-        logError("No recurring price found");
-        return;
-      }
+      if (!subscriptionItem?.price)
+        return logErrorAndThrow(
+          `No recurring price found for subscription ${subscription.id}`
+        );
 
       const price_id: string = subscriptionItem.price.id;
 

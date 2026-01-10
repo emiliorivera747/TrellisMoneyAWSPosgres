@@ -1,6 +1,6 @@
 // Drizzle
 import { db } from "@/src/drizzle/db";
-import { subscription } from "@/src/drizzle/schema";
+import { subscription, user } from "@/src/drizzle/schema";
 import { eq } from "drizzle-orm";
 
 // Types
@@ -31,23 +31,71 @@ export const updateUserAndSubscription = async ({
   customer_id,
   subscriptionData,
 }: UpdateUserAndSubscriptionProps) => {
-  const res = await prisma.$transaction([
-    prisma.user.update({
-      where: { user_id },
-      data: {
-        customer_id,
-      },
-    }),
+  // const res = await prisma.$transaction([
+  //   prisma.user.update({
+  //     where: { user_id },
+  //     data: {
+  //       customer_id,
+  //     },
+  //   }),
 
-    prisma.subscription.upsert({
-      where: { user_id },
-      update: subscriptionData,
-      create: {
-        ...subscriptionData,
-      },
-    }),
-  ]);
+  //   prisma.subscription.upsert({
+  //     where: { user_id },
+  //     update: subscriptionData,
+  //     create: {
+  //       ...subscriptionData,
+  //     },
+  //   }),
+  // ]);
 
+  const {
+    status,
+    start_date: startDate,
+    trial_start: trialStart,
+    trial_end: trialEnd,
+    ended_at: endedAt,
+    cancel_at: cancelAt,
+    cancel_at_period_end: cancelAtPeriodEnd,
+    canceled_at: canceledAt,
+    updated_at: updatedAt,
+    subscription_id: subscriptionId,
+  } = subscriptionData;
+
+  const res = db.transaction(async (tx) => {
+    tx.update(user).set({
+      customerId: customer_id,
+    });
+
+    tx.insert(subscription)
+      .values({
+        userId: user_id,
+        customerId: customer_id,
+        subscriptionId,
+        startDate,
+        trialStart,
+        trialEnd,
+        endedAt,
+        cancelAt,
+        cancelAtPeriodEnd,
+        canceledAt,
+        updatedAt,
+        status: status,
+      })
+      .onConflictDoUpdate({
+        target: subscription.subscriptionId,
+        set: {
+          status,
+          startDate,
+          trialStart,
+          trialEnd,
+          endedAt,
+          cancelAt,
+          cancelAtPeriodEnd,
+          canceledAt,
+          updatedAt,
+        },
+      });
+  });
   return res;
 };
 
@@ -64,7 +112,6 @@ export const updateSubscription = async (
   userId: string,
   subscriptionData: Subscription
 ) => {
-  
   // const res = await prisma.subscription.update({
   //   where: {
   //     user_id,

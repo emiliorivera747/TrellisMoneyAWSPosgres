@@ -22,7 +22,6 @@ import { generateSubscriptionDataFromSubscription } from "@/webhooks/stripe/help
 const handleSubscriptionDeleted = async (event: Stripe.Event) => {
   try {
     const subscription = await getStripeSubscriptionByEvent(event);
-
     const res = await generateSubscriptionDataFromSubscription(subscription);
     if (!res)
       return logError(
