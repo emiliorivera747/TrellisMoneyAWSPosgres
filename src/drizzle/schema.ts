@@ -279,7 +279,7 @@ export const price = pgTable("Price", {
 	currency: text().notNull(),
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
 	unitAmount: bigint("unit_amount", { mode: "number" }).notNull(),
-	recurringInterval: interval("recurring_interval").notNull(),
+	recurringInterval: interval("recurring_interval"),
 	recurringIntervalCount: integer("recurring_interval_count").default(1),
 	recurringUsageType: usageType("recurring_usage_type").default('licensed').notNull(),
 	active: boolean().default(false).notNull(),
