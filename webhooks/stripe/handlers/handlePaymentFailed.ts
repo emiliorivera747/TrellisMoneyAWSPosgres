@@ -5,7 +5,7 @@ import { logError } from "@/utils/api-helpers/errors/logError";
 
 // Helpers
 import {
-  getInvoiceFromEvent,
+  extractInvoiceFromStripeEvent,
 } from "@/webhooks/stripe/helpers/invoice";
 
 import { generateSubscriptionDataFromInvoice } from "@/webhooks/stripe/helpers/subscriptions";
@@ -28,7 +28,7 @@ import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
  */
 const handlePaymentFailed = async (event: Stripe.Event) => {
   try {
-    const invoice = getInvoiceFromEvent(event);
+    const invoice = extractInvoiceFromStripeEvent(event);
 
     const res = await generateSubscriptionDataFromInvoice(invoice);
     if (!res) return logError("Failed to generate subscription data");

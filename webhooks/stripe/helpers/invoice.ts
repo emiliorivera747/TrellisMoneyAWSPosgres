@@ -44,13 +44,10 @@ export const getSubscriptionIdForInvoiceLine = (
 };
 
 /**
- * Retrieves the subscription ID from a Stripe invoice.
+ * Extracts the subscription ID from a Stripe invoice.
  *
- * This function extracts the subscription line item from the provided Stripe invoice
- * and then retrieves the corresponding subscription ID associated with that line item.
- *
- * @param invoice - The Stripe invoice object from which the subscription ID will be extracted.
- * @returns The subscription ID associated with the invoice.
+ * @param invoice - The Stripe invoice object.
+ * @returns The subscription ID, or undefined if not found.
  */
 export const getSubIdFromInvoice = (invoice: Stripe.Invoice) => {
   try {
@@ -64,16 +61,10 @@ export const getSubIdFromInvoice = (invoice: Stripe.Invoice) => {
 };
 
 /**
- * Retrieves the subscription associated with a given Stripe invoice.
+ * Fetches the subscription linked to a Stripe invoice.
  *
- * This function extracts the subscription ID from the provided invoice
- * and fetches the corresponding subscription details. If the subscription
- * ID cannot be determined, it returns `null`.
- *
- * @param invoice - The Stripe invoice object from which the subscription
- *                  information will be extracted.
- * @returns The subscription object if the subscription ID is found,
- *          otherwise `null`.
+ * @param invoice - The Stripe invoice object.
+ * @returns The subscription object or `null` if not found.
  */
 export const getSubscriptionFromInvoice = async (invoice: Stripe.Invoice) => {
   const id = getSubIdFromInvoice(invoice);
@@ -87,7 +78,7 @@ export const getSubscriptionFromInvoice = async (invoice: Stripe.Invoice) => {
  * @param event - The Stripe event containing the invoice data.
  * @returns The extracted Stripe invoice object.
  */
-export const getInvoiceFromEvent = (event: Stripe.Event) => {
+export const extractInvoiceFromStripeEvent = (event: Stripe.Event) => {
   const invoice = event.data.object as Stripe.Invoice;
   return invoice;
 };

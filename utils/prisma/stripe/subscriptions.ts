@@ -1,49 +1,36 @@
-import prisma from "@/lib/prisma";
+// Drizzle
+import { db } from "@/src/drizzle/db";
+import { subscription } from "@/src/drizzle/schema";
+import { eq } from "drizzle-orm";
 
+// Types
+import { UpdateUserAndSubscriptionProps } from "@/types/utils/stripe/subscriptions";
 import { Subscription } from "@/types/services/stripe/stripe";
 
-interface updateUserAndSubscriptionProps {
-  user_id: string;
-  customer_id: string;
-  subscriptionData: Subscription;
-}
-
 /**
- * Updates the user and their subscription information in the database.
+ * Updates user and subscription in the database within a transaction.
  *
- * This function performs a database transaction to update the `user` table with the
- * provided `customer_id` and either updates or creates a subscription record in the
- * `subscription` table with the provided `subscriptionData`.
+ * @param {Object} params - Parameters for the update.
+ * @param {string} params.user_id - User ID.
+ * @param {string} params.customer_id - Stripe customer ID.
+ * @param {Object} params.subscriptionData - Subscription data to update or create.
  *
- * @param {Object} params - The parameters for updating the user and subscription.
- * @param {string} params.user_id - The unique identifier of the user to be updated.
- * @param {string} params.customer_id - The Stripe customer ID associated with the user.
- * @param {Object} params.subscriptionData - The subscription data to be updated or created.
+ * @returns {Promise<[User, Subscription]>} Updated user and subscription records.
  *
- * @returns {Promise<[User, Subscription]>} A promise that resolves to an array containing
- * the updated user and subscription records.
- *
- * @throws {Prisma.PrismaClientKnownRequestError} Throws if the transaction fails due to
- * database constraints or other known Prisma errors.
- * @throws {Prisma.PrismaClientUnknownRequestError} Throws if an unknown error occurs during
- * the transaction.
+ * @throws {Prisma.PrismaClientKnownRequestError | Prisma.PrismaClientUnknownRequestError}
  *
  * @example
  * const result = await updateUserAndSubscription({
  *   user_id: '123',
  *   customer_id: 'cus_ABC123',
- *   subscriptionData: {
- *     plan: 'premium',
- *     status: 'active',
- *   },
+ *   subscriptionData: { plan: 'premium', status: 'active' },
  * });
- * console.log(result);
  */
 export const updateUserAndSubscription = async ({
   user_id,
   customer_id,
   subscriptionData,
-}: updateUserAndSubscriptionProps) => {
+}: UpdateUserAndSubscriptionProps) => {
   const res = await prisma.$transaction([
     prisma.user.update({
       where: { user_id },
@@ -64,32 +51,37 @@ export const updateUserAndSubscription = async ({
   return res;
 };
 
-
 /**
- * Updates a subscription record in the database for a given user.
+ * Updates a user's subscription in the database.
  *
- * @param user_id - The unique identifier of the user whose subscription is being updated.
- * @param subscription - The subscription object containing the updated subscription details.
- * 
- * The `subscription` object should include the following properties:
- * - `status`: The current status of the subscription.
- * - `start_date`: The start date of the subscription.
- * - `trial_start`: The start date of the trial period, if applicable.
- * - `trial_end`: The end date of the trial period, if applicable.
- * - `ended_at`: The date when the subscription ended, if applicable.
- * - `cancel_at`: The date when the subscription is scheduled to be canceled, if applicable.
- * - `cancel_at_period_end`: A boolean indicating whether the subscription will be canceled at the end of the current billing period.
- * - `canceled_at`: The date when the subscription was canceled, if applicable.
- * - `updated_at`: The date when the subscription was last updated.
+ * @param user_id - User's unique identifier.
+ * @param subscription - Subscription details to update.
+ * @returns Updated subscription record.
  *
- * @returns A promise that resolves to the updated subscription record.
- *
- * @throws Will throw an error if the update operation fails.
+ * @throws Error if the update fails.
  */
 export const updateSubscription = async (
-  user_id: string,
-  subscription: Subscription
+  userId: string,
+  subscriptionData: Subscription
 ) => {
+  
+  // const res = await prisma.subscription.update({
+  //   where: {
+  //     user_id,
+  //   },
+  //   data: {
+  //     status,
+  //     start_date,
+  //     trial_start,
+  //     trial_end,
+  //     ended_at,
+  //     cancel_at,
+  //     cancel_at_period_end,
+  //     canceled_at,
+  //     updated_at,
+  //   },
+  // });
+
   const {
     status,
     start_date,
@@ -100,24 +92,23 @@ export const updateSubscription = async (
     cancel_at_period_end,
     canceled_at,
     updated_at,
-  } = subscription;
+  } = subscriptionData;
 
-  const res = await prisma.subscription.update({
-    where: {
-      user_id,
-    },
-    data: {
+  const res = await db
+    .update(subscription)
+    .set({
       status,
-      start_date,
-      trial_start,
-      trial_end,
-      ended_at,
-      cancel_at,
-      cancel_at_period_end,
-      canceled_at,
-      updated_at,
-    },
-  });
+      startDate: start_date,
+      trialStart: trial_start,
+      trialEnd: trial_end,
+      endedAt: ended_at,
+      cancelAt: cancel_at,
+      cancelAtPeriodEnd: cancel_at_period_end,
+      canceledAt: canceled_at,
+      updatedAt: updated_at,
+    })
+    .where(eq(subscription.userId, userId))
+    .returning();
 
   return res;
 };
