@@ -1,4 +1,8 @@
 import { SupabaseUserSyncData } from "@/features/auth/types/callback";
+import { db } from "@/src/drizzle/db";
+import { user, household, householdMember } from "@/src/drizzle/schema";
+import { eq } from "drizzle-orm";
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 
 /**
  * Determines the base redirect URL based on environment and headers.
@@ -24,137 +28,182 @@ export async function upsertUser(currentUser: SupabaseUserSyncData) {
     /**
      * Get the household
      */
-    const household = await getHousehold(currentUser.id);
+    const doesHouseholdExistRes = await doesHouseholdExist(currentUser.id);
 
     /**
      * If the user does not exist then we will
      * create a new house and member.
      */
-    if (!household) await createHousehold(currentUser);
+    if (!doesHouseholdExistRes) await createHousehold(currentUser);
 
     return userDB;
+    
   } catch (err) {
-    const errorMessage =
-      err instanceof Error ? err.message : "There was an error updating user";
+
+    const errorMessage = getServerErrorMessage(err);
+
     console.error(
       "Prisma Upsert/Household Creation Failed:",
       errorMessage,
       err
     );
+
     return null;
   }
 }
 
 /**
- * Creates a household for the given user and assigns the user as an admin member of the household.
+ * Creates a household and assigns the user as an admin member.
  *
- * @param currentUser - The user data containing the user's ID, email, and metadata.
+ * @param currentUser - User data with ID, email, and metadata.
  *
- * The function performs the following steps:
- * 1. Generates a household name based on the user's full name or email.
- * 2. Creates a new household in the database with the generated name.
- * 3. Adds the user as an admin member of the newly created household.
+ * Steps:
+ * 1. Generate a household name from the user's full name or email.
+ * 2. Create a household and add the user as an admin member.
  *
- * @remarks
- * - If the user's full name is not available, the household name is derived from the user's email.
- * - The function uses a database transaction to ensure both the household and household member are created atomically.
- *
- * @throws Will throw an error if the database transaction fails.
+ * @throws Error if the database transaction fails.
  */
 export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
-  
   const { id, email, user_metadata } = currentUser;
   const fullName = user_metadata.full_name?.trim();
 
-  await prisma.$transaction(async (tx) => {
-    
-    // 1. Create household (no created_by yet)
-    const household = await tx.household.create({
-      data: { name: createHouseholdName(fullName, email) },
-    });
+  // await prisma.$transaction(async (tx) => {
+  //   // 1. Create household (no created_by yet)
+  //   const household = await tx.household.create({
+  //     data: { name: createHouseholdName(fullName, email) },
+  //   });
 
-    // 2. Create admin member and connect both sides in one call
-    const adminMember = await tx.householdMember.create({
-      data: {
+  //   // 2. Create admin member and connect both sides in one call
+  //   const adminMember = await tx.householdMember.create({
+  //     data: {
+  //       name: user_metadata.full_name?.trim() || "Unknown",
+  //       email: email ?? undefined,
+  //       role: "ADMIN",
+  //       user: { connect: { user_id: id } },
+  //       household: { connect: { household_id: household.household_id } },
+  //     },
+  //   });
+  //   // 3. Set the created_by field in the household
+  //   await tx.household.update({
+  //     where: { household_id: household.household_id },
+  //     data: { created_by: { connect: { member_id: adminMember.member_id } } },
+  //   });
+
+  //   return household;
+  // });
+
+  await db.transaction(async (tx) => {
+    /**
+     * Create Household
+     */
+    const householdInsert = await tx
+      .insert(household)
+      .values({
+        householdId: crypto.randomUUID(),
+        name: createHouseholdName(fullName, email),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      })
+      .returning({ householdId: household.householdId });
+    const householdId = householdInsert[0].householdId;
+
+    /**
+     * Create Member
+     */
+    const memberInsert = await tx
+      .insert(householdMember)
+      .values({
+        memberId: crypto.randomUUID(),
         name: user_metadata.full_name?.trim() || "Unknown",
-        email: email ?? undefined,
         role: "ADMIN",
-        user: { connect: { user_id: id } },
-        household: { connect: { household_id: household.household_id } },
-      },
-    });
-    // 3. Set the created_by field in the household
-    await tx.household.update({
-      where: { household_id: household.household_id },
-      data: { created_by: { connect: { member_id: adminMember.member_id } } },
-    });
+        userId: id,
+        householdId,
+      })
+      .returning({ memberId: householdMember.memberId });
+    const memberId = memberInsert[0]?.memberId;
 
-    return household;
+    /**
+     * Update createBy field in household
+     */
+    await tx
+      .update(household)
+      .set({
+        createdBy: memberId,
+      })
+      .where(eq(household.householdId, householdId));
+
+    return householdInsert[0];
   });
 };
 
 /**
- * Retrieves the household information associated with a given user ID.
+ * Retrieves the household ID for a given user ID.
  *
- * This function queries the database to find the first household member
- * record that matches the provided user ID. If a matching record is found,
- * it returns the household ID associated with the user.
- *
- * @param user_id - The unique identifier of the user whose household information is being retrieved.
- * @returns A promise that resolves to an object containing the `household_id` if the user is part of a household,
- *          or `null` if no matching household member is found.
- *
- * @example
- * ```typescript
- * const household = await getHousehold("user123");
- * if (household) {
- *   console.log(household.household_id);
- * } else {
- *   console.log("No household found for this user.");
- * }
- * ```
+ * @param userId - The user's unique identifier.
+ * @returns A promise resolving to the `household_id` or `null` if not found.
  */
-export const getHousehold = async (user_id: string) => {
-  const householdExists = await prisma.householdMember.findFirst({
-    where: { user_id },
-    select: { household_id: true },
-  });
-  return householdExists;
+export const doesHouseholdExist = async (userId: string) => {
+  const exists = await db
+    .select({ householdId: householdMember.householdId })
+    .from(householdMember)
+    .where(eq(householdMember.userId, userId))
+    .limit(1);
+  return exists;
 };
 
 /**
- * Updates an existing user or creates a new user in the database based on the provided user data.
+ * Upserts a user in the database.
  *
- * @param currentUser - The user data to synchronize with the database. This includes the user's ID, email,
- * and metadata such as the full name.
+ * @param currentUser - User data including ID, email, and metadata.
+ * @returns The user record after the upsert operation.
  *
- * @returns A promise that resolves to the user record in the database after the upsert operation.
- *
- * The function performs the following:
- * - If a user with the given `user_id` exists in the database, it updates the user's email and name.
- * - If no user with the given `user_id` exists, it creates a new user with the provided data.
- *
- * Notes:
- * - If `currentUser.email` is `null` or `undefined`, an empty string is used as the email.
- * - If `currentUser.user_metadata.full_name` is `null` or `undefined`, the name is set to "Unknown".
+ * Updates or creates a user based on `user_id`. Defaults email to an empty string
+ * and name to "Unknown" if not provided.
  */
 export const updateOrCreateUser = async (currentUser: SupabaseUserSyncData) => {
-  const userDB = await prisma.user.upsert({
-    where: { user_id: currentUser.id },
-    update: {
-      email: currentUser.email ?? "",
-      name: currentUser.user_metadata.full_name?.trim() || "Unknown",
-    },
-    create: {
-      user_id: currentUser.id,
-      email: currentUser.email ?? "",
-      name: currentUser.user_metadata.full_name?.trim() || "Unknown",
-    },
-    include: {
-      subscriptions: true,
-    },
+  // const userDB = await prisma.user.upsert({
+  //   where: { user_id: currentUser.id },
+  //   update: {
+  //     email: currentUser.email ?? "",
+  //     name: currentUser.user_metadata.full_name?.trim() || "Unknown",
+  //   },
+  //   create: {
+  //     user_id: currentUser.id,
+  //     email: currentUser.email ?? "",
+  //     name: currentUser.user_metadata.full_name?.trim() || "Unknown",
+  //   },
+  //   include: {
+  //     subscriptions: true,
+  //   },
+  // });
+  // return userDB;
+
+  const userId = currentUser.id;
+  const email = currentUser.email ?? "";
+  const name = currentUser.user_metadata?.full_name?.trim() || "Unknown";
+
+  await db
+    .insert(user)
+    .values({
+      userId,
+      email,
+      name,
+    })
+    .onConflictDoUpdate({
+      target: user.userId,
+      set: {
+        email: currentUser.email ?? "",
+        name: currentUser.user_metadata.full_name?.trim() || "Unknown",
+        updatedAt: new Date().toISOString(),
+      },
+    });
+
+  const userWithSubs = await db.query.user.findFirst({
+    where: eq(user.userId, userId),
+    with: { subscriptions: true },
   });
-  return userDB;
+
+  return userWithSubs;
 };
 
 const createHouseholdName = (
