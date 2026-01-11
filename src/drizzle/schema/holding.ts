@@ -64,3 +64,33 @@ export const holdingHistory = pgTable("HoldingHistory", {
 		}).onUpdate("cascade").onDelete("cascade"),
 ]);
 
+export const holdingHistoryRelations = relations(holdingHistory, ({one}) => ({
+	holding: one(holding, {
+		fields: [
+		  holdingHistory.accountId,
+		  holdingHistory.securityId,
+		  holdingHistory.userId,
+		],
+		references: [
+		  holding.accountId,
+		  holding.securityId,
+		  holding.userId,
+		],
+	  }),
+}));
+
+export const holdingRelations = relations(holding, ({one, many}) => ({
+	holdingHistories: many(holdingHistory),
+	security: one(security, {
+		fields: [holding.securityId],
+		references: [security.securityId]
+	}),
+	user: one(user, {
+		fields: [holding.userId],
+		references: [user.userId]
+	}),
+	account: one(account, {
+		fields: [holding.accountId],
+		references: [account.accountId]
+	}),
+}));

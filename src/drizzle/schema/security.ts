@@ -87,3 +87,19 @@ export const owner = pgTable("Owner", {
 	uniqueIndex("Owner_owner_id_key").using("btree", table.ownerId.asc().nullsLast().op("text_ops")),
 ]);
 
+export const securityRelations = relations(security, ({one, many}) => ({
+	user: one(user, {
+		fields: [security.userId],
+		references: [user.userId]
+	}),
+	fixedIncomes: many(fixedIncome),
+	securityHistories: many(securityHistory),
+	holdings: many(holding),
+}));
+
+export const securityHistoryRelations = relations(securityHistory, ({one}) => ({
+	security: one(security, {
+		fields: [securityHistory.securityId],
+		references: [security.securityId]
+	}),
+}));

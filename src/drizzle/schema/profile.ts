@@ -14,3 +14,10 @@ export const profile = pgTable("Profile", {
 			name: "Profile_user_id_fkey"
 		}).onUpdate("cascade").onDelete("restrict"),
 ]);
+
+export const profileRelations = relations(profile, ({one}) => ({
+	user: one(user, {
+		fields: [profile.userId],
+		references: [user.userId]
+	}),
+}));

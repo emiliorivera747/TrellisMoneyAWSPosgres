@@ -55,3 +55,16 @@ export const optionContract = pgTable("OptionContract", {
 	strikePrice: numeric("strike_price", { precision: 65, scale:  30 }).notNull(),
 	underlyingSecurityTicker: text("underlying_security_ticker").notNull(),
 });
+
+
+export const itemRelations = relations(item, ({one, many}) => ({
+	accounts: many(account),
+	user: one(user, {
+		fields: [item.userId],
+		references: [user.userId]
+	}),
+	household: one(household, {
+		fields: [item.householdId],
+		references: [household.householdId]
+	}),
+}));

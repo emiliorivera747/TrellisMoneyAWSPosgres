@@ -24,6 +24,13 @@ export const fixedIncome = pgTable("FixedIncome", {
 		}).onUpdate("cascade").onDelete("restrict"),
 ]);
 
+export const fixedIncomeRelations = relations(fixedIncome, ({one}) => ({
+	security: one(security, {
+		fields: [fixedIncome.securityId],
+		references: [security.securityId]
+	}),
+}));
+
 export const subscription = pgTable("Subscription", {
 	subscriptionId: text("subscription_id").primaryKey().notNull(),
 	userId: text("user_id").notNull(),
@@ -53,6 +60,17 @@ export const subscription = pgTable("Subscription", {
 		}).onUpdate("cascade").onDelete("set null"),
 ]);
 
+export const subscriptionRelations = relations(subscription, ({one}) => ({
+	user: one(user, {
+		fields: [subscription.userId],
+		references: [user.userId]
+	}),
+	price: one(price, {
+		fields: [subscription.priceId],
+		references: [price.priceId]
+	}),
+}));
+
 export const price = pgTable("Price", {
 	priceId: text("price_id").primaryKey().notNull(),
 	productId: text("product_id").notNull(),
@@ -73,6 +91,14 @@ export const price = pgTable("Price", {
 		}).onUpdate("cascade").onDelete("restrict"),
 ]);
 
+export const priceRelations = relations(price, ({one, many}) => ({
+	subscriptions: many(subscription),
+	product: one(product, {
+		fields: [price.productId],
+		references: [product.productId]
+	}),
+}));
+
 export const product = pgTable("Product", {
 	productId: text("product_id").primaryKey().notNull(),
 	name: text().notNull(),
@@ -81,3 +107,7 @@ export const product = pgTable("Product", {
 	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }).notNull(),
 });
+
+export const productRelations = relations(product, ({many}) => ({
+	prices: many(price),
+}));

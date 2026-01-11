@@ -38,3 +38,20 @@ export const householdMember = pgTable("HouseholdMember", {
 			name: "HouseholdMember_user_id_fkey"
 		}).onUpdate("cascade").onDelete("set null"),
 ]);
+
+export const householdRelations = relations(household, ({many}) => ({
+	accounts: many(account),
+	items: many(item),
+	householdMembers: many(householdMember),
+}));
+
+export const householdMemberRelations = relations(householdMember, ({one}) => ({
+	household: one(household, {
+		fields: [householdMember.householdId],
+		references: [household.householdId]
+	}),
+	user: one(user, {
+		fields: [householdMember.userId],
+		references: [user.userId]
+	}),
+}));

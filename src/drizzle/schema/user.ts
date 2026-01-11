@@ -16,3 +16,13 @@ export const user = pgTable("User", {
 	uniqueIndex("User_customer_id_key").using("btree", table.customerId.asc().nullsLast().op("text_ops")),
 	uniqueIndex("User_email_key").using("btree", table.email.asc().nullsLast().op("text_ops")),
 ]);
+
+export const userRelations = relations(user, ({many}) => ({
+	accounts: many(account),
+	items: many(item),
+	securities: many(security),
+	subscriptions: many(subscription),
+	profiles: many(profile),
+	householdMembers: many(householdMember),
+	holdings: many(holding),
+}));
