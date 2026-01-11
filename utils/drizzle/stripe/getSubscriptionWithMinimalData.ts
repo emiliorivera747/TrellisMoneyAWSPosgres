@@ -1,6 +1,6 @@
-import { db } from "@/src/drizzle/db";
+import { db } from "@/drizzle/db";
 import { eq, desc } from "drizzle-orm";
-import { subscription } from "@/src/drizzle/schema/stripe";
+import { subscription } from "@/drizzle/schema/stripe";
 
 const getSubscriptionMinimalData = async (userId: string) => {
   const sub = await db

@@ -1,6 +1,6 @@
 // Drizzle
-import { db } from "@/src/drizzle/db";
-import { user, household, householdMember } from "@/src/drizzle/schema/";
+import { db } from "@/drizzle/db";
+import { user, household, householdMember } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
 // Utils

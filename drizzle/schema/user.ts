@@ -16,7 +16,7 @@ import {
   profile,
   holding,
   householdMember,
-} from "@/src/drizzle/schema";
+} from "@/drizzle/schema";
 
 /**
  * User schema - Core user account information with authentication and Stripe customer linkage

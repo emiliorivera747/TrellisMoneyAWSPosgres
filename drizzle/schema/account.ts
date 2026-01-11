@@ -9,7 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-import { user, household, item, holding } from "@/src/drizzle/schema";
+import { user, household, item, holding } from "@/drizzle/schema";
 /**
  * Account schema - Stores financial account information from Plaid connections
  * Links accounts to users, households, items, and balances
