@@ -3,7 +3,7 @@ import Stripe from "stripe";
 // Utils
 import { generateSubscriptionData } from "@/webhooks/stripe/helpers/subscriptions";
 import { getCustomerIdFromSub } from "../helpers/customers";
-import { getUserByCustomerId } from "@/utils/prisma/user/user";
+import { getUserByCustomerId } from "@/utils/drizzle/user/user";
 import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 import { logError } from "@/utils/api-helpers/errors/logError";
 

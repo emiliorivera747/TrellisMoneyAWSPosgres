@@ -1,4 +1,6 @@
-import prisma from "@/lib/prisma";
+import { db } from "@/drizzle/db";
+import { eq } from "drizzle-orm";
+import { user } from "@/drizzle/schema";
 
 /**
  * Retrieves a user from the database by their email address.
@@ -13,13 +15,13 @@ import prisma from "@/lib/prisma";
  * @throws Will propagate any errors thrown by the Prisma client during the query.
  */
 export const getUserByEmail = async (email: string) => {
-  const user = await prisma.user.findUnique({
-    where: { email },
-  });
+  const userDB = await db
+    .select()
+    .from(user)
+    .where(eq(user.email, email))
+    .limit(1);
 
-  if (!user) null;
-
-  return user;
+  return userDB ?? null;
 };
 
 /**
@@ -33,14 +35,21 @@ export const getUserByEmail = async (email: string) => {
  * @throws Will throw an error if the `prisma.user.update` operation fails.
  */
 export const updateCustomerId = async (userId: string, customerId: string) => {
-  const user = await prisma.user.update({
-    where: { user_id: userId },
-    data: { customer_id: customerId },
-  });
+  // const user = await prisma.user.update({
+  //   where: { user_id: userId },
+  //   data: { customer_id: customerId },
+  // });
+  // if (!user) null;
 
-  if (!user) null;
+  const userDB = await db
+    .update(user)
+    .set({
+      customerId,
+    })
+    .where(eq(user.userId, userId))
+    .returning();
 
-  return user;
+  return userDB ?? null;
 };
 
 /**
@@ -57,13 +66,19 @@ export const updateCustomerId = async (userId: string, customerId: string) => {
  * Ensure proper error handling is implemented where this function is called.
  */
 export const getUserByCustomerId = async (customerId: string) => {
-  const user = await prisma.user.findUnique({
-    where: { customer_id: customerId },
-  });
+  // const user = await prisma.user.findUnique({
+  //   where: { customer_id: customerId },
+  // });
 
-  if (!user) return null;
+  // if (!user) return null;
 
-  return user;
+  const userDB = await db
+    .select()
+    .from(user)
+    .where(eq(user.customerId, customerId))
+    .limit(1);
+
+  return userDB ?? null;
 };
 
 /**
@@ -78,10 +93,17 @@ export const getUserByCustomerId = async (customerId: string) => {
  * Note: The current implementation always returns `null`, which may need
  * to be updated to return the actual user object when found.
  */
-export const getUserById = async (user_id: string) => {
-  const user = await prisma.user.findUnique({
-    where: { user_id },
-  });
-  if (!user) return null;
-  return user;
+export const getUserById = async (userId: string) => {
+  // const user = await prisma.user.findUnique({
+  //   where: { user_id },
+  // });
+  // if (!user) return null;
+
+  const userDB = await db
+    .select()
+    .from(user)
+    .where(eq(user.userId, userId))
+    .limit(1);
+
+  return userDB ?? null;
 };

@@ -1,8 +1,7 @@
-import { NextResponse } from "next/server";
-// import prisma from "@/lib/prisma";
-// import { authenticateUser } from "@/utils/api-helpers/authenticateUser";
 import crypto from "crypto";
 import { headers } from "next/headers";
+import { NextResponse } from "next/server";
+
 /**
  *
  * @route POST /api/users

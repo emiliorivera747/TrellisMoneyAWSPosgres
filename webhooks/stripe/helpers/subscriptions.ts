@@ -7,7 +7,7 @@ import Stripe from "stripe";
 import { logError } from "@/utils/api-helpers/errors/logError";
 
 import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
-import { getUserByCustomerId } from "@/utils/prisma/user/user";
+import { getUserByCustomerId } from "@/utils/drizzle/user/user";
 import { getSubscriptionFromInvoice } from "@/webhooks/stripe/helpers/invoice";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;

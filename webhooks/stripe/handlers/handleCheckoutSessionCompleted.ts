@@ -5,7 +5,7 @@ import { getStripeCheckoutSession } from "@/services/stripe/sessions";
 
 // Utils
 import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
-import { getUserByEmail } from "@/utils/prisma/user/user";
+import { getUserByEmail } from "@/utils/drizzle/user/user";
 import {
   getSubscriptionItemFromSubscription,
   generateSubscriptionData,

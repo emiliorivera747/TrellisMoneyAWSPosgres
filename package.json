@@ -7,7 +7,7 @@
     "build:scripts": "tsc -p tsconfig.scripts.json",
     "sync:stripe": "tsx scripts/syncProductsAndPrices.ts",
     "db:generate": "npx drizzle-kit generate",
-    "db:migrate": "tsx ./src/drizzle/migrate.ts",
+    "db:migrate": "tsx ./drizzle/migrate.ts",
     "build": "prisma generate --schema ./prisma/schema && next build",
     "start": "next start",
     "lint": "eslint .",
