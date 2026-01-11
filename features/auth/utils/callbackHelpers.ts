@@ -1,4 +1,4 @@
-import { subscription } from "@/src/drizzle/schema";
+import { subscription } from "@/src/drizzle/schema/schema";
 
 export type Subscription = typeof subscription.$inferSelect;
 

@@ -6,7 +6,6 @@ export const interval = pgEnum("Interval", ['day', 'week', 'month', 'year'])
 export const subscriptionStatus = pgEnum("SubscriptionStatus", ['incomplete', 'incomplete_expired', 'trialing', 'active', 'past_due', 'canceled', 'unpaid', 'paused'])
 export const usageType = pgEnum("UsageType", ['metered', 'licensed'])
 
-
 export const prismaMigrations = pgTable("_prisma_migrations", {
 	id: varchar({ length: 36 }).primaryKey().notNull(),
 	checksum: varchar({ length: 64 }).notNull(),

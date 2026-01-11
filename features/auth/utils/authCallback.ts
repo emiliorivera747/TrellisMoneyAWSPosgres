@@ -1,6 +1,6 @@
 // Drizzle
 import { db } from "@/src/drizzle/db";
-import { user, household, householdMember } from "@/src/drizzle/schema";
+import { user, household, householdMember } from "@/src/drizzle/schema/schema";
 import { eq } from "drizzle-orm";
 
 // Utils
@@ -15,15 +15,19 @@ import { SupabaseUserSyncData } from "@/features/auth/types/callback";
  */
 export async function upsertUser(currentUser: SupabaseUserSyncData) {
   try {
+    console.log("Before Update");
     /**
      * Perform the upsert
      */
     const userDB = await updateOrCreateUser(currentUser);
 
+    console.log("userDB", userDB);
+
     /**
      * Get the household
      */
     const doesHouseholdExistRes = await doesHouseholdExist(currentUser.id);
+    console.log("doesHouseholdExistRes", doesHouseholdExistRes);
 
     /**
      * If the user does not exist then we will
@@ -33,14 +37,7 @@ export async function upsertUser(currentUser: SupabaseUserSyncData) {
 
     return userDB;
   } catch (err) {
-    const errorMessage = getServerErrorMessage(err);
-
-    console.error(
-      "Prisma Upsert/Household Creation Failed:",
-      errorMessage,
-      err
-    );
-
+    console.error(getServerErrorMessage(err), err);
     return null;
   }
 }
@@ -98,6 +95,8 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
         updatedAt: new Date().toISOString(),
       })
       .returning({ householdId: household.householdId });
+
+    console.log("householdInsert", householdInsert);
     const householdId = householdInsert[0].householdId;
 
     /**
@@ -114,6 +113,7 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
       })
       .returning({ memberId: householdMember.memberId });
     const memberId = memberInsert[0]?.memberId;
+    console.log("memeberInsert", memberInsert);
 
     /**
      * Update createBy field in household
@@ -191,10 +191,13 @@ export const updateOrCreateUser = async (currentUser: SupabaseUserSyncData) => {
       },
     });
 
+  console.log("Insert values")
   const userWithSubs = await db.query.user.findFirst({
     where: eq(user.userId, userId),
-    with: { subscriptions: true },
+    with: { subscriptions: true }, 
   });
+
+  console.log("userWithSubs", userWithSubs);
 
   return userWithSubs;
 };

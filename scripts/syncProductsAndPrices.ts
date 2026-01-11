@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { stripe } from "@/lib/stripe";
 import { db } from "@/src/drizzle/db";
-import { product, price } from "@/src/drizzle/schema";
+import { product, price } from "@/src/drizzle/schema/schema";
 
 /**
  * Syncs products and prices from Stripe to the local database using Prisma.
@@ -24,22 +24,6 @@ async function syncProductsAndPrices() {
 
     // Wrap the product + prices upserts in a transaction
     await db.transaction(async (tx) => {
-      // Upsert the product
-      // await tx.product.upsert({
-      //   where: { product_id: product.id },
-      //   update: {
-      //     name: product.name,
-      //     description: product.description ?? null,
-      //     active: product.active,
-      //   },
-      //   create: {
-      //     product_id: product.id,
-      //     name: product.name,
-      //     description: product.description ?? null,
-      //     active: product.active,
-      //   },
-      // });
-
       await tx
         .insert(product)
         .values({
@@ -60,29 +44,6 @@ async function syncProductsAndPrices() {
         });
 
       for (const priceStripe of prices.data) {
-        // await tx.price.upsert({
-        //   where: { price_id: price.id },
-        //   update: {
-        //     currency: price.currency,
-        //     unit_amount: BigInt(price.unit_amount ?? 0),
-        //     recurring_interval: (price.recurring?.interval as Interval) ?? null,
-        //     recurring_interval_count: price.recurring?.interval_count ?? 1,
-        //     recurring_usage_type:
-        //       (price.recurring?.usage_type as UsageType) ?? "licensed",
-        //     active: price.active,
-        //   },
-        //   create: {
-        //     price_id: price.id,
-        //     product_id: productStripe.id,
-        //     currency: price.currency,
-        //     unit_amount: BigInt(price.unit_amount ?? 0),
-        //     recurring_interval: (price.recurring?.interval as Interval) ?? null,
-        //     recurring_interval_count: price.recurring?.interval_count ?? 1,
-        //     recurring_usage_type:
-        //       (price.recurring?.usage_type as UsageType) ?? "licensed",
-        //     active: price.active,
-        //   },
-        // });
         await tx
           .insert(price)
           .values({

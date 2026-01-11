@@ -33,10 +33,11 @@ export async function GET(request: Request) {
       error: exchangeTokenError ?? undefined,
       message: "Supabase code exchange failed",
     });
-
   const currentUser = data.session.user;
-
+  
+  
   // ---- Upsert User ----
+  console.log("Before Upsert")
   const dbUser = await upsertUser(currentUser);
   if (!dbUser) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
   const subscriptions = dbUser.subscriptions;
@@ -49,7 +50,9 @@ export async function GET(request: Request) {
    *        - No active subscriptions
    */
   if (plan && currentUser.email && !hasActiveSubscription(subscriptions)) {
+    
     try {
+      
       const price_id = await getPriceIdBySlug(plan);
 
       if (!price_id)
@@ -74,7 +77,7 @@ export async function GET(request: Request) {
           message: "Checkout URL is null",
         });
       }
-      
+
       return NextResponse.redirect(checkoutUrl);
     } catch (error) {
       console.error("Error creating checkout session:", error);

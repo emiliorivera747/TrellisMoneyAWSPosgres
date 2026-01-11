@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { balance, account, user, household, item, accountHistory, security, fixedIncome, subscription, price, product, profile, householdMember, holding, holdingHistory, securityHistory } from "./schema";
+import { balance, account, user, household, item, accountHistory, security, fixedIncome, subscription, price, product, profile, householdMember, holding, holdingHistory, securityHistory } from "@/src/drizzle/schema/schema";
 
 export const accountRelations = relations(account, ({one, many}) => ({
 	balance: one(balance, {
@@ -121,9 +121,17 @@ export const householdMemberRelations = relations(householdMember, ({one}) => ({
 
 export const holdingHistoryRelations = relations(holdingHistory, ({one}) => ({
 	holding: one(holding, {
-		fields: [holdingHistory.accountId],
-		references: [holding.accountId]
-	}),
+		fields: [
+		  holdingHistory.accountId,
+		  holdingHistory.securityId,
+		  holdingHistory.userId,
+		],
+		references: [
+		  holding.accountId,
+		  holding.securityId,
+		  holding.userId,
+		],
+	  }),
 }));
 
 export const holdingRelations = relations(holding, ({one, many}) => ({

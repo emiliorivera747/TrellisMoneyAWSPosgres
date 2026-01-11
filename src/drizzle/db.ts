@@ -1,12 +1,13 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import * as schema from "./schema";
+import * as schema from "@/src/drizzle/schema/schema";
+import "./schema/relations";
 
 declare global {
   var pgPool: Pool | undefined;
 }
 
-const pool =
+export const client =
   global.pgPool ??
   new Pool({
     host: process.env.DB_HOST!,
@@ -20,7 +21,7 @@ const pool =
     max: 10,
   });
 
-if (process.env.NODE_ENV !== "production") global.pgPool = pool;
+if (process.env.NODE_ENV !== "production") global.pgPool = client;
 
 // { schema } enables relational queries
-export const db = drizzle(pool, { schema });
+export const db = drizzle(client, { schema });
