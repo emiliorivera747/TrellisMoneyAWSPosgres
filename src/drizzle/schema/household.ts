@@ -10,10 +10,7 @@ import {
 
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-
-import { user } from "@/src/drizzle/schema/user";
-import { account } from "@/src/drizzle/schema/account";
-import { item } from "@/src/drizzle/schema/item";
+import { user, account, item } from "@/src/drizzle/schema";
 
 /**
  * HouseholdRole enum - Defines member roles within a household

@@ -8,10 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-
-import { household } from "@/src/drizzle/schema/household";
-import { account } from "@/src/drizzle/schema/account";
-import { user } from "@/src/drizzle/schema/user";
+import { user, account, household } from "@/src/drizzle/schema";
 
 /**
  * Item schema - Represents a Plaid connection/item with access tokens and consent information

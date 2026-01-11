@@ -13,8 +13,8 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-import { security } from "@/src/drizzle/schema/security";
-import { user } from "@/src/drizzle/schema/user";
+
+import { user, security } from "@/src/drizzle/schema";
 
 /**
  * SubscriptionStatus enum - Possible subscription states in Stripe

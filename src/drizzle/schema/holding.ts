@@ -10,9 +10,7 @@ import {
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
 
-import { security } from "@/src/drizzle/schema/security";
-import { user } from "@/src/drizzle/schema/user";
-import { account } from "@/src/drizzle/schema/account";
+import { user, security, account } from "@/src/drizzle/schema";
 
 /**
  * Holding schema - Stores investment holdings (securities) within accounts

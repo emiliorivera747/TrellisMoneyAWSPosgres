@@ -11,10 +11,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-
-import { user } from "@/src/drizzle/schema/user";
-import { holding } from "@/src/drizzle/schema/holding";
-import { fixedIncome } from "@/src/drizzle/schema/stripe";
+import { user, holding, fixedIncome } from "@/src/drizzle/schema";
 
 /**
  * Security schema - Represents financial securities (stocks, bonds, etc.) with pricing and metadata
