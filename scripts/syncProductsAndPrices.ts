@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { stripe } from "@/lib/stripe";
 import { db } from "@/src/drizzle/db";
-import { product, price } from "@/src/drizzle/schema/schema";
+import { product, price } from "@/src/drizzle/schema/stripe";
 
 /**
  * Syncs products and prices from Stripe to the local database using Prisma.

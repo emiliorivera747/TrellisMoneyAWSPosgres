@@ -96,19 +96,7 @@ export const account = pgTable(
 );
 
 /**
- * Schema for "AccountHistory" table storing historical account data.
- *
- * Columns:
- * - `id`: Primary key.
- * - `accountId`: FK to `account.accountId`, not null.
- * - `name`, `type`: Account details, not null.
- * - `available`, `current`, `limit`: Financial data, high precision, not null.
- * - `isoCurrencyCode`, `unofficialCurrencyCode`: Currency codes, not null.
- * - `userId`: Associated user, nullable.
- * - `timestamp`: Record creation time, defaults to current, not null.
- *
- * FK:
- * - `AccountHistory_account_id_fkey`: References `account.accountId`, cascades on update/delete.
+ * AccountHistory schema - Historical snapshots of account balances and details over time
  */
 export const accountHistory = pgTable(
   "AccountHistory",
@@ -139,17 +127,7 @@ export const accountHistory = pgTable(
 );
 
 /**
- * Represents the schema for the "Balance" table in the database.
- *
- * @property balanceId - Unique identifier for the balance record.
- * @property available - The available balance with a precision of 65 and scale of 30.
- * @property current - The current balance with a precision of 65 and scale of 30.
- * @property limit - The balance limit with a precision of 65 and scale of 30.
- * @property isoCurrencyCode - ISO currency code associated with the balance.
- * @property unofficialCurrencyCode - Unofficial currency code, if applicable.
- * @property lastUpdated - Timestamp indicating the last update, stored as a string with timezone.
- * @property updatedAt - Timestamp indicating when the record was last updated, defaults to the current timestamp.
- * @property timestamp - General timestamp for the record, defaults to the current timestamp.
+ * Balance schema - Stores account balance information (available, current, limit) with currency codes
  */
 export const balance = pgTable("Balance", {
   balanceId: text("balance_id").notNull(),
@@ -176,16 +154,7 @@ export const balance = pgTable("Balance", {
 });
 
 /**
- * Defines the relationships for the `account` entity.
- *
- * @remarks
- * This function establishes the following relationships:
- * - `balance`: A one-to-one relationship with the `balance` entity, linked via `balanceId`.
- * - `user`: A one-to-one relationship with the `user` entity, linked via `userId`.
- * - `household`: A one-to-one relationship with the `household` entity, linked via `householdId`.
- * - `item`: A one-to-one relationship with the `item` entity, linked via `itemId`.
- * - `accountHistories`: A one-to-many relationship with the `accountHistory` entity.
- * - `holdings`: A one-to-many relationship with the `holding` entity.
+ * Account relations - Links to balance, user, household, item, account histories, and holdings
  */
 export const accountRelations = relations(account, ({ one, many }) => ({
   balance: one(balance, {
@@ -209,17 +178,14 @@ export const accountRelations = relations(account, ({ one, many }) => ({
 }));
 
 /**
- * Defines the relationships for the `balance` entity.
- * Establishes a one-to-many relationship with the `account` entity.
+ * Balance relations - Links to associated accounts
  */
 export const balanceRelations = relations(balance, ({ many }) => ({
   accounts: many(account),
 }));
 
 /**
- * Defines the relationships for the `accountHistory` table.
- * Establishes a one-to-one relationship with the `account` table
- * using `accountId` as the foreign key.
+ * AccountHistory relations - Links to parent account
  */
 export const accountHistoryRelations = relations(accountHistory, ({ one }) => ({
   account: one(account, {
