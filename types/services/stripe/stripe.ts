@@ -313,5 +313,5 @@ export type MinmalSubscription = {
    * @type {boolean}
    * @memberof MinmalSubscription
    */
-  cancelAtPeriodEnd: boolean;
+  cancelAtPeriodnd: boolean;
 };

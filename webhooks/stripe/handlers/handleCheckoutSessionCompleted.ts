@@ -6,10 +6,8 @@ import { getStripeCheckoutSession } from "@/services/stripe/sessions";
 // Utils
 import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 import { getUserByEmail } from "@/utils/drizzle/user/user";
-import {
-  getSubscriptionItemFromSubscription,
-  generateSubscriptionData,
-} from "@/utils/api-helpers/stripe/webhookHelpers";
+import { getSubscriptionItemFromSubscription } from "@/utils/api-helpers/stripe/webhookHelpers";
+import { generateSubscriptionData } from "@/webhooks/stripe/helpers/subscriptions";
 import { updateUserAndSubscription } from "@/utils/prisma/stripe/subscriptions";
 
 /**
@@ -38,7 +36,6 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
       typeof subscription === "object" &&
       mode === "subscription"
     ) {
-      
       const subscriptionItem =
         getSubscriptionItemFromSubscription(subscription);
 
@@ -59,8 +56,8 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
 
       // ----- Batch user and subscription updates in a single transaction -----
       await updateUserAndSubscription({
-        user_id: user.userId,
-        customer_id: customer as string,
+        userId: user.userId,
+        customerId: customer as string,
         subscriptionData,
       });
 

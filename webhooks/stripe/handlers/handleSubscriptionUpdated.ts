@@ -46,14 +46,14 @@ const handleSubscriptionUpdated = async (event: Stripe.Event) => {
     const subscriptionData = generateSubscriptionData({
       subscription,
       customer_id,
-      user_id: user.user_id,
+      user_id: user.userId,
     });
 
     // Update our local subscription record with the latest Stripe state
-    await updateSubscription(user.user_id, subscriptionData);
+    await updateSubscription(user.userId, subscriptionData);
 
     console.log(
-      `Subscription ${subscription.id} updated for user ${user.user_id} – status: ${subscription.status}`
+      `Subscription ${subscription.id} updated for user ${user.userId} – status: ${subscription.status}`
     );
   } catch (error) {
     // Use your shared logError utility for consistency

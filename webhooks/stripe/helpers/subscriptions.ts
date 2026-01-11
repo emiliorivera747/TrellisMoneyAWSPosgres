@@ -1,28 +1,25 @@
 import { MinmalSubscription } from "@/types/services/stripe/stripe";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
-import { Subscription } from "@/types/services/stripe/stripe";
 
 // Utils
 import { logError } from "@/utils/api-helpers/errors/logError";
-import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
-
-import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
 import { getUserByCustomerId } from "@/utils/drizzle/user/user";
+import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
+import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
 import { getSubscriptionFromInvoice } from "@/webhooks/stripe/helpers/invoice";
+
+// Types
+import { GenerateSubscriptionDataProps } from "@/types/utils/stripe/subscriptions";
+import { Subscription } from "@/drizzle/schema";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
 
 /**
- * Determines if a subscription is active based on its status and cancellation time.
+ * Checks if a subscription is active or trialing and not canceled.
  *
- * @param sub - The subscription object to evaluate. It can be of type `MinmalSubscription` or `null`.
- * @returns `true` if the subscription is active or in a trialing state and has not been canceled yet; otherwise, `false`.
- *
- * The function checks:
- * - If the subscription exists.
- * - If the subscription's status is either "active" or "trialing".
- * - If the subscription has not been canceled (`cancel_at` is either `null` or a timestamp in the future).
+ * @param sub - The subscription object (`MinmalSubscription` or `null`).
+ * @returns `true` if active or trialing and not canceled; otherwise, `false`.
  */
 export const hasActiveSubscription = (
   sub: MinmalSubscription | null
@@ -70,43 +67,32 @@ export const getSubscriptionItemFromLineItems = (
 };
 
 /**
- * Generates a subscription object based on the provided Stripe subscription data
- * and additional parameters.
+ * Creates a normalized subscription object from Stripe data.
  *
- * @param {Object} params - The parameters for generating the subscription.
- * @param {Stripe.Subscription} params.subscription - The Stripe subscription object.
- * @param {string} params.customer_id - The ID of the customer associated with the subscription.
- * @param {string} params.price_id - The ID of the price associated with the subscription.
- * @param {string} params.user_id - The ID of the user associated with the subscription.
- *
- * @returns {Subscription} The generated subscription object containing normalized data.
+ * @param params - Includes Stripe subscription, customer ID, price ID, and user ID.
+ * @returns Normalized subscription object.
  */
 export const generateSubscriptionData = ({
   subscription,
   customer_id,
   price_id,
   user_id,
-}: {
-  subscription: Stripe.Subscription;
-  customer_id: string;
-  price_id?: string;
-  user_id: string;
-}) => {
-  const subscriptionData: Subscription = {
-    subscription_id: subscription.id,
-    user_id: user_id,
-    customer_id: customer_id,
-    price_id: price_id ?? "",
+}: GenerateSubscriptionDataProps) => {
+  const subscriptionData = {
+    subscriptionId: subscription.id,
+    userId: user_id,
+    customerId: customer_id,
+    priceId: price_id ?? "",
     status: subscription.status as Subscription["status"],
-    start_date: subscription.start_date ?? 0,
-    trial_start: subscription.trial_start ?? 0,
-    trial_end: subscription.trial_end ?? 0,
-    ended_at: subscription.ended_at ?? 0,
-    cancel_at: subscription.cancel_at ?? 0,
-    cancel_at_period_end: subscription.cancel_at_period_end ?? false,
-    canceled_at: subscription.canceled_at ?? 0,
-    created_at: subscription.created ?? 0,
-    updated_at: Math.floor(Date.now() / 1000),
+    startDate: subscription.start_date ?? 0,
+    trialStart: subscription.trial_start ?? 0,
+    trialEnd: subscription.trial_end ?? 0,
+    endedAt: subscription.ended_at ?? 0,
+    cancelAt: subscription.cancel_at ?? 0,
+    cancelAtPeriodEnd: subscription.cancel_at_period_end ?? false,
+    canceledAt: subscription.canceled_at ?? 0,
+    createdAt: subscription.created ?? 0,
+    updatedAt: Math.floor(Date.now() / 1000),
   };
   return subscriptionData;
 };
@@ -128,16 +114,10 @@ export const getSubscriptionItemFromSubscription = (
 };
 
 /**
- * Determines if the provided parameters indicate a subscription.
+ * Checks if the given parameters represent a subscription.
  *
- * @param {IsSubscriptionParams} params - The parameters to evaluate.
- * @param {unknown} params.subscription - The subscription object to check.
- * @param {string} params.mode - The mode to verify, expected to be "subscription".
- * @returns {boolean} `true` if the parameters indicate a subscription, otherwise `false`.
- *
- * @example
- * const result = isSubscription({ subscription: {}, mode: "subscription" });
- * console.log(result); // true
+ * @param params - Contains `subscription` and `mode`.
+ * @returns `true` if `mode` is "subscription" and `subscription` is an object.
  */
 export const isSubscription = (
   subscription: string | Stripe.Subscription | null,
@@ -151,19 +131,10 @@ export const isSubscription = (
 /**
  * Generates subscription data from a Stripe invoice.
  *
- * This function retrieves the subscription associated with the given invoice,
- * extracts the customer ID, fetches the corresponding user, and generates
- * subscription data based on the retrieved information. If any step fails,
- * it logs an error and returns `null`.
+ * Retrieves the subscription, customer ID, user, and creates subscription data.
  *
- * @param invoice - The Stripe invoice object used to generate subscription data.
- * @returns A promise that resolves to the generated subscription data object, or `null` if an error occurs.
- *
- * @throws Will log an error message if:
- * - The subscription object is not found.
- * - The customer ID is not found in the subscription.
- * - The user does not exist for the given customer ID.
- * - An unexpected error occurs during the process.
+ * @param invoice - The Stripe invoice object.
+ * @returns The subscription data, user ID, user, and customer ID, or `null` on error.
  */
 export const generateSubscriptionDataFromInvoice = async (
   invoice: Stripe.Invoice
@@ -198,17 +169,14 @@ export const generateSubscriptionDataFromInvoice = async (
 };
 
 /**
- * Generates subscription data from a Stripe subscription object.
+ * Generates subscription data from a Stripe subscription.
  *
- * This function retrieves the customer ID from the provided Stripe subscription,
- * fetches the associated user based on the customer ID, and generates subscription
- * data using the subscription, customer ID, and user information.
+ * Retrieves the customer ID, user, and creates subscription data.
  *
- * @param subscription - The Stripe subscription object to process.
- * @returns An object containing the generated subscription data, user ID, and user information,
- *          or `null` if an error occurs or the user is not found.
+ * @param subscription - The Stripe subscription object.
+ * @returns The subscription data, user ID, and user, or `null` on error.
  *
- * @throws Will throw an error if the customer ID cannot be retrieved from the subscription.
+ * @throws If the customer ID cannot be retrieved.
  */
 export const generateSubscriptionDataFromSubscription = async (
   subscription: Stripe.Subscription
