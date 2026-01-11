@@ -21,7 +21,7 @@ export const getUserByEmail = async (email: string) => {
     .where(eq(user.email, email))
     .limit(1);
 
-  return userDB ?? null;
+  return userDB[0]?? null;
 };
 
 /**
@@ -35,12 +35,7 @@ export const getUserByEmail = async (email: string) => {
  * @throws Will throw an error if the `prisma.user.update` operation fails.
  */
 export const updateCustomerId = async (userId: string, customerId: string) => {
-  // const user = await prisma.user.update({
-  //   where: { user_id: userId },
-  //   data: { customer_id: customerId },
-  // });
-  // if (!user) null;
-
+  
   const userDB = await db
     .update(user)
     .set({
@@ -49,7 +44,7 @@ export const updateCustomerId = async (userId: string, customerId: string) => {
     .where(eq(user.userId, userId))
     .returning();
 
-  return userDB ?? null;
+  return userDB[0]?? null;
 };
 
 /**
@@ -66,11 +61,6 @@ export const updateCustomerId = async (userId: string, customerId: string) => {
  * Ensure proper error handling is implemented where this function is called.
  */
 export const getUserByCustomerId = async (customerId: string) => {
-  // const user = await prisma.user.findUnique({
-  //   where: { customer_id: customerId },
-  // });
-
-  // if (!user) return null;
 
   const userDB = await db
     .select()
@@ -78,7 +68,7 @@ export const getUserByCustomerId = async (customerId: string) => {
     .where(eq(user.customerId, customerId))
     .limit(1);
 
-  return userDB ?? null;
+  return userDB[0] ?? null;
 };
 
 /**
@@ -94,10 +84,6 @@ export const getUserByCustomerId = async (customerId: string) => {
  * to be updated to return the actual user object when found.
  */
 export const getUserById = async (userId: string) => {
-  // const user = await prisma.user.findUnique({
-  //   where: { user_id },
-  // });
-  // if (!user) return null;
 
   const userDB = await db
     .select()
@@ -105,5 +91,5 @@ export const getUserById = async (userId: string) => {
     .where(eq(user.userId, userId))
     .limit(1);
 
-  return userDB ?? null;
+  return userDB[0] ?? null;
 };

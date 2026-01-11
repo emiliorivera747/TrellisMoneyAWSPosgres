@@ -54,19 +54,19 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
         subscription,
         customer_id: customer as string,
         price_id,
-        user_id: user.user_id,
+        user_id: user.userId,
       });
 
       // ----- Batch user and subscription updates in a single transaction -----
       await updateUserAndSubscription({
-        user_id: user.user_id,
+        user_id: user.userId,
         customer_id: customer as string,
         subscriptionData,
       });
 
       // ----- Log subscription update -----
       console.log(
-        `Subscription ${subscription.id} updated for user ${user.user_id} – status: ${subscription.status}`
+        `Subscription ${subscription.id} updated for user ${user.userId} – status: ${subscription.status}`
       );
     }
   } catch (error) {

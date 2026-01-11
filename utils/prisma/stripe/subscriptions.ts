@@ -31,23 +31,6 @@ export const updateUserAndSubscription = async ({
   customer_id,
   subscriptionData,
 }: UpdateUserAndSubscriptionProps) => {
-  // const res = await prisma.$transaction([
-  //   prisma.user.update({
-  //     where: { user_id },
-  //     data: {
-  //       customer_id,
-  //     },
-  //   }),
-
-  //   prisma.subscription.upsert({
-  //     where: { user_id },
-  //     update: subscriptionData,
-  //     create: {
-  //       ...subscriptionData,
-  //     },
-  //   }),
-  // ]);
-
   const {
     status,
     start_date: startDate,
@@ -112,23 +95,6 @@ export const updateSubscription = async (
   userId: string,
   subscriptionData: Subscription
 ) => {
-  // const res = await prisma.subscription.update({
-  //   where: {
-  //     user_id,
-  //   },
-  //   data: {
-  //     status,
-  //     start_date,
-  //     trial_start,
-  //     trial_end,
-  //     ended_at,
-  //     cancel_at,
-  //     cancel_at_period_end,
-  //     canceled_at,
-  //     updated_at,
-  //   },
-  // });
-
   const {
     status,
     start_date,

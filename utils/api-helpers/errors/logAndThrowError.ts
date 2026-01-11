@@ -3,7 +3,8 @@
  *
  * @param msg - The error message to be logged.
  */
-export const logErrorAndThrow = (msg: string) => {
-    console.error(`${msg}`);
-    throw new Error(msg);
+export const logErrorAndThrow = (msg: string | Error | unknown) => {
+  let message = msg instanceof Error ? msg.message : msg;
+  console.error(`${message}`);
+  throw new Error(String(message));
 };

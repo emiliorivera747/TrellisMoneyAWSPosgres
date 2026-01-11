@@ -96,11 +96,6 @@ export const getSubscriptionItemFromSubscription = (
   return subscriptionItem;
 };
 
-interface IsSubscriptionParams {
-  subscription: Stripe.Subscription | string;
-  mode: string;
-}
-
 /**
  * Determines if the provided parameters indicate a subscription.
  *
@@ -168,6 +163,5 @@ export const getSubscriptionById = async (subscriptionId: string) => {
   const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
     expand: ["items.data.price", "items.data.price.product", "customer"],
   });
-
   return subscription;
 };

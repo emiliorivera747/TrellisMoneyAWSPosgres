@@ -1,10 +1,11 @@
 import { MinmalSubscription } from "@/types/services/stripe/stripe";
+import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { Subscription } from "@/types/services/stripe/stripe";
-import Stripe from "stripe";
 
 // Utils
 import { logError } from "@/utils/api-helpers/errors/logError";
+import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 
 import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
 import { getUserByCustomerId } from "@/utils/drizzle/user/user";
@@ -27,12 +28,10 @@ export const hasActiveSubscription = (
   sub: MinmalSubscription | null
 ): boolean => {
   if (!sub) return false;
-
   const now = Math.floor(Date.now() / 1000);
-
   return (
     ["active", "trialing"].includes(sub.status) &&
-    (!sub.cancel_at || sub.cancel_at > now)
+    (!sub.cancelAt || sub.cancelAt > now)
   );
 };
 
@@ -150,29 +149,6 @@ export const isSubscription = (
 };
 
 /**
- * Retrieves a subscription from Stripe by its ID, including expanded details.
- *
- * @param subscriptionId - The unique identifier of the subscription to retrieve.
- * @returns A promise that resolves to the subscription object, including expanded details
- *          such as the subscription items, their prices, associated products, and the customer.
- *
- * @remarks
- * This function uses the Stripe API to fetch subscription details. The `expand` parameter
- * is used to include additional information about the subscription items, their prices,
- * the associated products, and the customer in the response.
- *
- * @throws Will throw an error if the subscription ID is invalid or if there is an issue
- *         with the Stripe API request.
- */
-export const getSubscriptionById = async (subscriptionId: string) => {
-  const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
-    expand: ["items.data.price", "items.data.price.product", "customer"],
-  });
-
-  return subscription;
-};
-
-/**
  * Generates subscription data from a Stripe invoice.
  *
  * This function retrieves the subscription associated with the given invoice,
@@ -194,30 +170,23 @@ export const generateSubscriptionDataFromInvoice = async (
 ) => {
   try {
     const subscription = await getSubscriptionFromInvoice(invoice);
-    if (!subscription) {
-      logError("Subscription object was not found");
-      return null;
-    }
+    if (!subscription)
+      return logErrorAndThrow("Subscription object was not found");
 
     const customer_id = getCustomerIdFromSub(subscription);
-    if (!customer_id) {
-      logError("Customer ID was not found in subscription");
-      return null;
-    }
+    if (!customer_id)
+      return logErrorAndThrow("Customer ID was not found in subscription");
 
     const user = await getUserByCustomerId(customer_id);
-    if (!user) {
-      logError("User does not exist with customer ID");
-      return null;
-    }
+    if (!user) return logErrorAndThrow("User does not exist with customer ID");
 
     const subscriptionData = generateSubscriptionData({
       subscription,
       customer_id,
-      user_id: user.user_id,
+      user_id: user.userId,
     });
 
-    return { subscriptionData, user_id: user.user_id, user, customer_id};
+    return { subscriptionData, user_id: user.userId, user, customer_id };
   } catch (error) {
     logError(
       `Error generating subscription data from invoice: ${
@@ -255,16 +224,15 @@ export const generateSubscriptionDataFromSubscription = async (
     const subscriptionData = generateSubscriptionData({
       subscription,
       customer_id: customerId as string,
-      user_id: user.user_id,
+      user_id: user.userId,
     });
 
-    return { subscriptionData, user_id: user.user_id, user };
+    return { subscriptionData, user_id: user.userId, user };
   } catch (error) {
-    logError(
+    return logErrorAndThrow(
       `Error generating subscription data from subscription: ${
         (error as Error).message
       }`
     );
-    return null;
   }
 };
