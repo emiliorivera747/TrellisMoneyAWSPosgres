@@ -1,7 +1,6 @@
 // Drizzle
 import { db } from "@/src/drizzle/db";
-import { user } from "@/src/drizzle/schema/user";
-import { householdMember, household } from "@/src/drizzle/schema/household";
+import { user, household, householdMember } from "@/src/drizzle/schema/";
 import { eq } from "drizzle-orm";
 
 // Utils
@@ -192,11 +191,12 @@ export const updateOrCreateUser = async (currentUser: SupabaseUserSyncData) => {
       },
     });
 
-  console.log("Insert values");
+  console.log("Insert values")
   const userWithSubs = await db.query.user.findFirst({
     where: eq(user.userId, userId),
-    with: { subscriptions: true },
+    with: { subscriptions: true }, 
   });
+
   console.log("userWithSubs", userWithSubs);
 
   return userWithSubs;

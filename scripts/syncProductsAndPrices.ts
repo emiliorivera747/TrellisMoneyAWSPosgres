@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { stripe } from "@/lib/stripe";
 import { db } from "@/src/drizzle/db";
-import { product, price } from "@/src/drizzle/schema/stripe";
+import { product, price } from "@/src/drizzle/schema";
 
 /**
  * Syncs products and prices from Stripe to the local database using Prisma.
@@ -73,12 +73,10 @@ async function syncProductsAndPrices() {
           });
       }
     });
-
     console.log(
       `Synced product ${productStripe.id} with ${prices.data.length} price(s)`
     );
   }
-
   console.log("All products and prices synced successfully!");
 }
 
