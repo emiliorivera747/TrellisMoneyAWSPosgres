@@ -15,8 +15,8 @@ import { item } from "@/src/drizzle/schema/item";
 import { holding } from "@/src/drizzle/schema/holding";
 
 /**
- *  Account schema
- *
+ * Account schema - Stores financial account information from Plaid connections
+ * Links accounts to users, households, items, and balances
  */
 export const account = pgTable(
   "Account",

@@ -16,6 +16,9 @@ import { user } from "@/src/drizzle/schema/user";
 import { holding } from "@/src/drizzle/schema/holding";
 import { fixedIncome } from "@/src/drizzle/schema/stripe";
 
+/**
+ * Security schema - Represents financial securities (stocks, bonds, etc.) with pricing and metadata
+ */
 export const security = pgTable(
   "Security",
   {
@@ -65,6 +68,9 @@ export const security = pgTable(
   ]
 );
 
+/**
+ * SecurityHistory schema - Historical snapshots of security prices and metadata
+ */
 export const securityHistory = pgTable(
   "SecurityHistory",
   {
@@ -112,6 +118,9 @@ export const securityHistory = pgTable(
   ]
 );
 
+/**
+ * Owner schema - Account owner information (contact details, addresses)
+ */
 export const owner = pgTable(
   "Owner",
   {
@@ -144,6 +153,9 @@ export const owner = pgTable(
   ]
 );
 
+/**
+ * Security relations - Links to user, fixed incomes, history, and holdings
+ */
 export const securityRelations = relations(security, ({ one, many }) => ({
   user: one(user, {
     fields: [security.userId],
@@ -154,6 +166,9 @@ export const securityRelations = relations(security, ({ one, many }) => ({
   holdings: many(holding),
 }));
 
+/**
+ * SecurityHistory relations - Links to parent security
+ */
 export const securityHistoryRelations = relations(
   securityHistory,
   ({ one }) => ({

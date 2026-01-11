@@ -1,7 +1,17 @@
-import { pgTable, varchar, timestamp, text, integer, serial, numeric, uniqueIndex, boolean, foreignKey, bigint, index, primaryKey, pgEnum } from "drizzle-orm/pg-core"
+import { pgTable, timestamp, text, uniqueIndex, boolean } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 import { relations } from "drizzle-orm";
+import { account} from "@/src/drizzle/schema/account";
+import { item } from "@/src/drizzle/schema/item";
+import { security } from "@/src/drizzle/schema/security";
+import { subscription } from "@/src/drizzle/schema/stripe";
+import { profile} from "@/src/drizzle/schema/profile";
+import { holding } from "@/src/drizzle/schema/holding";
+import { householdMember } from "@/src/drizzle/schema/household";
 
+/**
+ * User schema - Core user account information with authentication and Stripe customer linkage
+ */
 export const user = pgTable("User", {
 	userId: text("user_id").primaryKey().notNull(),
 	email: text().notNull(),
@@ -17,6 +27,9 @@ export const user = pgTable("User", {
 	uniqueIndex("User_email_key").using("btree", table.email.asc().nullsLast().op("text_ops")),
 ]);
 
+/**
+ * User relations - Links to accounts, items, securities, subscriptions, profiles, household members, and holdings
+ */
 export const userRelations = relations(user, ({many}) => ({
 	accounts: many(account),
 	items: many(item),

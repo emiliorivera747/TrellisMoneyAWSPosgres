@@ -16,6 +16,9 @@ import { relations } from "drizzle-orm";
 import { security } from "@/src/drizzle/schema/security";
 import { user } from "@/src/drizzle/schema/user";
 
+/**
+ * SubscriptionStatus enum - Possible subscription states in Stripe
+ */
 export const subscriptionStatus = pgEnum("SubscriptionStatus", [
   "incomplete",
   "incomplete_expired",
@@ -26,9 +29,18 @@ export const subscriptionStatus = pgEnum("SubscriptionStatus", [
   "unpaid",
   "paused",
 ]);
+/**
+ * Interval enum - Billing interval types for subscriptions
+ */
 export const interval = pgEnum("Interval", ["day", "week", "month", "year"]);
+/**
+ * UsageType enum - Usage tracking types for subscriptions
+ */
 export const usageType = pgEnum("UsageType", ["metered", "licensed"]);
 
+/**
+ * FixedIncome schema - Fixed income security details (yield rates, maturity dates)
+ */
 export const fixedIncome = pgTable(
   "FixedIncome",
   {
@@ -58,6 +70,9 @@ export const fixedIncome = pgTable(
   ]
 );
 
+/**
+ * FixedIncome relations - Links to parent security
+ */
 export const fixedIncomeRelations = relations(fixedIncome, ({ one }) => ({
   security: one(security, {
     fields: [fixedIncome.securityId],
@@ -65,6 +80,9 @@ export const fixedIncomeRelations = relations(fixedIncome, ({ one }) => ({
   }),
 }));
 
+/**
+ * Subscription schema - Stripe subscription information linked to users
+ */
 export const subscription = pgTable(
   "Subscription",
   {
@@ -105,6 +123,9 @@ export const subscription = pgTable(
   ]
 );
 
+/**
+ * Subscription relations - Links to user and price
+ */
 export const subscriptionRelations = relations(subscription, ({ one }) => ({
   user: one(user, {
     fields: [subscription.userId],
@@ -116,6 +137,9 @@ export const subscriptionRelations = relations(subscription, ({ one }) => ({
   }),
 }));
 
+/**
+ * Price schema - Stripe price information linked to products
+ */
 export const price = pgTable(
   "Price",
   {
@@ -149,6 +173,9 @@ export const price = pgTable(
   ]
 );
 
+/**
+ * Price relations - Links to product and subscriptions
+ */
 export const priceRelations = relations(price, ({ one, many }) => ({
   subscriptions: many(subscription),
   product: one(product, {
@@ -157,6 +184,9 @@ export const priceRelations = relations(price, ({ one, many }) => ({
   }),
 }));
 
+/**
+ * Product schema - Stripe product information
+ */
 export const product = pgTable("Product", {
   productId: text("product_id").primaryKey().notNull(),
   name: text().notNull(),
@@ -171,6 +201,9 @@ export const product = pgTable("Product", {
   }).notNull(),
 });
 
+/**
+ * Product relations - Links to associated prices
+ */
 export const productRelations = relations(product, ({ many }) => ({
   prices: many(price),
 }));

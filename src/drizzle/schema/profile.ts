@@ -9,6 +9,10 @@ import {
 import { relations } from "drizzle-orm";
 import { user } from "@/src/drizzle/schema/user";
 
+/**
+ * Profile schema - User profile information (bio, etc.)
+ * One-to-one relationship with User
+ */
 export const profile = pgTable(
   "Profile",
   {
@@ -31,6 +35,9 @@ export const profile = pgTable(
   ]
 );
 
+/**
+ * Profile relations - One-to-one relationship with user
+ */
 export const profileRelations = relations(profile, ({ one }) => ({
   user: one(user, {
     fields: [profile.userId],

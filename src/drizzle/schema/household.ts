@@ -15,12 +15,18 @@ import { user } from "@/src/drizzle/schema/user";
 import { account } from "@/src/drizzle/schema/account";
 import { item } from "@/src/drizzle/schema/item";
 
+/**
+ * HouseholdRole enum - Defines member roles within a household
+ */
 export const householdRole = pgEnum("HouseholdRole", [
   "ADMIN",
   "MEMBER",
   "GUEST",
 ]);
 
+/**
+ * Household schema - Represents a shared household for multiple users
+ */
 export const household = pgTable("Household", {
   householdId: text("household_id").primaryKey().notNull(),
   name: text().default("Our Household").notNull(),
@@ -34,6 +40,9 @@ export const household = pgTable("Household", {
   }).notNull(),
 });
 
+/**
+ * HouseholdMember schema - Links users to households with roles and invite status
+ */
 export const householdMember = pgTable(
   "HouseholdMember",
   {
@@ -82,12 +91,18 @@ export const householdMember = pgTable(
   ]
 );
 
+/**
+ * Household relations - Links to accounts, items, and household members
+ */
 export const householdRelations = relations(household, ({ many }) => ({
   accounts: many(account),
   items: many(item),
   householdMembers: many(householdMember),
 }));
 
+/**
+ * HouseholdMember relations - Links to household and user
+ */
 export const householdMemberRelations = relations(
   householdMember,
   ({ one }) => ({

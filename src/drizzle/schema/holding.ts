@@ -14,6 +14,10 @@ import { security } from "@/src/drizzle/schema/security";
 import { user } from "@/src/drizzle/schema/user";
 import { account } from "@/src/drizzle/schema/account";
 
+/**
+ * Holding schema - Stores investment holdings (securities) within accounts
+ * Composite primary key: accountId, securityId, userId
+ */
 export const holding = pgTable(
   "Holding",
   {
@@ -84,6 +88,9 @@ export const holding = pgTable(
   ]
 );
 
+/**
+ * HoldingHistory schema - Historical snapshots of holding values over time
+ */
 export const holdingHistory = pgTable(
   "HoldingHistory",
   {
@@ -148,6 +155,9 @@ export const holdingHistory = pgTable(
   ]
 );
 
+/**
+ * HoldingHistory relations - Links to the parent holding via composite key
+ */
 export const holdingHistoryRelations = relations(holdingHistory, ({ one }) => ({
   holding: one(holding, {
     fields: [
@@ -159,6 +169,9 @@ export const holdingHistoryRelations = relations(holdingHistory, ({ one }) => ({
   }),
 }));
 
+/**
+ * Holding relations - Links to security, user, account, and historical records
+ */
 export const holdingRelations = relations(holding, ({ one, many }) => ({
   holdingHistories: many(holdingHistory),
   security: one(security, {
