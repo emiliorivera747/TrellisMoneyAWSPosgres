@@ -38,14 +38,14 @@ const AssetName = ({ asset }: { asset: ProjectedAsset }) => {
         {nameElement}
         {(asset?.shares ?? 0) >= 1 && (
           <span className="font-normal text-tertiary-1000">
-            {investmentTypes.includes(asset?.subtype)
+            {investmentTypes.includes(asset?.subtype || "")
               ? Number(asset.shares).toFixed(2) + " Shares"
               : "$" + Number(asset.total).toFixed(2) + " Cash"}
           </span>
         )}
         {(asset?.shares ?? 0) < 1 && (
           <span className="font-normal text-tertiary-1000">
-            {investmentTypes.includes(asset?.subtype)
+            {investmentTypes.includes(asset?.subtype || "")
               ? Number(asset.shares).toFixed(10) + " Shares"
               : "$" + Number(asset.total) + " Cash"}
           </span>
