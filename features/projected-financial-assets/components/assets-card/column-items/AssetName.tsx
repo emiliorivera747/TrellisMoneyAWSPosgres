@@ -1,6 +1,5 @@
-import React from "react";
 import { TableCell } from "@/components/ui/table";
-import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
 import {
   HoverCard,
   HoverCardContent,
@@ -9,7 +8,7 @@ import {
 
 const investmentTypes = ["cryptocurrency", "equity", "etf", "mutual fund"];
 
-const AssetName = ({ asset }: { asset: Assets }) => {
+const AssetName = ({ asset }: { asset: ProjectedAsset }) => {
   const n = asset?.name?.length;
 
   let nameElement;
@@ -47,7 +46,7 @@ const AssetName = ({ asset }: { asset: Assets }) => {
         {(asset?.shares ?? 0) < 1 && (
           <span className="font-normal text-tertiary-1000">
             {investmentTypes.includes(asset?.subtype)
-              ? Number(asset.shares).toFixed(10)+ " Shares"
+              ? Number(asset.shares).toFixed(10) + " Shares"
               : "$" + Number(asset.total) + " Cash"}
           </span>
         )}
