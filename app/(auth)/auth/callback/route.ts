@@ -37,7 +37,6 @@ export async function GET(request: Request) {
   
   
   // ---- Upsert User ----
-  console.log("Before Upsert")
   const dbUser = await upsertUser(currentUser);
   if (!dbUser) return NextResponse.redirect(`${origin}/auth/auth-code-error`);
   const subscriptions = dbUser.subscriptions;
@@ -77,7 +76,6 @@ export async function GET(request: Request) {
           message: "Checkout URL is null",
         });
       }
-
       return NextResponse.redirect(checkoutUrl);
     } catch (error) {
       console.error("Error creating checkout session:", error);
@@ -87,6 +85,5 @@ export async function GET(request: Request) {
 
   // Redirect to the dashboard
   const redirectTo = next?.startsWith("http") ? next : `${origin}${next}`;
-
   return NextResponse.redirect(redirectTo);
 }

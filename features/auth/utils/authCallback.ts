@@ -15,19 +15,15 @@ import { SupabaseUserSyncData } from "@/features/auth/types/callback";
  */
 export async function upsertUser(currentUser: SupabaseUserSyncData) {
   try {
-    console.log("Before Update");
     /**
      * Perform the upsert
      */
     const userDB = await updateOrCreateUser(currentUser);
 
-    console.log("userDB", userDB);
-
     /**
      * Get the household
      */
     const doesHouseholdExistRes = await doesHouseholdExist(currentUser.id);
-    console.log("doesHouseholdExistRes", doesHouseholdExistRes);
 
     /**
      * If the user does not exist then we will
@@ -191,13 +187,10 @@ export const updateOrCreateUser = async (currentUser: SupabaseUserSyncData) => {
       },
     });
 
-  console.log("Insert values")
   const userWithSubs = await db.query.user.findFirst({
     where: eq(user.userId, userId),
-    with: { subscriptions: true }, 
+    with: { subscriptions: true },
   });
-
-  console.log("userWithSubs", userWithSubs);
 
   return userWithSubs;
 };
