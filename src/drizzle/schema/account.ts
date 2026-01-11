@@ -1,7 +1,18 @@
-import { pgTable, varchar, timestamp, text, integer, serial, numeric, uniqueIndex, boolean, foreignKey, bigint, index, primaryKey, pgEnum } from "drizzle-orm/pg-core"
-import { sql } from "drizzle-orm"
+import {
+  pgTable,
+  timestamp,
+  text,
+  serial,
+  numeric,
+  uniqueIndex,
+  foreignKey,
+} from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-import { balance, user, household, item } from "@/src/drizzle/schema/schema";
+import { user } from "@/src/drizzle/schema/user";
+import { household } from "@/src/drizzle/schema/household";
+import { item } from "@/src/drizzle/schema/item";
+import { holding } from "@/src/drizzle/schema/holding";
 
 /**
  *  Account schema
@@ -166,7 +177,7 @@ export const balance = pgTable("Balance", {
 
 /**
  * Defines the relationships for the `account` entity.
- * 
+ *
  * @remarks
  * This function establishes the following relationships:
  * - `balance`: A one-to-one relationship with the `balance` entity, linked via `balanceId`.
@@ -204,7 +215,6 @@ export const accountRelations = relations(account, ({ one, many }) => ({
 export const balanceRelations = relations(balance, ({ many }) => ({
   accounts: many(account),
 }));
-
 
 /**
  * Defines the relationships for the `accountHistory` table.
