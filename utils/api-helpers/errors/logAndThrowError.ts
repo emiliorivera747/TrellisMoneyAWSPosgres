@@ -5,6 +5,6 @@
  */
 export const logErrorAndThrow = (msg: string | Error | unknown) => {
   let message = msg instanceof Error ? msg.message : msg;
-  console.error(`${message}`);
+  console.error(`${message} \n`);
   throw new Error(String(message));
 };

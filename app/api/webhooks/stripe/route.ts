@@ -12,7 +12,7 @@ import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerError
 
 /**
  * Processes Stripe webhook events by verifying the signature, parsing the event,
- * and handling specific event types like `checkout.session.completed` and 
+ * and handling specific event types like `checkout.session.completed` and
  * `customer.subscription.deleted`. Logs unhandled events for debugging.
  *
  * @param req - Incoming `NextRequest` with the webhook payload and headers.
@@ -68,8 +68,9 @@ export async function POST(req: NextRequest) {
       // case "price.updated":
       //   break;
       default:
-        console.log(`Unhandled event type: ${event.type}`);
+      // console.log(`Unhandled event type: ${event.type}`);
     }
+    console.log("Webhook processed successfully");
     return new Response("Webhook processed successfully", { status: 200 });
   } catch (error) {
     return new Response(`Webhook Error: ${getServerErrorMessage(error)}`, {

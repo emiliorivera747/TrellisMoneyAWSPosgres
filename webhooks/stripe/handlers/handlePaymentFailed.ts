@@ -37,7 +37,7 @@ const handlePaymentFailed = async (event: Stripe.Event) => {
 
     await updateSubscription(user_id, subscriptionData);
   } catch (error) {
-    console.error("Error in handleInvoicePaidEvent:", error);
+    console.error("Error in handleInvoicePaidEvent:", error, '\n');
   }
 };
 

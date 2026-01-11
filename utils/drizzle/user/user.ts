@@ -21,7 +21,7 @@ export const getUserByEmail = async (email: string) => {
     .where(eq(user.email, email))
     .limit(1);
 
-  return userDB[0]?? null;
+  return userDB[0] ?? null;
 };
 
 /**

@@ -40,7 +40,7 @@ export const updateUserAndSubscription = async ({
     tx.insert(subscription)
       .values({
         ...subscriptionData,
-        userId: userId,
+        userId,
         customerId: customerId,
       })
       .onConflictDoUpdate({
