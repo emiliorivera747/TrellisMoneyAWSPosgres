@@ -14,6 +14,8 @@
 
 ## Subscription (Stripe Integration)
 <img width="1508" alt="Screenshot 2025-06-09 at 7 58 50 PM" src="https://github.com/user-attachments/assets/3641699e-664f-471d-acb9-e495d9e277ed" />
+<img width="1512" height="820" alt="Screenshot 2026-01-10 at 6 18 52 PM" src="https://github.com/user-attachments/assets/6a61ceee-73e5-43ed-993e-d393505b1a1b" />
+
 
 ## Add Connection (Plaid Integration)
 <img width="1509" height="856" alt="Screenshot 2025-10-02 at 8 08 25 PM" src="https://github.com/user-attachments/assets/2cb12563-72d3-42a3-bb3d-3d28eb7f0d99" />
