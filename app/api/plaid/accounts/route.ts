@@ -1,6 +1,6 @@
 import { NextRequest} from "next/server";
 import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
-import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
+import { getAccountsFromPlaidWithItems } from "@/services/plaid/getAccountV2";
 import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
 import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
 import { withAuth } from "@/lib/protected";
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
       /**
        *  Go through each item and fetch the accounts
        */
-      const accounts = await getAccountsFromPlaid(items);
+      const accounts = await getAccountsFromPlaidWithItems(items);
 
       /**
        *  Store the accounts in the database

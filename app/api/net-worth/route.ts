@@ -8,7 +8,7 @@ import {
 import { withAuth } from "@/lib/protected";
 import { getMemberByUserId } from "@/utils/drizzle/household/household";
 import { updateAccounts } from "@/utils/drizzle/accounts/updateAccountsV2";
-import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
+import { getAccountsFromPlaidWithItems } from "@/services/plaid/getAccountV2";
 import { calculateNetWorth } from "@/utils/api-helpers/net-worth/calculateNetWorth";
 
 import { getItemsFromPlaid } from "@/services/plaid/items/items";
@@ -27,16 +27,29 @@ import { household } from "@/drizzle/schema";
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
+
+      /**
+       * Get member
+       */
       const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to find member", 404);
 
+      /**
+       * Get items from member
+       */
       const items = member?.household?.items;
       if (!items) return FailResponse("Items not found for household", 404);
 
+      /**
+       * Get Plaid Items
+       */
       const plaidItems = await getItemsFromPlaid(items);
       const updateItems = await updateItemsWithPlaidItems(plaidItems);
 
-      const plaidAccounts = await getAccountsFromPlaid(updateItems);
+      /**
+       * Get accounts from Plaid using items
+       */
+      const plaidAccounts = await getAccountsFromPlaidWithItems(updateItems);
       await updateAccounts(plaidAccounts, member?.household?.accounts || []);
 
       if (!member.household_id)

@@ -45,7 +45,7 @@ export const getItemsFromPlaid = async (items: any[]) => {
   const allItems = await Promise.all(
     items.map(async (item) => {
       const res = await client.itemGet({ access_token: item.access_token });
-      return res.data.item; // Return only the Plaid item details
+      return res.data.item; 
     })
   );
   return allItems;

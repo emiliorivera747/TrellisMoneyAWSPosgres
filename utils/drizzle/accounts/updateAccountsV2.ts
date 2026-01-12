@@ -2,15 +2,15 @@ import { AccountBalance } from "plaid";
 import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import { AccountSubtype, AccountType } from "plaid";
 import { db } from "@/drizzle/db";
-import { account, balance } from "@/drizzle/schema";
+import { account, balance, Account } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 
-//Types
-import { AccountBaseWithItemId, Account } from "@/types/services/plaid/plaid";
-
 // Helpers
 import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
+
+//Types
+// import { AccountBaseWithItemId } from "@/types/services/plaid/plaid";
 
 /**
  * Update the accounts in the database
@@ -57,10 +57,7 @@ export async function updateAccounts(
             available: getValueOrDefault(balances?.available, 0).toString(),
             current: getValueOrDefault(balances?.current, 0).toString(),
             limit: getValueOrDefault(balances?.limit, 0).toString(),
-            isoCurrencyCode: getValueOrDefault(
-              balances?.iso_currency_code,
-              ""
-            ),
+            isoCurrencyCode: getValueOrDefault(balances?.iso_currency_code, ""),
             unofficialCurrencyCode: getValueOrDefault(
               balances?.unofficial_currency_code,
               ""

@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-import { getAccountsFromPlaid } from "@/services/plaid/getAccountV2";
+import { getAccountsFromPlaidWithItems } from "@/services/plaid/getAccountV2";
 
 import { withAuth } from "@/lib/protected";
 
@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
       /**
        *  Go through each item and fetch the accounts
        */
-      const accounts = await getAccountsFromPlaid(items);
+      const accounts = await getAccountsFromPlaidWithItems(items);
 
       /**
        *  Store the accounts in the database
