@@ -27,7 +27,6 @@ import { household } from "@/drizzle/schema";
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-
       /**
        * Get member
        */
@@ -47,22 +46,23 @@ export async function GET(req: NextRequest) {
       const updateItems = await updateItemsWithPlaidItems(plaidItems);
 
       /**
-       * Get accounts from Plaid using items
+       * Get Accounts from Plaid using items from Database
        */
       const plaidAccounts = await getAccountsFromPlaidWithItems(updateItems);
-      await updateAccounts(plaidAccounts, member?.household?.accounts || []);
+      const householdAccounts = member.household.accounts || [];
+      await updateAccounts(plaidAccounts, householdAccounts);
 
-      if (!member.household_id)
+      if (!member.householdId)
         return FailResponse("No household id found", 404);
 
       // Re-fetch household with updated accounts to get latest data
       const householdData = await db.query.household.findFirst({
-        where: eq(household.householdId, member.household_id),
+        where: eq(household.householdId, member.householdId),
         with: { accounts: true },
       });
 
       if (!householdData) return FailResponse("Household not found", 404);
-      
+
       // Transform Drizzle accounts to snake_case format
       const transformedAccounts = householdData.accounts.map((acc) => ({
         account_id: acc.accountId,
@@ -76,14 +76,16 @@ export async function GET(req: NextRequest) {
         official_name: acc.officialName,
         verification_status: acc.verificationStatus,
         persistent_account_id: acc.persistentAccountId,
-        expected_annual_return_rate: acc.annualReturnRate ? Number(acc.annualReturnRate) : null,
+        expected_annual_return_rate: acc.annualReturnRate
+          ? Number(acc.annualReturnRate)
+          : null,
         iso_currency_code: acc.isoCurrencyCode,
         unofficial_currency_code: acc.unofficialCurrencyCode,
         item_id: acc.itemId,
         user_id: acc.userId,
         household_id: acc.householdId,
       }));
-      
+
       const data = calculateNetWorth(transformedAccounts);
 
       return SuccessResponse("data", "Success");

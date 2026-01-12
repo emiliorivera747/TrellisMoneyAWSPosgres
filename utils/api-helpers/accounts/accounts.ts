@@ -1,4 +1,5 @@
 // import { Account } from "@/app/generated/prisma/client";
+import { Account } from "@/drizzle/schema";
 
 /**
  * Extracts an array of account IDs from a list of account objects.

@@ -1,38 +1,35 @@
-import { AccountBalance } from "plaid";
-import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
-import { AccountSubtype, AccountType } from "plaid";
-import { db } from "@/drizzle/db";
-import { account, balance, Account } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
-import { sql } from "drizzle-orm";
-
 // Helpers
 import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 
-//Types
-// import { AccountBaseWithItemId } from "@/types/services/plaid/plaid";
+// Types
+import {
+  AccountSubtype,
+  AccountType,
+  AccountBase,
+  AccountBalance,
+} from "plaid";
+
+// Drizzle
+import { db } from "@/drizzle/db";
+import { account, balance, Account } from "@/drizzle/schema";
+
+// Utils
+import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 
 /**
  * Update the accounts in the database
  * Optimized to use batch operations via transaction to reduce database round-trips
  */
 export async function updateAccounts(
-  accountBase: AccountBaseWithItemId[][],
+  accountBase: AccountBase[][],
   householdAccounts: Account[]
 ) {
   const accounts = accountBase.flat();
-  const map = new Map<
-    string,
-    { user_id: string; household_id: string; item_id: string }
-  >();
-  const n = householdAccounts?.length;
-
-  for (let i = 0; i < n; i++) {
-    let acc = householdAccounts[i];
-    map.set(acc.account_id, {
-      user_id: acc.user_id || "",
-      household_id: acc.household_id || "",
-      item_id: acc.item_id || "",
+  const map = new Map<string, { userId: string; householdId: string }>();
+  for (let account of householdAccounts) {
+    map.set(account.accountId, {
+      userId: account.userId || "",
+      householdId: account.householdId || "",
     });
   }
 
@@ -45,9 +42,8 @@ export async function updateAccounts(
         const balances = plaidAccount?.balances ?? default_balance;
         const accountData = extractAccountData(plaidAccount, balances);
         const account_id = plaidAccount.account_id;
-        const user_id = map.get(account_id)?.user_id || "";
-        const household_id = map.get(account_id)?.household_id || "";
-        const item_id = map.get(account_id)?.item_id || "";
+        const user_id = map.get(account_id)?.userId || "";
+        const household_id = map.get(account_id)?.householdId || "";
 
         // Upsert balance
         const balanceResult = await tx
@@ -101,7 +97,7 @@ export async function updateAccounts(
             balanceId: account_id,
             userId: user_id,
             householdId: household_id || null,
-            itemId: item_id,
+            itemId: account.itemId,
             updatedAt: new Date().toISOString(),
           })
           .onConflictDoUpdate({
@@ -151,10 +147,7 @@ const default_balance = {
  * @param balances
  * @returns
  */
-const extractAccountData = (
-  account: AccountBaseWithItemId,
-  balances: AccountBalance
-) => {
+const extractAccountData = (account: AccountBase, balances: AccountBalance) => {
   const accountData = {
     name: getValueOrDefault(account?.name, ""),
     type: getValueOrDefault(account?.type, "depository" as AccountType),
