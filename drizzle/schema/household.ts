@@ -27,7 +27,6 @@ export const householdRole = pgEnum("HouseholdRole", [
 export const household = pgTable("Household", {
   householdId: text("household_id").primaryKey().notNull(),
   name: text().default("Our Household").notNull(),
-  createdBy: text("user_id"),
   createdAt: timestamp("created_at", { precision: 3, mode: "string" })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

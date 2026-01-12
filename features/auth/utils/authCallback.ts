@@ -53,31 +53,6 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
   const { id, email, user_metadata } = currentUser;
   const fullName = user_metadata.full_name?.trim();
 
-  // await prisma.$transaction(async (tx) => {
-  //   // 1. Create household (no created_by yet)
-  //   const household = await tx.household.create({
-  //     data: { name: createHouseholdName(fullName, email) },
-  //   });
-
-  //   // 2. Create admin member and connect both sides in one call
-  //   const adminMember = await tx.householdMember.create({
-  //     data: {
-  //       name: user_metadata.full_name?.trim() || "Unknown",
-  //       email: email ?? undefined,
-  //       role: "ADMIN",
-  //       user: { connect: { user_id: id } },
-  //       household: { connect: { household_id: household.household_id } },
-  //     },
-  //   });
-  //   // 3. Set the created_by field in the household
-  //   await tx.household.update({
-  //     where: { household_id: household.household_id },
-  //     data: { created_by: { connect: { member_id: adminMember.member_id } } },
-  //   });
-
-  //   return household;
-  // });
-
   await db.transaction(async (tx) => {
     /**
      * Create Household
@@ -98,28 +73,13 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
     /**
      * Create Member
      */
-    const memberInsert = await tx
-      .insert(householdMember)
-      .values({
-        memberId: crypto.randomUUID(),
-        name: user_metadata.full_name?.trim() || "Unknown",
-        role: "ADMIN",
-        userId: id,
-        householdId,
-      })
-      .returning({ memberId: householdMember.memberId });
-    const memberId = memberInsert[0]?.memberId;
-    console.log("memeberInsert", memberInsert);
-
-    /**
-     * Update createBy field in household
-     */
-    await tx
-      .update(household)
-      .set({
-        createdBy: memberId,
-      })
-      .where(eq(household.householdId, householdId));
+    await tx.insert(householdMember).values({
+      memberId: crypto.randomUUID(),
+      name: user_metadata.full_name?.trim() || "Unknown",
+      role: "ADMIN",
+      userId: id,
+      householdId,
+    });
 
     return householdInsert[0];
   });
@@ -137,7 +97,7 @@ export const doesHouseholdExist = async (userId: string) => {
     .from(householdMember)
     .where(eq(householdMember.userId, userId))
     .limit(1);
-  return exists;
+  return exists.length !== 0;
 };
 
 /**

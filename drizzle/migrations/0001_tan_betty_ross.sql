@@ -1,0 +1,1 @@
+ALTER TABLE "Household" DROP COLUMN "user_id";
