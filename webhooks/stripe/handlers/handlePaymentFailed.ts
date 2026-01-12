@@ -29,13 +29,13 @@ import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
 const handlePaymentFailed = async (event: Stripe.Event) => {
   try {
     const invoice = extractInvoiceFromStripeEvent(event);
-
     const res = await generateSubscriptionDataFromInvoice(invoice);
     if (!res) return logError("Failed to generate subscription data");
-
     const { user_id, subscriptionData } = res;
-
-    await updateSubscription(user_id, subscriptionData);
+    const subscription = await updateSubscription(user_id, subscriptionData);
+    console.log(
+      `Subscription ${subscription[0].subscriptionId} updated for user ${user_id} – status: ${subscription[0].status} \n`
+    );
   } catch (error) {
     console.error("Error in handleInvoicePaidEvent:", error, '\n');
   }

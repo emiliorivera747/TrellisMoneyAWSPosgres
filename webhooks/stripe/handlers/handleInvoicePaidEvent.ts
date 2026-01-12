@@ -16,15 +16,17 @@ import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
  */
 const handleInvoicePaidEvent = async (event: Stripe.Event) => {
   try {
-    
     const invoice = extractInvoiceFromStripeEvent(event);
 
     const res = await generateSubscriptionDataFromInvoice(invoice);
-    if (!res) return logError("Failed to generate Subscriptin data \n");
+    if (!res) return logError("Failed to generate Subscription data \n");
 
     const { user_id, subscriptionData } = res;
-    await updateSubscription(user_id, subscriptionData);
-    
+    const subscription = await updateSubscription(user_id, subscriptionData);
+
+    console.log(
+      `Subscription ${subscription[0].subscriptionId} updated for user ${user_id} – status: ${subscription[0].status} \n`
+    );
   } catch (error) {
     return logErrorAndThrow(
       `Error in handleInvoicePaidEvent: ${getServerErrorMessage(error)} \n`

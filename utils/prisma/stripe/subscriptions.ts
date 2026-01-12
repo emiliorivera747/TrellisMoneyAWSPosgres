@@ -19,7 +19,6 @@ export const updateUserAndSubscription = async ({
   customerId,
   subscriptionData,
 }: UpdateUserAndSubscriptionProps) => {
-  
   const {
     status,
     startDate,
@@ -32,12 +31,16 @@ export const updateUserAndSubscription = async ({
     updatedAt,
   } = subscriptionData;
 
-  const res = db.transaction(async (tx) => {
-    tx.update(user).set({
-      customerId,
-    });
+  const res = await db.transaction(async (tx) => {
+    await tx
+      .update(user)
+      .set({
+        customerId,
+      })
+      .where(eq(user.id, userId));
 
-    tx.insert(subscription)
+    const subscriptionRes = await tx
+      .insert(subscription)
       .values({
         ...subscriptionData,
         userId,
@@ -56,8 +59,12 @@ export const updateUserAndSubscription = async ({
           canceledAt,
           updatedAt,
         },
-      });
+      })
+      .returning();
+
+    return subscriptionRes;
   });
+
   return res;
 };
 

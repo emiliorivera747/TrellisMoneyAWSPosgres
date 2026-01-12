@@ -53,7 +53,7 @@ const handleSubscriptionUpdated = async (event: Stripe.Event) => {
     await updateSubscription(user.userId, subscriptionData);
 
     console.log(
-      `Subscription ${subscription.id} updated for user ${user.userId} – status: ${subscription.status}`
+      `Subscription ${subscription.id} updated for user ${user.userId} – status: ${subscription.status}\n`
     );
   } catch (error) {
     // Use your shared logError utility for consistency

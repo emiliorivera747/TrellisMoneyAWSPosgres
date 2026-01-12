@@ -17,6 +17,7 @@ import { updateUserAndSubscription } from "@/utils/prisma/stripe/subscriptions";
  * @param event - The Stripe event object containing session details.
  */
 const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
+  const handlerName = `handleCheckoutSessionCompleted`;
   try {
     // ----- Get the checkout session -----
     const { subscription, customer, customer_email, mode } =
@@ -53,17 +54,25 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
         price_id,
         user_id: user.userId,
       });
+      if (!subscriptionData)
+        return logErrorAndThrow(
+          `${handlerName}: Failed to generate subscription data`
+        );
 
       // ----- Batch user and subscription updates in a single transaction -----
-      await updateUserAndSubscription({
+      const upsertSubscription = await updateUserAndSubscription({
         userId: user.userId,
         customerId: customer as string,
         subscriptionData,
       });
+      if (!upsertSubscription)
+        return logErrorAndThrow(
+          `${handlerName}: Failed to upsert subscription`
+        );
 
       // ----- Log subscription update -----
       console.log(
-        `Subscription ${subscription.id} updated for user ${user.userId} – status: ${subscription.status}`
+        `Subscription ${subscription.id} updated for user ${user.userId} – status: ${subscription.status} \n`
       );
     }
   } catch (error) {
