@@ -72,7 +72,7 @@ const handleCheckoutSessionCompleted = async (event: Stripe.Event) => {
 
       // ----- Log subscription update -----
       console.log(
-        `Subscription ${subscription.id} updated for user ${user.userId} – status: ${subscription.status} \n`
+        `Subscription ${subscription.id} updated for user ${user.userId} – status: ${subscription.status}`
       );
     }
   } catch (error) {

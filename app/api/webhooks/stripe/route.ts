@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
       default:
       // console.log(`Unhandled event type: ${event.type}`);
     }
-    console.log("Webhook processed successfully");
+    console.log("Webhook processed successfully \n");
     return new Response("Webhook processed successfully", { status: 200 });
   } catch (error) {
     return new Response(`Webhook Error: ${getServerErrorMessage(error)}`, {

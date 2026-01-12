@@ -27,7 +27,7 @@ const handlePaymentActionRequired = async (event: Stripe.Event) => {
     const { user_id, subscriptionData } = res;
     const subscription = await updateSubscription(user_id, subscriptionData);
     console.log(
-      `Subscription ${subscription[0].subscriptionId} updated for user ${user_id} – status: ${subscription[0].status} \n`
+      `Subscription ${subscription[0].subscriptionId} updated for user ${user_id} – status: ${subscription[0].status}`
     );
   } catch (error) {
     console.error("Error in handlePaymentActionRequired:", error);
