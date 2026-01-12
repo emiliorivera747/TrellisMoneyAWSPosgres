@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
 
       const data = calculateNetWorth(transformedAccounts);
 
-      return SuccessResponse("data", "Success");
+      return SuccessResponse(data, "Success");
     } catch (error) {
       return ErrorResponse(error);
     }

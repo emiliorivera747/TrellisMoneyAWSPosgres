@@ -5,31 +5,23 @@ import {
   ErrorResponse,
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
-
-import { getUserHouseholdMembership } from "@/utils/prisma/household-member/members";
 import { logError } from "@/utils/api-helpers/errors/logError";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
-import prisma from "@/lib/prisma";
+import {
+  getMembersWithUserId,
+  getMemberByUserId,
+  createMember,
+} from "@/utils/api-helpers/members/members";
 
 /**
  * GET /api/members
  */
 export async function GET(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
-    const user_id = user.id;
     try {
-      const householdMember = await prisma.householdMember.findUnique({
-        where: { user_id },
-        include: {
-          household: {
-            include: {
-              members: true,
-            },
-          },
-        },
-      });
+      const householdMembers = await getMembersWithUserId(user.id);
       return SuccessResponse({
-        members: householdMember?.household?.members,
+        members: householdMembers,
       });
     } catch (error) {
       const errorMessage = getServerErrorMessage(error);
@@ -58,19 +50,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       if (!user_id) return FailResponse("Failled to get user ID", 404);
 
       // ----- Retreive the membership -----
-      const householdMember = await prisma.householdMember.findUnique({
-        where: { user_id },
-        select: { household_id: true },
-      });
+      const householdMember = await getMemberByUserId(user.id);
+
       // ----- Create a new household member with the provided name and email -----
-      const household_id = householdMember?.household_id;
-      const newMember = await prisma.householdMember.create({
-        data: {
-          name,
-          email,
-          household_id,
-        },
-      });
+      const householdId = householdMember?.householdId;
+      const newMember = await createMember({ name, email, householdId });
+
       return SuccessResponse({ member: newMember });
     } catch (error) {
       const message = getServerErrorMessage(error);
