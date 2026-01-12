@@ -8,7 +8,7 @@ import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 import { getUserByEmail } from "@/utils/drizzle/user/user";
 import { getSubscriptionItemFromSubscription } from "@/utils/api-helpers/stripe/webhookHelpers";
 import { generateSubscriptionData } from "@/webhooks/stripe/helpers/subscriptions";
-import { updateUserAndSubscription } from "@/utils/prisma/stripe/subscriptions";
+import { updateUserAndSubscription } from "@/utils/drizzle/stripe/subscriptions";
 
 /**
  * Handles the checkout session completed event from Stripe.

@@ -4,7 +4,7 @@ import Stripe from "stripe";
 import { generateSubscriptionData } from "@/webhooks/stripe/helpers/subscriptions";
 import { getCustomerIdFromSub } from "../helpers/customers";
 import { getUserByCustomerId } from "@/utils/drizzle/user/user";
-import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
+import { updateSubscription } from "@/utils/drizzle/stripe/subscriptions";
 import { logError } from "@/utils/api-helpers/errors/logError";
 
 // Stripe

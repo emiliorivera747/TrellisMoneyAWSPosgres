@@ -9,7 +9,7 @@ import {
 } from "@/webhooks/stripe/helpers/invoice";
 
 import { generateSubscriptionDataFromInvoice } from "@/webhooks/stripe/helpers/subscriptions";
-import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
+import { updateSubscription } from "@/utils/drizzle/stripe/subscriptions";
 
 /**
  * This event handler endpoint processes invoice.paid event.

@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { getStripeSubscriptionByEvent } from "@/services/stripe/subscriptions";
 
-import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
+import { updateSubscription } from "@/utils/drizzle/stripe/subscriptions";
 
 // Helpers
 import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";

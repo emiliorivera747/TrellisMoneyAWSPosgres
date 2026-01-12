@@ -37,7 +37,7 @@ export const updateUserAndSubscription = async ({
       .set({
         customerId,
       })
-      .where(eq(user.id, userId));
+      .where(eq(user.userId, userId));
 
     const subscriptionRes = await tx
       .insert(subscription)

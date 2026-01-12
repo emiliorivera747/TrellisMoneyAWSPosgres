@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { updateSubscription } from "@/utils/prisma/stripe/subscriptions";
+import { updateSubscription } from "@/utils/drizzle/stripe/subscriptions";
 
 // Helpers
 import { extractInvoiceFromStripeEvent } from "@/webhooks/stripe/helpers/invoice";
