@@ -42,6 +42,7 @@ export async function GET(req: NextRequest) {
       if (!member.household_id)
         return FailResponse("No household id found", 404);
 
+      // Re-fetch household with updated accounts to get latest data
       const householdData = await db.query.household.findFirst({
         where: eq(household.householdId, member.household_id),
         with: { accounts: true },
@@ -49,7 +50,7 @@ export async function GET(req: NextRequest) {
 
       if (!householdData) return FailResponse("Household not found", 404);
       
-      // Transform Drizzle accounts to match the expected Account type format
+      // Transform Drizzle accounts to snake_case format
       const transformedAccounts = householdData.accounts.map((acc) => ({
         account_id: acc.accountId,
         name: acc.name,
@@ -67,6 +68,7 @@ export async function GET(req: NextRequest) {
         unofficial_currency_code: acc.unofficialCurrencyCode,
         item_id: acc.itemId,
         user_id: acc.userId,
+        household_id: acc.householdId,
       }));
       
       const data = calculateNetWorth(transformedAccounts);
