@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { Holding as HoldingPlaid } from "plaid";
 import { Holding as HoldingPrisma } from "@/types/services/plaid/plaid";
-import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
+import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { getUser } from "@/services/supabase/getUser";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
@@ -139,14 +139,14 @@ export const getExistingHoldings = async (holdings: Holding[]) => {
  * Get the holding update fields
  */
 const getHoldingUpdateFields = (holding: Holding) => ({
-  cost_basis: getValueOrDefault(holding?.cost_basis, 0),
-  institution_price: getValueOrDefault(holding?.institution_price, 0),
+  cost_basis: valueOrDefault(holding?.cost_basis, 0),
+  institution_price: valueOrDefault(holding?.institution_price, 0),
   institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
   institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
-  institution_value: getValueOrDefault(holding?.institution_value, 0),
-  vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
-  vested_value: getValueOrDefault(holding?.vested_value, 0),
-  quantity: getValueOrDefault(holding?.quantity, 0),
+  institution_value: valueOrDefault(holding?.institution_value, 0),
+  vested_quantity: valueOrDefault(holding?.vested_quantity, 0),
+  vested_value: valueOrDefault(holding?.vested_value, 0),
+  quantity: valueOrDefault(holding?.quantity, 0),
   iso_currency_code: holding.iso_currency_code || "USD",
 });
 
@@ -156,13 +156,13 @@ const getHoldingUpdateFields = (holding: Holding) => ({
 const getHoldingCreateFields = (holding: Holding) => ({
   security_id: holding.security_id,
   account_id: holding.account_id,
-  cost_basis: getValueOrDefault(holding?.cost_basis, 0),
-  institution_price: getValueOrDefault(holding?.institution_price, 0),
+  cost_basis: valueOrDefault(holding?.cost_basis, 0),
+  institution_price: valueOrDefault(holding?.institution_price, 0),
   institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
   institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
-  institution_value: getValueOrDefault(holding?.institution_value, 0),
-  vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
-  vested_value: getValueOrDefault(holding?.vested_value, 0),
-  quantity: getValueOrDefault(holding?.quantity, 0),
+  institution_value: valueOrDefault(holding?.institution_value, 0),
+  vested_quantity: valueOrDefault(holding?.vested_quantity, 0),
+  vested_value: valueOrDefault(holding?.vested_value, 0),
+  quantity: valueOrDefault(holding?.quantity, 0),
   iso_currency_code: holding.iso_currency_code || "USD",
 });

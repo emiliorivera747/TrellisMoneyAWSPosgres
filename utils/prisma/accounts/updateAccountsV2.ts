@@ -1,6 +1,6 @@
 // import prisma from "@/lib/prisma";
 import { AccountBalance } from "plaid";
-import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
+import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import { AccountSubtype, AccountType } from "plaid";
 
 //Types
@@ -48,11 +48,11 @@ export async function updateAccounts(
       prisma.balance.upsert({
         where: { balance_id: account.account_id },
         update: {
-          available: getValueOrDefault(balances?.available, 0),
-          current: getValueOrDefault(balances?.current, 0),
-          limit: getValueOrDefault(balances?.limit, 0),
-          iso_currency_code: getValueOrDefault(balances?.iso_currency_code, ""),
-          unofficial_currency_code: getValueOrDefault(
+          available: valueOrDefault(balances?.available, 0),
+          current: valueOrDefault(balances?.current, 0),
+          limit: valueOrDefault(balances?.limit, 0),
+          iso_currency_code: valueOrDefault(balances?.iso_currency_code, ""),
+          unofficial_currency_code: valueOrDefault(
             balances?.unofficial_currency_code,
             ""
           ),
@@ -60,11 +60,11 @@ export async function updateAccounts(
         },
         create: {
           balance_id: account.account_id,
-          available: getValueOrDefault(balances?.available, 0),
-          current: getValueOrDefault(balances?.current, 0),
-          limit: getValueOrDefault(balances?.limit, 0),
-          iso_currency_code: getValueOrDefault(balances?.iso_currency_code, ""),
-          unofficial_currency_code: getValueOrDefault(
+          available: valueOrDefault(balances?.available, 0),
+          current: valueOrDefault(balances?.current, 0),
+          limit: valueOrDefault(balances?.limit, 0),
+          iso_currency_code: valueOrDefault(balances?.iso_currency_code, ""),
+          unofficial_currency_code: valueOrDefault(
             balances?.unofficial_currency_code,
             ""
           ),
@@ -85,7 +85,7 @@ export async function updateAccounts(
         },
         create: {
           member: { connect: { member_id } },
-          account_id: getValueOrDefault(account_id, ""),
+          account_id: valueOrDefault(account_id, ""),
           ...accountData,
           user: { connect: { user_id } },
           item: { connect: { item_id } },
@@ -133,14 +133,14 @@ const extractAccountData = (
   balances: AccountBalance
 ) => {
   const accountData = {
-    name: getValueOrDefault(account?.name, ""),
-    type: getValueOrDefault(account?.type, "depository" as AccountType),
-    subtype: getValueOrDefault(account?.subtype, "checking" as AccountSubtype),
-    available: getValueOrDefault(balances.available, 0),
-    current: getValueOrDefault(balances.current, 0),
-    limit: getValueOrDefault(balances.limit, 0),
-    iso_currency_code: getValueOrDefault(balances.iso_currency_code, ""),
-    unofficial_currency_code: getValueOrDefault(
+    name: valueOrDefault(account?.name, ""),
+    type: valueOrDefault(account?.type, "depository" as AccountType),
+    subtype: valueOrDefault(account?.subtype, "checking" as AccountSubtype),
+    available: valueOrDefault(balances.available, 0),
+    current: valueOrDefault(balances.current, 0),
+    limit: valueOrDefault(balances.limit, 0),
+    iso_currency_code: valueOrDefault(balances.iso_currency_code, ""),
+    unofficial_currency_code: valueOrDefault(
       balances.unofficial_currency_code,
       ""
     ),

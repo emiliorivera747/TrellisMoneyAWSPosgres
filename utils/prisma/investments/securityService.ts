@@ -1,6 +1,6 @@
 import { Security } from "plaid";
 import { Security as SecurityPrisma } from "@/types/services/plaid/plaid";
-import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
+import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import { Decimal } from "@prisma/client/runtime/library";
 import prisma from "@/lib/prisma";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
@@ -88,7 +88,7 @@ const addSecurityHistory = async (
   security: Security
 ) => {
   const existing = securitiesMap.get(security.security_id);
-  const newPrice = getValueOrDefault(security.close_price, 0);
+  const newPrice = valueOrDefault(security.close_price, 0);
   if (
     !existing ||
     Math.abs(Number(existing?.close_price) - Number(newPrice)) > 0.01
@@ -107,10 +107,10 @@ const addSecurityHistory = async (
  */
 const getSecurityHistoryFields = (security: Security) => ({
   security_id: security.security_id,
-  name: getValueOrDefault(security?.name, ""),
-  close_price: getValueOrDefault(security?.close_price, 0),
+  name: valueOrDefault(security?.name, ""),
+  close_price: valueOrDefault(security?.close_price, 0),
   close_price_as_of: isoToUTC(security?.close_price_as_of),
-  ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
+  ticker_symbol: valueOrDefault(security?.ticker_symbol, ""),
   update_datetime: isoToUTC(
     security?.update_datetime || new Date().toISOString()
   ),
@@ -125,28 +125,28 @@ const getSecurityHistoryFields = (security: Security) => ({
  */
 const getSecurityCreateFields = (security: Security) => ({
   security_id: security.security_id,
-  isin: getValueOrDefault(security?.isin, ""),
-  cusip: getValueOrDefault(security?.cusip, ""),
-  sedol: getValueOrDefault(security?.sedol, ""),
-  institution_security_id: getValueOrDefault(
+  isin: valueOrDefault(security?.isin, ""),
+  cusip: valueOrDefault(security?.cusip, ""),
+  sedol: valueOrDefault(security?.sedol, ""),
+  institution_security_id: valueOrDefault(
     security?.institution_security_id,
     ""
   ),
-  institution_id: getValueOrDefault(security?.institution_id, ""),
-  proxy_security_id: getValueOrDefault(security?.proxy_security_id, ""),
-  name: getValueOrDefault(security?.name, ""),
-  ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
-  is_cash_equivalent: getValueOrDefault(security?.is_cash_equivalent, false),
-  type: getValueOrDefault(security?.type, ""),
-  close_price: getValueOrDefault(security?.close_price, 0),
+  institution_id: valueOrDefault(security?.institution_id, ""),
+  proxy_security_id: valueOrDefault(security?.proxy_security_id, ""),
+  name: valueOrDefault(security?.name, ""),
+  ticker_symbol: valueOrDefault(security?.ticker_symbol, ""),
+  is_cash_equivalent: valueOrDefault(security?.is_cash_equivalent, false),
+  type: valueOrDefault(security?.type, ""),
+  close_price: valueOrDefault(security?.close_price, 0),
   close_price_as_of: isoToUTC(security?.close_price_as_of),
   update_datetime: isoToUTC(security?.update_datetime),
-  iso_currency_code: getValueOrDefault(security?.iso_currency_code, ""),
-  unofficial_currency_code: getValueOrDefault(
+  iso_currency_code: valueOrDefault(security?.iso_currency_code, ""),
+  unofficial_currency_code: valueOrDefault(
     security?.unofficial_currency_code,
     ""
   ),
-  market_identifier_code: getValueOrDefault(
+  market_identifier_code: valueOrDefault(
     security?.market_identifier_code,
     ""
   ),
@@ -160,11 +160,11 @@ const getSecurityCreateFields = (security: Security) => ({
  * @returns
  */
 const extractSecurityUpdateData = (security: Security) => ({
-  close_price: getValueOrDefault(security?.close_price, 0),
+  close_price: valueOrDefault(security?.close_price, 0),
   close_price_as_of: isoToUTC(security?.close_price_as_of),
-  name: getValueOrDefault(security?.name, ""),
+  name: valueOrDefault(security?.name, ""),
   update_datetime: isoToUTC(security?.update_datetime),
-  sector: getValueOrDefault(security?.sector, ""),
-  industry: getValueOrDefault(security?.industry, ""),
-  ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
+  sector: valueOrDefault(security?.sector, ""),
+  industry: valueOrDefault(security?.industry, ""),
+  ticker_symbol: valueOrDefault(security?.ticker_symbol, ""),
 });

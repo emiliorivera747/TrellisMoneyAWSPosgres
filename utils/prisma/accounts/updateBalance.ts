@@ -1,16 +1,16 @@
 import prisma from "@/lib/prisma";
 import { Balance } from "@/types/services/plaid/plaid";
-import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
+import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 
 export async function updateBalance(balance: Balance, account_id: string) {
   const dbResponse = await prisma.balance.upsert({
     where: { balance_id: account_id },
     update: {
-      available: getValueOrDefault(balance?.available, 0),
-      current: getValueOrDefault(balance?.current, 0),
-      limit: getValueOrDefault(balance?.limit, 0),
-      iso_currency_code: getValueOrDefault(balance?.iso_currency_code, ""),
-      unofficial_currency_code: getValueOrDefault(
+      available: valueOrDefault(balance?.available, 0),
+      current: valueOrDefault(balance?.current, 0),
+      limit: valueOrDefault(balance?.limit, 0),
+      iso_currency_code: valueOrDefault(balance?.iso_currency_code, ""),
+      unofficial_currency_code: valueOrDefault(
         balance?.unofficial_currency_code,
         ""
       ),
@@ -18,11 +18,11 @@ export async function updateBalance(balance: Balance, account_id: string) {
     },
     create: {
       balance_id: account_id,
-      available: getValueOrDefault(balance?.available, 0),
-      current: getValueOrDefault(balance?.current, 0),
-      limit: getValueOrDefault(balance?.limit, 0),
-      iso_currency_code: getValueOrDefault(balance?.iso_currency_code, ""),
-      unofficial_currency_code: getValueOrDefault(
+      available: valueOrDefault(balance?.available, 0),
+      current: valueOrDefault(balance?.current, 0),
+      limit: valueOrDefault(balance?.limit, 0),
+      iso_currency_code: valueOrDefault(balance?.iso_currency_code, ""),
+      unofficial_currency_code: valueOrDefault(
         balance?.unofficial_currency_code,
         ""
       ),

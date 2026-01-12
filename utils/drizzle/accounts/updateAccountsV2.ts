@@ -1,6 +1,14 @@
 // Helpers
 import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 
+// Drizzle
+import { db } from "@/drizzle/db";
+import { account, balance, Account } from "@/drizzle/schema";
+
+// Utils
+import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
+import { generateAccountMap } from "@/utils/api-helpers/accounts/accountMaps";
+
 // Types
 import {
   AccountSubtype,
@@ -9,12 +17,16 @@ import {
   AccountBalance,
 } from "plaid";
 
-// Drizzle
-import { db } from "@/drizzle/db";
-import { account, balance, Account } from "@/drizzle/schema";
-
-// Utils
-import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
+/**
+ * Default balance object
+ */
+const DEFAULT_BALANCE = {
+  available: 0,
+  current: 0,
+  limit: 0,
+  iso_currency_code: "",
+  unofficial_currency_code: "",
+};
 
 /**
  * Update the accounts in the database
@@ -24,57 +36,35 @@ export async function updateAccounts(
   accountBase: AccountBase[][],
   householdAccounts: Account[]
 ) {
-  const accounts = accountBase.flat();
-  const map = new Map<string, { userId: string; householdId: string }>();
-  for (let account of householdAccounts) {
-    map.set(account.accountId, {
-      userId: account.userId || "",
-      householdId: account.householdId || "",
-    });
-  }
+  const plaidAccounts = accountBase.flat();
+  const accountMap = generateAccountMap(householdAccounts);
 
   try {
     const res = await db.transaction(async (tx) => {
-      const balanceResults = [];
+      const balanceResults: any[] = []; // Replace 'any' with the correct type if known
       const accountResults = [];
 
-      for (const plaidAccount of accounts) {
-        const balances = plaidAccount?.balances ?? default_balance;
-        const accountData = extractAccountData(plaidAccount, balances);
-        const account_id = plaidAccount.account_id;
-        const user_id = map.get(account_id)?.userId || "";
-        const household_id = map.get(account_id)?.householdId || "";
+      for (const plaidAccount of plaidAccounts) {
+        const balances = plaidAccount?.balances ?? DEFAULT_BALANCE;
+        const accountData = extractAccountFromPlaid(plaidAccount);
+        const plaidBalancesData = extractBalanceFromPlaid(balances);
+        
+        // Id's
+        const accountId = plaidAccount.account_id;
+        const userId = accountMap.get(accountId)?.userId || "";
+        const householdId = accountMap.get(accountId)?.householdId || "";
+        const itemId = accountMap.get(accountId)?.itemId || "";
 
-        // Upsert balance
         const balanceResult = await tx
           .insert(balance)
           .values({
-            balanceId: account_id,
-            available: getValueOrDefault(balances?.available, 0).toString(),
-            current: getValueOrDefault(balances?.current, 0).toString(),
-            limit: getValueOrDefault(balances?.limit, 0).toString(),
-            isoCurrencyCode: getValueOrDefault(balances?.iso_currency_code, ""),
-            unofficialCurrencyCode: getValueOrDefault(
-              balances?.unofficial_currency_code,
-              ""
-            ),
-            updatedAt: new Date().toISOString(),
+            balanceId: accountId,
+            ...plaidBalancesData,
           })
           .onConflictDoUpdate({
             target: balance.balanceId,
             set: {
-              available: getValueOrDefault(balances?.available, 0).toString(),
-              current: getValueOrDefault(balances?.current, 0).toString(),
-              limit: getValueOrDefault(balances?.limit, 0).toString(),
-              isoCurrencyCode: getValueOrDefault(
-                balances?.iso_currency_code,
-                ""
-              ),
-              unofficialCurrencyCode: getValueOrDefault(
-                balances?.unofficial_currency_code,
-                ""
-              ),
-              updatedAt: new Date().toISOString(),
+              ...plaidBalancesData,
             },
           })
           .returning();
@@ -85,40 +75,22 @@ export async function updateAccounts(
         const accountResult = await tx
           .insert(account)
           .values({
-            accountId: account_id,
-            name: accountData.name,
-            type: accountData.type,
-            subtype: accountData.subtype,
-            available: accountData.available.toString(),
-            current: accountData.current.toString(),
-            limit: accountData.limit.toString(),
-            isoCurrencyCode: accountData.iso_currency_code,
-            unofficialCurrencyCode: accountData.unofficial_currency_code,
-            balanceId: account_id,
-            userId: user_id,
-            householdId: household_id || null,
-            itemId: account.itemId,
-            updatedAt: new Date().toISOString(),
+            balanceId: accountId,
+            userId,
+            householdId,
+            itemId,
+            ...accountData,
           })
           .onConflictDoUpdate({
             target: account.accountId,
             set: {
-              name: accountData.name,
-              type: accountData.type,
-              subtype: accountData.subtype,
-              available: accountData.available.toString(),
-              current: accountData.current.toString(),
-              limit: accountData.limit.toString(),
-              isoCurrencyCode: accountData.iso_currency_code,
-              unofficialCurrencyCode: accountData.unofficial_currency_code,
-              updatedAt: new Date().toISOString(),
+              ...accountData,
             },
           })
           .returning();
 
         accountResults.push(accountResult[0]);
       }
-
       return { balances: balanceResults, accounts: accountResults };
     });
 
@@ -128,38 +100,37 @@ export async function updateAccounts(
   }
 }
 
-/**
- * Default balance object
- */
-const default_balance = {
-  available: 0,
-  current: 0,
-  limit: 0,
-  iso_currency_code: "",
-  unofficial_currency_code: "",
-};
-
-/**
- *
- * Extract the account data from the Plaid account object
- *
- * @param account
- * @param balances
- * @returns
- */
-const extractAccountData = (account: AccountBase, balances: AccountBalance) => {
-  const accountData = {
-    name: getValueOrDefault(account?.name, ""),
-    type: getValueOrDefault(account?.type, "depository" as AccountType),
-    subtype: getValueOrDefault(account?.subtype, "checking" as AccountSubtype),
-    available: getValueOrDefault(balances.available, 0),
-    current: getValueOrDefault(balances.current, 0),
-    limit: getValueOrDefault(balances.limit, 0),
-    iso_currency_code: getValueOrDefault(balances.iso_currency_code, ""),
-    unofficial_currency_code: getValueOrDefault(
-      balances.unofficial_currency_code,
+const extractBalanceFromPlaid = (balance: AccountBalance) => {
+  const balanceData = {
+    available: valueOrDefault(balance?.available, 0).toString(),
+    current: valueOrDefault(balance?.current, 0).toString(),
+    limit: valueOrDefault(balance?.limit, 0).toString(),
+    isoCurrencyCode: valueOrDefault(balance?.iso_currency_code, ""),
+    unofficialCurrencyCode: valueOrDefault(
+      balance?.unofficial_currency_code,
       ""
     ),
+  };
+  return balanceData;
+};
+
+const extractAccountFromPlaid = (account: AccountBase) => {
+  const accountData = {
+    accountId: account.account_id,
+    mask: account.mask,
+    official_name: account.official_name,
+    name: valueOrDefault(account?.name, ""),
+    type: valueOrDefault(account?.type, "depository" as AccountType),
+    subtype: valueOrDefault(account?.subtype, "checking" as AccountSubtype),
+    available: valueOrDefault(account.balances.available, 0).toString(),
+    current: valueOrDefault(account.balances.current, 0).toString(),
+    limit: valueOrDefault(account.balances.limit, 0).toString(),
+    iso_currency_code: valueOrDefault(account.balances.iso_currency_code, ""),
+    unofficial_currency_code: valueOrDefault(
+      account.balances.unofficial_currency_code,
+      ""
+    ),
+    holderCategory: account.holder_category,
   };
   return accountData;
 };

@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
+import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Holding } from "@/types/services/plaid/plaid";
 
@@ -25,22 +25,22 @@ export const updateOrCreateHolding = async ({
   await prisma.holding.upsert({
     where: {
       holding_id: {
-        account_id: getValueOrDefault(holding?.account_id, ""),
-        security_id: getValueOrDefault(holding?.security_id, ""),
+        account_id: valueOrDefault(holding?.account_id, ""),
+        security_id: valueOrDefault(holding?.security_id, ""),
         user_id,
       },
     },
     update: {
-      cost_basis: getValueOrDefault(holding?.cost_basis, 0),
-      institution_price: getValueOrDefault(holding?.institution_price, 0),
-      institution_value: getValueOrDefault(holding?.institution_value, 0),
-      quantity: getValueOrDefault(holding?.quantity, 0),
-      vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
-      vested_value: getValueOrDefault(holding?.vested_value, 0),
+      cost_basis: valueOrDefault(holding?.cost_basis, 0),
+      institution_price: valueOrDefault(holding?.institution_price, 0),
+      institution_value: valueOrDefault(holding?.institution_value, 0),
+      quantity: valueOrDefault(holding?.quantity, 0),
+      vested_quantity: valueOrDefault(holding?.vested_quantity, 0),
+      vested_value: valueOrDefault(holding?.vested_value, 0),
       institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
       institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
-      iso_currency_code: getValueOrDefault(holding?.iso_currency_code, ""),
-      unofficial_currency_code: getValueOrDefault(
+      iso_currency_code: valueOrDefault(holding?.iso_currency_code, ""),
+      unofficial_currency_code: valueOrDefault(
         holding?.unofficial_currency_code,
         ""
       ),
@@ -51,29 +51,29 @@ export const updateOrCreateHolding = async ({
         connect: { user_id: user_id },
       },
       account: {
-        connect: { account_id: getValueOrDefault(holding?.account_id, "") },
+        connect: { account_id: valueOrDefault(holding?.account_id, "") },
       },
       security: {
-        connect: { security_id: getValueOrDefault(holding?.security_id, "") },
+        connect: { security_id: valueOrDefault(holding?.security_id, "") },
       },
       member: {
         connect: {
-          member_id: getValueOrDefault(
+          member_id: valueOrDefault(
             holdingsMap.get(`${holding.account_id}-${holding.security_id}`),
             ""
           ),
         },
       },
-      cost_basis: getValueOrDefault(holding?.cost_basis, 0),
-      institution_price: getValueOrDefault(holding?.institution_price, 0),
-      institution_value: getValueOrDefault(holding?.institution_value, 0),
-      quantity: getValueOrDefault(holding?.quantity, 0),
-      vested_quantity: getValueOrDefault(holding?.vested_quantity, 0),
-      vested_value: getValueOrDefault(holding?.vested_value, 0),
+      cost_basis: valueOrDefault(holding?.cost_basis, 0),
+      institution_price: valueOrDefault(holding?.institution_price, 0),
+      institution_value: valueOrDefault(holding?.institution_value, 0),
+      quantity: valueOrDefault(holding?.quantity, 0),
+      vested_quantity: valueOrDefault(holding?.vested_quantity, 0),
+      vested_value: valueOrDefault(holding?.vested_value, 0),
       institution_price_as_of: isoToUTC(holding?.institution_price_as_of),
       institution_price_datetime: isoToUTC(holding?.institution_price_datetime),
-      iso_currency_code: getValueOrDefault(holding?.iso_currency_code, ""),
-      unofficial_currency_code: getValueOrDefault(
+      iso_currency_code: valueOrDefault(holding?.iso_currency_code, ""),
+      unofficial_currency_code: valueOrDefault(
         holding?.unofficial_currency_code,
         ""
       ),

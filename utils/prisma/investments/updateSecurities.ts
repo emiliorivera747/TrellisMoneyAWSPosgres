@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { Security } from "@/types/services/plaid/plaid";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
-import { getValueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
+import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import { getUser } from "@/services/supabase/getUser";
 
 /**
@@ -51,28 +51,28 @@ export async function updateSecurities(
  */
 const getSecurirtyCreateFields = (security: Security) => ({
   security_id: security.security_id,
-  isin: getValueOrDefault(security?.isin, ""),
-  cusip: getValueOrDefault(security?.cusip, ""),
-  sedol: getValueOrDefault(security?.sedol, ""),
-  institution_security_id: getValueOrDefault(
+  isin: valueOrDefault(security?.isin, ""),
+  cusip: valueOrDefault(security?.cusip, ""),
+  sedol: valueOrDefault(security?.sedol, ""),
+  institution_security_id: valueOrDefault(
     security?.institution_security_id,
     ""
   ),
-  institution_id: getValueOrDefault(security?.institution_id, ""),
-  proxy_security_id: getValueOrDefault(security?.proxy_security_id, ""),
-  name: getValueOrDefault(security?.name, ""),
-  ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
-  is_cash_equivalent: getValueOrDefault(security?.is_cash_equivalent, false),
-  type: getValueOrDefault(security?.type, ""),
-  close_price: getValueOrDefault(security?.close_price, 0),
+  institution_id: valueOrDefault(security?.institution_id, ""),
+  proxy_security_id: valueOrDefault(security?.proxy_security_id, ""),
+  name: valueOrDefault(security?.name, ""),
+  ticker_symbol: valueOrDefault(security?.ticker_symbol, ""),
+  is_cash_equivalent: valueOrDefault(security?.is_cash_equivalent, false),
+  type: valueOrDefault(security?.type, ""),
+  close_price: valueOrDefault(security?.close_price, 0),
   close_price_as_of: isoToUTC(security?.close_price_as_of),
   update_datetime: isoToUTC(security?.update_datetime),
-  iso_currency_code: getValueOrDefault(security?.iso_currency_code, ""),
-  unofficial_currency_code: getValueOrDefault(
+  iso_currency_code: valueOrDefault(security?.iso_currency_code, ""),
+  unofficial_currency_code: valueOrDefault(
     security?.unofficial_currency_code,
     ""
   ),
-  market_identifier_code: getValueOrDefault(
+  market_identifier_code: valueOrDefault(
     security?.market_identifier_code,
     ""
   ),
@@ -86,13 +86,13 @@ const getSecurirtyCreateFields = (security: Security) => ({
  * @returns
  */
 const getSecurityUpdateFields = (security: Security) => ({
-  close_price: getValueOrDefault(security?.close_price, 0),
+  close_price: valueOrDefault(security?.close_price, 0),
   close_price_as_of: isoToUTC(security?.close_price_as_of),
-  name: getValueOrDefault(security?.name, ""),
+  name: valueOrDefault(security?.name, ""),
   update_datetime: isoToUTC(security?.update_datetime),
-  sector: getValueOrDefault(security?.sector, ""),
-  industry: getValueOrDefault(security?.industry, ""),
-  ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
+  sector: valueOrDefault(security?.sector, ""),
+  industry: valueOrDefault(security?.industry, ""),
+  ticker_symbol: valueOrDefault(security?.ticker_symbol, ""),
   timestamp: isoToUTC(security?.timestamp),
 });
 
@@ -105,10 +105,10 @@ const getSecurityUpdateFields = (security: Security) => ({
  */
 const getSecurityHistoryCreateFields = (security: Security) => ({
   security_id: security.security_id,
-  close_price: getValueOrDefault(security?.close_price, 0),
+  close_price: valueOrDefault(security?.close_price, 0),
   close_price_as_of: isoToUTC(security?.close_price_as_of),
-  ticker_symbol: getValueOrDefault(security?.ticker_symbol, ""),
-  name: getValueOrDefault(security?.name, ""),
+  ticker_symbol: valueOrDefault(security?.ticker_symbol, ""),
+  name: valueOrDefault(security?.name, ""),
   update_datetime: isoToUTC(
     security?.update_datetime || new Date().toISOString()
   ),
