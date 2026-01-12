@@ -62,12 +62,9 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
       .values({
         householdId: crypto.randomUUID(),
         name: createHouseholdName(fullName, email),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
       })
       .returning({ householdId: household.householdId });
 
-    console.log("householdInsert", householdInsert);
     const householdId = householdInsert[0].householdId;
 
     /**

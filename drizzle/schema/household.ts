@@ -33,7 +33,9 @@ export const household = pgTable("Household", {
   updatedAt: timestamp("updated_at", {
     precision: 3,
     mode: "string",
-  }).notNull(),
+  })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 });
 
 /**
