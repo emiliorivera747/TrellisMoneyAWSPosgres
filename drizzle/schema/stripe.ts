@@ -160,7 +160,9 @@ export const price = pgTable(
     updatedAt: timestamp("updated_at", {
       precision: 3,
       mode: "string",
-    }).notNull(),
+    })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
   },
   (table) => [
     foreignKey({
@@ -198,7 +200,9 @@ export const product = pgTable("Product", {
   updatedAt: timestamp("updated_at", {
     precision: 3,
     mode: "string",
-  }).notNull(),
+  })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 });
 
 /**
