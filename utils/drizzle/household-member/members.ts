@@ -1,6 +1,9 @@
 import { db } from "@/drizzle/db";
 import { eq, and } from "drizzle-orm";
-import { householdMember, householdRole } from "@/drizzle/schema";
+import { householdMember } from "@/drizzle/schema";
+
+// types
+import { HasHouseholdPermission } from "@/types/utils/drizzle/household-member/members";
 
 /**
  * Retrieves the household ID for a member_id.
@@ -16,15 +19,8 @@ export const getHouseholdIdByMembership = async (
     .from(householdMember)
     .where(eq(householdMember.memberId, memberId))
     .limit(1);
-
   if (!member[0]?.householdId) return null;
   return member[0].householdId;
-};
-
-type hasHouseholdPermission = {
-  userId: string;
-  householdId: string;
-  allowedRoles?: (typeof householdRole.enumValues)[number][];
 };
 
 /**
@@ -34,17 +30,17 @@ type hasHouseholdPermission = {
  * @returns `true` if authorized, otherwise `false`.
  */
 export const hasHouseholdPermission = async ({
-  userId: user_id,
-  householdId: household_id,
+  userId,
+  householdId,
   allowedRoles: allowed_roles = ["ADMIN", "MEMBER"],
-}: hasHouseholdPermission): Promise<boolean> => {
+}: HasHouseholdPermission): Promise<boolean> => {
   const member = await db
     .select({ role: householdMember.role })
     .from(householdMember)
     .where(
       and(
-        eq(householdMember.householdId, household_id),
-        eq(householdMember.userId, user_id)
+        eq(householdMember.householdId, householdId),
+        eq(householdMember.userId, userId)
       )
     )
     .limit(1);

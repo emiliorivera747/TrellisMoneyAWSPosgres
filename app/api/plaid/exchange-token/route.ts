@@ -10,8 +10,6 @@ import {
   ErrorResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { addItem } from "@/utils/drizzle/item/addItem";
-import { addAccounts } from "@/utils/drizzle/accounts/addAccounts";
-import { logError } from "@/utils/api-helpers/errors/logError";
 import {
   getHouseholdIdByMembership,
   hasHouseholdPermission,
@@ -85,7 +83,6 @@ export async function POST(req: NextRequest) {
           institution_name: metadata?.institution?.name,
         });
       } catch (error) {
-        console.error("Failed to save Plaid Item", error);
         return ErrorResponse("Failed to link institution", 500);
       }
 
@@ -112,7 +109,6 @@ export async function POST(req: NextRequest) {
         "Institution linked successfully. Account details will update soon."
       );
     } catch (error) {
-      console.error(error);
       return ErrorResponse(error, 500);
     }
   });

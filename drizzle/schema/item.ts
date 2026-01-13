@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-import { user, account, household } from "@/drizzle/schema";
+import { user, account, household, householdMember } from "@/drizzle/schema";
 
 /**
  * Item schema - Represents a Plaid connection/item with access tokens and consent information
@@ -114,5 +114,9 @@ export const itemRelations = relations(item, ({ one, many }) => ({
   household: one(household, {
     fields: [item.householdId],
     references: [household.householdId],
+  }),
+  member: one(householdMember, {
+    fields: [item.memberId],
+    references: [householdMember.memberId],
   }),
 }));

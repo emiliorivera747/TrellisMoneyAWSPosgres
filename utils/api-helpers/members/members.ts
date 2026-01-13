@@ -1,6 +1,7 @@
 import { db } from "@/drizzle/db";
 import { householdMember } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
+import { CreateMemberProps } from "@/types/utils/drizzle/household-member/members";
 
 export const getMembersWithUserId = async (userId: string) => {
   const members = await db
@@ -29,11 +30,6 @@ export const getMemberByUserId = async (userId: string) => {
   return member[0];
 };
 
-type CreateMemberProps = {
-  name: string;
-  email: string;
-  householdId: string;
-};
 export const createMember = async ({
   name,
   email,
