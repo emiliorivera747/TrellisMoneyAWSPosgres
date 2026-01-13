@@ -3,19 +3,20 @@ import { client } from "@/config/plaidClient";
 import { withAuth } from "@/lib/protected";
 
 // Utils
-import { getItemWithMemberAndInstitutionId } from "@/utils/prisma/item/getItem";
+import { getItemWithMemberAndInstitutionId } from "@/utils/drizzle/item/getItem";
 import {
   FailResponse,
   SuccessResponse,
   ErrorResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { addItem } from "@/utils/prisma/item/addItem";
-import { addAccounts } from "@/utils/prisma/accounts/addAccounts";
+import { addItem } from "@/utils/drizzle/item/addItem";
+import { addAccounts } from "@/utils/drizzle/accounts/addAccounts";
 import { logError } from "@/utils/api-helpers/errors/logError";
 import {
   getHouseholdIdByMembership,
   hasHouseholdPermission,
-} from "@/utils/prisma/household-member/members";
+} from "@/utils/drizzle/household-member/members";
+import { addPlaidMetadataAccounts } from "@/utils/prisma/accounts/addAccounts";
 
 // Types
 import { ExchangeTokenRequestBody } from "@/types/services/plaid/plaid";
@@ -39,38 +40,33 @@ export async function POST(req: NextRequest) {
       !public_token ||
       !metadata?.institution ||
       !metadata?.accounts?.length
-    ) {
-      logError("Key fields are missing");
+    )
       return FailResponse("Key fields are missing", 400);
-    }
 
     try {
-      
       // ----- Get household from the member_id -----
       const household_id = await getHouseholdIdByMembership(member_id);
       if (!household_id)
         return FailResponse("Could not match member to household", 400);
 
       // ----- Is member authorized -----
-      const allowed = await hasHouseholdPermission({ user_id, household_id });
-      if (!allowed) {
-        logError("Permission denied");
-        return FailResponse("Permission denied", 403);
-      }
+      const allowed = await hasHouseholdPermission({
+        userId: user_id,
+        householdId: household_id,
+      });
+      if (!allowed) return FailResponse("Permission denied", 403);
 
       // ----- Get Item From the database -----
       const itemDB = await getItemWithMemberAndInstitutionId({
-        member_id,
-        institution_id: metadata?.institution?.institution_id,
+        memberId: member_id,
+        institutionId: metadata?.institution?.institution_id,
       });
 
-      if (itemDB) {
-        logError("This institution is already linked for this member");
+      if (itemDB)
         return FailResponse(
           "This institution is already linked for this member",
           400
         );
-      }
 
       // ----- Exchange the public token for an access token -----
       const response = await client.itemPublicTokenExchange({ public_token });
@@ -85,6 +81,8 @@ export async function POST(req: NextRequest) {
           item_id,
           access_token,
           request_id,
+          institution_id: metadata?.institution?.institution_id,
+          institution_name: metadata?.institution?.name,
         });
       } catch (error) {
         console.error("Failed to save Plaid Item", error);
@@ -93,12 +91,11 @@ export async function POST(req: NextRequest) {
 
       // ----- Add accounts -----
       try {
-        await addAccounts({
-          user_id,
-          item_id,
-          accounts: metadata.accounts,
-          household_id,
-          member_id,
+        await addPlaidMetadataAccounts({
+          itemId: item_id,
+          plaidAccounts: metadata.accounts,
+          householdId: household_id,
+          memberId: member_id,
         });
       } catch (accountError) {
         console.warn(

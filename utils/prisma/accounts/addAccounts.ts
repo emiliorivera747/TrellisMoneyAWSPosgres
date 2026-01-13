@@ -1,11 +1,12 @@
-import prisma from "@/lib/prisma";
+import { db } from "@/drizzle/db";
+import { account, balance } from "@/drizzle/schema";
 import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
+
 interface AddAccountsParams {
-  user_id: string;
-  item_id: string;
-  accounts: PlaidLinkOnSuccessMetadata["accounts"];
-  household_id: string;
-  member_id: string;
+  itemId: string;
+  plaidAccounts: PlaidLinkOnSuccessMetadata["accounts"];
+  householdId: string;
+  memberId: string;
 }
 
 /**
@@ -15,48 +16,27 @@ interface AddAccountsParams {
  * @param accounts - The accounts to be added
  * @returns The added accounts
  */
-export const addAccounts = async ({
-  user_id,
-  item_id,
-  accounts,
-  household_id,
-  member_id,
-  
+export const addPlaidMetadataAccounts = async ({
+  itemId,
+  plaidAccounts,
+  householdId,
+  memberId,
 }: AddAccountsParams) => {
-
   const accountAdded = [];
 
-  for (const account of accounts) {
-    const createdAccount = await prisma.account.create({
-      data: {
-        user: {
-          connect: {
-            user_id: user_id,
-          },
-        },
-        member: {
-          connect: {
-            member_id: member_id,
-          },
-        },
-        item: {
-          connect: {
-            item_id: item_id,
-          },
-        },
-        household: {
-          connect: {
-            household_id: household_id,
-          },
-        },
-        account_id: account.id,
-        name: account.name,
-        mask: account.mask || null,
-        type: account.type,
-        subtype: account.subtype,
-        verification_status: account.verification_status || null,
-      },
+  for (const plaidAccount of plaidAccounts) {
+    const createdAccount = await db.insert(account).values({
+      itemId,
+      householdId,
+      memberId,
+      accountId: plaidAccount.id,
+      name: plaidAccount.name,
+      mask: plaidAccount.mask || null,
+      type: plaidAccount.type,
+      subtype: plaidAccount.subtype,
+      verificationStatus: plaidAccount.verification_status || null,
     });
+
     accountAdded.push(createdAccount);
   }
 

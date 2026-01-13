@@ -9,7 +9,13 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-import { user, household, item, holding } from "@/drizzle/schema";
+import {
+  user,
+  household,
+  item,
+  holding,
+  householdMember,
+} from "@/drizzle/schema";
 /**
  * Account schema - Stores financial account information from Plaid connections
  * Links accounts to users, households, items, and balances
@@ -18,6 +24,11 @@ export const account = pgTable(
   "Account",
   {
     accountId: text("account_id").notNull(),
+    householdId: text("household_id"),
+    itemId: text("item_id").notNull(),
+    balanceId: text("balance_id"), // Made optional by removing `.notNull()`
+    memberId: text("member_id").notNull(),
+    persistentAccountId: text("persistent_account_id"),
     name: text(),
     type: text(),
     available: numeric({ precision: 65, scale: 30 }),
@@ -29,21 +40,16 @@ export const account = pgTable(
     officialName: text("official_name"),
     subtype: text(),
     verificationStatus: text("verification_status"),
-    persistentAccountId: text("persistent_account_id"),
     annualReturnRate: numeric("annual_return_rate", {
       precision: 65,
       scale: 30,
     }).default("0.00"),
     holderCategory: text("holder_category"),
-    balanceId: text("balance_id").notNull(),
-    userId: text("user_id").notNull(),
     timestamp: timestamp({
       precision: 3,
       withTimezone: true,
       mode: "string",
     }).default(sql`CURRENT_TIMESTAMP`),
-    householdId: text("household_id"),
-    itemId: text("item_id").notNull(),
     updatedAt: timestamp("updated_at", {
       precision: 3,
       withTimezone: true,
@@ -64,13 +70,6 @@ export const account = pgTable(
       columns: [table.balanceId],
       foreignColumns: [balance.balanceId],
       name: "Account_balance_id_fkey",
-    })
-      .onUpdate("cascade")
-      .onDelete("cascade"),
-    foreignKey({
-      columns: [table.userId],
-      foreignColumns: [user.userId],
-      name: "Account_user_id_fkey",
     })
       .onUpdate("cascade")
       .onDelete("cascade"),
@@ -157,10 +156,6 @@ export const accountRelations = relations(account, ({ one, many }) => ({
     fields: [account.balanceId],
     references: [balance.balanceId],
   }),
-  user: one(user, {
-    fields: [account.userId],
-    references: [user.userId],
-  }),
   household: one(household, {
     fields: [account.householdId],
     references: [household.householdId],
@@ -168,6 +163,10 @@ export const accountRelations = relations(account, ({ one, many }) => ({
   item: one(item, {
     fields: [account.itemId],
     references: [item.itemId],
+  }),
+  member: one(householdMember, {
+    fields: [account.memberId],
+    references: [householdMember.memberId],
   }),
   accountHistories: many(accountHistory),
   holdings: many(holding),

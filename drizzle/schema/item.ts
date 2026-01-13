@@ -18,6 +18,9 @@ export const item = pgTable(
   {
     itemId: text("item_id").primaryKey().notNull(),
     institutionId: text("institution_id").notNull(),
+    userId: text("user_id").notNull(),
+    householdId: text("household_id"),
+    memberId: text("member_id"),
     institutionName: text("institution_name"),
     webhook: text(),
     authMethod: text("auth_method"),
@@ -39,8 +42,6 @@ export const item = pgTable(
     consentedDataScopes: text("consented_data_scopes").array(),
     consentedUseCases: text("consented_use_cases").array(),
     accessToken: text("access_token").notNull(),
-    userId: text("user_id").notNull(),
-    householdId: text("household_id"),
   },
   (table) => [
     foreignKey({

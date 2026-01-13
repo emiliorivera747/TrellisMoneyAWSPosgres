@@ -36,6 +36,20 @@
       "when": 1768259651281,
       "tag": "0004_calm_the_anarchist",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1768264251639,
+      "tag": "0005_condemned_gunslinger",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1768264981266,
+      "tag": "0006_clumsy_sumo",
+      "breakpoints": true
     }
   ]
 }
