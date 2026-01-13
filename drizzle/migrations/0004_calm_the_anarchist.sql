@@ -1,1 +1,0 @@
-ALTER TABLE "HouseholdMember" ADD COLUMN "email" text;

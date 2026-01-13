@@ -5,71 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1768088462983,
-      "tag": "0000_lethal_hydra",
+      "when": 1768280431975,
+      "tag": "0000_large_baron_zemo",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1768192126045,
-      "tag": "0001_tan_betty_ross",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1768192580245,
-      "tag": "0002_curious_maria_hill",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1768232893001,
-      "tag": "0003_pale_marten_broadcloak",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1768259651281,
-      "tag": "0004_calm_the_anarchist",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1768264251639,
-      "tag": "0005_condemned_gunslinger",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1768264981266,
-      "tag": "0006_clumsy_sumo",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1768269532489,
-      "tag": "0007_wonderful_madame_hydra",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "7",
-      "when": 1768271987558,
-      "tag": "0008_illegal_sandman",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "7",
-      "when": 1768272330471,
-      "tag": "0009_fluffy_firebrand",
+      "when": 1768281564401,
+      "tag": "0001_complex_electro",
       "breakpoints": true
     }
   ]

@@ -1,1 +1,0 @@
-ALTER TABLE "Account" ADD CONSTRAINT "Account_member_id_fkey" FOREIGN KEY ("member_id") REFERENCES "public"."HouseholdMember"("member_id") ON DELETE restrict ON UPDATE cascade;

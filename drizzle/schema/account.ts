@@ -9,13 +9,34 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-import {
-  user,
-  household,
-  item,
-  holding,
-  householdMember,
-} from "@/drizzle/schema";
+import { household, item, holding, householdMember } from "@/drizzle/schema";
+
+/**
+ * Balance schema - Stores account balance information (available, current, limit) with currency codes
+ */
+export const balance = pgTable("Balance", {
+  balanceId: text("balance_id").notNull().primaryKey(),
+  current: numeric({ precision: 65, scale: 30 }).notNull(),
+  limit: numeric({ precision: 65, scale: 30 }).notNull(),
+  isoCurrencyCode: text("iso_currency_code").notNull(),
+  unofficialCurrencyCode: text("unofficial_currency_code"),
+  lastUpdated: timestamp("last_updated", {
+    precision: 3,
+    withTimezone: true,
+    mode: "string",
+  }),
+  updatedAt: timestamp("updated_at", {
+    precision: 3,
+    withTimezone: true,
+    mode: "string",
+  }).default(sql`CURRENT_TIMESTAMP`),
+  timestamp: timestamp({
+    precision: 3,
+    withTimezone: true,
+    mode: "string",
+  }).default(sql`CURRENT_TIMESTAMP`),
+});
+
 /**
  * Account schema - Stores financial account information from Plaid connections
  * Links accounts to users, households, items, and balances
@@ -23,7 +44,7 @@ import {
 export const account = pgTable(
   "Account",
   {
-    accountId: text("account_id").notNull(),
+    accountId: text("account_id").primaryKey().notNull(),
     householdId: text("household_id"),
     itemId: text("item_id").notNull(),
     balanceId: text("balance_id"),
@@ -127,33 +148,6 @@ export const accountHistory = pgTable(
       .onDelete("cascade"),
   ]
 );
-
-/**
- * Balance schema - Stores account balance information (available, current, limit) with currency codes
- */
-export const balance = pgTable("Balance", {
-  balanceId: text("balance_id").notNull(),
-  available: numeric({ precision: 65, scale: 30 }).notNull(),
-  current: numeric({ precision: 65, scale: 30 }).notNull(),
-  limit: numeric({ precision: 65, scale: 30 }).notNull(),
-  isoCurrencyCode: text("iso_currency_code").notNull(),
-  unofficialCurrencyCode: text("unofficial_currency_code"),
-  lastUpdated: timestamp("last_updated", {
-    precision: 3,
-    withTimezone: true,
-    mode: "string",
-  }),
-  updatedAt: timestamp("updated_at", {
-    precision: 3,
-    withTimezone: true,
-    mode: "string",
-  }).default(sql`CURRENT_TIMESTAMP`),
-  timestamp: timestamp({
-    precision: 3,
-    withTimezone: true,
-    mode: "string",
-  }).default(sql`CURRENT_TIMESTAMP`),
-});
 
 /**
  * Account relations - Links to balance, user, household, item, account histories, and holdings

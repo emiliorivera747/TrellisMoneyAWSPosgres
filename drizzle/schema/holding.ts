@@ -5,7 +5,7 @@ import {
   serial,
   numeric,
   foreignKey,
-  primaryKey,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
@@ -14,11 +14,16 @@ import { user, security, account } from "@/drizzle/schema";
 
 /**
  * Holding schema - Stores investment holdings (securities) within accounts
- * Composite primary key: accountId, securityId, userId
+ * Primary key: holdingId
+ * Unique constraint: accountId, securityId, userId
  */
 export const holding = pgTable(
   "Holding",
   {
+    holdingId: text("holding_id").primaryKey().notNull(),
+    accountId: text("account_id").notNull(),
+    securityId: text("security_id").notNull(),
+    userId: text("user_id").notNull(),
     costBasis: numeric("cost_basis", { precision: 65, scale: 30 }).notNull(),
     institutionPrice: numeric("institution_price", {
       precision: 65,
@@ -50,12 +55,9 @@ export const holding = pgTable(
       scale: 30,
     }).notNull(),
     quantity: numeric({ precision: 65, scale: 30 }).notNull(),
-    accountId: text("account_id").notNull(),
-    securityId: text("security_id").notNull(),
     timestamp: timestamp({ precision: 3, withTimezone: true, mode: "string" })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    userId: text("user_id").notNull(),
   },
   (table) => [
     foreignKey({
@@ -79,10 +81,12 @@ export const holding = pgTable(
     })
       .onUpdate("cascade")
       .onDelete("cascade"),
-    primaryKey({
-      columns: [table.accountId, table.securityId, table.userId],
-      name: "Holding_pkey",
-    }),
+    uniqueIndex("Holding_account_id_security_id_user_id_key").using(
+      "btree",
+      table.accountId.asc().nullsLast().op("text_ops"),
+      table.securityId.asc().nullsLast().op("text_ops"),
+      table.userId.asc().nullsLast().op("text_ops")
+    ),
   ]
 );
 
@@ -124,6 +128,7 @@ export const holdingHistory = pgTable(
       scale: 30,
     }).notNull(),
     quantity: numeric({ precision: 65, scale: 30 }).notNull(),
+    holdingId: text("holding_id").notNull(),
     accountId: text("account_id").notNull(),
     securityId: text("security_id").notNull(),
     createdAt: timestamp("created_at", {
@@ -144,9 +149,9 @@ export const holdingHistory = pgTable(
   },
   (table) => [
     foreignKey({
-      columns: [table.accountId, table.securityId, table.userId],
-      foreignColumns: [holding.accountId, holding.securityId, holding.userId],
-      name: "HoldingHistory_security_id_user_id_account_id_fkey",
+      columns: [table.holdingId],
+      foreignColumns: [holding.holdingId],
+      name: "HoldingHistory_holding_id_fkey",
     })
       .onUpdate("cascade")
       .onDelete("cascade"),
@@ -154,16 +159,12 @@ export const holdingHistory = pgTable(
 );
 
 /**
- * HoldingHistory relations - Links to the parent holding via composite key
+ * HoldingHistory relations - Links to the parent holding via holdingId
  */
 export const holdingHistoryRelations = relations(holdingHistory, ({ one }) => ({
   holding: one(holding, {
-    fields: [
-      holdingHistory.accountId,
-      holdingHistory.securityId,
-      holdingHistory.userId,
-    ],
-    references: [holding.accountId, holding.securityId, holding.userId],
+    fields: [holdingHistory.holdingId],
+    references: [holding.holdingId],
   }),
 }));
 

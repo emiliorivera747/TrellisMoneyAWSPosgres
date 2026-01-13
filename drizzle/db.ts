@@ -23,4 +23,4 @@ export const client =
 if (process.env.NODE_ENV !== "production") global.pgPool = client;
 
 // { schema } enables relational queries
-export const db = drizzle(client, { schema, casing: "snake_case" });
+export const db = drizzle(client, { schema, casing:'snake_case'});

@@ -1,6 +1,6 @@
 {
-  "id": "13d8a4b8-1c92-47c2-9339-c05d56e30a12",
-  "prevId": "23282e3e-0ad6-4b32-8bf2-f8bc31cf8016",
+  "id": "3cd6f8e7-bbb8-4789-9c3e-49b5c00ce28b",
+  "prevId": "f6361f9c-0222-44d1-bbb0-7946ee028c95",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -11,8 +11,38 @@
         "account_id": {
           "name": "account_id",
           "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "household_id": {
+          "name": "household_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "item_id": {
+          "name": "item_id",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "balance_id": {
+          "name": "balance_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "member_id": {
+          "name": "member_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "persistent_account_id": {
+          "name": "persistent_account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "name": {
           "name": "name",
@@ -80,12 +110,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "persistent_account_id": {
-          "name": "persistent_account_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "annual_return_rate": {
           "name": "annual_return_rate",
           "type": "numeric(65, 30)",
@@ -99,36 +123,12 @@
           "primaryKey": false,
           "notNull": false
         },
-        "balance_id": {
-          "name": "balance_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "timestamp": {
           "name": "timestamp",
           "type": "timestamp(3) with time zone",
           "primaryKey": false,
           "notNull": false,
           "default": "CURRENT_TIMESTAMP"
-        },
-        "household_id": {
-          "name": "household_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "item_id": {
-          "name": "item_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
         },
         "updated_at": {
           "name": "updated_at",
@@ -177,19 +177,6 @@
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
-        "Account_user_id_fkey": {
-          "name": "Account_user_id_fkey",
-          "tableFrom": "Account",
-          "tableTo": "User",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
         "Account_household_id_fkey": {
           "name": "Account_household_id_fkey",
           "tableFrom": "Account",
@@ -214,6 +201,19 @@
             "item_id"
           ],
           "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "Account_member_id_fkey": {
+          "name": "Account_member_id_fkey",
+          "tableFrom": "Account",
+          "tableTo": "HouseholdMember",
+          "columnsFrom": [
+            "member_id"
+          ],
+          "columnsTo": [
+            "member_id"
+          ],
+          "onDelete": "restrict",
           "onUpdate": "cascade"
         }
       },
@@ -324,13 +324,7 @@
         "balance_id": {
           "name": "balance_id",
           "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "available": {
-          "name": "available",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "current": {
@@ -390,6 +384,30 @@
       "name": "Holding",
       "schema": "",
       "columns": {
+        "holding_id": {
+          "name": "holding_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "security_id": {
+          "name": "security_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "cost_basis": {
           "name": "cost_basis",
           "type": "numeric(65, 30)",
@@ -457,33 +475,46 @@
           "primaryKey": false,
           "notNull": true
         },
-        "account_id": {
-          "name": "account_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "security_id": {
-          "name": "security_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "timestamp": {
           "name": "timestamp",
           "type": "timestamp(3) with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "CURRENT_TIMESTAMP"
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
         }
       },
-      "indexes": {},
+      "indexes": {
+        "Holding_account_id_security_id_user_id_key": {
+          "name": "Holding_account_id_security_id_user_id_key",
+          "columns": [
+            {
+              "expression": "account_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            },
+            {
+              "expression": "security_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            },
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "Holding_security_id_fkey": {
           "name": "Holding_security_id_fkey",
@@ -525,16 +556,7 @@
           "onUpdate": "cascade"
         }
       },
-      "compositePrimaryKeys": {
-        "Holding_pkey": {
-          "name": "Holding_pkey",
-          "columns": [
-            "account_id",
-            "security_id",
-            "user_id"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -617,6 +639,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "holding_id": {
+          "name": "holding_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "account_id": {
           "name": "account_id",
           "type": "text",
@@ -652,19 +680,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "HoldingHistory_security_id_user_id_account_id_fkey": {
-          "name": "HoldingHistory_security_id_user_id_account_id_fkey",
+        "HoldingHistory_holding_id_fkey": {
+          "name": "HoldingHistory_holding_id_fkey",
           "tableFrom": "HoldingHistory",
           "tableTo": "Holding",
           "columnsFrom": [
-            "account_id",
-            "security_id",
-            "user_id"
+            "holding_id"
           ],
           "columnsTo": [
-            "account_id",
-            "security_id",
-            "user_id"
+            "holding_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
@@ -704,7 +728,8 @@
           "name": "updated_at",
           "type": "timestamp(3)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
@@ -1003,7 +1028,25 @@
           "name": "institution_id",
           "type": "text",
           "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
+        },
+        "household_id": {
+          "name": "household_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "member_id": {
+          "name": "member_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "institution_name": {
           "name": "institution_name",
@@ -1033,13 +1076,13 @@
           "name": "update_type",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "consent_expiration_time": {
           "name": "consent_expiration_time",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -1095,18 +1138,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "household_id": {
-          "name": "household_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
@@ -1924,7 +1955,8 @@
           "name": "updated_at",
           "type": "timestamp(3)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
@@ -1989,7 +2021,8 @@
           "name": "updated_at",
           "type": "timestamp(3)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
