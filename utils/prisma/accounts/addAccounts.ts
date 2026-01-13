@@ -23,7 +23,6 @@ export const addPlaidMetadataAccounts = async ({
   memberId,
 }: AddAccountsParams) => {
   const accountAdded = [];
-
   for (const plaidAccount of plaidAccounts) {
     const createdAccount = await db.insert(account).values({
       itemId,
@@ -36,7 +35,6 @@ export const addPlaidMetadataAccounts = async ({
       subtype: plaidAccount.subtype,
       verificationStatus: plaidAccount.verification_status || null,
     });
-
     accountAdded.push(createdAccount);
   }
 

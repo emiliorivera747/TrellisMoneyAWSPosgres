@@ -1,4 +1,4 @@
-import {Account} from '@/types/services/plaid/plaid';
+import { Account } from "@/drizzle/schema";
 
 export function calculateNetWorth(accounts: Account[]): { netWorth: number, assets: number, liabilities: number } {
     let netWorth = 0;

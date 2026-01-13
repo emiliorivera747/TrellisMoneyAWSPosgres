@@ -17,7 +17,7 @@ export const item = pgTable(
   "Item",
   {
     itemId: text("item_id").primaryKey().notNull(),
-    institutionId: text("institution_id").notNull(),
+    institutionId: text("institution_id"),
     userId: text("user_id").notNull(),
     householdId: text("household_id"),
     memberId: text("member_id"),
@@ -25,8 +25,8 @@ export const item = pgTable(
     webhook: text(),
     authMethod: text("auth_method"),
     requestId: text("request_id").notNull(),
-    updateType: text("update_type").notNull(),
-    consentExpirationTime: text("consent_expiration_time").notNull(),
+    updateType: text("update_type"),
+    consentExpirationTime: text("consent_expiration_time"),
     createdAt: timestamp("created_at", {
       precision: 3,
       withTimezone: true,

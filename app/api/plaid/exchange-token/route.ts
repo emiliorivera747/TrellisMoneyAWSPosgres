@@ -43,20 +43,20 @@ export async function POST(req: NextRequest) {
 
     try {
       // ----- Get household from the member_id -----
-      const household_id = await getHouseholdIdByMembership(memberId);
-      if (!household_id)
+      const householdId = await getHouseholdIdByMembership(memberId);
+      if (!householdId)
         return FailResponse("Could not match member to household", 400);
 
       // ----- Is member authorized -----
       const allowed = await hasHouseholdPermission({
-        userId: userId,
-        householdId: household_id,
+        userId,
+        householdId,
       });
       if (!allowed) return FailResponse("Permission denied", 403);
 
       // ----- Get Item From the database -----
       const itemDB = await getItemWithMemberAndInstitutionId({
-        memberId: memberId,
+        memberId,
         institutionId: metadata?.institution?.institution_id,
       });
 
@@ -80,9 +80,9 @@ export async function POST(req: NextRequest) {
       try {
         // ------ Add item to the database ------
         await addItem({
-          memberId: memberId,
-          userId: userId,
-          householdId: household_id,
+          memberId,
+          userId,
+          householdId,
           plaidItem: response.data,
         });
       } catch (error) {
@@ -94,8 +94,8 @@ export async function POST(req: NextRequest) {
         await addPlaidMetadataAccounts({
           itemId,
           plaidAccounts: metadata.accounts,
-          householdId: household_id,
-          memberId: memberId,
+          householdId,
+          memberId,
         });
       } catch (accountError) {
         console.warn(

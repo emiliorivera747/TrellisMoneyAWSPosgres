@@ -17,6 +17,8 @@ import { db } from "@/drizzle/db";
 import { eq } from "drizzle-orm";
 import { household } from "@/drizzle/schema";
 
+import { deepSnakeCase } from "@/utils/api-helpers/transformer/transformers";
+
 /**
  *
  * The API calculates the user net worth
@@ -60,33 +62,11 @@ export async function GET(req: NextRequest) {
         where: eq(household.householdId, member.householdId),
         with: { accounts: true },
       });
-
       if (!householdData) return FailResponse("Household not found", 404);
 
-      // Transform Drizzle accounts to snake_case format
-      const transformedAccounts = householdData.accounts.map((acc) => ({
-        account_id: acc.accountId,
-        name: acc.name,
-        type: acc.type,
-        subtype: acc.subtype,
-        current: acc.current ? Number(acc.current) : null,
-        available: acc.available ? Number(acc.available) : null,
-        limit: acc.limit ? Number(acc.limit) : null,
-        mask: acc.mask,
-        official_name: acc.officialName,
-        verification_status: acc.verificationStatus,
-        persistent_account_id: acc.persistentAccountId,
-        expected_annual_return_rate: acc.annualReturnRate
-          ? Number(acc.annualReturnRate)
-          : null,
-        iso_currency_code: acc.isoCurrencyCode,
-        unofficial_currency_code: acc.unofficialCurrencyCode,
-        item_id: acc.itemId,
-        user_id: acc.userId,
-        household_id: acc.householdId,
-      }));
-
-      const data = calculateNetWorth(transformedAccounts);
+      
+      const accounts = householdData.accounts;
+      const data = calculateNetWorth(accounts);
 
       return SuccessResponse(data, "Success");
     } catch (error) {

@@ -87,6 +87,13 @@ export const account = pgTable(
     })
       .onUpdate("cascade")
       .onDelete("cascade"),
+    foreignKey({
+      columns: [table.memberId],
+      foreignColumns: [householdMember.memberId],
+      name: "Account_member_id_fkey",
+    })
+      .onUpdate("cascade")
+      .onDelete("restrict"),
   ]
 );
 
@@ -163,10 +170,6 @@ export const accountRelations = relations(account, ({ one, many }) => ({
   item: one(item, {
     fields: [account.itemId],
     references: [item.itemId],
-  }),
-  member: one(householdMember, {
-    fields: [account.memberId],
-    references: [householdMember.memberId],
   }),
   accountHistories: many(accountHistory),
   holdings: many(holding),

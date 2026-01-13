@@ -5,7 +5,6 @@ import {
   ErrorResponse,
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 import {
   getMembersWithUserId,
   getMemberByUserId,
@@ -19,7 +18,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
       const householdMembers = await getMembersWithUserId(user.id);
-      console.log("members", householdMembers);
       return SuccessResponse({
         members: householdMembers,
       });

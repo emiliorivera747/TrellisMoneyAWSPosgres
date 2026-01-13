@@ -28,6 +28,5 @@ export const addItem = async ({
       accessToken: plaidItem.access_token,
     })
     .returning();
-
   return res[0];
 };
