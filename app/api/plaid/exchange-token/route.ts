@@ -28,14 +28,14 @@ import { ExchangeTokenRequestBody } from "@/types/services/plaid/plaid";
  */
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
-    const user_id = user.id;
+    const userId = user.id;
 
-    const { member_id, metadata, public_token }: ExchangeTokenRequestBody =
+    const { member_id: memberId, metadata, public_token: publicToken }: ExchangeTokenRequestBody =
       await request.json();
 
     if (
-      !member_id ||
-      !public_token ||
+      !memberId ||
+      !publicToken ||
       !metadata?.institution ||
       !metadata?.accounts?.length
     )
@@ -43,20 +43,20 @@ export async function POST(req: NextRequest) {
 
     try {
       // ----- Get household from the member_id -----
-      const household_id = await getHouseholdIdByMembership(member_id);
+      const household_id = await getHouseholdIdByMembership(memberId);
       if (!household_id)
         return FailResponse("Could not match member to household", 400);
 
       // ----- Is member authorized -----
       const allowed = await hasHouseholdPermission({
-        userId: user_id,
+        userId: userId,
         householdId: household_id,
       });
       if (!allowed) return FailResponse("Permission denied", 403);
 
       // ----- Get Item From the database -----
       const itemDB = await getItemWithMemberAndInstitutionId({
-        memberId: member_id,
+        memberId: memberId,
         institutionId: metadata?.institution?.institution_id,
       });
 
@@ -66,21 +66,24 @@ export async function POST(req: NextRequest) {
           400
         );
 
-      // ----- Exchange the public token for an access token -----
-      const response = await client.itemPublicTokenExchange({ public_token });
-      const { access_token, item_id, request_id } = response.data;
+      // ################################################ EXCHANGE TOKEN ##############################################
+
+      /**
+       * After exchanging the token we have to make sure that the item gets stored to the Database because it will contain
+       * the access_token. Without the acccess token we can not delete the item from our end.
+       */
+      const response = await client.itemPublicTokenExchange({ public_token: publicToken });
+      if (!response)
+        return FailResponse("There was en error when adding item", 500);
+      const itemId = response.data.item_id;
 
       try {
         // ------ Add item to the database ------
         await addItem({
-          member_id,
-          user_id,
-          household_id,
-          item_id,
-          access_token,
-          request_id,
-          institution_id: metadata?.institution?.institution_id,
-          institution_name: metadata?.institution?.name,
+          memberId: memberId,
+          userId: userId,
+          householdId: household_id,
+          plaidItem: response.data,
         });
       } catch (error) {
         return ErrorResponse("Failed to link institution", 500);
@@ -89,23 +92,23 @@ export async function POST(req: NextRequest) {
       // ----- Add accounts -----
       try {
         await addPlaidMetadataAccounts({
-          itemId: item_id,
+          itemId,
           plaidAccounts: metadata.accounts,
           householdId: household_id,
-          memberId: member_id,
+          memberId: memberId,
         });
       } catch (accountError) {
         console.warn(
           "Initial account sync failed for item_id:",
-          item_id,
+          itemId,
           accountError
         );
-        console.error(accountError, { item_id, member_id });
+        console.error(accountError, { itemId, memberId });
       }
 
       // Success — access_token is safely stored
       return SuccessResponse(
-        { item_id },
+        { itemId },
         "Institution linked successfully. Account details will update soon."
       );
     } catch (error) {

@@ -1,0 +1,1 @@
+ALTER TABLE "HouseholdMember" DROP COLUMN "email";

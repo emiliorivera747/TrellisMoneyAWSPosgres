@@ -1,52 +1,31 @@
 import { db } from "@/drizzle/db";
 import { item } from "@/drizzle/schema";
-
-interface AddItemProps {
-  user_id: string;
-  member_id: string;
-  item_id: string;
-  access_token: string;
-  household_id: string;
-  request_id: string;
-  institution_id?: string;
-  institution_name?: string;
-}
+import { AddItemProps } from "@/types/utils/drizzle/item/items";
 
 /**
- * Adds the item to the database.
+ * Adds an item to the database.
  *
- * @param user_id - The ID of the authenticated user
- * @param member_id - The ID of the household member
- * @param household_id - The ID of the household
- * @param item_id - The Plaid item ID
- * @param access_token - The access token associated with the item
- * @param request_id - The Plaid request ID
- * @param institution_id - Optional institution ID from metadata
- * @param institution_name - Optional institution name from metadata
- * @returns The created item record or an error
+ * @param userId - Authenticated user ID
+ * @param memberId - Household member ID
+ * @param householdId - Household ID
+ * @param plaidItem - Plaid item details
+ * @returns The created item record
  */
 export const addItem = async ({
-  user_id,
-  member_id,
-  household_id,
-  item_id,
-  access_token,
-  request_id,
-  institution_id,
-  institution_name,
+  userId,
+  memberId,
+  householdId,
+  plaidItem,
 }: AddItemProps) => {
   const res = await db
     .insert(item)
     .values({
-      itemId: item_id,
-      userId: user_id,
-      memberId: member_id,
-      householdId: household_id,
-      requestId: request_id,
-      accessToken: access_token,
-      institutionId: institution_id ?? null,
-      institutionName: institution_name ?? null,
-      // updateType and consentExpirationTime will be updated later via updateItemsWithPlaidItems
+      itemId: plaidItem.item_id,
+      userId,
+      memberId,
+      householdId,
+      requestId: plaidItem.request_id,
+      accessToken: plaidItem.access_token,
     })
     .returning();
 

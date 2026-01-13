@@ -48,7 +48,6 @@ export const householdMember = pgTable(
     name: text().notNull(),
     role: householdRole().default("MEMBER").notNull(),
     dob: timestamp({ precision: 3, mode: "string" }),
-    email: text('email'),
     invitedEmail: text("invited_email"),
     inviteStatus: text("invite_status").default("pending").notNull(),
     householdId: text("household_id").notNull(),
