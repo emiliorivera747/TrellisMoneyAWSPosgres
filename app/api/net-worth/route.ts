@@ -29,6 +29,7 @@ import { deepSnakeCase } from "@/utils/api-helpers/transformer/transformers";
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
+      
       /**
        * Get member
        */
@@ -64,7 +65,7 @@ export async function GET(req: NextRequest) {
       });
       if (!householdData) return FailResponse("Household not found", 404);
 
-      
+
       const accounts = householdData.accounts;
       const data = calculateNetWorth(accounts);
 

@@ -1,13 +1,7 @@
 import { db } from "@/drizzle/db";
-import { account, balance } from "@/drizzle/schema";
-import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
-
-interface AddAccountsParams {
-  itemId: string;
-  plaidAccounts: PlaidLinkOnSuccessMetadata["accounts"];
-  householdId: string;
-  memberId: string;
-}
+import { account } from "@/drizzle/schema";
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
+import { AddAccountsParams } from "@/types/utils/drizzle/account/accounts";
 
 /**
  * Adds accounts to the database for the given item.
@@ -22,21 +16,24 @@ export const addPlaidMetadataAccounts = async ({
   householdId,
   memberId,
 }: AddAccountsParams) => {
-  const accountAdded = [];
-  for (const plaidAccount of plaidAccounts) {
-    const createdAccount = await db.insert(account).values({
-      itemId,
-      householdId,
-      memberId,
-      accountId: plaidAccount.id,
-      name: plaidAccount.name,
-      mask: plaidAccount.mask || null,
-      type: plaidAccount.type,
-      subtype: plaidAccount.subtype,
-      verificationStatus: plaidAccount.verification_status || null,
-    });
-    accountAdded.push(createdAccount);
+  try {
+    const accountAdded = [];
+    for (const plaidAccount of plaidAccounts) {
+      const createdAccount = await db.insert(account).values({
+        itemId,
+        householdId,
+        memberId,
+        accountId: plaidAccount.id,
+        name: plaidAccount.name,
+        mask: plaidAccount.mask || null,
+        type: plaidAccount.type,
+        subtype: plaidAccount.subtype,
+        verificationStatus: plaidAccount.verification_status || null,
+      });
+      accountAdded.push(createdAccount);
+    }
+    return accountAdded;
+  } catch (error) {
+    throw new Error(`Failed to add accounts: ${getServerErrorMessage(error)}`);
   }
-
-  return accountAdded;
 };

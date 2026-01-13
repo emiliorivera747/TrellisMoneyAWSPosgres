@@ -26,7 +26,7 @@ export const account = pgTable(
     accountId: text("account_id").notNull(),
     householdId: text("household_id"),
     itemId: text("item_id").notNull(),
-    balanceId: text("balance_id"), // Made optional by removing `.notNull()`
+    balanceId: text("balance_id"),
     memberId: text("member_id").notNull(),
     persistentAccountId: text("persistent_account_id"),
     name: text(),
@@ -162,6 +162,10 @@ export const accountRelations = relations(account, ({ one, many }) => ({
   balance: one(balance, {
     fields: [account.balanceId],
     references: [balance.balanceId],
+  }),
+  member: one(householdMember, {
+    fields: [account.memberId],
+    references: [householdMember.memberId],
   }),
   household: one(household, {
     fields: [account.householdId],

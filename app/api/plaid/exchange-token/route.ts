@@ -30,16 +30,19 @@ export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     const userId = user.id;
 
-    const { member_id: memberId, metadata, public_token: publicToken }: ExchangeTokenRequestBody =
-      await request.json();
+    const {
+      member_id: memberId,
+      metadata,
+      public_token: publicToken,
+    }: ExchangeTokenRequestBody = await request.json();
 
-    if (
+    const hasMissingKeys =
       !memberId ||
       !publicToken ||
       !metadata?.institution ||
-      !metadata?.accounts?.length
-    )
-      return FailResponse("Key fields are missing", 400);
+      !metadata?.accounts?.length;
+
+    if (hasMissingKeys) return FailResponse("Key fields are missing", 400);
 
     try {
       // ----- Get household from the member_id -----
@@ -57,7 +60,7 @@ export async function POST(req: NextRequest) {
       // ----- Get Item From the database -----
       const itemDB = await getItemWithMemberAndInstitutionId({
         memberId,
-        institutionId: metadata?.institution?.institution_id,
+        institutionId: metadata?.institution?.institution_id ?? "",
       });
 
       if (itemDB)
@@ -67,44 +70,32 @@ export async function POST(req: NextRequest) {
         );
 
       // ################################################ EXCHANGE TOKEN ##############################################
-
       /**
        * After exchanging the token we have to make sure that the item gets stored to the Database because it will contain
        * the access_token. Without the acccess token we can not delete the item from our end.
        */
-      const response = await client.itemPublicTokenExchange({ public_token: publicToken });
-      if (!response)
-        return FailResponse("There was en error when adding item", 500);
+      const response = await client.itemPublicTokenExchange({
+        public_token: publicToken,
+      });
+
+      if (!response) return FailResponse("Error adding item", 500);
       const itemId = response.data.item_id;
 
-      try {
-        // ------ Add item to the database ------
-        await addItem({
-          memberId,
-          userId,
-          householdId,
-          plaidItem: response.data,
-        });
-      } catch (error) {
-        return ErrorResponse("Failed to link institution", 500);
-      }
+      // ------ Add item to the database ------
+      await addItem({
+        memberId,
+        userId,
+        householdId,
+        plaidItem: response.data,
+      });
 
       // ----- Add accounts -----
-      try {
-        await addPlaidMetadataAccounts({
-          itemId,
-          plaidAccounts: metadata.accounts,
-          householdId,
-          memberId,
-        });
-      } catch (accountError) {
-        console.warn(
-          "Initial account sync failed for item_id:",
-          itemId,
-          accountError
-        );
-        console.error(accountError, { itemId, memberId });
-      }
+      await addPlaidMetadataAccounts({
+        itemId,
+        plaidAccounts: metadata.accounts,
+        householdId,
+        memberId,
+      });
 
       // Success — access_token is safely stored
       return SuccessResponse(
