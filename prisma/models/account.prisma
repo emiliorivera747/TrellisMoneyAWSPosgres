@@ -2,6 +2,7 @@ model Account {
   account_id               String            @id
   name                     String?
   type                     String?
+  
   available                Decimal?
   current                  Decimal?
   limit                    Decimal?
