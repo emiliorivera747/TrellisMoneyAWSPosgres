@@ -4,7 +4,6 @@ import {
   text,
   varchar,
   integer,
-  numeric,
   boolean,
   foreignKey,
   bigint,
@@ -29,6 +28,7 @@ export const subscriptionStatus = pgEnum("SubscriptionStatus", [
   "UNPAID",
   "PAUSED",
 ]);
+
 /**
  * RecurringInterval enum - Billing interval types for subscriptions
  */
@@ -38,11 +38,11 @@ export const recurringInterval = pgEnum("RecurringInterval", [
   "MONTH",
   "YEAR",
 ]);
+
 /**
  * UsageType enum - Usage tracking types for subscriptions
  */
 export const usageType = pgEnum("UsageType", ["METERED", "LICENSED"]);
-
 
 /**
  * Subscription schema - Stripe subscription information linked to users
