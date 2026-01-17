@@ -39,49 +39,49 @@ model Security {
   timestamp                DateTime?          @default(now()) @db.Timestamptz(3)
 }
 
-model SecurityHistory {
-  id                       Int        @id @default(autoincrement())
-  isin                     String?
-  cusip                    String?
-  sedol                    String?
-  institution_security_id  String?
-  institution_id           String?
-  proxy_security_id        String?
-  name                     String?
-  ticker_symbol            String?
-  is_cash_equivalent       Boolean?
-  type                     String?
-  close_price              Decimal?
-  close_price_as_of        DateTime?  @db.Timestamptz(3)
-  update_datetime          DateTime?  @db.Timestamptz(3)
-  iso_currency_code        String?
-  unofficial_currency_code String?
-  market_identifier_code   String?
-  sector                   String?
-  industry                 String?
-  option_contract_id       Int?
-  timestamp                DateTime   @default(now()) @db.Timestamptz(3)
-  security                 Security  @relation(fields: [security_id], references: [security_id])
-  security_id              String
-}
+// model SecurityHistory {
+//   id                       Int        @id @default(autoincrement())
+//   isin                     String?
+//   cusip                    String?
+//   sedol                    String?
+//   institution_security_id  String?
+//   institution_id           String?
+//   proxy_security_id        String?
+//   name                     String?
+//   ticker_symbol            String?
+//   is_cash_equivalent       Boolean?
+//   type                     String?
+//   close_price              Decimal?
+//   close_price_as_of        DateTime?  @db.Timestamptz(3)
+//   update_datetime          DateTime?  @db.Timestamptz(3)
+//   iso_currency_code        String?
+//   unofficial_currency_code String?
+//   market_identifier_code   String?
+//   sector                   String?
+//   industry                 String?
+//   option_contract_id       Int?
+//   timestamp                DateTime   @default(now()) @db.Timestamptz(3)
+//   security                 Security  @relation(fields: [security_id], references: [security_id])
+//   security_id              String
+// }
 
-model Owner {
-  owner_id        String     @id
-  name            String?
-  phone_number    String?
-  phone_type      String?
-  phone_primary   Boolean?
-  email           String
-  email_type      String?
-  email_primary   Boolean?
-  street          String?
-  region          String?
-  address         String?
-  city            String?
-  state           String?
-  postal_code     String?
-  country         String?
-  address_primary Boolean?
-  accountId       String
-  timestamp       DateTime?  @default(now())
-}
+// model Owner {
+//   owner_id        String     @id
+//   name            String?
+//   phone_number    String?
+//   phone_type      String?
+//   phone_primary   Boolean?
+//   email           String
+//   email_type      String?
+//   email_primary   Boolean?
+//   street          String?
+//   region          String?
+//   address         String?
+//   city            String?
+//   state           String?
+//   postal_code     String?
+//   country         String?
+//   address_primary Boolean?
+//   accountId       String
+//   timestamp       DateTime?  @default(now())
+// }
