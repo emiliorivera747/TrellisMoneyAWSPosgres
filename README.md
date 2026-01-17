@@ -24,6 +24,7 @@
 <img width="1509" height="856" alt="Screenshot 2025-10-02 at 8 08 25 PM" src="https://github.com/user-attachments/assets/2cb12563-72d3-42a3-bb3d-3d28eb7f0d99" />
 
 ## Entity-Relationship Diagram 
-<img width="2463" height="1847" alt="trellis-money-schema (1)" src="https://github.com/user-attachments/assets/f6571810-da63-407a-9ccc-ea8b71d04b59" />
+<img width="1772" height="1888" alt="trellis-money-schema (2)" src="https://github.com/user-attachments/assets/cee1de92-61e6-4d78-a438-be8c11a4ae0c" />
+
 
 
