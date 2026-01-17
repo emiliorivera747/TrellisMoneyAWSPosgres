@@ -4,7 +4,6 @@ import {
   text,
   varchar,
   numeric,
-  uniqueIndex,
   foreignKey,
   index,
   pgEnum,

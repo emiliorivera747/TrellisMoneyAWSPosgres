@@ -2,7 +2,6 @@ import {
   pgTable,
   timestamp,
   text,
-  uniqueIndex,
   foreignKey,
   index,
   pgEnum,
