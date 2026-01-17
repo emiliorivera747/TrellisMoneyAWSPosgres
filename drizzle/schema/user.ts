@@ -9,13 +9,11 @@ import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
 
 import {
-  account,
   item,
-  security,
   subscription,
   profile,
-  holding,
   householdMember,
+  household,
 } from "@/drizzle/schema";
 
 /**
@@ -26,7 +24,7 @@ export const user = pgTable(
   {
     userId: text("user_id").primaryKey().notNull(),
     email: text().notNull(),
-    name: text(),
+    fullName: text("full_name"),
     emailVerified: boolean("email_verified").default(false),
     phoneVerified: boolean("phone_verified").default(false),
     phone: text(),
@@ -59,14 +57,15 @@ export const user = pgTable(
 );
 
 /**
- * User relations - Links to accounts, items, securities, subscriptions, profiles, household members, and holdings
+ * User relations - Links to items, subscriptions, profiles, and household members
  */
-export const userRelations = relations(user, ({ many }) => ({
-  accounts: many(account),
+export const userRelations = relations(user, ({ one, many }) => ({
   items: many(item),
-  securities: many(security),
   subscriptions: many(subscription),
-  profiles: many(profile),
+  profile: one(profile, {
+    fields: [user.userId],
+    references: [profile.userId],
+  }),
   householdMembers: many(householdMember),
-  holdings: many(holding),
+  householdsCreated: many(household),
 }));

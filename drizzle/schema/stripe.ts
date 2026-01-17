@@ -2,83 +2,47 @@ import {
   pgTable,
   timestamp,
   text,
+  varchar,
   integer,
-  serial,
   numeric,
-  uniqueIndex,
   boolean,
   foreignKey,
   bigint,
   pgEnum,
+  index,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
 
-import { user, security } from "@/drizzle/schema";
+import { user } from "@/drizzle/schema";
 
 /**
  * SubscriptionStatus enum - Possible subscription states in Stripe
  */
 export const subscriptionStatus = pgEnum("SubscriptionStatus", [
-  "incomplete",
-  "incomplete_expired",
-  "trialing",
-  "active",
-  "past_due",
-  "canceled",
-  "unpaid",
-  "paused",
+  "INCOMPLETE",
+  "INCOMPLETE_EXPIRED",
+  "TRIALING",
+  "ACTIVE",
+  "PAST_DUE",
+  "CANCELED",
+  "UNPAID",
+  "PAUSED",
 ]);
 /**
- * Interval enum - Billing interval types for subscriptions
+ * RecurringInterval enum - Billing interval types for subscriptions
  */
-export const interval = pgEnum("Interval", ["day", "week", "month", "year"]);
+export const recurringInterval = pgEnum("RecurringInterval", [
+  "DAY",
+  "WEEK",
+  "MONTH",
+  "YEAR",
+]);
 /**
  * UsageType enum - Usage tracking types for subscriptions
  */
-export const usageType = pgEnum("UsageType", ["metered", "licensed"]);
+export const usageType = pgEnum("UsageType", ["METERED", "LICENSED"]);
 
-/**
- * FixedIncome schema - Fixed income security details (yield rates, maturity dates)
- */
-export const fixedIncome = pgTable(
-  "FixedIncome",
-  {
-    id: serial().primaryKey().notNull(),
-    yieldRatePercentage: numeric("yield_rate_percentage", {
-      precision: 65,
-      scale: 30,
-    }),
-    yieldRateType: text("yield_rate_type"),
-    maturityDate: text("maturity_date"),
-    issueDate: text("issue_date"),
-    faceValue: numeric("face_value", { precision: 65, scale: 30 }),
-    securityId: text().notNull(),
-  },
-  (table) => [
-    uniqueIndex("FixedIncome_securityId_key").using(
-      "btree",
-      table.securityId.asc().nullsLast().op("text_ops")
-    ),
-    foreignKey({
-      columns: [table.securityId],
-      foreignColumns: [security.securityId],
-      name: "FixedIncome_securityId_fkey",
-    })
-      .onUpdate("cascade")
-      .onDelete("restrict"),
-  ]
-);
-
-/**
- * FixedIncome relations - Links to parent security
- */
-export const fixedIncomeRelations = relations(fixedIncome, ({ one }) => ({
-  security: one(security, {
-    fields: [fixedIncome.securityId],
-    references: [security.securityId],
-  }),
-}));
 
 /**
  * Subscription schema - Stripe subscription information linked to users
@@ -87,22 +51,56 @@ export const subscription = pgTable(
   "Subscription",
   {
     subscriptionId: text("subscription_id").primaryKey().notNull(),
+    status: subscriptionStatus().default("INCOMPLETE").notNull(),
+    startDate: timestamp("start_date", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
+    trialStart: timestamp("trial_start", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
+    trialEnd: timestamp("trial_end", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
+    endedAt: timestamp("ended_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
+    cancelAt: timestamp("cancel_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
+    canceledAt: timestamp("canceled_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
+    cancelAtPeriodEnd: boolean("cancel_at_period_end").default(false),
+    stripeCustomerId: text("stripe_customer_id"),
     userId: text("user_id").notNull(),
-    customerId: text("customer_id").notNull(),
-    priceId: text("price_id"),
-    status: subscriptionStatus().default("incomplete").notNull(),
-    startDate: integer("start_date"),
-    trialStart: integer("trial_start"),
-    trialEnd: integer("trial_end"),
-    endedAt: integer("ended_at"),
-    cancelAt: integer("cancel_at"),
-    cancelAtPeriodEnd: boolean("cancel_at_period_end").default(false).notNull(),
-    createdAt: integer("created_at"),
-    updatedAt: integer("updated_at"),
-    canceledAt: integer("canceled_at"),
+    priceId: text("price_id").notNull(),
+    createdAt: timestamp("created_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
   },
   (table) => [
-    uniqueIndex("Subscription_user_id_key").using(
+    index("Subscription_user_id_idx").using(
       "btree",
       table.userId.asc().nullsLast().op("text_ops")
     ),
@@ -119,7 +117,7 @@ export const subscription = pgTable(
       name: "Subscription_price_id_fkey",
     })
       .onUpdate("cascade")
-      .onDelete("set null"),
+      .onDelete("restrict"),
   ]
 );
 
@@ -144,27 +142,33 @@ export const price = pgTable(
   "Price",
   {
     priceId: text("price_id").primaryKey().notNull(),
-    productId: text("product_id").notNull(),
-    currency: text().notNull(),
-    // You can use { mode: "bigint" } if numbers are exceeding js number limitations
+    currency: varchar("currency", { length: 3 }).notNull(),
     unitAmount: bigint("unit_amount", { mode: "number" }).notNull(),
-    recurringInterval: interval("recurring_interval"),
+    recurringInterval: recurringInterval("recurring_interval"),
     recurringIntervalCount: integer("recurring_interval_count").default(1),
     recurringUsageType: usageType("recurring_usage_type")
-      .default("licensed")
+      .default("LICENSED")
       .notNull(),
-    active: boolean().default(false).notNull(),
-    createdAt: timestamp("created_at", { precision: 3, mode: "string" })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at", {
+    active: boolean().default(false),
+    productId: text("product_id").notNull(),
+    createdAt: timestamp("created_at", {
       precision: 3,
+      withTimezone: true,
       mode: "string",
     })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
+    updatedAt: timestamp("updated_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
   },
   (table) => [
+    index("Price_product_id_idx").using(
+      "btree",
+      table.productId.asc().nullsLast().op("text_ops")
+    ),
     foreignKey({
       columns: [table.productId],
       foreignColumns: [product.productId],
@@ -191,18 +195,21 @@ export const priceRelations = relations(price, ({ one, many }) => ({
  */
 export const product = pgTable("Product", {
   productId: text("product_id").primaryKey().notNull(),
-  name: text().notNull(),
+  productName: text("product_name").notNull(),
   description: text(),
-  active: boolean().default(true).notNull(),
-  createdAt: timestamp("created_at", { precision: 3, mode: "string" })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  updatedAt: timestamp("updated_at", {
+  active: boolean().default(true),
+  createdAt: timestamp("created_at", {
     precision: 3,
+    withTimezone: true,
     mode: "string",
   })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
+  updatedAt: timestamp("updated_at", {
+    precision: 3,
+    withTimezone: true,
+    mode: "string",
+  }),
 });
 
 /**

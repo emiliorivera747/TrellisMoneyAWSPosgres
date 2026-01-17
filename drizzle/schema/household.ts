@@ -10,7 +10,7 @@ import {
 
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-import { user, account, item } from "@/drizzle/schema";
+import { user, account, holding } from "@/drizzle/schema";
 
 /**
  * HouseholdRole enum - Defines member roles within a household
@@ -24,52 +24,73 @@ export const householdRole = pgEnum("HouseholdRole", [
 /**
  * Household schema - Represents a shared household for multiple users
  */
-export const household = pgTable("Household", {
-  householdId: text("household_id").primaryKey().notNull(),
-  name: text().default("Our Household").notNull(),
-  createdAt: timestamp("created_at", { precision: 3, mode: "string" })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  updatedAt: timestamp("updated_at", {
-    precision: 3,
-    mode: "string",
-  })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-});
+export const household = pgTable(
+  "Household",
+  {
+    householdId: text("household_id").primaryKey().notNull(),
+    householdName: text("household_name").default("Our Household"),
+    createdByUserId: text("created_by_user_id"),
+    createdAt: timestamp("created_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
+  },
+  (table) => [
+    foreignKey({
+      columns: [table.createdByUserId],
+      foreignColumns: [user.userId],
+      name: "Household_created_by_user_id_fkey",
+    })
+      .onUpdate("cascade")
+      .onDelete("set null"),
+  ]
+);
 
 /**
- * HouseholdMember schema - Links users to households with roles and invite status
+ * HouseholdMember schema - Links users to households with roles
  */
 export const householdMember = pgTable(
   "HouseholdMember",
   {
-    memberId: text("member_id").primaryKey().notNull(),
+    householdMemberId: text("household_member_id").primaryKey().notNull(),
+    email: text(),
     name: text().notNull(),
     role: householdRole().default("MEMBER").notNull(),
-    dob: timestamp({ precision: 3, mode: "string" }),
-    invitedEmail: text("invited_email"),
-    inviteStatus: text("invite_status").default("pending").notNull(),
     householdId: text("household_id").notNull(),
     userId: text("user_id"),
+    createdAt: timestamp("created_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updated_at", {
+      precision: 3,
+      withTimezone: true,
+      mode: "string",
+    }),
   },
   (table) => [
     index("HouseholdMember_household_id_idx").using(
       "btree",
       table.householdId.asc().nullsLast().op("text_ops")
     ),
-    uniqueIndex("HouseholdMember_household_id_invited_email_key").using(
-      "btree",
-      table.householdId.asc().nullsLast().op("text_ops"),
-      table.invitedEmail.asc().nullsLast().op("text_ops")
-    ),
-    uniqueIndex("HouseholdMember_household_id_user_id_key").using(
-      "btree",
-      table.householdId.asc().nullsLast().op("text_ops"),
-      table.userId.asc().nullsLast().op("text_ops")
-    ),
     index("HouseholdMember_user_id_idx").using(
       "btree",
+      table.userId.asc().nullsLast().op("text_ops")
+    ),
+    index("HouseholdMember_household_id_user_id_idx").using(
+      "btree",
+      table.householdId.asc().nullsLast().op("text_ops"),
       table.userId.asc().nullsLast().op("text_ops")
     ),
     foreignKey({
@@ -90,20 +111,22 @@ export const householdMember = pgTable(
 );
 
 /**
- * Household relations - Links to accounts, items, and household members
+ * Household relations - Links to household members
  */
-export const householdRelations = relations(household, ({ many }) => ({
-  accounts: many(account),
-  items: many(item),
+export const householdRelations = relations(household, ({ one, many }) => ({
+  createdByUser: one(user, {
+    fields: [household.createdByUserId],
+    references: [user.userId],
+  }),
   householdMembers: many(householdMember),
 }));
 
 /**
- * HouseholdMember relations - Links to household and user
+ * HouseholdMember relations - Links to household, user, accounts, and holdings
  */
 export const householdMemberRelations = relations(
   householdMember,
-  ({ one }) => ({
+  ({ one, many }) => ({
     household: one(household, {
       fields: [householdMember.householdId],
       references: [household.householdId],
@@ -112,5 +135,7 @@ export const householdMemberRelations = relations(
       fields: [householdMember.userId],
       references: [user.userId],
     }),
+    accounts: many(account),
+    holdings: many(holding),
   })
 );
