@@ -5,6 +5,7 @@ import {
   text,
   integer,
 } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 /**
  * PrismaMigrations schema - Internal Prisma migration tracking table
@@ -20,7 +21,7 @@ export const prismaMigrations = pgTable("_prisma_migrations", {
     mode: "string",
   }),
   startedAt: timestamp("started_at", { withTimezone: true, mode: "string" })
-    .defaultNow()
+    .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   appliedStepsCount: integer("applied_steps_count").default(0).notNull(),
 });

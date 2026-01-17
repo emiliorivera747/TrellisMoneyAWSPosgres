@@ -25,8 +25,8 @@ import {
  * @field emailVerified - Email confirmation status (default: false)
  * @field phoneVerified - Phone/SMS verification status (default: false)
  * @field phone - E.164 format recommended (+1...)
- * @field createdAt - UTC with timezone (default: now())
- * @field updatedAt - Use trigger to auto-update (default: now())
+ * @field createdAt - UTC with timezone (default: CURRENT_TIMESTAMP)
+ * @field updatedAt - Use trigger to auto-update (default: CURRENT_TIMESTAMP)
  */
 export const user = pgTable(
   "User",
@@ -43,14 +43,14 @@ export const user = pgTable(
       withTimezone: true,
       mode: "string",
     })
-      .default(sql`now()`)
+      .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at", {
       precision: 3,
       withTimezone: true,
       mode: "string",
     })
-      .default(sql`now()`)
+      .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
   },
   (table) => [
