@@ -95,7 +95,7 @@ export const account = pgTable(
     index("Account_household_member_id_type_idx").using(
       "btree",
       table.householdMemberId.asc().nullsLast().op("text_ops"),
-      table.type.asc().nullsLast().op("text_ops")
+      table.type.asc().nullsLast()
     ),
     foreignKey({
       columns: [table.itemId],

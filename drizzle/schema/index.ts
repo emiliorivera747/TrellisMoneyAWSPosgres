@@ -7,7 +7,6 @@ export * from "./item";
 export * from "./profile";
 export * from "./security";
 export * from "./stripe";
-export * from "./schema";
 
 // Import tables for type inference
 import { user } from "./user";
@@ -39,7 +38,6 @@ import {
   recurringInterval,
   usageType,
 } from "./stripe";
-import { prismaMigrations } from "./schema";
 
 // Export User types
 export type User = typeof user.$inferSelect;
@@ -81,9 +79,6 @@ export type PriceInsert = typeof price.$inferInsert;
 export type Product = typeof product.$inferSelect;
 export type ProductInsert = typeof product.$inferInsert;
 
-// Export Schema types
-export type PrismaMigrations = typeof prismaMigrations.$inferSelect;
-export type PrismaMigrationsInsert = typeof prismaMigrations.$inferInsert;
 
 // Export Enum types
 export type HouseholdRole = typeof householdRole.enumValues[number];

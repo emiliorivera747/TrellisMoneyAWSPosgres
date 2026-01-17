@@ -1,5 +1,5 @@
 {
-  "id": "f6361f9c-0222-44d1-bbb0-7946ee028c95",
+  "id": "d47bb04b-b5fa-46bf-b7ab-c5df2ff7bd98",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -11,11 +11,85 @@
         "account_id": {
           "name": "account_id",
           "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "available_balance": {
+          "name": "available_balance",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "current_balance": {
+          "name": "current_balance",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "limit_amount": {
+          "name": "limit_amount",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mask": {
+          "name": "mask",
+          "type": "varchar(4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "account_name": {
+          "name": "account_name",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "household_id": {
-          "name": "household_id",
+        "official_name": {
+          "name": "official_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type": {
+          "name": "type",
+          "type": "AccountType",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subtype": {
+          "name": "subtype",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expected_annual_return_rate": {
+          "name": "expected_annual_return_rate",
+          "type": "numeric(6, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "holder_category": {
+          "name": "holder_category",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "persistent_account_id": {
+          "name": "persistent_account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verification_status": {
+          "name": "verification_status",
+          "type": "AccountVerificationStatus",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verification_name": {
+          "name": "verification_name",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -26,170 +100,85 @@
           "primaryKey": false,
           "notNull": true
         },
-        "balance_id": {
-          "name": "balance_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "member_id": {
-          "name": "member_id",
+        "household_member_id": {
+          "name": "household_member_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "persistent_account_id": {
-          "name": "persistent_account_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "type": {
-          "name": "type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "available": {
-          "name": "available",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "current": {
-          "name": "current",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "limit": {
-          "name": "limit",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "iso_currency_code": {
-          "name": "iso_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "unofficial_currency_code": {
-          "name": "unofficial_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "mask": {
-          "name": "mask",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "official_name": {
-          "name": "official_name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "subtype": {
-          "name": "subtype",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "verification_status": {
-          "name": "verification_status",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "annual_return_rate": {
-          "name": "annual_return_rate",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'0.00'"
-        },
-        "holder_category": {
-          "name": "holder_category",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "timestamp": {
-          "name": "timestamp",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "CURRENT_TIMESTAMP"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": false,
-          "default": "CURRENT_TIMESTAMP"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {
-        "Account_balance_id_key": {
-          "name": "Account_balance_id_key",
+        "Account_item_id_idx": {
+          "name": "Account_item_id_idx",
           "columns": [
             {
-              "expression": "balance_id",
+              "expression": "item_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last",
               "opclass": "text_ops"
             }
           ],
-          "isUnique": true,
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "Account_household_member_id_idx": {
+          "name": "Account_household_member_id_idx",
+          "columns": [
+            {
+              "expression": "household_member_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "Account_household_member_id_type_idx": {
+          "name": "Account_household_member_id_type_idx",
+          "columns": [
+            {
+              "expression": "household_member_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            },
+            {
+              "expression": "type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
           "concurrently": false,
           "method": "btree",
           "with": {}
         }
       },
       "foreignKeys": {
-        "Account_balance_id_fkey": {
-          "name": "Account_balance_id_fkey",
-          "tableFrom": "Account",
-          "tableTo": "Balance",
-          "columnsFrom": [
-            "balance_id"
-          ],
-          "columnsTo": [
-            "balance_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "Account_household_id_fkey": {
-          "name": "Account_household_id_fkey",
-          "tableFrom": "Account",
-          "tableTo": "Household",
-          "columnsFrom": [
-            "household_id"
-          ],
-          "columnsTo": [
-            "household_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
         "Account_item_id_fkey": {
           "name": "Account_item_id_fkey",
           "tableFrom": "Account",
@@ -203,15 +192,15 @@
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
-        "Account_member_id_fkey": {
-          "name": "Account_member_id_fkey",
+        "Account_household_member_id_fkey": {
+          "name": "Account_household_member_id_fkey",
           "tableFrom": "Account",
           "tableTo": "HouseholdMember",
           "columnsFrom": [
-            "member_id"
+            "household_member_id"
           ],
           "columnsTo": [
-            "member_id"
+            "household_member_id"
           ],
           "onDelete": "restrict",
           "onUpdate": "cascade"
@@ -223,351 +212,27 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.AccountHistory": {
-      "name": "AccountHistory",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "account_id": {
-          "name": "account_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "type": {
-          "name": "type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "available": {
-          "name": "available",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "current": {
-          "name": "current",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "limit": {
-          "name": "limit",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "iso_currency_code": {
-          "name": "iso_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "unofficial_currency_code": {
-          "name": "unofficial_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "timestamp": {
-          "name": "timestamp",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "CURRENT_TIMESTAMP"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "AccountHistory_account_id_fkey": {
-          "name": "AccountHistory_account_id_fkey",
-          "tableFrom": "AccountHistory",
-          "tableTo": "Account",
-          "columnsFrom": [
-            "account_id"
-          ],
-          "columnsTo": [
-            "account_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.Balance": {
-      "name": "Balance",
-      "schema": "",
-      "columns": {
-        "balance_id": {
-          "name": "balance_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "current": {
-          "name": "current",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "limit": {
-          "name": "limit",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "iso_currency_code": {
-          "name": "iso_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "unofficial_currency_code": {
-          "name": "unofficial_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "last_updated": {
-          "name": "last_updated",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "CURRENT_TIMESTAMP"
-        },
-        "timestamp": {
-          "name": "timestamp",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "CURRENT_TIMESTAMP"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.Holding": {
       "name": "Holding",
       "schema": "",
       "columns": {
-        "cost_basis": {
-          "name": "cost_basis",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "institution_price": {
-          "name": "institution_price",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "institution_price_as_of": {
-          "name": "institution_price_as_of",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "institution_price_datetime": {
-          "name": "institution_price_datetime",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "institution_value": {
-          "name": "institution_value",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "annual_return_rate": {
-          "name": "annual_return_rate",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'0.06'"
-        },
-        "iso_currency_code": {
-          "name": "iso_currency_code",
+        "holding_id": {
+          "name": "holding_id",
           "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "unofficial_currency_code": {
-          "name": "unofficial_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "vested_quantity": {
-          "name": "vested_quantity",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "vested_value": {
-          "name": "vested_value",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "quantity": {
-          "name": "quantity",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "account_id": {
-          "name": "account_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "security_id": {
-          "name": "security_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "timestamp": {
-          "name": "timestamp",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "CURRENT_TIMESTAMP"
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "Holding_security_id_fkey": {
-          "name": "Holding_security_id_fkey",
-          "tableFrom": "Holding",
-          "tableTo": "Security",
-          "columnsFrom": [
-            "security_id"
-          ],
-          "columnsTo": [
-            "security_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "Holding_user_id_fkey": {
-          "name": "Holding_user_id_fkey",
-          "tableFrom": "Holding",
-          "tableTo": "User",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "Holding_account_id_fkey": {
-          "name": "Holding_account_id_fkey",
-          "tableFrom": "Holding",
-          "tableTo": "Account",
-          "columnsFrom": [
-            "account_id"
-          ],
-          "columnsTo": [
-            "account_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {
-        "Holding_pkey": {
-          "name": "Holding_pkey",
-          "columns": [
-            "account_id",
-            "security_id",
-            "user_id"
-          ]
-        }
-      },
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.HoldingHistory": {
-      "name": "HoldingHistory",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "cost_basis": {
-          "name": "cost_basis",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
         "institution_price": {
           "name": "institution_price",
-          "type": "numeric(65, 30)",
+          "type": "numeric(20, 8)",
           "primaryKey": false,
-          "notNull": true
-        },
-        "annual_return_rate": {
-          "name": "annual_return_rate",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'0.06'"
+          "notNull": false
         },
         "institution_price_as_of": {
           "name": "institution_price_as_of",
           "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "institution_price_datetime": {
           "name": "institution_price_datetime",
@@ -577,9 +242,21 @@
         },
         "institution_value": {
           "name": "institution_value",
-          "type": "numeric(65, 30)",
+          "type": "numeric(24, 8)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "cost_basis": {
+          "name": "cost_basis",
+          "type": "numeric(24, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "numeric(20, 8)",
+          "primaryKey": false,
+          "notNull": false
         },
         "iso_currency_code": {
           "name": "iso_currency_code",
@@ -587,38 +264,38 @@
           "primaryKey": false,
           "notNull": false
         },
-        "unofficial_currency_code": {
-          "name": "unofficial_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "vested_quantity": {
           "name": "vested_quantity",
-          "type": "numeric(65, 30)",
+          "type": "numeric(20, 8)",
           "primaryKey": false,
           "notNull": false
         },
         "vested_value": {
           "name": "vested_value",
-          "type": "numeric(65, 30)",
+          "type": "numeric(24, 8)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "quantity": {
-          "name": "quantity",
-          "type": "numeric(65, 30)",
+        "expected_annual_return_rate": {
+          "name": "expected_annual_return_rate",
+          "type": "numeric(6, 4)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "account_id": {
           "name": "account_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "security_id": {
           "name": "security_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "household_member_id": {
+          "name": "household_member_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -634,33 +311,120 @@
           "name": "updated_at",
           "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": true,
-          "default": "CURRENT_TIMESTAMP"
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "Holding_account_id_idx": {
+          "name": "Holding_account_id_idx",
+          "columns": [
+            {
+              "expression": "account_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "Holding_household_member_id_idx": {
+          "name": "Holding_household_member_id_idx",
+          "columns": [
+            {
+              "expression": "household_member_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "Holding_security_id_idx": {
+          "name": "Holding_security_id_idx",
+          "columns": [
+            {
+              "expression": "security_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "Holding_household_member_id_security_id_idx": {
+          "name": "Holding_household_member_id_security_id_idx",
+          "columns": [
+            {
+              "expression": "household_member_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            },
+            {
+              "expression": "security_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
-        "HoldingHistory_security_id_user_id_account_id_fkey": {
-          "name": "HoldingHistory_security_id_user_id_account_id_fkey",
-          "tableFrom": "HoldingHistory",
-          "tableTo": "Holding",
+        "Holding_account_id_fkey": {
+          "name": "Holding_account_id_fkey",
+          "tableFrom": "Holding",
+          "tableTo": "Account",
           "columnsFrom": [
-            "account_id",
-            "security_id",
-            "user_id"
+            "account_id"
           ],
           "columnsTo": [
-            "account_id",
-            "security_id",
-            "user_id"
+            "account_id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "Holding_security_id_fkey": {
+          "name": "Holding_security_id_fkey",
+          "tableFrom": "Holding",
+          "tableTo": "Security",
+          "columnsFrom": [
+            "security_id"
+          ],
+          "columnsTo": [
+            "security_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        },
+        "Holding_household_member_id_fkey": {
+          "name": "Holding_household_member_id_fkey",
+          "tableFrom": "Holding",
+          "tableTo": "HouseholdMember",
+          "columnsFrom": [
+            "household_member_id"
+          ],
+          "columnsTo": [
+            "household_member_id"
+          ],
+          "onDelete": "restrict",
           "onUpdate": "cascade"
         }
       },
@@ -680,30 +444,49 @@
           "primaryKey": true,
           "notNull": true
         },
-        "name": {
-          "name": "name",
+        "household_name": {
+          "name": "household_name",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": "'Our Household'"
+        },
+        "created_by_user_id": {
+          "name": "created_by_user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3)",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "CURRENT_TIMESTAMP"
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3)",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": true,
-          "default": "CURRENT_TIMESTAMP"
+          "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "Household_created_by_user_id_fkey": {
+          "name": "Household_created_by_user_id_fkey",
+          "tableFrom": "Household",
+          "tableTo": "User",
+          "columnsFrom": [
+            "created_by_user_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -714,11 +497,17 @@
       "name": "HouseholdMember",
       "schema": "",
       "columns": {
-        "member_id": {
-          "name": "member_id",
+        "household_member_id": {
+          "name": "household_member_id",
           "type": "text",
           "primaryKey": true,
           "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "name": {
           "name": "name",
@@ -734,25 +523,6 @@
           "notNull": true,
           "default": "'MEMBER'"
         },
-        "dob": {
-          "name": "dob",
-          "type": "timestamp(3)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "invited_email": {
-          "name": "invited_email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "invite_status": {
-          "name": "invite_status",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'pending'"
-        },
         "household_id": {
           "name": "household_id",
           "type": "text",
@@ -762,6 +532,19 @@
         "user_id": {
           "name": "user_id",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
           "notNull": false
         }
@@ -783,39 +566,9 @@
           "method": "btree",
           "with": {}
         },
-        "HouseholdMember_household_id_invited_email_key": {
-          "name": "HouseholdMember_household_id_invited_email_key",
+        "HouseholdMember_user_id_idx": {
+          "name": "HouseholdMember_user_id_idx",
           "columns": [
-            {
-              "expression": "household_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
-            },
-            {
-              "expression": "invited_email",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "HouseholdMember_household_id_user_id_key": {
-          "name": "HouseholdMember_household_id_user_id_key",
-          "columns": [
-            {
-              "expression": "household_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
-            },
             {
               "expression": "user_id",
               "isExpression": false,
@@ -824,14 +577,21 @@
               "opclass": "text_ops"
             }
           ],
-          "isUnique": true,
+          "isUnique": false,
           "concurrently": false,
           "method": "btree",
           "with": {}
         },
-        "HouseholdMember_user_id_idx": {
-          "name": "HouseholdMember_user_id_idx",
+        "HouseholdMember_household_id_user_id_idx": {
+          "name": "HouseholdMember_household_id_user_id_idx",
           "columns": [
+            {
+              "expression": "household_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            },
             {
               "expression": "user_id",
               "isExpression": false,
@@ -890,14 +650,20 @@
           "primaryKey": true,
           "notNull": true
         },
+        "customer_id": {
+          "name": "customer_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "email": {
           "name": "email",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "name": {
-          "name": "name",
+        "full_name": {
+          "name": "full_name",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -918,12 +684,6 @@
         },
         "phone": {
           "name": "phone",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "customer_id": {
-          "name": "customer_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -951,8 +711,7 @@
               "expression": "customer_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": true,
@@ -967,8 +726,7 @@
               "expression": "email",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": true,
@@ -979,7 +737,22 @@
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "User_customer_id_unique": {
+          "name": "User_customer_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "customer_id"
+          ]
+        },
+        "User_email_unique": {
+          "name": "User_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -994,26 +767,14 @@
           "primaryKey": true,
           "notNull": true
         },
-        "institution_id": {
-          "name": "institution_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "user_id": {
           "name": "user_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "household_id": {
-          "name": "household_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "member_id": {
-          "name": "member_id",
+        "institution_id": {
+          "name": "institution_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -1024,32 +785,26 @@
           "primaryKey": false,
           "notNull": false
         },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "webhook": {
           "name": "webhook",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "auth_method": {
-          "name": "auth_method",
+        "error_type": {
+          "name": "error_type",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "request_id": {
-          "name": "request_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "update_type": {
-          "name": "update_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "consent_expiration_time": {
-          "name": "consent_expiration_time",
+        "error_code": {
+          "name": "error_code",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -1061,56 +816,47 @@
           "notNull": true,
           "default": "CURRENT_TIMESTAMP"
         },
-        "available_products": {
-          "name": "available_products",
-          "type": "text[]",
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
           "notNull": false
-        },
-        "billed_products": {
-          "name": "billed_products",
-          "type": "text[]",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "products": {
-          "name": "products",
-          "type": "text[]",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "error": {
-          "name": "error",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "consented_products": {
-          "name": "consented_products",
-          "type": "text[]",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "consented_data_scopes": {
-          "name": "consented_data_scopes",
-          "type": "text[]",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "consented_use_cases": {
-          "name": "consented_use_cases",
-          "type": "text[]",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "access_token": {
-          "name": "access_token",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
         }
       },
-      "indexes": {},
+      "indexes": {
+        "Item_user_id_idx": {
+          "name": "Item_user_id_idx",
+          "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "Item_institution_id_idx": {
+          "name": "Item_institution_id_idx",
+          "columns": [
+            {
+              "expression": "institution_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "Item_user_id_fkey": {
           "name": "Item_user_id_fkey",
@@ -1124,126 +870,65 @@
           ],
           "onDelete": "restrict",
           "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ItemStatus": {
+      "name": "ItemStatus",
+      "schema": "",
+      "columns": {
+        "item_id": {
+          "name": "item_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
         },
-        "Item_household_id_fkey": {
-          "name": "Item_household_id_fkey",
-          "tableFrom": "Item",
-          "tableTo": "Household",
+        "transactions_last_successful_update": {
+          "name": "transactions_last_successful_update",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transactions_last_failed": {
+          "name": "transactions_last_failed",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_sync_cursor": {
+          "name": "last_sync_cursor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ItemStatus_item_id_fkey": {
+          "name": "ItemStatus_item_id_fkey",
+          "tableFrom": "ItemStatus",
+          "tableTo": "Item",
           "columnsFrom": [
-            "household_id"
+            "item_id"
           ],
           "columnsTo": [
-            "household_id"
+            "item_id"
           ],
-          "onDelete": "set null",
+          "onDelete": "cascade",
           "onUpdate": "cascade"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.OptionContract": {
-      "name": "OptionContract",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "contract_type": {
-          "name": "contract_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "expiration_date": {
-          "name": "expiration_date",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "strike_price": {
-          "name": "strike_price",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "underlying_security_ticker": {
-          "name": "underlying_security_ticker",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.TransactionStatus": {
-      "name": "TransactionStatus",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "last_successful_update": {
-          "name": "last_successful_update",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "last_failed_update": {
-          "name": "last_failed_update",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.WebhookStatus": {
-      "name": "WebhookStatus",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "sent_at": {
-          "name": "sent_at",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "code_sent": {
-          "name": "code_sent",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -1312,145 +997,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Owner": {
-      "name": "Owner",
-      "schema": "",
-      "columns": {
-        "owner_id": {
-          "name": "owner_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "phone_number": {
-          "name": "phone_number",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "phone_type": {
-          "name": "phone_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "phone_primary": {
-          "name": "phone_primary",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "email_type": {
-          "name": "email_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "email_primary": {
-          "name": "email_primary",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "street": {
-          "name": "street",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "region": {
-          "name": "region",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "address": {
-          "name": "address",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "city": {
-          "name": "city",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "state": {
-          "name": "state",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "postal_code": {
-          "name": "postal_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "country": {
-          "name": "country",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "address_primary": {
-          "name": "address_primary",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "accountId": {
-          "name": "accountId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "timestamp": {
-          "name": "timestamp",
-          "type": "timestamp(3)",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "CURRENT_TIMESTAMP"
-        }
-      },
-      "indexes": {
-        "Owner_owner_id_key": {
-          "name": "Owner_owner_id_key",
-          "columns": [
-            {
-              "expression": "owner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.Security": {
       "name": "Security",
       "schema": "",
@@ -1458,193 +1004,9 @@
         "security_id": {
           "name": "security_id",
           "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "isin": {
-          "name": "isin",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "cusip": {
-          "name": "cusip",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sedol": {
-          "name": "sedol",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "institution_security_id": {
-          "name": "institution_security_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "institution_id": {
-          "name": "institution_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "proxy_security_id": {
-          "name": "proxy_security_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "ticker_symbol": {
-          "name": "ticker_symbol",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "is_cash_equivalent": {
-          "name": "is_cash_equivalent",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "type": {
-          "name": "type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "close_price": {
-          "name": "close_price",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "close_price_as_of": {
-          "name": "close_price_as_of",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "update_datetime": {
-          "name": "update_datetime",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "iso_currency_code": {
-          "name": "iso_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "unofficial_currency_code": {
-          "name": "unofficial_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "market_identifier_code": {
-          "name": "market_identifier_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sector": {
-          "name": "sector",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "industry": {
-          "name": "industry",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "option_contract_id": {
-          "name": "option_contract_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "timestamp": {
-          "name": "timestamp",
-          "type": "timestamp(3) with time zone",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "CURRENT_TIMESTAMP"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "Security_user_id_fkey": {
-          "name": "Security_user_id_fkey",
-          "tableFrom": "Security",
-          "tableTo": "User",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.SecurityHistory": {
-      "name": "SecurityHistory",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "isin": {
-          "name": "isin",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "cusip": {
-          "name": "cusip",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sedol": {
-          "name": "sedol",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "institution_security_id": {
-          "name": "institution_security_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "institution_id": {
           "name": "institution_id",
           "type": "text",
@@ -1657,8 +1019,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "name": {
-          "name": "name",
+        "security_name": {
+          "name": "security_name",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -1677,19 +1039,26 @@
         },
         "type": {
           "name": "type",
+          "type": "SecurityType",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "subtype": {
+          "name": "subtype",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
         "close_price": {
           "name": "close_price",
-          "type": "numeric(65, 30)",
+          "type": "numeric(20, 8)",
           "primaryKey": false,
           "notNull": false
         },
         "close_price_as_of": {
           "name": "close_price_as_of",
-          "type": "timestamp(3) with time zone",
+          "type": "date",
           "primaryKey": false,
           "notNull": false
         },
@@ -1701,18 +1070,6 @@
         },
         "iso_currency_code": {
           "name": "iso_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "unofficial_currency_code": {
-          "name": "unofficial_currency_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "market_identifier_code": {
-          "name": "market_identifier_code",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -1729,128 +1086,22 @@
           "primaryKey": false,
           "notNull": false
         },
-        "option_contract_id": {
-          "name": "option_contract_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "timestamp": {
-          "name": "timestamp",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp(3) with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "CURRENT_TIMESTAMP"
         },
-        "security_id": {
-          "name": "security_id",
-          "type": "text",
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "SecurityHistory_security_id_fkey": {
-          "name": "SecurityHistory_security_id_fkey",
-          "tableFrom": "SecurityHistory",
-          "tableTo": "Security",
-          "columnsFrom": [
-            "security_id"
-          ],
-          "columnsTo": [
-            "security_id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.FixedIncome": {
-      "name": "FixedIncome",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "yield_rate_percentage": {
-          "name": "yield_rate_percentage",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "yield_rate_type": {
-          "name": "yield_rate_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "maturity_date": {
-          "name": "maturity_date",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "issue_date": {
-          "name": "issue_date",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "face_value": {
-          "name": "face_value",
-          "type": "numeric(65, 30)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "securityId": {
-          "name": "securityId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {
-        "FixedIncome_securityId_key": {
-          "name": "FixedIncome_securityId_key",
-          "columns": [
-            {
-              "expression": "securityId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "FixedIncome_securityId_fkey": {
-          "name": "FixedIncome_securityId_fkey",
-          "tableFrom": "FixedIncome",
-          "tableTo": "Security",
-          "columnsFrom": [
-            "securityId"
-          ],
-          "columnsTo": [
-            "security_id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -1867,15 +1118,9 @@
           "primaryKey": true,
           "notNull": true
         },
-        "product_id": {
-          "name": "product_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "currency": {
           "name": "currency",
-          "type": "text",
+          "type": "varchar(3)",
           "primaryKey": false,
           "notNull": true
         },
@@ -1887,7 +1132,7 @@
         },
         "recurring_interval": {
           "name": "recurring_interval",
-          "type": "Interval",
+          "type": "RecurringInterval",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false
@@ -1905,31 +1150,53 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
-          "default": "'licensed'"
+          "default": "'LICENSED'"
         },
         "active": {
           "name": "active",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": false
+        },
+        "product_id": {
+          "name": "product_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3)",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "CURRENT_TIMESTAMP"
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3)",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": true,
-          "default": "CURRENT_TIMESTAMP"
+          "notNull": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "Price_product_id_idx": {
+          "name": "Price_product_id_idx",
+          "columns": [
+            {
+              "expression": "product_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "Price_product_id_fkey": {
           "name": "Price_product_id_fkey",
@@ -1961,8 +1228,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "name": {
-          "name": "name",
+        "product_name": {
+          "name": "product_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -1977,22 +1244,21 @@
           "name": "active",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": true
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp(3)",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "CURRENT_TIMESTAMP"
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "timestamp(3)",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": true,
-          "default": "CURRENT_TIMESTAMP"
+          "notNull": false
         }
       },
       "indexes": {},
@@ -2013,14 +1279,65 @@
           "primaryKey": true,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
+        "status": {
+          "name": "status",
+          "type": "SubscriptionStatus",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'INCOMPLETE'"
+        },
+        "start_date": {
+          "name": "start_date",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "trial_start": {
+          "name": "trial_start",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "trial_end": {
+          "name": "trial_end",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ended_at": {
+          "name": "ended_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cancel_at": {
+          "name": "cancel_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "canceled_at": {
+          "name": "canceled_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cancel_at_period_end": {
+          "name": "cancel_at_period_end",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "stripe_customer_id": {
+          "name": "stripe_customer_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "customer_id": {
-          "name": "customer_id",
+        "user_id": {
+          "name": "user_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -2029,75 +1346,25 @@
           "name": "price_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
-        },
-        "status": {
-          "name": "status",
-          "type": "SubscriptionStatus",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'incomplete'"
-        },
-        "start_date": {
-          "name": "start_date",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "trial_start": {
-          "name": "trial_start",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "trial_end": {
-          "name": "trial_end",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "ended_at": {
-          "name": "ended_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "cancel_at": {
-          "name": "cancel_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "cancel_at_period_end": {
-          "name": "cancel_at_period_end",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
-          "type": "integer",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "canceled_at": {
-          "name": "canceled_at",
-          "type": "integer",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
           "notNull": false
         }
       },
       "indexes": {
-        "Subscription_user_id_key": {
-          "name": "Subscription_user_id_key",
+        "Subscription_user_id_idx": {
+          "name": "Subscription_user_id_idx",
           "columns": [
             {
               "expression": "user_id",
@@ -2107,7 +1374,7 @@
               "opclass": "text_ops"
             }
           ],
-          "isUnique": true,
+          "isUnique": false,
           "concurrently": false,
           "method": "btree",
           "with": {}
@@ -2137,7 +1404,7 @@
           "columnsTo": [
             "price_id"
           ],
-          "onDelete": "set null",
+          "onDelete": "restrict",
           "onUpdate": "cascade"
         }
       },
@@ -2192,7 +1459,7 @@
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "default": "CURRENT_TIMESTAMP"
         },
         "applied_steps_count": {
           "name": "applied_steps_count",
@@ -2212,6 +1479,27 @@
     }
   },
   "enums": {
+    "public.AccountType": {
+      "name": "AccountType",
+      "schema": "public",
+      "values": [
+        "DEPOSITORY",
+        "CREDIT",
+        "LOAN",
+        "INVESTMENT",
+        "OTHER"
+      ]
+    },
+    "public.AccountVerificationStatus": {
+      "name": "AccountVerificationStatus",
+      "schema": "public",
+      "values": [
+        "AUTOMATICALLY_VERIFIED",
+        "PENDING_MANUAL_VERIFICATION",
+        "DATABASE_INSIGHTS_PASS",
+        "FAILED"
+      ]
+    },
     "public.HouseholdRole": {
       "name": "HouseholdRole",
       "schema": "public",
@@ -2221,36 +1509,51 @@
         "GUEST"
       ]
     },
-    "public.Interval": {
-      "name": "Interval",
+    "public.SecurityType": {
+      "name": "SecurityType",
       "schema": "public",
       "values": [
-        "day",
-        "week",
-        "month",
-        "year"
+        "CASH",
+        "CRYPTOCURRENCY",
+        "DERIVATIVE",
+        "EQUITY",
+        "ETF",
+        "FIXED",
+        "LOAN",
+        "MUTUAL",
+        "OTHER"
+      ]
+    },
+    "public.RecurringInterval": {
+      "name": "RecurringInterval",
+      "schema": "public",
+      "values": [
+        "DAY",
+        "WEEK",
+        "MONTH",
+        "YEAR"
       ]
     },
     "public.SubscriptionStatus": {
       "name": "SubscriptionStatus",
       "schema": "public",
       "values": [
-        "incomplete",
-        "incomplete_expired",
-        "trialing",
-        "active",
-        "past_due",
-        "canceled",
-        "unpaid",
-        "paused"
+        "INCOMPLETE",
+        "INCOMPLETE_EXPIRED",
+        "TRIALING",
+        "ACTIVE",
+        "PAST_DUE",
+        "CANCELED",
+        "UNPAID",
+        "PAUSED"
       ]
     },
     "public.UsageType": {
       "name": "UsageType",
       "schema": "public",
       "values": [
-        "metered",
-        "licensed"
+        "METERED",
+        "LICENSED"
       ]
     }
   },
