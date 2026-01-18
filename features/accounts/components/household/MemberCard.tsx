@@ -1,5 +1,4 @@
-import { Member, MemberCardProp } from "@/features/accounts/types/household";
-import { HouseholdMember } from "@/drizzle/schema"; 
+import { MemberCardProp } from "@/features/accounts/types/household";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useConnectionContext } from "@/features/manage-connections/context/ConnectionContext";
 
@@ -23,13 +22,13 @@ const MemberCards = ({ members }: MemberCardProp) => {
   return (
     <div key={1} className="flex flex-col gap-3">
       {members.map(
-        ({ name, url, user_id, member_id }: Member, index: number) => {
-          let id = user_id ? user_id : member_id;
+        ({ fullName, url, userId, householdMemberId }, index: number) => {
+          let id = userId ? userId : householdMemberId;
           return (
             <div
-              key={`${user_id}-${index}`}
+              key={`${userId}-${index}`}
               className="flex flex-row gap-4 items-center border rounded-[12px] px-4 py-[1rem] hover:bg-tertiary-200 font-light cursor-pointer"
-              onClick={() => handleSelectingMember(member_id)}
+              onClick={() => handleSelectingMember(householdMemberId)}
             >
               <Avatar>
                 <AvatarImage src={url ? url : ""} />
@@ -38,10 +37,10 @@ const MemberCards = ({ members }: MemberCardProp) => {
                     index % 2 === 0 ? "bg-primary-800" : "bg-secondary-800"
                   } text-white`}
                 >
-                  {name ? name[0].toUpperCase() : "D"}
+                  {fullName ? fullName[0].toUpperCase() : "D"}
                 </AvatarFallback>
               </Avatar>
-              <div key={`${user_id}-${index}`}>{name}</div>
+              <div key={`${userId}-${index}`}>{fullName}</div>
             </div>
           );
         }

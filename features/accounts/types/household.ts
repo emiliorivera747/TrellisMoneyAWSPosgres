@@ -5,31 +5,7 @@ import { HouseholdMember } from "@/drizzle/schema";
  * @export
  * @interface Member
  */
-export interface Member {
-  /**
-   * The user ID of the member.
-   * @type {string}
-   * @memberof Member
-   */
-  user_id: string;
-  /**
-   * The ID of the head of household.
-   * @type {string}
-   * @memberof Member
-   */
-  head_of_household_id: string;
-  /**
-   * The member ID.
-   * @type {string}
-   * @memberof Member
-   */
-  member_id?: string;
-  /**
-   * The name of the member.
-   * @type {string}
-   * @memberof Member
-   */
-  name: string;
+export interface Member extends HouseholdMember {
   /**
    * The URL associated with the member.
    * @type {string}
@@ -49,7 +25,7 @@ export interface StepProps {
    * @type {Member[]}
    * @memberof StepProps
    */
-  members: HouseholdMember[];
+  members: Member[];
   /**
    * The function to handle click events.
    * @type {(id: string) => void}

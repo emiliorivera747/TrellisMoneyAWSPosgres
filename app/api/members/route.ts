@@ -50,7 +50,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
       // ----- Create a new household member with the provided name and email -----
       const householdId = householdMember?.householdId;
-      const newMember = await createMember({ name, email, householdId });
+      const newMember = await createMember({
+        fullName: name,
+        email,
+        householdId,
+      });
 
       return SuccessResponse({ member: newMember });
     } catch (error) {
