@@ -32,3 +32,8 @@ export const getItemWithMemberAndInstitutionId = async ({
     .limit(1);
   return items[0] ?? null;
 };
+
+export const getItemsWithUserId = async (userId: string) => {
+  const items = await db.select().from(item).where(eq(item.userId, userId));
+  return items;
+};

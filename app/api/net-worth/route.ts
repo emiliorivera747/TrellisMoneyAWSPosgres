@@ -10,7 +10,6 @@ import { getMemberByUserId } from "@/utils/drizzle/household/household";
 import { updateAccounts } from "@/utils/drizzle/accounts/updateAccountsV2";
 import { getAccountsFromPlaidWithItems } from "@/services/plaid/getAccountV2";
 import { calculateNetWorth } from "@/utils/api-helpers/net-worth/calculateNetWorth";
-
 import { getItemsFromPlaid } from "@/services/plaid/items/items";
 import { updateItemsWithPlaidItems } from "@/utils/drizzle/item/updateItems";
 import { db } from "@/drizzle/db";
