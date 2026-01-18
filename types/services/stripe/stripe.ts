@@ -6,14 +6,14 @@ import Stripe from "stripe";
  * @typedef {"incomplete" | "incomplete_expired" | "trialing" | "active" | "past_due" | "canceled" | "unpaid" | "paused"} SubscriptionStatus
  */
 export type SubscriptionStatus =
-  | "incomplete"
-  | "incomplete_expired"
-  | "trialing"
-  | "active"
-  | "past_due"
-  | "canceled"
-  | "unpaid"
-  | "paused";
+  | "INCOMPLETE"
+  | "INCOMPLETE_EXPIRED"
+  | "TRIALING"
+  | "ACTIVE"
+  | "PAST_DUE"
+  | "CANCELED"
+  | "UNPAID"
+  | "PAUSED";
 
 /**
  * Represents the billing interval for a subscription.

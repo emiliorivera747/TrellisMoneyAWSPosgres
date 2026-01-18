@@ -1,4 +1,4 @@
-import { MinmalSubscription } from "@/types/services/stripe/stripe";
+import { Subscription } from "@/drizzle/schema";
 
 /**
  * Determines if a subscription is active based on its status and cancellation time.
@@ -11,13 +11,9 @@ import { MinmalSubscription } from "@/types/services/stripe/stripe";
  * - If the subscription's status is either "active" or "trialing".
  * - If the subscription has not been canceled (`cancel_at` is either `null` or a timestamp in the future).
  */
-export const hasActiveSubscription = (
-  sub: MinmalSubscription | null
-): boolean => {
+export const hasActiveSubscription = (sub: Subscription | null): boolean => {
   if (!sub) return false;
-  const now = Math.floor(Date.now() / 1000);
-  return (
-    ["active", "trialing"].includes(sub.status) &&
-    (!sub.cancelAt || sub.cancelAt > now)
-  );
+  // const now = new Date();
+  // const cancelAt = sub.cancelAt ? new Date(sub.cancelAt) : null;
+  return ["ACTIVE", "TRIALING"].includes(sub.status);
 };

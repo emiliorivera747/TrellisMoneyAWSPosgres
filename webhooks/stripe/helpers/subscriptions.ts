@@ -79,6 +79,7 @@ export const generateSubscriptionData = ({
   price_id,
   user_id,
 }: GenerateSubscriptionDataProps) => {
+  
   const subscriptionData = {
     subscriptionId: subscription.id,
     userId: user_id,
