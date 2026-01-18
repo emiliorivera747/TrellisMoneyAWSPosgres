@@ -1,5 +1,5 @@
 import { db } from "@/drizzle/db";
-import { account } from "@/drizzle/schema";
+import { account, AccountInsert } from "@/drizzle/schema";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 import { AddAccountsParams } from "@/types/utils/drizzle/account/accounts";
 
@@ -13,23 +13,21 @@ import { AddAccountsParams } from "@/types/utils/drizzle/account/accounts";
 export const addPlaidMetadataAccounts = async ({
   itemId,
   plaidAccounts,
-  householdId,
-  memberId,
+  householdMemberId,
 }: AddAccountsParams) => {
   try {
     const accountAdded = [];
     for (const plaidAccount of plaidAccounts) {
       const createdAccount = await db.insert(account).values({
         itemId,
-        householdId,
-        memberId,
+        householdMemberId,
         accountId: plaidAccount.id,
-        name: plaidAccount.name,
+        accountName: plaidAccount.name,
         mask: plaidAccount.mask || null,
         type: plaidAccount.type,
         subtype: plaidAccount.subtype,
         verificationStatus: plaidAccount.verification_status || null,
-      });
+      } as AccountInsert);
       accountAdded.push(createdAccount);
     }
     return accountAdded;

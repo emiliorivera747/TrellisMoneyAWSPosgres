@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server";
-import { client } from "@/config/plaidClient";
 import { withAuth } from "@/lib/protected";
 
 // Utils
@@ -34,13 +33,13 @@ export async function POST(req: NextRequest) {
     const userId = user.id;
 
     const {
-      member_id: memberId,
+      member_id: householdMemberId,
       metadata,
       public_token: publicToken,
     }: ExchangeTokenRequestBody = await request.json();
 
     const hasMissingKeys =
-      !memberId ||
+      !householdMemberId ||
       !publicToken ||
       !metadata?.institution ||
       !metadata?.accounts?.length;
@@ -49,7 +48,7 @@ export async function POST(req: NextRequest) {
 
     try {
       // ----- Get household from the member_id -----
-      const householdId = await getHouseholdIdByMembership(memberId);
+      const householdId = await getHouseholdIdByMembership(householdMemberId);
       if (!householdId)
         return FailResponse("Could not match member to household", 400);
 
@@ -62,7 +61,7 @@ export async function POST(req: NextRequest) {
 
       // ----- Get Item From the database -----
       const itemDB = await getItemWithMemberAndInstitutionId({
-        memberId,
+        memberId: householdMemberId,
         institutionId: metadata?.institution?.institution_id ?? "",
       });
 
@@ -92,8 +91,7 @@ export async function POST(req: NextRequest) {
       await addPlaidMetadataAccounts({
         itemId,
         plaidAccounts: metadata.accounts,
-        householdId,
-        memberId,
+        householdMemberId,
       });
 
       // Success — access_token is safely stored
