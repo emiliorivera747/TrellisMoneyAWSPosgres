@@ -34,7 +34,7 @@ export const user = pgTable(
     userId: text("user_id").primaryKey().notNull(),
     customerId: text("customer_id").unique(),
     email: text().notNull().unique(),
-    full_name: text("full_name"),
+    fullName: text("full_name"),
     emailVerified: boolean("email_verified").default(false),
     phoneVerified: boolean("phone_verified").default(false),
     phone: text(),

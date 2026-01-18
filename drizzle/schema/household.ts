@@ -61,7 +61,7 @@ export const householdMember = pgTable(
   {
     householdMemberId: text("household_member_id").primaryKey().notNull(),
     email: text(),
-    name: text().notNull(),
+    fullName: text().notNull(),
     role: householdRole().default("MEMBER").notNull(),
     householdId: text("household_id").notNull(),
     userId: text("user_id"),

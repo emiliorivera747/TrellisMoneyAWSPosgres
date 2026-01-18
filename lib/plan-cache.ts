@@ -7,32 +7,15 @@ let LASTFETCHED = 0;
 const CACHE_TTL_MS = 1000 * 60 * 30; // 30 minutes
 
 /**
- * Retrieves the Stripe price ID associated with a given slug.
+ * Fetches the Stripe price ID for a given slug, using a cached mapping.
+ * Refreshes the cache if empty or stale (older than CACHE_TTL_MS).
  *
- * This function checks if the cached plans are stale or empty. If so, it refreshes
- * the cache by fetching the active prices from Stripe and mapping their `url_slug`
- * metadata to their respective price IDs. The cache is then used to quickly retrieve
- * the price ID for the given slug.
- *
- * @param slug - The unique identifier (slug) used to look up the corresponding price ID.
- * @returns A promise that resolves to the price ID as a string if the slug exists in the cache,
- *          or `null` if the slug is not found.
- *
- * @remarks
- * - The cache is refreshed if it is empty or if the time since the last fetch exceeds
- *   the defined cache time-to-live (CACHE_TTL_MS).
- * - The `url_slug` metadata field in Stripe prices is used to map slugs to price IDs.
- * - Ensure that the Stripe API key is properly configured for the `stripe` instance.
+ * @param slug - The slug to look up.
+ * @returns A promise resolving to the price ID or `null` if not found.
  *
  * @example
- * ```typescript
  * const priceId = await getPriceIdBySlug("premium-plan");
- * if (priceId) {
- *   console.log(`Price ID for premium plan: ${priceId}`);
- * } else {
- *   console.log("Slug not found in cached plans.");
- * }
- * ```
+ * console.log(priceId ?? "Slug not found.");
  */
 export async function getPriceIdBySlug(slug: string): Promise<string | null> {
   const NOW = Date.now();

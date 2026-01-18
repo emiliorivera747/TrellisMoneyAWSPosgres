@@ -61,7 +61,7 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
       .insert(household)
       .values({
         householdId: crypto.randomUUID(),
-        name: createHouseholdName(fullName, email),
+        householdName: createHouseholdName(fullName, email),
       })
       .returning({ householdId: household.householdId });
 
@@ -71,8 +71,8 @@ export const createHousehold = async (currentUser: SupabaseUserSyncData) => {
      * Create Member
      */
     await tx.insert(householdMember).values({
-      memberId: crypto.randomUUID(),
-      name: user_metadata.full_name?.trim() || "Unknown",
+      householdMemberId: crypto.randomUUID(),
+      fullName: user_metadata.full_name?.trim() || "Unknown",
       role: "ADMIN",
       userId: id,
       householdId,
@@ -107,40 +107,22 @@ export const doesHouseholdExist = async (userId: string) => {
  * and name to "Unknown" if not provided.
  */
 export const updateOrCreateUser = async (currentUser: SupabaseUserSyncData) => {
-  // const userDB = await prisma.user.upsert({
-  //   where: { user_id: currentUser.id },
-  //   update: {
-  //     email: currentUser.email ?? "",
-  //     name: currentUser.user_metadata.full_name?.trim() || "Unknown",
-  //   },
-  //   create: {
-  //     user_id: currentUser.id,
-  //     email: currentUser.email ?? "",
-  //     name: currentUser.user_metadata.full_name?.trim() || "Unknown",
-  //   },
-  //   include: {
-  //     subscriptions: true,
-  //   },
-  // });
-  // return userDB;
-
   const userId = currentUser.id;
   const email = currentUser.email ?? "";
-  const name = currentUser.user_metadata?.full_name?.trim() || "Unknown";
+  const fullName = currentUser.user_metadata?.full_name?.trim() || "Unknown";
 
   await db
     .insert(user)
     .values({
       userId,
       email,
-      name,
+      fullName,
     })
     .onConflictDoUpdate({
       target: user.userId,
       set: {
         email: currentUser.email ?? "",
-        name: currentUser.user_metadata.full_name?.trim() || "Unknown",
-        updatedAt: new Date().toISOString(),
+        fullName: currentUser.user_metadata.full_name?.trim() || "Unknown",
       },
     });
 

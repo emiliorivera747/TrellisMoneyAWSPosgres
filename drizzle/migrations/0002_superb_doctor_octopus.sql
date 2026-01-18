@@ -1,0 +1,1 @@
+ALTER TABLE "HouseholdMember" RENAME COLUMN "name" TO "fullName";
