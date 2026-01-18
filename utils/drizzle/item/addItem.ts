@@ -14,8 +14,6 @@ import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerError
  */
 export const addItem = async ({
   userId,
-  memberId,
-  householdId,
   plaidItem,
 }: AddItemProps) => {
   try {
@@ -24,9 +22,6 @@ export const addItem = async ({
       .values({
         itemId: plaidItem.item_id,
         userId,
-        memberId,
-        householdId,
-        requestId: plaidItem.request_id,
         accessToken: plaidItem.access_token,
       })
       .returning();

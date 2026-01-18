@@ -19,6 +19,9 @@ import { addPlaidMetadataAccounts } from "@/utils/prisma/accounts/addAccounts";
 // Types
 import { ExchangeTokenRequestBody } from "@/types/services/plaid/plaid";
 
+// Services
+import { exchangePublicToken } from "@/services/stripe/token-exchange";
+
 /**
  * Handles the POST request to exchange a public token for an access token
  * and store the item in the database.
@@ -74,18 +77,14 @@ export async function POST(req: NextRequest) {
        * After exchanging the token we have to make sure that the item gets stored to the Database because it will contain
        * the access_token. Without the acccess token we can not delete the item from our end.
        */
-      const response = await client.itemPublicTokenExchange({
-        public_token: publicToken,
-      });
+      const response = await exchangePublicToken(publicToken);
 
       if (!response) return FailResponse("Error adding item", 500);
       const itemId = response.data.item_id;
 
       // ------ Add item to the database ------
       await addItem({
-        memberId,
         userId,
-        householdId,
         plaidItem: response.data,
       });
 
