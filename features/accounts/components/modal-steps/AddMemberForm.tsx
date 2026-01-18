@@ -24,34 +24,20 @@ import { householdService } from "../../services/householdServices";
 import PrimaryModalHeader from "@/features/accounts/components/headers/PrimaryModalHeader";
 
 /**
- * A React functional component that renders a form for adding a new household member.
- * This component utilizes the `useForm` hook with Zod schema validation to manage form state
- * and validation. Upon successful submission, it triggers the creation of a household member
- * and starts a connection using the provided `start` function from the `useConnectionContext` hook.
+ * A React component for adding a new household member using a form.
+ * Utilizes `useForm` with Zod schema validation for form state and validation.
+ * On submission, creates a household member and starts a connection via `useConnectionContext`.
  *
- * @component
- *
- * @returns {JSX.Element} The rendered AddMemberForm component.
- *
- * @remarks
- * - The form fields are dynamically generated using the `FormFieldGenerator` component.
- * - The `PrimaryModalHeader` component is used to display the form title.
- * - The `PrimarySubmitButton` is used to submit the form.
- * - The `BackToRouteButton` allows navigation back to the "owner" route.
+ * @returns {JSX.Element} AddMemberForm component.
  *
  * @example
- * ```tsx
  * <AddMemberForm />
- * ```
  *
  * @dependencies
- * - `useConnectionContext`: A custom hook to manage connection-related logic.
- * - `useForm`: A hook from `react-hook-form` for form state management.
- * - `zodResolver`: A resolver for integrating Zod schema validation with `react-hook-form`.
- * - `householdService.createHouseholdMember`: A service function to create a new household member.
- *
- * @internal
- * This component is part of the modal steps in the "Add Member" feature.
+ * - `useConnectionContext`: Manages connection logic.
+ * - `useForm`: Form state management from `react-hook-form`.
+ * - `zodResolver`: Integrates Zod validation with `react-hook-form`.
+ * - `householdService.createHouseholdMember`: Creates a new household member.
  */
 const AddMemberForm = () => {
   const { start, close } = useConnectionContext();

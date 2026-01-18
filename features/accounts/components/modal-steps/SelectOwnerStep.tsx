@@ -4,21 +4,13 @@ import { useFetchHouseholdMembers } from "@/features/accounts/hooks/useFetchHous
 import MemberCardSkeleton from "@/features/accounts/components/skeleton/MemberCardSkeleton";
 
 /**
- * A React functional component that represents the "Select Owner" step in a modal workflow.
- * This component fetches household members and displays them using the `MemberCard` component.
- * It also provides an option to add a new member using the `AddMemberCard` component.
- *
- * @component
+ * Displays the "Select Owner" step in a modal, showing household members and an option to add new ones.
  *
  * @returns {JSX.Element} The rendered component.
  *
  * @remarks
- * - Utilizes the `useFetchHouseholdMembers` hook to fetch household data.
- * - Uses the `useConnectionContext` hook to navigate between routes.
- *
- * @dependencies
- * - `MemberCard`: A component to display household members.
- * - `AddMemberCard`: A component to add a new household member.
+ * - Fetches household data using `useFetchHouseholdMembers`.
+ * - Includes `MemberCard` for displaying members and `AddMemberCard` for adding new ones.
  *
  * @example
  * ```tsx

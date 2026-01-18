@@ -1,3 +1,5 @@
+import { HouseholdMember } from "@/drizzle/schema";
+
 /**
  * Represents a member of a household.
  * @export
@@ -47,7 +49,7 @@ export interface StepProps {
    * @type {Member[]}
    * @memberof StepProps
    */
-  members: Member[];
+  members: HouseholdMember[];
   /**
    * The function to handle click events.
    * @type {(id: string) => void}

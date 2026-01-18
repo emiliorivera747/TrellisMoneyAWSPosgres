@@ -7,7 +7,7 @@ export type HasHouseholdPermission = {
 };
 
 export type CreateMemberProps = {
-  name: string;
+  fullName: string;
   email: string;
   householdId: string;
 };

@@ -1,28 +1,14 @@
 import { Member, MemberCardProp } from "@/features/accounts/types/household";
+import { HouseholdMember } from "@/drizzle/schema"; 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useConnectionContext } from "@/features/manage-connections/context/ConnectionContext";
 
 /**
- * A functional component that renders a list of household members as clickable cards.
- * Each card displays the member's avatar and name, and triggers a callback function when clicked.
+ * Renders a list of household members as clickable cards.
+ * Each card shows the member's avatar and name, triggering a callback on click.
  *
- * @param {Object} props - The props object.
- * @param {HouseholdResponse} props.householdResponse - The response object containing household data.
- * @param {Function} [props.clickFn] - An optional callback function triggered when a member card is clicked.
- *
- * @typedef {Object} StepProps
- * @property {HouseholdResponse} householdResponse - The response object containing household data.
- * @property {Function} [clickFn] - An optional callback function triggered when a member card is clicked.
- *
- * @typedef {Object} HouseholdResponse
- * @property {Array<Member>} data.members - An array of household members.
- *
- * @typedef {Object} Member
- * @property {string} name - The name of the household member.
- * @property {string} url - The URL of the member's avatar image.
- * @property {string} user_id - The unique identifier for the household member.
- *
- * @returns {JSX.Element} A JSX element representing the list of household member cards.
+ * @param {MemberCardProp} props - Contains members data.
+ * @returns {JSX.Element | null} List of member cards or null if no members.
  */
 const MemberCards = ({ members }: MemberCardProp) => {
   const { close, start } = useConnectionContext();
