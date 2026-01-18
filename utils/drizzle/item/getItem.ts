@@ -1,6 +1,11 @@
 import { db } from "@/drizzle/db";
-import { eq, and } from "drizzle-orm";
-import { item } from "@/drizzle/schema";
+import { eq, and, desc } from "drizzle-orm";
+import { item, account } from "@/drizzle/schema";
+
+type GetItemWithMemberAndInstitutionId = {
+  memberId: string;
+  institutionId: string;
+};
 
 /**
  * Retrieves the first item from the database that matches the specified member ID and institution ID.
@@ -12,17 +17,18 @@ import { item } from "@/drizzle/schema";
 export const getItemWithMemberAndInstitutionId = async ({
   memberId,
   institutionId,
-}: {
-  memberId: string;
-  institutionId: string;
-}) => {
+}: GetItemWithMemberAndInstitutionId) => {
   const items = await db
     .select()
     .from(item)
+    .innerJoin(account, eq(account.itemId, item.itemId))
     .where(
-      and(eq(item.memberId, memberId), eq(item.institutionId, institutionId))
+      and(
+        eq(account.householdMemberId, memberId),
+        eq(item.institutionId, institutionId)
+      )
     )
+    .orderBy(desc(item.createdAt))
     .limit(1);
-
   return items[0] ?? null;
 };

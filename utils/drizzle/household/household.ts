@@ -2,10 +2,6 @@ import { db } from "@/drizzle/db";
 import { eq } from "drizzle-orm";
 import { householdMember } from "@/drizzle/schema";
 
-// Types
-import { Account } from "@/types/services/plaid/plaid";
-
-
 /**
  * Fetches household member by user ID with household relations (accounts and items).
  *
@@ -19,14 +15,6 @@ import { Account } from "@/types/services/plaid/plaid";
 export const getMemberByUserId = async (userId: string) => {
   const member = await db.query.householdMember.findFirst({
     where: eq(householdMember.userId, userId),
-    with: {
-      household: {
-        with: {
-          accounts: true,
-          items: true,
-        },
-      },
-    },
   });
   return member;
 };

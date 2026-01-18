@@ -17,7 +17,6 @@ export const GET = async (req: NextRequest) => {
   return withAuth(req, async (request, user) => {
     try {
       const subscription = await getSubscriptionMinimalData(user.id);
-      console.log("subscription", subscription);
       const subscribed = hasActiveSubscription(subscription);
       return NextResponse.json(
         { subscribed, status: "success" },

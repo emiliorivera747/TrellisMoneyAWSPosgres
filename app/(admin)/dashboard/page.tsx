@@ -27,8 +27,8 @@ const DashboardContent = () => {
   /**
    * Both Request will be made in parallel
    */
-  const { netWorthData, netWorthHasError, netWorthLoading, netWorthError } =
-    useFetchNetWorth();
+  // const { netWorthData, netWorthHasError, netWorthLoading, netWorthError } =
+  //   useFetchNetWorth();
 
   // const {
   //   futureProjectionData,
@@ -48,13 +48,13 @@ const DashboardContent = () => {
             futureProjectionLoading={futureProjectionLoading}
             futureProjectionError={futureProjectionError}
           /> */}
-          <NetValueItems
+          {/* <NetValueItems
             netWorthLoading={netWorthLoading}
             netWorthData={netWorthData}
             netWorthHasError={netWorthHasError}
             netWorthError={netWorthError}
           />
-          <Footer />
+          <Footer /> */}
         </PrimaryDashboardSection>
       </div>
 

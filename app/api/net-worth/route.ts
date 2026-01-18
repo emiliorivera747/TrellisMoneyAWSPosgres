@@ -17,8 +17,6 @@ import { db } from "@/drizzle/db";
 import { eq } from "drizzle-orm";
 import { household } from "@/drizzle/schema";
 
-import { deepSnakeCase } from "@/utils/api-helpers/transformer/transformers";
-
 /**
  *
  * The API calculates the user net worth
@@ -36,9 +34,9 @@ export async function GET(req: NextRequest) {
       const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to find member", 404);
 
-      /**
-       * Get items from member
-       */
+      // /**
+      //  * Get items from member
+      //  */
       const items = member?.household?.items;
       if (!items) return FailResponse("Items not found for household", 404);
 
