@@ -12,7 +12,6 @@ import {
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
-import { getMemberByUserId } from "@/utils/prisma/household/household";
 import { getItemsWithUserId } from "@/utils/drizzle/item/getItem";
 
 /**
@@ -31,7 +30,8 @@ import { getItemsWithUserId } from "@/utils/drizzle/item/getItem";
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      const items = await getMemberByUserId(user.id);
+      
+      const items = await getItemsWithUserId(user.id);
       if (!items) return FailResponse("Failed to get items with user id", 404);
 
       /**
@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
        */
       const updatedAccounts = await updateAccounts(
         plaidAccounts,
-        household?.accounts || []
+        accountsDB 
       );
 
       if (!updatedAccounts)
