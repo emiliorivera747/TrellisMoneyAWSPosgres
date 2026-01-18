@@ -8,7 +8,7 @@ import { getUserByCustomerId } from "@/utils/drizzle/user/user";
 import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
 import { getSubscriptionFromInvoice } from "@/webhooks/stripe/helpers/invoice";
-import unixToISO from "@/utils/helper-functions/dates/unixToIso";
+import { unixToISO } from "@/utils/helper-functions/dates/conversions";
 
 // Types
 import { GenerateSubscriptionDataProps } from "@/types/utils/stripe/subscriptions";
