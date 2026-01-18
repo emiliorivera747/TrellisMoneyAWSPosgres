@@ -7,7 +7,7 @@ import {
 } from "@/utils/api-helpers/api-responses/response";
 import { withAuth } from "@/lib/protected";
 import { getMemberByUserId } from "@/utils/drizzle/household/household";
-import { updateAccounts } from "@/utils/drizzle/accounts/updateAccountsV2";
+import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
 import { getAccountsFromPlaidWithItems } from "@/services/plaid/getAccountV2";
 import { calculateNetWorth } from "@/utils/api-helpers/net-worth/calculateNetWorth";
 import { getItemsFromPlaid } from "@/services/plaid/items/items";

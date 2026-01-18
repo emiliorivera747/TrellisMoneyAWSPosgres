@@ -11,7 +11,7 @@ import {
   ErrorResponse,
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { updateAccounts } from "@/utils/drizzle/accounts/updateAccountsV2";
+import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
 import { getMemberByUserId } from "@/utils/prisma/household/household";
 import { getItemsWithUserId } from "@/utils/drizzle/item/getItem";
 
