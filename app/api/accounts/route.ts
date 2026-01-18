@@ -11,7 +11,7 @@ import {
   ErrorResponse,
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
+import { updateAccounts } from "@/utils/drizzle/accounts/updateAccountsV2";
 import { getMemberByUserId } from "@/utils/prisma/household/household";
 import { getItemsWithUserId } from "@/utils/drizzle/item/getItem";
 
@@ -37,13 +37,13 @@ export async function GET(req: NextRequest) {
       /**
        *  Go through each item and fetch the accounts
        */
-      const accounts = await getAccountsFromPlaidWithItems(items);
+      const plaidAccounts = await getAccountsFromPlaidWithItems(items);
 
       /**
        *  Store the accounts in the database
        */
       const updatedAccounts = await updateAccounts(
-        accounts,
+        plaidAccounts,
         household?.accounts || []
       );
 

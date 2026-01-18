@@ -3,7 +3,8 @@ import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 
 // Drizzle
 import { db } from "@/drizzle/db";
-import { account, Account, AccountType } from "@/drizzle/schema";
+import { account, Account } from "@/drizzle/schema";
+import { sql } from "drizzle-orm";
 
 // Utils
 import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
@@ -11,8 +12,6 @@ import { generateAccountMap } from "@/utils/api-helpers/accounts/accountMaps";
 
 // Types
 import {
-  AccountSubtype,
-  AccountType as PlaidAccountType,
   AccountBase,
   AccountBalance,
 } from "plaid";
@@ -29,80 +28,69 @@ const DEFAULT_BALANCE = {
 };
 
 /**
- * Convert Plaid account type to Drizzle AccountType enum
- */
-const convertAccountType = (plaidType: PlaidAccountType | null | undefined): AccountType => {
-  if (!plaidType) return "DEPOSITORY";
-  
-  const upperType = plaidType.toUpperCase() as AccountType;
-  // Validate it's a valid enum value, default to DEPOSITORY if not
-  const validTypes: AccountType[] = ["DEPOSITORY", "CREDIT", "LOAN", "INVESTMENT", "OTHER"];
-  return validTypes.includes(upperType) ? upperType : "DEPOSITORY";
-};
-
-/**
  * Update the accounts in the database
  * Optimized to use batch operations via transaction to reduce database round-trips
  */
 export async function updateAccounts(
-  accountBase: AccountBase[][],
-  householdAccounts: Account[]
+  accountBasePlaid: AccountBase[][],
+  accountDb: Account[]
 ) {
-  const plaidAccounts = accountBase.flat();
-  const accountMap = generateAccountMap(householdAccounts);
+  const plaidAccounts = accountBasePlaid.flat();
+  if (plaidAccounts.length === 0) return [];
+
+  const accountMap = generateAccountMap(accountDb);
+
+  // Prepare all rows in one go
+  const values = plaidAccounts.map((plaidAccount) => {
+    const balances = plaidAccount.balances ?? DEFAULT_BALANCE;
+
+    const accountId = plaidAccount.account_id;
+    const { householdMemberId = "", itemId = "" } = accountMap.get(accountId) ?? {};
+
+    return {
+      accountId,
+      householdMemberId,
+      itemId,
+      ...extractAccountFromPlaid(plaidAccount, balances),
+    };
+  });
 
   try {
-    const res = await db.transaction(async (tx) => {
-      const accountResults = [];
+    const updatedAccounts = await db
+      .insert(account)
+      .values(values)
+      .onConflictDoUpdate({
+        target: account.accountId,
+        set: {
+          householdMemberId: sql`excluded.household_member_id`,
+          itemId: sql`excluded.item_id`,
+          accountName: sql`excluded.account_name`,
+          officialName: sql`excluded.official_name`,
+          mask: sql`excluded.mask`,
+          type: sql`excluded.type`,
+          subtype: sql`excluded.subtype`,
+          availableBalance: sql`excluded.available_balance`,
+          currentBalance: sql`excluded.current_balance`,
+          limitAmount: sql`excluded.limit_amount`,
+          holderCategory: sql`excluded.holder_category`,
+        },
+      })
+      .returning();
+    return updatedAccounts;
 
-      for (const plaidAccount of plaidAccounts) {
-        const balances = plaidAccount?.balances ?? DEFAULT_BALANCE;
-        const accountData = extractAccountFromPlaid(plaidAccount, balances);
-        
-        // Id's
-        const accountId = plaidAccount.account_id;
-        const householdMemberId = accountMap.get(accountId)?.householdMemberId || "";
-        const itemId = accountMap.get(accountId)?.itemId || "";
-
-        if (!householdMemberId || !itemId) {
-          console.warn(`Missing householdMemberId or itemId for account ${accountId}`);
-          continue;
-        }
-
-        // Upsert account
-        const accountResult = await tx
-          .insert(account)
-          .values({
-            accountId,
-            householdMemberId,
-            itemId,
-            ...accountData,
-          })
-          .onConflictDoUpdate({
-            target: account.accountId,
-            set: {
-              ...accountData,
-            },
-          })
-          .returning();
-
-        accountResults.push(accountResult[0]);
-      }
-      return { accounts: accountResults };
-    });
-
-    return res.accounts;
   } catch (error) {
-    return ErrorResponse("Failed to update accounts and balances");
+    return ErrorResponse(error);
   }
 }
-
-const extractAccountFromPlaid = (account: AccountBase, balances: AccountBalance) => {
+const extractAccountFromPlaid = (
+  account: AccountBase,
+  balances: AccountBalance
+) => {
   const accountData = {
     accountName: valueOrDefault(account?.name, ""),
     officialName: account.official_name ?? null,
     mask: account.mask ?? null,
-    type: convertAccountType(account?.type),
+    type: account?.type.toUpperCase() as "DEPOSITORY" | "CREDIT" | "LOAN" | "INVESTMENT" | "OTHER",
     subtype: account?.subtype ?? null,
     availableBalance: valueOrDefault(balances?.available, 0).toString(),
     currentBalance: valueOrDefault(balances?.current, 0).toString(),
