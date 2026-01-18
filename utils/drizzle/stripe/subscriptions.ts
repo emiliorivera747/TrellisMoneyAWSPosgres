@@ -1,6 +1,6 @@
 // Drizzle
 import { db } from "@/drizzle/db";
-import { subscription, user, Subscription } from "@/drizzle/schema";
+import { subscription, Subscription } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
 // Types
