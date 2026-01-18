@@ -8,6 +8,7 @@ import { getUserByCustomerId } from "@/utils/drizzle/user/user";
 import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 import { getCustomerIdFromSub } from "@/webhooks/stripe/helpers/customers";
 import { getSubscriptionFromInvoice } from "@/webhooks/stripe/helpers/invoice";
+import unixToISO from "@/utils/helper-functions/dates/unixToIso";
 
 // Types
 import { GenerateSubscriptionDataProps } from "@/types/utils/stripe/subscriptions";
@@ -81,18 +82,20 @@ export const generateSubscriptionData = ({
   const subscriptionData = {
     subscriptionId: subscription.id,
     userId: user_id,
-    customerId: customer_id,
+    stripeCustomerId: customer_id,
     priceId: price_id ?? "",
-    status: subscription.status as Subscription["status"],
-    startDate: subscription.start_date ?? 0,
-    trialStart: subscription.trial_start ?? 0,
-    trialEnd: subscription.trial_end ?? 0,
-    endedAt: subscription.ended_at ?? 0,
-    cancelAt: subscription.cancel_at ?? 0,
+    status: subscription.status.toUpperCase() as Subscription["status"],
+    
+    startDate: unixToISO(subscription.start_date ?? 0),
+    trialStart: unixToISO(subscription.trial_start ?? 0),
+    trialEnd: unixToISO(subscription.trial_end ?? 0),
+    endedAt: unixToISO(subscription.ended_at ?? 0),
+    cancelAt: unixToISO(subscription.cancel_at ?? 0),
+
     cancelAtPeriodEnd: subscription.cancel_at_period_end ?? false,
-    canceledAt: subscription.canceled_at ?? 0,
-    createdAt: subscription.created ?? 0,
-    updatedAt: Math.floor(Date.now() / 1000),
+    canceledAt: unixToISO(subscription.canceled_at ?? 0),
+    createdAt: unixToISO(subscription.created ?? 0) || "",
+    updatedAt: unixToISO(Math.floor(Date.now() / 1000)),
   };
   return subscriptionData;
 };

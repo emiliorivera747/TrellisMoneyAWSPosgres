@@ -16,9 +16,9 @@ import { UpdateUserAndSubscriptionProps } from "@/types/utils/stripe/subscriptio
  */
 export const updateUserAndSubscription = async ({
   userId,
-  customerId,
   subscriptionData,
 }: UpdateUserAndSubscriptionProps) => {
+  
   const {
     status,
     startDate,
@@ -32,19 +32,13 @@ export const updateUserAndSubscription = async ({
   } = subscriptionData;
 
   const res = await db.transaction(async (tx) => {
-    await tx
-      .update(user)
-      .set({
-        customerId,
-      })
-      .where(eq(user.userId, userId));
+    await tx;
 
     const subscriptionRes = await tx
       .insert(subscription)
       .values({
         ...subscriptionData,
         userId,
-        customerId: customerId,
       })
       .onConflictDoUpdate({
         target: subscription.subscriptionId,
@@ -61,7 +55,6 @@ export const updateUserAndSubscription = async ({
         },
       })
       .returning();
-
     return subscriptionRes;
   });
 
@@ -81,6 +74,7 @@ export const updateSubscription = async (
   userId: string,
   subscriptionData: Subscription
 ) => {
+  
   const res = await db
     .update(subscription)
     .set({
