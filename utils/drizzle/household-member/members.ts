@@ -1,6 +1,6 @@
 import { db } from "@/drizzle/db";
-import { eq, and } from "drizzle-orm";
-import { householdMember } from "@/drizzle/schema";
+import { eq, and, inArray } from "drizzle-orm";
+import { household, householdMember, user } from "@/drizzle/schema";
 
 // types
 import { HasHouseholdPermission } from "@/types/utils/drizzle/household-member/members";
@@ -54,10 +54,23 @@ export const getMembers = async (userId: string) => {
   const memberRows = await db
     .select({
       householdMemberId: householdMember.householdMemberId,
-      householdId: householdMember.householdId,
     })
     .from(householdMember)
-    .where(eq(householdMember.userId, userId));
-
+    .leftJoin(user, eq(householdMember.userId, user.userId))
+    .leftJoin(household, eq(householdMember.householdId, household.householdId))
+    .where(
+      inArray(
+        householdMember.householdId,
+        db
+          .select({ householdId: householdMember.householdId })
+          .from(householdMember)
+          .where(eq(householdMember.userId, userId))
+      )
+    )
+    .orderBy(
+      householdMember.householdId,
+      householdMember.role,
+      household.householdName
+    );
   return memberRows;
 };

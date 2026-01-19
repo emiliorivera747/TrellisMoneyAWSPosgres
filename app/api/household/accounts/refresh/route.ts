@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
        * Get the householdMemberIds
        */
       const householdMemberIds = memberRows.map((m) => m.householdMemberId);
+      console.log(householdMemberIds)
 
       /**
        * Get items from household member ids

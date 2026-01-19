@@ -2,10 +2,12 @@ import { NextRequest } from "next/server";
 import { validateTimestamp } from "@/utils/api-helpers/projected-net-worth/validateTimestamp";
 import { withAuth } from "@/lib/protected";
 
-import prisma from "@/lib/prisma";
+import { db } from "@/drizzle/db";
+import { eq, inArray } from "drizzle-orm";
+import { household, householdMember, account, holding, item } from "@/drizzle/schema";
 
 // Util
-import { getMemberByUserId } from "@/utils/prisma/household/household";
+import { getMemberByUserId } from "@/utils/drizzle/household/household";
 import {
   SuccessResponse,
   ErrorResponse,
@@ -33,6 +35,7 @@ import { getInvestmentsWithItemsPlaid } from "@/utils/prisma/investments/getInve
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
+      
       /**
        * Extract the timestamp from the query parameters
        * and validate it to ensure it is in the correct format.
@@ -41,43 +44,89 @@ export async function GET(req: NextRequest) {
       const timestamp = searchParams.get("timestamp");
       validateTimestamp(timestamp);
 
-      const member = await getMemberByUserId(user.id, {
-        accounts: true,
-        items: true,
-        holdings: true,
-      });
+      const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to get member from user", 404);
 
-      /**
-       * Retrieve the items associated with the authenticated user.
-       * If no items are found, throw an appropriate error.
-       */
-      const items = member.household?.items;
-      if (!items || items.length === 0)
-        return FailResponse("No items found for the given household ID", 404);
+      if (!member.householdId)
+        return FailResponse("No household ID found for member", 404);
 
-      const holdings = member.household?.holdings;
-      if (!holdings)
-        return FailResponse("No items found for the given household ID", 404);
-
-      /**
-       * Fetch the investment holdings data for the user's items
-       * based on the provided timestamp.
-       */
-      await getInvestmentsWithItemsPlaid({
-        items,
-        timestamp: timestamp || "",
-        user_id: user.id,
-        holdings,
+      // Get household with accounts
+      const householdData = await db.query.household.findFirst({
+        where: eq(household.householdId, member.householdId),
+        with: {
+          householdMembers: true,
+        },
       });
 
-      const household = await prisma.household.findUnique({
-        where: { household_id: member.household_id },
-        include: { accounts: { include: { holdings: { include: { security: true } } } } },
+      if (!householdData)
+        return FailResponse("Household not found", 404);
+
+      // Get all household member IDs for this household
+      const householdMemberIds = householdData.householdMembers.map(
+        (m) => m.householdMemberId
+      );
+
+      // Get items for all household members - fetch full item records
+      const itemIds = await db
+        .selectDistinct({ itemId: item.itemId })
+        .from(item)
+        .innerJoin(account, eq(account.itemId, item.itemId))
+        .where(inArray(account.householdMemberId, householdMemberIds));
+
+      if (!itemIds || itemIds.length === 0)
+        return FailResponse("No items found for the given household ID", 404);
+
+      const items = await db
+        .select()
+        .from(item)
+        .where(inArray(item.itemId, itemIds.map((i) => i.itemId)));
+
+      // Get holdings for all household members
+      const holdingsData = await db
+        .select()
+        .from(holding)
+        .where(inArray(holding.householdMemberId, householdMemberIds));
+
+      if (!holdingsData || holdingsData.length === 0)
+        return FailResponse("No holdings found for the given household ID", 404);
+
+
+      // Fetch household with accounts, holdings, and securities
+      const householdWithData = await db.query.household.findFirst({
+        where: eq(household.householdId, member.householdId),
+        with: {
+          householdMembers: {
+            with: {
+              accounts: {
+                with: {
+                  holdings: {
+                    with: {
+                      security: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       });
 
+      if (!householdWithData)
+        return FailResponse("Household not found", 404);
+
+      // Flatten accounts from all household members
+      const allAccounts = householdWithData.householdMembers.flatMap(
+        (member) => member.accounts || []
+      );
+
+      // Create the response structure matching the Prisma format
+      const householdResponse = {
+        ...householdWithData,
+        accounts: allAccounts,
+      };
+      console.log(householdResponse)
       return SuccessResponse(
-        { household },
+        { household: householdResponse },
         "Successfully retrieved Investment"
       );
     } catch (error) {
