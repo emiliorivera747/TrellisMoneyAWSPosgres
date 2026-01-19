@@ -84,25 +84,25 @@ export async function POST(req: NextRequest) {
        */
       const response = await exchangePublicToken(publicToken);
 
-      if (!response || !response.data) {
+      if (!response || !response.data)
         return FailResponse("Error exchanging token with Plaid", 500);
-      }
 
       const itemId = response.data.item_id;
-      if (!itemId) {
-        return FailResponse("Invalid response from Plaid: missing item_id", 500);
-      }
+      if (!itemId)
+        return FailResponse(
+          "Invalid response from Plaid: missing item_id",
+          500
+        );
 
       // Validate required account fields before proceeding
       const invalidAccounts = metadata.accounts.filter(
         (acc) => !acc.id || !acc.name || !acc.type
       );
-      if (invalidAccounts.length > 0) {
+      if (invalidAccounts.length > 0)
         return FailResponse(
           "One or more accounts are missing required fields (id, name, type)",
           400
         );
-      }
 
       // ------ Add item to the database ------
       const createdItem = await addItem({
@@ -110,9 +110,8 @@ export async function POST(req: NextRequest) {
         plaidItem: response.data,
       });
 
-      if (!createdItem) {
+      if (!createdItem)
         return FailResponse("Failed to save item to database", 500);
-      }
 
       // ----- Add accounts -----
       await addPlaidMetadataAccounts({
