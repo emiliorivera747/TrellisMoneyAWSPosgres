@@ -57,6 +57,76 @@ export const getItemsByHouseholdMemberIds = async (
 };
 
 /**
+ * Retrieves items with their associated household members.
+ * Items are linked to members through accounts.
+ * 
+ * @param householdMemberIds - Array of household member IDs to get items for
+ * @returns A promise that resolves to an array of items with their associated members
+ */
+export const getItemsWithMembersByHouseholdMemberIds = async (
+  householdMemberIds: string[]
+) => {
+  // Get items associated with these household members
+  const items = await db
+    .selectDistinct({
+      itemId: item.itemId,
+      accessToken: item.accessToken,
+      institutionId: item.institutionId,
+      institutionName: item.institutionName,
+      errorCode: item.errorCode,
+      userId: item.userId,
+      webhook: item.webhook,
+      errorType: item.errorType,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+    })
+    .from(item)
+    .innerJoin(account, eq(account.itemId, item.itemId))
+    .where(inArray(account.householdMemberId, householdMemberIds));
+
+  if (items.length === 0) {
+    return [];
+  }
+
+  // Get all unique item IDs
+  const itemIds = items.map((i) => i.itemId);
+
+  // Get all accounts for these items
+  const accounts = await db
+    .select()
+    .from(account)
+    .where(inArray(account.itemId, itemIds));
+
+  // Get unique household member IDs from accounts
+  const memberIdsFromAccounts = [...new Set(accounts.map((acc) => acc.householdMemberId))];
+
+  // Get household members
+  const members = await db
+    .select()
+    .from(householdMember)
+    .where(inArray(householdMember.householdMemberId, memberIdsFromAccounts));
+
+  // Create a map of itemId -> members
+  const itemMembersMap = new Map<string, typeof members>();
+
+  // For each item, find which members have accounts linked to it
+  items.forEach((itemData) => {
+    const itemAccounts = accounts.filter((acc) => acc.itemId === itemData.itemId);
+    const memberIdsForItem = itemAccounts.map((acc) => acc.householdMemberId);
+    const membersForItem = members.filter((member) =>
+      memberIdsForItem.includes(member.householdMemberId)
+    );
+    itemMembersMap.set(itemData.itemId, membersForItem);
+  });
+
+  // Combine items with their members
+  return items.map((itemData) => ({
+    ...itemData,
+    members: itemMembersMap.get(itemData.itemId) || [],
+  }));
+};
+
+/**
  * Retrieves an item along with its associated household and household members filtered by a specific user ID.
  * 
  * In the Drizzle schema, items are linked to users directly, and households are accessed through accounts.

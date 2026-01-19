@@ -1,5 +1,5 @@
-import { ItemWithMembers } from "@/types/prisma/prisma";
 import { ApiResponse } from "@/types/services/responses/api-responses";
+import { Item } from "@/drizzle/schema";
 
 /**
  * Represents the response structure for getting items.
@@ -7,4 +7,4 @@ import { ApiResponse } from "@/types/services/responses/api-responses";
  * @interface GetItemsResponse
  */
 export interface GetItemsResponse
-  extends ApiResponse<{ items: ItemWithMembers[] }> {}
+  extends ApiResponse<{ items: Item[] }> {}

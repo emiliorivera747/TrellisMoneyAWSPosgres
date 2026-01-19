@@ -7,7 +7,7 @@ import {
 } from "@/utils/api-helpers/api-responses/response";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 import { getMembers } from "@/utils/drizzle/household-member/members";
-import { getItemsByHouseholdMemberIds } from "@/utils/drizzle/item/getItem";
+import { getItemsWithMembersByHouseholdMemberIds } from "@/utils/drizzle/item/getItem";
 import { addItem } from "@/utils/drizzle/item/addItem";
 
 /**
@@ -89,26 +89,27 @@ export async function GET(req: NextRequest) {
     try {
       // Get household members for the user
       const memberRows = await getMembers(user.id);
-      if (memberRows.length === 0) {
-        return FailResponse("No household membership found", 404);
-      }
-
+      if (memberRows.length === 0) return FailResponse("No household membership found", 404);
+    
       // Get household member IDs
       const householdMemberIds = memberRows.map((m) => m.householdMemberId);
 
-      // Get items associated with these household members
-      const items = await getItemsByHouseholdMemberIds(householdMemberIds);
-      if (items.length === 0) {
+      // Get items with their associated members
+      const itemsWithMembers = await getItemsWithMembersByHouseholdMemberIds(householdMemberIds);
+      if (itemsWithMembers.length === 0) {
         return FailResponse("No items found", 404);
       }
 
-      // Remove access_token from response for security
-      const itemsWithoutToken = items.map((item) => {
-        const { accessToken, ...rest } = item;
-        return rest;
+      // Format response to only include item and member(s)
+      const itemsWithMember = itemsWithMembers.map((itemData) => {
+        const { accessToken, members, ...itemWithoutToken } = itemData;
+        return {
+          item: itemWithoutToken,
+          member: members.length > 0 ? members[0] : null, // Return first member or null
+        };
       });
 
-      return SuccessResponse({ items: itemsWithoutToken }, "Items retrieved successfully");
+      return SuccessResponse({ items: itemsWithMember }, "Items retrieved successfully");
     } catch (error) {
       return ErrorResponse(getServerErrorMessage(error));
     }
