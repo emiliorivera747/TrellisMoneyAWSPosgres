@@ -1,5 +1,4 @@
-import { Account } from "@/app/generated/prisma/client";
-
+import { Account } from "@/drizzle/schema";
 export interface AccountListProps {
   accountsError: Error | null;
   isLoadingAccounts: boolean;
@@ -12,6 +11,5 @@ export interface AccountGroupedByType {
 }
 
 export interface UseGroupAccountsProps {
-  accounts: Account[];
+  accounts: Account[] | undefined;
 }
-

@@ -1,7 +1,4 @@
 import { NextRequest } from "next/server";
-
-import { getAccountsFromPlaidWithItems } from "@/services/plaid/getAccountV2";
-
 import { withAuth } from "@/lib/protected";
 
 // Utils
@@ -11,8 +8,6 @@ import {
   ErrorResponse,
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
-import { getItemsWithUserId } from "@/utils/drizzle/item/getItem";
 
 import { getMembers } from "@/utils/drizzle/household-member/members";
 import { getItemsByHouseholdMemberIds } from "@/utils/drizzle/item/getItem";

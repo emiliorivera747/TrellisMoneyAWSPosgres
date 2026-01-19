@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Account } from "@/types/services/plaid/plaid";
+import { Account } from "@/drizzle/schema";
 
 import {
   AccountGroupedByType,
@@ -15,15 +15,16 @@ import {
  * @returns
  */
 const useGroupAccounts = ({ accounts }: UseGroupAccountsProps) => {
+  if (!accounts) return {};
   const [groups, setGroups] = useState<AccountGroupedByType | {}>({});
 
   useEffect(() => {
     const groupedAccounts = accounts?.reduce(
       (acc: { [key: string]: Account[] }, account) => {
         const { type } = account;
-        
+
         if (!type) return acc;
-        
+
         if (!acc[type]) acc[type] = [];
 
         acc[type].push(account);

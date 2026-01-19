@@ -1,6 +1,6 @@
 import { API_URL } from "@/utils/global-variables/globals";
-import { ApiResponse } from "@/types/api-responses/accounts";
-import { Account } from "@/app/generated/prisma/client";
+import { ApiResponse } from "@/types/services/responses/api-responses";
+import { Account } from "@/drizzle/schema";
 
 /**
  * Fetches the list of accounts from the API.
@@ -11,7 +11,6 @@ import { Account } from "@/app/generated/prisma/client";
 const fetchAccounts = async (): Promise<
   ApiResponse<{ accounts: Account[] }>
 > => {
-  
   const res = await fetch(`${API_URL}/accounts`);
 
   if (!res.ok)

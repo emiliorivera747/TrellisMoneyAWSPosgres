@@ -5,6 +5,7 @@ import AccountsList from "@/features/accounts/components/list/AccountsList";
 import PrimaryAccountSection from "@/features/accounts/components/sections/PrimaryAccountSection";
 import AssetsAndLiabilitiesCard from "@/features/accounts/components/cards/AssetsAndLiabilitiesCard";
 import AddConnectionButtonAccount from "@/features/accounts/components/buttons/AddConnectionButtonAccount";
+import RefreshAccounts from "@/features/accounts/components/buttons/RefreshAccounts";
 
 // Section
 import SecondaryAccountSection from "@/features/accounts/components/sections/SecondaryAccountSection";
@@ -30,13 +31,14 @@ const page = () => {
   } = useFetchAccounts();
 
   const accounts = accountsResponse?.data?.accounts;
-  const { groups = {} } = useGroupAccounts({ accounts });
+  const { groups = {} } = useGroupAccounts({ accounts: accounts });
 
   return (
     <section className="h-screen mx-[2%] overflow-y-scroll no-scrollbar flex flex-row gap-8">
       <PrimaryAccountSection>
         <AccountNetWorthGraph />
         <div className="pt-8 w-full gap-8">
+          <RefreshAccounts />
           <AccountsList
             groups={groups}
             isLoadingAccounts={isLoadingAccounts}
