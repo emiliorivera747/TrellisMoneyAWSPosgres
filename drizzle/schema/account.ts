@@ -44,15 +44,15 @@ export const account = pgTable(
     availableBalance: numeric("available_balance", {
       precision: 28,
       scale: 8,
-    }),
+    }).default(sql`0`),
     currentBalance: numeric("current_balance", {
       precision: 28,
       scale: 8,
-    }),
+    }).default(sql`0`),
     limitAmount: numeric("limit_amount", {
       precision: 28,
       scale: 8,
-    }),
+    }).default(sql`0`),
     mask: varchar("mask", { length: 4 }),
     accountName: text("account_name").notNull(),
     officialName: text("official_name"),
@@ -61,7 +61,7 @@ export const account = pgTable(
     expectedAnnualReturnRate: numeric("expected_annual_return_rate", {
       precision: 6,
       scale: 4,
-    }),
+    }).default(sql`0.06`),
     holderCategory: varchar("holder_category", { length: 20 }),
     persistentAccountId: text("persistent_account_id"),
     verificationStatus: accountVerificationStatus("verification_status"),

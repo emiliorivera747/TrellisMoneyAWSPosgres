@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { withAuth } from "@/lib/protected";
 import {
   SuccessResponse,
@@ -6,41 +6,29 @@ import {
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
-import { getMemberByUserId } from "@/utils/prisma/household/household";
+import { getMembers } from "@/utils/drizzle/household-member/members";
+import { getItemsByHouseholdMemberIds } from "@/utils/drizzle/item/getItem";
+import { addItem } from "@/utils/drizzle/item/addItem";
 
 /**
  * Handles the POST request to create a new item in the database.
  *
- * This function expects a JSON payload in the request body containing an `item` object
- * with various properties. It uses Prisma to create a new record in the `item` table
- * with the provided data. If any property is missing, it defaults to an empty string.
+ * This function expects a JSON payload in the request body containing a `plaidItem` object
+ * with Plaid item details (from ItemPublicTokenExchangeResponse).
+ * It uses Drizzle to create a new record in the `item` table.
  *
  * @param req - The incoming HTTP request object of type `NextRequest`.
- * @returns A JSON response containing a success message and the created item object,
- *          or an error message with a 500 status code in case of failure.
+ * @returns A JSON response containing a success message and the created item object
+ *          (without access_token), or an error message with a 500 status code in case of failure.
  *
  * Example usage:
  * ```json
  * POST /api/plaid/items
  * {
- *   "item": {
+ *   "plaidItem": {
  *     "item_id": "123",
- *     "institution_id": "456",
- *     "available_products": ["transactions"],
- *     "billed_products": ["auth"],
- *     "products": ["identity"],
- *     "error": null,
- *     "user_id": "user_789",
  *     "access_token": "access-token-abc",
- *     "update_type": "background",
- *     "consent_expiration_time": "2023-12-31T23:59:59Z",
- *     "institution_name": "Bank Name",
- *     "webhook": "https://example.com/webhook",
- *     "auth_method": "oauth",
- *     "consented_products": ["transactions"],
- *     "consented_data_scopes": ["read"],
- *     "consented_use_cases": ["personal_finance"],
- *     "request_id": "req_123"
+ *     ...
  *   }
  * }
  * ```
@@ -48,52 +36,48 @@ import { getMemberByUserId } from "@/utils/prisma/household/household";
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      // const body = await request.json();
-      // const tempItem = body.item;
+      const body = await request.json();
+      const { plaidItem } = body;
 
-      // // Create the item
-      // const item = await prisma.item.create({
-      //   data: {
-      //     item_id: tempItem.item_id || "",
-      //     institution_id: tempItem.institution_id || "",
-      //     available_products: tempItem.available_products || "",
-      //     billed_products: tempItem.billed_products || "",
-      //     products: tempItem.products || "",
-      //     error: tempItem.error || "",
-      //     user_id: user?.id || "", // Use the authenticated user's ID
-      //     access_token: tempItem.access_token || "",
-      //     update_type: tempItem.update_type || "",
-      //     consent_expiration_time: tempItem.consent_expiration_time || "",
-      //     institution_name: tempItem.institution_name || "",
-      //     webhook: tempItem.webhook || "",
-      //     auth_method: tempItem.auth_method || "",
-      //     consented_products: tempItem.consented_products || "",
-      //     consented_data_scopes: tempItem.consented_data_scopes || "",
-      //     consented_use_cases: tempItem.consented_use_cases || "",
-      //     request_id: tempItem.request_id || "",
-      //   },
-      // });
+      if (!plaidItem || !plaidItem.item_id || !plaidItem.access_token) {
+        return FailResponse("Missing required fields: plaidItem with item_id and access_token", 400);
+      }
 
-      return NextResponse.json({ message: "Hello, World!", item: [] });
-    } catch (error) {
-      return NextResponse.json(
-        { error: (error as any).message },
-        { status: 500 }
+      // Create the item using Drizzle
+      const createdItem = await addItem({
+        userId: user.id,
+        plaidItem,
+      });
+
+      if (!createdItem) {
+        return FailResponse("Failed to create item", 500);
+      }
+
+      // Remove access_token from response for security
+      const { accessToken, ...itemWithoutToken } = createdItem;
+
+      return SuccessResponse(
+        { item: itemWithoutToken },
+        "Item created successfully"
       );
+    } catch (error) {
+      return ErrorResponse(getServerErrorMessage(error));
     }
   });
 }
 
 /**
- * Handles the GET request to retrieve Plaid items associated with the authenticated user.
+ * Handles the GET request to retrieve Plaid items associated with the authenticated user's household.
  *
  * @param req - The incoming Next.js request object.
- * @returns A promise that resolves to a response containing the user's Plaid items
- *          or an appropriate error response.
+ * @returns A promise that resolves to a response containing the user's household Plaid items
+ *          (without access_token) or an appropriate error response.
  *
  * @remarks
  * - This function uses the `withAuth` middleware to ensure the user is authenticated.
- * - It queries the database for Plaid items associated with the authenticated user's ID.
+ * - It queries the database for Plaid items associated with the user's household members.
+ * - Items are retrieved through household members (via accounts) to get all items in the household.
+ * - Access tokens are excluded from the response for security.
  * - If no items are found, it returns a 404 response with a failure message.
  * - In case of an error during the database query, it returns an error response with
  *   the appropriate server error message.
@@ -103,27 +87,28 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      // const member = await getMemberByUserId(user.id, {
-      //   accounts: true,
-      //   items: {
-      //     include: {
-      //       member: true,
-      //     },
-      //   },
-      // });
+      // Get household members for the user
+      const memberRows = await getMembers(user.id);
+      if (memberRows.length === 0) {
+        return FailResponse("No household membership found", 404);
+      }
 
-      // if (!member) return FailResponse("Failed to get member from user", 404);
+      // Get household member IDs
+      const householdMemberIds = memberRows.map((m) => m.householdMemberId);
 
-      // const items = member.household?.items?.map((item: Item) => {
-      //   const { access_token, ...rest } = item;
-      //   return {
-      //     ...rest,
-      //   };
-      // });
+      // Get items associated with these household members
+      const items = await getItemsByHouseholdMemberIds(householdMemberIds);
+      if (items.length === 0) {
+        return FailResponse("No items found", 404);
+      }
 
-      // if (!items) return FailResponse("Failed to get items", 404);
+      // Remove access_token from response for security
+      const itemsWithoutToken = items.map((item) => {
+        const { accessToken, ...rest } = item;
+        return rest;
+      });
 
-      return SuccessResponse({ "hey"});
+      return SuccessResponse({ items: itemsWithoutToken }, "Items retrieved successfully");
     } catch (error) {
       return ErrorResponse(getServerErrorMessage(error));
     }

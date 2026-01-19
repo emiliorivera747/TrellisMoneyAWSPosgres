@@ -1,14 +1,16 @@
 import { NextRequest } from "next/server";
 
-// Libe
+// Lib
 import { withAuth } from "@/lib/protected";
-import prisma from "@/lib/prisma";
+import { db } from "@/drizzle/db";
+import { item } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
 
 // Services
 import { removeItemFromPlaid } from "@/services/plaid/items/items";
 
 // Utils
-import getItemWithHousehold from "@/utils/prisma/item/getItemWithHousehold";
+import { getItemWithHousehold } from "@/utils/drizzle/item/getItem";
 import { getMemberInfo } from "@/utils/api-helpers/item/getMemberInfo";
 
 import {
@@ -49,15 +51,15 @@ export async function POST(req: NextRequest) {
       /**
        * Get the item with all of its populated objects
        */
-      const item = await getItemWithHousehold({ item_id, user_id });
+      const itemData = await getItemWithHousehold({ item_id, user_id });
 
       /**
        *  If item not found return 404 error
        */
-      if (!item)
+      if (!itemData)
         return FailResponse("Item not found or you do not have access to it.", 404);
 
-      const { isOwner, isAdmin } = getMemberInfo(item, user_id);
+      const { isOwner, isAdmin } = getMemberInfo(itemData, user_id);
 
       /**
        * Is the current user the owner of the item? or
@@ -65,8 +67,8 @@ export async function POST(req: NextRequest) {
        */
       if (isOwner || isAdmin) {
         try {
-          await removeItemFromPlaid(item.access_token);
-          await prisma.item.delete({ where: { item_id } });
+          await removeItemFromPlaid(itemData.accessToken);
+          await db.delete(item).where(eq(item.itemId, item_id));
           return SuccessResponse(null, "Item successfully removed.", 200);
         } catch (error) {
           return FailResponse(
