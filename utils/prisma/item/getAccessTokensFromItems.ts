@@ -1,4 +1,4 @@
-// import { Item } from "@/app/generated/prisma/client";
+import { Item } from "@/drizzle/schema";
 
 /**
  *
@@ -9,7 +9,7 @@
  */
 export const getAllAccessTokens = (items: Item[]) => {
   const accessTokens = items
-    .map((item) => item.access_token)
+    .map((item) => item.accessToken)
     .filter((token): token is string => token !== null && token !== undefined);
   return accessTokens;
 };
