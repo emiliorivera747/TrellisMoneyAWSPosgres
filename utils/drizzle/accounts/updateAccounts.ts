@@ -11,10 +11,7 @@ import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDe
 import { generateAccountMap } from "@/utils/api-helpers/accounts/accountMaps";
 
 // Types
-import {
-  AccountBase,
-  AccountBalance,
-} from "plaid";
+import { AccountBase, AccountBalance } from "plaid";
 
 /**
  * Default balance object
@@ -40,12 +37,15 @@ export async function updateAccounts(
 
   const accountMap = generateAccountMap(accountDb);
 
-  // Prepare all rows in one go
+  /**
+   * Prepare all of the rows in one go
+   */
   const values = plaidAccounts.map((plaidAccount) => {
     const balances = plaidAccount.balances ?? DEFAULT_BALANCE;
 
     const accountId = plaidAccount.account_id;
-    const { householdMemberId = "", itemId = "" } = accountMap.get(accountId) ?? {};
+    const { householdMemberId = "", itemId = "" } =
+      accountMap.get(accountId) ?? {};
 
     return {
       accountId,
@@ -77,11 +77,12 @@ export async function updateAccounts(
       })
       .returning();
     return updatedAccounts;
-
   } catch (error) {
     return ErrorResponse(error);
   }
 }
+
+
 const extractAccountFromPlaid = (
   account: AccountBase,
   balances: AccountBalance
@@ -90,7 +91,12 @@ const extractAccountFromPlaid = (
     accountName: valueOrDefault(account?.name, ""),
     officialName: account.official_name ?? null,
     mask: account.mask ?? null,
-    type: account?.type.toUpperCase() as "DEPOSITORY" | "CREDIT" | "LOAN" | "INVESTMENT" | "OTHER",
+    type: account?.type.toUpperCase() as
+      | "DEPOSITORY"
+      | "CREDIT"
+      | "LOAN"
+      | "INVESTMENT"
+      | "OTHER",
     subtype: account?.subtype ?? null,
     availableBalance: valueOrDefault(balances?.available, 0).toString(),
     currentBalance: valueOrDefault(balances?.current, 0).toString(),

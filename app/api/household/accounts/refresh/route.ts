@@ -9,11 +9,8 @@ import {
   ErrorResponse,
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
-
-import { getMembers } from "@/utils/drizzle/household-member/members";
-import { getItemsByHouseholdMemberIds } from "@/utils/drizzle/item/getItem";
 import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
+import { getItemsWithUserId } from "@/utils/drizzle/item/getItem";
 
 /**
  * POST /api/household/accounts/refresh
@@ -27,24 +24,8 @@ import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      /**
-       * Get the member rows
-       */
-      const memberRows = await getMembers(user.id);
-      if (memberRows.length === 0)
-        return FailResponse("No household membership found", 404);
-
-      /**
-       * Get the householdMemberIds
-       */
-      const householdMemberIds = memberRows.map((m) => m.householdMemberId);
-
-      /**
-       * Get items from household member ids
-       */
-      const items = await getItemsByHouseholdMemberIds(householdMemberIds);
-      if (items.length === 0)
-        return FailResponse("No connected financial institutions found", 404);
+      const items = await getItemsWithUserId(user.id);
+      if (!items) return FailResponse("Could not find the users items", 404);
 
       /**
        * Get the accounts from the database
@@ -73,7 +54,7 @@ export async function POST(req: NextRequest) {
         "Household accounts refreshed successfully"
       );
     } catch (error) {
-      return ErrorResponse(getServerErrorMessage(error));
+      return ErrorResponse(error);
     }
   });
 }

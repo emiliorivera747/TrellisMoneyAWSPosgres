@@ -116,7 +116,7 @@ export async function POST(req: NextRequest) {
       // ----- Add accounts -----
       await addPlaidMetadataAccounts({
         itemId,
-        plaidAccounts: metadata.accounts,
+        plaidAccountsMetadata: metadata.accounts,
         householdMemberId,
       });
 
