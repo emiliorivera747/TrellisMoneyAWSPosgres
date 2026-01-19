@@ -32,7 +32,7 @@ const AccountsList = ({
           <div key={type}>
             <AccountListHeader type={type} />
             {accounts?.map((account) => {
-              return <Accountcard key={account.account_id} account={account} />;
+              return <Accountcard key={account.accountId} account={account} />;
             })}
           </div>
         );

@@ -1,4 +1,3 @@
-import { Account } from "@/types/services/plaid/plaid";
 import { FaAirbnb } from "react-icons/fa";
 import {
   AlertDialog,
@@ -12,6 +11,7 @@ import ModalHeader from "@/components/headers/ModalHeader";
 import { transactions } from "@/features/accounts/utils/data/mockTransactionData";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 import { useRemoveItem } from "@/hooks/react-query/items/useRemoveItem";
+import { Account } from "@/drizzle/schema";
 
 /**
  * Renders an account card with details and a modal for managing connections and viewing transactions.
@@ -36,7 +36,7 @@ const AccountCard = ({ account }: { account: Account }) => {
       <AlertDialogTrigger className="w-full">
         {" "}
         <div
-          key={account.account_id}
+          key={account.accountId}
           className="p-2 border rounded-[12px] grid grid-cols-3 mb-4  border-tertiary-200 hover:shadow-lg transition duration-500 ease-in-out  w-full"
         >
           <div className="flex flex-col w-[8rem] h-[4rem] bg-gradient-to-r from-primary-500 to-primary-800 rounded-[8px] items-center justify-center text-white py-1 pb-2">
@@ -44,16 +44,16 @@ const AccountCard = ({ account }: { account: Account }) => {
             <FaAirbnb size={100} />
           </div>
           <div className="flex items-center justify-start font-medium text-[0.9rem] text-tertiary-1000">
-            {account.name}
+            {account.accountName}
           </div>
           <div className="flex items-center justify-end font-light text-tertiary-800 pr-4">
-            {convertToMoney(Number(account.current))}
+            {convertToMoney(Number(account.currentBalance))}
           </div>
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent className="h-[70vh] w-[60vw] overflow-scroll max-w-screen rounded-[12px]">
         <AlertDialogHeader>
-          <ModalHeader title={account.name || ""} />
+          <ModalHeader title={account.accountName || ""} />
 
           <div className="">
             <div className="text-md font-semibold border-b border-tertiary-200 pb-4 mx-2 mb-4">
@@ -65,7 +65,7 @@ const AccountCard = ({ account }: { account: Account }) => {
                 className="px-4 py-4 border rounded-[12px]
               mb-4 ml-2 text-red-600 font-semibold hover:bg-tertiary-200"
                 onClick={() => {
-                  if (account.item_id) mutateItem(account.item_id);
+                  if (account.itemId) mutateItem(account.itemId);
                 }}
               >
                 Delete Connection

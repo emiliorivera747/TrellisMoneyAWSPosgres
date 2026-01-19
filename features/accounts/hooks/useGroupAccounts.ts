@@ -15,7 +15,6 @@ import {
  * @returns
  */
 const useGroupAccounts = ({ accounts }: UseGroupAccountsProps) => {
-  if (!accounts) return {};
   const [groups, setGroups] = useState<AccountGroupedByType | {}>({});
 
   useEffect(() => {
