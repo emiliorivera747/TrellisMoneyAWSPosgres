@@ -49,3 +49,15 @@ export const hasHouseholdPermission = async ({
 
   return allowed_roles.includes(member[0].role);
 };
+
+export const getMembers = async (userId: string) => {
+  const memberRows = await db
+    .select({
+      householdMemberId: householdMember.householdMemberId,
+      householdId: householdMember.householdId,
+    })
+    .from(householdMember)
+    .where(eq(householdMember.userId, userId));
+
+  return memberRows;
+};

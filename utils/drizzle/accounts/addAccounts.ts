@@ -1,5 +1,5 @@
 import { db } from "@/drizzle/db";
-import { account, balance } from "@/drizzle/schema";
+import { account} from "@/drizzle/schema";
 import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 
 interface AddAccountsParams {

@@ -1,5 +1,5 @@
 import { db } from "@/drizzle/db";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, inArray } from "drizzle-orm";
 import { item, account } from "@/drizzle/schema";
 
 type GetItemWithMemberAndInstitutionId = {
@@ -35,5 +35,23 @@ export const getItemWithMemberAndInstitutionId = async ({
 
 export const getItemsWithUserId = async (userId: string) => {
   const items = await db.select().from(item).where(eq(item.userId, userId));
+  return items;
+};
+
+export const getItemsByHouseholdMemberIds = async (
+  householdMemberIds: string[]
+) => {
+  const items = await db
+    .selectDistinct({
+      itemId: item.itemId,
+      accessToken: item.accessToken,
+      institutionId: item.institutionId,
+      institutionName: item.institutionName,
+      errorCode: item.errorCode,
+    })
+    .from(item)
+    .innerJoin(account, eq(account.itemId, item.itemId))
+    .where(inArray(account.householdMemberId, householdMemberIds));
+
   return items;
 };

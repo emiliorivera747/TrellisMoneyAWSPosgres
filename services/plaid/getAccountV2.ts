@@ -36,7 +36,7 @@ export const getAccounts = async (items: any[]): Promise<AccountBase[][]> => {
  * @returns
  */
 export const getAccountsFromPlaidWithItems = async (
-  items: Item[]
+  items: Pick<Item, "accessToken">[] // Only require the accessToken field from Item
 ): Promise<AccountBase[][]> => {
   const accessTokens = getAllAccessTokens(items);
 
