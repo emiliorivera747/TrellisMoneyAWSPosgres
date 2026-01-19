@@ -14,6 +14,10 @@ import {
 import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
 import { getItemsWithUserId } from "@/utils/drizzle/item/getItem";
 
+import { getMembers } from "@/utils/drizzle/household-member/members";
+import { getItemsByHouseholdMemberIds } from "@/utils/drizzle/item/getItem";
+import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
+
 /**
  * Handles authenticated GET requests to retrieve and update household accounts.
  *
@@ -30,30 +34,32 @@ import { getItemsWithUserId } from "@/utils/drizzle/item/getItem";
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      
-      const items = await getItemsWithUserId(user.id);
-      if (!items) return FailResponse("Failed to get items with user id", 404);
+      /**
+       * Get the member rows
+       */
+      const memberRows = await getMembers(user.id);
+      if (memberRows.length === 0)
+        return FailResponse("No household membership found", 404);
 
       /**
-       *  Go through each item and fetch the accounts
+       * Get the householdMemberIds
        */
-      const plaidAccounts = await getAccountsFromPlaidWithItems(items);
+      const householdMemberIds = memberRows.map((m) => m.householdMemberId);
 
       /**
-       *  Store the accounts in the database
+       * Get items from household member ids
        */
-      const updatedAccounts = await updateAccounts(
-        plaidAccounts,
-        accountsDB 
-      );
+      const items = await getItemsByHouseholdMemberIds(householdMemberIds);
+      if (items.length === 0)
+        return FailResponse("No connected financial institutions found", 404);
 
-      if (!updatedAccounts)
-        return FailResponse("Failed to update account", 500);
+      /**
+       * Get Accounts
+       */
+      const accountsDb = getAccountsFromItems(items);
+      if (!accountsDb) return FailResponse("Failed to update account", 500);
 
-      return SuccessResponse(
-        { accounts: updatedAccounts },
-        "Retrieved accounts"
-      );
+      return SuccessResponse({ accounts: accountsDb }, "Retrieved accounts");
     } catch (error) {
       return ErrorResponse(getServerErrorMessage(error));
     }
