@@ -17,6 +17,21 @@ export const addPlaidMetadataAccounts = async ({
 }: AddAccountsParams) => {
   try {
     const accountAdded = [];
+    
+    // Validate all accounts before inserting any
+    for (const plaidAccount of plaidAccounts) {
+      if (!plaidAccount.id) {
+        throw new Error("Account ID is required");
+      }
+      if (!plaidAccount.name) {
+        throw new Error(`Account name is required for account ${plaidAccount.id}`);
+      }
+      if (!plaidAccount.type) {
+        throw new Error(`Account type is required for account ${plaidAccount.id}`);
+      }
+    }
+
+    // Insert all accounts
     for (const plaidAccount of plaidAccounts) {
       const createdAccount = await db.insert(account).values({
         itemId,
@@ -25,7 +40,7 @@ export const addPlaidMetadataAccounts = async ({
         accountName: plaidAccount.name,
         mask: plaidAccount.mask || null,
         type: plaidAccount.type,
-        subtype: plaidAccount.subtype,
+        subtype: plaidAccount.subtype || null,
         verificationStatus: plaidAccount.verification_status || null,
       } as AccountInsert);
       accountAdded.push(createdAccount);
