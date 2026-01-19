@@ -5,46 +5,46 @@ import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMon
 import Link from "next/link";
 
 const page = () => {
-  const { holdingsData, holdingsError, holdingsLoading, holdingsHasError } =
-    useFetchHoldings();
+  // const { holdingsData, holdingsError, holdingsLoading, holdingsHasError } =
+  //   useFetchHoldings();
 
-  const [groupedHoldings, setGroupedHolding] = useState<
-    { name: string; totalShares: number; totalInstitutionValue: number }[]
-  >([]);
+  // const [groupedHoldings, setGroupedHolding] = useState<
+  //   { name: string; totalShares: number; totalInstitutionValue: number }[]
+  // >([]);
 
-  useEffect(() => {
-    const accounts = holdingsData?.data?.household.accounts;
-    const holdings = accounts?.flatMap((account) => account?.holdings);
+  // useEffect(() => {
+  //   const accounts = holdingsData?.data?.household.accounts;
+  //   const holdings = accounts?.flatMap((account) => account?.holdings);
 
-    const groups = Object.groupBy(
-      holdings ?? [],
-      (holding) => holding.security?.ticker_symbol ?? "Unknown"
-    );
+  //   const groups = Object.groupBy(
+  //     holdings ?? [],
+  //     (holding) => holding.security?.ticker_symbol ?? "Unknown"
+  //   );
 
-    const groupedResults = Object.entries(groups).map(([key, holdings]) => {
-      const totalShares = (holdings ?? []).reduce(
-        (acc, holding) => acc + Number(holding?.quantity ?? 0),
-        0
-      );
+  //   const groupedResults = Object.entries(groups).map(([key, holdings]) => {
+  //     const totalShares = (holdings ?? []).reduce(
+  //       (acc, holding) => acc + Number(holding?.quantity ?? 0),
+  //       0
+  //     );
 
-      const totalInstitutionValue = (holdings ?? []).reduce(
-        (acc, holding) => acc + (Number(holding?.institution_value) ?? 0),
-        0
-      );
+  //     const totalInstitutionValue = (holdings ?? []).reduce(
+  //       (acc, holding) => acc + (Number(holding?.institution_value) ?? 0),
+  //       0
+  //     );
 
-      return {
-        name: key,
-        totalShares,
-        totalInstitutionValue,
-      };
-    });
+  //     return {
+  //       name: key,
+  //       totalShares,
+  //       totalInstitutionValue,
+  //     };
+  //   });
 
-    let sorted = groupedResults.sort(
-      (a, b) => b.totalInstitutionValue - a.totalInstitutionValue
-    );
+  //   let sorted = groupedResults.sort(
+  //     (a, b) => b.totalInstitutionValue - a.totalInstitutionValue
+  //   );
 
-    setGroupedHolding(sorted);
-  }, [holdingsData]);
+  //   setGroupedHolding(sorted);
+  // }, [holdingsData]);
 
   return (
     <section className="h-screen overflow-scroll">
@@ -52,7 +52,7 @@ const page = () => {
         <header className="font-bold text-xl pb-4 mt-[3.4rem]">
           All Investments
         </header>
-        <pre className="text-xs whitespace-pre-wrap flex flex-col gap-2">
+        {/* <pre className="text-xs whitespace-pre-wrap flex flex-col gap-2">
           {groupedHoldings?.map(
             ({ name, totalShares, totalInstitutionValue }) => {
               return (
@@ -74,7 +74,7 @@ const page = () => {
               );
             }
           )}
-        </pre>
+        </pre> */}
       </header>
     </section>
   );

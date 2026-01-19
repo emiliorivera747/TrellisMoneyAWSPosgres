@@ -17,7 +17,7 @@ export const getHouseholdIdByMembership = async (
   const member = await db
     .select({ householdId: householdMember.householdId })
     .from(householdMember)
-    .where(eq(householdMember.memberId, memberId))
+    .where(eq(householdMember.householdMemberId, memberId))
     .limit(1);
   if (!member[0]?.householdId) return null;
   return member[0].householdId;
