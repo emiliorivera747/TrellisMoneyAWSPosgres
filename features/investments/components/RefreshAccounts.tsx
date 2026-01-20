@@ -9,7 +9,7 @@ import { API_URL } from "@/utils/global-variables/globals";
  */
 const RefreshInvestments = () => {
   const refetchAccounts = async () => {
-    fetch(`${API_URL}/household/holding/refresh`, { method: "POST" });
+    fetch(`${API_URL}/household/investments/refresh`, { method: "POST" });
   };
 
   return (

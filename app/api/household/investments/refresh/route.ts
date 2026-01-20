@@ -2,17 +2,22 @@
 import { NextRequest } from "next/server";
 import { withAuth } from "@/lib/protected"; // your auth wrapper
 
+// Services
 import { getHoldingsFromPlaidWithItems } from "@/services/plaid/holdings/getHoldingsV2";
-import { updateHoldings } from "@/utils/drizzle/holdings/updateHoldings";
 
+// Drizzle
+import { getItemsByUserId } from "@/utils/drizzle/item/getItem";
+import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
+
+// Utils
 import {
   SuccessResponse,
   ErrorResponse,
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
-import { getItemsByUserId } from "@/utils/drizzle/item/getItem";
-import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
+import { updateHoldings } from "@/utils/drizzle/holdings/updateHoldings";
+import { getInvestmentsPlaid } from "@/utils/drizzle/investments/getInvestments";
 
 /**
  * POST /api/household/holdings/refresh
@@ -42,7 +47,13 @@ export async function POST(req: NextRequest) {
       /**
        * Get Plaid holdings
        */
-      const plaidHoldingsResponses = await getHoldingsFromPlaidWithItems(items);
+      const plaidHoldingsResponses = await getInvestmentsPlaid({
+        items,
+        accountsDB,
+        timestamp: "",
+        userId: user.id,
+        holdingsDB: [],
+      });
 
       // Flatten holdings from all responses
       const allPlaidHoldings = plaidHoldingsResponses.flatMap(
