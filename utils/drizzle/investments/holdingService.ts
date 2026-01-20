@@ -3,10 +3,10 @@ import { holding } from "@/drizzle/schema";
 import { Holding as HoldingPlaid } from "plaid";
 import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
-import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 import { sql } from "drizzle-orm";
 import { Holding as HoldingDrizzle } from "@/drizzle/schema";
 import { UpsertHoldingsParams } from "@/types/utils/drizzle/investments/getInvestments";
+import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 
 /**
  * Upserts the holdings into the database using Drizzle
@@ -15,50 +15,14 @@ import { UpsertHoldingsParams } from "@/types/utils/drizzle/investments/getInves
 export const upsertHoldings = async ({
   holdingsPlaid,
   timestamp,
-  accountMap,
+  holdingMap,
 }: UpsertHoldingsParams): Promise<{
   holdingUpserts: HoldingDrizzle[];
 }> => {
   try {
-    if (holdingsPlaid.length === 0) {
-      return { holdingUpserts: [] };
-    }
+    if (holdingsPlaid.length === 0) return { holdingUpserts: [] };
 
-    const values = holdingsPlaid.map((holdingPlaid) => {
-      const accountId = valueOrDefault(holdingPlaid.account_id, "");
-      const securityId = valueOrDefault(holdingPlaid.security_id, "");
-      const holdingId = `${accountId}-${securityId}`;
-      const { householdMemberId = "" } = accountMap.get(accountId) ?? {};
-
-      return {
-        holdingId,
-        accountId,
-        securityId,
-        householdMemberId,
-        costBasis: valueOrDefault(holdingPlaid.cost_basis, 0).toString(),
-        institutionPrice: valueOrDefault(
-          holdingPlaid.institution_price,
-          0
-        ).toString(),
-        institutionValue: valueOrDefault(
-          holdingPlaid.institution_value,
-          0
-        ).toString(),
-        quantity: valueOrDefault(holdingPlaid.quantity, 0).toString(),
-        vestedQuantity: valueOrDefault(
-          holdingPlaid.vested_quantity,
-          0
-        ).toString(),
-        vestedValue: valueOrDefault(holdingPlaid.vested_value, 0).toString(),
-        institutionPriceAsOf: holdingPlaid.institution_price_as_of
-          ? isoToUTC(holdingPlaid.institution_price_as_of).toISOString()
-          : null,
-        institutionPriceDatetime: holdingPlaid.institution_price_datetime
-          ? isoToUTC(holdingPlaid.institution_price_datetime).toISOString()
-          : null,
-        isoCurrencyCode: holdingPlaid.iso_currency_code || null,
-      };
-    });
+    const values = getAllHoldingValues(holdingsPlaid, holdingMap);
 
     const holdingUpserts = await db
       .insert(holding)
@@ -78,14 +42,50 @@ export const upsertHoldings = async ({
           institutionPriceAsOf: sql`excluded.institution_price_as_of`,
           institutionPriceDatetime: sql`excluded.institution_price_datetime`,
           isoCurrencyCode: sql`excluded.iso_currency_code`,
-          updatedAt: sql`CURRENT_TIMESTAMP`,
+          updatedAt: timestamp ? timestamp : sql`CURRENT_TIMESTAMP`,
         },
       })
       .returning();
-
     return { holdingUpserts };
   } catch (error) {
-    console.error("Error upserting holdings:", getServerErrorMessage(error));
-    throw new Error(getServerErrorMessage(error));
+    return logErrorAndThrow(error);
   }
+};
+
+const getAllHoldingValues = (
+  holdingsPlaid: HoldingPlaid[],
+  holdingMap: Map<string, { householdMemberId: string; holdingId: string }>
+) => {
+  const values = holdingsPlaid.map((holdingPlaid) => {
+    const accountId = valueOrDefault(holdingPlaid.account_id, "");
+    const securityId = valueOrDefault(holdingPlaid.security_id, "");
+    const holdingId = holdingMap.get(`${accountId}-${securityId}`)?.holdingId || "";
+    const householdMemberId = holdingMap.get(
+      `${accountId}-${securityId}`
+    )?.householdMemberId || "";
+
+    return {
+      holdingId,
+      accountId,
+      securityId,
+      householdMemberId,
+      costBasis: `${valueOrDefault(holdingPlaid.cost_basis, 0)}`,
+      institutionPrice: `${valueOrDefault(holdingPlaid.institution_price, 0)}`,
+      institutionValue: `${valueOrDefault(holdingPlaid.institution_value, 0)}`,
+      quantity: `${valueOrDefault(holdingPlaid.quantity, 0)}`,
+      vestedQuantity: `${valueOrDefault(holdingPlaid.vested_quantity, 0)}`,
+      vestedValue: `${valueOrDefault(holdingPlaid.vested_value, 0)}`,
+      institutionPriceAsOf: valueOrDefault(
+        isoToUTC(holdingPlaid.institution_price_as_of).toISOString(),
+        null
+      ),
+      institutionPriceDatetime: valueOrDefault(
+        isoToUTC(holdingPlaid.institution_price_datetime).toISOString(),
+        null
+      ),
+      isoCurrencyCode: holdingPlaid.iso_currency_code || null,
+    };
+  });
+
+  return values;
 };

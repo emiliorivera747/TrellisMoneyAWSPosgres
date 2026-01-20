@@ -23,9 +23,7 @@ export const upsertSecurities = async ({
   securityUpserts: SecurityDrizzle[];
 }> => {
   try {
-    if (securitiesPlaid.length === 0) {
-      return { securityUpserts: [] };
-    }
+    if (securitiesPlaid.length === 0) return { securityUpserts: [] };
 
     const values = securitiesPlaid.map((securityPlaid) => ({
       securityId: securityPlaid.security_id,
@@ -65,7 +63,7 @@ export const upsertSecurities = async ({
           isoCurrencyCode: sql`excluded.iso_currency_code`,
           sector: sql`excluded.sector`,
           industry: sql`excluded.industry`,
-          updatedAt: sql`CURRENT_TIMESTAMP`,
+          updatedAt: timestamp ? timestamp : sql`CURRENT_TIMESTAMP`,
         },
       })
       .returning();
