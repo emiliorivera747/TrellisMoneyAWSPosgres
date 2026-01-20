@@ -1,5 +1,5 @@
 import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
-import { updateHoldingsAndSecurities } from "@/utils/prisma/investments/updateHoldingsAndSecurities";
+import { updateHoldingsAndSecurities } from "@/utils/drizzle/investments/updateHoldingsAndSecurities";
 import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
 
 // Services

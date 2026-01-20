@@ -13,7 +13,7 @@ import {
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/dates/getDates";
 import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
-import { getInvestmentsPlaid } from "@/utils/prisma/investments/getInvestments";
+import { getInvestmentsPlaid } from "@/utils/drizzle/investments/getInvestments";
 import {
   FailResponse,
   SuccessResponse,
