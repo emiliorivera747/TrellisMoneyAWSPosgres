@@ -1,6 +1,7 @@
 import { db } from "@/drizzle/db";
 import { eq, and, desc, inArray } from "drizzle-orm";
 import { item, account, householdMember, household } from "@/drizzle/schema";
+import { getMembers } from "../household-member/members";
 
 type GetItemWithMemberAndInstitutionId = {
   memberId: string;
@@ -49,6 +50,8 @@ export const getItemsByHouseholdMemberIds = async (
       institutionId: item.institutionId,
       institutionName: item.institutionName,
       errorCode: item.errorCode,
+      updatedAt: item.updatedAt,
+      createdAt: item.createdAt,
     })
     .from(item)
     .innerJoin(account, eq(account.itemId, item.itemId))
@@ -229,4 +232,13 @@ export const getItemsWithHouseholdMemeberIds = async (
     .where(inArray(account.householdMemberId, householdMemberIds));
 
   return itemIds;
+};
+
+export const getItemsByUserId = async (userId: string) => {
+  const memberRows = await getMembers(userId);
+  if (memberRows.length === 0) throw new Error("No household members found");
+  const memberIds = memberRows.map((m) => m.householdMemberId);
+  const items = await getItemsByHouseholdMemberIds(memberIds);
+  if (items.length === 0) throw new Error("No items found");
+  return items;
 };

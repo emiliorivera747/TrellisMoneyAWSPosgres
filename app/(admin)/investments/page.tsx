@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useFetchHoldings from "@/hooks/react-query/holdings/useFetchHoldings";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 import Link from "next/link";
+import RefreshInvestments from "@/features/investments/components/RefreshAccounts";
 
 const page = () => {
   const { holdingsData, holdingsError, holdingsLoading, holdingsHasError } =
@@ -52,6 +53,7 @@ const page = () => {
         <header className="font-bold text-xl pb-4 mt-[3.4rem]">
           All Investments
         </header>
+        <RefreshInvestments />
         {/* <pre className="text-xs whitespace-pre-wrap flex flex-col gap-2">
           {groupedHoldings?.map(
             ({ name, totalShares, totalInstitutionValue }) => {

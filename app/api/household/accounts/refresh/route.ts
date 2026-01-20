@@ -31,15 +31,16 @@ export async function POST(req: NextRequest) {
       /**
        * Get the member rows
        */
-      const memberRows = await getMembers(user.id);
-      if (memberRows.length === 0)
+      const memberRows: { householdMemberId: string }[] = await getMembers(
+        user.id
+      );
+      if (!memberRows || memberRows.length === 0)
         return FailResponse("No household membership found", 404);
 
       /**
        * Get the householdMemberIds
        */
       const householdMemberIds = memberRows.map((m) => m.householdMemberId);
-      console.log(householdMemberIds)
 
       /**
        * Get items from household member ids

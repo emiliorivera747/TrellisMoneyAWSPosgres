@@ -11,9 +11,7 @@ import {
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
-
-import { getMembers } from "@/utils/drizzle/household-member/members";
-import { getItemsByHouseholdMemberIds } from "@/utils/drizzle/item/getItem";
+import { getItemsByUserId } from "@/utils/drizzle/item/getItem";
 import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
 
 /**
@@ -29,23 +27,10 @@ export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
       /**
-       * Get the member rows
-       */
-      const memberRows = await getMembers(user.id);
-      if (memberRows.length === 0)
-        return FailResponse("No household membership found", 404);
-
-      /**
-       * Get the householdMemberIds
-       */
-      const householdMemberIds = memberRows.map((m) => m.householdMemberId);
-      console.log(householdMemberIds);
-
-      /**
        * Get items from household member ids
        */
-      const items = await getItemsByHouseholdMemberIds(householdMemberIds);
-      if (items.length === 0)
+      const items = await getItemsByUserId(user.id);
+      if (!items)
         return FailResponse("No connected financial institutions found", 404);
 
       /**
@@ -57,13 +42,12 @@ export async function POST(req: NextRequest) {
        * Get Plaid holdings
        */
       const plaidHoldingsResponses = await getHoldingsFromPlaidWithItems(items);
-      console.log("Plaid Holdings", plaidHoldingsResponses);
-      
+
       // Flatten holdings from all responses
       const allPlaidHoldings = plaidHoldingsResponses.flatMap(
         (response) => response.holdings || []
       );
-      
+
       if (allPlaidHoldings.length === 0)
         return FailResponse("No holdings found", 404);
 
