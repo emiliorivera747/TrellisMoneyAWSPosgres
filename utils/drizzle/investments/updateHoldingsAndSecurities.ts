@@ -1,7 +1,6 @@
 // Utils
 import { upsertSecurities } from "@/utils/drizzle/investments/securityService";
 import { upsertHoldings } from "@/utils/drizzle/investments/holdingService";
-import { generateAccountMap } from "@/utils/api-helpers/accounts/accountMaps";
 
 // Types
 import { UpdateHoldingsAndSecuritiesParams } from "@/types/utils/drizzle/investments/getInvestments";
@@ -21,14 +20,11 @@ export const updateHoldingsAndSecurities = async ({
   securitiesPlaid,
   timestamp,
   holdingsDB,
-  accountsDB,
-  userId,
 }: UpdateHoldingsAndSecuritiesParams) => {
   /**
-   * Generate account map to get householdMemberId for each account
+   * Generate holding map to get householdMemberId for each account
    * This is needed because Drizzle schema uses householdMemberId instead of user_id
    */
-  const accountMap = generateAccountMap(accountsDB);
   const holdingMap = generateHoldingMap(holdingsDB);
 
   /**

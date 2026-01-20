@@ -1,16 +1,17 @@
-import { Security } from "plaid";
+// Drizzle
 import { db } from "@/drizzle/db";
 import { security } from "@/drizzle/schema";
+import { sql } from "drizzle-orm";
+import { Security as SecurityDrizzle, SecurityType } from "@/drizzle/schema";
+
+// Utils
+import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
-import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
-import { sql } from "drizzle-orm";
-import { Security as SecurityDrizzle } from "@/drizzle/schema";
 
-interface UpsertSecuritiesParams {
-  securitiesPlaid: Security[];
-  timestamp: string;
-}
+// Types
+import { UpsertSecuritiesParams } from "@/types/utils/drizzle/investments/securityService";
+import { Security } from "plaid";
 
 /**
  * Upserts the securities into the database using Drizzle
@@ -25,26 +26,7 @@ export const upsertSecurities = async ({
   try {
     if (securitiesPlaid.length === 0) return { securityUpserts: [] };
 
-    const values = securitiesPlaid.map((securityPlaid) => ({
-      securityId: securityPlaid.security_id,
-      institutionId: securityPlaid.institution_id || null,
-      proxySecurityId: securityPlaid.proxy_security_id || null,
-      securityName: securityPlaid.name || null,
-      tickerSymbol: securityPlaid.ticker_symbol || null,
-      isCashEquivalent: securityPlaid.is_cash_equivalent || false,
-      type: securityPlaid.type || null,
-      subtype: securityPlaid.subtype || null,
-      closePrice: securityPlaid.close_price
-        ? valueOrDefault(securityPlaid.close_price, 0).toString()
-        : null,
-      closePriceAsOf: securityPlaid.close_price_as_of || null,
-      updateDatetime: securityPlaid.update_datetime
-        ? isoToUTC(securityPlaid.update_datetime).toISOString()
-        : null,
-      isoCurrencyCode: securityPlaid.iso_currency_code || null,
-      sector: securityPlaid.sector || null,
-      industry: securityPlaid.industry || null,
-    }));
+    const values = getSecurityValues(securitiesPlaid);
 
     const securityUpserts = await db
       .insert(security)
@@ -67,10 +49,34 @@ export const upsertSecurities = async ({
         },
       })
       .returning();
-
     return { securityUpserts };
   } catch (error) {
-    console.error("Error upserting securities:", getServerErrorMessage(error));
-    throw new Error(getServerErrorMessage(error));
+    return logErrorAndThrow(error);
   }
+};
+
+const getSecurityValues = (securitiesPlaid: Security[]) => {
+  const values = securitiesPlaid.map((securityPlaid) => ({
+    securityId: valueOrDefault(securityPlaid.security_id, ""),
+    institutionId: valueOrDefault(securityPlaid.institution_id, null),
+    proxySecurityId: valueOrDefault(securityPlaid.proxy_security_id, null),
+    securityName: valueOrDefault(securityPlaid.name, null),
+    tickerSymbol: valueOrDefault(securityPlaid.ticker_symbol, null),
+    isCashEquivalent: valueOrDefault(securityPlaid.is_cash_equivalent, false),
+    type: valueOrDefault(
+      securityPlaid.type?.toUpperCase(),
+      null
+    ) as SecurityType,
+    closePrice: valueOrDefault(securityPlaid.close_price?.toString(), null),
+    closePriceAsOf: valueOrDefault(securityPlaid.close_price_as_of, null),
+    updateDatetime: securityPlaid.update_datetime
+      ? isoToUTC(
+          valueOrDefault(securityPlaid.update_datetime, null)
+        ).toISOString()
+      : null,
+    isoCurrencyCode: valueOrDefault(securityPlaid.iso_currency_code, null),
+    sector: valueOrDefault(securityPlaid.sector, null),
+    industry: valueOrDefault(securityPlaid.industry, null),
+  }));
+  return values;
 };
