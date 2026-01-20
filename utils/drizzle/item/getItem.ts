@@ -59,7 +59,7 @@ export const getItemsByHouseholdMemberIds = async (
 /**
  * Retrieves items with their associated household members.
  * Items are linked to members through accounts.
- * 
+ *
  * @param householdMemberIds - Array of household member IDs to get items for
  * @returns A promise that resolves to an array of items with their associated members
  */
@@ -98,7 +98,9 @@ export const getItemsWithMembersByHouseholdMemberIds = async (
     .where(inArray(account.itemId, itemIds));
 
   // Get unique household member IDs from accounts
-  const memberIdsFromAccounts = [...new Set(accounts.map((acc) => acc.householdMemberId))];
+  const memberIdsFromAccounts = [
+    ...new Set(accounts.map((acc) => acc.householdMemberId)),
+  ];
 
   // Get household members
   const members = await db
@@ -111,7 +113,9 @@ export const getItemsWithMembersByHouseholdMemberIds = async (
 
   // For each item, find which members have accounts linked to it
   items.forEach((itemData) => {
-    const itemAccounts = accounts.filter((acc) => acc.itemId === itemData.itemId);
+    const itemAccounts = accounts.filter(
+      (acc) => acc.itemId === itemData.itemId
+    );
     const memberIdsForItem = itemAccounts.map((acc) => acc.householdMemberId);
     const membersForItem = members.filter((member) =>
       memberIdsForItem.includes(member.householdMemberId)
@@ -128,14 +132,14 @@ export const getItemsWithMembersByHouseholdMemberIds = async (
 
 /**
  * Retrieves an item along with its associated household and household members filtered by a specific user ID.
- * 
+ *
  * In the Drizzle schema, items are linked to users directly, and households are accessed through accounts.
  * This function:
  * 1. Gets the item by item_id
  * 2. Gets accounts for that item
  * 3. Gets household members for those accounts (filtered by user_id)
  * 4. Gets household info from those members
- * 
+ *
  * @param itemId - The ID of the item to retrieve
  * @param userId - The ID of the user to filter household members
  * @returns A promise that resolves to the item with household and members info, or null if not found
@@ -212,4 +216,16 @@ export const getItemWithHousehold = async ({
         }
       : null,
   };
+};
+
+export const getItemsWithHouseholdMemeberIds = async (
+  householdMemberIds: string[]
+) => {
+  const itemIds = await db
+    .selectDistinct({ itemId: item.itemId })
+    .from(item)
+    .innerJoin(account, eq(account.itemId, item.itemId))
+    .where(inArray(account.householdMemberId, householdMemberIds));
+
+  return itemIds;
 };

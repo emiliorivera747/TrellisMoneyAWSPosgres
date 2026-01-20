@@ -1,6 +1,6 @@
 import { db } from "@/drizzle/db";
 import { eq } from "drizzle-orm";
-import { householdMember } from "@/drizzle/schema";
+import { householdMember, household } from "@/drizzle/schema";
 
 /**
  * Fetches household member by user ID with household relations (accounts and items).
@@ -17,4 +17,14 @@ export const getMemberByUserId = async (userId: string) => {
     where: eq(householdMember.userId, userId),
   });
   return member;
+};
+
+export const getHouseholdByHouseholdId = async (householdId: string) => {
+  
+  const householdData = await db.query.household.findFirst({
+    where: eq(household.householdId, householdId),
+    with: { householdMembers: true },
+  });
+
+  return householdData;
 };
