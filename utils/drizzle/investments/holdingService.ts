@@ -6,12 +6,7 @@ import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 import { sql } from "drizzle-orm";
 import { Holding as HoldingDrizzle } from "@/drizzle/schema";
-
-interface UpsertHoldingsParams {
-  holdingsPlaid: HoldingPlaid[];
-  timestamp: string;
-  accountMap: Map<string, { householdMemberId: string }>;
-}
+import { UpsertHoldingsParams } from "@/types/utils/drizzle/investments/getInvestments";
 
 /**
  * Upserts the holdings into the database using Drizzle
@@ -33,32 +28,28 @@ export const upsertHoldings = async ({
       const accountId = valueOrDefault(holdingPlaid.account_id, "");
       const securityId = valueOrDefault(holdingPlaid.security_id, "");
       const holdingId = `${accountId}-${securityId}`;
-      const { householdMemberId = "" } =
-        accountMap.get(accountId) ?? {};
+      const { householdMemberId = "" } = accountMap.get(accountId) ?? {};
 
       return {
         holdingId,
         accountId,
         securityId,
         householdMemberId,
-        costBasis: holdingPlaid.cost_basis
-          ? valueOrDefault(holdingPlaid.cost_basis, 0).toString()
-          : null,
-        institutionPrice: holdingPlaid.institution_price
-          ? valueOrDefault(holdingPlaid.institution_price, 0).toString()
-          : null,
-        institutionValue: holdingPlaid.institution_value
-          ? valueOrDefault(holdingPlaid.institution_value, 0).toString()
-          : null,
-        quantity: holdingPlaid.quantity
-          ? valueOrDefault(holdingPlaid.quantity, 0).toString()
-          : null,
-        vestedQuantity: holdingPlaid.vested_quantity
-          ? valueOrDefault(holdingPlaid.vested_quantity, 0).toString()
-          : null,
-        vestedValue: holdingPlaid.vested_value
-          ? valueOrDefault(holdingPlaid.vested_value, 0).toString()
-          : null,
+        costBasis: valueOrDefault(holdingPlaid.cost_basis, 0).toString(),
+        institutionPrice: valueOrDefault(
+          holdingPlaid.institution_price,
+          0
+        ).toString(),
+        institutionValue: valueOrDefault(
+          holdingPlaid.institution_value,
+          0
+        ).toString(),
+        quantity: valueOrDefault(holdingPlaid.quantity, 0).toString(),
+        vestedQuantity: valueOrDefault(
+          holdingPlaid.vested_quantity,
+          0
+        ).toString(),
+        vestedValue: valueOrDefault(holdingPlaid.vested_value, 0).toString(),
         institutionPriceAsOf: holdingPlaid.institution_price_as_of
           ? isoToUTC(holdingPlaid.institution_price_as_of).toISOString()
           : null,

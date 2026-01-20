@@ -1,17 +1,10 @@
-import { Security, Holding } from "plaid";
+// Utils
 import { upsertSecurities } from "@/utils/drizzle/investments/securityService";
 import { upsertHoldings } from "@/utils/drizzle/investments/holdingService";
-import { Holding as HoldingDB, Account as AccountDB } from "@/drizzle/schema";
 import { generateAccountMap } from "@/utils/api-helpers/accounts/accountMaps";
 
-interface UpdateHoldingsAndSecuritiesParams {
-  holdingsPlaid: Holding[];
-  holdingsDB: HoldingDB[];
-  securitiesPlaid: Security[];
-  accountsDB: AccountDB[];
-  userId: string;
-  timestamp: string;
-}
+// Types
+import { UpdateHoldingsAndSecuritiesParams } from "@/types/utils/drizzle/investments/getInvestments";
 
 /**
  *
