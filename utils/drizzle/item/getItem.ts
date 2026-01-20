@@ -44,6 +44,7 @@ export const getItemsByHouseholdMemberIds = async (
   const items = await db
     .selectDistinct({
       itemId: item.itemId,
+      userId: item.userId,
       accessToken: item.accessToken,
       institutionId: item.institutionId,
       institutionName: item.institutionName,

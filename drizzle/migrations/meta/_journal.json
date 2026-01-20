@@ -36,6 +36,20 @@
       "when": 1768787595070,
       "tag": "0004_shallow_dark_phoenix",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1768869210817,
+      "tag": "0005_violet_shiva",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1768869282626,
+      "tag": "0006_curious_wendell_vaughn",
+      "breakpoints": true
     }
   ]
 }
