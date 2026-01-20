@@ -26,6 +26,7 @@ import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
+      
       /**
        * Get items from household member ids
        */
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
         return FailResponse("No connected financial institutions found", 404);
 
       /**
-       * Get the accounts from the database (needed for mapping accountId to householdMemberId)
+       * Get the accounts
        */
       const accountsDB = await getAccountsFromItems(items);
 

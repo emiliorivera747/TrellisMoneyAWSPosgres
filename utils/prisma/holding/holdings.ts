@@ -3,12 +3,9 @@ import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDe
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { Holding } from "@/types/services/plaid/plaid";
 
-interface UpdateOrCreateHoldingProps {
-  holding: Holding;
-  timestamp: string;
-  user_id: string;
-  holdingsMap: Map<string, string>;
-}
+// Types
+import { UpdateOrCreateHoldingProps } from "@/types/api-routes/investments/getInvestments";
+
 /**
  *
  * Will update or create a holding record in the database
@@ -19,7 +16,7 @@ interface UpdateOrCreateHoldingProps {
 export const updateOrCreateHolding = async ({
   holding,
   timestamp,
-  user_id,
+  userId,
   holdingsMap,
 }: UpdateOrCreateHoldingProps) => {
   await prisma.holding.upsert({
@@ -27,7 +24,7 @@ export const updateOrCreateHolding = async ({
       holding_id: {
         account_id: valueOrDefault(holding?.account_id, ""),
         security_id: valueOrDefault(holding?.security_id, ""),
-        user_id,
+        user_id: userId,
       },
     },
     update: {
@@ -48,7 +45,7 @@ export const updateOrCreateHolding = async ({
     },
     create: {
       user: {
-        connect: { user_id: user_id },
+        connect: { user_id: userId },
       },
       account: {
         connect: { account_id: valueOrDefault(holding?.account_id, "") },

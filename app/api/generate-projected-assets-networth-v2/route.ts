@@ -12,7 +12,6 @@ import {
 } from "@/utils/api-helpers/errors/handlePrismaErrors";
 import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/dates/getDates";
-import { getAccountsExapanded } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
 import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
 import { getInvestmentsPlaid } from "@/utils/prisma/investments/getInvestments";
 import {
