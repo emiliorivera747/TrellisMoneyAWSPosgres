@@ -1,12 +1,11 @@
-import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
-import { updateHoldingsAndSecurities } from "@/utils/drizzle/investments/updateHoldingsAndSecurities";
-import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
-
 // Services
 import { getAllHoldingsWithAccessTokens } from "@/services/plaid/holdings/holdings";
 
 // Utils
 import { updateHoldings } from "@/utils/prisma/holding/updateHoldings";
+import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
+import { updateHoldingsAndSecurities } from "@/utils/drizzle/investments/updateHoldingsAndSecurities";
+import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
 
 // Types
 import {
