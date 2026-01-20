@@ -32,21 +32,15 @@ export const getInvestmentsPlaid = async (
   holdingsDB: HoldingDB[],
   user_id: string
 ) => {
-  /**
-   *  Get all of the access tokens from the items
-   */
+  // Extract access tokens from the provided items
   const accessTokens = getAllAccessTokens(items);
 
-  /**
-   *  Go through each item and fetch the investments
-   */
+  // Fetch investment data for each access token
   const investmentsForEachItem = await getAllHoldingsWithAccessTokens(
     accessTokens
   );
 
-  /**
-   *  Store Holdings and Securities in the database
-   */
+  // Update the database with fetched holdings and related data
   investmentsForEachItem.forEach(async (item) => {
     await updateAccounts([item.accounts], accountsDB);
     await updateHoldingsAndSecurities({
@@ -54,7 +48,8 @@ export const getInvestmentsPlaid = async (
       securitiesPlaid: item.securities,
       timestamp,
       holdingsDB,
-      user_id,
+      accountsDB,
+      userId: user_id,
     });
   });
 

@@ -1,13 +1,15 @@
 import { Security, Holding } from "plaid";
-import { upsertSecurities } from "@/utils/prisma/investments/securityService";
-import { upsertHoldings } from "@/utils/prisma/investments/holdingService";
-import { Holding as HoldingDB } from "@/app/generated/prisma/browser";
+import { upsertSecurities } from "@/utils/drizzle/investments/securityService";
+import { upsertHoldings } from "@/utils/drizzle/investments/holdingService";
+import { Holding as HoldingDB, Account as AccountDB } from "@/drizzle/schema";
+import { generateAccountMap } from "@/utils/api-helpers/accounts/accountMaps";
 
 interface UpdateHoldingsAndSecuritiesParams {
   holdingsPlaid: Holding[];
   holdingsDB: HoldingDB[];
   securitiesPlaid: Security[];
-  user_id: string;
+  accountsDB: AccountDB[];
+  userId: string;
   timestamp: string;
 }
 
@@ -25,97 +27,28 @@ export const updateHoldingsAndSecurities = async ({
   securitiesPlaid,
   timestamp,
   holdingsDB,
-  user_id,
+  accountsDB,
+  userId,
 }: UpdateHoldingsAndSecuritiesParams) => {
-  const holdingMap = new Map<
-    string,
-    {
-      user_id: string;
-      member_id: string;
-      security_id: string;
-      holding_id: string;
-    }
-  >();
-
-  const securityMap = new Map<string, { member_id: string }>();
-
-  for (const holding of holdingsDB) {
-    holdingMap.set(holding.holding_id, {
-      user_id: holding.user_id,
-      member_id: holding.member_id,
-      security_id: holding.security_id,
-    });
-  }
-
-  for (const security of securitiesPlaid) {
-    securityMap.set(security.security_id, {
-      member_id: holdingMap.get(security.holding_id),
-    });
-  }
-
-  // /**
-  //  * Retrieve all existing Securities and Holdings in parallel
-  //  */
-  // const [existingSecurities, existingHoldings] = await Promise.all([
-  //   getExistingSecurities(securities),
-  //   getExistingHoldings(holdings),
-  // ]);
+  /**
+   * Generate account map to get householdMemberId for each account
+   * This is needed because Drizzle schema uses householdMemberId instead of user_id
+   */
+  const accountMap = generateAccountMap(accountsDB);
 
   /**
-   * Upsert securities and holdings, and get their history
+   * Upsert securities and holdings in parallel
+   * Note: In Drizzle schema, securities are standalone and don't need user_id or household_id
    */
-  await upsertSecurities({
-    securitiesPlaid,
-    user_id,
-    timestamp,
-    securityMap,
-    household_id: accountsDb[0].household_id,
-  });
-
-  await upsertHoldings({
-    holdingsPlaid,
-    user_id,
-    timestamp,
-    holdingMap,
-  });
-
-  // // Add missing properties to holdingHistory
-  // const holdingHistory = rawHoldingHistory.map((history) => ({
-  //   ...history,
-  //   member_id: accountMap.get(history.account_id)?.member_id || null,
-  //   household_id: accountMap.get(history.account_id)?.household_id || null,
-  // }));
-
-  /**
-   * Execute all database operations in a single transaction
-   * This includes upserts and history creation
-   */
-  try {
-    // const historyPromises = [];
-    // if (securityHistory.length > 0) {
-    //   historyPromises.push(
-    //     prisma.securityHistory.createMany({
-    //       data: securityHistory,
-    //       skipDuplicates: true,
-    //     })
-    //   );
-    // }
-    // if (holdingHistory.length > 0) {
-    //   historyPromises.push(
-    //     prisma.holdingHistory.createMany({
-    //       data: holdingHistory,
-    //       skipDuplicates: true,
-    //     })
-    //   );
-    // }
-    // if (historyPromises.length > 0) {
-    //   await Promise.all(historyPromises);
-    // }
-  } catch (error) {
-    console.error(
-      "An error occurred while updating holdings and securities:",
-      error
-    );
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await Promise.all([
+    upsertSecurities({
+      securitiesPlaid,
+      timestamp,
+    }),
+    upsertHoldings({
+      holdingsPlaid,
+      timestamp,
+      accountMap,
+    }),
+  ]);
 };
