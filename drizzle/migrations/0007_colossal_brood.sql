@@ -1,0 +1,1 @@
+ALTER TABLE "Security" DROP COLUMN "subtype";

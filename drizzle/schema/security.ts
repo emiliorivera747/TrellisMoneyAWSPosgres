@@ -37,7 +37,6 @@ export const security = pgTable("Security", {
   tickerSymbol: text("ticker_symbol"),
   isCashEquivalent: boolean("is_cash_equivalent"),
   type: securityType(),
-  subtype: text("subtype"),
   closePrice: numeric("close_price", { precision: 20, scale: 8 }),
   closePriceAsOf: date("close_price_as_of"),
   updateDatetime: timestamp("update_datetime", {
