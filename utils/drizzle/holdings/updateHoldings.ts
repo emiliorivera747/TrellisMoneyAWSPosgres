@@ -12,7 +12,7 @@ import { generateAccountMap } from "@/utils/api-helpers/accounts/accountMaps";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 
 // Types
-import { InvestmentsHoldingsGetResponse, Holding} from "plaid";
+import { InvestmentsHoldingsGetResponse, Holding } from "plaid";
 import { UpdateHoldingsInTxParams } from "@/types/utils/drizzle/investments/getInvestments";
 import { generateHoldingMap } from "@/utils/api-helpers/holdings/holdingMap";
 
@@ -117,33 +117,29 @@ export async function updateHoldingsInTx({
   const holdingMap = generateHoldingMap(holdingsDB);
   const values = getAllHoldingValues(plaidHoldings, holdingMap);
 
-  try {
-    const updatedHoldings = await tx
-      .insert(holding)
-      .values(values)
-      .onConflictDoUpdate({
-        target: holding.holdingId,
-        set: {
-          householdMemberId: sql`excluded.household_member_id`,
-          accountId: sql`excluded.account_id`,
-          securityId: sql`excluded.security_id`,
-          costBasis: sql`excluded.cost_basis`,
-          institutionPrice: sql`excluded.institution_price`,
-          institutionValue: sql`excluded.institution_value`,
-          quantity: sql`excluded.quantity`,
-          vestedQuantity: sql`excluded.vested_quantity`,
-          vestedValue: sql`excluded.vested_value`,
-          institutionPriceAsOf: sql`excluded.institution_price_as_of`,
-          institutionPriceDatetime: sql`excluded.institution_price_datetime`,
-          isoCurrencyCode: sql`excluded.iso_currency_code`,
-          updatedAt: timestamp ? timestamp : sql`CURRENT_TIMESTAMP`,
-        },
-      })
-      .returning();
-    return updatedHoldings;
-  } catch (error) {
-    return ErrorResponse(error);
-  }
+  const updatedHoldings = await tx
+    .insert(holding)
+    .values(values)
+    .onConflictDoUpdate({
+      target: holding.holdingId,
+      set: {
+        householdMemberId: sql`excluded.household_member_id`,
+        accountId: sql`excluded.account_id`,
+        securityId: sql`excluded.security_id`,
+        costBasis: sql`excluded.cost_basis`,
+        institutionPrice: sql`excluded.institution_price`,
+        institutionValue: sql`excluded.institution_value`,
+        quantity: sql`excluded.quantity`,
+        vestedQuantity: sql`excluded.vested_quantity`,
+        vestedValue: sql`excluded.vested_value`,
+        institutionPriceAsOf: sql`excluded.institution_price_as_of`,
+        institutionPriceDatetime: sql`excluded.institution_price_datetime`,
+        isoCurrencyCode: sql`excluded.iso_currency_code`,
+        updatedAt: timestamp ? timestamp : sql`CURRENT_TIMESTAMP`,
+      },
+    })
+    .returning();
+  return updatedHoldings;
 }
 
 const getAllHoldingValues = (

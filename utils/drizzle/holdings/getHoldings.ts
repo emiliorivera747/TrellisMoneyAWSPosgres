@@ -1,6 +1,6 @@
 import { db } from "@/drizzle/db";
-import { holding, account, Item, Account } from "@/drizzle/schema";
-import { inArray, eq } from "drizzle-orm";
+import { holding, Account } from "@/drizzle/schema";
+import { inArray } from "drizzle-orm";
 
 /**
  * Get holdings for specific accounts
@@ -9,6 +9,7 @@ import { inArray, eq } from "drizzle-orm";
 export const getHoldingsByAccounts = async (accounts: Account[]) => {
   if (accounts.length === 0) return [];
   const accountIds = accounts.map((acc) => acc.accountId);
+  console.log(accountIds);
 
   const holdings = await db
     .select()

@@ -18,6 +18,9 @@ export const holding = pgTable(
   "Holding",
   {
     holdingId: text("holding_id").primaryKey().notNull(),
+    accountId: text("account_id"),
+    securityId: text("security_id").notNull(),
+    householdMemberId: text("household_member_id").notNull(),
     institutionPrice: numeric("institution_price", {
       precision: 20,
       scale: 8,
@@ -48,9 +51,6 @@ export const holding = pgTable(
       precision: 6,
       scale: 4,
     }),
-    accountId: text("account_id"),
-    securityId: text("security_id").notNull(),
-    householdMemberId: text("household_member_id").notNull(),
     createdAt: timestamp("created_at", {
       precision: 3,
       withTimezone: true,

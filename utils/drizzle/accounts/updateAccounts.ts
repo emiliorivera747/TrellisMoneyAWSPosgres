@@ -3,7 +3,7 @@ import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 
 // Drizzle
 import { db } from "@/drizzle/db";
-import { account, Account, Item } from "@/drizzle/schema";
+import { account, Account} from "@/drizzle/schema";
 import { sql } from "drizzle-orm";
 
 // Utils

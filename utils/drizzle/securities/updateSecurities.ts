@@ -30,20 +30,16 @@ export const updateSecuritiesInTx = async ({
   plaidSecurities,
   timestamp,
 }: UpsertSecuritiesParams) => {
-  // Return early if there are no securities to process
   if (plaidSecurities.length === 0) return [];
 
-  // Map Plaid securities to database-compatible values
   const values = getSecurityValues(plaidSecurities);
 
-  // Perform upsert operation in the database
   const securityUpserts = await tx
-    .insert(security) // Insert into the security table
-    .values(values) // Use mapped values
+    .insert(security) 
+    .values(values) 
     .onConflictDoUpdate({
-      target: security.securityId, // Conflict resolution based on securityId
+      target: security.securityId, 
       set: {
-        // Update fields on conflict
         securityName: sql`excluded.security_name`,
         tickerSymbol: sql`excluded.ticker_symbol`,
         isCashEquivalent: sql`excluded.is_cash_equivalent`,
@@ -58,9 +54,8 @@ export const updateSecuritiesInTx = async ({
         updatedAt: timestamp ? timestamp : sql`CURRENT_TIMESTAMP`, // Use provided timestamp or current time
       },
     })
-    .returning(); // Return the upserted rows
+    .returning(); 
 
-  // Return the result of the upsert operation
   return securityUpserts;
 };
 

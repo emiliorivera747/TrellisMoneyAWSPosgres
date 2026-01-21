@@ -40,6 +40,8 @@ export async function POST(req: NextRequest) {
       // Step 3: Get holdings for these accounts
       const holdingsDB = await getHoldingsByAccounts(accountsDB);
 
+      console.log("accountDB", accountsDB, "holdingDB", holdingsDB);
+
       // Step 4: Refresh from Plaid and update database
       const result = await refreshHouseholdHoldings({
         items,
