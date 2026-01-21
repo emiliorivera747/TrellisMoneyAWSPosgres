@@ -1,5 +1,6 @@
 // Drizzle
 import { security } from "@/drizzle/schema";
+import { sql } from "drizzle-orm";
 
 // Types
 import { UpsertSecuritiesParams } from "@/types/utils/drizzle/investments/securityService";
@@ -18,7 +19,7 @@ export const updateSecuritiesInTx = async ({
   timestamp,
 }: UpsertSecuritiesParams) => {
   if (plaidSecurities.length === 0) return [];
-  const values = getSecurityValues(plaidSecurities, timestamp);
+  const values = getSecurityValues(plaidSecurities);
   const deduplicatedValues = Array.from(
     new Map(values.map((v) => [v.securityId, v])).values()
   );
@@ -29,20 +30,19 @@ export const updateSecuritiesInTx = async ({
     .onConflictDoUpdate({
       target: security.securityId,
       set: {
-        ...buildConflictUpdateColumns(security, [
-          "institutionId",
-          "proxySecurityId",
-          "securityName",
-          "tickerSymbol",
-          "isCashEquivalent",
-          "type",
-          "closePrice",
-          "closePriceAsOf",
-          "updateDatetime",
-          "isoCurrencyCode",
-          "sector",
-          "industry",
-        ]),
+        institutionId: sql`excluded.institution_id`,
+        proxySecurityId: sql`excluded.proxy_security_id`,
+        securityName: sql`excluded.security_name`,
+        tickerSymbol: sql`excluded.ticker_symbol`,
+        isCashEquivalent: sql`excluded.is_cash_equivalent`,
+        type: sql`excluded.type`,
+        closePrice: sql`excluded.close_price`,
+        closePriceAsOf: sql`excluded.close_price_as_of`,
+        updateDatetime: sql`excluded.update_datetime`,
+        isoCurrencyCode: sql`excluded.iso_currency_code`,
+        sector: sql`excluded.sector`,
+        industry: sql`excluded.industry`,
+        updatedAt: sql`now()`,
       },
     })
     .returning();
@@ -56,10 +56,7 @@ export const updateSecuritiesInTx = async ({
  * @param securitiesPlaid - An array of security objects from Plaid.
  * @returns An array of transformed security values with defaulted and formatted fields.
  */
-const getSecurityValues = (
-  securitiesPlaid: Security[],
-  timestamp: string | undefined
-) => {
+const getSecurityValues = (securitiesPlaid: Security[]) => {
   const values = securitiesPlaid.map((securityPlaid) => ({
     securityId: securityPlaid.security_id,
     institutionId: securityPlaid.institution_id ?? null,

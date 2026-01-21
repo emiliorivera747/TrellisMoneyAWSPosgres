@@ -116,7 +116,6 @@ export async function updateHoldingsInTx({
 
   const holdingMap = generateHoldingMap(holdingsDB);
   const values = getAllHoldingValues(plaidHoldings, holdingMap);
-  console.log("Values", values);
 
   const updatedHoldings = await tx
     .insert(holding)
@@ -124,19 +123,17 @@ export async function updateHoldingsInTx({
     .onConflictDoUpdate({
       target: holding.holdingId,
       set: {
-        ...buildConflictUpdateColumns(holding, [
-          "institutionPrice",
-          "institutionPriceAsOf",
-          "institutionPriceDatetime",
-          "institutionValue",
-          "costBasis",
-          "quantity",
-          "isoCurrencyCode",
-          "vestedQuantity",
-          "vestedValue",
-          "expectedAnnualReturnRate",
-        ]),
-        updatedAt: sql`CURRENT_TIMESTAMP`,
+        institutionPrice: sql`excluded.institution_price`,
+        institutionPriceAsOf: sql`excluded.institution_price_as_of`,
+        institutionPriceDatetime: sql`excluded.institution_price_datetime`,
+        institutionValue: sql`excluded.institution_value`,
+        costBasis: sql`excluded.cost_basis`,
+        quantity: sql`excluded.quantity`,
+        isoCurrencyCode: sql`excluded.iso_currency_code`,
+        vestedQuantity: sql`excluded.vested_quantity`,
+        vestedValue: sql`excluded.vested_value`,
+        expectedAnnualReturnRate: sql`excluded.expected_annual_return_rate`,
+        updatedAt: sql`now()`,
       },
     })
     .returning();
