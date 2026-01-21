@@ -1,6 +1,5 @@
 import { client } from "@/config/plaidClient";
 import { Item } from "@/drizzle/schema";
-import { logError } from "@/utils/api-helpers/errors/logError";
 
 /**
  * Fetches investment holdings for given access tokens.
@@ -26,7 +25,9 @@ export const getAllHoldingsWithAccessTokens = async (
 /**
  * Fetch holdings from Plaid for all items in parallel
  */
-export async function fetchAllPlaidHoldings(items: Item[]) {
+export async function fetchAllPlaidHoldings(
+  items: Pick<Item, "accessToken">[]
+) {
   const responses = await Promise.all(
     items.map(async (item) => {
       const response = await client.investmentsHoldingsGet({

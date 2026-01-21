@@ -235,10 +235,14 @@ export const getItemsWithHouseholdMemeberIds = async (
 };
 
 export const getItemsByUserId = async (userId: string) => {
+  
   const memberRows = await getMembers(userId);
   if (memberRows.length === 0) throw new Error("No household members found");
+  
   const memberIds = memberRows.map((m) => m.householdMemberId);
   const items = await getItemsByHouseholdMemberIds(memberIds);
+
   if (items.length === 0) throw new Error("No items found");
+
   return items;
 };

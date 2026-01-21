@@ -14,20 +14,21 @@ import { updateHoldingsInTx } from "@/utils/drizzle/holdings/updateHoldings";
 
 // Types
 import {
-  Item,
+  Item as ItemDB,
   Account as AccountDB,
   Holding as HoldingDB,
 } from "@/drizzle/schema/index";
+
 import { GetInvestmentsWithItemsPlaid } from "@/types/api-routes/investments/getInvestments";
 
 // Drizzle
 import { db } from "@/drizzle/db";
 
 type GetInvestmentsPlaid = {
-  items: Item[];
-  timestamp: string;
+  items: Pick<ItemDB, "accessToken">[];
   accountsDB: AccountDB[];
   holdingsDB: HoldingDB[];
+  timestamp: string;
 };
 
 /**
@@ -49,7 +50,6 @@ export const refreshHouseholdHoldings = async ({
    * Get all holdings from Plaid
    */
   const plaidResponse = await fetchAllPlaidHoldings(items);
-  
   const plaidAccounts = plaidResponse.flatMap((res) => res.accounts);
   const plaidHoldings = plaidResponse.flatMap((res) => res.holdings);
   const plaidSecurities = plaidResponse.flatMap((res) => res.securities);
