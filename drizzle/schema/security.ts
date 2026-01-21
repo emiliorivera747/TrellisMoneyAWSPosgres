@@ -12,21 +12,6 @@ import { relations } from "drizzle-orm";
 import { holding } from "@/drizzle/schema";
 
 /**
- * SecurityType enum - Defines security types
- */
-export const securityType = pgEnum("SecurityType", [
-  "CASH",
-  "CRYPTOCURRENCY",
-  "DERIVATIVE",
-  "EQUITY",
-  "ETF",
-  "FIXED",
-  "LOAN",
-  "MUTUAL",
-  "OTHER",
-]);
-
-/**
  * Security schema - Represents financial securities (stocks, bonds, etc.) with pricing and metadata
  */
 export const security = pgTable("Security", {
@@ -36,7 +21,7 @@ export const security = pgTable("Security", {
   securityName: text("security_name"),
   tickerSymbol: text("ticker_symbol"),
   isCashEquivalent: boolean("is_cash_equivalent"),
-  type: securityType(),
+  type: text("type"),
   closePrice: numeric("close_price", { precision: 20, scale: 8 }),
   closePriceAsOf: date("close_price_as_of"),
   updateDatetime: timestamp("update_datetime", {

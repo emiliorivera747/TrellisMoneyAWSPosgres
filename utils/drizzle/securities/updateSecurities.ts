@@ -44,14 +44,13 @@ export const updateSecuritiesInTx = async ({
         tickerSymbol: sql`excluded.ticker_symbol`,
         isCashEquivalent: sql`excluded.is_cash_equivalent`,
         type: sql`excluded.type`,
-        subtype: sql`excluded.subtype`,
         closePrice: sql`excluded.close_price`,
         closePriceAsOf: sql`excluded.close_price_as_of`,
         updateDatetime: sql`excluded.update_datetime`,
         isoCurrencyCode: sql`excluded.iso_currency_code`,
         sector: sql`excluded.sector`,
         industry: sql`excluded.industry`,
-        updatedAt: timestamp ? timestamp : sql`CURRENT_TIMESTAMP`, // Use provided timestamp or current time
+        updatedAt: timestamp ? timestamp : sql`CURRENT_TIMESTAMP`,
       },
     })
     .returning(); 
@@ -67,9 +66,9 @@ export const updateSecuritiesInTx = async ({
  */
 const getSecurityValues = (securitiesPlaid: Security[]) => {
   const values = securitiesPlaid.map((securityPlaid) => ({
-    securityId: valueOrDefault(securityPlaid.security_id, ""),
-    institutionId: valueOrDefault(securityPlaid.institution_id, null),
-    proxySecurityId: valueOrDefault(securityPlaid.proxy_security_id, null),
+    securityId: securityPlaid.security_id,
+    institutionId: securityPlaid.institution_id,
+    proxySecurityId: securityPlaid.proxy_security_id,
     securityName: valueOrDefault(securityPlaid.name, null),
     tickerSymbol: valueOrDefault(securityPlaid.ticker_symbol, null),
     isCashEquivalent: valueOrDefault(securityPlaid.is_cash_equivalent, false),
