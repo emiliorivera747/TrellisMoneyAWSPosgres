@@ -9,43 +9,43 @@ const page = () => {
   const { holdingsData, holdingsError, holdingsLoading, holdingsHasError } =
     useFetchHoldings();
 
-  // const [groupedHoldings, setGroupedHolding] = useState<
-  //   { name: string; totalShares: number; totalInstitutionValue: number }[]
-  // >([]);
+  const [groupedHoldings, setGroupedHolding] = useState<
+    { name: string; totalShares: number; totalInstitutionValue: number }[]
+  >([]);
 
-  // useEffect(() => {
-  //   const accounts = holdingsData?.data?.household.accounts;
-  //   const holdings = accounts?.flatMap((account) => account?.holdings);
+  useEffect(() => {
+    const accounts = holdingsData?.data?.accounts;
+    const holdings = accounts?.flatMap((account) => account?.holdings);
 
-  //   const groups = Object.groupBy(
-  //     holdings ?? [],
-  //     (holding) => holding.security?.ticker_symbol ?? "Unknown"
-  //   );
+    const groups = Object.groupBy(
+      holdings ?? [],
+      (holding) => holding.security?.tickerSymbol ?? "Unknown"
+    );
 
-  //   const groupedResults = Object.entries(groups).map(([key, holdings]) => {
-  //     const totalShares = (holdings ?? []).reduce(
-  //       (acc, holding) => acc + Number(holding?.quantity ?? 0),
-  //       0
-  //     );
+    const groupedResults = Object.entries(groups).map(([key, holdings]) => {
+      const totalShares = (holdings ?? []).reduce(
+        (acc, holding) => acc + Number(holding?.quantity ?? 0),
+        0
+      );
 
-  //     const totalInstitutionValue = (holdings ?? []).reduce(
-  //       (acc, holding) => acc + (Number(holding?.institution_value) ?? 0),
-  //       0
-  //     );
+      const totalInstitutionValue = (holdings ?? []).reduce(
+        (acc, holding) => acc + (Number(holding?.institutionValue) ?? 0),
+        0
+      );
 
-  //     return {
-  //       name: key,
-  //       totalShares,
-  //       totalInstitutionValue,
-  //     };
-  //   });
+      return {
+        name: key,
+        totalShares,
+        totalInstitutionValue,
+      };
+    });
 
-  //   let sorted = groupedResults.sort(
-  //     (a, b) => b.totalInstitutionValue - a.totalInstitutionValue
-  //   );
+    let sorted = groupedResults.sort(
+      (a, b) => b.totalInstitutionValue - a.totalInstitutionValue
+    );
 
-  //   setGroupedHolding(sorted);
-  // }, [holdingsData]);
+    setGroupedHolding(sorted);
+  }, [holdingsData]);
 
   return (
     <section className="h-screen overflow-scroll">
@@ -54,7 +54,7 @@ const page = () => {
           All Investments
         </header>
         <RefreshInvestments />
-        {/* <pre className="text-xs whitespace-pre-wrap flex flex-col gap-2">
+        <pre className="text-xs whitespace-pre-wrap flex flex-col gap-2">
           {groupedHoldings?.map(
             ({ name, totalShares, totalInstitutionValue }) => {
               return (
@@ -66,7 +66,7 @@ const page = () => {
                   <span className="px-4 flex flex-col gap-1">
                     {name}
                     <span className="font-extralight text-tertiary-800">
-                      {convertToMoney(totalShares)} shares
+                      {totalShares.toFixed(2)} shares
                     </span>
                   </span>
                   <span className="font-semibold flex justify-end px-4 text-[0.8rem]">
@@ -76,7 +76,7 @@ const page = () => {
               );
             }
           )}
-        </pre> */}
+        </pre>
       </header>
     </section>
   );

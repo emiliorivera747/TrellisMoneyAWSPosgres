@@ -52,7 +52,6 @@ export async function GET(req: NextRequest) {
        * Get Accounts
        */
       const accountsDb = await getAccountsFromItems(items);
-      console.log("accountDB", accountsDb)
       if (!accountsDb) return FailResponse("Failed to update account", 500);
 
       return SuccessResponse({ accounts: accountsDb }, "Retrieved accounts");
