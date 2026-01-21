@@ -1,29 +1,19 @@
 import { db } from "@/drizzle/db";
-import { holding, account, Item } from "@/drizzle/schema";
+import { holding, account, Item, Account } from "@/drizzle/schema";
 import { inArray, eq } from "drizzle-orm";
 
 /**
- * Retrieves all holdings associated with the provided items.
- * Holdings are linked to items through accounts.
- *
- * @param items - Array of items to get holdings for
- * @returns A promise that resolves to an array of all holdings for the given items
+ * Get holdings for specific accounts
+ * PREFERRED: Use this when you already have accounts from items
  */
-export const getHoldingsFromItems = async (items: Pick<Item, "itemId">[]) => {
-  // Extract item IDs from the items array
-  const itemIds = items.map((item) => item.itemId);
+export const getHoldingsByAccounts = async (accounts: Account[]) => {
+  if (accounts.length === 0) return [];
+  const accountIds = accounts.map((acc) => acc.accountId);
 
-  // If no items provided, return empty array
-  if (itemIds.length === 0) return [];
-
-  // Query holdings by joining with accounts to filter by itemId
-  const holdingsData = await db
-    .select({
-      holding: holding,
-    })
+  const holdings = await db
+    .select()
     .from(holding)
-    .innerJoin(account, eq(account.accountId, holding.accountId))
-    .where(inArray(account.itemId, itemIds));
+    .where(inArray(holding.accountId, accountIds));
 
-  return holdingsData.map((row) => row.holding);
+  return holdings;
 };

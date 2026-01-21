@@ -5,6 +5,7 @@ import { withAuth } from "@/lib/protected"; // your auth wrapper
 // Drizzle
 import { getItemsByUserId } from "@/utils/drizzle/item/getItem";
 import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
+import { getHoldingsByAccounts } from "@/utils/drizzle/holdings/getHoldings";
 
 // Utils
 import {
@@ -27,32 +28,28 @@ import { refreshHouseholdHoldings } from "@/utils/drizzle/investments/getInvestm
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      /**
-       * Get items from household member ids
-       */
+      // Step 1: Get items (sequential - needed first)
       const items = await getItemsByUserId(user.id);
-      if (!items)
+      if (!items || items.length === 0) {
         return FailResponse("No connected financial institutions found", 404);
+      }
 
-      /**
-       * Get the accounts
-       */
+      // Step 2: Get accounts first (needed for holdings query)
       const accountsDB = await getAccountsFromItems(items);
 
-      /**
-       * Get Plaid holdings
-       */
-      const plaidHoldingsResponses = await refreshHouseholdHoldings({
+      // Step 3: Get holdings for these accounts
+      const holdingsDB = await getHoldingsByAccounts(accountsDB);
+
+      // Step 4: Refresh from Plaid and update database
+      const result = await refreshHouseholdHoldings({
         items,
-        accountsDB,
+        accountsDB: accountsDB || [],
         timestamp: "",
-        holdingsDB: [],
+        holdingsDB: holdingsDB || [],
       });
-      if (!plaidHoldingsResponses)
-        return FailResponse("Failed to get Holdings from Plaid", 404);
 
       const { accountsUpdated, holdingsUpdated, securitiesUpdated } =
-        plaidHoldingsResponses.stats;
+        result.stats;
 
       // 5. Return quick success response (do NOT return full holdings list here)
       return SuccessResponse(
