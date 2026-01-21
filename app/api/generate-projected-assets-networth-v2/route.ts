@@ -4,25 +4,21 @@ import { NextResponse, NextRequest } from "next/server";
 import { generateProjectedAssets } from "@/utils/api-helpers/projected-financial-assets/generateProjectedAssets";
 
 // Helpers
-import {
-  handlePrismaErrorWithCode,
-  isPrismaError,
-  handlePrismaErrorWithNoCode,
-  isPrismaErrorWithCode,
-} from "@/utils/api-helpers/errors/handlePrismaErrors";
-import { handleOtherErrror } from "@/utils/api-helpers/errors/handleErrors";
 import { getDates } from "@/utils/api-helpers/dates/getDates";
 import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
-import { getInvestmentsPlaid } from "@/utils/drizzle/investments/getInvestments";
+import { refreshHouseholdHoldings } from "@/utils/drizzle/investments/getInvestments";
 import {
   FailResponse,
   SuccessResponse,
+  ErrorResponse,
 } from "@/utils/api-helpers/api-responses/response";
-import { getExpandedAccounts } from "@/utils/prisma/accounts-holdings-securities/getAccountsHoldingsSecurities";
+import {
+  getMemberWithHouseholdByUserId,
+  getExpandedAccounts,
+} from "@/utils/drizzle/household/household";
 
 // Auth
 import { withAuth } from "@/lib/protected";
-import { getMemberWithHouseholdByUserId } from "@/utils/prisma/household/household";
 
 const default_inflation_rate = 0.025;
 
@@ -54,49 +50,79 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       if (!timestamp) return FailResponse("No timestamp found", 404);
 
       /**
-       *  Get member
+       *  Get member with household data
        */
-      const member = await getMemberWithHouseholdByUserId({
-        user_id,
-        householdInclude: { accounts: true, items: true, holdings: true },
-      });
+      const member = await getMemberWithHouseholdByUserId(user_id);
       if (!member) return FailResponse("Failed to find member", 404);
 
       /**
        * Get the items
        */
       const items = member?.household?.items;
-      if (!items) return FailResponse("Items not found for household", 404);
+      if (!items || items.length === 0)
+        return FailResponse("Items not found for household", 404);
 
       /**
        * Do we have accounts?
        */
-      if (!member.household?.accounts)
+      if (!member.household?.accounts || member.household.accounts.length === 0)
         return FailResponse("Accounts not found for the household", 404);
 
-      /**
-       * Get the investments from Plaid
-       */
-      await getInvestmentsPlaid(
-        items,
-        timestamp || "",
-        member.household?.accounts,
-        member.household?.holdings,
-        user.id
-      );
 
       if (!member?.household_id)
         return FailResponse("Household not found for member", 404);
 
       /**
-       * Get Expanded Accounts
+       * Get Expanded Accounts (with holdings and securities)
        */
       const expandedAccounts = await getExpandedAccounts(member.household_id);
       if (!expandedAccounts)
-        return FailResponse("Could retrieve exapanded accounts", 404);
+        return FailResponse("Could not retrieve expanded accounts", 404);
+
+      // Transform Drizzle accounts to match expected Account interface
+      const transformedAccounts = expandedAccounts.accounts.map((account) => ({
+        account_id: account.accountId,
+        name: account.accountName,
+        official_name: account.officialName,
+        mask: account.mask,
+        type: account.type.toLowerCase(),
+        subtype: account.subtype,
+        current: account.currentBalance ? Number(account.currentBalance) : null,
+        expected_annual_return_rate: account.expectedAnnualReturnRate
+          ? Number(account.expectedAnnualReturnRate)
+          : null,
+        holdings: account.holdings?.map((holding) => ({
+          holding_id: holding.holdingId,
+          account_id: holding.accountId,
+          security_id: holding.security?.securityId,
+          institution_price: holding.institutionPrice
+            ? Number(holding.institutionPrice)
+            : null,
+          institution_value: holding.institutionValue
+            ? Number(holding.institutionValue)
+            : null,
+          cost_basis: holding.costBasis ? Number(holding.costBasis) : null,
+          quantity: holding.quantity ? Number(holding.quantity) : null,
+          iso_currency_code: holding.isoCurrencyCode,
+          expected_annual_return_rate: holding.expectedAnnualReturnRate
+            ? Number(holding.expectedAnnualReturnRate)
+            : null,
+          security: holding.security
+            ? {
+                security_id: holding.security.securityId,
+                name: holding.security.securityName,
+                ticker_symbol: holding.security.tickerSymbol,
+                type: holding.security.type,
+                close_price: holding.security.closePrice
+                  ? Number(holding.security.closePrice)
+                  : null,
+              }
+            : undefined,
+        })),
+      }));
 
       const projectedNetWorth = await generateProjectedNetWorth(
-        expandedAccounts.accounts,
+        transformedAccounts as any,
         start_year,
         end_year,
         searchParams.get("includes_inflation") === "true",
@@ -108,7 +134,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         end_year,
         includes_inflation: searchParams.get("includes_inflation") === "true",
         annual_inflation_rate: default_inflation_rate,
-        accounts: expandedAccounts.accounts,
+        accounts: transformedAccounts as any,
       });
 
       return SuccessResponse(
@@ -119,9 +145,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         "Accounts, holdings, and securities updated successfully."
       );
     } catch (error) {
-      if (isPrismaErrorWithCode(error)) return handlePrismaErrorWithCode(error);
-      if (isPrismaError(error)) return handlePrismaErrorWithNoCode(error);
-      return handleOtherErrror(error);
+      return ErrorResponse(error);
     }
   });
 }
