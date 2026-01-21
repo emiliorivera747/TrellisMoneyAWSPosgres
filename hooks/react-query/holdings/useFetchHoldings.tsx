@@ -13,7 +13,7 @@ const useFetchHoldings = () => {
     error: holdingsError,
     isLoading: holdingsLoading,
   } = useQuery({
-    queryKey: ["holdigns"],
+    queryKey: ["holdings"],
     queryFn: holdingService.getHoldings,
     staleTime: 5 * 60 * 1000,
     gcTime: 30 * 60 * 1000,
