@@ -5,7 +5,6 @@ import {
   date,
   numeric,
   boolean,
-  pgEnum,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";

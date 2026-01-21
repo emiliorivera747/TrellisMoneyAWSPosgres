@@ -28,6 +28,7 @@ import { refreshHouseholdHoldings } from "@/utils/drizzle/investments/getInvestm
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
+      
       // Step 1: Get items (sequential - needed first)
       const items = await getItemsByUserId(user.id);
       if (!items || items.length === 0) {
@@ -39,8 +40,6 @@ export async function POST(req: NextRequest) {
 
       // Step 3: Get holdings for these accounts
       const holdingsDB = await getHoldingsByAccounts(accountsDB);
-
-      console.log("accountDB", accountsDB, "holdingDB", holdingsDB);
 
       // Step 4: Refresh from Plaid and update database
       const result = await refreshHouseholdHoldings({

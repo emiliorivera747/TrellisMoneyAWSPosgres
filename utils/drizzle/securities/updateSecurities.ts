@@ -1,15 +1,12 @@
 // Drizzle
 import { security } from "@/drizzle/schema";
 import { sql } from "drizzle-orm";
-import { SecurityType } from "@/drizzle/schema";
-
-// Utils
-import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
-import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 
 // Types
 import { UpsertSecuritiesParams } from "@/types/utils/drizzle/investments/securityService";
 import { Security } from "plaid";
+
+import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 
 /**
  * Upserts the securities into the database using Drizzle
@@ -17,12 +14,12 @@ import { Security } from "plaid";
  */
 /**
  * Updates securities in the database within a transaction by performing an upsert operation.
- * 
+ *
  * @param {Object} params - The parameters for the update operation.
  * @param {Transaction} params.tx - The database transaction object.
  * @param {Array} params.plaidSecurities - An array of securities to be upserted.
  * @param {string | null} params.timestamp - Optional timestamp to set for the updated records.
- * 
+ *
  * @returns {Promise<Array>} A promise that resolves to an array of upserted securities.
  */
 export const updateSecuritiesInTx = async ({
@@ -30,32 +27,36 @@ export const updateSecuritiesInTx = async ({
   plaidSecurities,
   timestamp,
 }: UpsertSecuritiesParams) => {
-  if (plaidSecurities.length === 0) return [];
+  try {
+    if (plaidSecurities.length === 0) return [];
+    const values = getSecurityValues(plaidSecurities);
+    const securityUpserts = await tx
+      .insert(security)
+      .values(values)
+      .onConflictDoUpdate({
+        target: security.securityId,
+        set: {
+          institutionId: sql`excluded.institution_id`,
+          proxySecurityId: sql`excluded.proxy_security_id`,
+          securityName: sql`excluded.security_name`,
+          tickerSymbol: sql`excluded.ticker_symbol`,
+          isCashEquivalent: sql`excluded.is_cash_equivalent`,
+          type: sql`excluded.type`,
+          closePrice: sql`excluded.close_price`,
+          closePriceAsOf: sql`excluded.close_price_as_of`,
+          updateDatetime: sql`excluded.update_datetime`,
+          isoCurrencyCode: sql`excluded.iso_currency_code`,
+          sector: sql`excluded.sector`,
+          industry: sql`excluded.industry`,
+        },
+      })
+      .returning();
+    console.log(securityUpserts);
 
-  const values = getSecurityValues(plaidSecurities);
-
-  const securityUpserts = await tx
-    .insert(security) 
-    .values(values) 
-    .onConflictDoUpdate({
-      target: security.securityId, 
-      set: {
-        securityName: sql`excluded.security_name`,
-        tickerSymbol: sql`excluded.ticker_symbol`,
-        isCashEquivalent: sql`excluded.is_cash_equivalent`,
-        type: sql`excluded.type`,
-        closePrice: sql`excluded.close_price`,
-        closePriceAsOf: sql`excluded.close_price_as_of`,
-        updateDatetime: sql`excluded.update_datetime`,
-        isoCurrencyCode: sql`excluded.iso_currency_code`,
-        sector: sql`excluded.sector`,
-        industry: sql`excluded.industry`,
-        updatedAt: timestamp ? timestamp : sql`CURRENT_TIMESTAMP`,
-      },
-    })
-    .returning(); 
-
-  return securityUpserts;
+    return securityUpserts;
+  } catch (error) {
+    return logErrorAndThrow(error);
+  }
 };
 
 /**
@@ -67,25 +68,20 @@ export const updateSecuritiesInTx = async ({
 const getSecurityValues = (securitiesPlaid: Security[]) => {
   const values = securitiesPlaid.map((securityPlaid) => ({
     securityId: securityPlaid.security_id,
-    institutionId: securityPlaid.institution_id,
-    proxySecurityId: securityPlaid.proxy_security_id,
-    securityName: valueOrDefault(securityPlaid.name, null),
-    tickerSymbol: valueOrDefault(securityPlaid.ticker_symbol, null),
-    isCashEquivalent: valueOrDefault(securityPlaid.is_cash_equivalent, false),
-    type: valueOrDefault(
-      securityPlaid.type?.toUpperCase(),
-      null
-    ) as SecurityType,
-    closePrice: valueOrDefault(securityPlaid.close_price?.toString(), null),
-    closePriceAsOf: valueOrDefault(securityPlaid.close_price_as_of, null),
+    institutionId: securityPlaid.institution_id ?? null,
+    proxySecurityId: securityPlaid.proxy_security_id ?? null,
+    securityName: securityPlaid.name ?? null,
+    tickerSymbol: securityPlaid.ticker_symbol ?? null,
+    isCashEquivalent: securityPlaid.is_cash_equivalent ?? false,
+    type: securityPlaid.type ?? null,
+    closePrice: securityPlaid.close_price ?? null,
+    closePriceAsOf: securityPlaid.close_price_as_of ?? null,
     updateDatetime: securityPlaid.update_datetime
-      ? isoToUTC(
-          valueOrDefault(securityPlaid.update_datetime, null)
-        ).toISOString()
+      ? new Date(securityPlaid.update_datetime).toISOString()
       : null,
-    isoCurrencyCode: valueOrDefault(securityPlaid.iso_currency_code, null),
-    sector: valueOrDefault(securityPlaid.sector, null),
-    industry: valueOrDefault(securityPlaid.industry, null),
+    isoCurrencyCode: securityPlaid.iso_currency_code ?? null,
+    sector: securityPlaid.sector ?? null,
+    industry: securityPlaid.industry ?? null,
   }));
   return values;
 };
