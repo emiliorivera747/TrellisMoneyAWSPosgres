@@ -3,7 +3,7 @@ import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 
 // Drizzle
 import { db } from "@/drizzle/db";
-import { account, Account } from "@/drizzle/schema";
+import { account, Account, Item } from "@/drizzle/schema";
 import { sql } from "drizzle-orm";
 
 // Utils
@@ -42,13 +42,12 @@ export async function updateAccounts(
    */
   const values = plaidAccounts.map((plaidAccount) => {
     const balances = plaidAccount.balances ?? DEFAULT_BALANCE;
-
     const accountId = plaidAccount.account_id;
     const { householdMemberId = "", itemId = "" } =
       accountMap.get(accountId) ?? {};
 
     return {
-      accountId,
+      accountId:,
       householdMemberId,
       itemId,
       ...extractAccountFromPlaid(plaidAccount, balances),
@@ -82,6 +81,57 @@ export async function updateAccounts(
   }
 }
 
+interface UpdatedAccountsInTx {
+  tx: any;
+  plaidAccounts: AccountBase[];
+  accountsDB: Account[];
+}
+
+export const updateAccountsInTx = async ({
+  tx,
+  plaidAccounts,
+  accountsDB,
+}: UpdatedAccountsInTx) => {
+  
+  if (!plaidAccounts.length) return [];
+
+  const accountMap = generateAccountMap(accountsDB);
+
+  const values = plaidAccounts.map((plaidAccount) => {
+    const balances = plaidAccount.balances ?? DEFAULT_BALANCE;
+    const accountId = plaidAccount.account_id;
+    
+    const { householdMemberId = "", itemId = "" } =
+      accountMap.get(accountId) ?? {};
+
+    return {
+      accountId,
+      householdMemberId,
+      itemId,
+      ...extractAccountFromPlaid(plaidAccount, balances),
+    };
+  });
+
+  return tx
+  .insert(account)
+  .values(values)
+  .onConflictDoUpdate({
+    target: account.accountId,
+    set: {
+      accountName: sql`excluded.account_name`,
+      officialName: sql`excluded.official_name`,
+      mask: sql`excluded.mask`,
+      type: sql`excluded.type`,
+      subtype: sql`excluded.subtype`,
+      availableBalance: sql`excluded.available_balance`,
+      currentBalance: sql`excluded.current_balance`,
+      limitAmount: sql`excluded.limit_amount`,
+      holderCategory: sql`excluded.holder_category`,
+      updatedAt: sql`now()`,
+    },
+  })
+  .returning();
+};
 
 const extractAccountFromPlaid = (
   account: AccountBase,

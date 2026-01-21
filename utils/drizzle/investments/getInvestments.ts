@@ -1,11 +1,15 @@
 // Services
-import { getAllHoldingsWithAccessTokens } from "@/services/plaid/holdings/holdings";
+import {
+  getAllHoldingsWithAccessTokens,
+  fetchAllPlaidHoldings,
+} from "@/services/plaid/holdings/holdings";
 
 // Utils
 import { updateHoldings } from "@/utils/prisma/holding/updateHoldings";
 import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
 import { updateHoldingsAndSecurities } from "@/utils/drizzle/investments/updateHoldingsAndSecurities";
-import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
+import { updateAccounts, updateAccountsInTx } from "@/utils/drizzle/accounts/updateAccounts";
+import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
 
 // Types
 import {
@@ -14,6 +18,9 @@ import {
   Holding as HoldingDB,
 } from "@/drizzle/schema/index";
 import { GetInvestmentsWithItemsPlaid } from "@/types/api-routes/investments/getInvestments";
+
+// Drizzle
+import { db } from "@/drizzle/db";
 
 /**
  * Fetch investments using access tokens.
@@ -31,28 +38,36 @@ export const getInvestmentsPlaid = async (
   holdingsDB: HoldingDB[],
   user_id: string
 ) => {
-  // Extract access tokens from the provided items
-  const accessTokens = getAllAccessTokens(items);
+  /**
+   * Get all holdings from Plaid
+   */
+  const plaidResponse = await fetchAllPlaidHoldings(items);
 
-  // Fetch investment data for each access token
-  const investmentsForEachItem = await getAllHoldingsWithAccessTokens(
-    accessTokens
-  );
+  const plaidAccounts = plaidResponse.flatMap((res) => res.accounts);
+  const plaidHoldings = plaidResponse.flatMap((res) => res.holdings);
+  const plaidSecurities = plaidResponse.flatMap((res) => res.securities);
 
-  // Update the database with fetched holdings and related data
-  investmentsForEachItem.forEach(async (item) => {
-    await updateAccounts([item.accounts], accountsDB);
-    await updateHoldingsAndSecurities({
-      holdingsPlaid: item.holdings,
-      securitiesPlaid: item.securities,
-      timestamp,
-      holdingsDB,
-      accountsDB,
-      userId: user_id,
-    });
-  });
+  if (plaidHoldings.length === 0)
+    return logErrorAndThrow("No holdings found in any connected accounts");
 
-  return investmentsForEachItem;
+  // // Update the database with fetched holdings and related data
+  // investmentsForEachItem.forEach(async (item) => {
+  //   await updateAccounts([item.accounts], accountsDB);
+  //   await updateHoldingsAndSecurities({
+  //     holdingsPlaid: item.holdings,
+  //     securitiesPlaid: item.securities,
+  //     timestamp,
+  //     holdingsDB,
+  //     accountsDB,
+  //     userId: user_id,
+  //   });
+  // });
+
+  const res = await db.transaction(async (tx)=>{
+    const updateAccounts = updateAccountsInTx({tx, accountsDB, plaidAccounts});
+  })
+
+  return res;
 };
 
 /**
