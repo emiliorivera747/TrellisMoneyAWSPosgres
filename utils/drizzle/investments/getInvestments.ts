@@ -58,6 +58,7 @@ export const refreshHouseholdHoldings = async ({
     return logErrorAndThrow("No holdings found in any connected accounts");
 
   const res = await db.transaction(async (tx) => {
+    
     // Update accounts first (holdings depend on accounts)
     const updatedAccounts = await updateAccountsInTx({
       tx,

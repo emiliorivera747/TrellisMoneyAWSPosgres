@@ -47,7 +47,7 @@ export async function updateAccounts(
       accountMap.get(accountId) ?? {};
 
     return {
-      accountId:,
+      accountId,
       householdMemberId,
       itemId,
       ...extractAccountFromPlaid(plaidAccount, balances),
@@ -92,7 +92,6 @@ export const updateAccountsInTx = async ({
   plaidAccounts,
   accountsDB,
 }: UpdatedAccountsInTx) => {
-  
   if (!plaidAccounts.length) return [];
 
   const accountMap = generateAccountMap(accountsDB);
@@ -100,7 +99,7 @@ export const updateAccountsInTx = async ({
   const values = plaidAccounts.map((plaidAccount) => {
     const balances = plaidAccount.balances ?? DEFAULT_BALANCE;
     const accountId = plaidAccount.account_id;
-    
+
     const { householdMemberId = "", itemId = "" } =
       accountMap.get(accountId) ?? {};
 
@@ -113,24 +112,24 @@ export const updateAccountsInTx = async ({
   });
 
   return tx
-  .insert(account)
-  .values(values)
-  .onConflictDoUpdate({
-    target: account.accountId,
-    set: {
-      accountName: sql`excluded.account_name`,
-      officialName: sql`excluded.official_name`,
-      mask: sql`excluded.mask`,
-      type: sql`excluded.type`,
-      subtype: sql`excluded.subtype`,
-      availableBalance: sql`excluded.available_balance`,
-      currentBalance: sql`excluded.current_balance`,
-      limitAmount: sql`excluded.limit_amount`,
-      holderCategory: sql`excluded.holder_category`,
-      updatedAt: sql`now()`,
-    },
-  })
-  .returning();
+    .insert(account)
+    .values(values)
+    .onConflictDoUpdate({
+      target: account.accountId,
+      set: {
+        accountName: sql`excluded.account_name`,
+        officialName: sql`excluded.official_name`,
+        mask: sql`excluded.mask`,
+        type: sql`excluded.type`,
+        subtype: sql`excluded.subtype`,
+        availableBalance: sql`excluded.available_balance`,
+        currentBalance: sql`excluded.current_balance`,
+        limitAmount: sql`excluded.limit_amount`,
+        holderCategory: sql`excluded.holder_category`,
+        updatedAt: sql`now()`,
+      },
+    })
+    .returning();
 };
 
 const extractAccountFromPlaid = (
