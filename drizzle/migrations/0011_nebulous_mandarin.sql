@@ -1,0 +1,1 @@
+ALTER TABLE "Holding" ALTER COLUMN "expected_annual_return_rate" SET DEFAULT 0.06;

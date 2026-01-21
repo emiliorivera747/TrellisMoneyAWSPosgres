@@ -80,7 +80,6 @@ export async function updateHoldings(
       .onConflictDoUpdate({
         target: holding.holdingId,
         set: {
-          householdMemberId: sql`excluded.household_member_id`,
           accountId: sql`excluded.account_id`,
           securityId: sql`excluded.security_id`,
           institutionPrice: sql`excluded.institution_price`,
@@ -126,9 +125,6 @@ export async function updateHoldingsInTx({
       target: holding.holdingId,
       set: {
         ...buildConflictUpdateColumns(holding, [
-          "householdMemberId",
-          "accountId",
-          "securityId",
           "institutionPrice",
           "institutionPriceAsOf",
           "institutionPriceDatetime",
@@ -153,22 +149,15 @@ const getAllHoldingValues = (
 ) => {
   const values = holdingsPlaid.map((holdingPlaid) => {
     const accountId = holdingPlaid.account_id;
-
     const securityId = holdingPlaid.security_id;
-
     const holdingId =
       holdingMap.get(`${accountId}-${securityId}`)?.holdingId ||
       crypto.randomUUID();
-
-    const householdMemberId = holdingMap.get(
-      `${accountId}-${securityId}`
-    )?.householdMemberId;
 
     return {
       holdingId,
       accountId,
       securityId,
-      householdMemberId,
       costBasis: `${valueOrDefault(holdingPlaid.cost_basis, 0)}`,
       institutionPrice: `${valueOrDefault(holdingPlaid.institution_price, 0)}`,
       institutionValue: `${valueOrDefault(holdingPlaid.institution_value, 0)}`,

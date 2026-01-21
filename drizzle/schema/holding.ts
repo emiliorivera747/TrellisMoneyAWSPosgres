@@ -49,7 +49,7 @@ export const holding = pgTable(
     expectedAnnualReturnRate: numeric("expected_annual_return_rate", {
       precision: 6,
       scale: 4,
-    }),
+    }).default(sql`0.06`),
     createdAt: timestamp("created_at", {
       precision: 3,
       withTimezone: true,
