@@ -2,9 +2,6 @@
 import { NextRequest } from "next/server";
 import { withAuth } from "@/lib/protected"; // your auth wrapper
 
-// Services
-import { getHoldingsFromPlaidWithItems } from "@/services/plaid/holdings/getHoldingsV2";
-
 // Drizzle
 import { getItemsByUserId } from "@/utils/drizzle/item/getItem";
 import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
@@ -16,8 +13,7 @@ import {
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
-import { updateHoldings } from "@/utils/drizzle/holdings/updateHoldings";
-import { getInvestmentsPlaid } from "@/utils/drizzle/investments/getInvestments";
+import { refreshHouseholdHoldings } from "@/utils/drizzle/investments/getInvestments";
 
 /**
  * POST /api/household/holdings/refresh
@@ -31,7 +27,6 @@ import { getInvestmentsPlaid } from "@/utils/drizzle/investments/getInvestments"
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      
       /**
        * Get items from household member ids
        */
@@ -47,35 +42,24 @@ export async function POST(req: NextRequest) {
       /**
        * Get Plaid holdings
        */
-      const plaidHoldingsResponses = await getInvestmentsPlaid({
+      const plaidHoldingsResponses = await refreshHouseholdHoldings({
         items,
         accountsDB,
         timestamp: "",
-        userId: user.id,
         holdingsDB: [],
       });
+      if (!plaidHoldingsResponses)
+        return FailResponse("Failed to get Holdings from Plaid", 404);
 
-      // Flatten holdings from all responses
-      const allPlaidHoldings = plaidHoldingsResponses.flatMap(
-        (response) => response.holdings || []
-      );
-
-      if (allPlaidHoldings.length === 0)
-        return FailResponse("No holdings found", 404);
-
-      // 4. Update holdings in DB (your existing utility - should be idempotent)
-      const updatedHoldings = await updateHoldings(
-        plaidHoldingsResponses,
-        accountsDB
-      );
+      const { accountsUpdated, holdingsUpdated, securitiesUpdated } =
+        plaidHoldingsResponses.stats;
 
       // 5. Return quick success response (do NOT return full holdings list here)
       return SuccessResponse(
         {
-          refreshedHoldingsCount: Array.isArray(updatedHoldings)
-            ? updatedHoldings.length
-            : 0,
-          refreshedItemCount: items.length,
+          refreshedHoldingsCount: holdingsUpdated,
+          refreshedAccountsCount: accountsUpdated,
+          refreshedSecurityCount: securitiesUpdated,
           refreshedAt: new Date().toISOString(),
         },
         "Household holdings refreshed successfully"

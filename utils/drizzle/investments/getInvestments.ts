@@ -23,6 +23,13 @@ import { GetInvestmentsWithItemsPlaid } from "@/types/api-routes/investments/get
 // Drizzle
 import { db } from "@/drizzle/db";
 
+type GetInvestmentsPlaid = {
+  items: Item[];
+  timestamp: string;
+  accountsDB: AccountDB[];
+  holdingsDB: HoldingDB[];
+};
+
 /**
  * Fetch investments using access tokens.
  * @param {Item[]} items - Items with access tokens.
@@ -32,18 +39,17 @@ import { db } from "@/drizzle/db";
  * @param {string} user_id - User ID.
  * @returns {Promise<any>} Investments for each item.
  */
-export const getInvestmentsPlaid = async (
-  items: Item[],
-  timestamp: string,
-  accountsDB: AccountDB[],
-  holdingsDB: HoldingDB[],
-  user_id: string
-) => {
+export const refreshHouseholdHoldings = async ({
+  items,
+  timestamp,
+  accountsDB,
+  holdingsDB,
+}: GetInvestmentsPlaid) => {
   /**
    * Get all holdings from Plaid
    */
   const plaidResponse = await fetchAllPlaidHoldings(items);
-
+  
   const plaidAccounts = plaidResponse.flatMap((res) => res.accounts);
   const plaidHoldings = plaidResponse.flatMap((res) => res.holdings);
   const plaidSecurities = plaidResponse.flatMap((res) => res.securities);
@@ -52,13 +58,14 @@ export const getInvestmentsPlaid = async (
     return logErrorAndThrow("No holdings found in any connected accounts");
 
   const res = await db.transaction(async (tx) => {
-    
-    const updateAccounts = updateAccountsInTx({
+    // Update accounts first (holdings depend on accounts)
+    const updatedAccounts = await updateAccountsInTx({
       tx,
       accountsDB,
       plaidAccounts,
     });
 
+    // Update securities and holdings in parallel (they're independent)
     const [updatedSecurities, updatedHoldings] = await Promise.all([
       updateSecuritiesInTx({ plaidSecurities, tx, timestamp }),
       updateHoldingsInTx({ plaidHoldings, tx, timestamp, holdingsDB }),
@@ -67,7 +74,12 @@ export const getInvestmentsPlaid = async (
     return {
       holdingsUpdated: updatedHoldings,
       securititiesUpdated: updatedSecurities,
-      accounts: updateAccounts,
+      accounts: updatedAccounts,
+      stats: {
+        holdingsUpdated: updatedHoldings.length,
+        securitiesUpdated: updatedSecurities.length,
+        accountsUpdated: updatedAccounts.length,
+      },
     };
   });
 
