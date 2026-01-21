@@ -7,9 +7,10 @@ import {
 // Utils
 import { updateHoldings } from "@/utils/prisma/holding/updateHoldings";
 import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
-import { updateHoldingsAndSecurities } from "@/utils/drizzle/investments/updateHoldingsAndSecurities";
-import { updateAccounts, updateAccountsInTx } from "@/utils/drizzle/accounts/updateAccounts";
+import { updateAccountsInTx } from "@/utils/drizzle/accounts/updateAccounts";
+import { updateSecuritiesInTx } from "@/utils/drizzle/securities/updateSecurities";
 import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
+import { updateHoldingsInTx } from "@/utils/drizzle/holdings/updateHoldings";
 
 // Types
 import {
@@ -50,22 +51,25 @@ export const getInvestmentsPlaid = async (
   if (plaidHoldings.length === 0)
     return logErrorAndThrow("No holdings found in any connected accounts");
 
-  // // Update the database with fetched holdings and related data
-  // investmentsForEachItem.forEach(async (item) => {
-  //   await updateAccounts([item.accounts], accountsDB);
-  //   await updateHoldingsAndSecurities({
-  //     holdingsPlaid: item.holdings,
-  //     securitiesPlaid: item.securities,
-  //     timestamp,
-  //     holdingsDB,
-  //     accountsDB,
-  //     userId: user_id,
-  //   });
-  // });
+  const res = await db.transaction(async (tx) => {
+    
+    const updateAccounts = updateAccountsInTx({
+      tx,
+      accountsDB,
+      plaidAccounts,
+    });
 
-  const res = await db.transaction(async (tx)=>{
-    const updateAccounts = updateAccountsInTx({tx, accountsDB, plaidAccounts});
-  })
+    const [updatedSecurities, updatedHoldings] = await Promise.all([
+      updateSecuritiesInTx({ plaidSecurities, tx, timestamp }),
+      updateHoldingsInTx({ plaidHoldings, tx, timestamp, holdingsDB }),
+    ]);
+
+    return {
+      holdingsUpdated: updatedHoldings,
+      securititiesUpdated: updatedSecurities,
+      accounts: updateAccounts,
+    };
+  });
 
   return res;
 };

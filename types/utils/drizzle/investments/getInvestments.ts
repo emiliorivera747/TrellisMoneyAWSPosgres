@@ -18,3 +18,10 @@ export interface UpsertHoldingsParams {
   timestamp: string;
   holdingMap: Map<string, { householdMemberId: string; holdingId: string }>;
 }
+
+export type UpdateHoldingsInTxParams =  {
+  plaidHoldings: plaidHolding[];
+  holdingsDB: HoldingDB[];
+  timestamp: string;
+  tx: any;
+}

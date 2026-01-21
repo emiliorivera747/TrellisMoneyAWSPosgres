@@ -9,9 +9,12 @@ import { sql } from "drizzle-orm";
 // Utils
 import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
 import { generateAccountMap } from "@/utils/api-helpers/accounts/accountMaps";
+import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 
 // Types
-import { Holding as HoldingPlaid, InvestmentsHoldingsGetResponse } from "plaid";
+import { InvestmentsHoldingsGetResponse, Holding} from "plaid";
+import { UpdateHoldingsInTxParams } from "@/types/utils/drizzle/investments/getInvestments";
+import { generateHoldingMap } from "@/utils/api-helpers/holdings/holdingMap";
 
 /**
  * Update the holdings in the database
@@ -25,7 +28,7 @@ export async function updateHoldings(
   const plaidHoldings = holdingsPlaidResponses.flatMap(
     (response) => response.holdings || []
   );
-  
+
   if (plaidHoldings.length === 0) return [];
   const accountMap = generateAccountMap(accountsDb);
 
@@ -98,3 +101,85 @@ export async function updateHoldings(
     return ErrorResponse(error);
   }
 }
+
+/**
+ * Update the holdings in the database
+ * Optimized to use batch operations via transaction to reduce database round-trips
+ */
+export async function updateHoldingsInTx({
+  plaidHoldings,
+  timestamp,
+  holdingsDB,
+  tx,
+}: UpdateHoldingsInTxParams) {
+  if (plaidHoldings.length === 0) return [];
+
+  const holdingMap = generateHoldingMap(holdingsDB);
+  const values = getAllHoldingValues(plaidHoldings, holdingMap);
+
+  try {
+    const updatedHoldings = await tx
+      .insert(holding)
+      .values(values)
+      .onConflictDoUpdate({
+        target: holding.holdingId,
+        set: {
+          householdMemberId: sql`excluded.household_member_id`,
+          accountId: sql`excluded.account_id`,
+          securityId: sql`excluded.security_id`,
+          costBasis: sql`excluded.cost_basis`,
+          institutionPrice: sql`excluded.institution_price`,
+          institutionValue: sql`excluded.institution_value`,
+          quantity: sql`excluded.quantity`,
+          vestedQuantity: sql`excluded.vested_quantity`,
+          vestedValue: sql`excluded.vested_value`,
+          institutionPriceAsOf: sql`excluded.institution_price_as_of`,
+          institutionPriceDatetime: sql`excluded.institution_price_datetime`,
+          isoCurrencyCode: sql`excluded.iso_currency_code`,
+          updatedAt: timestamp ? timestamp : sql`CURRENT_TIMESTAMP`,
+        },
+      })
+      .returning();
+    return updatedHoldings;
+  } catch (error) {
+    return ErrorResponse(error);
+  }
+}
+
+const getAllHoldingValues = (
+  holdingsPlaid: Holding[],
+  holdingMap: Map<string, { householdMemberId: string; holdingId: string }>
+) => {
+  const values = holdingsPlaid.map((holdingPlaid) => {
+    const accountId = valueOrDefault(holdingPlaid.account_id, "");
+    const securityId = valueOrDefault(holdingPlaid.security_id, "");
+    const holdingId =
+      holdingMap.get(`${accountId}-${securityId}`)?.holdingId || "";
+    const householdMemberId =
+      holdingMap.get(`${accountId}-${securityId}`)?.householdMemberId || "";
+
+    return {
+      holdingId,
+      accountId,
+      securityId,
+      householdMemberId,
+      costBasis: `${valueOrDefault(holdingPlaid.cost_basis, 0)}`,
+      institutionPrice: `${valueOrDefault(holdingPlaid.institution_price, 0)}`,
+      institutionValue: `${valueOrDefault(holdingPlaid.institution_value, 0)}`,
+      quantity: `${valueOrDefault(holdingPlaid.quantity, 0)}`,
+      vestedQuantity: `${valueOrDefault(holdingPlaid.vested_quantity, 0)}`,
+      vestedValue: `${valueOrDefault(holdingPlaid.vested_value, 0)}`,
+      institutionPriceAsOf: valueOrDefault(
+        isoToUTC(holdingPlaid.institution_price_as_of).toISOString(),
+        null
+      ),
+      institutionPriceDatetime: valueOrDefault(
+        isoToUTC(holdingPlaid.institution_price_datetime).toISOString(),
+        null
+      ),
+      isoCurrencyCode: holdingPlaid.iso_currency_code || null,
+    };
+  });
+
+  return values;
+};

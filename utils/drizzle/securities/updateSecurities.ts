@@ -18,12 +18,12 @@ import { Security } from "plaid";
  */
 export const updateSecuritiesInTx = async ({
   tx,
-  securitiesPlaid,
+  plaidSecurities,
   timestamp,
 }: UpsertSecuritiesParams) => {
   try {
-    if (securitiesPlaid.length === 0) return [];
-    const values = getSecurityValues(securitiesPlaid);
+    if (plaidSecurities.length === 0) return [];
+    const values = getSecurityValues(plaidSecurities);
 
     const securityUpserts = await tx
       .insert(security)
