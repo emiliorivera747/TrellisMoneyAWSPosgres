@@ -42,7 +42,9 @@ export const security = pgTable("Security", {
     precision: 3,
     withTimezone: true,
     mode: "string",
-  }),
+  })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 });
 
 /**
