@@ -1,8 +1,7 @@
 // Drizzle
-import { db } from "@/drizzle/db";
 import { security } from "@/drizzle/schema";
 import { sql } from "drizzle-orm";
-import { Security as SecurityDrizzle, SecurityType } from "@/drizzle/schema";
+import { SecurityType } from "@/drizzle/schema";
 
 // Utils
 import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
@@ -17,15 +16,16 @@ import { Security } from "plaid";
  * Upserts the securities into the database using Drizzle
  * Note: In Drizzle schema, securities are standalone entities without user_id or household_id
  */
-export const upsertSecuritiesInTx = async ({
-  tx: any,
+export const updateSecuritiesInTx = async ({
+  tx,
   securitiesPlaid,
+  timestamp,
 }: UpsertSecuritiesParams) => {
   try {
     if (securitiesPlaid.length === 0) return [];
     const values = getSecurityValues(securitiesPlaid);
 
-    const securityUpserts = await db
+    const securityUpserts = await tx
       .insert(security)
       .values(values)
       .onConflictDoUpdate({
