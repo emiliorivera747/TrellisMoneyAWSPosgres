@@ -1,26 +1,12 @@
 // Drizzle
 import { security } from "@/drizzle/schema";
-import { SQL, getTableColumns, sql } from "drizzle-orm";
-import { PgTable } from "drizzle-orm/pg-core";
 
 // Types
 import { UpsertSecuritiesParams } from "@/types/utils/drizzle/investments/securityService";
 import { Security } from "plaid";
 
-const buildConflictUpdateColumns = <
-  T extends PgTable,
-  Q extends keyof T["_"]["columns"]
->(
-  table: T,
-  columns: Q[]
-) => {
-  const cls = getTableColumns(table);
-  return columns.reduce((acc, column) => {
-    const colName = cls[column].name;
-    acc[column] = sql.raw(`excluded.${colName}`);
-    return acc;
-  }, {} as Record<Q, SQL>);
-};
+// Utils
+import { buildConflictUpdateColumns } from "@/utils/drizzle/helpers/buildConflictUpdateColumns";
 
 /**
  * Upserts the securities into the database using Drizzle
@@ -36,7 +22,7 @@ export const updateSecuritiesInTx = async ({
   const deduplicatedValues = Array.from(
     new Map(values.map((v) => [v.securityId, v])).values()
   );
-  
+
   const securityUpserts = await tx
     .insert(security)
     .values(deduplicatedValues)
