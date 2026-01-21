@@ -9,7 +9,7 @@ import {
 import { sql } from "drizzle-orm";
 import { relations } from "drizzle-orm";
 
-import { security, account, householdMember } from "@/drizzle/schema";
+import { security, account } from "@/drizzle/schema";
 
 /**
  * Holding schema - Stores investment holdings (securities) within accounts
@@ -20,7 +20,6 @@ export const holding = pgTable(
     holdingId: text("holding_id").primaryKey().notNull(),
     accountId: text("account_id"),
     securityId: text("security_id").notNull(),
-    householdMemberId: text("household_member_id").notNull(),
     institutionPrice: numeric("institution_price", {
       precision: 20,
       scale: 8,
@@ -69,17 +68,8 @@ export const holding = pgTable(
       "btree",
       table.accountId.asc().nullsLast().op("text_ops")
     ),
-    index("Holding_household_member_id_idx").using(
-      "btree",
-      table.householdMemberId.asc().nullsLast().op("text_ops")
-    ),
     index("Holding_security_id_idx").using(
       "btree",
-      table.securityId.asc().nullsLast().op("text_ops")
-    ),
-    index("Holding_household_member_id_security_id_idx").using(
-      "btree",
-      table.householdMemberId.asc().nullsLast().op("text_ops"),
       table.securityId.asc().nullsLast().op("text_ops")
     ),
     foreignKey({
@@ -93,13 +83,6 @@ export const holding = pgTable(
       columns: [table.securityId],
       foreignColumns: [security.securityId],
       name: "Holding_security_id_fkey",
-    })
-      .onUpdate("cascade")
-      .onDelete("restrict"),
-    foreignKey({
-      columns: [table.householdMemberId],
-      foreignColumns: [householdMember.householdMemberId],
-      name: "Holding_household_member_id_fkey",
     })
       .onUpdate("cascade")
       .onDelete("restrict"),
@@ -117,9 +100,5 @@ export const holdingRelations = relations(holding, ({ one }) => ({
   account: one(account, {
     fields: [holding.accountId],
     references: [account.accountId],
-  }),
-  householdMember: one(householdMember, {
-    fields: [holding.householdMemberId],
-    references: [householdMember.householdMemberId],
   }),
 }));

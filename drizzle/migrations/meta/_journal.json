@@ -57,6 +57,13 @@
       "when": 1769018758219,
       "tag": "0009_typical_ultimatum",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1769022687485,
+      "tag": "0010_premium_pandemic",
+      "breakpoints": true
     }
   ]
 }
