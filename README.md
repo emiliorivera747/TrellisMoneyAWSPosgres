@@ -8,7 +8,7 @@
 
 ## Add Multiple Members
 <img width="1512" height="855" alt="Screenshot 2026-01-07 at 8 37 12 PM" src="https://github.com/user-attachments/assets/ecfc0fb0-6d59-4533-ad94-6750331a0ad0" />
-<img width="1512" height="857" alt="Screenshot 2026-01-07 at 8 41 06 PM" src="https://github.com/user-attachments/assets/e56f7d78-3a17-40ee-8d6c-4786a60271e0" />
+<img width="1512" height="857" alt="Screenshot 2026-01-21 at 5 30 11 PM" src="https://github.com/user-attachments/assets/54b5507e-c4ad-40b1-bf41-115f3975a01c" />
 
 
 ## Sign In Page
