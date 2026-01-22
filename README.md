@@ -3,8 +3,9 @@
 <img width="1507" height="855" alt="Screenshot 2026-01-10 at 6 21 30 PM" src="https://github.com/user-attachments/assets/406e2a6e-7950-4b71-98cb-db4986265159" />
 
 ## Dashboard
-<img width="1511" height="857" alt="Screenshot 2026-01-21 at 5 27 32 PM" src="https://github.com/user-attachments/assets/f1384dcd-2a51-4624-b37c-587c02de36af" />
+<img width="1512" height="859" alt="Screenshot 2026-01-21 at 5 36 39 PM" src="https://github.com/user-attachments/assets/139473a3-c570-4640-baf6-895218947895" />
 <img width="1512" height="856" alt="Screenshot 2026-01-21 at 5 34 52 PM" src="https://github.com/user-attachments/assets/28a11141-68c3-41d9-840f-d50c60491ba2" />
+
 
 ## Add Multiple Members
 <img width="1512" height="855" alt="Screenshot 2026-01-07 at 8 37 12 PM" src="https://github.com/user-attachments/assets/ecfc0fb0-6d59-4533-ad94-6750331a0ad0" />
