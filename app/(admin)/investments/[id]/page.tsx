@@ -4,6 +4,7 @@ import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMon
 import { use } from "react";
 import HoldingHeader from "@/features/holding/components/headers/HoldingHeader";
 import MarketValueCards from "@/features/holding/components/cards/MarketValueCards";
+import AverageCostCard from "@/features/holding/components/cards/AverageCostCard";
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
@@ -40,8 +41,14 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     <section className="h-screen overflow-scroll">
       <header className="mt-[3.5rem] px-8">
         <HoldingHeader holding={holding} />
-        <MarketValueCards holding={holding} />
-        <div className="mb-4 font-semibold">Holdings by Account</div>
+        <div className="flex gap-6">
+          <MarketValueCards holding={holding} />
+          <AverageCostCard holding={holding} />
+        </div>
+
+        <div className="mb-4 font-medium text-tertiary-1000 text-[1.2rem] mt-6">
+          Holdings by Account
+        </div>
         <div className="flex flex-col gap-2">
           {holding.holdings.map((h) => (
             <div
@@ -60,12 +67,12 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
                     {convertToMoney(h.totalValue)}
                   </div>
                   <div className="text-sm text-tertiary-800">
-                    {h.shares.toFixed(4)} shares
+                    {h.shares.toFixed(2)} shares
                   </div>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-2 text-sm">
-                <div>
+                {/* <div>
                   <div className="text-tertiary-800">Cost Basis</div>
                   <div>{convertToMoney(h.averageCost)}</div>
                 </div>
@@ -80,8 +87,8 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
                   >
                     {convertToMoney(h.totalReturn)}
                   </div>
-                </div>
-                <div className="flex justify-end items-center text-tertiary-700">
+                </div> */}
+                <div className="flex justify-start items-center text-tertiary-700">
                   <div>
                     {Math.floor(
                       (Date.now() - new Date(h.updatedAt).getTime()) /
