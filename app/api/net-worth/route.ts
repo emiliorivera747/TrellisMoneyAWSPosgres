@@ -8,7 +8,7 @@ import {
 import { withAuth } from "@/lib/protected";
 import { calculateNetWorth } from "@/utils/api-helpers/net-worth/calculateNetWorth";
 import { getItemsByUserId } from "@/utils/drizzle/item/getItem";
-import { getAccountWithItemIds } from "@/utils/prisma/accounts/accountService";
+import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
 
 /**
  *
@@ -20,16 +20,15 @@ import { getAccountWithItemIds } from "@/utils/prisma/accounts/accountService";
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      /**
-       * Get items from member
-       */
-      const items = await getItemsByUserId(user.user_id);
+
+      
+      const items = await getItemsByUserId(user.id);
       if (!items) return FailResponse("Items not found for household", 404);
 
-      const itemIds = items.map((item) => item.itemId);
-
-      const accounts = await getAccountWithItemIds(itemIds);
+      const accounts = await getAccountsFromItems(items);
       if (!accounts) return FailResponse("No accounts found", 404);
+
+
       const data = calculateNetWorth(accounts);
 
       return SuccessResponse(data, "Success");
