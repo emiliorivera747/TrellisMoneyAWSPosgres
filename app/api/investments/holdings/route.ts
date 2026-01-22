@@ -2,10 +2,10 @@ import { NextRequest } from "next/server";
 import { withAuth } from "@/lib/protected";
 import { db } from "@/drizzle/db";
 import { eq, inArray } from "drizzle-orm";
-import { holding, account, security } from "@/drizzle/schema";
+import { holding, account, security} from "@/drizzle/schema";
 
 // Util
-import { getItemsByUserId } from "@/utils/drizzle/item/getItem";
+import { getMembers } from "@/utils/drizzle/household-member/members";
 import {
   SuccessResponse,
   ErrorResponse,
@@ -27,15 +27,20 @@ import {
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      const items = await getItemsByUserId(user.user_id);
-      if (!items) FailResponse("No items associated with the user", 404);
-      const itemIds = items.map((item) => item.itemId);
+      // Get all household members for this user
+      const members = await getMembers(user.id);
+
+      if (members.length === 0)
+        return FailResponse("No household members found for this user", 404);
+
+      // Extract member IDs
+      const memberIds = members.map((m) => m.householdMemberId);
 
       // Get all investment accounts for these members
       const investmentAccounts = await db
         .select()
         .from(account)
-        .where(inArray(account.itemId, itemIds));
+        .where(inArray(account.householdMemberId, memberIds));
 
       if (investmentAccounts.length === 0)
         return FailResponse("No investment accounts found", 404);
