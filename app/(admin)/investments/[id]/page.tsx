@@ -2,6 +2,8 @@
 import useFetchAggregateHoldings from "@/hooks/react-query/holdings/useFetchAggregateHoldings";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 import { use } from "react";
+import HoldingHeader from "@/features/holding/components/headers/HoldingHeader";
+import MarketValueCards from "@/features/holding/components/cards/MarketValueCards";
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
@@ -36,47 +38,9 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <section className="h-screen overflow-scroll">
-      <header className="mt-8 px-8">
-        <div className="font-bold text-xl pb-4 mt-[3.4rem]">
-          {holding.tickerSymbol}
-        </div>
-        <div className="text-tertiary-800 mb-6">{holding.securityName}</div>
-
-        <div className="bg-white border rounded-[12px] p-6 mb-6 max-w-2xl">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <div className="text-tertiary-800 text-sm mb-1">Total Value</div>
-              <div className="text-xl font-semibold">
-                {convertToMoney(parseFloat(holding.totalValue))}
-              </div>
-            </div>
-            <div>
-              <div className="text-tertiary-800 text-sm mb-1">Total Shares</div>
-              <div className="text-xl font-semibold">
-                {parseFloat(holding.shares).toFixed(4)}
-              </div>
-            </div>
-            <div>
-              <div className="text-tertiary-800 text-sm mb-1">Average Cost</div>
-              <div className="text-xl font-semibold">
-                {convertToMoney(parseFloat(holding.averageCost))}
-              </div>
-            </div>
-            <div>
-              <div className="text-tertiary-800 text-sm mb-1">Total Return</div>
-              <div
-                className={`text-xl font-semibold ${
-                  parseFloat(holding.totalReturn) >= 0
-                    ? "text-green-600"
-                    : "text-red-600"
-                }`}
-              >
-                {convertToMoney(parseFloat(holding.totalReturn))}
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <header className="mt-[3.5rem] px-8">
+        <HoldingHeader holding={holding} />
+        <MarketValueCards holding={holding} />
         <div className="mb-4 font-semibold">Holdings by Account</div>
         <div className="flex flex-col gap-2">
           {holding.holdings.map((h) => (
@@ -87,7 +51,9 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <div className="font-medium">{h.account.name}</div>
-                  <div className="text-sm text-tertiary-800">{h.member.name}</div>
+                  <div className="text-sm text-tertiary-800">
+                    {h.member.name}
+                  </div>
                 </div>
                 <div className="text-right">
                   <div className="font-semibold">
@@ -107,15 +73,22 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
                   <div className="text-tertiary-800">Return</div>
                   <div
                     className={
-                      h.totalReturn >= 0 ? "text-green-600" : "text-red-600"
+                      h.totalReturn >= 0
+                        ? "text-secondary-1000"
+                        : "text-red-600"
                     }
                   >
                     {convertToMoney(h.totalReturn)}
                   </div>
                 </div>
-                <div>
-                  <div className="text-tertiary-800">Updated</div>
-                  <div>{new Date(h.updatedAt).toLocaleDateString()}</div>
+                <div className="flex justify-end items-center text-tertiary-700">
+                  <div>
+                    {Math.floor(
+                      (Date.now() - new Date(h.updatedAt).getTime()) /
+                        (1000 * 60 * 60)
+                    )}{" "}
+                    hours ago
+                  </div>
                 </div>
               </div>
             </div>
