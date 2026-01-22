@@ -10,7 +10,12 @@ const page = () => {
     useFetchHoldings();
 
   const [groupedHoldings, setGroupedHolding] = useState<
-    { name: string; totalShares: number; totalInstitutionValue: number }[]
+    {
+      name: string;
+      totalShares: number;
+      totalInstitutionValue: number;
+      securityId: string;
+    }[]
   >([]);
 
   useEffect(() => {
@@ -37,6 +42,7 @@ const page = () => {
         name: key,
         totalShares,
         totalInstitutionValue,
+        securityId: holdings?.[0]?.security?.securityId ?? "Unknown",
       };
     });
 
@@ -56,10 +62,10 @@ const page = () => {
         <RefreshInvestments />
         <pre className="text-xs whitespace-pre-wrap flex flex-col gap-2">
           {groupedHoldings?.map(
-            ({ name, totalShares, totalInstitutionValue }) => {
+            ({ name, totalShares, totalInstitutionValue, securityId }) => {
               return (
                 <Link
-                  href="/investments/4"
+                  href={`/investments/${securityId}`}
                   className="grid grid-cols-2 border rounded-[12px] py-[0.5rem] w-[30rem] items-center hover:shadow-md"
                   key={name}
                 >
