@@ -7,6 +7,7 @@
 <img width="1512" height="857" alt="Screenshot 2026-01-07 at 8 41 06 PM" src="https://github.com/user-attachments/assets/e56f7d78-3a17-40ee-8d6c-4786a60271e0" />
 
 ## Dashboard
+<img width="1511" height="857" alt="Screenshot 2026-01-21 at 5 27 32 PM" src="https://github.com/user-attachments/assets/f1384dcd-2a51-4624-b37c-587c02de36af" />
 <img width="1510" alt="Screenshot 2025-06-09 at 7 54 18 PM" src="https://github.com/user-attachments/assets/0cecab3a-7f61-4877-8c22-366d9319965b" />
 
 ## Sign In Page
