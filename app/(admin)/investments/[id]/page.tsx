@@ -1,6 +1,129 @@
-const page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
-  return <div>{id}</div>;
+"use client";
+import useFetchAggregateHoldings from "@/hooks/react-query/holdings/useFetchAggregateHoldings";
+import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
+import { use } from "react";
+
+const Page = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = use(params);
+  const { aggregateData, aggregateLoading, aggregateHasError, aggregateError } =
+    useFetchAggregateHoldings(id);
+
+  if (aggregateLoading) {
+    return (
+      <section className="h-screen flex items-center justify-center">
+        <div>Loading...</div>
+      </section>
+    );
+  }
+
+  if (aggregateHasError) {
+    return (
+      <section className="h-screen flex items-center justify-center">
+        <div>Error: {aggregateError?.message || "Failed to load data"}</div>
+      </section>
+    );
+  }
+
+  const holding = aggregateData?.data;
+
+  if (!holding) {
+    return (
+      <section className="h-screen flex items-center justify-center">
+        <div>No data found</div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="h-screen overflow-scroll">
+      <header className="mt-8 px-8">
+        <div className="font-bold text-xl pb-4 mt-[3.4rem]">
+          {holding.tickerSymbol}
+        </div>
+        <div className="text-tertiary-800 mb-6">{holding.securityName}</div>
+
+        <div className="bg-white border rounded-[12px] p-6 mb-6 max-w-2xl">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <div className="text-tertiary-800 text-sm mb-1">Total Value</div>
+              <div className="text-xl font-semibold">
+                {convertToMoney(parseFloat(holding.totalValue))}
+              </div>
+            </div>
+            <div>
+              <div className="text-tertiary-800 text-sm mb-1">Total Shares</div>
+              <div className="text-xl font-semibold">
+                {parseFloat(holding.shares).toFixed(4)}
+              </div>
+            </div>
+            <div>
+              <div className="text-tertiary-800 text-sm mb-1">Average Cost</div>
+              <div className="text-xl font-semibold">
+                {convertToMoney(parseFloat(holding.averageCost))}
+              </div>
+            </div>
+            <div>
+              <div className="text-tertiary-800 text-sm mb-1">Total Return</div>
+              <div
+                className={`text-xl font-semibold ${
+                  parseFloat(holding.totalReturn) >= 0
+                    ? "text-green-600"
+                    : "text-red-600"
+                }`}
+              >
+                {convertToMoney(parseFloat(holding.totalReturn))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-4 font-semibold">Holdings by Account</div>
+        <div className="flex flex-col gap-2">
+          {holding.holdings.map((h) => (
+            <div
+              key={h.holdingId}
+              className="bg-white border rounded-[12px] p-4 max-w-2xl hover:shadow-md"
+            >
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <div className="font-medium">{h.account.name}</div>
+                  <div className="text-sm text-tertiary-800">{h.member.name}</div>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold">
+                    {convertToMoney(h.totalValue)}
+                  </div>
+                  <div className="text-sm text-tertiary-800">
+                    {h.shares.toFixed(4)} shares
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-2 text-sm">
+                <div>
+                  <div className="text-tertiary-800">Cost Basis</div>
+                  <div>{convertToMoney(h.averageCost)}</div>
+                </div>
+                <div>
+                  <div className="text-tertiary-800">Return</div>
+                  <div
+                    className={
+                      h.totalReturn >= 0 ? "text-green-600" : "text-red-600"
+                    }
+                  >
+                    {convertToMoney(h.totalReturn)}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-tertiary-800">Updated</div>
+                  <div>{new Date(h.updatedAt).toLocaleDateString()}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </header>
+    </section>
+  );
 };
 
-export default page;
+export default Page;
