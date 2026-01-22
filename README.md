@@ -2,15 +2,13 @@
 ## Landing Page
 <img width="1507" height="855" alt="Screenshot 2026-01-10 at 6 21 30 PM" src="https://github.com/user-attachments/assets/406e2a6e-7950-4b71-98cb-db4986265159" />
 
+## Dashboard
+<img width="1511" height="857" alt="Screenshot 2026-01-21 at 5 27 32 PM" src="https://github.com/user-attachments/assets/f1384dcd-2a51-4624-b37c-587c02de36af" />
+<img width="1511" height="857" alt="Screenshot 2026-01-21 at 5 27 32 PM" src="https://github.com/user-attachments/assets/6bd64a61-802c-4a49-9a97-635a22218016" />
+
 ## Add Multiple Members
 <img width="1512" height="855" alt="Screenshot 2026-01-07 at 8 37 12 PM" src="https://github.com/user-attachments/assets/ecfc0fb0-6d59-4533-ad94-6750331a0ad0" />
 <img width="1512" height="857" alt="Screenshot 2026-01-07 at 8 41 06 PM" src="https://github.com/user-attachments/assets/e56f7d78-3a17-40ee-8d6c-4786a60271e0" />
-
-## Dashboard
-<img width="1511" height="857" alt="Screenshot 2026-01-21 at 5 27 32 PM" src="https://github.com/user-attachments/assets/f1384dcd-2a51-4624-b37c-587c02de36af" />
-<img width="1510" alt="Screenshot 2025-06-09 at 7 54 18 PM" src="https://github.com/user-attachm![Uploading Screenshot 2026-01-21 at 5.30.11 PM.png…]()
-ents/assets/0cecab3a-7f61-4877-8c22-366d9319965b" />
-<img width="1511" height="857" alt="Screenshot 2026-01-21 at 5 27 32 PM" src="https://github.com/user-attachments/assets/f1384dcd-2a51-4624-b37c-587c02de36af" />
 
 
 ## Sign In Page
