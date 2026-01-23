@@ -3,7 +3,7 @@ import { DetailedHolding } from "@/types/api-routes/holding/holding";
 
 const AccountWithHoldingCard = ({ holding }: { holding: DetailedHolding }) => {
   return (
-    <div className="bg-white border rounded-[12px] p-4 max-w-2xl hover:shadow-md border-tertiary-400">
+    <div className="bg-white border rounded-[12px] p-4 hover:shadow-md border-tertiary-300">
       <div className="flex justify-between items-start gap-2">
         
         <div>

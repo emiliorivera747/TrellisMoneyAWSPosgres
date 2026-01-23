@@ -1,5 +1,4 @@
 import { client } from "@/config/plaidClient";
-import { getAllAccessTokens } from "@/utils/drizzle/item/getAccessTokensFromItems";
 import { AccountBase } from "plaid";
 import { Item } from "@/drizzle/schema";
 
@@ -10,14 +9,15 @@ import { Item } from "@/drizzle/schema";
  * @param items
  * @returns
  */
-export const getAccounts = async (items: any[]): Promise<AccountBase[][]> => {
-  
+export const getAccounts = async (
+  items: Pick<Item, "itemId">[]
+): Promise<AccountBase[][]> => {
   // Get all access tokens from items
-  const accessTokens = await getAllAccessTokens(items);
+  const accessTokens = items.map((item) => item.itemId);
 
   // Get all of the accounts associated with the access tokens and add corresponding item_id
   const accounts = await Promise.all(
-    accessTokens.map(async (token) => {
+    accessTokens.map(async (token: string) => {
       const response = await client.accountsGet({ access_token: token });
       return response.data.accounts.map((account) => ({
         ...account,
@@ -36,12 +36,11 @@ export const getAccounts = async (items: any[]): Promise<AccountBase[][]> => {
  * @returns
  */
 export const getAccountsFromPlaidWithItems = async (
-  items: Item[] 
+  items: Pick<Item, "itemId">[]
 ): Promise<AccountBase[][]> => {
-  const accessTokens = getAllAccessTokens(items);
-
+  const accessTokens = items.map((item) => item.itemId);
   const accounts = await Promise.all(
-    accessTokens.map(async (token) => {
+    accessTokens.map(async (token: string) => {
       const response = await client.accountsGet({ access_token: token });
       return response.data.accounts.map((account) => ({
         ...account,
