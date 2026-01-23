@@ -4,7 +4,7 @@
 import { useRef, useMemo } from "react";
 
 //components
-import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphV2";
+import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphContainer";
 import ProjectedLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";
 import ProjectedNetWorthGraphError from "@/components/errors/ProjectedNetWorthGraphError";
 
