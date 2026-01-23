@@ -75,12 +75,8 @@ export async function GET(
             tickerSymbol: security.tickerSymbol,
             securityName: security.securityName,
           },
-          account: {
-            accountName: account.accountName,
-          },
-          member: {
-            fullName: householdMember.fullName,
-          },
+          account: { accountName: account.accountName },
+          member: { fullName: householdMember.fullName },
         })
         .from(holding)
         .innerJoin(security, eq(holding.securityId, security.securityId))
@@ -96,13 +92,13 @@ export async function GET(
           )
         );
 
-      if (holdings.length === 0) {
+      if (holdings.length === 0)
         return FailResponse("No holdings found for this security", 404);
-      }
 
       // Aggregate all holdings for this security
       const ticker = holdings[0].security.tickerSymbol || "UNKNOWN";
-      const securityName = holdings[0].security.securityName || "Unknown Security";
+      const securityName =
+        holdings[0].security.securityName || "Unknown Security";
 
       let totalShares = 0;
       let totalValueSum = 0;
@@ -135,10 +131,10 @@ export async function GET(
       const aggregatedHolding: AggregateHoldingDetails = {
         tickerSymbol: ticker,
         securityName: securityName,
-        totalValue: totalValueSum.toFixed(2),
-        averageCost: totalCostBasisSum.toFixed(2),
-        totalReturn: (totalValueSum - totalCostBasisSum).toFixed(2),
-        shares: totalShares.toFixed(4),
+        totalValue: totalValueSum,
+        averageCost: totalCostBasisSum,
+        totalReturn: totalValueSum - totalCostBasisSum,
+        shares: totalShares,
         holdings: holdingsArray as any,
       };
 

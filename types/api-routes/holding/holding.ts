@@ -1,10 +1,10 @@
 export type AggregateHoldingDetails = {
   tickerSymbol: string;
   securityName: string;
-  totalValue: string;
-  averageCost: string;
-  totalReturn: string;
-  shares: string;
+  totalValue: number;
+  averageCost: number;
+  totalReturn: number;
+  shares: number;
   holdings: [
     {
       holdingId: string;

@@ -13,13 +13,20 @@ const AccountWithHoldingCard = ({ holding }: { holding: DetailedHolding }) => {
             </span>
             <div className="flex items-center gap-1">
               <span className="h-[0.4rem] w-[0.4rem] rounded-full bg-tertiary-400 inline-block align-middle mx-1"></span>
-              <span className="text-xs text-tertiary-600">
+                <span className="text-xs text-tertiary-600">
                 {Math.floor(
                   (Date.now() - new Date(holding.updatedAt).getTime()) /
+                  (1000 * 60 * 60)
+                ) < 2
+                  ? `${Math.floor(
+                    (Date.now() - new Date(holding.updatedAt).getTime()) /
+                    (1000 * 60)
+                  )} minutes ago`
+                  : `${Math.floor(
+                    (Date.now() - new Date(holding.updatedAt).getTime()) /
                     (1000 * 60 * 60)
-                )}{" "}
-                hours ago
-              </span>
+                  )} hours ago`}
+                </span>
             </div>
           </div>
           <div className="text-sm text-tertiary-700">{holding.member.name}</div>

@@ -26,14 +26,12 @@ const MarketValueCards = ({
         </h1>
         <span
           className={`flex gap-1 ${
-            Number(holding?.totalReturn) > 0
-              ? "text-secondary-1000"
-              : "text-red-600"
+            holding?.totalReturn > 0 ? "text-secondary-1000" : "text-red-600"
           }`}
         >
           <span>
-            {Number(holding?.totalReturn) > 0 ? "+" : "-"}
-            {convertToMoney(parseFloat(holding.totalReturn))}
+            {/* {holding?.totalReturn} */}
+            {convertToMoney(holding.totalReturn)}
           </span>
           <span>
             (

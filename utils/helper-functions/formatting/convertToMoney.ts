@@ -25,7 +25,12 @@ export function convertToMoney(
   if (amount === undefined || amount === null || typeof amount !== "number")
     return "0.00";
 
-  return `$${amount
+  const isNegative = amount < 0;
+  const absoluteAmount = Math.abs(amount);
+
+  const formattedAmount = `$${absoluteAmount
     .toFixed(numberOfDecimals)
     .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
+
+  return isNegative ? `-${formattedAmount}` : formattedAmount;
 }

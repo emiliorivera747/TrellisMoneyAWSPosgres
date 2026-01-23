@@ -48,7 +48,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
             <MarketValueCards holding={holding} />
             <AverageCostCard holding={holding} />
           </div>
-          <div className="mb-4 font-light text-tertiary-800 text-[1.2rem] mt-10">
+          <div className="mb-4 font-light text-tertiary-800 text-[1.2rem] mt-4">
             Positions
           </div>
           <div className="flex flex-col gap-2 w-[46rem]">
