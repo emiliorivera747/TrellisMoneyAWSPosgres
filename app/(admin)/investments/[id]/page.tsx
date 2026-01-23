@@ -41,15 +41,13 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     <section className="h-screen overflow-scroll">
       <header className="mt-[3.5rem] px-8">
         <HoldingHeader holding={holding} />
-        <div className="flex gap-6">
+        <div className="grid grid-cols-[20rem_20rem] gap-8">
           <MarketValueCards holding={holding} />
           <AverageCostCard holding={holding} />
         </div>
-
         <div className="mb-4 font-medium text-tertiary-1000 text-[1.2rem] mt-6">
           Holdings by Account
         </div>
-        
         <div className="flex flex-col gap-2">
           {holding.holdings.map((h) => (
             <div

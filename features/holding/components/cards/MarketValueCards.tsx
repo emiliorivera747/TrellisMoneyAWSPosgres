@@ -1,6 +1,8 @@
 import { AggregateHoldingDetails } from "@/types/api-routes/holding/holding";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 import Card from "@/components/cards/Card";
+import PrimaryCardHeader from "@/components/cards/PrimaryCardHeader";
+import CurrencyDisplay from "@/components/typography/CurrencyDisplay";
 
 /**
  * Component to display market value and total return information for a given holding.
@@ -16,17 +18,9 @@ const MarketValueCards = ({
 }) => {
   return (
     <Card>
-      <div className="flex flex-col -1  border-tertiary-300">
-        <h1 className="text-sm justify-start text-tertiary-1000 display flex flex-row items-center pb-2">
-          Market value
-        </h1>
-
-        <p className="font-medium text-tertiary-1000 text-2xl">
-          {convertToMoney(parseFloat(holding.totalValue))}
-        </p>
-      </div>
-
-      <div className="flex flex-row gap-1 text-[0.78rem] justify-between font-medium">
+      <PrimaryCardHeader>Market value</PrimaryCardHeader>
+      <CurrencyDisplay value={holding.totalValue} />
+      <div className="flex flex-row gap-1 text-[0.78rem] justify-between font-medium w-full">
         <h1 className="justify-start text-tertiary-800 display flex flex-row items-center gap-2 font-light">
           Total return
         </h1>
