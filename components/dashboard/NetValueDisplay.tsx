@@ -9,6 +9,7 @@ import { NetValueDisplayCardProps } from "@/types/components/admin/dashboard/das
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 
 import NetValueDisplayCardSkeleton from "@/components/skeletons/dashboard/NetValueDisplayCardSkeleton";
+import PrimaryCardHeader from "@/components/cards/PrimaryCardHeader";
 
 /**
  *
@@ -34,13 +35,13 @@ const NetValueDisplay = ({
   return (
     <div className="border border-tertiary-400 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-3 rounded-[12px] box-border overflow-x-scroll">
       <div className="flex flex-row justify-between  w-full">
-        <h1 className="text-md justify-start text-tertiary-800 display flex flex-row items-center gap-2">
+        <PrimaryCardHeader>
           {title}
           <InformationIcon
             modalDescription={modalDescription}
             modalTitle={modalTitle}
           />
-        </h1>
+        </PrimaryCardHeader>
         <LinkWithIcon linkLabel={linkLabel} linkUrl={linkUrl} />
       </div>
       <p className="font-medium text-tertiary-1000 text-2xl">
