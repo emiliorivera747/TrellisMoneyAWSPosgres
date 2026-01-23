@@ -1,5 +1,9 @@
 import { ApiResponse } from "@/types/services/responses/api-responses";
-import { Item } from "@/drizzle/schema";
+import { HouseholdMember, Item } from "@/drizzle/schema";
+
+interface ItemWithMembers extends Item {
+  member: HouseholdMember;
+}
 
 /**
  * Represents the response structure for getting items.
@@ -7,4 +11,6 @@ import { Item } from "@/drizzle/schema";
  * @interface GetItemsResponse
  */
 export interface GetItemsResponse
-  extends ApiResponse<{ items: Item[] }> {}
+  extends ApiResponse<{
+    items: ItemWithMembers[];
+  }> {}

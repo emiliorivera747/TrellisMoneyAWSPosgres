@@ -11,24 +11,18 @@ import { getItemsWithMembersByHouseholdMemberIds } from "@/utils/drizzle/item/ge
 import { addItem } from "@/utils/drizzle/item/addItem";
 
 /**
- * Handles the POST request to create a new item in the database.
+ * Handles POST requests to create a new Plaid item.
  *
- * This function expects a JSON payload in the request body containing a `plaidItem` object
- * with Plaid item details (from ItemPublicTokenExchangeResponse).
- * It uses Drizzle to create a new record in the `item` table.
+ * Expects a JSON body with `plaidItem` containing `item_id` and `access_token`.
+ * Creates a new item in the database and returns the created item (excluding `access_token`).
  *
- * @param req - The incoming HTTP request object of type `NextRequest`.
- * @returns A JSON response containing a success message and the created item object
- *          (without access_token), or an error message with a 500 status code in case of failure.
- *
- * Example usage:
+ * Example:
  * ```json
  * POST /api/plaid/items
  * {
  *   "plaidItem": {
  *     "item_id": "123",
- *     "access_token": "access-token-abc",
- *     ...
+ *     "access_token": "access-token-abc"
  *   }
  * }
  * ```
@@ -67,22 +61,12 @@ export async function POST(req: NextRequest) {
 }
 
 /**
- * Handles the GET request to retrieve Plaid items associated with the authenticated user's household.
+ * Retrieves Plaid items linked to the authenticated user's household.
  *
- * @param req - The incoming Next.js request object.
- * @returns A promise that resolves to a response containing the user's household Plaid items
- *          (without access_token) or an appropriate error response.
- *
- * @remarks
- * - This function uses the `withAuth` middleware to ensure the user is authenticated.
- * - It queries the database for Plaid items associated with the user's household members.
- * - Items are retrieved through household members (via accounts) to get all items in the household.
- * - Access tokens are excluded from the response for security.
- * - If no items are found, it returns a 404 response with a failure message.
- * - In case of an error during the database query, it returns an error response with
- *   the appropriate server error message.
- *
- * @throws Will throw an error if the database query fails.
+ * - Ensures user authentication via `withAuth`.
+ * - Fetches Plaid items associated with household members.
+ * - Excludes access tokens for security.
+ * - Returns 404 if no items are found or an error response on failure.
  */
 export async function GET(req: NextRequest) {
   return withAuth(req, async (request, user) => {
