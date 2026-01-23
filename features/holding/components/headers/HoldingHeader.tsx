@@ -9,9 +9,9 @@ import { AggregateHoldingDetails } from "@/types/api-routes/holding/holding";
  */
 const HoldingHeader = ({ holding }: { holding: AggregateHoldingDetails }) => {
   return (
-    <div className="flex flex-row gap-4 mb-6 items-center text-tertiary-1000">
-      <div className="font-bold text-2xl">{holding.tickerSymbol}</div>
-      <div className="text-tertiary-700 text-xl">{holding.securityName}</div>
+    <div className="flex flex-row gap-4 tems-center text-tertiary-1000">
+      <div className="font-bold text-3xl">{holding.tickerSymbol}</div>
+      <div className="text-tertiary-700 text-2xl">{holding.securityName}</div>
     </div>
   );
 };
