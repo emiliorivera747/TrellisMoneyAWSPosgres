@@ -1,5 +1,5 @@
 import { client } from "@/config/plaidClient";
-import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
+import { getAllAccessTokens } from "@/utils/drizzle/item/getAccessTokensFromItems";
 import { InvestmentsHoldingsGetResponse } from "plaid";
 import { Item } from "@/drizzle/schema";
 

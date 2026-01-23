@@ -5,8 +5,7 @@ import {
 } from "@/services/plaid/holdings/holdings";
 
 // Utils
-import { updateHoldings } from "@/utils/prisma/holding/updateHoldings";
-import { getAllAccessTokens } from "@/utils/prisma/item/getAccessTokensFromItems";
+import { getAllAccessTokens } from "@/utils/drizzle/item/getAccessTokensFromItems";
 import { updateAccountsInTx } from "@/utils/drizzle/accounts/updateAccounts";
 import { updateSecuritiesInTx } from "@/utils/drizzle/securities/updateSecurities";
 import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
@@ -86,35 +85,35 @@ export const refreshHouseholdHoldings = async ({
   return res;
 };
 
-/**
- * Fetches investments with items from Plaid.
- * @export
- * @param {GetInvestmentsWithItemsPlaid} props - The properties for getting investments.
- * @returns {Promise<any>} The investments for each item.
- */
-export const getInvestmentsWithItemsPlaid = async ({
-  items,
-  timestamp,
-  userId,
-  holdings: holdingsDB,
-}: GetInvestmentsWithItemsPlaid) => {
-  // Extract access tokens from the provided items
-  const accessTokens = getAllAccessTokens(items);
+// /**
+//  * Fetches investments with items from Plaid.
+//  * @export
+//  * @param {GetInvestmentsWithItemsPlaid} props - The properties for getting investments.
+//  * @returns {Promise<any>} The investments for each item.
+//  */
+// export const getInvestmentsWithItemsPlaid = async ({
+//   items,
+//   timestamp,
+//   userId,
+//   holdings: holdingsDB,
+// }: GetInvestmentsWithItemsPlaid) => {
+//   // Extract access tokens from the provided items
+//   const accessTokens = getAllAccessTokens(items);
 
-  // Fetch investment data for each access token
-  const investmentsForEachItem = await getAllHoldingsWithAccessTokens(
-    accessTokens
-  );
+//   // Fetch investment data for each access token
+//   const investmentsForEachItem = await getAllHoldingsWithAccessTokens(
+//     accessTokens
+//   );
 
-  // Update the database with fetched holdings and related data
-  investmentsForEachItem.forEach(async (item) => {
-    await updateHoldings({
-      holdings: item.holdings,
-      timestamp,
-      userId,
-      holdingsDB,
-    });
-  });
+//   // Update the database with fetched holdings and related data
+//   investmentsForEachItem.forEach(async (item) => {
+//     await updateHoldings({
+//       holdings: item.holdings,
+//       timestamp,
+//       userId,
+//       holdingsDB,
+//     });
+//   });
 
-  return investmentsForEachItem;
-};
+//   return investmentsForEachItem;
+// };
