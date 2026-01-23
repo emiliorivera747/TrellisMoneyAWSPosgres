@@ -1,4 +1,3 @@
-// import { Account } from "@/app/generated/prisma/client";
 import { Account } from "@/drizzle/schema";
 
 /**

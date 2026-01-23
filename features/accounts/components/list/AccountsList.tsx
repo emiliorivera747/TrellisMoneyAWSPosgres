@@ -4,7 +4,6 @@ import Accountcard from "@/features/accounts/components/cards/AccountCard";
 import NoAccountsFound from "@/features/accounts/components/cards/NoAccountsFound";
 
 // Types
-// import { Account } from "@/app/generated/prisma/client";
 import { AccountListProps } from "@/features/accounts/types/accounts";
 
 /**

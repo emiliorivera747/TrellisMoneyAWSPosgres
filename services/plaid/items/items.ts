@@ -1,5 +1,4 @@
 import { client } from "@/config/plaidClient";
-// import { Item } from "@/app/generated/prisma/client";
 
 /**
  * Removes an item from Plaid using the provided access token.
