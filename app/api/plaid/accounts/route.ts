@@ -1,7 +1,5 @@
 import { NextRequest} from "next/server";
-import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
 import { getAccountsFromPlaidWithItems } from "@/services/plaid/getAccountV2";
-import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
 import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
 import { withAuth } from "@/lib/protected";
 import {

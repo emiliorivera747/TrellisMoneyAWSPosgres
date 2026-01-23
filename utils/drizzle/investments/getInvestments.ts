@@ -1,11 +1,7 @@
 // Services
-import {
-  getAllHoldingsWithAccessTokens,
-  fetchAllPlaidHoldings,
-} from "@/services/plaid/holdings/holdings";
+import { fetchAllPlaidHoldings } from "@/services/plaid/holdings/holdings";
 
 // Utils
-import { getAllAccessTokens } from "@/utils/drizzle/item/getAccessTokensFromItems";
 import { updateAccountsInTx } from "@/utils/drizzle/accounts/updateAccounts";
 import { updateSecuritiesInTx } from "@/utils/drizzle/securities/updateSecurities";
 import { logErrorAndThrow } from "@/utils/api-helpers/errors/logAndThrowError";
@@ -17,8 +13,6 @@ import {
   Account as AccountDB,
   Holding as HoldingDB,
 } from "@/drizzle/schema/index";
-
-import { GetInvestmentsWithItemsPlaid } from "@/types/api-routes/investments/getInvestments";
 
 // Drizzle
 import { db } from "@/drizzle/db";

@@ -1,8 +1,10 @@
-import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/config/plaidClient";
-import { getItem } from "@/utils/prisma/item/getItem";
 import { withAuth } from "@/lib/protected";
+import { getItem } from "@/utils/drizzle/item/getItem";
+import { db } from "@/drizzle/db";
+import { item } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ _id: string }> }) {
   return withAuth(req, async (request, user) => {
@@ -13,18 +15,17 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ _
       // Get the item
       const itemFound = await getItem(_id);
 
-      const access_token = itemFound?.access_token;
+      const access_token = itemFound?.accessToken;
 
       // If the item exists, remove it from Plaid
       if (itemFound && access_token) {
         // Delete the item from the database
-        const deletedItem = await prisma.item.delete({
-          where: {
-            item_id: _id,
-          },
-        });
+        const deletedItem = await db
+          .delete(item)
+          .where(eq(item.itemId, _id))
+          .returning();
 
-        if (!deletedItem) {
+        if (!deletedItem || deletedItem.length === 0) {
           return NextResponse.json(
             { message: "Failed to delete item from database" },
             { status: 400 }

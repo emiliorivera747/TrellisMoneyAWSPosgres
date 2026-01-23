@@ -9,6 +9,21 @@ type GetItemWithMemberAndInstitutionId = {
 };
 
 /**
+ * Retrieves an item by its item ID.
+ *
+ * @param itemId - The unique identifier of the item.
+ * @returns A promise that resolves to the item if found, or undefined if no matching item exists.
+ */
+export const getItem = async (itemId: string) => {
+  const items = await db
+    .select()
+    .from(item)
+    .where(eq(item.itemId, itemId))
+    .limit(1);
+  return items[0];
+};
+
+/**
  * Retrieves the first item from the database that matches the specified member ID and institution ID.
  *
  * @param member_id - The unique identifier of the member.

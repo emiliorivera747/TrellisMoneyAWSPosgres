@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 import { withAuth } from "@/lib/protected";
 
-import getSubscriptionMinimalData from "@/utils/prisma/stripe/getSubscriptionMinimalData";
+import getSubscriptionMinimalData from "@/utils/drizzle/stripe/getSubscriptionWithMinimalData";
 import { hasActiveSubscription } from "@/utils/api-helpers/stripe/subscriptions";
 
 /**

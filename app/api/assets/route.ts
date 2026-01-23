@@ -10,7 +10,6 @@ import {
   FailResponse,
 } from "@/utils/api-helpers/api-responses/response";
 import { getMemberByUserId } from "@/utils/drizzle/household/household";
-import { getHoldingsWithHouseholdId } from "@/utils/prisma/holding/holdings";
 
 /**
  *

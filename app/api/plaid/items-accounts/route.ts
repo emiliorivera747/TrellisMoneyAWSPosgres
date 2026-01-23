@@ -1,10 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getItemsByUserId } from "@/utils/prisma/item/itemsService";
 import { getUser } from "@/services/supabase/getUser";
-import { getAccounts } from "@/services/plaid/getAccountV2";
-import { noAccountsError } from "@/utils/api-helpers/errors/accountErrors";
-import { updateAccounts } from "@/utils/prisma/accounts/updateAccountsV2";
-import { noItemsError } from "@/utils/api-helpers/errors/itemErrors";
 
 export async function GET(req: Request) {
   try {
