@@ -49,6 +49,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="mb-4 font-medium text-tertiary-1000 text-[1.2rem] mt-6">
           Holdings by Account
         </div>
+        
         <div className="flex flex-col gap-2">
           {holding.holdings.map((h) => (
             <div
@@ -72,22 +73,6 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-2 text-sm">
-                {/* <div>
-                  <div className="text-tertiary-800">Cost Basis</div>
-                  <div>{convertToMoney(h.averageCost)}</div>
-                </div>
-                <div>
-                  <div className="text-tertiary-800">Return</div>
-                  <div
-                    className={
-                      h.totalReturn >= 0
-                        ? "text-secondary-1000"
-                        : "text-red-600"
-                    }
-                  >
-                    {convertToMoney(h.totalReturn)}
-                  </div>
-                </div> */}
                 <div className="flex justify-start items-center text-tertiary-700">
                   <div>
                     {Math.floor(

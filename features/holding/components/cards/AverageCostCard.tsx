@@ -11,7 +11,7 @@ import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMon
 const AverageCostCard = ({ holding }: { holding: AggregateHoldingDetails }) => {
   return (
     <div className="pt-6 pb-8 border rounded-[12px] px-6 flex flex-col gap-4 w-[20rem] mb-6 border-tertiary-300">
-      <div className="flex flex-col border-b gap-1 pb-4 border-tertiary-300">
+      <div className="flex flex-col gap-1 pb-4 border-tertiary-300">
         <h1 className="text-sm justify-start text-tertiary-1000 display flex flex-row items-center pb-2">
           Average Cost
         </h1>
