@@ -5,7 +5,6 @@ const AccountWithHoldingCard = ({ holding }: { holding: DetailedHolding }) => {
   return (
     <div className="bg-white border rounded-[12px] p-4 hover:shadow-md border-tertiary-300">
       <div className="flex justify-between items-start gap-2">
-        
         <div>
           <div className="font-medium flex items-center gap-4">
             <span className="text-tertiary-a00 font-medium">

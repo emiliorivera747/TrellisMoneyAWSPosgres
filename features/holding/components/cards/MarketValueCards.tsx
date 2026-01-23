@@ -30,7 +30,7 @@ const MarketValueCards = ({
           }`}
         >
           <span>
-            {/* {holding?.totalReturn} */}
+            {holding?.totalReturn > 0 ? "+" : ""}
             {convertToMoney(holding.totalReturn)}
           </span>
           <span>
