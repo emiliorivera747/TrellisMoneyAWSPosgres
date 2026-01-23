@@ -1,4 +1,3 @@
-import prisma from "@/lib/prisma";
 import { NextResponse, NextRequest } from "next/server";
 import { z } from "zod";
 import { withAuth } from "@/lib/protected";
@@ -8,6 +7,15 @@ import {
 } from "@/features/auth/schemas/formSchemas";
 
 import { handleZodError } from "@/utils/api-helpers/errors/handleZodErrors";
+import {
+  getUserByEmailOrId,
+  createUserWithDetails,
+  getAllUsers,
+  getUserByEmail,
+  updateUserByEmail,
+  getUserById,
+  deleteUserById,
+} from "@/utils/drizzle/user/user";
 
 const getNameFromBody = (body: RecordSchema) =>
   body?.record?.raw_user_meta_data?.name || body?.record?.email || "none";
@@ -55,24 +63,20 @@ export const POST = async (req: NextRequest) => {
     /**
      * Does the User already exist?
      */
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ email }, { user_id: id }] },
-    });
-    if (user) return userAlreadyExistsError();
+    const existingUser = await getUserByEmailOrId(email, id);
+    if (existingUser) return userAlreadyExistsError();
 
     /**
      * You've gotten this far. Therefore,
      * create the user.
      */
-    const newUser = await prisma.user.create({
-      data: {
-        name,
-        email,
-        user_id: id,
-        email_verified,
-        phone,
-        phone_verified,
-      },
+    const newUser = await createUserWithDetails({
+      fullName: name,
+      email,
+      userId: id,
+      emailVerified: email_verified,
+      phone,
+      phoneVerified: phone_verified,
     });
 
     return NextResponse.json(
@@ -92,7 +96,7 @@ export const POST = async (req: NextRequest) => {
 export const GET = async (req: NextRequest) =>
   withAuth(req, async (req, user) => {
     try {
-      const users = await prisma.user.findMany();
+      const users = await getAllUsers();
       return NextResponse.json({ status: "success", users }, { status: 200 });
     } catch (error) {
       if (error instanceof Error) {
@@ -124,27 +128,18 @@ export const PUT = async (req: NextRequest) =>
       const { email, id } = record;
       const name = getNameFromBody(body);
 
-      const user = await prisma.user.findUnique({
-        where: {
-          email,
-        },
-      });
+      const existingUser = await getUserByEmail(email);
 
-      if (!user) {
+      if (!existingUser) {
         return NextResponse.json(
           { status: "error", message: "User does not exist" },
           { status: 404 }
         );
       }
 
-      const updatedUser = await prisma.user.update({
-        where: {
-          email,
-        },
-        data: {
-          name,
-          user_id: id,
-        },
+      const updatedUser = await updateUserByEmail(email, {
+        fullName: name,
+        userId: id,
       });
 
       return NextResponse.json(
@@ -173,11 +168,7 @@ export const DELETE = async (req: NextRequest) =>
     try {
       const id = user.id;
 
-      const userRecord = await prisma.user.findUnique({
-        where: {
-          user_id: id,
-        },
-      });
+      const userRecord = await getUserById(id);
 
       if (!userRecord) {
         return NextResponse.json(
@@ -186,11 +177,7 @@ export const DELETE = async (req: NextRequest) =>
         );
       }
 
-      await prisma.user.delete({
-        where: {
-          user_id: id,
-        },
-      });
+      await deleteUserById(id);
 
       return NextResponse.json(
         { status: "success", message: "User deleted" },

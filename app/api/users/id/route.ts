@@ -1,7 +1,7 @@
-import prisma from "@/lib/prisma";
 import { withAuth } from "@/lib/protected";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
+import { getUserById, deleteUserById } from "@/utils/drizzle/user/user";
 
 const userDoesNotExist = () =>
   NextResponse.json(
@@ -26,11 +26,7 @@ export async function GET(request: NextRequest) {
   return withAuth(request, async (_req, user) => {
     try {
       const userId = user.id;
-      const userData = await prisma.user.findUnique({
-        where: {
-          user_id: userId,
-        },
-      });
+      const userData = await getUserById(userId);
 
       // Your protected logic here
       return NextResponse.json(
@@ -59,11 +55,7 @@ export async function DELETE(request: NextRequest) {
       /**
        * Does the user exist?
        */
-      const userData = await prisma.user.findUnique({
-        where: {
-          user_id: id,
-        },
-      });
+      const userData = await getUserById(id);
 
       if (!userData) return userDoesNotExist();
 
@@ -76,7 +68,7 @@ export async function DELETE(request: NextRequest) {
       /**
        * Delete the user from Postgres
        */
-      const deletedUser = await prisma.user.delete({ where: { user_id: id } });
+      const deletedUser = await deleteUserById(id);
       if (!deletedUser) return userNotDeleted();
 
       return NextResponse.json(

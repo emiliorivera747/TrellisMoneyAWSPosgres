@@ -1,5 +1,5 @@
 import { db } from "@/drizzle/db";
-import { eq } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
 import { user } from "@/drizzle/schema";
 
 /**
@@ -120,4 +120,108 @@ export const createUser = async ({
     .returning();
 
   return newUser[0] ?? null;
+};
+
+/**
+ * Creates a new user in the database with full details.
+ *
+ * @param userData - Object containing user details.
+ * @returns The created user object if successful, otherwise `null`.
+ */
+export const createUserWithDetails = async ({
+  email,
+  userId,
+  fullName,
+  emailVerified,
+  phone,
+  phoneVerified,
+}: {
+  email: string;
+  userId: string;
+  fullName?: string | null;
+  emailVerified?: boolean;
+  phone?: string | null;
+  phoneVerified?: boolean;
+}) => {
+  const newUser = await db
+    .insert(user)
+    .values({
+      email,
+      userId,
+      fullName: fullName ?? null,
+      emailVerified: emailVerified ?? false,
+      phone: phone ?? null,
+      phoneVerified: phoneVerified ?? false,
+    })
+    .returning();
+
+  return newUser[0] ?? null;
+};
+
+/**
+ * Find a user by email or user ID.
+ *
+ * @param email - The email to search for.
+ * @param userId - The user ID to search for.
+ * @returns The user object if found, otherwise `null`.
+ */
+export const getUserByEmailOrId = async (email: string, userId: string) => {
+  const userDB = await db
+    .select()
+    .from(user)
+    .where(or(eq(user.email, email), eq(user.userId, userId)))
+    .limit(1);
+
+  return userDB[0] ?? null;
+};
+
+/**
+ * Get all users from the database.
+ *
+ * @returns An array of all users.
+ */
+export const getAllUsers = async () => {
+  const users = await db.select().from(user);
+  return users;
+};
+
+/**
+ * Update a user's details by email.
+ *
+ * @param email - The email of the user to update.
+ * @param data - The data to update.
+ * @returns The updated user object if successful, otherwise `null`.
+ */
+export const updateUserByEmail = async (
+  email: string,
+  data: {
+    fullName?: string;
+    userId?: string;
+  }
+) => {
+  const updatedUser = await db
+    .update(user)
+    .set({
+      fullName: data.fullName,
+      userId: data.userId,
+    })
+    .where(eq(user.email, email))
+    .returning();
+
+  return updatedUser[0] ?? null;
+};
+
+/**
+ * Delete a user by user ID.
+ *
+ * @param userId - The user ID to delete.
+ * @returns The deleted user object if successful, otherwise `null`.
+ */
+export const deleteUserById = async (userId: string) => {
+  const deletedUser = await db
+    .delete(user)
+    .where(eq(user.userId, userId))
+    .returning();
+
+  return deletedUser[0] ?? null;
 };
