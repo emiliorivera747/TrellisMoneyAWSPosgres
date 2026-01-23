@@ -3,7 +3,7 @@ export type AggregateHoldingDetails = {
   securityName: string;
   totalValue: number;
   averageCost: number;
-  totalReturn: number;
+  totalReturn: number | null;
   shares: number;
   holdings: [
     {

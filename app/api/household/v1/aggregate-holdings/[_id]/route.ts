@@ -133,7 +133,10 @@ export async function GET(
         securityName: securityName,
         totalValue: totalValueSum,
         averageCost: totalCostBasisSum,
-        totalReturn: totalValueSum - totalCostBasisSum,
+        totalReturn:
+          totalCostBasisSum > 0
+            ? totalValueSum - totalCostBasisSum
+            : null,
         shares: totalShares,
         holdings: holdingsArray as any,
       };

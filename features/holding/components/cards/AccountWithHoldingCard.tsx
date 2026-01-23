@@ -16,7 +16,12 @@ const AccountWithHoldingCard = ({ holding }: { holding: DetailedHolding }) => {
                 {Math.floor(
                   (Date.now() - new Date(holding.updatedAt).getTime()) /
                   (1000 * 60 * 60)
-                ) < 2
+                ) === 1
+                  ? `1 hour ago`
+                  : Math.floor(
+                    (Date.now() - new Date(holding.updatedAt).getTime()) /
+                    (1000 * 60 * 60)
+                  ) < 1
                   ? `${Math.floor(
                     (Date.now() - new Date(holding.updatedAt).getTime()) /
                     (1000 * 60)
