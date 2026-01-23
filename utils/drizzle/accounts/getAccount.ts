@@ -1,6 +1,6 @@
 import { db } from "@/drizzle/db";
 import { account, Item } from "@/drizzle/schema";
-import { inArray } from "drizzle-orm";
+import { inArray, desc } from "drizzle-orm";
 
 /**
  * Retrieves all accounts associated with the provided items.
@@ -9,7 +9,6 @@ import { inArray } from "drizzle-orm";
  * @returns A promise that resolves to an array of all accounts for the given items
  */
 export const getAccountsFromItems = async (items: Pick<Item, "itemId">[]) => {
-  
   const itemIds = items.map((item) => item.itemId);
 
   if (itemIds.length === 0) return [];
@@ -17,7 +16,8 @@ export const getAccountsFromItems = async (items: Pick<Item, "itemId">[]) => {
   const accounts = await db
     .select()
     .from(account)
-    .where(inArray(account.itemId, itemIds));
+    .where(inArray(account.itemId, itemIds))
+    .orderBy(desc(account.currentBalance));
 
   return accounts;
 };
