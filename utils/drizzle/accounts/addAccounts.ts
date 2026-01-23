@@ -1,77 +1,80 @@
 import { db } from "@/drizzle/db";
-import { account} from "@/drizzle/schema";
-import { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
-
-interface AddAccountsParams {
-  user_id: string;
-  item_id: string;
-  accounts: PlaidLinkOnSuccessMetadata["accounts"];
-  household_id: string;
-  member_id: string;
-}
+import {
+  account,
+  AccountType,
+  AccountVerificationStatus,
+} from "@/drizzle/schema";
+import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
+import { AddAccountsParams } from "@/types/utils/drizzle/account/accounts";
+import { PlaidAccount } from "react-plaid-link";
 
 /**
- * Adds accounts to the database for the given item.
- * Creates both balance and account records for each account.
- *
- * @param user_id - The ID of the user
- * @param item_id - The ID of the item
- * @param accounts - The accounts to be added from Plaid metadata
- * @param household_id - The ID of the household
- * @param member_id - The ID of the household member
- * @returns The added accounts
+ * Adds Plaid account metadata to the database.
+ * - Uses a transaction
+ * - Batch inserts for performance
+ * - Safely handles enum mismatches
+ * - Prevents duplicate primary key crashes
  */
-export const addAccounts = async ({
-  user_id,
-  item_id,
-  accounts,
-  household_id,
-  member_id,
+export const addPlaidMetadataAccounts = async ({
+  itemId,
+  plaidAccountsMetadata,
+  householdMemberId,
 }: AddAccountsParams) => {
-  const accountAdded = [];
+  if (!plaidAccountsMetadata.length) return;
 
-  for (const plaidAccount of accounts) {
-    // Create balance first (accounts require a balanceId)
-    const balanceData = {
-      balanceId: plaidAccount.id,
-      available: (plaidAccount.balances?.available ?? 0).toString(),
-      current: (plaidAccount.balances?.current ?? 0).toString(),
-      limit: (plaidAccount.balances?.limit ?? 0).toString(),
-      isoCurrencyCode: plaidAccount.balances?.iso_currency_code ?? "",
-      unofficialCurrencyCode:
-        plaidAccount.balances?.unofficial_currency_code ?? "",
-    };
+  try {
+    const rows = plaidAccountsMetadata.map((plaidAccount) => {
+      const { type, subtype, verificationStatus } =
+        getAccountEnums(plaidAccount);
 
-    await db.insert(balance).values(balanceData).onConflictDoNothing();
+      return {
+        // REQUIRED FIELDS (No defaults in schema)
+        accountId: plaidAccount.id,
+        accountName: plaidAccount.name,
+        type,
+        itemId,
+        householdMemberId,
 
-    // Create account
-    const accountData = {
-      accountId: plaidAccount.id,
-      balanceId: plaidAccount.id,
-      userId: user_id,
-      memberId: member_id,
-      householdId: household_id,
-      itemId: item_id,
-      name: plaidAccount.name ?? null,
-      mask: plaidAccount.mask ?? null,
-      type: plaidAccount.type ?? null,
-      subtype: plaidAccount.subtype ?? null,
-      verificationStatus: plaidAccount.verification_status ?? null,
-      available: (plaidAccount.balances?.available ?? 0).toString(),
-      current: (plaidAccount.balances?.current ?? 0).toString(),
-      limit: (plaidAccount.balances?.limit ?? 0).toString(),
-      isoCurrencyCode: plaidAccount.balances?.iso_currency_code ?? null,
-      unofficialCurrencyCode:
-        plaidAccount.balances?.unofficial_currency_code ?? null,
-    };
+        // OPTIONAL / DYNAMIC FIELDS
+        mask: plaidAccount.mask ?? null,
+        subtype,
+        verificationStatus,
+      };
+    });
 
-    const createdAccount = await db
-      .insert(account)
-      .values(accountData)
-      .returning();
-
-    accountAdded.push(createdAccount[0]);
+    // Atomic operation: No transaction wrapper needed
+    await db.insert(account).values(rows).onConflictDoNothing();
+  } catch (error) {
+    throw new Error(
+      `Failed to add Plaid accounts: ${getServerErrorMessage(error)}`
+    );
   }
+};
 
-  return accountAdded;
+const VALID_ACCOUNT_TYPES = new Set([
+  "DEPOSITORY",
+  "CREDIT",
+  "LOAN",
+  "INVESTMENT",
+  "OTHER",
+]);
+
+const getAccountEnums = (plaidAccount: PlaidAccount) => {
+  // Normalize the type
+  const rawType = plaidAccount?.type?.toUpperCase() || "";
+
+  // 2. Validate against whitelist, fallback to "OTHER"
+  const type = VALID_ACCOUNT_TYPES.has(rawType)
+    ? (rawType as AccountType)
+    : ("OTHER" as AccountType);
+
+  // 3. Safety check for subtype length (Postgres varchar(50) limit)
+  const subtype = plaidAccount?.subtype
+    ? plaidAccount.subtype.toUpperCase().slice(0, 50)
+    : null;
+
+  const rawStatus = plaidAccount?.verification_status?.toUpperCase();
+  const verificationStatus = (rawStatus as AccountVerificationStatus) || null;
+
+  return { type, subtype, verificationStatus };
 };

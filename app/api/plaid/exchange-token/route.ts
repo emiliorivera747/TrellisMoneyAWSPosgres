@@ -13,7 +13,7 @@ import {
   getHouseholdIdByMembership,
   hasHouseholdPermission,
 } from "@/utils/drizzle/household-member/members";
-import { addPlaidMetadataAccounts } from "@/utils/prisma/accounts/addAccounts";
+import { addPlaidMetadataAccounts } from "@/utils/drizzle/accounts/addAccounts";
 
 // Types
 import { ExchangeTokenRequestBody } from "@/types/services/plaid/plaid";
