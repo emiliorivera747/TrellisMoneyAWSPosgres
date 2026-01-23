@@ -1,6 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
-import prisma from "@/lib/prisma";
+
 import { withAuth } from "@/lib/protected";
+import { db } from "@/drizzle/db";
+import { account, householdMember } from "@/drizzle/schema";
+import { eq, and } from "drizzle-orm";
 
 /**
  *
@@ -31,20 +34,49 @@ export async function PATCH(
         );
       }
 
-      const updatedAccount = await prisma.account.update({
-        where: {
-          account_id: _id,
-          user_id: user?.id || user_id, // Use authenticated user ID if available
-        },
-        data: {
-          expected_annual_return_rate: expected_annual_return_rate,
-        },
-      });
+      // First, verify the account belongs to a household member owned by the user
+      const accountWithMember = await db
+        .select({
+          accountId: account.accountId,
+          householdMemberId: account.householdMemberId,
+          userId: householdMember.userId,
+        })
+        .from(account)
+        .innerJoin(
+          householdMember,
+          eq(account.householdMemberId, householdMember.householdMemberId)
+        )
+        .where(
+          and(
+            eq(account.accountId, _id),
+            eq(householdMember.userId, user?.id || user_id)
+          )
+        )
+        .limit(1);
+
+      if (!accountWithMember || accountWithMember.length === 0) {
+        return NextResponse.json(
+          {
+            message: "Account not found or unauthorized",
+            data: null,
+          },
+          { status: 404 }
+        );
+      }
+
+      // Update the account
+      const updatedAccount = await db
+        .update(account)
+        .set({
+          expectedAnnualReturnRate: expected_annual_return_rate.toString(),
+        })
+        .where(eq(account.accountId, _id))
+        .returning();
 
       return NextResponse.json(
         {
           message: "Success",
-          data: updatedAccount,
+          data: updatedAccount[0],
         },
         { status: 200 }
       );
@@ -59,8 +91,6 @@ export async function PATCH(
         },
         { status: 500 }
       );
-    } finally {
-      await prisma.$disconnect();
     }
   });
 }
