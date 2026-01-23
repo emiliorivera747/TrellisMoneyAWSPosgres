@@ -9,7 +9,7 @@
 const RefreshButton = ({ onClickFn }: { onClickFn: () => void }) => {
   return (
     <button
-      className="border px-4 py-2 rounded-full flex items-center justify-center gap-2 mb-4"
+      className="border px-4 py-2 rounded-full flex items-center justify-center gap-2 mb-4 hover:bg-tertiary-100"
       onClick={() => onClickFn()}
     >
       <svg

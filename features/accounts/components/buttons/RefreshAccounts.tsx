@@ -1,6 +1,9 @@
 "use client";
 import useRefreshAccounts from "@/hooks/accounts/useRefreshAccounts";
 
+// Components
+import RefreshButton from "@/components/buttons/RefreshButton";
+
 /**
  * RefreshAccounts component renders a button that triggers a refresh of accounts.
  *
@@ -10,14 +13,7 @@ import useRefreshAccounts from "@/hooks/accounts/useRefreshAccounts";
 const RefreshAccounts = () => {
   const { refreshAccounts } = useRefreshAccounts();
 
-  return (
-    <button
-      className="border px-4 py-2 rounded-full"
-      onClick={() => refreshAccounts()}
-    >
-      Refresh
-    </button>
-  );
+  return <RefreshButton onClickFn={() => refreshAccounts()} />;
 };
 
 export default RefreshAccounts;

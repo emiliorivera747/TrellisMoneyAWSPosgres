@@ -9,8 +9,7 @@ import useRefreshInvestments from "@/hooks/investments/useRefreshInvestments";
  * @returns A button element that, when clicked, sends a POST request to refresh data.
  */
 const RefreshInvestments = () => {
-  const { refreshInvestments } = useRefreshInvestments();
-
+  const { refreshInvestments } = useRefreshInvestments(); 
   return <RefreshButton onClickFn={() => refreshInvestments()} />;
 };
 
