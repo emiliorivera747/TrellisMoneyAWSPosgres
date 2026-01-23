@@ -93,3 +93,31 @@ export const getUserById = async (userId: string) => {
 
   return userDB[0] ?? null;
 };
+
+/**
+ * Creates a new user in the database.
+ *
+ * @param userData - Object containing email and user_id for the new user.
+ * @returns The created user object if successful, otherwise `null`.
+ *
+ * @remarks
+ * This function uses Drizzle's insert method to create a new user record.
+ * The userId from Supabase auth is used as the primary key.
+ */
+export const createUser = async ({
+  email,
+  userId,
+}: {
+  email: string;
+  userId: string;
+}) => {
+  const newUser = await db
+    .insert(user)
+    .values({
+      email,
+      userId,
+    })
+    .returning();
+
+  return newUser[0] ?? null;
+};

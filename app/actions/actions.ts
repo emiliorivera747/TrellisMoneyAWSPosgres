@@ -8,8 +8,7 @@ import { z } from "zod";
 
 //Utils
 import { createClient } from "@/utils/supabase/server";
-
-import prisma from "@/lib/prisma";
+import { getUserByEmail, createUser } from "@/utils/drizzle/user/user";
 
 //Schema
 import {
@@ -123,11 +122,7 @@ export async function signUp(
 
 
     // Before adding the user to your own database, you should check if the user already exists
-    const user = await prisma.user.findUnique({
-      where: {
-        email: validatedFields.email,
-      },
-    });
+    const user = await getUserByEmail(validatedFields.email);
 
     if (user) {
       return {
@@ -138,12 +133,12 @@ export async function signUp(
     }
 
     // Add the user to your own PostgreSQL database
-    await prisma.user.create({
-      data: {
+    if (data.user?.id) {
+      await createUser({
         email: validatedFields.email,
-        user_id: data.user?.id,
-      },
-    });
+        userId: data.user.id,
+      });
+    }
 
     return handleSuccess(formData);
   } catch (e) {
