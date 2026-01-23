@@ -54,8 +54,6 @@ export const refreshHouseholdHoldings = async ({
   const plaidHoldings = plaidResponse.flatMap((res) => res.holdings);
   const plaidSecurities = plaidResponse.flatMap((res) => res.securities);
 
-  console.log("Plaid Response", plaidHoldings);
-
   if (plaidHoldings.length === 0)
     return logErrorAndThrow("No holdings found in any connected accounts");
 

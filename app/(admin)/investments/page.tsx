@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useFetchHoldings from "@/hooks/react-query/holdings/useFetchHoldings";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 import Link from "next/link";
-import RefreshInvestments from "@/features/investments/components/RefreshAccounts";
+import RefreshInvestments from "@/features/investments/components/RefreshInvestments";
 
 const page = () => {
   const { holdingsData, holdingsError, holdingsLoading, holdingsHasError } =

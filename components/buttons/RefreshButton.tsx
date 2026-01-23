@@ -1,21 +1,16 @@
-"use client";
-import { API_URL } from "@/utils/global-variables/globals";
 
 /**
- * RefreshInvestments component renders a button that triggers an API call
- * to refresh investment account holdings.
+ * A reusable button component that triggers a refresh action.
  *
- * @returns A button element that, when clicked, sends a POST request to refresh data.
+ * @param {Object} props - The component props.
+ * @param {() => void} props.onClickFn - The function to execute when the button is clicked.
+ * @returns {JSX.Element} A styled button with a refresh icon and label.
  */
-const RefreshInvestments = () => {
-  const refetchAccounts = async () => {
-    fetch(`${API_URL}/household/investments/refresh`, { method: "POST" });
-  };
-
+const RefreshButton = ({ onClickFn }: { onClickFn: () => void }) => {
   return (
     <button
       className="border px-4 py-2 rounded-full flex items-center justify-center gap-2 mb-4"
-      onClick={() => refetchAccounts()}
+      onClick={() => onClickFn()}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -36,4 +31,4 @@ const RefreshInvestments = () => {
   );
 };
 
-export default RefreshInvestments;
+export default RefreshButton;
