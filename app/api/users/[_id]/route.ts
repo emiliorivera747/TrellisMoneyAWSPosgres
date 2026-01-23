@@ -1,14 +1,11 @@
-import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-
+import { getUserById } from "@/utils/drizzle/user/user";
 
 export const GET = async (
   request: Request,
   { params }: { params: Promise<{ _id: string }> }
 ) => {
-
   try {
-
     const { _id } = await params;
 
     if (!_id) {
@@ -18,9 +15,7 @@ export const GET = async (
       );
     }
 
-    const user = await prisma.user.findUnique({
-      where: { user_id: _id },
-    });
+    const user = await getUserById(_id);
 
     if (!user) {
       return NextResponse.json(
@@ -30,7 +25,7 @@ export const GET = async (
     }
 
     return NextResponse.json(
-      { status: "success", data: user.user_id },
+      { status: "success", data: user.userId },
       { status: 200 }
     );
   } catch (error) {
