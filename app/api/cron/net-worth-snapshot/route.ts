@@ -1,14 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "@/lib/protected";
-import { verifySignatureAppRouter } from "@upstash/qstash/nextjs";
 
 // Utils
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
-import {
-  SuccessResponse,
-  ErrorResponse,
-  FailResponse,
-} from "@/utils/api-helpers/api-responses/response";
+import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 
 /**
  * Handles authenticated GET requests to retrieve and update household accounts.
@@ -23,7 +18,7 @@ import {
  * @param req - Incoming `NextRequest`.
  * @returns A `Response` with updated accounts or an error message.
  */
-export const POST = verifySignatureAppRouter(async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
   return withAuth(req, async (request, user) => {
     try {
       console.log("Running daily net worth snapshot...");
@@ -32,4 +27,4 @@ export const POST = verifySignatureAppRouter(async (req: NextRequest) => {
       return ErrorResponse(getServerErrorMessage(error));
     }
   });
-});
+};
