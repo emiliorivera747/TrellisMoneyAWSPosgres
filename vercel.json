@@ -1,5 +1,9 @@
 {
-    "git": {
-      "deploymentEnabled": true
-    }
+  "git": {
+    "deploymentEnabled": true
+  },
+  "crons": {
+    "path": "/api/cron/net-worth-snapshot",
+    "schedule": "0 0 * * *"
   }
+}
