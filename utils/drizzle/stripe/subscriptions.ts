@@ -7,12 +7,10 @@ import { eq } from "drizzle-orm";
 import { UpdateUserAndSubscriptionProps } from "@/types/utils/stripe/subscriptions";
 
 /**
- * Updates user and subscription in the database within a transaction.
+ * Updates user and subscription in a transaction.
  *
- * @param params - Contains userId, customerId, and subscriptionData.
+ * @param params - Includes userId, customerId, and subscriptionData.
  * @returns Promise<[User, Subscription]> Updated records.
- *
- * @throws PrismaClient errors on failure.
  */
 export const updateUserAndSubscription = async ({
   userId,

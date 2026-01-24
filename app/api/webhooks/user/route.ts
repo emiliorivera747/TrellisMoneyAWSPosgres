@@ -27,11 +27,13 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: "Timestamp expired" }, { status: 400 });
     }
 
-
     /**
      * Creates a HMAC object with the SHA256 algorithm using the private key
      */
-    const hmac = crypto.createHmac("sha256", process.env.PRIVATE_SUPABASE_KEY || "");
+    const hmac = crypto.createHmac(
+      "sha256",
+      process.env.PRIVATE_SUPABASE_KEY || ""
+    );
     //("HMAC", hmac);
 
     /**
@@ -39,7 +41,7 @@ export async function DELETE(req: Request) {
      */
     const body = await req.text();
     hmac.update(`${timestamp}${body}`);
-    const calculatedSignature = hmac.digest('hex');
+    const calculatedSignature = hmac.digest("hex");
     //("calculatedSignature", calculatedSignature);
 
     // Check if x-supabase-secret matches our PRIVATE_SUPABASE_KEY

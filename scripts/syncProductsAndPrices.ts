@@ -4,7 +4,7 @@ import { db } from "@/drizzle/db";
 import { product, price, PriceInsert } from "@/drizzle/schema";
 
 /**
- * Syncs products and prices from Stripe to the local database using Prisma.
+ * Syncs products and prices from Stripe to the local database using Drizzle.
  *
  * Fetches active products and their prices from Stripe, then upserts them into the database
  * within a transaction to ensure consistency.

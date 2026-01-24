@@ -11,7 +11,7 @@ import { createHouseholdName } from "@/utils/helper-functions/formatting/createH
 import { SupabaseUserSyncData } from "@/features/auth/types/callback";
 
 /**
- * Adds or updates a user in the PostgreSQL database via Prisma.
+ * Adds or updates a user in the PostgreSQL database via Drizzle.
  */
 export async function upsertUser(currentUser: SupabaseUserSyncData) {
   try {
