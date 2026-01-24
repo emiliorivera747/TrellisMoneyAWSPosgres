@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "@/lib/protected";
 
 // Utils
-import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
 import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
 
 /**
@@ -18,13 +17,11 @@ import { ErrorResponse } from "@/utils/api-helpers/api-responses/response";
  * @param req - Incoming `NextRequest`.
  * @returns A `Response` with updated accounts or an error message.
  */
-export const POST = async (req: NextRequest) => {
-  return withAuth(req, async (request, user) => {
-    try {
-      console.log("Running daily net worth snapshot...");
-      return NextResponse.json({ status: "success" });
-    } catch (error) {
-      return ErrorResponse(getServerErrorMessage(error));
-    }
-  });
+export const GET = async (req: NextRequest) => {
+  try {
+    console.log("Running daily net worth snapshot...");
+    return NextResponse.json({ status: "success" });
+  } catch (error) {
+    return ErrorResponse(error);
+  }
 };
