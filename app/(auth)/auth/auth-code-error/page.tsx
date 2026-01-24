@@ -43,17 +43,31 @@ export default function AuthErrorPage() {
     );
   }, [searchParams]);
 
+  console.log(error);
+
   const getErrorMessage = () => {
     if (error === "signup_disabled")
       return (
-        errorDescription ||
-        "Signups are currently disabled for this instance. Please contact support for more information."
+        <span>
+          Please contact{" "}
+          <a href="mailto:emiliorivera@trellismoney.com">
+            emiliorivera@trellismoney.com
+          </a>{" "}
+          if you would like to receive access. We are currently only allowing a
+          select few to access the application.
+        </span>
       );
 
     if (error === "access_denied")
       return (
-        errorDescription ||
-        "Access was denied. Please check your credentials or contact support."
+        <span>
+          Please contact{" "}
+          <a href="mailto:emiliorivera@trellismoney.com">
+            emiliorivera@trellismoney.com
+          </a>{" "}
+          if you would like to receive access. We are currently only allowing a
+          select few to access the application.
+        </span>
       );
 
     return (
@@ -64,11 +78,13 @@ export default function AuthErrorPage() {
 
   return (
     <section className="h-screen w-screen flex items-center justify-center">
-      <div className="flex flex-col items-center h-[50vh] w-[60%] rounded-[12px] mx-[5%] px-20">
+      <div className="flex flex-col items-center h-[50vh] w-[60%] rounded-[12px] mx-[5%] px-20 gap-10">
         <PrimaryHeader label={"Authentication Error"} />
-        <p className="pt-6 pb-8 text-[#c92a2a] font-light">
-          {getErrorMessage()}
-        </p>
+        <div className=" bg-[#fff5f5] rounded-[12px] px-8 py-6 border border-red-300">
+          <p className="flex items-center  justify-center pt-6 pb-8 text-[#c92a2a] font-semibold">
+            {getErrorMessage()}
+          </p>
+        </div>
         <a
           href="/"
           className="py-4 px-4 rounded-[12px] hover:bg-tertiary-200"
