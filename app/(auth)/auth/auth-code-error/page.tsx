@@ -10,26 +10,20 @@ import { useSearchParams } from "next/navigation";
 import { PrimaryHeader } from "@/components/marketing/headers/Headers";
 
 /**
- * AuthErrorPage Component
- *
- * Renders an authentication error page displaying messages based on URL parameters.
- * Provides a link to navigate back to the home page.
- *
- * @returns {JSX.Element} The rendered error page.
- *
- * @example
- * <AuthErrorPage />
- *
- * @dependencies
- * - React hooks: `useState`, `useEffect`
- * - `useSearchParams` for URL query parameters
- *
- * @errorHandling
- * - `signup_disabled`: Signups are disabled.
- * - `access_denied`: Access denied.
- * - Default: Generic error message.
+ * Renders an authentication error page with messages based on URL parameters.
+ * Includes a link to navigate back to the home page.
  */
-export default function AuthErrorPage() {
+import { Suspense } from "react";
+
+export default function AuthErrorPageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AuthErrorPage />
+    </Suspense>
+  );
+}
+
+function AuthErrorPage() {
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [errorDescription, setErrorDescription] = useState<string | null>(null);
@@ -42,8 +36,6 @@ export default function AuthErrorPage() {
         searchParams.get("error_description")
     );
   }, [searchParams]);
-
-  console.log(error);
 
   const getErrorMessage = () => {
     if (error === "signup_disabled")
@@ -87,7 +79,6 @@ export default function AuthErrorPage() {
         </div>
         <a
           href="/"
-          className="py-4 px-4 rounded-[12px] hover:bg-tertiary-200"
           style={{
             boxShadow: `rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px`,
           }}
