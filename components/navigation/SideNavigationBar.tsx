@@ -64,8 +64,6 @@ const SideNavigationBar: React.FC = () => {
     );
   }
 
-  console.log("sub res", subscriptionResponse);
-
   return (
     <aside className=" sm:border-tertiary-200 flex flex-col sm:flex-row justify-start w-full sm:justify-center sm:w-24 2xl:w-48 min-w-24 sticky text-white sm:border-r border-tertiary-300 border-box h-screen">
       <nav className=" flex flex-row sm:flex-col  pb-4 justify-between items-center my-[3.2rem]">

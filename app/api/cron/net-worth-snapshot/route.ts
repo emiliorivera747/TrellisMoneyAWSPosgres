@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "@/lib/protected";
+import { verifySignatureAppRouter } from "@upstash/qstash/nextjs";
 
 // Utils
 import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerErrorMessage";
@@ -22,7 +23,7 @@ import {
  * @param req - Incoming `NextRequest`.
  * @returns A `Response` with updated accounts or an error message.
  */
-export async function GET(req: NextRequest) {
+export const POST = verifySignatureAppRouter(async (req: NextRequest) => {
   return withAuth(req, async (request, user) => {
     try {
       console.log("Running daily net worth snapshot...");
@@ -31,4 +32,4 @@ export async function GET(req: NextRequest) {
       return ErrorResponse(getServerErrorMessage(error));
     }
   });
-}
+});
