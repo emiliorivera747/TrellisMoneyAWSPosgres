@@ -1,8 +1,13 @@
-import { AssetsWithType, Assets } from "@/types/assets";
+import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
+
+export interface AssetsWithType {
+  assets: ProjectedAsset[];
+  type?: string;
+}
 
 export const extractAllAssetsFromAssetWithType = (
   assetWithType: AssetsWithType[]
-): Assets[] => {
+): ProjectedAsset[] => {
   const res = assetWithType.flatMap((item) => item.assets);
   return res;
 };

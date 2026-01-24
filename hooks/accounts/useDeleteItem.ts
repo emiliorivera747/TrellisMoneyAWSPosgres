@@ -15,7 +15,7 @@ export const useDeleteItem = () => {
     isPending: itemIsPending,
     isError: itemHasError,
   } = useMutation({
-    mutationFn: itemService.deleteItem,
+    mutationFn: itemService.removeItem,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       toast({

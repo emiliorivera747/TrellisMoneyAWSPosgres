@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Assets } from "@/features/projected-financial-assets/types/projectedAssetsCard";
+import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
 
-const useSortAssets = (financialAssetsData: { data: Assets[] }) => {
-  const [filteredAssets, setFilteredAssets] = useState<Assets[]>([]);
+const useSortAssets = (financialAssetsData: { data: ProjectedAsset[] }) => {
+  const [filteredAssets, setFilteredAssets] = useState<ProjectedAsset[]>([]);
 
   useEffect(() => {
     if (financialAssetsData?.data) {

@@ -1,4 +1,6 @@
-import prisma from "@/lib/prisma";
+// Note: This file uses Prisma which may not be available in the current setup
+// Consider using the Drizzle version at utils/drizzle/securities/updateSecurities.ts instead
+// import prisma from "@/lib/prisma";
 import { Security } from "@/types/services/plaid/plaid";
 import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 import { valueOrDefault } from "@/utils/helper-functions/formatting/getValueOrDefaultValue";
@@ -15,31 +17,12 @@ export async function updateSecurities(
   securities: Security[],
   timestamp: string
 ) {
-  const user = await getUser();
-  const user_id = user?.id || "";
-
-  for (let security of securities) {
-    const createFields = getSecurirtyCreateFields(security);
-    const updateFields = getSecurityUpdateFields(security);
-    const historyCreateFields = getSecurityHistoryCreateFields(security);
-
-    await prisma.security.upsert({
-      where: { security_id: security.security_id },
-      update: {
-        ...updateFields,
-      },
-      create: {
-        user_id: user_id,
-        ...createFields,
-      },
-    });
-
-    await prisma.securityHistory.create({
-      data: {
-        ...historyCreateFields,
-      },
-    });
-  }
+  // Note: This function uses Prisma which is not available in the current setup
+  // This file appears to be legacy code. Consider using the Drizzle version instead:
+  // utils/drizzle/securities/updateSecurities.ts or utils/drizzle/investments/securityService.ts
+  throw new Error(
+    "updateSecurities: Prisma is not available. Use Drizzle-based security service instead."
+  );
 }
 
 /**

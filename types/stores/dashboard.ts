@@ -13,6 +13,12 @@ export interface DashboardFiltersSlice {
    */
   selectedProjectedYear: number;
   /**
+   * The retirement year.
+   * @type {number}
+   * @memberof DashboardFiltersSlice
+   */
+  retirementYear: number;
+  /**
    * The selected inflation filter.
    * @type {InflationFilters}
    * @memberof DashboardFiltersSlice
@@ -31,6 +37,12 @@ export interface DashboardFiltersSlice {
    * @memberof DashboardFiltersSlice
    */
   setSelectedProjectedYear: (year: number) => void;
+  /**
+   * Sets the retirement year.
+   * @type {(year: number) => void}
+   * @memberof DashboardFiltersSlice
+   */
+  setRetirementYear: (year: number) => void;
   /**
    * Sets the selected inflation filter.
    * @type {(filter: InflationFilters) => void}

@@ -21,7 +21,7 @@ const AverageCostCard = ({ holding }: { holding: AggregateHoldingDetails }) => {
       <div className="flex flex-row gap-1 text-[0.78rem] justify-between font-medium w-full">
         <h1 className="justify-start text-tertiary-800 display flex flex-row items-center gap-2 font-light">Shares</h1>
         <span className={`gap-1 font-medium text-tertiary-800`}>
-          {parseFloat(holding.shares).toFixed(2)}
+          {typeof holding.shares === 'string' ? parseFloat(holding.shares).toFixed(2) : holding.shares.toFixed(2)}
         </span>
       </div>
     </Card>

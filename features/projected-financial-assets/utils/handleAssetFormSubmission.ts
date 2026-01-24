@@ -1,6 +1,6 @@
 //Functions
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
-import { ProjectedAssets } from "@/features/projected-financial-assets/types/projectedAssets";
+import { ProjectedAssetsWithFilter } from "@/types/future-projections/futureProjections";
 import { FutureProjectionData } from "@/types/future-projections/futureProjections";
 import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
 import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
@@ -19,10 +19,7 @@ import useFetchUser from "@/hooks/user/useFetchUser";
  */
 export const handleFormSubmission = (data: Record<string, number>) => {
   const { selectedProjectedYear: selectedYear, selectedInflationFilter: selectedFilter } = useDashboardFilters();
-  const { futureProjectionData: projectionData } = useFetchProjections({
-    selectedProjectedYear: selectedYear,
-    selectedInflationFilter: selectedFilter,
-  });
+  const { futureProjectionData: projectionData } = useFetchProjections();
   const { user } = useFetchUser();
   const { mutateAssets } = useUpdateAssets();
 
@@ -48,6 +45,6 @@ const getCurrentProjectedAsset = (
   selectedFilter: string
 ) => {
   return projectionData?.projected_assets?.find(
-    (payload: ProjectedAssets) => payload.value === selectedFilter
+    (payload: ProjectedAssetsWithFilter) => payload.value === selectedFilter
   );
 };

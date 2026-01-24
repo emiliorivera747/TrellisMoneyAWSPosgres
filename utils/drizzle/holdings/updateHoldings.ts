@@ -142,7 +142,7 @@ export async function updateHoldingsInTx({
 
 const getAllHoldingValues = (
   holdingsPlaid: Holding[],
-  holdingMap: Map<string, { householdMemberId: string; holdingId: string }>
+  holdingMap: Map<string, { holdingId: string }>
 ) => {
   const values = holdingsPlaid.map((holdingPlaid) => {
     const accountId = holdingPlaid.account_id;

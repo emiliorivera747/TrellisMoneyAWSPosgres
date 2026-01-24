@@ -17,19 +17,11 @@ export const updateItemsWithPlaidItems = async (
       const res = await db
         .update(item)
         .set({
-          availableProducts: plaidItem.available_products || [],
-          billedProducts: plaidItem.billed_products || [],
-          products: plaidItem.products || [],
-          error: plaidItem.error ? JSON.stringify(plaidItem.error) : null,
           institutionId: plaidItem.institution_id || "",
           institutionName: plaidItem.institution_name || "",
-          updateType: plaidItem.update_type || "",
           webhook: plaidItem.webhook || "",
-          consentedProducts: plaidItem.consented_products || [],
-          consentedDataScopes: plaidItem.consented_data_scopes || [],
-          consentedUseCases: plaidItem.consented_use_cases || [],
-          consentExpirationTime: plaidItem.consent_expiration_time || "",
-          authMethod: plaidItem.auth_method || "",
+          errorType: plaidItem.error?.error_type || null,
+          errorCode: plaidItem.error?.error_code || null,
         })
         .where(eq(item.itemId, plaidItem.item_id))
         .returning();

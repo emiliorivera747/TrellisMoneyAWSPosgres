@@ -5,14 +5,13 @@ import { Holding } from "@/drizzle/schema";
  *
  * @param holdings - An array of Holding objects to be mapped.
  * @returns A Map where the key is a string in the format `${accountId}-${securityId}`,
- *          and the value is an object containing holdingId and householdMemberId.
+ *          and the value is an object containing holdingId.
  */
 export const generateHoldingMap = (holdings: Holding[]) => {
-  const hm = new Map();
+  const hm = new Map<string, { holdingId: string }>();
   for (let holding of holdings) {
     hm.set(`${holding.accountId}-${holding.securityId}`, {
       holdingId: holding.holdingId,
-      householdMemberId: holding.householdMemberId,
     });
   }
   return hm;

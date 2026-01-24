@@ -30,7 +30,6 @@ export const upsertHoldings = async ({
       .onConflictDoUpdate({
         target: holding.holdingId,
         set: {
-          householdMemberId: sql`excluded.household_member_id`,
           accountId: sql`excluded.account_id`,
           securityId: sql`excluded.security_id`,
           costBasis: sql`excluded.cost_basis`,
@@ -54,21 +53,17 @@ export const upsertHoldings = async ({
 
 const getAllHoldingValues = (
   holdingsPlaid: HoldingPlaid[],
-  holdingMap: Map<string, { householdMemberId: string; holdingId: string }>
+  holdingMap: Map<string, { holdingId: string }>
 ) => {
   const values = holdingsPlaid.map((holdingPlaid) => {
     const accountId = valueOrDefault(holdingPlaid.account_id, "");
     const securityId = valueOrDefault(holdingPlaid.security_id, "");
     const holdingId = holdingMap.get(`${accountId}-${securityId}`)?.holdingId || "";
-    const householdMemberId = holdingMap.get(
-      `${accountId}-${securityId}`
-    )?.householdMemberId || "";
 
     return {
       holdingId,
       accountId,
       securityId,
-      householdMemberId,
       costBasis: `${valueOrDefault(holdingPlaid.cost_basis, 0)}`,
       institutionPrice: `${valueOrDefault(holdingPlaid.institution_price, 0)}`,
       institutionValue: `${valueOrDefault(holdingPlaid.institution_value, 0)}`,

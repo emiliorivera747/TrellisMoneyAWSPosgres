@@ -26,10 +26,9 @@ const usePlaid = ({ linkToken }: { linkToken: string | null }) => {
       publicToken: string,
       metadata: PlaidLinkOnSuccessMetadata
     ) => {
-      await plaidService.exchangeToken({
-        public_token: publicToken,
-        metadata,
-      });
+      // Note: This hook needs member_id to exchange token properly
+      // Consider using usePlaidConnectionFlow hook instead
+      console.warn("usePlaid hook: member_id is required for token exchange");
     },
   });
   return { open, ready, error };

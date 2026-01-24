@@ -10,18 +10,14 @@ import plaidServices from "@/services/plaid/plaidServices";
 
 const Link = ({ linkToken, ref, className, itemId }: LinkProps) => {
   const onSuccess = useCallback(async (public_token: string, metadata: any) => {
-    const { institution, accounts } = metadata;
-    
     if (itemId !== null) {
       // Handle Update mode
     } else {
-      await plaidServices.exchangeToken({
-        public_token,
-        institution,
-        accounts,
-      });
+      // Note: This component needs member_id to exchange token properly
+      // Consider using usePlaidConnectionFlow hook instead
+      console.warn("Link component: member_id is required for token exchange");
     }
-  }, []);
+  }, [itemId]);
 
   const config: Parameters<typeof usePlaidLink>[0] = {
     token: linkToken!,

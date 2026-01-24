@@ -1,6 +1,6 @@
 // Services
 import financialProjectionService from "@/features/projected-net-worth/services/financialProjectionsService";
-import { FinancialAssets } from "@/features/projected-financial-assets/types/projectedAssets";
+import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
 
 export const fetchProjectionData = async (
   startDate: number,
@@ -140,11 +140,11 @@ export const fetchProjections = async (
       projected_assets: [
         {
           value: "withInflation",
-          data: projected_assets_inflation as FinancialAssets[],
+          data: projected_assets_inflation as ProjectedAsset[],
         },
         {
           value: "withNoInflation",
-          data: projected_assets_no_inflation as FinancialAssets[],
+          data: projected_assets_no_inflation as ProjectedAsset[],
         },
       ],
     };

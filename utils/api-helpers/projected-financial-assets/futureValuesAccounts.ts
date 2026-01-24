@@ -1,7 +1,7 @@
 import { Account } from "@/types/services/plaid/plaid";
+import { AccountType } from "plaid";
 
 import { getHoldingName } from "@/utils/api-helpers/holdings/holdingAccessors";
-import { AccountType } from "@/features/projected-financial-assets/types/projectedAssetsCard";
 import {
   getFutureValue,
   getFormulaValues,

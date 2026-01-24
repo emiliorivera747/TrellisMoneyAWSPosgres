@@ -33,8 +33,8 @@ export const updateHoldingsAndSecurities = async ({
    */
   await Promise.all([
     upsertSecurities({
-      securitiesPlaid,
-      timestamp,
+      plaidSecurities: securitiesPlaid,
+      timestamp: timestamp,
     }),
     upsertHoldings({
       holdingsPlaid,

@@ -1,11 +1,11 @@
 import { User } from "@supabase/supabase-js";
-import { FinancialAssets } from "../types/projectedAssets";
+import { ProjectedAsset } from "../types/projectedAssets";
 
 function updateAssets(
-  assets: FinancialAssets[],
+  assets: ProjectedAsset[],
   data: Record<string, number>,
   user?: User | null
-): FinancialAssets[] | null {
+): ProjectedAsset[] | null {
   
   const res = assets.map((asset) => {
     const newVal =

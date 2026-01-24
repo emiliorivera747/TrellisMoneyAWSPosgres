@@ -6,6 +6,7 @@ export const useDashboardFilters = () =>
   useStore(
     useShallow((state) => ({
       selectedProjectedYear: state.selectedProjectedYear,
+      retirementYear: state.retirementYear,
       selectedInflationFilter: state.selectedInflationFilter,
       mode: state.mode,
     }))
@@ -16,6 +17,7 @@ export const useDashboardFilterActions = () =>
   useStore(
     useShallow((state) => ({
       setSelectedProjectedYear: state.setSelectedProjectedYear,
+      setRetirementYear: state.setRetirementYear,
       setSelectedInflationFilter: state.setSelectedInflationFilter,
       toggleMode: state.toggleMode,
     }))

@@ -6,20 +6,20 @@ import { ExchangeTokenProps } from "@/types/services/requests/plaidServices";
  * Exchanges the public token for an access token.
  * @param {ExchangeTokenProps} props - The properties required to exchange the token.
  * @param {string} props.public_token - The public token received from Plaid Link.
- * @param {Institution} props.institution - The institution object containing institution_id and name.
- * @param {Account[]} props.accounts - The array of accounts associated with the public token.
+ * @param {PlaidLinkOnSuccessMetadata} props.metadata - The metadata from Plaid Link onSuccess callback.
+ * @param {string} props.member_id - The member ID.
  */
 const exchangeToken = async ({
   public_token,
-  institution,
-  accounts,
+  metadata,
+  member_id,
 }: ExchangeTokenProps) => {
   await fetch(`${API_URL}/plaid/exchange-token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ public_token, institution, accounts }),
+    body: JSON.stringify({ public_token, metadata, member_id }),
   });
 };
 

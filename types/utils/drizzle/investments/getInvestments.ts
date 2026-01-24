@@ -16,7 +16,7 @@ export interface UpdateHoldingsAndSecuritiesParams {
 export interface UpsertHoldingsParams {
   holdingsPlaid: plaidHolding[];
   timestamp: string;
-  holdingMap: Map<string, { householdMemberId: string; holdingId: string }>;
+  holdingMap: Map<string, { holdingId: string }>;
 }
 
 export type UpdateHoldingsInTxParams =  {

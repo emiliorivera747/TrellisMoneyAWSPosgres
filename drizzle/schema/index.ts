@@ -28,7 +28,6 @@ import {
 import { profile } from "./profile";
 import {
   security,
-  securityType,
 } from "./security";
 import {
   subscription,
@@ -88,4 +87,3 @@ export type UsageType = typeof usageType.enumValues[number];
 export type AccountType = typeof accountType.enumValues[number];
 export type AccountVerificationStatus =
   typeof accountVerificationStatus.enumValues[number];
-export type SecurityType = typeof securityType.enumValues[number];
