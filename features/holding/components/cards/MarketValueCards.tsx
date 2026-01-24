@@ -20,7 +20,7 @@ const MarketValueCards = ({
     <Card>
       <PrimaryCardHeader>Market value</PrimaryCardHeader>
       <CurrencyDisplay value={holding.totalValue} />
-      <div className="flex flex-row gap-1 text-[0.78rem] justify-between font-medium w-full">
+      <div className="flex flex-row gap-1 text-[0.54rem] sm:text-[0.78rem] justify-between font-medium w-full">
         <h1 className="justify-start text-tertiary-800 display flex flex-row items-center gap-2 font-light">
           Total return
         </h1>

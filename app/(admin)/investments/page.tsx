@@ -66,7 +66,7 @@ const page = () => {
               return (
                 <Link
                   href={`/investments/${securityId}`}
-                  className="grid grid-cols-2 border rounded-[12px] py-[0.5rem] w-[30rem] items-center hover:shadow-md"
+                  className="grid grid-cols-2 border rounded-[12px] py-[0.5rem] sm:w-[30rem] items-center hover:shadow-md"
                   key={name}
                 >
                   <span className="px-4 flex flex-col gap-1">

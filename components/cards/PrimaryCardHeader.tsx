@@ -13,7 +13,7 @@ const PrimaryCardHeader = ({
     <h1
       ref={ref}
       className={cn(
-        "text-md justify-start text-tertiary-800 display flex flex-row items-center gap-2",
+        "text-sm sm:text-md justify-start text-tertiary-800 display flex flex-row items-center gap-2",
         className
       )}
     >

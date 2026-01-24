@@ -10,7 +10,7 @@ interface CurrencyDisplayProps {
 const CurrencyDisplay = ({ value, ref, className }: CurrencyDisplayProps) => {
   return (
     <p
-      className={cn("font-medium text-tertiary-1000 text-2xl", className)}
+      className={cn("font-medium text-tertiary-1000 sm:text-2xl text-xl", className)}
       ref={ref}
     >
       {convertToMoney(value)}

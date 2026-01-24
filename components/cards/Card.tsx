@@ -19,7 +19,7 @@ const Card = ({
 }) => {
   return (
     <div
-      className="border border-tertiary-400 flex flex-col items-start pt-6 pb-8 px-8 mt-6 gap-3 rounded-[12px] box-border overflow-x-scroll"
+      className="p-3 border border-tertiary-400 flex flex-col items-start sm:pt-6 sm:pb-8 sm:px-8 sm:mt-6 gap-3 rounded-[12px] box-border overflow-x-scroll"
       ref={ref}
     >
       {children}

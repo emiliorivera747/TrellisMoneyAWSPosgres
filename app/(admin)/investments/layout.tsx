@@ -13,5 +13,5 @@ export const metadata: Metadata = {
  * @returns A section element wrapping the provided children.
  */
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <section>{children}</section>;
+  return <section className="">{children}</section>;
 }
