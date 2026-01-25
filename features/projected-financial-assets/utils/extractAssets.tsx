@@ -2,4 +2,4 @@ import { FutureProjectionData } from "@/types/future-projections/futureProjectio
 
 export const getAssets = (
   futureProjectionData: FutureProjectionData | undefined
-) => futureProjectionData?.projected_assets?.[0]?.data;
+) => futureProjectionData?.projectedAssets?.[0]?.data;

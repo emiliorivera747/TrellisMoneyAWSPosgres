@@ -9,12 +9,12 @@ export interface ProjectionData {
    * @type {{ value: string; data: any; }[]}
    * @memberof ProjectionData
    */
-  projected_net_worth: { value: string; data: any; }[];
+  projectedNetWorth: { value: string; data: any; }[];
 
   /**
    * Array of projected asset data points.
    * @type {{ value: string; data: any; }[]}
    * @memberof ProjectionData
    */
-  projected_assets: { value: string; data: any; }[];
+  projectedAssets: { value: string; data: any; }[];
 } 

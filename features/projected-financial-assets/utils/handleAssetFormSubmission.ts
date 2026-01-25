@@ -26,7 +26,7 @@ export const handleFormSubmission = (data: Record<string, number>) => {
   if (!projectionData) return;
   const currentProjectedAsset =
     getCurrentProjectedAsset(projectionData, selectedFilter) ||
-    projectionData.projected_assets[0];
+    projectionData.projectedAssets[0];
 
   if (!currentProjectedAsset) return;
 
@@ -44,7 +44,7 @@ const getCurrentProjectedAsset = (
   projectionData: FutureProjectionData | undefined | null,
   selectedFilter: string
 ) => {
-  return projectionData?.projected_assets?.find(
+  return projectionData?.projectedAssets?.find(
     (payload: ProjectedAssetsWithFilter) => payload.value === selectedFilter
   );
 };

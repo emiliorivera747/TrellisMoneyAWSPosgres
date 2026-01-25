@@ -12,14 +12,14 @@ export interface FutureProjectionData {
    * @type {ProjectedAssetsWithFilter[]}
    * @memberof FutureProjectionData
    */
-  projected_assets: ProjectedAssetsWithFilter[];
+  projectedAssets: ProjectedAssetsWithFilter[];
 
   /**
    * The projected net worth.
    * @type {ProjectedNetWorthWithFilter[]}
    * @memberof FutureProjectionData
    */
-  projected_net_worth: ProjectedNetWorthWithFilter[];
+  projectedNetWorth: ProjectedNetWorthWithFilter[];
 }
 
 /**

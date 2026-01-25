@@ -113,9 +113,9 @@ const getCurrentProjectedAsset = (
   futureProjectionData: FutureProjectionData | undefined | null,
   selectedFilter: string
 ) => {
-  const assets = futureProjectionData?.projected_assets?.find(
+  const assets = futureProjectionData?.projectedAssets?.find(
     (payload) => payload.value === selectedFilter
   );
   if (assets) return assets;
-  return futureProjectionData?.projected_assets[0];
+  return futureProjectionData?.projectedAssets[0];
 };

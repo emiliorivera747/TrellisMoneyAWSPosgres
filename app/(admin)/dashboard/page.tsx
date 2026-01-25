@@ -57,7 +57,6 @@ const DashboardContent = () => {
           <Footer />
         </PrimaryDashboardSection>
       </div>
-
       {/* Secondary Dashboard Section */}
       <div className="h-full w-[30%] sticky top-0 pt-[3%]">
         <AssetsDashboardProvider>

@@ -28,13 +28,13 @@ const useFilteredArrays = (
   // useEffect(() => {
   //   if (projectionData?.noInflationData && projectionData?.inflationData) {
   //     const filteredNoInflation = filterProjectionData(
-  //       projectionData.noInflationData.data.projected_net_worth,
+  //       projectionData.noInflationData.data.projectedNetWorth,
   //       selectedYear
   //     );
   //     setFilteredDataNoInflation(filteredNoInflation);
 
   //     const filteredWithInflation = filterProjectionData(
-  //       projectionData.inflationData.data.projected_net_worth,
+  //       projectionData.inflationData.data.projectedNetWorth,
   //       selectedYear
   //     );
   //     setFilteredDataWithInflation(filteredWithInflation);

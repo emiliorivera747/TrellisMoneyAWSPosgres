@@ -52,8 +52,8 @@ export const fetchProjectionData = async (
  * @returns A promise that resolves to an object containing the projected net worth and assets.
  *          The structure of the returned object is:
  *          {
- *            projected_net_worth: Array<{ value: string, data: any }>,
- *            projected_assets: Array<{ value: string, data: any }>
+ *            projectedNetWorth: Array<{ value: string, data: any }>,
+ *            projectedAssets: Array<{ value: string, data: any }>
  *          }
  *
  * @throws Will throw an error if the filter value is invalid.
@@ -70,16 +70,16 @@ export const fetchProjections = async (
         endDate,
         false
       );
-    const { projected_net_worth, projected_assets } = res.data;
+    const { projectedNetWorth, projectedAssets } = res.data;
 
     return {
-      projected_net_worth: [
+      projectedNetWorth: [
         {
           value: "withNoInflation",
-          data: projected_net_worth,
+          data: projectedNetWorth,
         },
       ],
-      projected_assets: [{ value: "withNoInflation", data: projected_assets }],
+      projectedAssets: [{ value: "withNoInflation", data: projectedAssets }],
     };
   } else if (filter === "withInflation") {
     const res =
@@ -89,15 +89,15 @@ export const fetchProjections = async (
         true
       );
 
-    const { projected_net_worth, projected_assets } = res.data;
+    const { projectedNetWorth, projectedAssets } = res.data;
     return {
-      projected_net_worth: [
+      projectedNetWorth: [
         {
           value: "withInflation",
-          data: projected_net_worth,
+          data: projectedNetWorth,
         },
       ],
-      projected_assets: [{ value: "withInflation", data: projected_assets }],
+      projectedAssets: [{ value: "withInflation", data: projectedAssets }],
     };
   } else if (filter === "isBoth") {
     const noInflationData =
@@ -115,34 +115,34 @@ export const fetchProjections = async (
       );
 
     const {
-      projected_net_worth: projected_net_worth_inflation,
-      projected_assets: projected_assets_inflation,
+      projectedNetWorth: projectedNetWorth_inflation,
+      projectedAssets: projectedAssets_inflation,
     } = inflationData.data;
 
     const {
-      projected_net_worth: projected_net_worth_no_inflation,
-      projected_assets: projected_assets_no_inflation,
+      projectedNetWorth: projectedNetWorth_no_inflation,
+      projectedAssets: projectedAssets_no_inflation,
     } = noInflationData.data;
 
     return {
-      projected_net_worth: [
+      projectedNetWorth: [
         {
           value: "withInflation",
-          data: projected_net_worth_inflation,
+          data: projectedNetWorth_inflation,
         },
         {
           value: "withNoInflation",
-          data: projected_net_worth_no_inflation,
+          data: projectedNetWorth_no_inflation,
         },
       ],
-      projected_assets: [
+      projectedAssets: [
         {
           value: "withInflation",
-          data: projected_assets_inflation,
+          data: projectedAssets_inflation,
         },
         {
           value: "withNoInflation",
-          data: projected_assets_no_inflation,
+          data: projectedAssets_no_inflation,
         },
       ],
     };

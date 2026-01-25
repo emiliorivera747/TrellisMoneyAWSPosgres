@@ -138,8 +138,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
       return SuccessResponse(
         {
-          projected_net_worth: projectedNetWorth,
-          projected_assets: projectedAssets,
+          projectedNetWorth: projectedNetWorth,
+          projectedAssets: projectedAssets,
         },
         "Accounts, holdings, and securities updated successfully."
       );

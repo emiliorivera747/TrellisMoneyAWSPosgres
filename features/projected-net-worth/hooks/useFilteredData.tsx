@@ -26,7 +26,7 @@ const useFilteredData = (
   useEffect(() => {
     if (!futureProjectionData) return;
 
-    const projectedNetWorthsData = futureProjectionData?.projected_net_worth;
+    const projectedNetWorthsData = futureProjectionData?.projectedNetWorth;
 
     if (!projectedNetWorthsData || projectedNetWorthsData.length === 0) {
       setFilteredData([]);
@@ -41,7 +41,7 @@ const useFilteredData = (
       return { filterValue: projectedNetWorth.value, data: filtered };
     });
     setFilteredData(filtered);
-  }, [futureProjectionData?.projected_net_worth, selectedYear, selectedFilter]);
+  }, [futureProjectionData?.projectedNetWorth, selectedYear, selectedFilter]);
 
   return filteredData;
 };
