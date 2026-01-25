@@ -21,7 +21,9 @@ import { upsertNetWorthSnapshot } from "@/utils/drizzle/net-worth/upsertNetWorth
  * @param req - Incoming `NextRequest`.
  * @returns A `Response` with snapshot summary or an error message.
  */
-export const GET = async (req: NextRequest, res: NextResponse) => {
+export async function GET(
+  req: NextRequest,
+) {
   try {
     if (req.headers.get("x-vercel-cron") !== "true")
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
@@ -135,4 +137,4 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   } catch (error) {
     return ErrorResponse(error);
   }
-};
+}
