@@ -1,4 +1,4 @@
-import { LinePayload } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
 import { FutureProjectionData } from "@/types/future-projections/futureProjections";
 
 export interface SecurityData {
@@ -35,7 +35,7 @@ export interface HeaderWithIconProps {
 
 export interface ResponsiveLineGraphProps<T> {
   selectedYear: number;
-  filteredDataForLines: LinePayload[];
+  filteredDataForLines: LineSeriesConfig[];
   tailwindClasses: string;
   withInflationTag?: boolean;
 }
@@ -63,7 +63,7 @@ export interface ColorBasedOnLineDirection {
 export interface ProjectedLineGraphProps {
   width: number;
   height: number;
-  linePayloads: LinePayload[];
+  linePayloads: LineSeriesConfig[];
   margin?: { top: number; right: number; bottom: number; left: number };
   showTooltip?: (args: any) => void;
   hideTooltip?: () => void;
@@ -85,7 +85,7 @@ export interface projectionData {
 }
 
 export interface PrimaryGraphHeaderProps {
-  linePayloads: LinePayload[];
+  linePayloads: LineSeriesConfig[];
   tooltipData: any;
   withInflationTag?: boolean;
   years: number[];

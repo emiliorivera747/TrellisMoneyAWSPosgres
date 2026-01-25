@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { colorConfigs } from "@/features/projected-net-worth/utils/data/lineColors";
 
 // Types
-import { LinePayload } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
 
 // Utils
 import { getNetWorthDataByFilter } from "@/features/net-worth/utils/data/networth/mockNetWorthData";
@@ -18,7 +18,7 @@ import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountF
  * @param {UseFilterNetWorthProps} props - Filtering properties.
  */
 export const useFilteredNetWorth = () => {
-  const [filteredData, setFilteredData] = useState<LinePayload[] | []>([]);
+  const [filteredData, setFilteredData] = useState<LineSeriesConfig[] | []>([]);
   const { selectedFilter, startDate, endDate } =
     useAccountsFiltersWithActions();
 
@@ -27,8 +27,8 @@ export const useFilteredNetWorth = () => {
 
     const filteredData = data.map((netWorthItem, index) => {
       return {
-        value: netWorthItem.value,
-        lineData: netWorthItem.data.filter((timeSeries) => {
+        filterValue: netWorthItem.value,
+        data: netWorthItem.data.filter((timeSeries) => {
           return startDate <= timeSeries.date && timeSeries.date <= endDate;
         }),
         colorConfig: colorConfigs[index],

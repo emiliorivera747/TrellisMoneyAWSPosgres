@@ -1,5 +1,5 @@
 import { getColorBasedOnLineDirection } from "@/utils/helper-functions/graph/getColorBasedOnLineDirection";
-import { LinePayload } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
 
 /**
@@ -11,7 +11,7 @@ import { Direction } from "@/features/projected-net-worth/types/graphComponents"
  */
 export const getTailwindColors = (
   direction: Direction,
-  dataForLines: LinePayload
+  dataForLines: LineSeriesConfig
 ) => {
   return {
     lineColor: getColorBasedOnLineDirection({

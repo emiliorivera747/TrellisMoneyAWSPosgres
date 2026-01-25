@@ -6,7 +6,6 @@ import { generateProjectedAssets } from "@/utils/api-helpers/projected-financial
 // Helpers
 import { getDates } from "@/utils/api-helpers/dates/getDates";
 import { generateProjectedNetWorth } from "@/utils/api-helpers/projected-net-worth/generateProjectedNetWorth";
-import { refreshHouseholdHoldings } from "@/utils/drizzle/investments/getInvestments";
 import {
   FailResponse,
   SuccessResponse,

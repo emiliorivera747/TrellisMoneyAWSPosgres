@@ -27,20 +27,19 @@ import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailw
 const defaultMargin = { top: 6, right: 6, bottom: 10, left: 6 };
 
 /**
+ * Renders a multi-line graph with a tooltip.
  *
- * Renders multiple lines on graph with a tooltip.
+ * @param {number} width - Graph width.
+ * @param {number} height - Graph height.
+ * @param {Array} linePayloads - Line data with styles.
+ * @param {object} margin - Graph margins.
+ * @param {function} showTooltip - Function to show tooltip.
+ * @param {function} hideTooltip - Function to hide tooltip.
+ * @param {Array} tooltipData - Tooltip data.
+ * @param {number} tooltipTop - Tooltip top position.
+ * @param {number} tooltipLeft - Tooltip left position.
  *
- * @param {number} width - The width of the graph.
- * @param {number} height - The height of the graph.
- * @param {Array} linePayLoads - The data for the lines to be rendered. Styles should be provided.
- * @param {object} margin - The margin of the graph.
- * @param {function} showTooltip - The function to show the tooltip.
- * @param {function} hideTooltip - The function to hide the tooltip.
- * @param {Array} tooltipData - The data to be displayed in the tooltip.
- * @param {number} tooltipTop - The top position of the tooltip.
- * @param {number} tooltipLeft - The left position of the tooltip.
- *
- * @returns
+ * @returns {JSX.Element | null}
  */
 const LineGraphTimeValue = ({
   width,
@@ -61,10 +60,10 @@ const LineGraphTimeValue = ({
 
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
-  const dateScale = useDateScale(linePayloads[0].lineData, margin, innerWidth); // x-axis
-  const allData = linePayloads.flatMap((line) => line.lineData);
+  const dateScale = useDateScale(linePayloads[0].data, margin, innerWidth); // x-axis
+  const allData = linePayloads.flatMap((line) => line.data);
   const stockValueScale = useStockValueScale(allData, margin, innerHeight); // y-axis
-  const directions = linePayloads.map((line) => getLineDirection(line.lineData));
+  const directions = linePayloads.map((line) => getLineDirection(line.data));
   
   // tooltip handler
   const handleTooltip = useHandleTooltipMultiple(
@@ -95,7 +94,7 @@ const LineGraphTimeValue = ({
         return (
           <LinePath
             key={i}
-            data={linePayload.lineData}
+            data={linePayload.data}
             x={(d: TimeSeriesData) => (dateScale ? dateScale(getDate(d)) : 0)}
             y={(d: TimeSeriesData) => (stockValueScale ? stockValueScale(getStockValue(d)) : 0)}
             stroke={lineColor}

@@ -1,7 +1,7 @@
 import ValueAndPriceChange from "@/components/dashboard/ValueAndPriceChange";
 
 //Types
-import { LinePayload } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
 import { TooltipPayload } from "@/types/components/admin/graphs/graphs";
 
 //Functions
@@ -9,7 +9,7 @@ import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirectio
 import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
 
 interface MultipleValPriceChangeProps {
-  payloadForLines: LinePayload[];
+  payloadForLines: LineSeriesConfig[];
   tooltipData: TooltipPayload[];
 }
 
@@ -27,21 +27,21 @@ const MultipleValPriceChange = ({
   if (!payloadForLines) return null;
 
   const directions = payloadForLines.map((line) =>
-    getLineDirection(line.lineData)
+    getLineDirection(line.data)
   );
 
   const isMultipleLines = payloadForLines?.length >= 2;
 
-  const getLineName = (line: LinePayload) => {
+  const getLineName = (line: LineSeriesConfig) => {
     if (payloadForLines.length > 1) {
-      if (line.value === "withInflation") return "with inflation";
+      if (line.filterValue === "withInflation") return "with inflation";
       return "no inflation";
     }
     return "";
   };
 
-  const withInflation = (line: LinePayload) => {
-    return line.value === "withInflation";
+  const withInflation = (line: LineSeriesConfig) => {
+    return line.filterValue === "withInflation";
   };
 
   return (
@@ -52,11 +52,11 @@ const MultipleValPriceChange = ({
           line
         );
         return (
-          <div key={(line.value ?? "undefined") + index}>
+          <div key={(line.filterValue ?? "undefined") + index}>
             <ValueAndPriceChange
               key={index}
               tooltipPayload={tooltipData ? tooltipData[index] : null}
-              data={line.lineData}
+              data={line.data}
               mainHeaderTailwindCss={`${
                 isMultipleLines ? "text-[1.1rem]" : "text-[1.4rem]"
               }  text-tertiary-1000 font-medium `}

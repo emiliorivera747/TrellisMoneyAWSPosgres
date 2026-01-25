@@ -1,10 +1,8 @@
-import { LinePayload } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
 import {
   lineColors1,
   lineColors2,
 } from "@/features/projected-net-worth/utils/data/lineColors";
-
-import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 /**
  *
@@ -16,27 +14,27 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
  */
 export const createLinePayLoads = (
   selectedFilter: string,
-  filteredData: LinePayload[],
+  filteredData: LineSeriesConfig[],
 ) => {
   const dataForLines =
     selectedFilter === "isBoth"
       ? [
           {
-            lineData: filteredData?.[1]?.lineData || [],
+            data: filteredData?.[1]?.data || [],
             colorConfig: lineColors1,
-            value: filteredData?.[1]?.value,
+            filterValue: filteredData?.[1]?.filterValue,
           },
           {
-            lineData: filteredData?.[0]?.lineData || [],
+            data: filteredData?.[0]?.data || [],
             colorConfig: lineColors2,
-            value: filteredData?.[0]?.value,
+            filterValue: filteredData?.[0]?.filterValue,
           },
         ]
       : [
           {
-            lineData: filteredData?.[0]?.lineData || [],
+            data: filteredData?.[0]?.data || [],
             colorConfig: lineColors1,
-            value: filteredData?.[0]?.value,
+            filterValue: filteredData?.[0]?.filterValue,
           },
         ];
 

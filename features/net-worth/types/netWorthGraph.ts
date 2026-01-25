@@ -1,4 +1,4 @@
-import { LinePayload } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
 import { TimeSeriesData } from "@/types/components/admin/graphs/graphs";
 
 
@@ -16,7 +16,7 @@ export interface ProjectedLineGraphProps {
   /**
    *  All lines to be displayed on the graph with their data.
    */
-  linePayloads: LinePayload[];
+  linePayloads: LineSeriesConfig[];
 
   /**
    * Margin for the graph.

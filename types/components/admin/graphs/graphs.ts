@@ -135,10 +135,10 @@ export interface TooltipPayload {
 
   /**
    * The payload data for the line associated with the tooltip.
-   * @type {LinePayload}
+   * @type {LineSeriesConfig}
    * @memberof TooltipPayload
    */
-  linePayload: LinePayload;
+  linePayload: LineSeriesConfig;
 }
 
 /**
@@ -184,10 +184,10 @@ export interface LineGraphTimeValueProps {
 
   /**
    * The data for the lines to be rendered. Configuration should be provided.
-   * @type {LinePayload[]}
+   * @type {LineSeriesConfig[]}
    * @memberof LineGraphTimeValueProps
    */
-  linePayloads: LinePayload[];
+  linePayloads: LineSeriesConfig[];
 
   /**
    * The function to show the tooltip.
@@ -373,38 +373,38 @@ export interface subheaderColor {
 }
 
 /**
- * Represents the payload data for a line in a graph.
+ * Represents the configuration data for a line series in a graph.
  * @export
- * @interface LinePayload
+ * @interface LineSeriesConfig
  */
-export interface LinePayload {
+export interface LineSeriesConfig {
   /**
    * The data of Line to be rendered.
    * @type {TimeSeriesData[]}
-   * @memberof LinePayload
+   * @memberof LineSeriesConfig
    */
-  lineData: TimeSeriesData[];
+  data: TimeSeriesData[];
 
   /**
    * The color configuration of the line.
    * @type {ColorConfig}
-   * @memberof LinePayload
+   * @memberof LineSeriesConfig
    */
   colorConfig?: ColorConfig;
 
   /**
    * The stroke width of the line.
    * @type {number}
-   * @memberof LinePayload
+   * @memberof LineSeriesConfig
    */
   strokeWidth?: number;
 
   /**
-   * The filter to be applied to the line.
+   * The filter value to be applied to the line.
    * @type {string}
-   * @memberof LinePayload
+   * @memberof LineSeriesConfig
    */
-  value?: string;
+  filterValue?: string;
 }
 
 /**
@@ -555,10 +555,10 @@ export interface HeaderTimeValueGraphProps {
   /**
    * The payloads representing the data for the lines in the graph.
    * Each payload contains information about the line's data points.
-   * @type {LinePayload[]}
+   * @type {LineSeriesConfig[]}
    * @memberof HeaderTimeValueGraphProps
    */
-  linePayloads: LinePayload[];
+  linePayloads: LineSeriesConfig[];
 
   /**
    * The data to be displayed in the tooltip, represented as an array of payloads.

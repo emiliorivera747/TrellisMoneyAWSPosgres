@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 
 // React
-import React, { createContext, useContext } from "react";
+import { createContext, useContext } from "react";
 import ValuePriceChangelabel from "@/components/dashboard/ValuePriceChangeLabel";
 
 // Components
@@ -10,7 +10,7 @@ import {
   HeaderTimeValueGraphProps,
   TitleProps,
   ValueProp,
-  LinePayload,
+  LineSeriesConfig,
   TooltipPayload,
   ValueChangeProps,
 } from "@/types/components/admin/graphs/graphs";
@@ -24,7 +24,7 @@ import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateY
 
 // Context
 const TimeValueGraphHeaderContext = createContext<{
-  linePayloads: LinePayload[];
+  linePayloads: LineSeriesConfig[];
   tooltipData?: TooltipPayload[];
 }>({
   linePayloads: [],
@@ -83,7 +83,7 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
 
   if (!linePayloads) return null;
 
-  const lineData = linePayloads[lineIndex].lineData;
+  const lineData = linePayloads[lineIndex].data;
   const tooltipPayload = tooltipData?.[lineIndex];
 
   return (
@@ -105,7 +105,7 @@ export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
 
   if (!linePayloads) return null;
 
-  const lineData = linePayloads[lineIndex].lineData;
+  const lineData = linePayloads[lineIndex].data;
   const tooltipPayload = tooltipData?.[lineIndex];
 
   if (!lineData) return null;
@@ -166,7 +166,7 @@ export function TotalYears({
 
   if (!linePayloads) return null;
 
-  const lineData = linePayloads[lineIndex].lineData;
+  const lineData = linePayloads[lineIndex].data;
 
   if (!lineData) return null;
 
