@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { db } from "@/drizzle/db";
-import { holding, account } from "@/drizzle/schema";
-import { eq, sql } from "drizzle-orm";
+import { account, holding } from "@/drizzle/schema";
+import { inArray, and, eq } from "drizzle-orm";
 import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
 import { withAuth } from "@/lib/protected";
 import {
@@ -23,7 +23,6 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
     try {
       const assets: ProjectedAsset[] = await request.json();
-      console.log(assets);
 
       const member = await getMemberByUserId(user.id);
       if (!member) return FailResponse("Failed to get member from user", 404);
@@ -35,59 +34,33 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
       const holdings = await getHoldingsWithHouseholdId(householdId);
       if (!holdings) return FailResponse("The holdings were not found", 404);
 
-      const assetMap = new Map<string, ProjectedAsset>();
+      console.log("assets", assets);
 
       for (let asset of assets) {
-        const accounts = asset.accounts;
-        if (!accounts) continue;
+        const accountIds = asset.accounts?.filter((id) => id !== undefined);
+        if (!accountIds || accountIds.length === 0) continue;
+        const expectedAnnualReturnRate =
+          asset.expected_annual_return_rate?.toString();
 
-        for (let account of accounts) {
-          const key = `${account}-${asset.security_id}`;
-          if (assetMap.has(key)) continue;
-          assetMap.set(key, asset);
-        }
+        const res = await db
+          .update(holding)
+          .set({
+            expectedAnnualReturnRate,
+          })
+          .where(
+            and(
+              inArray(account.accountId, accountIds),
+              eq(holding.securityId, asset.security_id ?? "")
+            )
+          )
+          .returning();
+
+        console.log("res", res);
       }
 
-      for (let holdingRecord of holdings) {
-        const asset = assetMap.get(
-          `${holdingRecord.accountId}-${holdingRecord.securityId}`
-        );
-        const expected_annual_return_rate = asset?.expected_annual_return_rate;
-
-        if (asset && holdingRecord.accountId && holdingRecord.securityId) {
-          const holdingId = `${holdingRecord.accountId}-${holdingRecord.securityId}`;
-          await db
-            .update(holding)
-            .set({
-              expectedAnnualReturnRate: expected_annual_return_rate
-                ? expected_annual_return_rate.toString()
-                : "0",
-              updatedAt: sql`CURRENT_TIMESTAMP`,
-            })
-            .where(eq(holding.holdingId, holdingId));
-        }
-      }
-
-      const res = assets.map(async (asset: ProjectedAsset) => {
-        const { account_id, user_id, expected_annual_return_rate, type } =
-          asset;
-
-        if (type !== "investment" && account_id) {
-          await db
-            .update(account)
-            .set({
-              expectedAnnualReturnRate: expected_annual_return_rate
-                ? expected_annual_return_rate.toString()
-                : "0",
-              updatedAt: sql`CURRENT_TIMESTAMP`,
-            })
-            .where(eq(account.accountId, account_id));
-        }
-      });
-
-      return SuccessResponse(res, "Successfull updated assets");
+      return SuccessResponse("Successfull updated assets");
     } catch (error) {
-      return ErrorResponse();
+      return ErrorResponse(error);
     }
   });
 }

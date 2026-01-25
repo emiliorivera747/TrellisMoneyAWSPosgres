@@ -51,7 +51,6 @@ const ProjectedNetWorthGraph = ({
     selectedInflationFilter
   );
 
-
   const years = useMemo(
     () =>
       generateYearsArray(currentYear, currentYear + defaultYearsIntoTheFuture),
