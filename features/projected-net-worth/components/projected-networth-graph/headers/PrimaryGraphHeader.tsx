@@ -15,37 +15,18 @@ import {
 } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 import { PrimaryGraphHeaderProps } from "@/features/projected-net-worth/types/graphComponents";
-
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 /**
- * PrimaryGraphHeader component renders the header section for the projected net worth graph.
- * It includes a title, year selection menu, filters, and additional information such as inflation tags.
+ * Renders the header for the projected net worth graph with title, year selection, filters, and optional inflation tags.
  *
- * @component
- * @param {PrimaryGraphHeaderProps} props - The props for the PrimaryGraphHeader component.
- * @param {Array} props.linePayloads - The data payloads for the graph lines.
- * @param {TooltipData} props.tooltipData - The data used for the tooltip display.
- * @param {boolean} props.withInflationTag - A flag to determine if the inflation tag should be displayed.
- * @param {Array<number>} props.years - The list of years available for selection.
+ * @param {PrimaryGraphHeaderProps} props - Component props.
+ * @param {Array} props.linePayloads - Graph line data.
+ * @param {TooltipData} props.tooltipData - Tooltip data.
+ * @param {boolean} props.withInflationTag - Show inflation tag if true.
+ * @param {Array<number>} props.years - Available years for selection.
  *
- * @returns {JSX.Element} The rendered PrimaryGraphHeader component.
- *
- * @remarks
- * - This component uses the `useDashboardFilters` hook to retrieve the current dashboard filter states.
- * - The `useDashboardFilterActions` hook is used to update the filter states.
- * - The `SelectYearMenuButton` component allows users to select a year or edit the retirement year.
- * - The `AlertDialog` component is used to display a modal for filter selection.
- * - The `MultipleValPriceChange` component displays price changes for multiple values.
- * - If `withInflationTag` is true and there is only one line payload, an `InflationTag` is displayed.
- *
- * @example
- * <PrimaryGraphHeader
- *   linePayloads={linePayloads}
- *   tooltipData={tooltipData}
- *   withInflationTag={true}
- *   years={[2023, 2024, 2025]}
- * />
+ * @returns {JSX.Element} The PrimaryGraphHeader component.
  */
 const PrimaryGraphHeader = ({
   linePayloads,
@@ -53,8 +34,10 @@ const PrimaryGraphHeader = ({
   withInflationTag,
   years,
 }: PrimaryGraphHeaderProps) => {
+
   const { selectedProjectedYear: selectedYear, retirementYear, selectedInflationFilter: selectedFilter } =
     useDashboardFilters();
+
   const { setSelectedInflationFilter: setSelectedFilter, setRetirementYear, setSelectedProjectedYear: setSelectedYear } =
     useDashboardFilterActions();
 

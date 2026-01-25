@@ -110,14 +110,14 @@ const generateDailyProjectedNetWorth = (
 
       projectedNetWorth.push({
         date,
-        close: Math.round(value * 100) / 100,
+        value: Math.round(value * 100) / 100,
       });
     }
   }
 
   projectedNetWorth.push({
     date: new Date(endYear, 0, 1),
-    close: Math.round((projectionsMap.get(endYear) ?? 0) * 100) / 100,
+    value: Math.round((projectionsMap.get(endYear) ?? 0) * 100) / 100,
   });
 
   return projectedNetWorth;

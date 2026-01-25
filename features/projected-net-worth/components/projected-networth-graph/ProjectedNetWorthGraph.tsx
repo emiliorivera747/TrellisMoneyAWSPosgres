@@ -27,6 +27,7 @@ import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.
 import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 /**
+ *
  * Projects the future net worth of the user based on the data provided
  *
  */
@@ -37,6 +38,7 @@ const ProjectedNetWorthGraph = ({
   futureProjectionLoading,
 }: ProjectedNetWorthGraphProps) => {
   const containerRef = useRef(null);
+
   const { selectedProjectedYear, selectedInflationFilter } =
     useDashboardFilters();
 
@@ -48,6 +50,8 @@ const ProjectedNetWorthGraph = ({
     selectedProjectedYear,
     selectedInflationFilter
   );
+
+  console.log("Future Projection Data", futureProjectionData);
 
   const years = useMemo(
     () =>
@@ -64,10 +68,12 @@ const ProjectedNetWorthGraph = ({
     filteredData
   );
 
+  console.log("Data For lines", dataForLines);
+
   return (
     <div className="h-[30rem] grid border-b border-tertiary-300">
       <ResponsiveLineGraphContainer
-        className={"h-[25rem] w-full border-box "}
+        className={"h-[25rem] w-full border-box"}
         ref={containerRef}
         GraphComponent={ProjectedLineGraph}
         linePayloads={dataForLines}

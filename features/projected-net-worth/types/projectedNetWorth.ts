@@ -1,9 +1,9 @@
 export interface NetWorthData {
   date: Date;
-  close: number;
+  value: number;
 }
 
 export interface ProjectedNetworth {
   data: NetWorthData[];
-  close: string;
+  value: string;
 }
