@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
+import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 import { filterProjectionData } from "@/features/projected-net-worth/utils/filterData";
 
 interface projectionData {
-  noInflationData: { data: SecurityData[] };
-  inflationData: { data: SecurityData[] };
+  noInflationData: { data: TimeSeriesData[] };
+  inflationData: { data: TimeSeriesData[] };
 }
 /**
  * Custom hook to filter the projection data based on the selected year.

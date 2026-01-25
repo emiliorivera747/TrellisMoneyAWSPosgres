@@ -22,11 +22,11 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
   if (!data || data.length === 0) return null;
 
   const deafultStockValueDifference =
-    data[data.length - 1].close - data[0].close;
+    data[data.length - 1].value - data[0].value;
 
   const defaultRateOfChange = calculateRateOfChange(
-    data[0].close,
-    data[data.length - 1].close
+    data[0].value,
+    data[data.length - 1].value
   );
 
   /**
@@ -49,9 +49,9 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
     );
   }
 
-  const stockValueDifference = getStockValue(tooltipPayload.d) - data[0].close;
+  const stockValueDifference = getStockValue(tooltipPayload.d) - data[0].value;
   const rateOfChange = calculateRateOfChange(
-    data[0].close,
+    data[0].value,
     getStockValue(tooltipPayload.d)
   );
 

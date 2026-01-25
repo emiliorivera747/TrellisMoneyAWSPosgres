@@ -91,7 +91,7 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
       {tooltipPayload
         ? `${numberToMoneyFormat(getStockValue(tooltipPayload.d))}`
         : `${numberToMoneyFormat(
-            lineData?.[lineData?.length - 1]?.close ?? 0
+            lineData?.[lineData?.length - 1]?.value ?? 0
           )}`}
     </span>
   );
@@ -111,11 +111,11 @@ export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
   if (!lineData) return null;
 
   const deafultStockValueDifference =
-    lineData[lineData.length - 1].close - lineData[0].close;
+    lineData[lineData.length - 1].value - lineData[0].value;
 
   const defaultRateOfChange = calculateRateOfChange(
-    lineData[0].close,
-    lineData[lineData.length - 1].close
+    lineData[0].value,
+    lineData[lineData.length - 1].value
   );
 
   if (!tooltipPayload)
@@ -128,10 +128,10 @@ export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
     );
 
   const stockValueDifference =
-    getStockValue(tooltipPayload.d) - lineData[0].close;
+    getStockValue(tooltipPayload.d) - lineData[0].value;
 
   const rateOfChange = calculateRateOfChange(
-    lineData[0].close,
+    lineData[0].value,
     getStockValue(tooltipPayload.d)
   );
 

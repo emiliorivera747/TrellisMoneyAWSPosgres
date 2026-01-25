@@ -1,21 +1,16 @@
-import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
+import { LineSeriesConfig, TimeSeriesData } from "@/types/components/admin/graphs/data";
 import { FutureProjectionData } from "@/types/future-projections/futureProjections";
-
-export interface SecurityData {
-  date: Date;
-  close: number;
-}
 
 export type ProjectedNetWorth = {
   value: String;
-  data: SecurityData[];
+  data: TimeSeriesData[];
 };
 export interface DoubleLineGraphProps {
   width: number;
   selectedYear: number;
   height: number;
-  data1: SecurityData[];
-  data2: SecurityData[];
+  data1: TimeSeriesData[];
+  data2: TimeSeriesData[];
   margin?: { top: number; right: number; bottom: number; left: number };
 }
 
@@ -42,8 +37,8 @@ export interface ResponsiveLineGraphProps<T> {
 
 export interface ResponsiveDoubleLineGraphProps {
   selectedYear: number;
-  filteredData1: { date: Date; close: number }[];
-  filteredData2: { date: Date; close: number }[];
+  filteredData1: { date: Date; value: number }[];
+  filteredData2: { date: Date; value: number }[];
   tailwindClasses: string;
 }
 
@@ -79,9 +74,9 @@ export interface ProjectedLineGraphProps {
 }
 
 export interface projectionData {
-  noInflationData: { data: SecurityData[] };
-  inflationData: { data: SecurityData[] };
-  data: SecurityData[];
+  noInflationData: { data: TimeSeriesData[] };
+  inflationData: { data: TimeSeriesData[] };
+  data: TimeSeriesData[];
 }
 
 export interface PrimaryGraphHeaderProps {

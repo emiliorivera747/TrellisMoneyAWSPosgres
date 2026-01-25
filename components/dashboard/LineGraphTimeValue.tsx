@@ -1,12 +1,8 @@
-// React
-import React from "react";
-
 //Visx
 import { Bar, LinePath } from "@visx/shape";
 import useDateScale from "@/hooks/graphs/useDateScale";
 import useStockValueScale from "@/hooks/graphs/useStockvalueScale";
 import { curveMonotoneX } from "@visx/curve";
-
 
 //Accessors
 import { getDate, getStockValue } from "@/utils/helper-functions/accessors/accessors";

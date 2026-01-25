@@ -1,15 +1,15 @@
 
-import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
+import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 
 export function filterProjectionData(
-  projectionData: SecurityData[],
+  projectionData: TimeSeriesData[],
   selectedYear: number
-): SecurityData[] {
+): TimeSeriesData[] {
 
   return projectionData
     .filter((data) => new Date(data.date).getFullYear() <= selectedYear)
     .map((data) => ({
       date: new Date(data.date),
-      close: data.close,
+      value: data.value,
     }));
 }

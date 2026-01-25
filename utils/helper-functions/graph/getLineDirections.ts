@@ -1,8 +1,8 @@
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
-import { SecurityData } from "@/features/projected-net-worth/types/graphComponents";
+import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 interface GetLineDirections {
-    data1: SecurityData[];
-    data2: SecurityData[];
+    data1: TimeSeriesData[];
+    data2: TimeSeriesData[];
 }
 
 export function getLineDirections({data1, data2}: GetLineDirections){

@@ -1,44 +1,24 @@
 import { ColorConfig } from "./colors";
 
 /**
- * Represents the data structure for time series data used in graphs.
+ * Represents a data point in a time series for financial metrics.
  * @export
  * @interface TimeSeriesData
  */
 export interface TimeSeriesData {
   /**
-   * The date associated with the data point.
+   * The date/time of the data point.
    * @type {Date}
    * @memberof TimeSeriesData
    */
   date: Date;
 
   /**
-   * The closing value of the data point.
+   * The financial value at this point in time (e.g., net worth, account balance, stock price).
    * @type {number}
    * @memberof TimeSeriesData
    */
-  close: number;
-}
-
-/**
- * Represents security data with date and close price.
- * @export
- * @interface SecurityData
- */
-export interface SecurityData {
-  /**
-   * The date of the data point.
-   * @type {Date}
-   * @memberof SecurityData
-   */
-  date: Date;
-  /**
-   * The close price.
-   * @type {number}
-   * @memberof SecurityData
-   */
-  close: number;
+  value: number;
 }
 
 /**

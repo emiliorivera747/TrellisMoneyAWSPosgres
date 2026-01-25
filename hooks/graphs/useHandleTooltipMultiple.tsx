@@ -5,7 +5,7 @@ import { TimeSeriesData, LineSeriesConfig } from "@/types/components/admin/graph
 import { getDate } from "@/utils/helper-functions/accessors/accessors";
 
 const bisectDate = bisector<TimeSeriesData, Date>((d) => d.date).left;
-const getStockValue = (d: TimeSeriesData) => d?.close;
+const getStockValue = (d: TimeSeriesData) => d?.value;
 
 const handleMultipleDataPoints = (
   showTooltip: (args: any) => void,

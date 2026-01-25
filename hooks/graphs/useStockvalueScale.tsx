@@ -3,7 +3,7 @@ import { scaleLinear } from "@visx/scale";
 import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 import { extent } from "@visx/vendor/d3-array";
 
-const getValue = (d: TimeSeriesData) => d?.close;
+const getValue = (d: TimeSeriesData) => d?.value;
 
 const useStockValueScale = (
   data: TimeSeriesData[],

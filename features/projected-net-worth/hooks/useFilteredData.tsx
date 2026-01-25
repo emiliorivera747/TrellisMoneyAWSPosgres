@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { FutureProjectionData } from "@/types/future-projections/futureProjections";
-import { SecurityData } from "@/types/components/admin/graphs/data";
+import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 
 // Functions
 import { filterProjectionData } from "@/features/projected-net-worth/utils/filterData";
@@ -20,7 +20,7 @@ const useFilteredData = (
   if (futureProjectionData instanceof Error) return;
 
   const [filteredData, setFilteredData] = useState<
-    { filterValue: string; data: SecurityData[] }[]
+    { filterValue: string; data: TimeSeriesData[] }[]
   >([]);
 
   useEffect(() => {

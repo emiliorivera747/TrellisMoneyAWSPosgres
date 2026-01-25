@@ -1,4 +1,3 @@
-import React from "react";
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
 import { LineGraphFilterButtonsProps } from "@/types/components/admin/graphs/filters";
 import { cn } from "@/lib/utils";
