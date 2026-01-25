@@ -7,28 +7,16 @@ export * from "./item";
 export * from "./profile";
 export * from "./security";
 export * from "./stripe";
+export * from "./net-worth";
 
 // Import tables for type inference
 import { user } from "./user";
-import {
-  account,
-  accountType,
-  accountVerificationStatus,
-} from "./account";
+import { account, accountType, accountVerificationStatus } from "./account";
 import { holding } from "./holding";
-import {
-  household,
-  householdMember,
-  householdRole,
-} from "./household";
-import {
-  item,
-  itemStatus,
-} from "./item";
+import { household, householdMember, householdRole } from "./household";
+import { item, itemStatus } from "./item";
 import { profile } from "./profile";
-import {
-  security,
-} from "./security";
+import { security } from "./security";
 import {
   subscription,
   price,
@@ -37,6 +25,7 @@ import {
   recurringInterval,
   usageType,
 } from "./stripe";
+import { netWorthSnapshot } from "./net-worth";
 
 // Export User types
 export type User = typeof user.$inferSelect;
@@ -78,12 +67,15 @@ export type PriceInsert = typeof price.$inferInsert;
 export type Product = typeof product.$inferSelect;
 export type ProductInsert = typeof product.$inferInsert;
 
+// Export Net Worth types
+export type NetWorthSnapshot = typeof netWorthSnapshot.$inferSelect;
+export type NetWorthSnapshotInsert = typeof netWorthSnapshot.$inferInsert;
 
 // Export Enum types
-export type HouseholdRole = typeof householdRole.enumValues[number];
-export type SubscriptionStatus = typeof subscriptionStatus.enumValues[number];
-export type RecurringInterval = typeof recurringInterval.enumValues[number];
-export type UsageType = typeof usageType.enumValues[number];
-export type AccountType = typeof accountType.enumValues[number];
+export type HouseholdRole = (typeof householdRole.enumValues)[number];
+export type SubscriptionStatus = (typeof subscriptionStatus.enumValues)[number];
+export type RecurringInterval = (typeof recurringInterval.enumValues)[number];
+export type UsageType = (typeof usageType.enumValues)[number];
+export type AccountType = (typeof accountType.enumValues)[number];
 export type AccountVerificationStatus =
-  typeof accountVerificationStatus.enumValues[number];
+  (typeof accountVerificationStatus.enumValues)[number];
