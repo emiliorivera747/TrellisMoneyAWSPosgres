@@ -51,7 +51,6 @@ const ProjectedNetWorthGraph = ({
     selectedInflationFilter
   );
 
-  console.log("Future Projection Data", futureProjectionData);
 
   const years = useMemo(
     () =>
@@ -67,8 +66,6 @@ const ProjectedNetWorthGraph = ({
     selectedInflationFilter,
     filteredData
   );
-
-  console.log("Data For lines", dataForLines);
 
   return (
     <div className="h-[30rem] grid border-b border-tertiary-300">

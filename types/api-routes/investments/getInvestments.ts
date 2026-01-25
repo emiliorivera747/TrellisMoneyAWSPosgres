@@ -33,6 +33,11 @@ export interface GetInvestmentsWithItemsPlaid {
   holdings: HoldingDB[];
 }
 
+/**
+ * Properties for updating holdings data.
+ * @export
+ * @interface UpdateHoldingsProps
+ */
 export interface UpdateHoldingsProps {
   /**
    * The holdings from Plaid.
@@ -60,10 +65,37 @@ export interface UpdateHoldingsProps {
   holdingsDB: HoldingDB[];
 }
 
-
+/**
+ * Properties for updating or creating a single holding.
+ * @export
+ * @interface UpdateOrCreateHoldingProps
+ */
 export interface UpdateOrCreateHoldingProps {
+    /**
+     * The holding data from Plaid.
+     * @type {Holding}
+     * @memberof UpdateOrCreateHoldingProps
+     */
     holding: Holding;
+
+    /**
+     * Timestamp for the update operation.
+     * @type {string}
+     * @memberof UpdateOrCreateHoldingProps
+     */
     timestamp: string;
+
+    /**
+     * The user ID.
+     * @type {string}
+     * @memberof UpdateOrCreateHoldingProps
+     */
     userId: string;
+
+    /**
+     * Map of account IDs to holding IDs.
+     * @type {Map<string, string>}
+     * @memberof UpdateOrCreateHoldingProps
+     */
     holdingsMap: Map<string, string>;
   }

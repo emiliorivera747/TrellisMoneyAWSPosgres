@@ -2,16 +2,45 @@ import React from 'react';
 
 import './button.css';
 
+/**
+ * Properties for the Button component in Storybook.
+ * @export
+ * @interface ButtonProps
+ */
 export interface ButtonProps {
-  /** Is this the principal call to action on the page? */
+  /**
+   * Is this the principal call to action on the page?
+   * @type {boolean}
+   * @memberof ButtonProps
+   */
   primary?: boolean;
-  /** What background color to use */
+
+  /**
+   * What background color to use.
+   * @type {string}
+   * @memberof ButtonProps
+   */
   backgroundColor?: string;
-  /** How large should the button be? */
+
+  /**
+   * How large should the button be?
+   * @type {'small' | 'medium' | 'large'}
+   * @memberof ButtonProps
+   */
   size?: 'small' | 'medium' | 'large';
-  /** Button contents */
+
+  /**
+   * Button contents.
+   * @type {string}
+   * @memberof ButtonProps
+   */
   label: string;
-  /** Optional click handler */
+
+  /**
+   * Optional click handler.
+   * @type {() => void}
+   * @memberof ButtonProps
+   */
   onClick?: () => void;
 }
 

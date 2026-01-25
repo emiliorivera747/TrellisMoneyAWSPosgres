@@ -1,7 +1,35 @@
+/**
+ * Represents a configuration item for date filtering.
+ * @export
+ * @typedef {Object} DateFilterConfigItem
+ */
 export type DateFilterConfigItem = {
+  /**
+   * Display label for the date filter option.
+   * @type {string}
+   * @memberof DateFilterConfigItem
+   */
   label: string;
+
+  /**
+   * Unique value identifier for the date filter option.
+   * @type {string}
+   * @memberof DateFilterConfigItem
+   */
   value: string;
+
+  /**
+   * Start date for the filter range.
+   * @type {Date}
+   * @memberof DateFilterConfigItem
+   */
   startDate: Date;
+
+  /**
+   * End date for the filter range.
+   * @type {Date}
+   * @memberof DateFilterConfigItem
+   */
   endDate: Date;
 };
 

@@ -3,23 +3,114 @@ import { netWorthSnapshot } from "@/drizzle/schema";
 import { sql } from "drizzle-orm";
 
 /**
- * Input type for creating/updating a net worth snapshot
+ * Input type for creating/updating a net worth snapshot.
+ * @export
+ * @typedef {Object} NetWorthSnapshotInput
  */
 export type NetWorthSnapshotInput = {
+  /**
+   * Unique identifier for the net worth snapshot (optional, auto-generated if not provided).
+   * @type {string}
+   * @memberof NetWorthSnapshotInput
+   */
   netWorthSnapshotId?: string;
+
+  /**
+   * Identifier for the household this snapshot belongs to.
+   * @type {string}
+   * @memberof NetWorthSnapshotInput
+   */
   householdId: string;
+
+  /**
+   * The date of the snapshot in string format.
+   * @type {string}
+   * @memberof NetWorthSnapshotInput
+   */
   snapshotDate: string;
+
+  /**
+   * Timestamp when the snapshot was taken.
+   * @type {string}
+   * @memberof NetWorthSnapshotInput
+   */
   snapshotAt?: string;
+
+  /**
+   * Total assets value as a string.
+   * @type {string}
+   * @memberof NetWorthSnapshotInput
+   */
   totalAssets: string;
+
+  /**
+   * Total liabilities value as a string.
+   * @type {string}
+   * @memberof NetWorthSnapshotInput
+   */
   totalLiabilities: string;
+
+  /**
+   * Net worth value as a string (total assets minus total liabilities).
+   * @type {string}
+   * @memberof NetWorthSnapshotInput
+   */
   netWorth: string;
+
+  /**
+   * Cash assets value as a string.
+   * @type {string | null}
+   * @memberof NetWorthSnapshotInput
+   */
   cashAssets?: string | null;
+
+  /**
+   * Investment assets value as a string.
+   * @type {string | null}
+   * @memberof NetWorthSnapshotInput
+   */
   investmentAssets?: string | null;
+
+  /**
+   * Other assets value as a string.
+   * @type {string | null}
+   * @memberof NetWorthSnapshotInput
+   */
   otherAssets?: string | null;
+
+  /**
+   * Credit liabilities value as a string.
+   * @type {string | null}
+   * @memberof NetWorthSnapshotInput
+   */
   creditLiabilities?: string | null;
+
+  /**
+   * Loan liabilities value as a string.
+   * @type {string | null}
+   * @memberof NetWorthSnapshotInput
+   */
   loanLiabilities?: string | null;
+
+  /**
+   * Other liabilities value as a string.
+   * @type {string | null}
+   * @memberof NetWorthSnapshotInput
+   */
   otherLiabilities?: string | null;
+
+  /**
+   * Version identifier for the calculation method used.
+   * @type {string | null}
+   * @memberof NetWorthSnapshotInput
+   */
   calculationVersion?: string | null;
+
+  /**
+   * Source of the snapshot data.
+   * @type {"SYSTEM" | "BACKFILL" | "MANUAL"}
+   * @memberof NetWorthSnapshotInput
+   */
   source?: "SYSTEM" | "BACKFILL" | "MANUAL";
 };
 

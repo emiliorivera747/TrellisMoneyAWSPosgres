@@ -148,9 +148,44 @@ export const emailVerificationSchema = z.object({
     }, "Email local part cannot be longer than 63 characters"),
 });
 
+/**
+ * Type representing the inferred sign-up form inputs.
+ * @export
+ * @typedef {z.infer<typeof signUpSchema>} SignUpInputs
+ */
 export type SignUpInputs = z.infer<typeof signUpSchema>;
+
+/**
+ * Type representing the inferred sign-in form inputs.
+ * @export
+ * @typedef {z.infer<typeof signInSchema>} SignInInputs
+ */
 export type SignInInputs = z.infer<typeof signInSchema>;
+
+/**
+ * Type representing the inferred record schema.
+ * @export
+ * @typedef {z.infer<typeof recordSchema>} RecordSchema
+ */
 export type RecordSchema = z.infer<typeof recordSchema>;
+
+/**
+ * Type representing the inferred reset password form inputs.
+ * @export
+ * @typedef {z.infer<typeof resetPasswordSchema>} ResetPasswordInputs
+ */
 export type ResetPasswordInputs = z.infer<typeof resetPasswordSchema>;
+
+/**
+ * Type representing the inferred login help form inputs.
+ * @export
+ * @typedef {z.infer<typeof loginHelpSchema>} LoginHelpInputs
+ */
 export type LoginHelpInputs = z.infer<typeof loginHelpSchema>;
+
+/**
+ * Type representing the inferred email verification form inputs.
+ * @export
+ * @typedef {z.infer<typeof emailVerificationSchema>} EmailVerificationInputs
+ */
 export type EmailVerificationInputs = z.infer<typeof emailVerificationSchema>;

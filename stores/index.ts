@@ -4,6 +4,11 @@ import { devtools } from "zustand/middleware";
 import { createDashboardFilterSlice } from "@/stores/slices/dashboard/dashboardFilters";
 import { createAccountFilterSlice } from "@/stores/slices/accounts/accountFilters";
 
+/**
+ * Combined store type that merges dashboard filter and account filter slices.
+ * @export
+ * @typedef {ReturnType<typeof createDashboardFilterSlice> & ReturnType<typeof createAccountFilterSlice>} Store
+ */
 export type Store = ReturnType<typeof createDashboardFilterSlice> &
   ReturnType<typeof createAccountFilterSlice>;
 

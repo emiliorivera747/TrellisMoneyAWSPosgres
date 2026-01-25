@@ -3,14 +3,51 @@ import React from 'react';
 import { Button } from './Button';
 import './header.css';
 
+/**
+ * Represents a user in the Storybook header.
+ * @typedef {Object} User
+ */
 type User = {
+  /**
+   * Name of the user.
+   * @type {string}
+   * @memberof User
+   */
   name: string;
 };
 
+/**
+ * Properties for the Header component in Storybook.
+ * @export
+ * @interface HeaderProps
+ */
 export interface HeaderProps {
+  /**
+   * User object if logged in.
+   * @type {User}
+   * @memberof HeaderProps
+   */
   user?: User;
+
+  /**
+   * Function to call when login button is clicked.
+   * @type {() => void}
+   * @memberof HeaderProps
+   */
   onLogin?: () => void;
+
+  /**
+   * Function to call when logout button is clicked.
+   * @type {() => void}
+   * @memberof HeaderProps
+   */
   onLogout?: () => void;
+
+  /**
+   * Function to call when create account button is clicked.
+   * @type {() => void}
+   * @memberof HeaderProps
+   */
   onCreateAccount?: () => void;
 }
 

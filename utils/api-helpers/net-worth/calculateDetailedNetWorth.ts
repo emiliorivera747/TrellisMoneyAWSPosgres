@@ -1,17 +1,72 @@
 import { Account } from "@/drizzle/schema";
 
 /**
- * Detailed net worth calculation with breakdown by asset/liability categories
+ * Detailed net worth calculation with breakdown by asset/liability categories.
+ * @export
+ * @typedef {Object} DetailedNetWorth
  */
 export type DetailedNetWorth = {
+  /**
+   * Total value of all assets.
+   * @type {number}
+   * @memberof DetailedNetWorth
+   */
   totalAssets: number;
+
+  /**
+   * Total value of all liabilities.
+   * @type {number}
+   * @memberof DetailedNetWorth
+   */
   totalLiabilities: number;
+
+  /**
+   * Net worth calculated as total assets minus total liabilities.
+   * @type {number}
+   * @memberof DetailedNetWorth
+   */
   netWorth: number;
+
+  /**
+   * Total value of cash assets (checking, savings, etc.).
+   * @type {number}
+   * @memberof DetailedNetWorth
+   */
   cashAssets: number;
+
+  /**
+   * Total value of investment assets (401k, IRA, brokerage, etc.).
+   * @type {number}
+   * @memberof DetailedNetWorth
+   */
   investmentAssets: number;
+
+  /**
+   * Total value of other assets (trusts, life insurance, etc.).
+   * @type {number}
+   * @memberof DetailedNetWorth
+   */
   otherAssets: number;
+
+  /**
+   * Total value of credit liabilities (credit cards, etc.).
+   * @type {number}
+   * @memberof DetailedNetWorth
+   */
   creditLiabilities: number;
+
+  /**
+   * Total value of loan liabilities (mortgages, auto loans, student loans, etc.).
+   * @type {number}
+   * @memberof DetailedNetWorth
+   */
   loanLiabilities: number;
+
+  /**
+   * Total value of other liabilities.
+   * @type {number}
+   * @memberof DetailedNetWorth
+   */
   otherLiabilities: number;
 };
 

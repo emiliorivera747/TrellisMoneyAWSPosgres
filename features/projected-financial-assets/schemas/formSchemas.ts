@@ -7,4 +7,9 @@ export const annualGrowthRateSchema = z.object({
         .max(100, "Annual growth rate must be less than 100"),
 });
 
+/**
+ * Type representing the inferred annual growth rate schema.
+ * @export
+ * @typedef {z.infer<typeof annualGrowthRateSchema>} AnnualGrowthRate
+ */
 export type AnnualGrowthRate = z.infer<typeof annualGrowthRateSchema>;

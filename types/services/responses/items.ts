@@ -1,7 +1,16 @@
 import { ApiResponse } from "@/types/services/responses/api-responses";
 import { HouseholdMember, Item } from "@/drizzle/schema";
 
+/**
+ * Represents an item with associated household member information.
+ * @interface ItemWithMembers
+ */
 interface ItemWithMembers extends Item {
+  /**
+   * The household member associated with this item.
+   * @type {HouseholdMember}
+   * @memberof ItemWithMembers
+   */
   member: HouseholdMember;
 }
 

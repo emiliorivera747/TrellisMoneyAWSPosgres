@@ -12,8 +12,24 @@ import isoToUTC from "@/utils/api-helpers/dates/isoToUTC";
 // Types
 import { Security } from "plaid";
 
+/**
+ * Parameters for upserting securities without a transaction context.
+ * @export
+ * @interface UpsertSecuritiesParamsWithoutTx
+ */
 export interface UpsertSecuritiesParamsWithoutTx {
+  /**
+   * Array of securities from Plaid to be upserted.
+   * @type {Security[]}
+   * @memberof UpsertSecuritiesParamsWithoutTx
+   */
   plaidSecurities: Security[];
+
+  /**
+   * Optional timestamp for the update operation.
+   * @type {string}
+   * @memberof UpsertSecuritiesParamsWithoutTx
+   */
   timestamp?: string;
 }
 

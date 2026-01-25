@@ -15,9 +15,37 @@ export interface UpdateUserAndSubscriptionProps {
   subscriptionData: Subscription;
 }
 
+/**
+ * Properties for generating subscription data.
+ * @export
+ * @interface GenerateSubscriptionDataProps
+ */
 export interface GenerateSubscriptionDataProps {
+  /**
+   * The Stripe subscription object.
+   * @type {Stripe.Subscription}
+   * @memberof GenerateSubscriptionDataProps
+   */
   subscription: Stripe.Subscription;
+
+  /**
+   * The Stripe customer ID.
+   * @type {string}
+   * @memberof GenerateSubscriptionDataProps
+   */
   customer_id: string;
+
+  /**
+   * The Stripe price ID associated with the subscription.
+   * @type {string}
+   * @memberof GenerateSubscriptionDataProps
+   */
   price_id?: string;
+
+  /**
+   * The user ID associated with the subscription.
+   * @type {string}
+   * @memberof GenerateSubscriptionDataProps
+   */
   user_id: string;
 }

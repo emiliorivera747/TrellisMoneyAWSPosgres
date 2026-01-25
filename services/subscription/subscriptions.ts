@@ -1,6 +1,23 @@
 import { API_URL } from "@/utils/global-variables/globals";
+
+/**
+ * Represents the API response for checking if a user is subscribed.
+ * @export
+ * @typedef {Object} isUserSubscribedApiResponse
+ */
 export type isUserSubscribedApiResponse = {
+  /**
+   * Indicates whether the user is subscribed.
+   * @type {boolean}
+   * @memberof isUserSubscribedApiResponse
+   */
   subscribed: boolean;
+
+  /**
+   * The status of the API response.
+   * @type {"success" | "fail" | "error"}
+   * @memberof isUserSubscribedApiResponse
+   */
   status: "success" | "fail" | "error";
 };
 

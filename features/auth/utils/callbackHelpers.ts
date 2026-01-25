@@ -1,5 +1,10 @@
 import { subscription } from "@/drizzle/schema";
 
+/**
+ * Represents a subscription record inferred from the database schema.
+ * @export
+ * @typedef {typeof subscription.$inferSelect} Subscription
+ */
 export type Subscription = typeof subscription.$inferSelect;
 
 /**

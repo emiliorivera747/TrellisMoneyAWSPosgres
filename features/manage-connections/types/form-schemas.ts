@@ -5,4 +5,9 @@ export const addMemberFormSchema = z.object({
   email: z.string().email(),
 });
 
+/**
+ * Type representing the inferred schema for adding a member form.
+ * @export
+ * @typedef {z.infer<typeof addMemberFormSchema>} AddMemberFormSchema
+ */
 export type AddMemberFormSchema = z.infer<typeof addMemberFormSchema>;

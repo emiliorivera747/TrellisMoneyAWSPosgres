@@ -34,9 +34,19 @@ const buttonVariants = cva(
   }
 )
 
+/**
+ * Properties for the Button component.
+ * @export
+ * @interface ButtonProps
+ */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
+  /**
+   * Change the component to a Slot component, allowing for component composition.
+   * @type {boolean}
+   * @memberof ButtonProps
+   */
   asChild?: boolean
 }
 
