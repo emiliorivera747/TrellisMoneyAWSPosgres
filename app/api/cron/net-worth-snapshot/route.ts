@@ -25,9 +25,6 @@ export async function GET(
   req: NextRequest,
 ) {
   try {
-    if (req.headers.get("x-vercel-cron") !== "true")
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-
     console.log("Running daily net worth snapshot...");
 
     const today = new Date().toISOString().split("T")[0];
