@@ -23,7 +23,6 @@ import { upsertNetWorthSnapshot } from "@/utils/drizzle/net-worth/upsertNetWorth
  */
 export const GET = async (req: NextRequest, res: NextResponse) => {
   try {
-    
     if (req.headers.get("x-vercel-cron") !== "true")
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
@@ -41,9 +40,8 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     const BATCH_SIZE = 20;
 
     for (let i = 0; i < households.length; i += BATCH_SIZE) {
-      
       const batch = households.slice(i, i + BATCH_SIZE);
-      
+
       console.log(
         `Processing batch ${Math.floor(i / BATCH_SIZE) + 1} (${
           batch.length
@@ -117,7 +115,6 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
             `Error processing household ${householdRecord.householdId}:`,
             householdError
           );
-          // Return null for failed households, don't stop processing
           return null;
         }
       });
@@ -135,7 +132,6 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       snapshotDate: today,
       snapshots: snapshotResults,
     });
-
   } catch (error) {
     return ErrorResponse(error);
   }
