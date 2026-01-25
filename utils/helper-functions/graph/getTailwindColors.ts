@@ -1,5 +1,5 @@
 import { getColorBasedOnLineDirection } from "@/utils/helper-functions/graph/getColorBasedOnLineDirection";
-import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 
 /**

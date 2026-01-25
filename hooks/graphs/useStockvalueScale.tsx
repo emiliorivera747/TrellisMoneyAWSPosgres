@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { scaleLinear } from "@visx/scale";
-import { TimeSeriesData } from "@/types/components/admin/graphs/graphs";
+import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 import { extent } from "@visx/vendor/d3-array";
 
 const getValue = (d: TimeSeriesData) => d?.close;

@@ -1,5 +1,5 @@
-import { SecurityData } from "@/types/components/admin/graphs/graphs";
-import { TooltipPayload } from "@/types/components/admin/graphs/graphs";
+import { SecurityData } from "@/types/components/admin/graphs/data";
+import { TooltipPayload } from "@/types/components/admin/graphs/tooltips";
 
 export interface RenderTooltipContentProps {
     tooltipPayload: TooltipPayload | null;

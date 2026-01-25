@@ -18,7 +18,8 @@ import TooltipBar from "@/components/dashboard/TooltipBar";
 import useHandleTooltipMultiple from "@/hooks/graphs/useHandleTooltipMultiple";
 
 //Types
-import { LineGraphTimeValueProps, TimeSeriesData } from "@/types/components/admin/graphs/graphs";
+import { TimeSeriesData } from "@/types/components/admin/graphs/data";
+import { LineGraphTimeValueProps } from "@/types/components/admin/graphs/props";
 
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";

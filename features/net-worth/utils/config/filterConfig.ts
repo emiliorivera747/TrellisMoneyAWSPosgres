@@ -1,5 +1,5 @@
 
-import { GraphFilterConfig } from "@/types/components/admin/graphs/graphs";
+import { GraphFilterConfig } from "@/types/components/admin/graphs/filters";
 
 export const filterConfig: GraphFilterConfig[] = [
     {

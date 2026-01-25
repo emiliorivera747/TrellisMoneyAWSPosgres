@@ -1,4 +1,4 @@
-import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
 import { FutureProjectionData } from "@/types/future-projections/futureProjections";
 
 export interface SecurityData {

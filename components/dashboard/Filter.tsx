@@ -1,6 +1,6 @@
 import React from "react";
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
-import { LineGraphFilterButtonsProps } from "@/types/components/admin/graphs/graphs";
+import { LineGraphFilterButtonsProps } from "@/types/components/admin/graphs/filters";
 import { cn } from "@/lib/utils";
 
 import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountFilters.selectors";

@@ -1,4 +1,4 @@
-import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
 
 export const checkLinePayloads = (LinePayloads: LineSeriesConfig[]) => {
 

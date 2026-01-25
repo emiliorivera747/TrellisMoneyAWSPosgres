@@ -1,5 +1,4 @@
-import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
-import { TimeSeriesData } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig, TimeSeriesData } from "@/types/components/admin/graphs/data";
 
 
 export interface ProjectedLineGraphProps {

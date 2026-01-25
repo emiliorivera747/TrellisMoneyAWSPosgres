@@ -1,7 +1,7 @@
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
 
 // Types
-import { ValuePriceChangeLabelProps } from "@/types/components/admin/graphs/graphs";
+import { ValuePriceChangeLabelProps } from "@/types/components/admin/graphs/props";
 
 // Utils
 import { cn } from "@/lib/utils";

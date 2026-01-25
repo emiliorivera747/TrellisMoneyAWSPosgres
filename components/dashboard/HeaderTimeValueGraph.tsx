@@ -6,14 +6,14 @@ import { createContext, useContext } from "react";
 import ValuePriceChangelabel from "@/components/dashboard/ValuePriceChangeLabel";
 
 // Components
+import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
+import { TooltipPayload } from "@/types/components/admin/graphs/tooltips";
 import {
   HeaderTimeValueGraphProps,
   TitleProps,
   ValueProp,
-  LineSeriesConfig,
-  TooltipPayload,
   ValueChangeProps,
-} from "@/types/components/admin/graphs/graphs";
+} from "@/types/components/admin/graphs/props";
 
 // Functions
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";

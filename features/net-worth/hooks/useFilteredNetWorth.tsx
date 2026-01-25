@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { colorConfigs } from "@/features/projected-net-worth/utils/data/lineColors";
 
 // Types
-import { LineSeriesConfig } from "@/types/components/admin/graphs/graphs";
+import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
 
 // Utils
 import { getNetWorthDataByFilter } from "@/features/net-worth/utils/data/networth/mockNetWorthData";
