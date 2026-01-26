@@ -13,7 +13,7 @@ import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/Pro
 
 // Functions
 import { generateYearsArray } from "@/features/projected-net-worth/utils/generateYearsArray";
-import { createLinePayLoads } from "@/features/projected-net-worth/utils/getDataForLines";
+import { createLineConfigurations } from "@/features/projected-net-worth/utils/getDataForLines";
 
 // Hooks
 import useFilteredData from "@/features/projected-net-worth/hooks/useFilteredData";
@@ -61,7 +61,7 @@ const ProjectedNetWorthGraph = ({
   if (futureProjectionHasError || !filteredData)
     return <ProjectedNetWorthGraphError error={futureProjectionError} />;
 
-  const dataForLines = createLinePayLoads(
+  const lineConfigs = createLineConfigurations(
     selectedInflationFilter,
     filteredData
   );
@@ -72,7 +72,7 @@ const ProjectedNetWorthGraph = ({
         className={"h-[25rem] w-full border-box"}
         ref={containerRef}
         GraphComponent={ProjectedLineGraph}
-        lineConfigs={dataForLines}
+        lineConfigs={lineConfigs}
         withInlfationTag={selectedInflationFilter === "withInflation"}
         years={years}
       />

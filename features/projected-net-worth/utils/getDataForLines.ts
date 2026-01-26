@@ -12,7 +12,8 @@ import {
  * @param filteredData
  * @returns
  */
-export const createLinePayLoads = (
+export const createLineConfigurations
+ = (
   selectedFilter: string,
   filteredData: LineSeriesConfig[],
 ) => {
