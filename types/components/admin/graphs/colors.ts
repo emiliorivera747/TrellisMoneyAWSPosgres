@@ -27,25 +27,25 @@ export interface LineColor {
 /**
  * Represents tag text colors for different states.
  * @export
- * @interface tagTextColor
+ * @interfaceTagTextColor
  */
-export interface tagTextColor {
+export interface TagTextColor {
   /**
    * The color for upward trend.
    * @type {string}
-   * @memberof tagTextColor
+   * @memberofTagTextColor
    */
   upColor: string;
   /**
    * The color for downward trend.
    * @type {string}
-   * @memberof tagTextColor
+   * @memberofTagTextColor
    */
   downColor: string;
   /**
    * The color for flat/neutral trend.
    * @type {string}
-   * @memberof tagTextColor
+   * @memberofTagTextColor
    */
   flatColor: string;
 }
@@ -119,10 +119,10 @@ export interface ColorConfig {
 
   /**
    * The color of the tag text.
-   * @type {tagTextColor}
+   * @type {TagTextColor}
    * @memberof ColorConfig
    */
-  tagTextColor: tagTextColor;
+ tagTextColor:TagTextColor;
 
   /**
    * The color of the tag background.

@@ -13,7 +13,7 @@ export const lineColors1 = {
     downColor: downColor,
     flatColor: flatColor,
   },
-  tagTextColor: {
+ tagTextColor: {
     upColor: "text-green-700",
     downColor: "text-red-700",
     flatColor: "text-secondary-900",
@@ -36,7 +36,7 @@ export const lineColors2 = {
     downColor: downColor2,
     flatColor: flatColor2,
   },
-  tagTextColor: {
+ tagTextColor: {
     upColor: "text-green-700",
     downColor: "text-red-700",
     flatColor: "text-secondary-900",

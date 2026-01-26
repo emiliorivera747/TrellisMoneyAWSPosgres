@@ -24,7 +24,7 @@ export const getTailwindColors = (payloadForLine: LineSeriesConfig) => {
         payloadForLine?.colorConfig?.lineColor?.flatColor ??
         "text-secondary-900",
     }),
-    tagTextColorTW: getColorBasedOnLineDirection({
+   tagTextColorTW: getColorBasedOnLineDirection({
       direction,
       upColor:
         payloadForLine?.colorConfig?.tagTextColor?.upColor ?? "text-green-700",
