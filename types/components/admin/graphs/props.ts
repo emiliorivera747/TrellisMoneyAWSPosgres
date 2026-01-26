@@ -14,7 +14,7 @@ export interface ResponsiveLineGraphProps {
    * @type {string}
    * @memberof ResponsiveLineGraphProps
    */
-  className: string;
+  className?: string;
 
   /**
    * The React component to be rendered as the graph.
@@ -29,7 +29,7 @@ export interface ResponsiveLineGraphProps {
    * @type {React.Ref<HTMLButtonElement | HTMLDivElement>}
    * @memberof ResponsiveLineGraphProps
    */
-  ref: React.Ref<HTMLButtonElement | HTMLDivElement>;
+  ref?: React.Ref<HTMLButtonElement | HTMLDivElement>;
 
   /**
    * Additional properties that can be passed to the graph component.

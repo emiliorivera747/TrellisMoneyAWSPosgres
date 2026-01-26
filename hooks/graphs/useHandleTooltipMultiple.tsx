@@ -36,7 +36,7 @@ const handleMultipleDataPoints = (
           d: d,
           strokeWidth: payload.strokeWidth,
           data: payload.data,
-          linePayload: payload,
+          lineConfig: payload,
         };
       });
 

@@ -46,5 +46,5 @@ export interface InflationTagProps {
    * @type {LineSeriesConfig}
    * @memberof InflationTagProps
    */
-  linePayload: LineSeriesConfig;
+  lineConfig: LineSeriesConfig;
 }

@@ -100,7 +100,7 @@ export interface TooltipPayload {
    * @type {LineSeriesConfig}
    * @memberof TooltipPayload
    */
-  linePayload: LineSeriesConfig;
+  lineConfig: LineSeriesConfig;
 }
 
 /**

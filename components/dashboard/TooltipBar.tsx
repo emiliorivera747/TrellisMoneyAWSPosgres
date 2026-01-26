@@ -33,7 +33,7 @@ const TooltipBar = ({
       {tooltipData.map((linePayload, i) => {
         const { lineColor } = getTailwindColors(
           directions[i],
-          linePayload.linePayload
+          linePayload.lineConfig
         );
 
         return (

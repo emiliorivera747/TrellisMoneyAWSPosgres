@@ -102,7 +102,7 @@ const PrimaryGraphHeader = ({
         />
         {withInflationTag && lineConfigs.length === 1 && (
           <div className="text-[0.7rem] text-tertiary-1000 gap-1 w-[25%] flex items-start justify-end pt-5">
-            <InflationTag linePayload={lineConfigs[0]} />
+            <InflationTag lineConfig={lineConfigs[0]} />
           </div>
         )}
       </div>
