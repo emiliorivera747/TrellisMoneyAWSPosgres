@@ -71,10 +71,12 @@ const ProjectedNetWorthGraph = ({
       <ResponsiveLineGraphContainer
         className={"h-[25rem] w-full border-box"}
         ref={containerRef}
-        GraphComponent={ProjectedLineGraph}
-        lineConfigs={lineConfigs}
-        withInlfationTag={selectedInflationFilter === "withInflation"}
-        years={years}
+        component={ProjectedLineGraph}
+        componentProps={{
+          lineConfigs,
+          withInflationTag: selectedInflationFilter === "withInflation",
+          years: years
+        }}
       />
     </div>
   );

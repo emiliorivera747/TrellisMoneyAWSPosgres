@@ -15,13 +15,10 @@ import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/gr
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 
-//TooltipData
-type TooltipData = TooltipConfig[];
-
 /**
  * Component for displaying a line graph.
  */
-export default withTooltip<ProjectedLineGraphProps, TooltipData>(
+export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
   ({
     width,
     height,
@@ -34,8 +31,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     tooltipLeft = 0,
     withInlfationTag = false,
     years,
-  }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
-
+  }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipConfig[]>) => {
     if (width < 10) return null;
     if (checkLinePayloads(lineConfigs) === false) return <NoLinePayloads />;
 

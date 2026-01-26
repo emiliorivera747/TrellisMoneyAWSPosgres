@@ -1,3 +1,4 @@
+import { ComponentType } from "react";
 import { curveMonotoneX } from "@visx/curve";
 import { ReactNode } from "react";
 import { TimeSeriesData, LineSeriesConfig } from "./data";
@@ -8,7 +9,7 @@ import { TooltipConfig } from "./tooltips";
  * @export
  * @interface ResponsiveLineGraphProps
  */
-export interface ResponsiveLineGraphProps {
+export interface ResponsiveGraphContainerProps<T = any> {
   /**
    * The CSS class name(s) to apply to the graph component.
    * @type {string}
@@ -22,7 +23,12 @@ export interface ResponsiveLineGraphProps {
    * @type {React.ComponentType<any>}
    * @memberof ResponsiveLineGraphProps
    */
-  GraphComponent: React.ComponentType<any>;
+  component: React.ComponentType<T & { width: number; height: number }>;
+
+  /**
+   * Props to be passed to the graph component (excluding width and height).
+   */
+  componentProps: Omit<T, "width" | "height">;
 
   /**
    * A reference to the HTML element, which can be either a button or a div.
