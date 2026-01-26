@@ -19,8 +19,12 @@ import { createLineConfigurations } from "@/features/projected-net-worth/utils/g
 import useFilteredData from "@/features/projected-net-worth/hooks/useFilteredData";
 
 // Constants
-const defaultYearsIntoTheFuture = 100;
-const currentYear = Number(new Date().getFullYear().toString());
+const DEFAULT_YEARS_INTO_THE_FUTURE = 100;
+const CURRENT_YEAR = Number(new Date().getFullYear().toString());
+const YEARS = generateYearsArray(
+  CURRENT_YEAR,
+  CURRENT_YEAR + DEFAULT_YEARS_INTO_THE_FUTURE
+);
 
 // Selectors
 import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
@@ -51,12 +55,6 @@ const ProjectedNetWorthGraph = ({
     selectedInflationFilter
   );
 
-  const years = useMemo(
-    () =>
-      generateYearsArray(currentYear, currentYear + defaultYearsIntoTheFuture),
-    []
-  );
-
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
   if (futureProjectionHasError || !filteredData)
     return <ProjectedNetWorthGraphError error={futureProjectionError} />;
@@ -75,7 +73,7 @@ const ProjectedNetWorthGraph = ({
         componentProps={{
           lineConfigs,
           withInflationTag: selectedInflationFilter === "withInflation",
-          years: years
+          years: YEARS,
         }}
       />
     </div>
