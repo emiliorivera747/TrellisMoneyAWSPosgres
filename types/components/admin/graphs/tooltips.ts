@@ -48,10 +48,10 @@ export interface TooltipProps {
 
   /**
    * The data to be displayed in the tooltip, represented as an array of payloads.
-   * @type {TooltipPayload[]}
+   * @type {TooltipConfig[]}
    * @memberof TooltipProps
    */
-  tooltipData: TooltipPayload[];
+  tooltipData: TooltipConfig[];
 
   /**
    * The possible directions for the tooltip to be displayed.
@@ -64,41 +64,41 @@ export interface TooltipProps {
 /**
  * Represents the payload data for a tooltip in a graph.
  * @export
- * @interface TooltipPayload
+ * @interface TooltipConfig
  */
-export interface TooltipPayload {
+export interface TooltipConfig {
   /**
    * The time series data associated with the tooltip.
    * @type {TimeSeriesData}
-   * @memberof TooltipPayload
+   * @memberof TooltipConfig
    */
-  d: TimeSeriesData;
+  lineDataPoint: TimeSeriesData;
 
   /**
    * The color associated with the tooltip's data point or line.
    * @type {string}
-   * @memberof TooltipPayload
+   * @memberof TooltipConfig
    */
   color: string;
 
   /**
    * The stroke width of the line associated with the tooltip's data point.
    * @type {number}
-   * @memberof TooltipPayload
+   * @memberof TooltipConfig
    */
   strokeWidth: number;
 
   /**
    * The array of time series data points related to the tooltip.
    * @type {TimeSeriesData[]}
-   * @memberof TooltipPayload
+   * @memberof TooltipConfig
    */
-  data: TimeSeriesData[];
+  lineData: TimeSeriesData[];
 
   /**
    * The payload data for the line associated with the tooltip.
    * @type {LineSeriesConfig}
-   * @memberof TooltipPayload
+   * @memberof TooltipConfig
    */
   lineConfig: LineSeriesConfig;
 }

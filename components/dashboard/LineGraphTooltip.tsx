@@ -35,7 +35,7 @@ const LineGraphTooltip = ({
           boxShadow: "none", // Ensure no box shadow is applied
         }}
       >
-        {formatDate(getDate(tooltipData[0].d))}
+        {formatDate(getDate(tooltipData[0].lineDataPoint))}
       </Tooltip>
     </div>
   );

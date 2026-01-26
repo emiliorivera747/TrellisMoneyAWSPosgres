@@ -6,7 +6,7 @@ import LineGraphFilterButton from '@/components/buttons/LineGraphFilterButton';
 interface FilterButtonsSectionProps {
     buttons: {
         isSelected: boolean;
-        svg_path: string;
+        svgPath: string;
         label: string;
         onClick: () => void;
     }[];
@@ -19,7 +19,7 @@ const FilterButtonsSection: React.FC<FilterButtonsSectionProps> = ({ buttons }) 
                 <LineGraphFilterButton
                     key={index}
                     isSelected={button.isSelected}
-                    svg_path={button.svg_path}
+                    svgPath={button.svgPath}
                     label={button.label}
                     onClick={button.onClick}
                 />

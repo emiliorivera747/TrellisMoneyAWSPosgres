@@ -49,15 +49,15 @@ const RenderTooltipContent: React.FC<RenderTooltipContentProps> = ({
     );
   }
 
-  const stockValueDifference = getStockValue(tooltipPayload.d) - data[0].value;
+  const stockValueDifference = getStockValue(tooltipPayload.lineDataPoint) - data[0].value;
   const rateOfChange = calculateRateOfChange(
     data[0].value,
-    getStockValue(tooltipPayload.d)
+    getStockValue(tooltipPayload.lineDataPoint)
   );
 
   const yearsBetween = calculateYearsBetween(
     data[0].date,
-    tooltipPayload.d.date
+    tooltipPayload.lineDataPoint.date
   );
 
   return (

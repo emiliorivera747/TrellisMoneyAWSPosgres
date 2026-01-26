@@ -1,5 +1,5 @@
 import { TimeSeriesData } from "@/types/components/admin/graphs/data";
-import { TooltipPayload } from "@/types/components/admin/graphs/tooltips";
+import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 
 /**
  * Properties for rendering tooltip content in the projected net worth graph.
@@ -9,10 +9,10 @@ import { TooltipPayload } from "@/types/components/admin/graphs/tooltips";
 export interface RenderTooltipContentProps {
     /**
      * The tooltip payload data to be displayed, or null if no tooltip is shown.
-     * @type {TooltipPayload | null}
+     * @type {TooltipConfig | null}
      * @memberof RenderTooltipContentProps
      */
-    tooltipPayload: TooltipPayload | null;
+    tooltipPayload: TooltipConfig | null;
 
     /**
      * The time series data for the graph.

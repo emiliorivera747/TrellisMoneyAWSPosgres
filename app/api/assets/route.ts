@@ -42,11 +42,11 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
         const expectedAnnualReturnRate =
           asset.expected_annual_return_rate?.toString();
 
-        const res = await db
-          .update(account)
-          .set({expectedAnnualReturnRate}).join(account.)
+        // const res = await db
+        //   .update(account)
+        //   .set({expectedAnnualReturnRate}).join(account.)
 
-        console.log("res", res);
+        // console.log("res", res);
       }
 
       return SuccessResponse("Successfull updated assets");

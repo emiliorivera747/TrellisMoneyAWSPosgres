@@ -23,11 +23,11 @@ import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/gr
 
 // Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
-import { TooltipPayload } from "@/types/components/admin/graphs/tooltips";
+import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 import { getTailwindColors } from "@/utils/helper-functions/graph/getTailwindColors";
 
 // TooltipData
-type TooltipData = TooltipPayload[];
+type TooltipData = TooltipConfig[];
 
 // Config
 import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";

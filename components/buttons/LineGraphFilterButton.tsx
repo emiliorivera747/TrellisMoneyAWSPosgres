@@ -6,7 +6,7 @@ import { LineGraphFilterButtonProps } from "@/features/projected-net-worth/types
 const LineGraphFilterButton = ({
   label,
   isSelected,
-  svg_path,
+  svgPath,
   color,
   onClick,
 }: LineGraphFilterButtonProps) => {

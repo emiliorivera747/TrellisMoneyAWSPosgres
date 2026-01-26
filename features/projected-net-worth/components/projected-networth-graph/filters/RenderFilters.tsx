@@ -26,7 +26,7 @@ const RenderFilters = ({
           filter: {
             key: InflationFilters;
             label: string;
-            svg_path: string;
+            svgPath: string;
             color: string;
           },
           index
@@ -34,7 +34,7 @@ const RenderFilters = ({
             <LineGraphFilterButton
               key={index}
               isSelected={selectedFilter === filter.key}
-              svg_path={filter.svg_path}
+              svgPath={filter.svgPath}
               label={filter.label}
               onClick={()=>handleFilterChange(filter.key)}
               color={filter.color}

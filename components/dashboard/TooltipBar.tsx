@@ -40,7 +40,7 @@ const TooltipBar = ({
           <circle
             key={i}
             cx={tooltipLeft}
-            cy={stockValueScale(getStockValue(linePayload.d))}
+            cy={stockValueScale(getStockValue(linePayload.lineDataPoint))}
             r={4.5}
             stroke={lineColor}
             fill="white"

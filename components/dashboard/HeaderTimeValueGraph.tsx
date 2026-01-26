@@ -7,7 +7,7 @@ import ValuePriceChangelabel from "@/components/dashboard/ValuePriceChangeLabel"
 
 // Components
 import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
-import { TooltipPayload } from "@/types/components/admin/graphs/tooltips";
+import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 import {
   HeaderTimeValueGraphProps,
   TitleProps,
@@ -25,7 +25,7 @@ import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateY
 // Context
 const TimeValueGraphHeaderContext = createContext<{
   lineConfigs: LineSeriesConfig[];
-  tooltipData?: TooltipPayload[];
+  tooltipData?: TooltipConfig[];
 }>({
   lineConfigs: [],
   tooltipData: undefined,
@@ -89,7 +89,7 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
   return (
     <span className={cn(defaultClass, className)} ref={ref}>
       {tooltipPayload
-        ? `${numberToMoneyFormat(getStockValue(tooltipPayload.d))}`
+        ? `${numberToMoneyFormat(getStockValue(tooltipPayload.lineDataPoint))}`
         : `${numberToMoneyFormat(
             lineData?.[lineData?.length - 1]?.value ?? 0
           )}`}
@@ -128,11 +128,11 @@ export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
     );
 
   const stockValueDifference =
-    getStockValue(tooltipPayload.d) - lineData[0].value;
+    getStockValue(tooltipPayload.lineDataPoint) - lineData[0].value;
 
   const rateOfChange = calculateRateOfChange(
     lineData[0].value,
-    getStockValue(tooltipPayload.d)
+    getStockValue(tooltipPayload.lineDataPoint)
   );
 
   return (
@@ -172,7 +172,7 @@ export function TotalYears({
 
   const years = calculateYearsBetween(
     lineData[0].date,
-    tooltipPayload ? tooltipPayload.d.date : lineData[lineData.length - 1].date
+    tooltipPayload ? tooltipPayload.lineDataPoint.date : lineData[lineData.length - 1].date
   );
 
   return <span className={cn(defaultClass, className)}>{years} years</span>;

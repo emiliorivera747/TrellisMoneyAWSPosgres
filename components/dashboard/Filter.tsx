@@ -18,7 +18,7 @@ const Filter = ({
         <LineGraphFilterButton
           key={index}
           isSelected={selectedFilter === filter.key}
-          svg_path={filter.svg_path}
+          svgPath={filter.svgPath}
           label={filter.label}
           onClick={() => setSelectedFilter(filter.key)}
           color={filter.color}

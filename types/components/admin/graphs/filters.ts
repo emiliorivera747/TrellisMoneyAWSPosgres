@@ -23,7 +23,7 @@ export interface GraphFilterConfig {
    * @type {string}
    * @memberof GraphFilterConfig
    */
-  svg_path: string;
+  svgPath: string;
   /**
    * The color of the filter.
    * @type {string}

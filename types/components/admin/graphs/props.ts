@@ -1,7 +1,7 @@
 import { curveMonotoneX } from "@visx/curve";
 import { ReactNode } from "react";
 import { TimeSeriesData, LineSeriesConfig } from "./data";
-import { TooltipPayload } from "./tooltips";
+import { TooltipConfig } from "./tooltips";
 
 /**
  * Represents the properties for a responsive line graph component.
@@ -82,10 +82,10 @@ export interface LineGraphTimeValueProps {
 
   /**
    * The data to be displayed in the tooltip.
-   * @type {TooltipPayload[]}
+   * @type {TooltipConfig[]}
    * @memberof LineGraphTimeValueProps
    */
-  tooltipData: TooltipPayload[];
+  tooltipData: TooltipConfig[];
 
   /**
    * The top position of the tooltip.
@@ -132,10 +132,10 @@ export interface ValueAndPriceChangeProps {
   /**
    * The payload data for the tooltip, which provides information about the graph's data points.
    * Can be `null` if no tooltip data is available.
-   * @type {TooltipPayload | null}
+   * @type {TooltipConfig | null}
    * @memberof ValueAndPriceChangeProps
    */
-  tooltipPayload: TooltipPayload | null;
+  tooltipPayload: TooltipConfig | null;
 
   /**
    * The time series data to be displayed in the graph.
@@ -208,10 +208,10 @@ export interface HeaderTimeValueGraphProps {
   /**
    * The data to be displayed in the tooltip, represented as an array of payloads.
    * Each payload contains information about the data point being hovered over.
-   * @type {TooltipPayload[]}
+   * @type {TooltipConfig[]}
    * @memberof HeaderTimeValueGraphProps
    */
-  tooltipData: TooltipPayload[];
+  tooltipData: TooltipConfig[];
 }
 
 /**

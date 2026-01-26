@@ -33,9 +33,9 @@ const handleMultipleDataPoints = (
               : d0;
         }
         return {
-          d: d,
+          lineDataPoint: d,
           strokeWidth: payload.strokeWidth,
-          data: payload.data,
+          lineData: payload.data,
           lineConfig: payload,
         };
       });
@@ -43,7 +43,7 @@ const handleMultipleDataPoints = (
       showTooltip({
         tooltipData,
         tooltipLeft: x,
-        tooltipTop: stockValueScale(getStockValue(tooltipData[0].d)),
+        tooltipTop: stockValueScale(getStockValue(tooltipData[0].lineDataPoint)),
       });
     },
     [showTooltip, stockValueScale, dateScale, JSON.stringify(lineConfigs)]

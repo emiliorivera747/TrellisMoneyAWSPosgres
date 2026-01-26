@@ -27,7 +27,7 @@ const ValueAndPriceChange = ({
         className={`tracking-wider ${mainHeaderTailwindCss} flex gap-2 items-center `}
       >
         {tooltipPayload
-          ? `${numberToMoneyFormat(getStockValue(tooltipPayload.d)) || "0.00"}`
+          ? `${numberToMoneyFormat(getStockValue(tooltipPayload.lineDataPoint)) || "0.00"}`
           : `${numberToMoneyFormat(data[data?.length - 1]?.value) || "0.00"}`}
       </span>
       <span

@@ -2,7 +2,7 @@ import ValueAndPriceChange from "@/components/dashboard/ValueAndPriceChange";
 
 //Types
 import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
-import { TooltipPayload } from "@/types/components/admin/graphs/tooltips";
+import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
@@ -10,7 +10,7 @@ import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailw
 
 interface MultipleValPriceChangeProps {
   payloadForLines: LineSeriesConfig[];
-  tooltipData: TooltipPayload[];
+  tooltipData: TooltipConfig[];
 }
 
 /**

@@ -51,7 +51,7 @@ export interface LineGraphFilterButtonProps {
    * @type {string}
    * @memberof LineGraphFilterButtonProps
    */
-  svg_path?: string;
+  svgPath?: string;
 
   /**
    * Color for the button.
@@ -93,7 +93,7 @@ export interface FilterConfig {
    * @type {string}
    * @memberof FilterConfig
    */
-  svg_path: string;
+  svgPath: string;
 
   /**
    * Color for the filter.

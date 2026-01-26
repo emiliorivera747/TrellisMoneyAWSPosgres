@@ -13,10 +13,10 @@ import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/gr
 
 //Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
-import { TooltipPayload } from "@/types/components/admin/graphs/tooltips";
+import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 
 //TooltipData
-type TooltipData = TooltipPayload[];
+type TooltipData = TooltipConfig[];
 
 /**
  * Component for displaying a line graph.
