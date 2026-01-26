@@ -1,9 +1,4 @@
-/**
- * Represents line colors for different states.
- * @export
- * @interface LineColor
- */
-export interface LineColor {
+export interface TrendColors {
   /**
    * The color for upward trend.
    * @type {string}
@@ -20,86 +15,6 @@ export interface LineColor {
    * The color for flat/neutral trend.
    * @type {string}
    * @memberof LineColor
-   */
-  flatColor: string;
-}
-
-/**
- * Represents tag text colors for different states.
- * @export
- * @interfaceTagTextColor
- */
-export interface TagTextColor {
-  /**
-   * The color for upward trend.
-   * @type {string}
-   * @memberofTagTextColor
-   */
-  upColor: string;
-  /**
-   * The color for downward trend.
-   * @type {string}
-   * @memberofTagTextColor
-   */
-  downColor: string;
-  /**
-   * The color for flat/neutral trend.
-   * @type {string}
-   * @memberofTagTextColor
-   */
-  flatColor: string;
-}
-
-/**
- * Represents tag background colors for different states.
- * @export
- * @interface tagBgColor
- */
-export interface tagBgColor {
-  /**
-   * The color for upward trend.
-   * @type {string}
-   * @memberof tagBgColor
-   */
-  upColor: string;
-  /**
-   * The color for downward trend.
-   * @type {string}
-   * @memberof tagBgColor
-   */
-  downColor: string;
-  /**
-   * The color for flat/neutral trend.
-   * @type {string}
-   * @memberof tagBgColor
-   */
-  flatColor: string;
-}
-
-/**
- * Represents the color configuration for a subheader in a graph.
- * @export
- * @interface subheaderColor
- */
-export interface subheaderColor {
-  /**
-   * The color used to indicate an upward trend or positive change.
-   * @type {string}
-   * @memberof subheaderColor
-   */
-  upColor: string;
-
-  /**
-   * The color used to indicate a downward trend or negative change.
-   * @type {string}
-   * @memberof subheaderColor
-   */
-  downColor: string;
-
-  /**
-   * The color used to indicate a flat or neutral trend.
-   * @type {string}
-   * @memberof subheaderColor
    */
   flatColor: string;
 }
@@ -115,26 +30,26 @@ export interface ColorConfig {
    * @type {LineColor}
    * @memberof ColorConfig
    */
-  lineColor: LineColor;
+  lineColor: TrendColors;
 
   /**
    * The color of the tag text.
    * @type {TagTextColor}
    * @memberof ColorConfig
    */
- tagTextColor:TagTextColor;
+  tagTextColor: TrendColors;
 
   /**
    * The color of the tag background.
    * @type {tagBgColor}
    * @memberof ColorConfig
    */
-  tagBgColor: tagBgColor;
+  tagBgColor: TrendColors;
 
   /**
    * The color of the subheader.
    * @type {subheaderColor}
    * @memberof ColorConfig
    */
-  subheaderColor: subheaderColor;
+  subheaderColor: TrendColors;
 }

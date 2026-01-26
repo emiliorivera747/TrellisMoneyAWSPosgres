@@ -43,17 +43,8 @@ export async function PATCH(req: NextRequest): Promise<NextResponse> {
           asset.expected_annual_return_rate?.toString();
 
         const res = await db
-          .update(holding)
-          .set({
-            expectedAnnualReturnRate,
-          })
-          .where(
-            and(
-              inArray(account.accountId, accountIds),
-              eq(holding.securityId, asset.security_id ?? "")
-            )
-          )
-          .returning();
+          .update(account)
+          .set({expectedAnnualReturnRate}).join(account.)
 
         console.log("res", res);
       }
