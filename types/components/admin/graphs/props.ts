@@ -1,7 +1,13 @@
-import { ComponentType } from "react";
-import { curveMonotoneX } from "@visx/curve";
+// React
 import { ReactNode } from "react";
+
+// Visx
+import { curveMonotoneX } from "@visx/curve";
+
+// Data
 import { TimeSeriesData, LineSeriesConfig } from "./data";
+
+// Config
 import { TooltipConfig } from "./tooltips";
 
 /**
@@ -35,7 +41,7 @@ export interface ResponsiveGraphContainerProps<T = any> {
    * @type {React.Ref<HTMLButtonElement | HTMLDivElement>}
    * @memberof ResponsiveLineGraphProps
    */
-  ref?: React.Ref<HTMLButtonElement | HTMLDivElement>;
+  ref?: React.Ref<HTMLDivElement> | undefined;
 
   /**
    * Additional properties that can be passed to the graph component.

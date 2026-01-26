@@ -12,14 +12,14 @@ import { ResponsiveGraphContainerProps } from "@/types/components/admin/graphs/p
  *
  * @returns
  */
-const ResponsiveLineGraphContainer = ({
+function ResponsiveGraphContainer<T = any>({
   className,
   component: Component,
   componentProps,
   ref,
-}: ResponsiveGraphContainerProps) => {
+}: ResponsiveGraphContainerProps) {
   return (
-    <div className={className}>
+    <div className={className} ref={ref}>
       <ParentSize>
         {({ height, width }: { height: number; width: number }) => (
           <Component width={width} height={height} {...(componentProps as T)} />
@@ -27,6 +27,6 @@ const ResponsiveLineGraphContainer = ({
       </ParentSize>
     </div>
   );
-};
+}
 
-export default ResponsiveLineGraphContainer;
+export default ResponsiveGraphContainer;
