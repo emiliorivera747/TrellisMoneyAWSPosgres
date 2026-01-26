@@ -21,7 +21,7 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
  * Renders the header for the projected net worth graph with title, year selection, filters, and optional inflation tags.
  *
  * @param {PrimaryGraphHeaderProps} props - Component props.
- * @param {Array} props.linePayloads - Graph line data.
+ * @param {Array} props.lineConfigs - Graph line data.
  * @param {TooltipData} props.tooltipData - Tooltip data.
  * @param {boolean} props.withInflationTag - Show inflation tag if true.
  * @param {Array<number>} props.years - Available years for selection.
@@ -29,7 +29,7 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
  * @returns {JSX.Element} The PrimaryGraphHeader component.
  */
 const PrimaryGraphHeader = ({
-  linePayloads,
+  lineConfigs,
   tooltipData,
   withInflationTag,
   years,
@@ -97,12 +97,12 @@ const PrimaryGraphHeader = ({
       </div>
       <div className="flex flex-row">
         <MultipleValPriceChange
-          payloadForLines={linePayloads}
+          payloadForLines={lineConfigs}
           tooltipData={tooltipData}
         />
-        {withInflationTag && linePayloads.length === 1 && (
+        {withInflationTag && lineConfigs.length === 1 && (
           <div className="text-[0.7rem] text-tertiary-1000 gap-1 w-[25%] flex items-start justify-end pt-5">
-            <InflationTag linePayload={linePayloads[0]} />
+            <InflationTag linePayload={lineConfigs[0]} />
           </div>
         )}
       </div>

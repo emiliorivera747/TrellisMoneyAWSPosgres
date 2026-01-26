@@ -25,7 +25,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
   ({
     width,
     height,
-    linePayloads,
+    lineConfigs,
     margin,
     showTooltip,
     hideTooltip,
@@ -35,14 +35,14 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     withInlfationTag = false,
     years,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
-    
+
     if (width < 10) return null;
-    if (checkLinePayloads(linePayloads) === false) return <NoLinePayloads />;
+    if (checkLinePayloads(lineConfigs) === false) return <NoLinePayloads />;
 
     return (
       <div className={`h-full w-full`}>
         <PrimaryGraphHeader
-          linePayloads={linePayloads}
+          lineConfigs={lineConfigs}
           tooltipData={tooltipData}
           withInflationTag={withInlfationTag}
           years={years}
@@ -52,7 +52,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
         <LineGraphTimeValue
           width={width}
           height={height}
-          linePayloads={linePayloads}
+          lineConfigs={lineConfigs}
           margin={margin}
           showTooltip={showTooltip}
           hideTooltip={hideTooltip}

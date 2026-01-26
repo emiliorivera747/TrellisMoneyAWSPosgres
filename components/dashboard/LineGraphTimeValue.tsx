@@ -28,7 +28,7 @@ const defaultMargin = { top: 6, right: 6, bottom: 10, left: 6 };
  *
  * @param {number} width - Graph width.
  * @param {number} height - Graph height.
- * @param {Array} linePayloads - Line data with styles.
+ * @param {Array} lineConfigs - Line data with styles.
  * @param {object} margin - Graph margins.
  * @param {function} showTooltip - Function to show tooltip.
  * @param {function} hideTooltip - Function to hide tooltip.
@@ -41,7 +41,7 @@ const defaultMargin = { top: 6, right: 6, bottom: 10, left: 6 };
 const LineGraphTimeValue = ({
   width,
   height,
-  linePayloads,
+  lineConfigs,
   margin = defaultMargin,
   showTooltip,
   hideTooltip,
@@ -51,23 +51,23 @@ const LineGraphTimeValue = ({
   curve = curveMonotoneX,
   backgroundFill = "url(#area-background-gradient)",
 }: LineGraphTimeValueProps) => {
-  
+
   if (width < 10 || height < 10) return null;
-  if (!linePayloads) return null;
+  if (!lineConfigs) return null;
 
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
-  const dateScale = useDateScale(linePayloads[0].data, margin, innerWidth); // x-axis
-  const allData = linePayloads.flatMap((line) => line.data);
+  const dateScale = useDateScale(lineConfigs[0].data, margin, innerWidth); // x-axis
+  const allData = lineConfigs.flatMap((line) => line.data);
   const stockValueScale = useStockValueScale(allData, margin, innerHeight); // y-axis
-  const directions = linePayloads.map((line) => getLineDirection(line.data));
-  
+  const directions = lineConfigs.map((line) => getLineDirection(line.data));
+
   // tooltip handler
   const handleTooltip = useHandleTooltipMultiple(
     (args) => showTooltip(args),
     stockValueScale,
     dateScale,
-    ...linePayloads
+    ...lineConfigs
   );
 
   return (
@@ -86,7 +86,7 @@ const LineGraphTimeValue = ({
         fill={backgroundFill}
         rx={14}
       />
-      {linePayloads.map((linePayload, i) => {
+      {lineConfigs.map((linePayload, i) => {
         const { lineColor } = getTailwindColors(directions[i], linePayload) ;
         return (
           <LinePath

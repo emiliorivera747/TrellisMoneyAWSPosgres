@@ -39,7 +39,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
   ({
     width,
     height,
-    linePayloads,
+    lineConfigs,
     margin,
     showTooltip,
     hideTooltip,
@@ -48,22 +48,22 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     tooltipLeft = 0,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
-    if (checkLinePayloads(linePayloads) === false) return <NoLinePayloads />;
+    if (checkLinePayloads(lineConfigs) === false) return <NoLinePayloads />;
 
     const svgRef = useRef<SVGSVGElement>(null);
     const filterRef = useRef<HTMLDivElement>(null);
 
-    const payloadLen = linePayloads.length;
+    const payloadLen = lineConfigs.length;
 
     return (
       <div className={`h-full w-full`}>
         <TimeValueGraphHeader
-          linePayloads={linePayloads}
+          lineConfigs={lineConfigs}
           tooltipData={tooltipData}
         >
           <div className="grid grid-cols-2 w-full">
             <div className={"grid grid-cols-[14rem_14rem]"}>
-              {linePayloads.map((linePayload, index) => {
+              {lineConfigs.map((linePayload, index) => {
                 const { primaryTextColorTW } = getTailwindColors(linePayload);
                 return (
                   <div key={index} className="flex flex-col">
@@ -101,7 +101,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
         <LineGraphTimeValue
           width={width}
           height={height}
-          linePayloads={linePayloads}
+          lineConfigs={lineConfigs}
           margin={margin}
           showTooltip={showTooltip}
           hideTooltip={hideTooltip}

@@ -24,10 +24,10 @@ import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateY
 
 // Context
 const TimeValueGraphHeaderContext = createContext<{
-  linePayloads: LineSeriesConfig[];
+  lineConfigs: LineSeriesConfig[];
   tooltipData?: TooltipPayload[];
 }>({
-  linePayloads: [],
+  lineConfigs: [],
   tooltipData: undefined,
 });
 
@@ -39,11 +39,11 @@ const TimeValueGraphHeaderContext = createContext<{
  */
 const TimeValueGraphHeader = ({
   children,
-  linePayloads,
+  lineConfigs,
   tooltipData,
 }: HeaderTimeValueGraphProps) => {
   return (
-    <TimeValueGraphHeaderContext.Provider value={{ linePayloads, tooltipData }}>
+    <TimeValueGraphHeaderContext.Provider value={{ lineConfigs, tooltipData }}>
       {children}
     </TimeValueGraphHeaderContext.Provider>
   );
@@ -79,11 +79,11 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
   const defaultClass =
     "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
 
-  const { linePayloads, tooltipData } = useContext(TimeValueGraphHeaderContext);
+  const { lineConfigs, tooltipData } = useContext(TimeValueGraphHeaderContext);
 
-  if (!linePayloads) return null;
+  if (!lineConfigs) return null;
 
-  const lineData = linePayloads[lineIndex].data;
+  const lineData = lineConfigs[lineIndex].data;
   const tooltipPayload = tooltipData?.[lineIndex];
 
   return (
@@ -101,11 +101,11 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
  * Shows the change in the value as well as the rate of change as a percentage.
  */
 export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
-  const { linePayloads, tooltipData } = useContext(TimeValueGraphHeaderContext);
+  const { lineConfigs, tooltipData } = useContext(TimeValueGraphHeaderContext);
 
-  if (!linePayloads) return null;
+  if (!lineConfigs) return null;
 
-  const lineData = linePayloads[lineIndex].data;
+  const lineData = lineConfigs[lineIndex].data;
   const tooltipPayload = tooltipData?.[lineIndex];
 
   if (!lineData) return null;
@@ -158,15 +158,15 @@ export function TotalYears({
   className?: string;
   lineIndex: number;
 }) {
-  const { linePayloads, tooltipData } = useContext(TimeValueGraphHeaderContext);
+  const { lineConfigs, tooltipData } = useContext(TimeValueGraphHeaderContext);
   const tooltipPayload = tooltipData?.[lineIndex];
 
 
   const defaultClass = "text-tertiary-800 font-normal";
 
-  if (!linePayloads) return null;
+  if (!lineConfigs) return null;
 
-  const lineData = linePayloads[lineIndex].data;
+  const lineData = lineConfigs[lineIndex].data;
 
   if (!lineData) return null;
 

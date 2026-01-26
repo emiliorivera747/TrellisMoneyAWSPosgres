@@ -64,7 +64,7 @@ export interface LineGraphTimeValueProps {
    * @type {LineSeriesConfig[]}
    * @memberof LineGraphTimeValueProps
    */
-  linePayloads: LineSeriesConfig[];
+  lineConfigs: LineSeriesConfig[];
 
   /**
    * The function to show the tooltip.
@@ -203,7 +203,7 @@ export interface HeaderTimeValueGraphProps {
    * @type {LineSeriesConfig[]}
    * @memberof HeaderTimeValueGraphProps
    */
-  linePayloads: LineSeriesConfig[];
+  lineConfigs: LineSeriesConfig[];
 
   /**
    * The data to be displayed in the tooltip, represented as an array of payloads.

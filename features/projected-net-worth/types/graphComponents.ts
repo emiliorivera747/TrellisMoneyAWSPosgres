@@ -298,7 +298,7 @@ export interface ProjectedLineGraphProps {
    * @type {LineSeriesConfig[]}
    * @memberof ProjectedLineGraphProps
    */
-  linePayloads: LineSeriesConfig[];
+  lineConfigs: LineSeriesConfig[];
 
   /**
    * Optional margin configuration for the graph.
@@ -424,7 +424,7 @@ export interface PrimaryGraphHeaderProps {
    * @type {LineSeriesConfig[]}
    * @memberof PrimaryGraphHeaderProps
    */
-  linePayloads: LineSeriesConfig[];
+  lineConfigs: LineSeriesConfig[];
 
   /**
    * Data to display in tooltips.

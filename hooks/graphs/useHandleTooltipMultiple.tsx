@@ -11,7 +11,7 @@ const handleMultipleDataPoints = (
   showTooltip: (args: any) => void,
   stockValueScale: any,
   dateScale: any,
-  ...linePayloads: LineSeriesConfig[]
+  ...lineConfigs: LineSeriesConfig[]
 ) => {
   return useCallback(
     (
@@ -20,7 +20,7 @@ const handleMultipleDataPoints = (
       const { x } = localPoint(event) || { x: 0 };
       const x0 = dateScale.invert(x);
 
-      const tooltipData = linePayloads.map((payload) => {
+      const tooltipData = lineConfigs.map((payload) => {
         const index = bisectDate(payload.data, x0, 1);
         const d0 = payload.data[index - 1];
         const d1 = payload.data[index];
@@ -46,7 +46,7 @@ const handleMultipleDataPoints = (
         tooltipTop: stockValueScale(getStockValue(tooltipData[0].d)),
       });
     },
-    [showTooltip, stockValueScale, dateScale, JSON.stringify(linePayloads)]
+    [showTooltip, stockValueScale, dateScale, JSON.stringify(lineConfigs)]
   );
 };
 

@@ -15,7 +15,7 @@ export interface ProjectedLineGraphProps {
   /**
    *  All lines to be displayed on the graph with their data.
    */
-  linePayloads: LineSeriesConfig[];
+  lineConfigs: LineSeriesConfig[];
 
   /**
    * Margin for the graph.

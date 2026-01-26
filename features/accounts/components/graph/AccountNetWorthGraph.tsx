@@ -23,7 +23,7 @@ const AccountNetWorthGraph = () => {
         className="w-full h-[26rem]"
         ref={graphRef}
         GraphComponent={NetWorthGraph}
-        linePayloads={filteredData}
+        lineConfigs={filteredData}
       />
       <DateFilter />
     </div>
