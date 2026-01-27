@@ -43,7 +43,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
           lineConfigs={lineConfigs}
           tooltipData={tooltipData}
           withInflationTag={withInlfationTag}
-          years={years}
+          years={years || []}
         />
 
         {/* The SVG for the graph */}
