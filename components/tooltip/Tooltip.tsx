@@ -13,7 +13,7 @@ const CustomTooltip: React.FC<TooltipProps> = ({ label, children }) => {
   return (
     <div className="relative group transition delay-300">
       {children}
-      <div className="absolute top-[100%] left-1/2 transform -translate-x-1/2 mb-2 sm:hidden group-hover:block sm:bg-tertiary-800 text-white text-[0.6rem] rounded py-1 px-2 transition delay-300 2xl:bg-transparent bg-transparent z-50">
+      <div className="absolute top-[100%] left-1/2 transform -translate-x-1/2 mb-2 sm:hidden group-hover:block sm:bg-tertiary-800 text-tertiary-100 text-[0.6rem] rounded py-1 px-2 transition delay-300 2xl:bg-transparent bg-transparent z-50">
         {label}
       </div>
     </div>
