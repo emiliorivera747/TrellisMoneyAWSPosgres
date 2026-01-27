@@ -18,7 +18,6 @@ import {
 
 // Auth
 import { withAuth } from "@/lib/protected";
-
 const default_inflation_rate = 0.025;
 
 /**
@@ -124,14 +123,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         transformedAccounts as any,
         startYear,
         endYear,
-        searchParams.get("includes_inflation") === "true",
+        searchParams.get("inflationAdjusted") === "true",
         default_inflation_rate
       );
 
       const projectedAssets = await generateProjectedAssets({
         startYear,
         endYear,
-        includesInflation: searchParams.get("includes_inflation") === "true",
+        includesInflation: searchParams.get("inflationAdjusted") === "true",
         annualInflationRate: default_inflation_rate,
         accounts: transformedAccounts as any,
       });
