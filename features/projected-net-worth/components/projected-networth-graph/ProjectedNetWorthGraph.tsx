@@ -15,9 +15,6 @@ import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/Pro
 import { generateYearsArray } from "@/features/projected-net-worth/utils/generateYearsArray";
 import { createLineConfigurations } from "@/features/projected-net-worth/utils/getDataForLines";
 
-// Hooks
-import useFilteredData from "@/features/projected-net-worth/hooks/useFilteredData";
-
 // Constants
 const DEFAULT_YEARS_INTO_THE_FUTURE = 100;
 const CURRENT_YEAR = new Date().getFullYear();
