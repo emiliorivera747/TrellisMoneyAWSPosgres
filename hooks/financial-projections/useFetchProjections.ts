@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProjections } from "@/features/projected-net-worth/utils/fetchProjectionData";
+import { fetchProjections } from "@/features/projected-net-worth/utils/services-helpers/fetchProjectionData";
 import { getAssets } from "@/features/projected-financial-assets/utils/extractAssets";
 import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
