@@ -29,9 +29,7 @@ const getLineColor = (filterValue: InflationFilters) => {
 export const createLineConfigurations = (
   futureProjectionData: FutureProjectionData | undefined
 ) => {
-  if (!futureProjectionData?.projectedNetWorth) {
-    return [];
-  }
+  if (!futureProjectionData?.projectedNetWorth) return [];
 
   return futureProjectionData.projectedNetWorth
     .toSorted((a, b) => {

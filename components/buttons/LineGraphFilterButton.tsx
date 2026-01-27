@@ -1,5 +1,3 @@
-import React from "react";
-
 //types
 import { LineGraphFilterButtonProps } from "@/features/projected-net-worth/types/filters";
 
@@ -21,7 +19,7 @@ const LineGraphFilterButton = ({
     >
       <span
         style={{ backgroundColor: color }}
-        className={`w-[0.8rem] h-[0.25rem] rounded-full`}
+        className={`w-[0.8rem] h-[0.23rem] rounded-full`}
       ></span>
       {label}
     </button>
