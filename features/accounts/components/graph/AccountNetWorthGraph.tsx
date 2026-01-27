@@ -3,7 +3,7 @@ import { useRef } from "react";
 // Components
 import DateFilter from "@/features/accounts/components/filter/DateFilter";
 import NetWorthGraph from "@/features/net-worth/components/net-worth-graph/NetWorthGraph";
-import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphContainer";
+import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveGraphContainer";
 
 // Hooks
 import { useFilteredNetWorth } from "@/features/net-worth/hooks/useFilteredNetWorth";

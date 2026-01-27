@@ -4,9 +4,9 @@
 import { useRef } from "react";
 
 // Components
-import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphContainer";
 import ProjectedLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";
 import ProjectedNetWorthGraphError from "@/components/errors/ProjectedNetWorthGraphError";
+import ResponsiveGraphContainer from "@/components/dashboard/ResponsiveGraphContainer";
 
 // External Libraries
 import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
@@ -50,7 +50,7 @@ const ProjectedNetWorthGraph = ({
 
   return (
     <div className="h-[30rem] grid border-b border-tertiary-300">
-      <ResponsiveLineGraphContainer
+      <ResponsiveGraphContainer
         className={"h-[25rem] w-full border-box"}
         ref={graphContainerRef}
         component={ProjectedLineGraph}
