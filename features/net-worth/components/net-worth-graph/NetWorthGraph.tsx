@@ -6,8 +6,8 @@ import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
 
 // Components
-import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
-import MultiLineTimeSeriesGraph from "@/components/dashboard/MultiLineTimeSeriesGraph";
+import DateAxisTooltip from "@/components/dashboard/DateAxisTooltip";
+import MultiLineTimeSeriesSvg from "@/components/dashboard/MultiLineTimeSeriesSvg";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
 import TimeValueGraphHeader, {
   Title,
@@ -99,7 +99,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
         </TimeValueGraphHeader>
 
         {/* The SVG for the graph */}
-        <MultiLineTimeSeriesGraph
+        <MultiLineTimeSeriesSvg
           width={width}
           height={height}
           lineConfigs={lineConfigs}
@@ -113,7 +113,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
 
         {/* Tooltip div */}
         {tooltipData && (
-          <LineGraphTooltip
+          <DateAxisTooltip
             margin={margin}
             tooltipLeft={tooltipLeft}
             defaultStyles={defaultStyles}

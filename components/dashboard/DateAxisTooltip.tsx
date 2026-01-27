@@ -1,8 +1,8 @@
-import React from "react";
+
 import { Tooltip } from "@visx/tooltip";
 import { formatDate } from "@/utils/helper-functions/formatting/formatDate";
 import { getDate } from "@/utils/helper-functions/accessors/accessors";
-import { LineGraphTooltipProps } from "@/types/components/admin/graphs/tooltips";
+import { DateAxisTooltipProps } from "@/types/components/admin/graphs/tooltips";
 const defaultMargin = { top: 0};
 
 /**
@@ -11,12 +11,12 @@ const defaultMargin = { top: 0};
  * @param param0
  * @returns
  */
-const LineGraphTooltip = ({
+const DateAxisTooltip = ({
   margin = defaultMargin,
   tooltipLeft,
   defaultStyles,
   tooltipData,
-}: LineGraphTooltipProps) => {
+}: DateAxisTooltipProps) => {
   if (!tooltipData) return null;
   return (
     <div className="">
@@ -41,4 +41,4 @@ const LineGraphTooltip = ({
   );
 };
 
-export default LineGraphTooltip;
+export default DateAxisTooltip;

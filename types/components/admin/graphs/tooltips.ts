@@ -104,11 +104,11 @@ export interface TooltipConfig {
 }
 
 /**
- * Represents the properties for a line graph tooltip component.
+ * Represents the properties for a date axis tooltip component.
  * @export
- * @interface LineGraphTooltipProps
+ * @interface DateAxisTooltipProps
  */
-export interface LineGraphTooltipProps {
+export interface DateAxisTooltipProps {
   /**
    * The margin object defining the spacing around the graph (optional).
    * - `top`: The top margin, in pixels.

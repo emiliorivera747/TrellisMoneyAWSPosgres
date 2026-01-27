@@ -71,11 +71,11 @@ export interface DoubleLineGraphProps {
 }
 
 /**
- * Properties for the line graph tooltip component.
+ * Properties for the date axis tooltip component.
  * @export
- * @interface LineGraphTooltipProps
+ * @interface DateAxisTooltipProps
  */
-export interface LineGraphTooltipProps {
+export interface DateAxisTooltipProps {
   /**
    * Top margin for the tooltip.
    * @type {{ top: number }}

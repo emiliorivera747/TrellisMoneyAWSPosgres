@@ -52,11 +52,11 @@ export interface ResponsiveGraphContainerProps<T = any> {
 }
 
 /**
- * Represents the properties for a multi-line time series graph component.
+ * Represents the properties for a multi-line time series SVG component.
  * @export
- * @interface MultiLineTimeSeriesGraphProps
+ * @interface MultiLineTimeSeriesSvgProps
  */
-export interface MultiLineTimeSeriesGraphProps {
+export interface MultiLineTimeSeriesSvgProps {
   /**
    * The width of the graph.
    * @type {number}

@@ -5,8 +5,8 @@ import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
 
 // Components
-import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
-import MultiLineTimeSeriesGraph from "@/components/dashboard/MultiLineTimeSeriesGraph";
+import DateAxisTooltip from "@/components/dashboard/DateAxisTooltip";
+import MultiLineTimeSeriesSvg from "@/components/dashboard/MultiLineTimeSeriesSvg";
 import PrimaryGraphHeader from "@/features/projected-net-worth/components/projected-networth-graph/headers/PrimaryGraphHeader";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
 
@@ -34,13 +34,11 @@ export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
     withInlfationTag = false,
     years,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipConfig[]>) => {
-    
     if (width < 10) return null;
     if (checkLinePayloads(lineConfigs) === false) return <NoLinePayloads />;
 
     return (
       <div className={`h-full w-full`}>
-        
         <PrimaryGraphHeader
           lineConfigs={lineConfigs}
           tooltipData={tooltipData}
@@ -49,7 +47,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
         />
 
         {/* The SVG for the graph */}
-        <MultiLineTimeSeriesGraph
+        <MultiLineTimeSeriesSvg
           width={width}
           height={height}
           lineConfigs={lineConfigs}
@@ -63,7 +61,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
 
         {/* Tooltip div */}
         {tooltipData && (
-          <LineGraphTooltip
+          <DateAxisTooltip
             margin={margin}
             tooltipLeft={tooltipLeft}
             defaultStyles={defaultStyles}
