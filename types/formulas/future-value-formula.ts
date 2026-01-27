@@ -63,7 +63,7 @@ export interface InflationAdjustedFutureValueParams extends FutureValueParams {
    * @type {Numeric}
    * @memberof InflationAdjustedFutureValueParams
    */
-  annual_inflation_rate: Numeric;
+  annualInflationRate: Numeric;
 }
 
 /**
@@ -77,12 +77,12 @@ export interface FutureValueInflationOption extends FutureValueParams {
    * @type {boolean}
    * @memberof FutureValueInflationOption
    */
-  includes_inflation: boolean;
+  includesInflation: boolean;
 
   /**
    * Estimated annual inflation rate.
    * @type {Numeric}
    * @memberof FutureValueInflationOption
    */
-  annual_inflation_rate: Numeric;
+  annualInflationRate: Numeric;
 }

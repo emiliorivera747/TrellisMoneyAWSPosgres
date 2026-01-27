@@ -16,8 +16,8 @@ import Decimal from "decimal.js";
  * @param accounts
  * @param start_year
  * @param end_year
- * @param includes_inflation
- * @param annual_inflation_rate
+ * @param includesInflation
+ * @param annualInflationRate
  * @param type
  * @returns
  */
@@ -25,8 +25,8 @@ export const calculate_fv_accounts = (
   accounts: Account[],
   start_year: number,
   end_year: number,
-  includes_inflation: boolean,
-  annual_inflation_rate: number,
+  includesInflation: boolean,
+  annualInflationRate: number,
   type: AccountType
 ) => {
   const res = [];
@@ -36,9 +36,9 @@ export const calculate_fv_accounts = (
 
     let fv = getFutureValue({
       present_value: Number(current),
-      annual_inflation_rate,
+      annualInflationRate,
       expected_annual_return_rate: expected_annual_return_rate ?? 0,
-      includes_inflation: includes_inflation,
+      includesInflation: includesInflation,
       years: end_year - start_year,
     });
 
@@ -65,8 +65,8 @@ export const calculate_fv_accounts = (
  * @param accounts
  * @param start_year
  * @param end_year
- * @param includes_inflation
- * @param annual_inflation_rate
+ * @param includesInflation
+ * @param annualInflationRate
  * @param type
  * @returns
  */
@@ -74,8 +74,8 @@ export const calculate_fv_holdings = (
   accounts: Account[],
   start_year: number,
   end_year: number,
-  includes_inflation: boolean,
-  annual_inflation_rate: number,
+  includesInflation: boolean,
+  annualInflationRate: number,
   type: AccountType
 ) => {
   const res = [];
@@ -87,9 +87,9 @@ export const calculate_fv_holdings = (
 
       let fv = getFutureValue({
         present_value: Number(quantity) * Number(close_price),
-        annual_inflation_rate,
+        annualInflationRate,
         expected_annual_return_rate,
-        includes_inflation: includes_inflation,
+        includesInflation: includesInflation,
         years: end_year - start_year,
       });
 

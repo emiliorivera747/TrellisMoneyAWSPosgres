@@ -25,13 +25,13 @@ export interface GenerateAssetsFromAccountsParams {
    * @type {boolean}
    * @memberof GenerateAssetsFromAccountsParams
    */
-  includes_inflation: boolean;
+  includesInflation: boolean;
   /**
    * The annual inflation rate.
    * @type {number}
    * @memberof GenerateAssetsFromAccountsParams
    */
-  annual_inflation_rate: number;
+  annualInflationRate: number;
   /**
    * The type of account.
    * @type {AccountType}
@@ -119,13 +119,13 @@ export interface GroupedHoldingToAssetsParams {
    * @type {boolean}
    * @memberof GroupedHoldingToAssetsParams
    */
-  includes_inflation: boolean;
+  includesInflation: boolean;
   /**
    * The annual inflation rate.
    * @type {number}
    * @memberof GroupedHoldingToAssetsParams
    */
-  annual_inflation_rate: number;
+  annualInflationRate: number;
   /**
    * The type of account.
    * @type {AccountType}
@@ -157,13 +157,13 @@ export interface GroupedHoldingsToAssetsParams {
    * @type {boolean}
    * @memberof GroupedHoldingsToAssetsParams
    */
-  includes_inflation: boolean;
+  includesInflation: boolean;
   /**
    * The annual inflation rate.
    * @type {number}
    * @memberof GroupedHoldingsToAssetsParams
    */
-  annual_inflation_rate: number;
+  annualInflationRate: number;
   /**
    * The type of account.
    * @type {AccountType}
@@ -195,13 +195,13 @@ export interface CashHoldingsToAssets {
    * @type {boolean}
    * @memberof CashHoldingsToAssets
    */
-  includes_inflation: boolean;
+  includesInflation: boolean;
   /**
    * The annual inflation rate.
    * @type {number}
    * @memberof CashHoldingsToAssets
    */
-  annual_inflation_rate: number;
+  annualInflationRate: number;
   /**
    * The type of account.
    * @type {AccountType}

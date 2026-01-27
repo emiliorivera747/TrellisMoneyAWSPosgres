@@ -35,11 +35,11 @@ export interface PopulateMapWithFvParams {
    * @type {boolean}
    * @memberof PopulateMapWithFvParams
    */
-  includes_inflation: boolean;
+  includesInflation: boolean;
   /**
    * The annual inflation rate.
    * @type {number}
    * @memberof PopulateMapWithFvParams
    */
-  annual_inflation_rate: number;
+  annualInflationRate: number;
 }

@@ -188,14 +188,14 @@ export interface ProjectedAssetProjectionConfig {
    * @type {boolean}
    * @memberof ProjectedAssetProjectionConfig
    */
-  includes_inflation: boolean;
+  includesInflation: boolean;
 
   /**
    * Annual inflation rate to apply.
    * @type {number}
    * @memberof ProjectedAssetProjectionConfig
    */
-  annual_inflation_rate: number;
+  annualInflationRate: number;
 
   /**
    * Type of the account.
@@ -216,28 +216,28 @@ export interface ProjectionParams {
    * @type {number}
    * @memberof ProjectionParams
    */
-  start_year: number;
+  startYear: number;
 
   /**
    * Ending year for the projection.
    * @type {number}
    * @memberof ProjectionParams
    */
-  end_year: number;
+  endYear: number;
 
   /**
    * Whether to include inflation in the projection.
    * @type {boolean}
    * @memberof ProjectionParams
    */
-  includes_inflation?: boolean;
+  includesInflation?: boolean;
 
   /**
    * Annual inflation rate to apply.
    * @type {number}
    * @memberof ProjectionParams
    */
-  annual_inflation_rate: number;
+  annualInflationRate: number;
 
   /**
    * Array of accounts to include in the projection.

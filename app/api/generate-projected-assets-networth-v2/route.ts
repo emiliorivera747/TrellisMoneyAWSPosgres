@@ -30,7 +30,7 @@ const default_inflation_rate = 0.025;
  */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   return withAuth(req, async (request, user) => {
-    const user_id = user.id;
+    const userId = user.id;
     try {
       /**
        * Get the timestamp from the request body
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
        * Get the start and end years from the request URL
        */
       const { searchParams } = new URL(request.url);
-      const { start_year, end_year } = getDates(searchParams);
+      const { startYear, endYear } = getDates(searchParams);
 
       /**
        * Were we given a timestamp
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       /**
        *  Get member with household data
        */
-      const member = await getMemberWithHouseholdByUserId(user_id);
+      const member = await getMemberWithHouseholdByUserId(userId);
       if (!member) return FailResponse("Failed to find member", 404);
 
       /**
@@ -122,17 +122,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
       const projectedNetWorth = await generateProjectedNetWorth(
         transformedAccounts as any,
-        start_year,
-        end_year,
+        startYear,
+        endYear,
         searchParams.get("includes_inflation") === "true",
         default_inflation_rate
       );
 
       const projectedAssets = await generateProjectedAssets({
-        start_year,
-        end_year,
-        includes_inflation: searchParams.get("includes_inflation") === "true",
-        annual_inflation_rate: default_inflation_rate,
+        startYear,
+        endYear,
+        includesInflation: searchParams.get("includes_inflation") === "true",
+        annualInflationRate: default_inflation_rate,
         accounts: transformedAccounts as any,
       });
 

@@ -25,9 +25,7 @@ const useFilteredData = (
 
   useEffect(() => {
     if (!futureProjectionData) return;
-
     const projectedNetWorthsData = futureProjectionData?.projectedNetWorth;
-
     if (!projectedNetWorthsData || projectedNetWorthsData.length === 0) {
       setFilteredData([]);
       return;

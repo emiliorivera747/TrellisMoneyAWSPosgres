@@ -9,26 +9,26 @@ export const fetchProjectionData = async (
 ) => {
   switch (filter) {
     case "actual":
-      return financialProjectionService.generateProjectedNetWorth(
+      return financialProjectionService.fetchProjectedNetWorth(
         startDate,
         endDate,
         false
       );
     case "inflationAdjusted":
-      return financialProjectionService.generateProjectedNetWorth(
+      return financialProjectionService.fetchProjectedNetWorth(
         startDate,
         endDate,
         true
       );
     case "both":
       const noInflationData =
-        await financialProjectionService.generateProjectedNetWorth(
+        await financialProjectionService.fetchProjectedNetWorth(
           startDate,
           endDate,
           false
         );
       const inflationData =
-        await financialProjectionService.generateProjectedNetWorth(
+        await financialProjectionService.fetchProjectedNetWorth(
           startDate,
           endDate,
           true
@@ -66,7 +66,7 @@ export const fetchProjections = async (
 ) => {
   if (filter === "actual") {
     const res =
-      await financialProjectionService.generateProjectedAssetsAndNetworth(
+      await financialProjectionService.fetchProjectedAssetsAndNetworth(
         startDate,
         endDate,
         false
@@ -84,7 +84,7 @@ export const fetchProjections = async (
     };
   } else if (filter === "inflationAdjusted") {
     const res =
-      await financialProjectionService.generateProjectedAssetsAndNetworth(
+      await financialProjectionService.fetchProjectedAssetsAndNetworth(
         startDate,
         endDate,
         true
@@ -99,18 +99,20 @@ export const fetchProjections = async (
           data: projectedNetWorth,
         },
       ],
-      projectedAssets: [{ filterValue: "inflationAdjusted", data: projectedAssets }],
+      projectedAssets: [
+        { filterValue: "inflationAdjusted", data: projectedAssets },
+      ],
     };
   } else if (filter === "both") {
     const noInflationData =
-      await financialProjectionService.generateProjectedAssetsAndNetworth(
+      await financialProjectionService.fetchProjectedAssetsAndNetworth(
         startDate,
         endDate,
         false
       );
 
     const inflationData =
-      await financialProjectionService.generateProjectedAssetsAndNetworth(
+      await financialProjectionService.fetchProjectedAssetsAndNetworth(
         startDate,
         endDate,
         true

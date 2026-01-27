@@ -586,7 +586,7 @@ export interface Holding {
    * @type {number | null | Decimal}
    * @memberof Holding
    */
-  annual_inflation_rate?: number | null | Decimal;
+  annualInflationRate?: number | null | Decimal;
   /**
    * The institution price.
    * @type {number | Decimal}

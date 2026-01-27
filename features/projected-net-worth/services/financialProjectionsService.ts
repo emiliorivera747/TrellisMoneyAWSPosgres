@@ -1,12 +1,12 @@
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
-const generateProjectedNetWorth = async (
-  start_year: number,
-  end_year: number,
-  includes_inflation: boolean
+const fetchProjectedNetWorth = async (
+  startYear: number,
+  endYear: number,
+  inflationAdjusted: boolean
 ) => {
   const response = await fetch(
-    `${API_URL}/generate-projected-networth?start_date=${start_year}&end_date=${end_year}&includes_inflation=${includes_inflation}`,
+    `${API_URL}/generate-projected-networth?startDate=${startYear}&endDate=${endYear}&inflationAdjusted=${inflationAdjusted}`,
     {
       method: "POST",
       headers: {
@@ -18,13 +18,13 @@ const generateProjectedNetWorth = async (
   return response.json();
 };
 
-const generateProjectedAssetsAndNetworth = async (
-  start_year: number,
-  end_year: number,
-  includes_inflation: boolean
+const fetchProjectedAssetsAndNetworth = async (
+  startYear: number,
+  endYear: number,
+  inflationAdjusted: boolean
 ) => {
   const response = await fetch(
-    `${API_URL}/generate-projected-assets-networth-v2?start_date=${start_year}&end_date=${end_year}&includes_inflation=${includes_inflation}`,
+    `${API_URL}/generate-projected-assets-networth-v2?startDate=${startYear}&endDate=${endYear}&inflationAdjusted=${inflationAdjusted}`,
     {
       method: "POST",
       headers: {
@@ -34,11 +34,11 @@ const generateProjectedAssetsAndNetworth = async (
     }
   );
   return response.json();
-}
+};
 
 const financialProjectionService = {
-  generateProjectedNetWorth,
-  generateProjectedAssetsAndNetworth
+  fetchProjectedNetWorth,
+  fetchProjectedAssetsAndNetworth,
 };
 
 export default financialProjectionService;

@@ -16,16 +16,16 @@ import { PopulateMapWithFvParams } from "@/types/future-projections/projected-ne
  * @param {Account[]} accounts - An array of account objects containing holdings and balances.
  * @param {number} start_year - The start year for the projection.
  * @param {number} end_year - The end year for the projection.
- * @param {boolean} includes_inflation - Whether to include inflation in the calculations.
- * @param {number} annual_inflation_rate - The annual inflation rate.
+ * @param {boolean} includesInflation - Whether to include inflation in the calculations.
+ * @param {number} annualInflationRate - The annual inflation rate.
  * @returns {Promise<NetWorthData[]>} A promise that resolves to an array of objects, each representing the projected net worth for a specific date.
  */
 export const generateProjectedNetWorth = async (
   accounts: Account[],
   start_year: number,
   end_year: number,
-  includes_inflation: boolean,
-  annual_inflation_rate: number
+  includesInflation: boolean,
+  annualInflationRate: number
 ): Promise<NetWorthData[]> => {
 
   if (!accounts.length || end_year < start_year) return [];
@@ -41,8 +41,8 @@ export const generateProjectedNetWorth = async (
         start_year,
         end_year,
         accounts: accounts ?? [],
-        includes_inflation,
-        annual_inflation_rate,
+        includesInflation,
+        annualInflationRate,
       });
     } else if (
       key === "depository" ||
@@ -55,8 +55,8 @@ export const generateProjectedNetWorth = async (
         start_year,
         end_year,
         accounts: accounts ?? [],
-        includes_inflation,
-        annual_inflation_rate,
+        includesInflation,
+        annualInflationRate,
       });
     }
   }
@@ -132,16 +132,16 @@ const generateDailyProjectedNetWorth = (
  * @param {number} params.start_year - The start year.
  * @param {number} params.end_year - The end year.
  * @param {Account[]} params.accounts - The accounts containing holdings.
- * @param {boolean} params.includes_inflation - Whether to include inflation.
- * @param {number} params.annual_inflation_rate - The annual inflation rate.
+ * @param {boolean} params.includesInflation - Whether to include inflation.
+ * @param {number} params.annualInflationRate - The annual inflation rate.
  */
 const populateMapWithFvHoldings = ({
   projectionsMap,
   start_year,
   end_year,
   accounts,
-  includes_inflation,
-  annual_inflation_rate,
+  includesInflation,
+  annualInflationRate,
 }: PopulateMapWithFvParams) => {
   // Pre-calculate holding data for reuse across years
   const holdingsData = accounts.flatMap((account) =>
@@ -159,10 +159,10 @@ const populateMapWithFvHoldings = ({
     for (const { expected_annual_return_rate, institutional_value } of holdingsData) {
       total += getFutureValue({
         present_value: institutional_value,
-        annual_inflation_rate,
+        annualInflationRate,
         expected_annual_return_rate,
         years: i,
-        includes_inflation,
+        includesInflation,
       });
     }
     let year = start_year + i;
@@ -179,16 +179,16 @@ const populateMapWithFvHoldings = ({
  * @param {number} params.start_year - The start year.
  * @param {number} params.end_year - The end year.
  * @param {Account[]} params.accounts - The accounts.
- * @param {boolean} params.includes_inflation - Whether to include inflation.
- * @param {number} params.annual_inflation_rate - The annual inflation rate.
+ * @param {boolean} params.includesInflation - Whether to include inflation.
+ * @param {number} params.annualInflationRate - The annual inflation rate.
  */
 const populateMapWithFvAccounts = ({
   projectionsMap,
   start_year,
   end_year,
   accounts,
-  includes_inflation,
-  annual_inflation_rate,
+  includesInflation,
+  annualInflationRate,
 }: PopulateMapWithFvParams) => {
   // Pre-calculate account data for reuse
   const accountsData = accounts.map((account) => ({
@@ -209,9 +209,9 @@ const populateMapWithFvAccounts = ({
     } of accountsData) {
       let fv = getFutureValue({
         present_value: current_amount,
-        annual_inflation_rate,
+        annualInflationRate,
         expected_annual_return_rate,
-        includes_inflation: includes_inflation,
+        includesInflation: includesInflation,
         years: i,
       });
       total += isNegative ? -fv : fv;
