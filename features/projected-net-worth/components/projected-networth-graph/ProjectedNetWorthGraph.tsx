@@ -4,7 +4,7 @@
 import { useRef } from "react";
 
 // Components
-import ProjectedLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";
+import ProjectedNetWorthLineChart from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";
 import ProjectedNetWorthGraphError from "@/components/errors/ProjectedNetWorthGraphError";
 import ResponsiveGraphContainer from "@/components/dashboard/ResponsiveGraphContainer";
 
@@ -15,6 +15,10 @@ import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/Pro
 import { generateYearsArray } from "@/features/projected-net-worth/utils/generateYearsArray";
 import { createLineConfigurations } from "@/features/projected-net-worth/utils/getDataForLines";
 
+// Selectors
+import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
+import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
+
 // Constants
 const DEFAULT_YEARS_INTO_THE_FUTURE = 100;
 const CURRENT_YEAR = new Date().getFullYear();
@@ -22,10 +26,6 @@ const YEARS = generateYearsArray(
   CURRENT_YEAR,
   CURRENT_YEAR + DEFAULT_YEARS_INTO_THE_FUTURE
 );
-
-// Selectors
-import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
-import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 /**
  *
@@ -39,10 +39,8 @@ const ProjectedNetWorthGraph = ({
   futureProjectionLoading,
 }: ProjectedNetWorthGraphProps) => {
   const graphContainerRef = useRef(null);
-
   const { selectedProjectedYear, selectedInflationFilter } =
     useDashboardFilters();
-
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
   if (futureProjectionHasError || futureProjectionData instanceof Error)
     return <ProjectedNetWorthGraphError error={futureProjectionError} />;
@@ -53,7 +51,7 @@ const ProjectedNetWorthGraph = ({
       <ResponsiveGraphContainer
         className={"h-[25rem] w-full border-box"}
         ref={graphContainerRef}
-        component={ProjectedLineGraph}
+        component={ProjectedNetWorthLineChart}
         componentProps={{
           lineConfigs,
           withInlfationTag: selectedInflationFilter === "inflationAdjusted",

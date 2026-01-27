@@ -18,22 +18,23 @@ const PrimaryGraphHeader = ({
   withInflationTag,
   years,
 }: PrimaryGraphHeaderProps) => {
+  
   const {
-    selectedProjectedYear: selectedYear,
+    selectedProjectedYear,
     retirementYear,
-    selectedInflationFilter: selectedFilter,
+    selectedInflationFilter,
   } = useDashboardFilters();
 
   const {
-    setSelectedInflationFilter: setSelectedFilter,
+    setSelectedInflationFilter,
     setRetirementYear,
-    setSelectedProjectedYear: setSelectedYear,
+    setSelectedProjectedYear,
   } = useDashboardFilterActions();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleFilterSelection = (filter: InflationFilters) => {
-    setSelectedFilter(filter);
+    setSelectedInflationFilter(filter);
     setIsDialogOpen(false);
   };
 
@@ -46,10 +47,10 @@ const PrimaryGraphHeader = ({
           <GraphHeaders label="Future Projection" />
           <div className="flex items-center">
             <SelectYearMenuButton
-              selectedYear={selectedYear}
+              selectedYear={selectedProjectedYear}
               years={years}
               retirementYear={retirementYear}
-              setSelectedYear={setSelectedYear}
+              setSelectedYear={setSelectedProjectedYear}
               editRetirementYear={setRetirementYear}
             />
           </div>
@@ -57,7 +58,7 @@ const PrimaryGraphHeader = ({
         <FilterDialog
           isOpen={isDialogOpen}
           onOpenChange={setIsDialogOpen}
-          selectedFilter={selectedFilter}
+          selectedFilter={selectedInflationFilter}
           onFilterChange={handleFilterSelection}
         />
       </div>
