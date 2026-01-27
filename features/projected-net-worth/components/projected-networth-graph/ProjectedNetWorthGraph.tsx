@@ -46,23 +46,11 @@ const ProjectedNetWorthGraph = ({
   const { selectedProjectedYear, selectedInflationFilter } =
     useDashboardFilters();
 
-  /**
-   *  Returns the filtered data based on the projectionData and selected filter.
-   */
-  const filteredData = useFilteredData(
-    futureProjectionData,
-    selectedProjectedYear,
-    selectedInflationFilter
-  );
-
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
-  if (futureProjectionHasError || !filteredData)
+  if (futureProjectionHasError || futureProjectionData instanceof Error)
     return <ProjectedNetWorthGraphError error={futureProjectionError} />;
 
-  const lineConfigs = createLineConfigurations(
-    selectedInflationFilter,
-    filteredData
-  );
+  const lineConfigs = createLineConfigurations(futureProjectionData);
 
   return (
     <div className="h-[30rem] grid border-b border-tertiary-300">

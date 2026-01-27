@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 
-import { FutureProjectionData } from "@/types/future-projections/futureProjections";
-import { TimeSeriesData } from "@/types/components/admin/graphs/data";
-
 // Functions
 import { filterProjectionData } from "@/features/projected-net-worth/utils/filters/filterData";
+
+// Types
+import { InflationFilters } from "@/types/future-projections/futureProjections";
+import { FutureProjectionData } from "@/types/future-projections/futureProjections";
+import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 
 /**
  * Custom hook to filter the projection data based on the selected year.
@@ -15,7 +17,7 @@ import { filterProjectionData } from "@/features/projected-net-worth/utils/filte
 const useFilteredData = (
   futureProjectionData: FutureProjectionData | null | undefined | Error,
   selectedYear: number,
-  selectedFilter: string
+  selectedFilter: InflationFilters
 ) => {
   if (futureProjectionData instanceof Error) return;
 
@@ -25,7 +27,9 @@ const useFilteredData = (
 
   useEffect(() => {
     if (!futureProjectionData) return;
+
     const projectedNetWorthsData = futureProjectionData?.projectedNetWorth;
+
     if (!projectedNetWorthsData || projectedNetWorthsData.length === 0) {
       setFilteredData([]);
       return;
@@ -38,6 +42,7 @@ const useFilteredData = (
       );
       return { filterValue: projectedNetWorth.filterValue, data: filtered };
     });
+
     setFilteredData(filtered);
   }, [futureProjectionData?.projectedNetWorth, selectedYear, selectedFilter]);
 

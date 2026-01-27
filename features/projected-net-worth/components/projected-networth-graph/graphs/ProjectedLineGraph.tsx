@@ -1,19 +1,19 @@
 "use client";
 
-//Visx
+// Visx
 import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
 
-//Components
+// Components
 import LineGraphTooltip from "@/components/dashboard/LineGraphTooltip";
 import LineGraphTimeValue from "@/components/dashboard/LineGraphTimeValue";
 import PrimaryGraphHeader from "@/features/projected-net-worth/components/projected-networth-graph/headers/PrimaryGraphHeader";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
 
-//Types
+// Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
-//Utils
+// Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/graph-helpers/checkLinePayloads";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 

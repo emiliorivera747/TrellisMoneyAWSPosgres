@@ -1,9 +1,10 @@
-import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
 import {
   lineColors1,
   lineColors2,
 } from "@/features/projected-net-worth/utils/data/lineColors";
+import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 import { InflationFilters } from "@/types/future-projections/futureProjections";
+import { FutureProjectionData } from "@/types/future-projections/futureProjections";
 
 /**
  *
@@ -14,30 +15,19 @@ import { InflationFilters } from "@/types/future-projections/futureProjections";
  * @returns
  */
 export const createLineConfigurations = (
-  selectedFilter: InflationFilters,
-  filteredData: LineSeriesConfig[]
+  futureProjectionData: FutureProjectionData | undefined
 ) => {
-  const dataForLines =
-    selectedFilter === "both"
-      ? [
-          {
-            data: filteredData?.[1]?.data || [],
-            colorConfig: lineColors1,
-            filterValue: filteredData?.[1]?.filterValue,
-          },
-          {
-            data: filteredData?.[0]?.data || [],
-            colorConfig: lineColors2,
-            filterValue: filteredData?.[0]?.filterValue,
-          },
-        ]
-      : [
-          {
-            data: filteredData?.[0]?.data || [],
-            colorConfig: lineColors1,
-            filterValue: filteredData?.[0]?.filterValue,
-          },
-        ];
+  const projectedNetWorthData =
+    futureProjectionData?.projectedNetWorth.map(({ filterValue, data }) => {
+      const transformedData: TimeSeriesData[] = data.map((netWorthData) => ({
+        date: new Date(netWorthData.date),
+        value: netWorthData.value,
+      }));
 
-  return dataForLines;
+      const lineColors = filterValue === "actual" ? lineColors1 : lineColors2;
+
+      return { filterValue, data: transformedData, colorConfig: lineColors };
+    }) || [];
+
+  return projectedNetWorthData;
 };

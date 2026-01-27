@@ -9,6 +9,7 @@ export type InflationFilters = "inflationAdjusted" | "actual" | "both";
  * @interface FutureProjectionData
  */
 export interface FutureProjectionData {
+  
   /**
    * The projected assets.
    * @type {ProjectedAssetsWithFilter[]}
@@ -30,6 +31,7 @@ export interface FutureProjectionData {
  * @interface ProjectedAssetsWithFilter
  */
 export interface ProjectedAssetsWithFilter {
+  
   /**
    * The projected assets data.
    * @type {ProjectedAsset[]}
@@ -42,7 +44,7 @@ export interface ProjectedAssetsWithFilter {
    * @type {string}
    * @memberof ProjectedAssetsWithFilter
    */
-  filterValue: InflationFilter;
+  filterValue: InflationFilters;
 }
 
 /**
@@ -51,16 +53,18 @@ export interface ProjectedAssetsWithFilter {
  * @interface ProjectedNetWorthWithFilter
  */
 export interface ProjectedNetWorthWithFilter {
+  
   /**
    * The projected net worth data.
    * @type {NetWorthData[]}
    * @memberof ProjectedNetWorthWithFilter
    */
   data: NetWorthData[];
+
   /**
    * The filtered value of the projected net worth.
    * @type {string}
    * @memberof ProjectedNetWorthWithFilter
    */
-  filterValue: InflationFilter;
+  filterValue: InflationFilters;
 }
