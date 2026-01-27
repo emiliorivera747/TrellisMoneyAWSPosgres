@@ -16,27 +16,27 @@ export const getTailwindColors = (
   return {
     lineColor: getColorBasedOnLineDirection({
       direction,
-      upColor: dataForLines?.colorConfig?.lineColor?.upColor ?? "text-green-700",
-      downColor: dataForLines?.colorConfig?.lineColor?.downColor ?? "text-red-700",
-      flatColor: dataForLines?.colorConfig?.lineColor?.flatColor ?? "text-secondary-900",
+      upColor: dataForLines?.colorConfig?.lineColor?.upColor ?? "#74b816",
+      downColor: dataForLines?.colorConfig?.lineColor?.downColor ?? "#e03131",
+      flatColor: dataForLines?.colorConfig?.lineColor?.flatColor ?? "#495057",
     }),
     tailwindTagTextColor: getColorBasedOnLineDirection({
       direction,
-      upColor: dataForLines?.colorConfig?.tagTextColor?.upColor ?? "text-green-700",
-      downColor: dataForLines?.colorConfig?.tagTextColor?.downColor ?? "text-red-700",
-      flatColor: dataForLines?.colorConfig?.tagTextColor?.flatColor ?? "text-secondary-900",
+      upColor: dataForLines?.colorConfig?.tagTextColor?.upColor ?? "#2f9e44",
+      downColor: dataForLines?.colorConfig?.tagTextColor?.downColor ?? "#e03131",
+      flatColor: dataForLines?.colorConfig?.tagTextColor?.flatColor ?? "#495057",
     }),
     tailwindTagBgColor: getColorBasedOnLineDirection({
       direction,
-      upColor: dataForLines?.colorConfig?.tagBgColor?.upColor ?? "bg-green-100",
-      downColor: dataForLines?.colorConfig?.tagBgColor?.downColor ?? "bg-red-100",
-      flatColor: dataForLines?.colorConfig?.tagBgColor?.flatColor ?? "bg-secondary-100",
+      upColor: dataForLines?.colorConfig?.tagBgColor?.upColor ?? "#d3f9d8",
+      downColor: dataForLines?.colorConfig?.tagBgColor?.downColor ?? "#ffe0e0",
+      flatColor: dataForLines?.colorConfig?.tagBgColor?.flatColor ?? "#f1f3f5",
     }),
     tailwindPrimaryTextColor: getColorBasedOnLineDirection({
       direction,
-      upColor: dataForLines?.colorConfig?.subheaderColor?.upColor ?? "text-green-700",
-      downColor: dataForLines?.colorConfig?.subheaderColor?.downColor ?? "text-red-700",
-      flatColor: dataForLines?.colorConfig?.subheaderColor?.flatColor ?? "text-secondary-900",
+      upColor: dataForLines?.colorConfig?.subheaderColor?.upColor ?? "#74b816",
+      downColor: dataForLines?.colorConfig?.subheaderColor?.downColor ?? "#e03131",
+      flatColor: dataForLines?.colorConfig?.subheaderColor?.flatColor ?? "#495057",
     }),
   };
 };

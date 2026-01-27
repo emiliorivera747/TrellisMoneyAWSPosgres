@@ -13,7 +13,8 @@ const ValueAndPriceChange = ({
   data,
   withYears = true,
   mainHeaderTailwindCss = "text-zinc-800 text-[1.4rem] font-medium ",
-  subHeaderTailwindCss = "text-secondary-900",
+  subHeaderTailwindCss = "",
+  subHeaderStyle,
   withInfo = false,
   lineName = "",
 }: ValueAndPriceChangeProps) => {
@@ -31,6 +32,7 @@ const ValueAndPriceChange = ({
       </span>
       <span
         className={`flex-row flex items-center gap-1 ${subHeaderTailwindCss}`}
+        style={subHeaderStyle}
       >
         <TiArrowSortedUp />
         <RenderTooltipContent

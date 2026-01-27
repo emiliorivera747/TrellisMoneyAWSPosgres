@@ -48,7 +48,8 @@ const InflationTag = ({
 
   return (
     <div
-      className={`flex items-center p-[0.3rem] px-3 rounded-full font-semibold gap-2 text-[0.6rem] ${tailwindTagBgColor} ${tailwindTagTextColor}`}
+      className={`flex items-center p-[0.3rem] px-3 rounded-full font-semibold gap-2 text-[0.6rem]`}
+      style={{ backgroundColor: tailwindTagBgColor, color: tailwindTagTextColor }}
     >
       {GetSvgV2({
         path: getSvgPath(lineDirection),

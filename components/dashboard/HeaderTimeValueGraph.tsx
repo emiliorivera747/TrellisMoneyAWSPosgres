@@ -100,7 +100,7 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
 /**
  * Shows the change in the value as well as the rate of change as a percentage.
  */
-export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
+export function ValueChangeHeader({ className, lineIndex, style }: ValueChangeProps) {
   const { lineConfigs, tooltipData } = useContext(TimeValueGraphHeaderContext);
 
   if (!lineConfigs) return null;
@@ -124,6 +124,7 @@ export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
         valueDifference={deafultStockValueDifference}
         rateOfChange={defaultRateOfChange}
         className={className}
+        style={style}
       />
     );
 
@@ -140,6 +141,7 @@ export function ValueChangeHeader({ className, lineIndex }: ValueChangeProps) {
       valueDifference={stockValueDifference}
       rateOfChange={rateOfChange}
       className={className}
+      style={style}
     />
   );
 }

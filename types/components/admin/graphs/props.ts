@@ -181,6 +181,13 @@ export interface ValueAndPriceChangeProps {
   subHeaderTailwindCss?: string;
 
   /**
+   * Inline styles to be applied to the sub-header of the graph.
+   * @type {React.CSSProperties}
+   * @memberof ValueAndPriceChangeProps
+   */
+  subHeaderStyle?: React.CSSProperties;
+
+  /**
    * Indicates whether additional informational content should be displayed in the graph.
    * Defaults to `false` if not provided.
    * @type {boolean}
@@ -310,6 +317,13 @@ export interface ValueChangeProps {
   className?: string;
 
   /**
+   * Inline styles to be applied to the value change element.
+   * @type {React.CSSProperties}
+   * @memberof ValueChangeProps
+   */
+  style?: React.CSSProperties;
+
+  /**
    * With years or not.
    * @type {boolean}
    * @memberof ValueChangeProps
@@ -348,4 +362,11 @@ export interface ValuePriceChangeLabelProps {
    * @memberof ValuePriceChangeLabelProps
    */
   className?: string;
+
+  /**
+   * Inline styles to be applied to the label.
+   * @type {React.CSSProperties}
+   * @memberof ValuePriceChangeLabelProps
+   */
+  style?: React.CSSProperties;
 }

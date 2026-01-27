@@ -52,7 +52,8 @@ const MultipleValPriceChange = ({
               mainHeaderTailwindCss={`${
                 isMultipleLines ? "text-[1.1rem]" : "text-[1.4rem]"
               } text-tertiary-1000 font-medium`}
-              subHeaderTailwindCss={`${tailwindPrimaryTextColor} font-semibold text-[0.7rem]`}
+              subHeaderTailwindCss="font-semibold text-[0.7rem]"
+              subHeaderStyle={{ color: tailwindPrimaryTextColor }}
               lineName={getLineName(line)}
             />
             <div className="flex items-center justify-start gap-2 text-[0.7rem] rounded-full w-[10rem] cursor-pointer mt-[0.2rem] ml-[0.17rem]">

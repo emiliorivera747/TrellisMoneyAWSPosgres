@@ -20,10 +20,11 @@ const ValuePriceChangeLabel = ({
   rateOfChange,
   ref,
   className,
+  style,
 }: ValuePriceChangeLabelProps) => {
   const defaultClass = "text-[0.8rem] text-tertiary-1000 font-semibold flex items-center gap-1";
   return (
-    <span ref={ref} className={cn(defaultClass, className)}>
+    <span ref={ref} className={cn(defaultClass, className)} style={style}>
       <TiArrowSortedUp />
       {numberToMoneyFormat(valueDifference) +
         " (" +

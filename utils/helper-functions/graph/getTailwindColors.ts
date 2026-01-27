@@ -17,44 +17,44 @@ export const getTailwindColors = (payloadForLine: LineSeriesConfig) => {
     lineColor: getColorBasedOnLineDirection({
       direction,
       upColor:
-        payloadForLine?.colorConfig?.lineColor?.upColor ?? "text-green-700",
+        payloadForLine?.colorConfig?.lineColor?.upColor ?? "#74b816",
       downColor:
-        payloadForLine?.colorConfig?.lineColor?.downColor ?? "text-red-700",
+        payloadForLine?.colorConfig?.lineColor?.downColor ?? "#e03131",
       flatColor:
         payloadForLine?.colorConfig?.lineColor?.flatColor ??
-        "text-secondary-900",
+        "#495057",
     }),
    tagTextColorTW: getColorBasedOnLineDirection({
       direction,
       upColor:
-        payloadForLine?.colorConfig?.tagTextColor?.upColor ?? "text-green-700",
+        payloadForLine?.colorConfig?.tagTextColor?.upColor ?? "#2f9e44",
       downColor:
-        payloadForLine?.colorConfig?.tagTextColor?.downColor ?? "text-red-700",
+        payloadForLine?.colorConfig?.tagTextColor?.downColor ?? "#e03131",
       flatColor:
         payloadForLine?.colorConfig?.tagTextColor?.flatColor ??
-        "text-secondary-900",
+        "#495057",
     }),
     tagBgColorTW: getColorBasedOnLineDirection({
       direction,
       upColor:
-        payloadForLine?.colorConfig?.tagBgColor?.upColor ?? "bg-green-100",
+        payloadForLine?.colorConfig?.tagBgColor?.upColor ?? "#d3f9d8",
       downColor:
-        payloadForLine?.colorConfig?.tagBgColor?.downColor ?? "bg-red-100",
+        payloadForLine?.colorConfig?.tagBgColor?.downColor ?? "#ffe0e0",
       flatColor:
         payloadForLine?.colorConfig?.tagBgColor?.flatColor ??
-        "bg-secondary-100",
+        "#f1f3f5",
     }),
     primaryTextColorTW: getColorBasedOnLineDirection({
       direction,
       upColor:
         payloadForLine?.colorConfig?.subheaderColor?.upColor ??
-        "text-green-700",
+        "#74b816",
       downColor:
         payloadForLine?.colorConfig?.subheaderColor?.downColor ??
-        "text-red-700",
+        "#e03131",
       flatColor:
         payloadForLine?.colorConfig?.subheaderColor?.flatColor ??
-        "text-secondary-900",
+        "#495057",
     }),
   };
 };

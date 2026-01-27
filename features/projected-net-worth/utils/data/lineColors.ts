@@ -1,55 +1,64 @@
 import {
-  upColor,
-  downColor,
-  flatColor,
-  upColor2,
-  downColor2,
-  flatColor2,
+  upColorLine1,
+  downColorLine1,
+  flatColorLine1,
+  upColorLine2,
+  downColorLine2,
+  flatColorLine2,
+  tagTextUpColor,
+  tagTextDownColor,
+  tagTextFlatColor,
+  tagBgUpColor,
+  tagBgDownColor,
+  tagBgFlatColor,
+  subheaderUpColor,
+  subheaderDownColor,
+  subheaderFlatColor,
 } from "@/features/projected-net-worth/utils/graph-helpers/graphColors";
 
 export const lineColors1 = {
   lineColor: {
-    upColor: upColor,
-    downColor: downColor,
-    flatColor: flatColor,
+    upColor: upColorLine1,
+    downColor: downColorLine1,
+    flatColor: flatColorLine1,
   },
- tagTextColor: {
-    upColor: "text-green-700",
-    downColor: "text-red-700",
-    flatColor: "text-secondary-900",
+  tagTextColor: {
+    upColor: tagTextUpColor,
+    downColor: tagTextDownColor,
+    flatColor: tagTextFlatColor,
   },
   tagBgColor: {
-    upColor: "bg-green-100",
-    downColor: "bg-red-100",
-    flatColor: "bg-secondary-100",
+    upColor: tagBgUpColor,
+    downColor: tagBgDownColor,
+    flatColor: tagBgFlatColor,
   },
   subheaderColor: {
-    upColor: "text-secondary-900",
-    downColor: "text-red-600",
-    flatColor: "text-secondary-900",
+    upColor: subheaderUpColor,
+    downColor: subheaderDownColor,
+    flatColor: subheaderFlatColor,
   },
 };
 
 export const lineColors2 = {
   lineColor: {
-    upColor: upColor2,
-    downColor: downColor2,
-    flatColor: flatColor2,
+    upColor: upColorLine2,
+    downColor: downColorLine2,
+    flatColor: flatColorLine2,
   },
- tagTextColor: {
-    upColor: "text-green-700",
-    downColor: "text-red-700",
-    flatColor: "text-secondary-900",
+  tagTextColor: {
+    upColor: tagTextUpColor,
+    downColor: tagTextDownColor,
+    flatColor: tagTextFlatColor,
   },
   tagBgColor: {
-    upColor: "bg-green-100",
-    downColor: "bg-red-100",
-    flatColor: "bg-secondary-100",
+    upColor: tagBgUpColor,
+    downColor: tagBgDownColor,
+    flatColor: tagBgFlatColor,
   },
   subheaderColor: {
-    upColor: "text-primary-800",
-    downColor: "text-red-600",
-    flatColor: "text-primary-900",
+    upColor: subheaderUpColor,
+    downColor: subheaderDownColor,
+    flatColor: subheaderFlatColor,
   },
 };
 

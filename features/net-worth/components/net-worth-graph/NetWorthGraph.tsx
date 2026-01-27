@@ -79,7 +79,8 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
                     <div className="flex gap-1">
                       <ValueChangeHeader
                         lineIndex={index}
-                        className={`${primaryTextColorTW} text-[0.7rem]`}
+                        className="text-[0.7rem]"
+                        style={{ color: primaryTextColorTW }}
                       />
                       <TotalYears lineIndex={index} className="text-[0.7rem]" />
                     </div>
