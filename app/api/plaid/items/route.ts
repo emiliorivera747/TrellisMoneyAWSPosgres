@@ -11,30 +11,25 @@ import { getItemsWithMembersByHouseholdMemberIds } from "@/utils/drizzle/item/ge
 import { addItem } from "@/utils/drizzle/item/addItem";
 
 /**
- * Handles POST requests to create a new Plaid item.
+ * Handles POST requests to create a Plaid item.
  *
- * Expects a JSON body with `plaidItem` containing `item_id` and `access_token`.
- * Creates a new item in the database and returns the created item (excluding `access_token`).
- *
- * Example:
- * ```json
- * POST /api/plaid/items
+ * Expects:
  * {
- *   "plaidItem": {
- *     "item_id": "123",
- *     "access_token": "access-token-abc"
- *   }
+ *   "plaidItem": { "item_id": "123", "access_token": "token" }
  * }
- * ```
+ *
+ * Creates and returns the item (excludes `access_token`).
  */
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
       const body = await request.json();
       const { plaidItem } = body;
-
       if (!plaidItem || !plaidItem.item_id || !plaidItem.access_token) {
-        return FailResponse("Missing required fields: plaidItem with item_id and access_token", 400);
+        return FailResponse(
+          "Missing required fields: plaidItem with item_id and access_token",
+          400
+        );
       }
 
       // Create the item using Drizzle
@@ -73,13 +68,16 @@ export async function GET(req: NextRequest) {
     try {
       // Get household members for the user
       const memberRows = await getMembers(user.id);
-      if (memberRows.length === 0) return FailResponse("No household membership found", 404);
-    
+      if (memberRows.length === 0)
+        return FailResponse("No household membership found", 404);
+
       // Get household member IDs
       const householdMemberIds = memberRows.map((m) => m.householdMemberId);
 
       // Get items with their associated members
-      const itemsWithMembers = await getItemsWithMembersByHouseholdMemberIds(householdMemberIds);
+      const itemsWithMembers = await getItemsWithMembersByHouseholdMemberIds(
+        householdMemberIds
+      );
       if (itemsWithMembers.length === 0) {
         return FailResponse("No items found", 404);
       }
@@ -93,9 +91,12 @@ export async function GET(req: NextRequest) {
         };
       });
 
-      return SuccessResponse({ items: itemsWithMember }, "Items retrieved successfully");
+      return SuccessResponse(
+        { items: itemsWithMember },
+        "Items retrieved successfully"
+      );
     } catch (error) {
-      return ErrorResponse(getServerErrorMessage(error));
+      return ErrorResponse(error);
     }
   });
 }

@@ -36,9 +36,22 @@ const getItems = async (): Promise<GetItemsResponse> => {
   return res.json();
 };
 
+/**
+ * Refreshes all items for the household.
+ * @export
+ * @returns {Promise<any>} A promise that resolves to the refresh response.
+ */
+const refreshItems = async () => {
+  const response = await fetch(`${API_URL}/household/items/refresh`, {
+    method: "POST",
+  });
+  return response.json();
+};
+
 const itemService = {
   removeItem,
   getItems,
+  refreshItems,
 };
 
 export default itemService;

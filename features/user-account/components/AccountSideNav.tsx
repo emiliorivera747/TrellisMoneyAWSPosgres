@@ -9,7 +9,7 @@ const AccountSideNav = () => {
   return (
     <aside className="w-[25rem]">
       <nav className="p-4">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">
+        <h1 className="text-2xl font-bold text-tertiary-800 mb-4">
           {user?.email?.split("@")[0]}'s Account
         </h1>
         <ul className="">
