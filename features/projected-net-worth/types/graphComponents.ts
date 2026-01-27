@@ -354,35 +354,35 @@ export interface ProjectedLineGraphProps {
    * @type {number[]}
    * @memberof ProjectedLineGraphProps
    */
-  years: number[];
+  years?: number[];
 
   /**
    * The currently selected year.
    * @type {number}
    * @memberof ProjectedLineGraphProps
    */
-  selectedYear: number;
+  selectedYear?: number;
 
   /**
    * Function to set the selected year.
    * @type {(year: number) => void}
    * @memberof ProjectedLineGraphProps
    */
-  setSelectedYear: (year: number) => void;
+  setSelectedYear?: (year: number) => void;
 
   /**
    * The retirement year for projections.
    * @type {number}
    * @memberof ProjectedLineGraphProps
    */
-  retirementYear: number;
+  retirementYear?: number;
 
   /**
    * Function to edit the retirement year.
    * @type {(year: number) => void}
    * @memberof ProjectedLineGraphProps
    */
-  editRetirementYear: (year: number) => void;
+  editRetirementYear?: (year: number) => void;
 }
 
 /**

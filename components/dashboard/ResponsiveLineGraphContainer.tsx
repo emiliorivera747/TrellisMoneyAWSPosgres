@@ -3,7 +3,8 @@ import { ResponsiveGraphContainerProps } from "@/types/components/admin/graphs/p
 
 /**
  *
- * ResponsiveLineGraphContainer is a wrapper component that uses the ParentSize component from @visx/responsive to make a line graph responsive.
+ * ResponsiveLineGraphContainer is a wrapper component that uses the ParentSize component 
+ * from @visx/responsive to make a line graph responsive.
  *
  * @param {string} className - The class name to be applied to the container.
  * @param {React.ComponentType} GraphComponent - The line graph component to be rendered.

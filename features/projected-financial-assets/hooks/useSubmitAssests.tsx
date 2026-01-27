@@ -114,7 +114,7 @@ const getCurrentProjectedAsset = (
   selectedFilter: string
 ) => {
   const assets = futureProjectionData?.projectedAssets?.find(
-    (payload) => payload.value === selectedFilter
+    (payload) => payload.filterValue === selectedFilter
   );
   if (assets) return assets;
   return futureProjectionData?.projectedAssets[0];

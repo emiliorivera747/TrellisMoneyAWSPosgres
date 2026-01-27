@@ -20,22 +20,13 @@ import useSubscription from "@/hooks/react-query/subscription/useSubscription";
 import SideNavSkeleton from "@/components/skeletons/navigation/SideNavSkeleton";
 
 /**
- * SideNavigationBar component renders a responsive side navigation bar
- * with navigation items and a user profile menu.
+ * Renders a responsive side navigation bar with navigation items and a user profile menu.
  *
- * @component
- * @returns {JSX.Element} The rendered side navigation bar component.
+ * @returns {JSX.Element} Side navigation bar component.
  *
  * @remarks
- * - Utilizes `usePathname` to determine the current path for highlighting active links.
- * - Displays a logo at the top and dynamically renders navigation items.
- * - Includes a user profile avatar menu at the bottom.
- *
- * @dependencies
- * - `Link` from `next/link` for navigation.
- * - `Image` from `next/image` for rendering the logo.
- * - `SideNavItemLink` for individual navigation items.
- * - `UserProfileAvatarMenu` for the user profile menu.
+ * - Highlights active links using `usePathname`.
+ * - Displays a logo, navigation items, and a user profile menu.
  *
  * @example
  * ```tsx

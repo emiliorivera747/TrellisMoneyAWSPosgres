@@ -1,28 +1,33 @@
 //Functions
 import updateAssets from "@/features/projected-financial-assets/utils/updateAssets";
-import { ProjectedAssetsWithFilter } from "@/types/future-projections/futureProjections";
-import { FutureProjectionData } from "@/types/future-projections/futureProjections";
-import useFetchProjections from "@/hooks/financial-projections/useFetchProjections";
-import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
-import useUpdateAssets from "@/hooks/financial-assets/useUpdateAssets";
-import useFetchUser from "@/hooks/user/useFetchUser";
+import { ProjectedAssetsWithFilter, FutureProjectionData } from "@/types/future-projections/futureProjections";
+import { User } from "@supabase/supabase-js";
+
+interface HandleFormSubmissionParams {
+  data: Record<string, number>;
+  projectionData: FutureProjectionData | undefined | null;
+  selectedFilter: string;
+  user: User | undefined | null;
+  mutateAssets: (assets: any) => void;
+}
 
 /**
  * Handles form submission to update the annual return rate.
  *
- * @param data - Form data submitted by the user.
- * @param projectionData - Data related to projected assets.
- * @param selectedFilter - Currently selected filter.
- * @param user - Current user information.
- * @param mutateAssets - Function to mutate asset data.
- * @param mutateAccount - Function to mutate account data.
+ * @param params - Parameters for form submission.
+ * @param params.data - Form data submitted by the user.
+ * @param params.projectionData - Data related to projected assets.
+ * @param params.selectedFilter - Currently selected filter.
+ * @param params.user - Current user information.
+ * @param params.mutateAssets - Function to mutate asset data.
  */
-export const handleFormSubmission = (data: Record<string, number>) => {
-  const { selectedProjectedYear: selectedYear, selectedInflationFilter: selectedFilter } = useDashboardFilters();
-  const { futureProjectionData: projectionData } = useFetchProjections();
-  const { user } = useFetchUser();
-  const { mutateAssets } = useUpdateAssets();
-
+export const handleFormSubmission = ({
+  data,
+  projectionData,
+  selectedFilter,
+  user,
+  mutateAssets,
+}: HandleFormSubmissionParams) => {
   if (!projectionData) return;
   const currentProjectedAsset =
     getCurrentProjectedAsset(projectionData, selectedFilter) ||
@@ -45,6 +50,6 @@ const getCurrentProjectedAsset = (
   selectedFilter: string
 ) => {
   return projectionData?.projectedAssets?.find(
-    (payload: ProjectedAssetsWithFilter) => payload.value === selectedFilter
+    (payload: ProjectedAssetsWithFilter) => payload.filterValue === selectedFilter
   );
 };
