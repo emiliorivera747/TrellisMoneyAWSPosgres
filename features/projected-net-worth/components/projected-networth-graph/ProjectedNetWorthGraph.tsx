@@ -46,7 +46,6 @@ const ProjectedNetWorthGraph = ({
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
   if (futureProjectionHasError || futureProjectionData instanceof Error)
     return <ProjectedNetWorthGraphError error={futureProjectionError} />;
-
   const lineConfigs = createLineConfigurations(futureProjectionData);
 
   return (

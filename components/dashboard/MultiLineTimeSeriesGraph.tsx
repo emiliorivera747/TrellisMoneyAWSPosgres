@@ -15,7 +15,7 @@ import useHandleTooltipMultiple from "@/hooks/graphs/useHandleTooltipMultiple";
 
 //Types
 import { TimeSeriesData } from "@/types/components/admin/graphs/data";
-import { LineGraphTimeValueProps } from "@/types/components/admin/graphs/props";
+import { MultiLineTimeSeriesGraphProps } from "@/types/components/admin/graphs/props";
 
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
@@ -38,7 +38,7 @@ const defaultMargin = { top: 6, right: 6, bottom: 10, left: 6 };
  *
  * @returns {JSX.Element | null}
  */
-const LineGraphTimeValue = ({
+const MultiLineTimeSeriesGraph = ({
   width,
   height,
   lineConfigs,
@@ -50,7 +50,7 @@ const LineGraphTimeValue = ({
   tooltipLeft,
   curve = curveMonotoneX,
   backgroundFill = "url(#area-background-gradient)",
-}: LineGraphTimeValueProps) => {
+}: MultiLineTimeSeriesGraphProps) => {
 
   if (width < 10 || height < 10) return null;
   if (!lineConfigs) return null;
@@ -127,4 +127,4 @@ const LineGraphTimeValue = ({
   );
 };
 
-export default LineGraphTimeValue;
+export default MultiLineTimeSeriesGraph;

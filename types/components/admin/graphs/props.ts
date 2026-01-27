@@ -52,85 +52,85 @@ export interface ResponsiveGraphContainerProps<T = any> {
 }
 
 /**
- * Represents the properties for a line graph time value component.
+ * Represents the properties for a multi-line time series graph component.
  * @export
- * @interface LineGraphTimeValueProps
+ * @interface MultiLineTimeSeriesGraphProps
  */
-export interface LineGraphTimeValueProps {
+export interface MultiLineTimeSeriesGraphProps {
   /**
    * The width of the graph.
    * @type {number}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   width: number;
 
   /**
    * The height of the graph.
    * @type {number}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   height: number;
 
   /**
    * The data for the lines to be rendered. Configuration should be provided.
    * @type {LineSeriesConfig[]}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   lineConfigs: LineSeriesConfig[];
 
   /**
    * The function to show the tooltip.
    * @type {(args: any) => void}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   showTooltip: (args: any) => void;
 
   /**
    * The function to hide the tooltip.
    * @type {() => void}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   hideTooltip: () => void;
 
   /**
    * The data to be displayed in the tooltip.
    * @type {TooltipConfig[]}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   tooltipData: TooltipConfig[];
 
   /**
    * The top position of the tooltip.
    * @type {number}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   tooltipTop: number;
 
   /**
    * The left position of the tooltip.
    * @type {number}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   tooltipLeft: number;
 
   /**
    * The margin of the graph.
    * @type {{ top: number; right: number; bottom: number; left: number }}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   margin?: { top: number; right: number; bottom: number; left: number };
 
   /**
    * The curve of the line graph.
    * @type {typeof curveMonotoneX}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   curve?: typeof curveMonotoneX;
 
   /**
    * The background fill color of the graph.
    * @type {string}
-   * @memberof LineGraphTimeValueProps
+   * @memberof MultiLineTimeSeriesGraphProps
    */
   backgroundFill?: string;
 }
