@@ -12,7 +12,7 @@ export type ProjectedNetWorth = {
    * @type {String}
    * @memberof ProjectedNetWorth
    */
-  value: String;
+  filterValue: String;
 
   /**
    * Array of time series data points for the projection.

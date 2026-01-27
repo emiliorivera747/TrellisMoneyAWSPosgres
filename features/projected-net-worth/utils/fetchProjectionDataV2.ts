@@ -52,8 +52,8 @@ export const fetchProjectionData = async (
  * @returns A promise that resolves to an object containing the projected net worth and assets.
  *          The structure of the returned object is:
  *          {
- *            projectedNetWorth: Array<{ value: string, data: any }>,
- *            projectedAssets: Array<{ value: string, data: any }>
+ *            projectedNetWorth: Array<{ filterValue: string, data: any }>,
+ *            projectedAssets: Array<{ filterValue: string, data: any }>
  *          }
  *
  * @throws Will throw an error if the filter value is invalid.
@@ -75,11 +75,11 @@ export const fetchProjections = async (
     return {
       projectedNetWorth: [
         {
-          value: "actual",
+          filterValue: "actual",
           data: projectedNetWorth,
         },
       ],
-      projectedAssets: [{ value: "actual", data: projectedAssets }],
+      projectedAssets: [{ filterValue: "actual", data: projectedAssets }],
     };
   } else if (filter === "inflationAdjusted") {
     const res =
@@ -93,11 +93,11 @@ export const fetchProjections = async (
     return {
       projectedNetWorth: [
         {
-          value: "inflationAdjusted",
+          filterValue: "inflationAdjusted",
           data: projectedNetWorth,
         },
       ],
-      projectedAssets: [{ value: "inflationAdjusted", data: projectedAssets }],
+      projectedAssets: [{ filterValue: "inflationAdjusted", data: projectedAssets }],
     };
   } else if (filter === "both") {
     const noInflationData =
@@ -127,21 +127,21 @@ export const fetchProjections = async (
     return {
       projectedNetWorth: [
         {
-          value: "inflationAdjusted",
+          filterValue: "inflationAdjusted",
           data: projectedNetWorth_inflation,
         },
         {
-          value: "actual",
+          filterValue: "actual",
           data: projectedNetWorth_no_inflation,
         },
       ],
       projectedAssets: [
         {
-          value: "inflationAdjusted",
+          filterValue: "inflationAdjusted",
           data: projectedAssets_inflation,
         },
         {
-          value: "actual",
+          filterValue: "actual",
           data: projectedAssets_no_inflation,
         },
       ],

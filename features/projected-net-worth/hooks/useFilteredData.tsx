@@ -38,7 +38,7 @@ const useFilteredData = (
         projectedNetWorth.data,
         selectedYear
       );
-      return { filterValue: projectedNetWorth.value, data: filtered };
+      return { filterValue: projectedNetWorth.filterValue, data: filtered };
     });
     setFilteredData(filtered);
   }, [futureProjectionData?.projectedNetWorth, selectedYear, selectedFilter]);

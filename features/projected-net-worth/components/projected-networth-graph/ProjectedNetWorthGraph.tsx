@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useRef} from "react";
+import { useRef } from "react";
 
 // Components
 import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphContainer";
@@ -41,7 +41,6 @@ const ProjectedNetWorthGraph = ({
   futureProjectionHasError,
   futureProjectionLoading,
 }: ProjectedNetWorthGraphProps) => {
-  
   const graphContainerRef = useRef(null);
 
   const { selectedProjectedYear, selectedInflationFilter } =
@@ -75,7 +74,7 @@ const ProjectedNetWorthGraph = ({
           lineConfigs,
           withInlfationTag: selectedInflationFilter === "inflationAdjusted",
           years: YEARS,
-          retirementYear: CURRENT_YEAR + 30, 
+          retirementYear: CURRENT_YEAR + 30,
           selectedYear: selectedProjectedYear,
         }}
       />
