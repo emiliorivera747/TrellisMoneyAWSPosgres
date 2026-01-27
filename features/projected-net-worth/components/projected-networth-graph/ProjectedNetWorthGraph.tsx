@@ -76,6 +76,12 @@ const ProjectedNetWorthGraph = ({
           years: YEARS,
           retirementYear: CURRENT_YEAR + 30,
           selectedYear: selectedProjectedYear,
+          setSelectedYear: (year: number) => {
+            // Add logic to handle setting the selected year
+          },
+          editRetirementYear: (year: number) => {
+            // Add logic to handle editing the retirement year
+          },
         }}
       />
     </div>

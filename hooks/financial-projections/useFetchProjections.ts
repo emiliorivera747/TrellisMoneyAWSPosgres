@@ -5,6 +5,7 @@ import { getAssets } from "@/features/projected-financial-assets/utils/extractAs
 import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
 const currentYear = Number(new Date().getFullYear().toString());
+
 /**
  * Hook to fetch financial projections based on year and filter.
  *

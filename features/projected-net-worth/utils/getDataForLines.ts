@@ -3,6 +3,7 @@ import {
   lineColors1,
   lineColors2,
 } from "@/features/projected-net-worth/utils/data/lineColors";
+import { InflationFilters } from "@/types/future-projections/futureProjections";
 
 /**
  *
@@ -12,10 +13,9 @@ import {
  * @param filteredData
  * @returns
  */
-export const createLineConfigurations
- = (
-  selectedFilter: string,
-  filteredData: LineSeriesConfig[],
+export const createLineConfigurations = (
+  selectedFilter: InflationFilters,
+  filteredData: LineSeriesConfig[]
 ) => {
   const dataForLines =
     selectedFilter === "both"
