@@ -1,3 +1,5 @@
+"use client";
+
 //Visx
 import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";

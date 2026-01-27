@@ -22,8 +22,10 @@ const AccountNetWorthGraph = () => {
       <ResponsiveLineGraphContainer
         className="w-full h-[26rem]"
         ref={graphRef}
-        GraphComponent={NetWorthGraph}
-        lineConfigs={filteredData}
+        component={NetWorthGraph}
+        componentProps={{
+          lineConfigs: filteredData,
+        }}
       />
       <DateFilter />
     </div>

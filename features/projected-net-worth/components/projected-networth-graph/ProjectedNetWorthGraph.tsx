@@ -1,9 +1,9 @@
 "use client";
 
-//React
-import { useRef, useMemo } from "react";
+// React
+import { useRef} from "react";
 
-//components
+// Components
 import ResponsiveLineGraphContainer from "@/components/dashboard/ResponsiveLineGraphContainer";
 import ProjectedLineGraph from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";
 import ProjectedNetWorthGraphError from "@/components/errors/ProjectedNetWorthGraphError";
@@ -41,7 +41,8 @@ const ProjectedNetWorthGraph = ({
   futureProjectionHasError,
   futureProjectionLoading,
 }: ProjectedNetWorthGraphProps) => {
-  const containerRef = useRef(null);
+  
+  const graphContainerRef = useRef(null);
 
   const { selectedProjectedYear, selectedInflationFilter } =
     useDashboardFilters();
@@ -68,7 +69,7 @@ const ProjectedNetWorthGraph = ({
     <div className="h-[30rem] grid border-b border-tertiary-300">
       <ResponsiveLineGraphContainer
         className={"h-[25rem] w-full border-box"}
-        ref={containerRef}
+        ref={graphContainerRef}
         component={ProjectedLineGraph}
         componentProps={{
           lineConfigs,
