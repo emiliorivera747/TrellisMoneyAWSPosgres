@@ -1,4 +1,3 @@
-import React from "react";
 import { TiArrowSortedUp } from "react-icons/ti";
 import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
 

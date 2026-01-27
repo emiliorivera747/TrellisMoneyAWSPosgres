@@ -1,10 +1,10 @@
-//Config
+// Config
 import { filterConfig } from "@/features/projected-net-worth/config/filterConfig";
 
-//Components
+// Components
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
 
-//Types
+// Types
 import { LineGraphFilterButtonsProps } from "@/features/projected-net-worth/types/filters";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
@@ -31,14 +31,14 @@ const RenderFilters = ({
           },
           index
         ) => (
-            <LineGraphFilterButton
-              key={index}
-              isSelected={selectedFilter === filter.key}
-              svgPath={filter.svgPath}
-              label={filter.label}
-              onClick={()=>handleFilterChange(filter.key)}
-              color={filter.color}
-            />
+          <LineGraphFilterButton
+            key={index}
+            isSelected={selectedFilter === filter.key}
+            svgPath={filter.svgPath}
+            label={filter.label}
+            onClick={() => handleFilterChange(filter.key)}
+            color={filter.color}
+          />
         )
       )}
     </div>
