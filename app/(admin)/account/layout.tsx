@@ -1,4 +1,3 @@
-import SideNavigationBar from "@/components/navigation/SideNavigationBar";
 import { Toaster } from "@/components/ui/toaster";
 
 import AccountSideNav from "@/features/user-account/components/AccountSideNav";

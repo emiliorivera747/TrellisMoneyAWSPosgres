@@ -29,11 +29,11 @@ export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
       
+      
       // Step 1: Get items (sequential - needed first)
       const items = await getItemsByUserId(user.id);
-      if (!items || items.length === 0) {
+      if (!items || items.length === 0)
         return FailResponse("No connected financial institutions found", 404);
-      }
 
       // Step 2: Get accounts first (needed for holdings query)
       const accountsDB = await getAccountsFromItems(items);

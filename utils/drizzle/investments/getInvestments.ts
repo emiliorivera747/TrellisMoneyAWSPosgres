@@ -39,6 +39,7 @@ export const refreshHouseholdHoldings = async ({
   accountsDB,
   holdingsDB,
 }: GetInvestmentsPlaid) => {
+  
   /**
    * Get all holdings from Plaid
    */
@@ -78,36 +79,3 @@ export const refreshHouseholdHoldings = async ({
 
   return res;
 };
-
-// /**
-//  * Fetches investments with items from Plaid.
-//  * @export
-//  * @param {GetInvestmentsWithItemsPlaid} props - The properties for getting investments.
-//  * @returns {Promise<any>} The investments for each item.
-//  */
-// export const getInvestmentsWithItemsPlaid = async ({
-//   items,
-//   timestamp,
-//   userId,
-//   holdings: holdingsDB,
-// }: GetInvestmentsWithItemsPlaid) => {
-//   // Extract access tokens from the provided items
-//   const accessTokens = getAllAccessTokens(items);
-
-//   // Fetch investment data for each access token
-//   const investmentsForEachItem = await getAllHoldingsWithAccessTokens(
-//     accessTokens
-//   );
-
-//   // Update the database with fetched holdings and related data
-//   investmentsForEachItem.forEach(async (item) => {
-//     await updateHoldings({
-//       holdings: item.holdings,
-//       timestamp,
-//       userId,
-//       holdingsDB,
-//     });
-//   });
-
-//   return investmentsForEachItem;
-// };

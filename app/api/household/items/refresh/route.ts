@@ -1,9 +1,9 @@
-// app/api/household/accounts/refresh/route.ts
+// app/api/household/items/refresh/route.ts
 import { NextRequest } from "next/server";
-import { withAuth } from "@/lib/protected"; // your auth wrapper
+import { withAuth } from "@/lib/protected";
 
-import { getAccountsFromPlaidWithItems } from "@/services/plaid/getAccountV2";
-import { updateAccounts } from "@/utils/drizzle/accounts/updateAccounts";
+import { getItemsFromPlaid } from "@/services/plaid/items/items";
+import { updateItemsWithPlaidItems } from "@/utils/drizzle/item/updateItems";
 
 import {
   SuccessResponse,
@@ -14,16 +14,15 @@ import { getServerErrorMessage } from "@/utils/api-helpers/errors/getServerError
 
 import { getMembers } from "@/utils/drizzle/household-member/members";
 import { getItemsByHouseholdMemberIds } from "@/utils/drizzle/item/getItem";
-import { getAccountsFromItems } from "@/utils/drizzle/accounts/getAccount";
 
 /**
- * POST /api/household/accounts/refresh
+ * POST /api/household/items/refresh
  *
- * Refreshes Plaid accounts for the authenticated user's entire household.
+ * Refreshes Plaid items for the authenticated user's entire household.
  * - Fetches all relevant items/connections from the household
- * - Calls Plaid to get fresh account data
+ * - Calls Plaid to get fresh item data
  * - Updates the database
- * - Returns quick success with metadata (not the full accounts list)
+ * - Returns quick success with metadata (not the full items list)
  */
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
@@ -50,30 +49,36 @@ export async function POST(req: NextRequest) {
         return FailResponse("No connected financial institutions found", 404);
 
       /**
-       * Get the accounts from the database
+       * Transform items for Plaid API (camelCase to snake_case)
        */
-      const accountsDB = await getAccountsFromItems(items);
+      const itemsForPlaid = items.map((item) => ({
+        access_token: item.accessToken,
+        item_id: item.itemId,
+      }));
 
       /**
-       * Get Plaid accounts
+       * Get Plaid items
        */
-      const plaidAccounts = await getAccountsFromPlaidWithItems(items);
-      if (plaidAccounts.length === 0)
-        return FailResponse("No accounts found", 404);
+      const plaidItems = await getItemsFromPlaid(itemsForPlaid);
+      if (plaidItems.length === 0)
+        return FailResponse("No items found from Plaid", 404);
 
-      // 4. Update accounts in DB (your existing utility - should be idempotent)
-      const updatedAccounts = await updateAccounts(plaidAccounts, accountsDB);
+      /**
+       * Update items in DB
+       */
+      const updatedItems = await updateItemsWithPlaidItems(plaidItems);
 
-      // 5. Return quick success response (do NOT return full account list here)
+      /**
+       * Return quick success response
+       */
       return SuccessResponse(
         {
-          refreshedAccountsCount: Array.isArray(updatedAccounts)
-            ? updatedAccounts.length
+          refreshedItemsCount: Array.isArray(updatedItems)
+            ? updatedItems.length
             : 0,
-          refreshedItemCount: items.length,
           refreshedAt: new Date().toISOString(),
         },
-        "Household accounts refreshed successfully"
+        "Household items refreshed successfully"
       );
     } catch (error) {
       return ErrorResponse(getServerErrorMessage(error));

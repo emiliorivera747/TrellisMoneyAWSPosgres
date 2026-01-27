@@ -14,25 +14,10 @@ import {
 /**
  * Page component for managing connections.
  *
- * This component fetches and displays a list of items from the server,
- * allowing users to delete individual items. It handles loading and error
- * states during the deletion process.
+ * Fetches and displays items, allowing users to delete them.
+ * Handles loading and error states during operations.
  *
- * @component
  * @returns {JSX.Element} The rendered page component.
- *
- * @remarks
- * - Fetches items from the API on initial render.
- * - Displays a loading message while an item is being deleted.
- * - Displays an error message if an error occurs during deletion.
- *
- * @example
- * <page />
- *
- * @dependencies
- * - `useState` and `useEffect` from React for state management and side effects.
- * - `useRemoveItem` custom hook for handling item deletion.
- * - Tailwind CSS classes for styling.
  */
 const page = () => {
   const { mutateItem, itemIsPending, itemHasError } = useRemoveItem();
@@ -52,12 +37,12 @@ const page = () => {
       </p>
       <div className=" h-full flex flex-col items-center justify-start pt-6 gap-4 w-[30rem]">
         {itemsResponse?.data?.items.map(
-          ({ itemId, institutionName, member }) => {
+          ({ member, item }) => {
             return (
-              <div key={itemId} className="flex gap-2 w-full">
+              <div key={item.itemId} className="flex gap-2 w-full">
                 <div className="rounded-[12px] border border-tertiary-400 py-2 px-6 box-border w-[80%] overflow-x-scroll font-light text-tertiary-900 flex  flex-col ">
                   <span className="font-semibold">
-                    {institutionName ?? "Unknown"}
+                    {item.institutionName ?? "Unknown"}
                   </span>{" "}
                   <span className="font-normal text-tertiary-700 text-[0.9rem]">
                     {member.fullName ?? member.email}
