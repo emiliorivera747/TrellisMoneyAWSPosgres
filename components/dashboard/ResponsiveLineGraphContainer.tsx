@@ -17,7 +17,7 @@ function ResponsiveGraphContainer<T = any>({
   component: Component,
   componentProps,
   ref,
-}: ResponsiveGraphContainerProps) {
+}: ResponsiveGraphContainerProps<T>) {
   return (
     <div className={className} ref={ref}>
       <ParentSize>

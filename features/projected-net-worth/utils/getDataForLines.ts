@@ -18,7 +18,7 @@ export const createLineConfigurations
   filteredData: LineSeriesConfig[],
 ) => {
   const dataForLines =
-    selectedFilter === "isBoth"
+    selectedFilter === "both"
       ? [
           {
             data: filteredData?.[1]?.data || [],

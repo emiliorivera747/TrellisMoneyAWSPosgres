@@ -1,9 +1,9 @@
 /**
  * Represents the available inflation filter options.
  * @export
- * @typedef {"withInflation" | "withNoInflation" | "isBoth"} InflationFilters
+ * @typedef {"inflationAdjusted" | "actual" | "both"} InflationFilters
  */
-export type InflationFilters = "withInflation" | "withNoInflation" | "isBoth";
+export type InflationFilters = "inflationAdjusted" | "actual" | "both";
 
 /**
  * Properties for the line graph filter buttons component.

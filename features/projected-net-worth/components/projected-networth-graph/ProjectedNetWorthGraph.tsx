@@ -20,7 +20,7 @@ import useFilteredData from "@/features/projected-net-worth/hooks/useFilteredDat
 
 // Constants
 const DEFAULT_YEARS_INTO_THE_FUTURE = 100;
-const CURRENT_YEAR = Number(new Date().getFullYear().toString());
+const CURRENT_YEAR = new Date().getFullYear();
 const YEARS = generateYearsArray(
   CURRENT_YEAR,
   CURRENT_YEAR + DEFAULT_YEARS_INTO_THE_FUTURE
@@ -73,8 +73,10 @@ const ProjectedNetWorthGraph = ({
         component={ProjectedLineGraph}
         componentProps={{
           lineConfigs,
-          withInflationTag: selectedInflationFilter === "withInflation",
+          withInlfationTag: selectedInflationFilter === "inflationAdjusted",
           years: YEARS,
+          retirementYear: CURRENT_YEAR + 30, 
+          selectedYear: selectedProjectedYear,
         }}
       />
     </div>

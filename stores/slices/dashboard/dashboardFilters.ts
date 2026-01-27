@@ -15,7 +15,7 @@ export const createDashboardFilterSlice: StateCreator<DashboardFiltersSlice> = (
 ) => ({
   selectedProjectedYear: DEFAULT_RETIREMENT_YEAR,
   retirementYear: DEFAULT_RETIREMENT_YEAR,
-  selectedInflationFilter: "withNoInflation",
+  selectedInflationFilter: "actual",
   mode: "view",
 
   setSelectedProjectedYear: (year) => set({ selectedProjectedYear: year }),

@@ -34,14 +34,14 @@ const MultipleValPriceChange = ({
 
   const getLineName = (line: LineSeriesConfig) => {
     if (payloadForLines.length > 1) {
-      if (line.filterValue === "withInflation") return "with inflation";
+      if (line.filterValue === "inflationAdjusted") return "with inflation";
       return "no inflation";
     }
     return "";
   };
 
   const withInflation = (line: LineSeriesConfig) => {
-    return line.filterValue === "withInflation";
+    return line.filterValue === "inflationAdjusted";
   };
 
   return (
