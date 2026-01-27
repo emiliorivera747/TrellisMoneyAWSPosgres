@@ -1,7 +1,7 @@
 import { InflationFilters } from "@/types/future-projections/futureProjections";
 
 export interface GetProjectionsProps {
-  filters: InflationFilters[];
+  filters: Exclude<InflationFilters, "both">[];
   startDate: number;
   endDate: number;
 }

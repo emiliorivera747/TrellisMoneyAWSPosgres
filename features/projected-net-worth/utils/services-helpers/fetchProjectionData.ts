@@ -1,7 +1,11 @@
+/**
+ * Helpers for fetching financial projection data with inflation adjustment support.
+ */
 import financialProjectionService from "@/features/projected-net-worth/services/financialProjectionsService";
 import { InflationFilters } from "@/types/future-projections/futureProjections";
 import { GetProjectionsProps } from "@/features/projected-net-worth/types/fetchProjectionsHelper";
 
+/** Maps inflation filter values to their corresponding API parameter. */
 const FILTER_CONFIG: Record<
   Exclude<InflationFilters, "both">,
   { isInflationAdjusted: boolean }
@@ -10,7 +14,8 @@ const FILTER_CONFIG: Record<
   inflationAdjusted: { isInflationAdjusted: true },
 };
 
-export const fetchProjectionData = async (
+/** Fetches projected net worth data. Returns both datasets when filter is "both". */
+export const fetchNetWorthProjection = async (
   startDate: number,
   endDate: number,
   filter: InflationFilters
@@ -34,6 +39,7 @@ export const fetchProjectionData = async (
   return { noInflationData, inflationData };
 };
 
+/** Fetches and formats net worth and assets projection for a single filter. */
 const fetchAndFormatProjection = async (
   startDate: number,
   endDate: number,
@@ -52,7 +58,8 @@ const fetchAndFormatProjection = async (
   };
 };
 
-const getFilters = (
+/** Expands "both" filter into individual filter values, or returns single filter as array. */
+const expandInflationFilter = (
   filter: InflationFilters
 ): Exclude<InflationFilters, "both">[] => {
   return filter === "both"
@@ -60,17 +67,18 @@ const getFilters = (
     : [filter];
 };
 
-const getProjections = async ({
+/** Fetches projections for multiple filters in parallel and aggregates results. */
+const fetchFormattedProjections = async ({
   filters,
   startDate,
   endDate,
 }: GetProjectionsProps) => {
-  const filteredFilters = filters.filter(
-    (filter): filter is Exclude<InflationFilters, "both"> => filter !== "both"
-  );
-
+  /**
+   * Goes through the filter array which can only consist of
+   * inflationAdjusted and actual filters
+   */
   const results = await Promise.all(
-    filteredFilters.map((filter) =>
+    filters.map((filter) =>
       fetchAndFormatProjection(startDate, endDate, filter)
     )
   );
@@ -80,22 +88,20 @@ const getProjections = async ({
   };
 };
 
+/** Main entry point for fetching projected net worth and assets data. */
 export const fetchProjections = async (
   startDate: number,
   endDate: number,
   filter: InflationFilters
 ) => {
-  
-  const filters = getFilters(filter);
+  const filters = expandInflationFilter(filter);
 
-  const { projectedNetWorth, projectedAssets } = await getProjections({
-    filters,
-    startDate,
-    endDate,
-  });
+  const { projectedNetWorth, projectedAssets } =
+    await fetchFormattedProjections({
+      filters,
+      startDate,
+      endDate,
+    });
 
   return { projectedNetWorth, projectedAssets };
 };
-
-
-
