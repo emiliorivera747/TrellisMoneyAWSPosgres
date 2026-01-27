@@ -1,4 +1,4 @@
-import ValueAndPriceChange from "@/components/dashboard/ValueAndPriceChange";
+import ValueSummary from "@/components/dashboard/ValueSummary";
 import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
@@ -47,7 +47,7 @@ const MultipleValPriceChange = ({
 
         return (
           <div key={`${line.filterValue ?? "undefined"}-${index}`}>
-            <ValueAndPriceChange
+            <ValueSummary
               tooltipPayload={tooltipData?.[index] ?? null}
               data={line.data}
               mainHeaderTailwindCss={`${headerSize} text-tertiary-1000 font-medium`}

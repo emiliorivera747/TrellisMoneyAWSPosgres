@@ -5,9 +5,9 @@ import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
 
-import { ValueAndPriceChangeProps } from "@/types/components/admin/graphs/props";
+import { ValueSummaryProps } from "@/types/components/admin/graphs/props";
 
-const ValueAndPriceChange = ({
+const ValueSummary = ({
   tooltipPayload,
   data,
   withYears = true,
@@ -15,7 +15,7 @@ const ValueAndPriceChange = ({
   subHeaderTailwindCss = "",
   subHeaderStyle,
   lineName = "",
-}: ValueAndPriceChangeProps) => {
+}: ValueSummaryProps) => {
   if (!data) return null;
 
   const rawValue = tooltipPayload
@@ -47,4 +47,4 @@ const ValueAndPriceChange = ({
   );
 };
 
-export default ValueAndPriceChange;
+export default ValueSummary;

@@ -138,21 +138,21 @@ export interface MultiLineTimeSeriesSvgProps {
 /**
  * Represents the properties for a component that displays value and price change graphs.
  * @export
- * @interface ValueAndPriceChangeProps
+ * @interface ValueSummaryProps
  */
-export interface ValueAndPriceChangeProps {
+export interface ValueSummaryProps {
   /**
    * The payload data for the tooltip, which provides information about the graph's data points.
    * Can be `null` if no tooltip data is available.
    * @type {TooltipConfig | null}
-   * @memberof ValueAndPriceChangeProps
+   * @memberof ValueSummaryProps
    */
   tooltipPayload: TooltipConfig | null;
 
   /**
    * The time series data to be displayed in the graph.
    * @type {TimeSeriesData[]}
-   * @memberof ValueAndPriceChangeProps
+   * @memberof ValueSummaryProps
    */
   data: TimeSeriesData[];
 
@@ -160,7 +160,7 @@ export interface ValueAndPriceChangeProps {
    * Indicates whether the graph should display years in its labels or data points.
    * Defaults to `false` if not provided.
    * @type {boolean}
-   * @memberof ValueAndPriceChangeProps
+   * @memberof ValueSummaryProps
    */
   withYears?: boolean;
 
@@ -168,7 +168,7 @@ export interface ValueAndPriceChangeProps {
    * The Tailwind CSS classes to be applied to the main header of the graph.
    * Can be used for custom styling.
    * @type {string}
-   * @memberof ValueAndPriceChangeProps
+   * @memberof ValueSummaryProps
    */
   mainHeaderTailwindCss?: string;
 
@@ -176,14 +176,14 @@ export interface ValueAndPriceChangeProps {
    * The Tailwind CSS classes to be applied to the sub-header of the graph.
    * Can be used for custom styling.
    * @type {string}
-   * @memberof ValueAndPriceChangeProps
+   * @memberof ValueSummaryProps
    */
   subHeaderTailwindCss?: string;
 
   /**
    * Inline styles to be applied to the sub-header of the graph.
    * @type {React.CSSProperties}
-   * @memberof ValueAndPriceChangeProps
+   * @memberof ValueSummaryProps
    */
   subHeaderStyle?: React.CSSProperties;
 
@@ -191,14 +191,14 @@ export interface ValueAndPriceChangeProps {
    * Indicates whether additional informational content should be displayed in the graph.
    * Defaults to `false` if not provided.
    * @type {boolean}
-   * @memberof ValueAndPriceChangeProps
+   * @memberof ValueSummaryProps
    */
   withInfo?: boolean;
 
   /**
    * The name of the line in the graph, used for labeling or identification purposes.
    * @type {string}
-   * @memberof ValueAndPriceChangeProps
+   * @memberof ValueSummaryProps
    */
   lineName?: string;
 }
