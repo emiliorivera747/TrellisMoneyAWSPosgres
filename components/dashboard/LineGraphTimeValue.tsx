@@ -19,7 +19,7 @@ import { LineGraphTimeValueProps } from "@/types/components/admin/graphs/props";
 
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
-import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
+import { getTailwindColors } from "@/features/projected-net-worth/utils/graph-helpers/getTailwindColors";
 
 const defaultMargin = { top: 6, right: 6, bottom: 10, left: 6 };
 

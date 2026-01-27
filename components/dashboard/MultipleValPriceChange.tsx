@@ -6,7 +6,7 @@ import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
-import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
+import { getTailwindColors } from "@/features/projected-net-worth/utils/graph-helpers/getTailwindColors";
 
 interface MultipleValPriceChangeProps {
   payloadForLines: LineSeriesConfig[];

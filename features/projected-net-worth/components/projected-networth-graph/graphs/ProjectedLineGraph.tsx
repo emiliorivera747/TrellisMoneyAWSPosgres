@@ -14,7 +14,7 @@ import NoLinePayloads from "@/features/projected-net-worth/components/projected-
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 //Utils
-import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
+import { checkLinePayloads } from "@/features/projected-net-worth/utils/graph-helpers/checkLinePayloads";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 
 /**

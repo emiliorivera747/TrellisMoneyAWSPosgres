@@ -6,7 +6,7 @@ import {
 
 // Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
-import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
+import { getTailwindColors } from "@/features/projected-net-worth/utils/graph-helpers/getTailwindColors";
 
 
 const getSvgPath = (category: InflationCategory) => {

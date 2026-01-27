@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { TimeSeriesData } from "@/types/components/admin/graphs/data";
-import { filterProjectionData } from "@/features/projected-net-worth/utils/filterData";
+import { filterProjectionData } from "@/features/projected-net-worth/utils/filters/filterData";
 
 interface projectionData {
   noInflationData: { data: TimeSeriesData[] };

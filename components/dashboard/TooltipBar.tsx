@@ -6,7 +6,7 @@ import { TooltipProps } from "@/types/components/admin/graphs/tooltips";
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 
 //Functions
-import { getTailwindColors } from "@/features/projected-net-worth/utils/getTailwindColors";
+import { getTailwindColors } from "@/features/projected-net-worth/utils/graph-helpers/getTailwindColors";
 
 /**
  * Component for displaying a tooltip bar on a graph.

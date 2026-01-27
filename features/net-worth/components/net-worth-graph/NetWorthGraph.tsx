@@ -22,7 +22,7 @@ import GraphHeader from "@/components/headers/GraphHeader";
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 // Utils
-import { checkLinePayloads } from "@/features/projected-net-worth/utils/checkLinePayloads";
+import { checkLinePayloads } from "@/features/projected-net-worth/utils/graph-helpers/checkLinePayloads";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 import { getTailwindColors } from "@/utils/helper-functions/graph/getTailwindColors";
 

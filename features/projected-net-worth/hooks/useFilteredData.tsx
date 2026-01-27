@@ -4,7 +4,7 @@ import { FutureProjectionData } from "@/types/future-projections/futureProjectio
 import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 
 // Functions
-import { filterProjectionData } from "@/features/projected-net-worth/utils/filterData";
+import { filterProjectionData } from "@/features/projected-net-worth/utils/filters/filterData";
 
 /**
  * Custom hook to filter the projection data based on the selected year.

@@ -5,7 +5,7 @@ import {
   upColor2,
   downColor2,
   flatColor2,
-} from "@/features/projected-net-worth/utils/graphColors";
+} from "@/features/projected-net-worth/utils/graph-helpers/graphColors";
 
 export const lineColors1 = {
   lineColor: {
