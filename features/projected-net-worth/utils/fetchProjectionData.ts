@@ -1,156 +1,84 @@
-// Services
 import financialProjectionService from "@/features/projected-net-worth/services/financialProjectionsService";
-import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
+import { InflationFilters } from "@/types/future-projections/futureProjections";
 
 export const fetchProjectionData = async (
   startDate: number,
   endDate: number,
-  filter: string
+  filter: InflationFilters
 ) => {
-  switch (filter) {
-    case "actual":
-      return financialProjectionService.fetchProjectedNetWorth(
-        startDate,
-        endDate,
-        false
-      );
-    case "inflationAdjusted":
-      return financialProjectionService.fetchProjectedNetWorth(
-        startDate,
-        endDate,
-        true
-      );
-    case "both":
-      const noInflationData =
-        await financialProjectionService.fetchProjectedNetWorth(
-          startDate,
-          endDate,
-          false
-        );
-      const inflationData =
-        await financialProjectionService.fetchProjectedNetWorth(
-          startDate,
-          endDate,
-          true
-        );
-      return { noInflationData, inflationData };
-    default:
-      throw new Error("Invalid filter");
+  if (filter === "actual") {
+    return financialProjectionService.fetchProjectedNetWorth(startDate, endDate, false);
   }
+
+  if (filter === "inflationAdjusted") {
+    return financialProjectionService.fetchProjectedNetWorth(startDate, endDate, true);
+  }
+
+  if (filter === "both") {
+    const [noInflationData, inflationData] = await Promise.all([
+      financialProjectionService.fetchProjectedNetWorth(startDate, endDate, false),
+      financialProjectionService.fetchProjectedNetWorth(startDate, endDate, true),
+    ]);
+    return { noInflationData, inflationData };
+  }
+
+  throw new Error("Invalid filter");
 };
 
-/**
- * Fetches projection data for projected net worth and assets based on the specified filter.
- *
- * @param startDate - The start date for the projection data (as a timestamp).
- * @param endDate - The end date for the projection data (as a timestamp).
- * @param filter - The filter to determine the type of projection data to fetch.
- *                 Possible values:
- *                 - "actual": Fetch data without considering inflation.
- *                 - "inflationAdjusted": Fetch data considering inflation.
- *                 - "both": Fetch both inflation and no-inflation data.
- *
- * @returns A promise that resolves to an object containing the projected net worth and assets.
- *          The structure of the returned object is:
- *          {
- *            projectedNetWorth: Array<{ filterValue: string, data: any }>,
- *            projectedAssets: Array<{ filterValue: string, data: any }>
- *          }
- *
- * @throws Will throw an error if the filter value is invalid.
- */
+const fetchAndFormatProjection = async (
+  startDate: number,
+  endDate: number,
+  includeInflation: boolean,
+  filterValue: InflationFilters
+) => {
+  
+  const res = await financialProjectionService.fetchProjectedAssetsAndNetworth(
+    startDate,
+    endDate,
+    includeInflation
+  );
+
+  const { projectedNetWorth, projectedAssets } = res.data;
+
+  return {
+    netWorth: { filterValue, data: projectedNetWorth },
+    assets: { filterValue, data: projectedAssets },
+  };
+};
+
 export const fetchProjections = async (
   startDate: number,
   endDate: number,
-  filter: string
+  filter: InflationFilters
 ) => {
+  
   if (filter === "actual") {
-    const res =
-      await financialProjectionService.fetchProjectedAssetsAndNetworth(
-        startDate,
-        endDate,
-        false
-      );
-    const { projectedNetWorth, projectedAssets } = res.data;
-
+    const result = await fetchAndFormatProjection(startDate, endDate, false, "actual");
     return {
-      projectedNetWorth: [
-        {
-          filterValue: "actual",
-          data: projectedNetWorth,
-        },
-      ],
-      projectedAssets: [{ filterValue: "actual", data: projectedAssets }],
+      projectedNetWorth: [result.netWorth],
+      projectedAssets: [result.assets],
     };
-  } else if (filter === "inflationAdjusted") {
-    const res =
-      await financialProjectionService.fetchProjectedAssetsAndNetworth(
-        startDate,
-        endDate,
-        true
-      );
-
-    const { projectedNetWorth, projectedAssets } = res.data;
-
-    return {
-      projectedNetWorth: [
-        {
-          filterValue: "inflationAdjusted",
-          data: projectedNetWorth,
-        },
-      ],
-      projectedAssets: [
-        { filterValue: "inflationAdjusted", data: projectedAssets },
-      ],
-    };
-  } else if (filter === "both") {
-    const noInflationData =
-      await financialProjectionService.fetchProjectedAssetsAndNetworth(
-        startDate,
-        endDate,
-        false
-      );
-
-    const inflationData =
-      await financialProjectionService.fetchProjectedAssetsAndNetworth(
-        startDate,
-        endDate,
-        true
-      );
-
-    const {
-      projectedNetWorth: projectedNetWorth_inflation,
-      projectedAssets: projectedAssets_inflation,
-    } = inflationData.data;
-
-    const {
-      projectedNetWorth: projectedNetWorth_no_inflation,
-      projectedAssets: projectedAssets_no_inflation,
-    } = noInflationData.data;
-
-    return {
-      projectedNetWorth: [
-        {
-          filterValue: "inflationAdjusted",
-          data: projectedNetWorth_inflation,
-        },
-        {
-          filterValue: "actual",
-          data: projectedNetWorth_no_inflation,
-        },
-      ],
-      projectedAssets: [
-        {
-          filterValue: "inflationAdjusted",
-          data: projectedAssets_inflation as ProjectedAsset[],
-        },
-        {
-          filterValue: "actual",
-          data: projectedAssets_no_inflation as ProjectedAsset[],
-        },
-      ],
-    };
-  } else {
-    throw new Error("Invalid filter");
   }
+
+  if (filter === "inflationAdjusted") {
+    const result = await fetchAndFormatProjection(startDate, endDate, true, "inflationAdjusted");
+    return {
+      projectedNetWorth: [result.netWorth],
+      projectedAssets: [result.assets],
+    };
+  }
+
+  if (filter === "both") {
+    const [inflationResult, actualResult] = await Promise.all([
+      fetchAndFormatProjection(startDate, endDate, true, "inflationAdjusted"),
+      fetchAndFormatProjection(startDate, endDate, false, "actual"),
+    ]);
+
+    return {
+      projectedNetWorth: [inflationResult.netWorth, actualResult.netWorth],
+      projectedAssets: [inflationResult.assets, actualResult.assets],
+    };
+  }
+
+  throw new Error("Invalid filter");
 };

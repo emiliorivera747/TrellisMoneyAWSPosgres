@@ -1,7 +1,7 @@
 import { NetWorthData } from "@/features/projected-net-worth/types/projectedNetWorth";
 import { ProjectedAsset } from "@/features/projected-financial-assets/types/projectedAssets";
 
-type InflationFilter = "inflationAdjusted" | "actual";
+export type InflationFilters = "inflationAdjusted" | "actual" | "both";
 
 /**
  * Future projection data consists of the projected assets and net worth.
