@@ -31,7 +31,7 @@ const LineGraphTooltip = ({
           fontSize: "0.68rem",
           background: "none",
           border: "none",
-          color: "#868e96", // Change the text color to red
+          color: "var(--tertiary-700)",
           boxShadow: "none", // Ensure no box shadow is applied
         }}
       >

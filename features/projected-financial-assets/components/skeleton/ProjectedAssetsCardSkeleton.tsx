@@ -8,7 +8,7 @@ const SkeletonLoader = () => {
       className="max-h-screen overflow-y-auto sticky rounded-[12px] h-[92vh] "
     >
       {/* Header Skeleton */}
-      <div className="font-bold text-zinc-800 flex items-center gap-1 justify-start p-4 ">
+      <div className="font-bold text-foreground flex items-center gap-1 justify-start p-4 ">
         <span className="text-sm tracking-wider h-8">
           Projections{" "}
         </span>{" "}

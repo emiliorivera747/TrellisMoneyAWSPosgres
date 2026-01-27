@@ -28,7 +28,7 @@ const TopPageNav: React.FC<TopPageNavProps> = ({
             source: true,
           }}
         />
-        <h1 className="text-zinc-800">{title}</h1>
+        <h1 className="text-foreground">{title}</h1>
       </div>
       {/* <Avatar
         className="w-[2.2rem] h-[2.2rem]"

@@ -24,7 +24,7 @@ const TooltipBar = ({
       <Line
         from={{ x: tooltipLeft, y: margin.top + 54 }}
         to={{ x: tooltipLeft, y: innerHeight + margin.top }}
-        stroke={"#868e96"} // Changed the line color to red
+        stroke={"var(--tertiary-700)"}
         strokeWidth={0.5}
         strokeDasharray="6,6" // Reduced the gap between dashes
         pointerEvents="none"
@@ -43,7 +43,7 @@ const TooltipBar = ({
             cy={stockValueScale(getStockValue(linePayload.lineDataPoint))}
             r={4.5}
             stroke={lineColor}
-            fill="white"
+            fill="var(--tertiary-100)"
             strokeWidth={2.5}
             pointerEvents="none"
           />

@@ -95,7 +95,7 @@ export const AssetsCardPrimaryHeader = () => {
   const { setMode } = useDashboardFiltersWithActions();
 
   return (
-    <div className="font-bold text-zinc-900 flex items-center justify-between">
+    <div className="font-bold text-foreground flex items-center justify-between">
       <HeaderTitle year={selectedYear} />
       <HeaderDropdown mode={mode} setMode={setMode} />
     </div>

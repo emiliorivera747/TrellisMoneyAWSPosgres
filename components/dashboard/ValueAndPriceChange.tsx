@@ -12,7 +12,7 @@ const ValueAndPriceChange = ({
   tooltipPayload,
   data,
   withYears = true,
-  mainHeaderTailwindCss = "text-zinc-800 text-[1.4rem] font-medium ",
+  mainHeaderTailwindCss = "text-foreground text-[1.4rem] font-medium ",
   subHeaderTailwindCss = "",
   subHeaderStyle,
   withInfo = false,
