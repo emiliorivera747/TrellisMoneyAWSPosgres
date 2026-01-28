@@ -22,8 +22,10 @@ export const getDirectionalColors = (
 ) => {
   
   const getColor = (key: keyof typeof DEFAULT_COLORS) => {
+    
     const config = dataForLines?.colorConfig?.[key];
     const defaults = DEFAULT_COLORS[key];
+
     return getColorBasedOnLineDirection({
       direction,
       upColor: config?.upColor ?? defaults.upColor,

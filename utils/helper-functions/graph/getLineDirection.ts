@@ -7,21 +7,18 @@ import { TimeSeriesData } from "@/types/components/admin/graphs/data";
  * - If initial stock value is less than the last stock value, return "up" (increasing)
  * - If initial stock value is greater than the last stock value, return "down" (decreasing)
  * - If initial stock value is equal to the last stock value, return "flat" (no change)
- * 
- * @param data 
- * @returns 
+ *
+ * @param data
+ * @returns
  */
 export const getLineDirection = (data: TimeSeriesData[]): Direction => {
-  
-  if (!data || data?.length < 2 ) return "flat";
-  
-  const initialStockValue = getStockValue(data[0]);
-  const lastStockValue = getStockValue(data[data?.length - 1]);
+  const len = data?.length;
+  if (!data || len < 2) return "flat";
 
-  if (initialStockValue < lastStockValue) {
-    return "up";
-  } else if (initialStockValue > lastStockValue) {
-    return "down";
-  }
+  const startValue = getStockValue(data[0]);
+  const endValue = getStockValue(data[len - 1]);
+
+  if (startValue < endValue) return "up";
+  if (startValue > endValue) return "down";
   return "flat";
 };

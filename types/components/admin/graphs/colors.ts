@@ -1,4 +1,4 @@
-export interface TrendColors {
+export type TrendColors = {
   /**
    * The color for upward trend.
    * @type {string}
@@ -17,7 +17,7 @@ export interface TrendColors {
    * @memberof LineColor
    */
   flatColor: string;
-}
+};
 
 /**
  * Represents the color configuration for graph elements.
