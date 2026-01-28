@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 // Components
-import TimeValueGraphHeader, {
+import GraphSummaryHeader, {
   Value,
   ValueChangeHeader,
   TotalYears,
@@ -13,9 +13,7 @@ import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWi
 import { NetWorthGraphHeaderProps } from "@/features/net-worth/types/net-worth-graph-header";
 
 // Utils
-import {
-  getDirectionalColorsByLineConfig,
-} from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
+import { getDirectionalColorsByLineConfig } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 // Config
 import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
@@ -26,23 +24,21 @@ const NetWorthGraphHeader = ({
 }: NetWorthGraphHeaderProps) => {
   const filterRef = useRef<HTMLDivElement>(null);
   return (
-    <TimeValueGraphHeader
+    <GraphSummaryHeader
       lineConfigs={lineConfigs}
       tooltipConfigs={tooltipConfigs || []}
     >
       <div className="grid grid-cols-2 w-full">
+        <GraphHeader label={"Net Worth"} />
         <div className={"grid grid-cols-[14rem_14rem]"}>
           {lineConfigs.map((lineConfig, index) => {
-            
             const { primaryTextColor } =
               getDirectionalColorsByLineConfig(lineConfig);
 
             return (
               <div key={index} className="flex flex-col">
                 <div className="flex">
-                  <div className="flex items-center">
-                    <GraphHeader label={"Net Worth"} />
-                  </div>
+                  <div className="flex items-center"></div>
                 </div>
                 <Value
                   lineIndex={index}
@@ -68,7 +64,7 @@ const NetWorthGraphHeader = ({
           />
         </div>
       </div>
-    </TimeValueGraphHeader>
+    </GraphSummaryHeader>
   );
 };
 

@@ -23,7 +23,7 @@ import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateY
 
 
 // Context
-const TimeValueGraphHeaderContext = createContext<{
+const GraphSummaryHeaderContext = createContext<{
   lineConfigs: LineSeriesConfig[];
   tooltipConfigs?: TooltipConfig[];
 }>({
@@ -37,15 +37,15 @@ const TimeValueGraphHeaderContext = createContext<{
  *
  * @returns {JSX.Element}
  */
-const TimeValueGraphHeader = ({
+const GraphSummaryHeader = ({
   children,
   lineConfigs,
   tooltipConfigs,
 }: HeaderTimeValueGraphProps) => {
   return (
-    <TimeValueGraphHeaderContext.Provider value={{ lineConfigs, tooltipConfigs }}>
+    <GraphSummaryHeaderContext.Provider value={{ lineConfigs, tooltipConfigs }}>
       {children}
-    </TimeValueGraphHeaderContext.Provider>
+    </GraphSummaryHeaderContext.Provider>
   );
 };
 
@@ -78,7 +78,7 @@ export function Title({ children, className, ref }: TitleProps) {
 export function Value({ className, lineIndex, ref }: ValueProp) {
   const defaultClass =
     "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
-  const { lineConfigs, tooltipConfigs } = useContext(TimeValueGraphHeaderContext);
+  const { lineConfigs, tooltipConfigs } = useContext(GraphSummaryHeaderContext);
 
   if (!lineConfigs) return null;
 
@@ -100,7 +100,7 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
  * Shows the change in the value as well as the rate of change as a percentage.
  */
 export function ValueChangeHeader({ className, lineIndex, style }: ValueChangeProps) {
-  const { lineConfigs, tooltipConfigs } = useContext(TimeValueGraphHeaderContext);
+  const { lineConfigs, tooltipConfigs } = useContext(GraphSummaryHeaderContext);
 
   if (!lineConfigs) return null;
 
@@ -159,7 +159,7 @@ export function TotalYears({
   className?: string;
   lineIndex: number;
 }) {
-  const { lineConfigs, tooltipConfigs } = useContext(TimeValueGraphHeaderContext);
+  const { lineConfigs, tooltipConfigs } = useContext(GraphSummaryHeaderContext);
   const tooltipPayload = tooltipConfigs?.[lineIndex];
   const defaultClass = "text-tertiary-800 font-normal";
 
@@ -176,9 +176,9 @@ export function TotalYears({
 }
 
 
-TimeValueGraphHeader.Title = Title;
-TimeValueGraphHeader.Value = Value;
-TimeValueGraphHeader.ValueChangeHeader = ValueChangeHeader;
-TimeValueGraphHeader.TotalYears = TotalYears;
+GraphSummaryHeader.Title = Title;
+GraphSummaryHeader.Value = Value;
+GraphSummaryHeader.ValueChangeHeader = ValueChangeHeader;
+GraphSummaryHeader.TotalYears = TotalYears;
 
-export default TimeValueGraphHeader;
+export default GraphSummaryHeader;

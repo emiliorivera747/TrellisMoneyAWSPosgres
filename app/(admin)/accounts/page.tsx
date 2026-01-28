@@ -20,7 +20,6 @@ import AccountNetWorthGraph from "@/features/accounts/components/graph/AccountNe
  * Responsible for showing all of the accounts
  * and other important metrics
  *
- * @returns
  */
 const page = () => {
   const {

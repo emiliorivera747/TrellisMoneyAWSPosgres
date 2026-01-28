@@ -9,7 +9,7 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 import DateAxisTooltip from "@/components/dashboard/DateAxisTooltip";
 import MultiLineTimeSeriesSvg from "@/components/dashboard/MultiLineTimeSeriesSvg";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
-import TimeValueGraphHeader, {
+import GraphSummaryHeader, {
   Value,
   ValueChangeHeader,
   TotalYears,
@@ -50,11 +50,6 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
     if (checkLinePayloads(lineConfigs) === false) return <NoLinePayloads />;
-
-    const svgRef = useRef<SVGSVGElement>(null);
-    const filterRef = useRef<HTMLDivElement>(null);
-
-    const payloadLen = lineConfigs.length;
 
     return (
       <div className={`h-full w-full`}>
