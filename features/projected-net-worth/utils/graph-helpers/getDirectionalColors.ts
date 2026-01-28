@@ -5,7 +5,6 @@ import { Direction } from "@/features/projected-net-worth/types/graphComponents"
 
 // Data
 import { DEFAULT_COLORS } from "@/features/projected-net-worth/utils/data/defaultColors";
-
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 
 /**

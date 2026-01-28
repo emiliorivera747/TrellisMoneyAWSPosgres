@@ -9,6 +9,7 @@ import { TimeSeriesData, LineSeriesConfig } from "./data";
 
 // Config
 import { TooltipConfig } from "./tooltips";
+import { GraphConfig } from "./graph-config";
 
 /**
  * Represents the properties for a responsive line graph component.
@@ -217,20 +218,11 @@ export interface HeaderTimeValueGraphProps {
   children: ReactNode;
 
   /**
-   * The payloads representing the data for the lines in the graph.
-   * Each payload contains information about the line's data points.
-   * @type {LineSeriesConfig[]}
+   * Unified configuration array pairing each line with its optional tooltip state.
+   * @type {GraphConfig[]}
    * @memberof HeaderTimeValueGraphProps
    */
-  lineConfigs: LineSeriesConfig[];
-
-  /**
-   * The data to be displayed in the tooltip, represented as an array of payloads.
-   * Each payload contains information about the data point being hovered over.
-   * @type {TooltipConfig[]}
-   * @memberof HeaderTimeValueGraphProps
-   */
-  tooltipConfigs: TooltipConfig[];
+  graphConfigs: GraphConfig[];
 }
 
 /**
@@ -268,18 +260,11 @@ export interface TitleProps {
  */
 export interface ValueProp {
   /**
-   * The line configuration containing the data.
-   * @type {LineSeriesConfig}
+   * Unified configuration pairing a line with its optional tooltip state.
+   * @type {GraphConfig}
    * @memberof ValueProp
    */
-  lineConfig: LineSeriesConfig;
-
-  /**
-   * The tooltip configuration for the line.
-   * @type {TooltipConfig}
-   * @memberof ValueProp
-   */
-  tooltipConfig?: TooltipConfig;
+  graphConfig: GraphConfig;
 
   /**
    * The ref of the value.
@@ -303,18 +288,11 @@ export interface ValueProp {
  */
 export interface ValueChangeProps {
   /**
-   * The line configuration containing the data.
-   * @type {LineSeriesConfig}
+   * Unified configuration pairing a line with its optional tooltip state.
+   * @type {GraphConfig}
    * @memberof ValueChangeProps
    */
-  lineConfig: LineSeriesConfig;
-
-  /**
-   * The tooltip configuration for the line.
-   * @type {TooltipConfig}
-   * @memberof ValueChangeProps
-   */
-  tooltipConfig?: TooltipConfig;
+  graphConfig: GraphConfig;
 
   /**
    * The ref of the value.
@@ -357,16 +335,10 @@ export interface ValueChangeProps {
  */
 export interface TotalYearsProps {
   /**
-   * The line configuration containing the data.
-   * @type {LineSeriesConfig}
+   * Unified configuration pairing a line with its optional tooltip state.
+   * @type {GraphConfig}
    */
-  lineConfig: LineSeriesConfig;
-
-  /**
-   * The tooltip configuration for the line.
-   * @type {TooltipConfig}
-   */
-  tooltipConfig?: TooltipConfig;
+  graphConfig: GraphConfig;
 
   /**
    * Optional CSS class name.

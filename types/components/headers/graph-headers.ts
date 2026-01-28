@@ -1,5 +1,4 @@
-import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
-import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
+import { GraphConfig } from "@/types/components/admin/graphs/graph-config";
 
 export interface GraphHeaderProps {
   label: string;
@@ -8,8 +7,7 @@ export interface GraphHeaderProps {
 }
 
 export interface GraphLineSummariesProps {
-  lineConfigs: LineSeriesConfig[];
-  tooltipConfigs: TooltipConfig[];
+  graphConfigs: GraphConfig[];
 }
 
 

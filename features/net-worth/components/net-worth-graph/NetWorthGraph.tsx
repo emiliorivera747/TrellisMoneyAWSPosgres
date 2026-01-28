@@ -1,5 +1,4 @@
 "use client";
-import { useRef } from "react";
 
 // Visx
 import { withTooltip, defaultStyles } from "@visx/tooltip";
@@ -9,29 +8,18 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 import DateAxisTooltip from "@/components/dashboard/DateAxisTooltip";
 import MultiLineTimeSeriesSvg from "@/components/dashboard/MultiLineTimeSeriesSvg";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
-import GraphSummaryHeader, {
-  Value,
-  ValueChange,
-  TotalYears,
-} from "@/components/dashboard/HeaderTimeValueGraph";
-import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";
-import GraphHeader from "@/components/headers/GraphHeader";
 import NetWorthGraphHeader from "@/features/net-worth/components/net-worth-graph/NetWorthGraphHeader";
 
 // Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
+import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
+import { createGraphConfigs } from "@/types/components/admin/graphs/graph-config";
 
 // Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/graph-helpers/checkLinePayloads";
-import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
-import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 // TooltipData
 type TooltipData = TooltipConfig[];
-
-// Config
-import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
-import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 
 /**
  * Component for displaying a line graph.
@@ -51,12 +39,11 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     if (width < 10) return null;
     if (checkLinePayloads(lineConfigs) === false) return <NoLinePayloads />;
 
+    const graphConfigs = createGraphConfigs(lineConfigs, tooltipConfigs);
+
     return (
       <div className={`h-full w-full`}>
-        <NetWorthGraphHeader
-          lineConfigs={lineConfigs}
-          tooltipConfigs={tooltipConfigs || []}
-        />
+        <NetWorthGraphHeader graphConfigs={graphConfigs} />
 
         {/* The SVG for the graph */}
         <MultiLineTimeSeriesSvg

@@ -13,12 +13,11 @@ import { PrimaryGraphHeaderProps } from "@/features/projected-net-worth/types/gr
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 const PrimaryGraphHeader = ({
-  lineConfigs,
-  tooltipConfigs,
+  graphConfigs,
   withInflationTag,
   years,
 }: PrimaryGraphHeaderProps) => {
-  
+
   const {
     selectedProjectedYear,
     retirementYear,
@@ -38,7 +37,7 @@ const PrimaryGraphHeader = ({
     setIsDialogOpen(false);
   };
 
-  const showInflationTag = withInflationTag && lineConfigs.length === 1;
+  const showInflationTag = withInflationTag && graphConfigs.length === 1;
 
   return (
     <header className="flex flex-col w-full h-auto">
@@ -63,13 +62,10 @@ const PrimaryGraphHeader = ({
         />
       </div>
       <div className="flex flex-row">
-        <GraphLineSummaries
-          lineConfigs={lineConfigs}
-          tooltipConfigs={tooltipConfigs}
-        />
+        <GraphLineSummaries graphConfigs={graphConfigs} />
         {showInflationTag && (
           <div className="text-[0.7rem] text-tertiary-1000 gap-1 w-[25%] flex items-start justify-end pt-5">
-            <InflationTag lineConfig={lineConfigs[0]} />
+            <InflationTag lineConfig={graphConfigs[0].lineConfig} />
           </div>
         )}
       </div>

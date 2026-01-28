@@ -1,7 +1,5 @@
-import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
-import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
+import { GraphConfig } from "@/types/components/admin/graphs/graph-config";
 
 export type NetWorthGraphHeaderProps = {
-  lineConfigs: LineSeriesConfig[];
-  tooltipConfigs: TooltipConfig[];
+  graphConfigs: GraphConfig[];
 };

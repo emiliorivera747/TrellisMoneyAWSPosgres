@@ -19,50 +19,39 @@ import { getDirectionalColorsByLineConfig } from "@/features/projected-net-worth
 import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
 
 const NetWorthGraphHeader = ({
-  lineConfigs,
-  tooltipConfigs,
+  graphConfigs,
 }: NetWorthGraphHeaderProps) => {
   const filterRef = useRef<HTMLDivElement>(null);
   return (
-    <GraphSummaryHeader
-      lineConfigs={lineConfigs}
-      tooltipConfigs={tooltipConfigs || []}
-    >
+    <GraphSummaryHeader graphConfigs={graphConfigs}>
       <GraphHeader label={"Net Worth"} />
-      
-      {lineConfigs.map((lineConfig, index) => {
+      <GraphFilterButtonWithModal
+        filterConfig={filterConfig}
+        ref={filterRef}
+        className="grid grid-cols-2"
+      />
+      {graphConfigs.map((graphConfig, index) => {
+        const { lineConfig } = graphConfig;
         const { primaryTextColor } =
           getDirectionalColorsByLineConfig(lineConfig);
-        const tooltipConfig = tooltipConfigs?.[index];
         return (
           <div key={index} className="flex flex-col">
             <Value
-              lineConfig={lineConfig}
-              tooltipConfig={tooltipConfig}
-              className={`${lineConfigs.length > 1 ? "text-[1.2rem]" : ""}`}
+              graphConfig={graphConfig}
+              className={`${graphConfigs.length > 1 ? "text-[1.2rem]" : ""}`}
             />
             <ValueChange
-              lineConfig={lineConfig}
-              tooltipConfig={tooltipConfig}
+              graphConfig={graphConfig}
               className="text-[0.7rem]"
               style={{ color: primaryTextColor }}
             />
             <TotalYears
-              lineConfig={lineConfig}
-              tooltipConfig={tooltipConfig}
+              graphConfig={graphConfig}
               className="text-[0.7rem]"
             />
           </div>
         );
       })}
-      <div className="flex justify-end">
-        <GraphFilterButtonWithModal
-          filterConfig={filterConfig}
-          ref={filterRef}
-          className="grid grid-cols-2"
-        />
-      </div>
-      
     </GraphSummaryHeader>
   );
 };

@@ -10,19 +10,17 @@ import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 
 const GraphLineSummaries = ({
-  lineConfigs,
-  tooltipConfigs,
+  graphConfigs,
 }: GraphLineSummariesProps) => {
-  if (!lineConfigs) return null;
-  const isMultipleLines = lineConfigs.length >= 2;
+  if (!graphConfigs || graphConfigs.length === 0) return null;
+  const isMultipleLines = graphConfigs.length >= 2;
   const headerSize = isMultipleLines ? "text-[1.1rem]" : "text-[1.4rem]";
 
   return (
     <div className="flex flex-row gap-2 w-[75%]">
-      {lineConfigs.map((lineConfig, index) => {
-        
+      {graphConfigs.map(({ lineConfig, tooltipConfig }, index) => {
         const direction = getLineDirection(lineConfig.data);
-        
+
         const { primaryTextColor, lineColor } = getDirectionalColors(
           direction,
           lineConfig
@@ -39,7 +37,7 @@ const GraphLineSummaries = ({
         return (
           <div key={`${lineConfig.filterValue ?? "undefined"}-${index}`}>
             <ValueSummary
-              tooltipPayload={tooltipConfigs?.[index] ?? null}
+              tooltipPayload={tooltipConfig ?? null}
               data={lineConfig.data}
               mainHeaderTailwindCss={`${headerSize} text-tertiary-1000 font-medium`}
               subHeaderTailwindCss="font-semibold text-[0.7rem]"

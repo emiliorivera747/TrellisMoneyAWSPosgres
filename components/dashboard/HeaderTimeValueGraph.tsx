@@ -21,8 +21,7 @@ import {
 } from "@/utils/helper-functions/accessors/accessors";
 
 // Types
-import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
-import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
+import { GraphConfig } from "@/types/components/admin/graphs/graph-config";
 import {
   HeaderTimeValueGraphProps,
   TitleProps,
@@ -32,24 +31,21 @@ import {
 } from "@/types/components/admin/graphs/props";
 
 const GraphSummaryHeaderContext = createContext<{
-  lineConfigs: LineSeriesConfig[];
-  tooltipConfigs?: TooltipConfig[];
+  graphConfigs: GraphConfig[];
 }>({
-  lineConfigs: [],
-  tooltipConfigs: undefined,
+  graphConfigs: [],
 });
 
 /**
  * Context provider for graph summary header components.
- * Provides line and tooltip data to child components.
+ * Provides unified graph configuration to child components.
  */
 const GraphSummaryHeader = ({
   children,
-  lineConfigs,
-  tooltipConfigs,
+  graphConfigs,
 }: HeaderTimeValueGraphProps) => {
   return (
-    <GraphSummaryHeaderContext.Provider value={{ lineConfigs, tooltipConfigs }}>
+    <GraphSummaryHeaderContext.Provider value={{ graphConfigs }}>
       {children}
     </GraphSummaryHeaderContext.Provider>
   );
@@ -67,7 +63,8 @@ export function Title({ children, className }: TitleProps) {
 /**
  * Displays the current value of the graph line.
  */
-export function Value({ className, lineConfig, tooltipConfig }: ValueProp) {
+export function Value({ className, graphConfig }: ValueProp) {
+  const { lineConfig, tooltipConfig } = graphConfig;
   const defaultClass =
     "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
   if (!lineConfig || !lineConfig.data) return null;
@@ -88,10 +85,10 @@ export function Value({ className, lineConfig, tooltipConfig }: ValueProp) {
  */
 export function ValueChange({
   className,
-  lineConfig,
-  tooltipConfig,
+  graphConfig,
   style,
 }: ValueChangeProps) {
+  const { lineConfig, tooltipConfig } = graphConfig;
   if (!lineConfig || !lineConfig.data) return null;
 
   const startValue = getStartValue(lineConfig);
@@ -114,9 +111,9 @@ export function ValueChange({
  */
 export function TotalYears({
   className,
-  lineConfig,
-  tooltipConfig,
+  graphConfig,
 }: TotalYearsProps) {
+  const { lineConfig, tooltipConfig } = graphConfig;
   const defaultClass = "text-tertiary-800 font-normal";
 
   if (!lineConfig || !lineConfig.data) return null;

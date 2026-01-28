@@ -12,10 +12,11 @@ import NoLinePayloads from "@/features/projected-net-worth/components/projected-
 
 // Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
+import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
+import { createGraphConfigs } from "@/types/components/admin/graphs/graph-config";
 
 // Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/graph-helpers/checkLinePayloads";
-import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 
 /**
  * Component for displaying a line graph.
@@ -37,11 +38,12 @@ export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
     if (width < 10) return null;
     if (checkLinePayloads(lineConfigs) === false) return <NoLinePayloads />;
 
+    const graphConfigs = createGraphConfigs(lineConfigs, tooltipConfigs);
+
     return (
       <div className={`h-full w-full`}>
         <PrimaryGraphHeader
-          lineConfigs={lineConfigs}
-          tooltipConfigs={tooltipConfigs}
+          graphConfigs={graphConfigs}
           withInflationTag={withInlfationTag}
           years={years || []}
         />

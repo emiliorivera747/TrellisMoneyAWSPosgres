@@ -1,4 +1,5 @@
 import { LineSeriesConfig, TimeSeriesData } from "@/types/components/admin/graphs/data";
+import { GraphConfig } from "@/types/components/admin/graphs/graph-config";
 import { FutureProjectionData } from "@/types/future-projections/futureProjections";
 
 /**
@@ -420,18 +421,11 @@ export interface projectionData {
  */
 export interface PrimaryGraphHeaderProps {
   /**
-   * Configuration for the lines displayed in the graph.
-   * @type {LineSeriesConfig[]}
+   * Unified configuration array pairing each line with its optional tooltip state.
+   * @type {GraphConfig[]}
    * @memberof PrimaryGraphHeaderProps
    */
-  lineConfigs: LineSeriesConfig[];
-
-  /**
-   * Data to display in tooltips.
-   * @type {any}
-   * @memberof PrimaryGraphHeaderProps
-   */
-  tooltipConfigs: any;
+  graphConfigs: GraphConfig[];
 
   /**
    * Whether to display the inflation tag.
