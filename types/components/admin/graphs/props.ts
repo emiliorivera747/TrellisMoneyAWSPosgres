@@ -10,6 +10,7 @@ import { TimeSeriesData, LineSeriesConfig } from "./data";
 // Config
 import { TooltipConfig } from "./tooltips";
 import { GraphConfig } from "./graph-config";
+import { GraphFilterConfig } from "./filters";
 
 /**
  * Represents the properties for a responsive line graph component.
@@ -380,4 +381,15 @@ export interface ValuePriceChangeLabelProps {
    * @memberof ValuePriceChangeLabelProps
    */
   style?: React.CSSProperties;
+}
+
+export interface GraphConfigSummaryListProps {
+  graphConfigs: GraphConfig[];
+  className?: string;
+}
+
+export interface GraphHeaderWithFilterProps {
+  filterConfig: GraphFilterConfig[];
+  filterRef: React.Ref<HTMLDivElement>;
+  label: string;
 }

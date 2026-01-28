@@ -115,7 +115,6 @@ export function TotalYears({
 }: TotalYearsProps) {
   const { lineConfig, tooltipConfig } = graphConfig;
   const defaultClass = "text-tertiary-800 font-normal";
-
   if (!lineConfig || !lineConfig.data) return null;
   const startDate = getStartDate(lineConfig);
   const endDate = getEndDate(lineConfig, tooltipConfig);
