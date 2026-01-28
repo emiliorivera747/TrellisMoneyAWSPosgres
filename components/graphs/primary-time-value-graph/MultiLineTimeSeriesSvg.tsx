@@ -8,7 +8,7 @@ import { curveMonotoneX } from "@visx/curve";
 import { getDate, getStockValue } from "@/utils/helper-functions/accessors/accessors";
 
 //Components
-import TooltipBar from "@/components/dashboard/TooltipBar";
+import TooltipBar from "@/components/graphs/primary-time-value-graph/TooltipBar";
 
 //Hooks
 import useHandleTooltipMultiple from "@/hooks/graphs/useHandleTooltipMultiple";

@@ -1,6 +1,6 @@
 // Components
 import { LineIndicator } from "@/features/projected-net-worth/components/projected-networth-graph/headers/LineIndicator";
-import ValueSummary from "@/components/dashboard/ValueSummary";
+import ValueSummary from "@/components/graphs/graph-header/ValueSummary";
 
 // Types
 import { GraphLineSummariesProps } from "@/types/components/headers/graph-headers";

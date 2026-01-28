@@ -1,5 +1,5 @@
 import { TiArrowSortedUp } from "react-icons/ti";
-import RenderTooltipContent from "@/components/dashboard/RenderTooltipContent";
+import RenderTooltipContent from "@/components/graphs/primary-time-value-graph/RenderTooltipContent";
 
 // Functions
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";

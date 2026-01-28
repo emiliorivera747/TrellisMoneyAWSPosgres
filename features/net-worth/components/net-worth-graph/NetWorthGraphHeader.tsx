@@ -5,7 +5,7 @@ import GraphSummaryHeader, {
   Value,
   ValueChange,
   TotalYears,
-} from "@/components/dashboard/HeaderTimeValueGraph";
+} from "@/components/graphs/graph-header/HeaderTimeValueGraph";
 import GraphHeader from "@/components/headers/GraphHeader";
 import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";
 

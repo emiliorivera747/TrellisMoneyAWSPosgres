@@ -5,8 +5,8 @@ import { withTooltip, defaultStyles } from "@visx/tooltip";
 import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withTooltip";
 
 // Components
-import DateAxisTooltip from "@/components/dashboard/DateAxisTooltip";
-import MultiLineTimeSeriesSvg from "@/components/dashboard/MultiLineTimeSeriesSvg";
+import DateAxisTooltip from "@/components/graphs/primary-time-value-graph/DateAxisTooltip";
+import MultiLineTimeSeriesSvg from "@/components/graphs/primary-time-value-graph/MultiLineTimeSeriesSvg";
 import PrimaryGraphHeader from "@/features/projected-net-worth/components/projected-networth-graph/headers/PrimaryGraphHeader";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
 
@@ -37,7 +37,6 @@ export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipConfig[]>) => {
     if (width < 10) return null;
     if (checkLinePayloads(lineConfigs) === false) return <NoLinePayloads />;
-
     const graphConfigs = createGraphConfigs(lineConfigs, tooltipConfigs);
 
     return (

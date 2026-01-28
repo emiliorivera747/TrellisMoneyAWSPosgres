@@ -4,7 +4,7 @@ import { createContext } from "react";
 import { cn } from "@/lib/utils";
 
 // Components
-import ValuePriceChangeLabel from "@/components/dashboard/ValuePriceChangeLabel";
+import ValuePriceChangeLabel from "@/components/graphs/primary-time-value-graph/ValuePriceChangeLabel";
 
 // Utils
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
