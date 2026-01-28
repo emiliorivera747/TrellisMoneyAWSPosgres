@@ -1,3 +1,7 @@
+import { cn } from "@/lib/utils";
+
+// Type
+import { GraphHeaderProps } from "@/types/components/headers/graph-headers";
 /**
  * A functional component that renders a styled header with a label.
  *
@@ -5,18 +9,13 @@
  * @param {string} props.label - The text to display as the header label.
  * @returns {JSX.Element} A styled header element.
  */
-const GraphHeader = ({ label }: { label: string }) => {
+const GraphHeader = ({ label, ref, className }: GraphHeaderProps) => {
+  const defaultClassName =
+    "flex items-center justify-center text-[1.5rem] gap-1 tracking-wider font-light text-tertiary-900";
   return (
-    <div className="flex items-center justify-center text-[1.5rem] gap-1">
-      <span className="tracking-wider font-light text-tertiary-900 ">
-        {label}
-      </span>
-      {/* <InformationIcon
-        modalTitle={"Future Projection"}
-        size={"size-5"}
-        modalDescription="The projected amount of your overall portfolio value in the future. This is based on your current portfolio value, the expected rate of return, and the time period you select."
-      /> */}
-    </div>
+    <h1 ref={ref} className={cn(defaultClassName, className)}>
+      {label}
+    </h1>
   );
 };
 
