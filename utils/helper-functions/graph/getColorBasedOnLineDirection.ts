@@ -1,11 +1,4 @@
-type Direction = "up" | "down" | "flat";
-
-interface ColorBasedOnLineDirection {
-  upColor: string;
-  downColor: string;
-  flatColor: string;
-  direction: Direction;
-}
+import { ColorBasedOnLineDirection } from "@/features/projected-net-worth/types/graphComponents";
 
 export const getColorBasedOnLineDirection = ({
   direction,

@@ -11,3 +11,13 @@ export interface MultipleValPriceChangeProps {
   lineConfigs: LineSeriesConfig[];
   tooltipConfigs: TooltipConfig[];
 }
+
+
+type Direction = "up" | "down" | "flat";
+
+export interface ColorBasedOnLineDirection {
+  upColor: string;
+  downColor: string;
+  flatColor: string;
+  direction: Direction;
+}

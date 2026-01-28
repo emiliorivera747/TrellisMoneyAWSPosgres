@@ -24,7 +24,7 @@ import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/gr
 // Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/graph-helpers/checkLinePayloads";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
-import { getDirectionalColors } from "@/utils/helper-functions/graph/getDirectionalColors";
+import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 // TooltipData
 type TooltipData = TooltipConfig[];
@@ -43,7 +43,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
     margin,
     showTooltip,
     hideTooltip,
-    tooltipData,
+    tooltipData: tooltipConfigs,
     tooltipTop = 0,
     tooltipLeft = 0,
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
@@ -59,7 +59,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
       <div className={`h-full w-full`}>
         <TimeValueGraphHeader
           lineConfigs={lineConfigs}
-          tooltipData={tooltipData}
+          tooltipConfigs={tooltipConfigs || []}
         >
           <div className="grid grid-cols-2 w-full">
             <div className={"grid grid-cols-[14rem_14rem]"}>
@@ -106,18 +106,18 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           margin={margin}
           showTooltip={showTooltip}
           hideTooltip={hideTooltip}
-          tooltipData={tooltipData}
+          tooltipConfigs={tooltipConfigs}
           tooltipTop={tooltipTop}
           tooltipLeft={tooltipLeft}
         />
 
         {/* Tooltip div */}
-        {tooltipData && (
+        {tooltipConfigs && (
           <DateAxisTooltip
             margin={margin}
             tooltipLeft={tooltipLeft}
             defaultStyles={defaultStyles}
-            tooltipData={tooltipData}
+            tooltipConfigs={tooltipConfigs}
           />
         )}
       </div>

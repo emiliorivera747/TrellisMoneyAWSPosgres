@@ -7,8 +7,6 @@ import { useRef } from "react";
 import ProjectedNetWorthLineChart from "@/features/projected-net-worth/components/projected-networth-graph/graphs/ProjectedLineGraph";
 import ProjectedNetWorthGraphError from "@/components/errors/ProjectedNetWorthGraphError";
 import ResponsiveGraphContainer from "@/components/dashboard/ResponsiveGraphContainer";
-
-// External Libraries
 import ProjectedNetWorthGraphSkeleton from "@/components/skeletons/dashboard/ProjectedNetWorthGraphSkeleton";
 
 // Functions
