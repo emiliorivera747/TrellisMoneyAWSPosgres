@@ -7,7 +7,7 @@ export interface GraphHeaderProps {
   className?: string;
 }
 
-export interface MultipleValPriceChangeProps {
+export interface GraphLineSummariesProps {
   lineConfigs: LineSeriesConfig[];
   tooltipConfigs: TooltipConfig[];
 }

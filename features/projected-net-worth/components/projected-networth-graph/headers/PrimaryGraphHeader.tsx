@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import GraphHeaders from "@/components/headers/GraphHeader";
-import MultipleValPriceChange from "@/features/projected-net-worth/components/projected-networth-graph/headers/MultipleValPriceChange";
+import GraphLineSummaries from "@/features/projected-net-worth/components/projected-networth-graph/headers/GraphLineSummaries";
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
 import FilterDialog from "@/features/projected-net-worth/components/projected-networth-graph/dialogs/FilterDialog";
@@ -63,7 +63,7 @@ const PrimaryGraphHeader = ({
         />
       </div>
       <div className="flex flex-row">
-        <MultipleValPriceChange
+        <GraphLineSummaries
           lineConfigs={lineConfigs}
           tooltipConfigs={tooltipConfigs}
         />

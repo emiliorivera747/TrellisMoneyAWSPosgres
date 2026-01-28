@@ -1,31 +1,33 @@
-import ValueSummary from "@/components/dashboard/ValueSummary";
-import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
-import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
-
 // Components
 import { LineIndicator } from "@/features/projected-net-worth/components/projected-networth-graph/headers/LineIndicator";
+import ValueSummary from "@/components/dashboard/ValueSummary";
 
 // Types
-import { MultipleValPriceChangeProps } from "@/types/components/headers/graph-headers";
+import { GraphLineSummariesProps } from "@/types/components/headers/graph-headers";
 
-const MultipleValPriceChange = ({
+// Utils
+import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
+import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
+
+const GraphLineSummaries = ({
   lineConfigs,
   tooltipConfigs,
-}: MultipleValPriceChangeProps) => {
+}: GraphLineSummariesProps) => {
   if (!lineConfigs) return null;
   const isMultipleLines = lineConfigs.length >= 2;
   const headerSize = isMultipleLines ? "text-[1.1rem]" : "text-[1.4rem]";
 
   return (
     <div className="flex flex-row gap-2 w-[75%]">
-      {lineConfigs.map((line, index) => {
-        const direction = getLineDirection(line.data);
-        
+      {lineConfigs.map((lineConfig, index) => {
+        const direction = getLineDirection(lineConfig.data);
         const { primaryTextColor, lineColor } = getDirectionalColors(
           direction,
-          line
+          lineConfig
         );
-        const isInflationAdjusted = line.filterValue === "inflationAdjusted";
+
+        const isInflationAdjusted =
+          lineConfig.filterValue === "inflationAdjusted";
         const lineName = isMultipleLines
           ? isInflationAdjusted
             ? "with inflation"
@@ -33,10 +35,10 @@ const MultipleValPriceChange = ({
           : "";
 
         return (
-          <div key={`${line.filterValue ?? "undefined"}-${index}`}>
+          <div key={`${lineConfig.filterValue ?? "undefined"}-${index}`}>
             <ValueSummary
               tooltipPayload={tooltipConfigs?.[index] ?? null}
-              data={line.data}
+              data={lineConfig.data}
               mainHeaderTailwindCss={`${headerSize} text-tertiary-1000 font-medium`}
               subHeaderTailwindCss="font-semibold text-[0.7rem]"
               subHeaderStyle={{ color: primaryTextColor }}
@@ -53,4 +55,4 @@ const MultipleValPriceChange = ({
   );
 };
 
-export default MultipleValPriceChange;
+export default GraphLineSummaries;
