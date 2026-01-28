@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 import { DetailedHolding } from "@/types/api-routes/holding/holding";
 
@@ -12,6 +14,7 @@ const getTimeAgo = (date: Date): string => {
 };
 
 const AccountWithHoldingCard = ({ holding }: { holding: DetailedHolding }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
   const timeAgo = getTimeAgo(new Date(holding.updatedAt));
   const hasReturn = Boolean(holding.totalReturn);
   const isPositiveReturn = (holding.totalReturn ?? 0) > 0;
@@ -23,10 +26,13 @@ const AccountWithHoldingCard = ({ holding }: { holding: DetailedHolding }) => {
     : null;
 
   return (
-    <div className="border rounded-[12px] p-4 hover:shadow-md border-tertiary-300">
+    <div
+      className="border rounded-[12px] p-6 hover:shadow-md border-tertiary-300 cursor-pointer transition-all"
+      onClick={() => setIsExpanded(!isExpanded)}
+    >
       <div className="flex justify-between items-start gap-2">
-        <div>
-          <div className="text-xs sm:text-[1rem] font-medium flex items-center gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="text-xs sm:text-[1rem] font-medium flex items-center gap-4 ">
             <span className="font-medium">{holding.account.name}</span>
             <div className="flex items-center gap-1">
               <span className="h-[0.4rem] w-[0.4rem] rounded-full bg-tertiary-400 inline-block align-middle mx-1" />
@@ -35,42 +41,56 @@ const AccountWithHoldingCard = ({ holding }: { holding: DetailedHolding }) => {
               </span>
             </div>
           </div>
+
           <div className="text-[0.7rem] sm:text-sm text-tertiary-700">
             {holding.member.name}
           </div>
         </div>
 
-        <div className="text-right">
-          <div className="font-medium text-xs md:text-md">
+        <div className="flex items-center gap-2">
+          <div className="font-medium text-xs sm:text-[0.9rem]">
             {convertToMoney(holding.totalValue)}
           </div>
-          <div className="flex flex-row gap-1 sm:text-[0.78rem] text-[0.6rem] justify-between font-medium w-full">
-            <span className="justify-start text-tertiary-800 flex flex-row items-center gap-2 font-light">
+          {isExpanded ? (
+            <ChevronUp className="h-4 w-4 text-tertiary-600" />
+          ) : (
+            <ChevronDown className="h-4 w-4 text-tertiary-600" />
+          )}
+        </div>
+      </div>
+
+      {isExpanded && (
+        <div className="mt-3 pt-3 border-t border-tertiary-200 flex flex-col gap-1">
+          {/* Shares */}
+          <div className="flex justify-between items-center mt-1 text-[0.75rem]">
+            <span className="text-tertiary-800 font-light">Shares</span>
+            <span className="justify-start text-tertiary-800 display flex flex-row items-center gap-2 font-light">
+              {holding.shares.toFixed(2)}
+            </span>
+          </div>
+
+          {/* Total Returns */}
+          <div className="flex justify-between items-center text-[0.75rem]">
+            <span className="justify-start text-tertiary-800 display flex flex-row items-center gap-2 font-light">
               Total return
             </span>
             <span
-              className={`flex gap-1 ${
+              className={`font-medium ${
                 isPositiveReturn ? "text-secondary-1000" : "text-red-600"
               }`}
             >
               {hasReturn ? (
                 <>
-                  <span>
-                    {isPositiveReturn && "+"}
-                    {convertToMoney(holding.totalReturn!)}
-                  </span>
-                  <span>({returnPercentage}%)</span>
+                  {isPositiveReturn && "+"}
+                  {convertToMoney(holding.totalReturn!)} ({returnPercentage}%)
                 </>
               ) : (
-                <span>Not available</span>
+                "Not available"
               )}
             </span>
           </div>
-          <div className="text-[0.6rem] sm:text-[0.8rem] text-tertiary-700">
-            {holding.shares.toFixed(2)} shares
-          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
