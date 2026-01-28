@@ -6,7 +6,7 @@ import {
 
 // Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
-import { getTailwindColors } from "@/features/projected-net-worth/utils/graph-helpers/getTailwindColors";
+import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 
 const getSvgPath = (category: InflationCategory) => {
@@ -41,7 +41,7 @@ const InflationTag = ({
 
   if (!lineConfig) return null;
   const lineDirection = getLineDirection(lineConfig.data);
-  const { tailwindTagTextColor, tailwindTagBgColor } = getTailwindColors(
+  const { tailwindTagTextColor, tailwindTagBgColor } = getDirectionalColors(
     lineDirection,
     lineConfig
   );

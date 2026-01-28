@@ -6,7 +6,7 @@ import { TooltipProps } from "@/types/components/admin/graphs/tooltips";
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 
 //Functions
-import { getTailwindColors } from "@/features/projected-net-worth/utils/graph-helpers/getTailwindColors";
+import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 /**
  * Component for displaying a tooltip bar on a graph.
@@ -31,7 +31,7 @@ const TooltipBar = ({
       />
 
       {tooltipConfigs.map((linePayload, i) => {
-        const { lineColor } = getTailwindColors(
+        const { lineColor } = getDirectionalColors(
           directions[i],
           linePayload.lineConfig
         );

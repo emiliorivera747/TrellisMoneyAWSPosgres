@@ -1,23 +1,18 @@
 import ValueSummary from "@/components/dashboard/ValueSummary";
-import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
-import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
-import { getTailwindColors } from "@/features/projected-net-worth/utils/graph-helpers/getTailwindColors";
+import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 // Components
 import { LineIndicator } from "@/features/projected-net-worth/components/projected-networth-graph/headers/LineIndicator";
 
-interface MultipleValPriceChangeProps {
-  lineConfigs: LineSeriesConfig[];
-  tooltipConfigs: TooltipConfig[];
-}
+// Types
+import { MultipleValPriceChangeProps } from "@/types/components/headers/graph-headers";
 
 const MultipleValPriceChange = ({
   lineConfigs,
   tooltipConfigs,
 }: MultipleValPriceChangeProps) => {
   if (!lineConfigs) return null;
-
   const isMultipleLines = lineConfigs.length >= 2;
   const headerSize = isMultipleLines ? "text-[1.1rem]" : "text-[1.4rem]";
 
@@ -25,7 +20,7 @@ const MultipleValPriceChange = ({
     <div className="flex flex-row gap-2 w-[75%]">
       {lineConfigs.map((line, index) => {
         const direction = getLineDirection(line.data);
-        const { tailwindPrimaryTextColor, lineColor } = getTailwindColors(
+        const { tailwindPrimaryTextColor, lineColor } = getDirectionalColors(
           direction,
           line
         );

@@ -19,7 +19,7 @@ import { MultiLineTimeSeriesSvgProps } from "@/types/components/admin/graphs/pro
 
 //Functions
 import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
-import { getTailwindColors } from "@/features/projected-net-worth/utils/graph-helpers/getTailwindColors";
+import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 const defaultMargin = { top: 6, right: 6, bottom: 10, left: 6 };
 
@@ -87,7 +87,7 @@ const MultiLineTimeSeriesSvg = ({
         rx={14}
       />
       {lineConfigs.map((linePayload, i) => {
-        const { lineColor } = getTailwindColors(directions[i], linePayload) ;
+        const { lineColor } = getDirectionalColors(directions[i], linePayload) ;
         return (
           <LinePath
             key={i}

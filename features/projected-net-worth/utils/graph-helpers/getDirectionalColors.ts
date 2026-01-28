@@ -9,7 +9,7 @@ import { Direction } from "@/features/projected-net-worth/types/graphComponents"
  * @param direction
  * @returns
  */
-export const getTailwindColors = (
+export const getDirectionalColors = (
   direction: Direction,
   dataForLines: LineSeriesConfig
 ) => {

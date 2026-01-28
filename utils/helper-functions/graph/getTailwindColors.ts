@@ -9,7 +9,7 @@ import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirectio
  * @param direction
  * @returns
  */
-export const getTailwindColors = (payloadForLine: LineSeriesConfig) => {
+export const getDirectionalColors = (payloadForLine: LineSeriesConfig) => {
 
   const direction = getLineDirection(payloadForLine.data);
 

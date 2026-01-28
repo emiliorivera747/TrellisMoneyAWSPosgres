@@ -24,7 +24,7 @@ import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/gr
 // Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/graph-helpers/checkLinePayloads";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
-import { getTailwindColors } from "@/utils/helper-functions/graph/getTailwindColors";
+import { getDirectionalColors } from "@/utils/helper-functions/graph/getDirectionalColors";
 
 // TooltipData
 type TooltipData = TooltipConfig[];
@@ -64,7 +64,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           <div className="grid grid-cols-2 w-full">
             <div className={"grid grid-cols-[14rem_14rem]"}>
               {lineConfigs.map((linePayload, index) => {
-                const { primaryTextColorTW } = getTailwindColors(linePayload);
+                const { primaryTextColorTW } = getDirectionalColors(linePayload);
                 return (
                   <div key={index} className="flex flex-col">
                     <div className="flex">
