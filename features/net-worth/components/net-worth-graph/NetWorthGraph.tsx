@@ -11,7 +11,7 @@ import MultiLineTimeSeriesSvg from "@/components/dashboard/MultiLineTimeSeriesSv
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
 import GraphSummaryHeader, {
   Value,
-  ValueChangeHeader,
+  ValueChange,
   TotalYears,
 } from "@/components/dashboard/HeaderTimeValueGraph";
 import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";

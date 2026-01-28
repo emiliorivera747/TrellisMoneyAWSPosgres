@@ -1,11 +1,8 @@
 "use client";
+
+import { createContext, useContext } from "react";
 import { cn } from "@/lib/utils";
 
-// React
-import { createContext, useContext } from "react";
-import ValuePriceChangelabel from "@/components/dashboard/ValuePriceChangeLabel";
-
-// Components
 import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 import {
@@ -13,16 +10,15 @@ import {
   TitleProps,
   ValueProp,
   ValueChangeProps,
+  TotalYearsProps,
 } from "@/types/components/admin/graphs/props";
 
-// Functions
+import ValuePriceChangeLabel from "@/components/dashboard/ValuePriceChangeLabel";
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 import { calculateRateOfChange } from "@/utils/helper-functions/graph/calculations/calculateRateOfChange";
 import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateYearsBetween";
 
-
-// Context
 const GraphSummaryHeaderContext = createContext<{
   lineConfigs: LineSeriesConfig[];
   tooltipConfigs?: TooltipConfig[];
@@ -32,10 +28,8 @@ const GraphSummaryHeaderContext = createContext<{
 });
 
 /**
- *
- * Header for the time value graph.
- *
- * @returns {JSX.Element}
+ * Context provider for graph summary header components.
+ * Provides line and tooltip data to child components.
  */
 const GraphSummaryHeader = ({
   children,
@@ -50,13 +44,7 @@ const GraphSummaryHeader = ({
 };
 
 /**
- *  The title of the graph.
- *x
- * @param {children} - The children of the title.
- * @param {className} - The class name of the title.
- * @param {ref} - The ref of the title.
- *
- * @returns {JSX.Element}
+ * Displays the title of the graph.
  */
 export function Title({ children, className, ref }: TitleProps) {
   const defaultClass =
@@ -69,11 +57,7 @@ export function Title({ children, className, ref }: TitleProps) {
 }
 
 /**
- *
- * The value of the graph.
- *
- * @param param0
- * @returns
+ * Displays the current value of the graph line.
  */
 export function Value({ className, lineIndex, ref }: ValueProp) {
   const defaultClass =
@@ -97,47 +81,28 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
 }
 
 /**
- * Shows the change in the value as well as the rate of change as a percentage.
+ * Displays the change in value and rate of change as a percentage.
  */
-export function ValueChangeHeader({ className, lineIndex, style }: ValueChangeProps) {
+export function ValueChange({ className, lineIndex, style }: ValueChangeProps) {
   const { lineConfigs, tooltipConfigs } = useContext(GraphSummaryHeaderContext);
 
   if (!lineConfigs) return null;
 
   const lineData = lineConfigs[lineIndex].data;
-  const tooltipPayload = tooltipConfigs?.[lineIndex];
-
   if (!lineData) return null;
 
-  const deafultStockValueDifference =
-    lineData[lineData.length - 1].value - lineData[0].value;
+  const tooltipPayload = tooltipConfigs?.[lineIndex];
+  const startValue = lineData[0].value;
+  const endValue = tooltipPayload
+    ? getStockValue(tooltipPayload.lineDataPoint)
+    : lineData[lineData.length - 1].value;
 
-  const defaultRateOfChange = calculateRateOfChange(
-    lineData[0].value,
-    lineData[lineData.length - 1].value
-  );
-
-  if (!tooltipPayload)
-    return (
-      <ValuePriceChangelabel
-        valueDifference={deafultStockValueDifference}
-        rateOfChange={defaultRateOfChange}
-        className={className}
-        style={style}
-      />
-    );
-
-  const stockValueDifference =
-    getStockValue(tooltipPayload.lineDataPoint) - lineData[0].value;
-
-  const rateOfChange = calculateRateOfChange(
-    lineData[0].value,
-    getStockValue(tooltipPayload.lineDataPoint)
-  );
+  const valueDifference = endValue - startValue;
+  const rateOfChange = calculateRateOfChange(startValue, endValue);
 
   return (
-    <ValuePriceChangelabel
-      valueDifference={stockValueDifference}
+    <ValuePriceChangeLabel
+      valueDifference={valueDifference}
       rateOfChange={rateOfChange}
       className={className}
       style={style}
@@ -146,19 +111,9 @@ export function ValueChangeHeader({ className, lineIndex, style }: ValueChangePr
 }
 
 /**
- * 
- *  The total years between the first and last data point of the line.
- * 
- * @param param0 
- * @returns 
+ * Displays the total years between the first and last data point of the line.
  */
-export function TotalYears({
-  className,
-  lineIndex,
-}: {
-  className?: string;
-  lineIndex: number;
-}) {
+export function TotalYears({ className, lineIndex }: TotalYearsProps) {
   const { lineConfigs, tooltipConfigs } = useContext(GraphSummaryHeaderContext);
   const tooltipPayload = tooltipConfigs?.[lineIndex];
   const defaultClass = "text-tertiary-800 font-normal";
@@ -178,7 +133,7 @@ export function TotalYears({
 
 GraphSummaryHeader.Title = Title;
 GraphSummaryHeader.Value = Value;
-GraphSummaryHeader.ValueChangeHeader = ValueChangeHeader;
+GraphSummaryHeader.ValueChange = ValueChange;
 GraphSummaryHeader.TotalYears = TotalYears;
 
 export default GraphSummaryHeader;

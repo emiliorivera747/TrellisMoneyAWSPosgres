@@ -336,6 +336,25 @@ export interface ValueChangeProps {
  * @export
  * @interface ValuePriceChangeLabelProps
  */
+/**
+ * Represents the properties for the TotalYears component.
+ * @export
+ * @interface TotalYearsProps
+ */
+export interface TotalYearsProps {
+  /**
+   * The index of the line to calculate years for.
+   * @type {number}
+   */
+  lineIndex: number;
+
+  /**
+   * Optional CSS class name.
+   * @type {string}
+   */
+  className?: string;
+}
+
 export interface ValuePriceChangeLabelProps {
   /**
    * The difference in value.

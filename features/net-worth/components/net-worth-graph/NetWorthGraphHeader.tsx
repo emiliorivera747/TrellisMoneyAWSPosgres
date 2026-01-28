@@ -3,7 +3,7 @@ import { useRef } from "react";
 // Components
 import GraphSummaryHeader, {
   Value,
-  ValueChangeHeader,
+  ValueChange,
   TotalYears,
 } from "@/components/dashboard/HeaderTimeValueGraph";
 import GraphHeader from "@/components/headers/GraphHeader";
@@ -45,7 +45,7 @@ const NetWorthGraphHeader = ({
                   className={`${lineConfigs.length > 1 ? "text-[1.2rem]" : ""}`}
                 />
                 <div className="flex gap-1">
-                  <ValueChangeHeader
+                  <ValueChange
                     lineIndex={index}
                     className="text-[0.7rem]"
                     style={{ color: primaryTextColor }}
