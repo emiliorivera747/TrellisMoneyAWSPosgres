@@ -15,9 +15,9 @@ const DateAxisTooltip = ({
   margin = defaultMargin,
   tooltipLeft,
   defaultStyles,
-  tooltipData,
+  tooltipConfigs,
 }: DateAxisTooltipProps) => {
-  if (!tooltipData) return null;
+  if (!tooltipConfigs) return null;
   return (
     <div className="">
       <Tooltip
@@ -35,7 +35,7 @@ const DateAxisTooltip = ({
           boxShadow: "none", // Ensure no box shadow is applied
         }}
       >
-        {formatDate(getDate(tooltipData[0].lineDataPoint))}
+        {formatDate(getDate(tooltipConfigs[0].lineDataPoint))}
       </Tooltip>
     </div>
   );

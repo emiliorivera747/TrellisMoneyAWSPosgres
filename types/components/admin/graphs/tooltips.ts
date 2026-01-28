@@ -51,7 +51,7 @@ export interface TooltipProps {
    * @type {TooltipConfig[]}
    * @memberof TooltipProps
    */
-  tooltipData: TooltipConfig[];
+  tooltipConfigs: TooltipConfig[];
 
   /**
    * The possible directions for the tooltip to be displayed.
@@ -136,5 +136,5 @@ export interface DateAxisTooltipProps {
    * @type {any}
    * @memberof LineGraphTooltipProps
    */
-  tooltipData: any;
+  tooltipConfigs: any;
 }

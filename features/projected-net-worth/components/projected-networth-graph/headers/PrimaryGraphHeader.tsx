@@ -14,7 +14,7 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 const PrimaryGraphHeader = ({
   lineConfigs,
-  tooltipData,
+  tooltipConfigs,
   withInflationTag,
   years,
 }: PrimaryGraphHeaderProps) => {
@@ -64,8 +64,8 @@ const PrimaryGraphHeader = ({
       </div>
       <div className="flex flex-row">
         <MultipleValPriceChange
-          payloadForLines={lineConfigs}
-          tooltipData={tooltipData}
+          lineConfigs={lineConfigs}
+          tooltipConfigs={tooltipConfigs}
         />
         {showInflationTag && (
           <div className="text-[0.7rem] text-tertiary-1000 gap-1 w-[25%] flex items-start justify-end pt-5">

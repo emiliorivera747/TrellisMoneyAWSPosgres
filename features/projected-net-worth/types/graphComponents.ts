@@ -102,7 +102,7 @@ export interface DateAxisTooltipProps {
    * @type {any}
    * @memberof LineGraphTooltipProps
    */
-  tooltipData: any;
+  tooltipConfigs: any;
 }
 
 /**
@@ -326,7 +326,7 @@ export interface ProjectedLineGraphProps {
    * @type {any}
    * @memberof ProjectedLineGraphProps
    */
-  tooltipData?: any;
+  tooltipConfigs?: any;
 
   /**
    * Top position of the tooltip in pixels.
@@ -431,7 +431,7 @@ export interface PrimaryGraphHeaderProps {
    * @type {any}
    * @memberof PrimaryGraphHeaderProps
    */
-  tooltipData: any;
+  tooltipConfigs: any;
 
   /**
    * Whether to display the inflation tag.

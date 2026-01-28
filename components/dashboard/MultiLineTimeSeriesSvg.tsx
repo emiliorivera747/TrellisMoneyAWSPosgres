@@ -32,7 +32,7 @@ const defaultMargin = { top: 6, right: 6, bottom: 10, left: 6 };
  * @param {object} margin - Graph margins.
  * @param {function} showTooltip - Function to show tooltip.
  * @param {function} hideTooltip - Function to hide tooltip.
- * @param {Array} tooltipData - Tooltip data.
+ * @param {Array} tooltipConfigs - Tooltip data.
  * @param {number} tooltipTop - Tooltip top position.
  * @param {number} tooltipLeft - Tooltip left position.
  *
@@ -45,7 +45,7 @@ const MultiLineTimeSeriesSvg = ({
   margin = defaultMargin,
   showTooltip,
   hideTooltip,
-  tooltipData,
+  tooltipConfigs,
   tooltipTop,
   tooltipLeft,
   curve = curveMonotoneX,
@@ -112,13 +112,13 @@ const MultiLineTimeSeriesSvg = ({
         onMouseMove={handleTooltip}
         onMouseLeave={() => hideTooltip()}
       />
-      {tooltipData && (
+      {tooltipConfigs && (
         <TooltipBar
           tooltipLeft={tooltipLeft}
           tooltipTop={tooltipTop}
           margin={margin}
           innerHeight={innerHeight}
-          tooltipData={tooltipData}
+          tooltipConfigs={tooltipConfigs}
           stockValueScale={stockValueScale ?? (() => 0)}
           directions={directions}
         />

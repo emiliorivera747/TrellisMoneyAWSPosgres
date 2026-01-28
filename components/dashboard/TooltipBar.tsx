@@ -15,7 +15,7 @@ const TooltipBar = ({
   tooltipLeft,
   margin,
   innerHeight,
-  tooltipData,
+  tooltipConfigs,
   stockValueScale,
   directions,
 }: TooltipProps) => {
@@ -30,7 +30,7 @@ const TooltipBar = ({
         pointerEvents="none"
       />
 
-      {tooltipData.map((linePayload, i) => {
+      {tooltipConfigs.map((linePayload, i) => {
         const { lineColor } = getTailwindColors(
           directions[i],
           linePayload.lineConfig

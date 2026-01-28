@@ -97,7 +97,7 @@ export interface MultiLineTimeSeriesSvgProps {
    * @type {TooltipConfig[]}
    * @memberof MultiLineTimeSeriesGraphProps
    */
-  tooltipData: TooltipConfig[];
+  tooltipConfigs?: TooltipConfig[];
 
   /**
    * The top position of the tooltip.
@@ -230,7 +230,7 @@ export interface HeaderTimeValueGraphProps {
    * @type {TooltipConfig[]}
    * @memberof HeaderTimeValueGraphProps
    */
-  tooltipData: TooltipConfig[];
+  tooltipConfigs: TooltipConfig[];
 }
 
 /**

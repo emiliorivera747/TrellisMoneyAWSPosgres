@@ -28,7 +28,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
     margin,
     showTooltip,
     hideTooltip,
-    tooltipData,
+    tooltipData: tooltipConfigs,
     tooltipTop = 0,
     tooltipLeft = 0,
     withInlfationTag = false,
@@ -41,7 +41,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
       <div className={`h-full w-full`}>
         <PrimaryGraphHeader
           lineConfigs={lineConfigs}
-          tooltipData={tooltipData}
+          tooltipConfigs={tooltipConfigs}
           withInflationTag={withInlfationTag}
           years={years || []}
         />
@@ -54,18 +54,18 @@ export default withTooltip<ProjectedLineGraphProps, TooltipConfig[]>(
           margin={margin}
           showTooltip={showTooltip}
           hideTooltip={hideTooltip}
-          tooltipData={tooltipData}
+          tooltipConfigs={tooltipConfigs}
           tooltipTop={tooltipTop}
           tooltipLeft={tooltipLeft}
         />
 
         {/* Tooltip div */}
-        {tooltipData && (
+        {tooltipConfigs && (
           <DateAxisTooltip
             margin={margin}
             tooltipLeft={tooltipLeft}
             defaultStyles={defaultStyles}
-            tooltipData={tooltipData}
+            tooltipConfigs={tooltipConfigs}
           />
         )}
       </div>
