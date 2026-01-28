@@ -9,22 +9,22 @@ import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
  * @param d - The time series data point
  * @returns The date of the data point
  */
-export const getDate: (d: TimeSeriesData) => Date = (d: TimeSeriesData) =>
-  d?.date;
+export const getDate: (dataPoint: TimeSeriesData) => Date = (dataPoint: TimeSeriesData) =>
+ dataPoint?.date;
 
 /**
  * Safely extracts the value from a time series data point.
  * @param d - The time series data point
  * @returns The value of the data point, or undefined if the data point is nullish
  */
-export const getStockValue = (d: TimeSeriesData) => d?.value;
+export const getStockValue = (dataPoint: TimeSeriesData) =>dataPoint?.value;
 
 /**
  * Extracts the value from a time series data point.
  * @param dataPoint - The time series data point
  * @returns The value of the data point
  */
-export const getValue = (dataPoint: TimeSeriesData | undefined) => dataPoint?.value;
+export const getValue = (dataPoint: TimeSeriesData | undefined ) => dataPoint?.value;
 
 /**
  * Gets the first value from a line series configuration.

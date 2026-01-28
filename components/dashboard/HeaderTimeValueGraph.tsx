@@ -73,11 +73,11 @@ export function Value({ className, lineConfig, tooltipConfig }: ValueProp) {
   if (!lineConfig || !lineConfig.data) return null;
   const endValue = getEndValue(lineConfig, tooltipConfig);
   let currentValue = tooltipConfig?.lineDataPoint;
-  
+
   return (
     <span className={cn(defaultClass, className)}>
       {tooltipConfig
-        ? `${numberToMoneyFormat(getValue(currentValue))}`
+        ? `${numberToMoneyFormat(getValue(currentValue) ?? 0)}`
         : `${numberToMoneyFormat(endValue)}`}
     </span>
   );
