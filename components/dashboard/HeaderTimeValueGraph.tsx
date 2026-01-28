@@ -17,13 +17,18 @@ import {
 
 // Utils
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
-import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
+import {
+  getEndDate,
+  getStartDate,
+  getStockValue,
+} from "@/utils/helper-functions/accessors/accessors";
 import { calculateRateOfChange } from "@/utils/helper-functions/graph/calculations/calculateRateOfChange";
 import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateYearsBetween";
 import {
   getStartValue,
   getEndValue,
 } from "@/utils/helper-functions/accessors/accessors";
+import { lineColors1 } from "@/features/projected-net-worth/utils/data/lineColors";
 
 const GraphSummaryHeaderContext = createContext<{
   lineConfigs: LineSeriesConfig[];
@@ -88,11 +93,13 @@ export function ValueChange({
   tooltipConfig,
   style,
 }: ValueChangeProps) {
-  if (!lineConfig || !tooltipConfig) return null;
+  if (!lineConfig || !lineConfig.data) return null;
+
   const startValue = getStartValue(lineConfig);
   const endValue = getEndValue(lineConfig, tooltipConfig);
   const diff = endValue - startValue;
   const rateOfChange = calculateRateOfChange(startValue, endValue);
+
   return (
     <ValuePriceChangeLabel
       valueDifference={diff}
@@ -113,17 +120,10 @@ export function TotalYears({
 }: TotalYearsProps) {
   const defaultClass = "text-tertiary-800 font-normal";
 
-  if (!lineConfig) return null;
-  const lineData = lineConfig.data;
-  if (!lineData) return null;
-
-  const years = calculateYearsBetween(
-    lineData[0].date,
-    tooltipConfig
-      ? tooltipConfig.lineDataPoint.date
-      : lineData[lineData.length - 1].date
-  );
-
+  if (!lineConfig || !lineConfig.data) return null;
+  const startDate = getStartDate(lineConfig);
+  const endDate = getEndDate(lineConfig, tooltipConfig);
+  const years = calculateYearsBetween(startDate, endDate);
   return <span className={cn(defaultClass, className)}>{years} years</span>;
 }
 

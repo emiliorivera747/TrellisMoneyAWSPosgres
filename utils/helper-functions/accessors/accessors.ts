@@ -16,11 +16,26 @@ export const getStartValue = (lineConfig: LineSeriesConfig) => {
 
 export const getEndValue = (
   lineConfig: LineSeriesConfig,
-  tooltipConfig: TooltipConfig
+  tooltipConfig: TooltipConfig | null | undefined
 ) => {
   const lineData = lineConfig.data;
   const endValue = tooltipConfig
     ? getStockValue(tooltipConfig.lineDataPoint)
     : lineData[lineData.length - 1].value;
   return endValue;
+};
+
+export const getStartDate = (lineConfig: LineSeriesConfig) => {
+  const lineData = lineConfig.data;
+  return lineData[0].date;
+};
+
+export const getEndDate = (
+  lineConfig: LineSeriesConfig,
+  tooltipConfig: TooltipConfig | null | undefined
+) => {
+  const lineData = lineConfig.data;
+  return tooltipConfig
+    ? tooltipConfig.lineDataPoint.date
+    : lineData[lineData.length - 1].date;
 };
