@@ -268,11 +268,18 @@ export interface TitleProps {
  */
 export interface ValueProp {
   /**
-   * The value of the line.
-   * @type {number}
+   * The line configuration containing the data.
+   * @type {LineSeriesConfig}
    * @memberof ValueProp
    */
-  lineIndex: number;
+  lineConfig: LineSeriesConfig;
+
+  /**
+   * The tooltip configuration for the line.
+   * @type {TooltipConfig}
+   * @memberof ValueProp
+   */
+  tooltipConfig?: TooltipConfig;
 
   /**
    * The ref of the value.
@@ -296,11 +303,18 @@ export interface ValueProp {
  */
 export interface ValueChangeProps {
   /**
-   * The value of the line.
-   * @type {number}
+   * The line configuration containing the data.
+   * @type {LineSeriesConfig}
    * @memberof ValueChangeProps
    */
-  lineIndex: number;
+  lineConfig: LineSeriesConfig;
+
+  /**
+   * The tooltip configuration for the line.
+   * @type {TooltipConfig}
+   * @memberof ValueChangeProps
+   */
+  tooltipConfig?: TooltipConfig;
 
   /**
    * The ref of the value.
@@ -343,10 +357,16 @@ export interface ValueChangeProps {
  */
 export interface TotalYearsProps {
   /**
-   * The index of the line to calculate years for.
-   * @type {number}
+   * The line configuration containing the data.
+   * @type {LineSeriesConfig}
    */
-  lineIndex: number;
+  lineConfig: LineSeriesConfig;
+
+  /**
+   * The tooltip configuration for the line.
+   * @type {TooltipConfig}
+   */
+  tooltipConfig?: TooltipConfig;
 
   /**
    * Optional CSS class name.

@@ -29,25 +29,32 @@ const NetWorthGraphHeader = ({
       tooltipConfigs={tooltipConfigs || []}
     >
       <GraphHeader label={"Net Worth"} />
+      
       {lineConfigs.map((lineConfig, index) => {
         const { primaryTextColor } =
           getDirectionalColorsByLineConfig(lineConfig);
+        const tooltipConfig = tooltipConfigs?.[index];
         return (
           <div key={index} className="flex flex-col">
             <Value
-              lineIndex={index}
+              lineConfig={lineConfig}
+              tooltipConfig={tooltipConfig}
               className={`${lineConfigs.length > 1 ? "text-[1.2rem]" : ""}`}
             />
             <ValueChange
-              lineIndex={index}
+              lineConfig={lineConfig}
+              tooltipConfig={tooltipConfig}
               className="text-[0.7rem]"
               style={{ color: primaryTextColor }}
             />
-            <TotalYears lineIndex={index} className="text-[0.7rem]" />
+            <TotalYears
+              lineConfig={lineConfig}
+              tooltipConfig={tooltipConfig}
+              className="text-[0.7rem]"
+            />
           </div>
         );
       })}
-
       <div className="flex justify-end">
         <GraphFilterButtonWithModal
           filterConfig={filterConfig}
@@ -55,6 +62,7 @@ const NetWorthGraphHeader = ({
           className="grid grid-cols-2"
         />
       </div>
+      
     </GraphSummaryHeader>
   );
 };

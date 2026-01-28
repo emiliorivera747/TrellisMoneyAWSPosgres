@@ -1,8 +1,10 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { cn } from "@/lib/utils";
 
+// Components
+import ValuePriceChangeLabel from "@/components/dashboard/ValuePriceChangeLabel";
 import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 import {
@@ -13,11 +15,15 @@ import {
   TotalYearsProps,
 } from "@/types/components/admin/graphs/props";
 
-import ValuePriceChangeLabel from "@/components/dashboard/ValuePriceChangeLabel";
+// Utils
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
 import { getStockValue } from "@/utils/helper-functions/accessors/accessors";
 import { calculateRateOfChange } from "@/utils/helper-functions/graph/calculations/calculateRateOfChange";
 import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateYearsBetween";
+import {
+  getStartValue,
+  getEndValue,
+} from "@/utils/helper-functions/accessors/accessors";
 
 const GraphSummaryHeaderContext = createContext<{
   lineConfigs: LineSeriesConfig[];
@@ -55,20 +61,17 @@ export function Title({ children, className }: TitleProps) {
 /**
  * Displays the current value of the graph line.
  */
-export function Value({ className, lineIndex }: ValueProp) {
+export function Value({ className, lineConfig, tooltipConfig }: ValueProp) {
   const defaultClass =
     "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
-  const { lineConfigs, tooltipConfigs } = useContext(GraphSummaryHeaderContext);
 
-  if (!lineConfigs) return null;
-
-  const lineData = lineConfigs[lineIndex].data;
-  const tooltipPayload = tooltipConfigs?.[lineIndex];
+  if (!lineConfig) return null;
+  const lineData = lineConfig.data;
 
   return (
     <span className={cn(defaultClass, className)}>
-      {tooltipPayload
-        ? `${numberToMoneyFormat(getStockValue(tooltipPayload.lineDataPoint))}`
+      {tooltipConfig
+        ? `${numberToMoneyFormat(getStockValue(tooltipConfig.lineDataPoint))}`
         : `${numberToMoneyFormat(
             lineData?.[lineData?.length - 1]?.value ?? 0
           )}`}
@@ -79,26 +82,20 @@ export function Value({ className, lineIndex }: ValueProp) {
 /**
  * Displays the change in value and rate of change as a percentage.
  */
-export function ValueChange({ className, lineIndex, style }: ValueChangeProps) {
-  const { lineConfigs, tooltipConfigs } = useContext(GraphSummaryHeaderContext);
-
-  if (!lineConfigs) return null;
-
-  const lineData = lineConfigs[lineIndex].data;
-  if (!lineData) return null;
-
-  const tooltipPayload = tooltipConfigs?.[lineIndex];
-  const startValue = lineData[0].value;
-  const endValue = tooltipPayload
-    ? getStockValue(tooltipPayload.lineDataPoint)
-    : lineData[lineData.length - 1].value;
-
-  const valueDifference = endValue - startValue;
+export function ValueChange({
+  className,
+  lineConfig,
+  tooltipConfig,
+  style,
+}: ValueChangeProps) {
+  if (!lineConfig || !tooltipConfig) return null;
+  const startValue = getStartValue(lineConfig);
+  const endValue = getEndValue(lineConfig, tooltipConfig);
+  const diff = endValue - startValue;
   const rateOfChange = calculateRateOfChange(startValue, endValue);
-
   return (
     <ValuePriceChangeLabel
-      valueDifference={valueDifference}
+      valueDifference={diff}
       rateOfChange={rateOfChange}
       className={className}
       style={style}
@@ -109,19 +106,21 @@ export function ValueChange({ className, lineIndex, style }: ValueChangeProps) {
 /**
  * Displays the total years between the first and last data point of the line.
  */
-export function TotalYears({ className, lineIndex }: TotalYearsProps) {
-  const { lineConfigs, tooltipConfigs } = useContext(GraphSummaryHeaderContext);
-  const tooltipPayload = tooltipConfigs?.[lineIndex];
+export function TotalYears({
+  className,
+  lineConfig,
+  tooltipConfig,
+}: TotalYearsProps) {
   const defaultClass = "text-tertiary-800 font-normal";
 
-  if (!lineConfigs) return null;
-  const lineData = lineConfigs[lineIndex].data;
+  if (!lineConfig) return null;
+  const lineData = lineConfig.data;
   if (!lineData) return null;
 
   const years = calculateYearsBetween(
     lineData[0].date,
-    tooltipPayload
-      ? tooltipPayload.lineDataPoint.date
+    tooltipConfig
+      ? tooltipConfig.lineDataPoint.date
       : lineData[lineData.length - 1].date
   );
 
