@@ -46,20 +46,16 @@ const GraphSummaryHeader = ({
 /**
  * Displays the title of the graph.
  */
-export function Title({ children, className, ref }: TitleProps) {
+export function Title({ children, className }: TitleProps) {
   const defaultClass =
     "tracking-wider font-medium text-tertiary-1000 not-italic text-[1.4rem]";
-  return (
-    <span className={cn(defaultClass, className)} ref={ref}>
-      {children}
-    </span>
-  );
+  return <span className={cn(defaultClass, className)}>{children}</span>;
 }
 
 /**
  * Displays the current value of the graph line.
  */
-export function Value({ className, lineIndex, ref }: ValueProp) {
+export function Value({ className, lineIndex }: ValueProp) {
   const defaultClass =
     "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
   const { lineConfigs, tooltipConfigs } = useContext(GraphSummaryHeaderContext);
@@ -70,7 +66,7 @@ export function Value({ className, lineIndex, ref }: ValueProp) {
   const tooltipPayload = tooltipConfigs?.[lineIndex];
 
   return (
-    <span className={cn(defaultClass, className)} ref={ref}>
+    <span className={cn(defaultClass, className)}>
       {tooltipPayload
         ? `${numberToMoneyFormat(getStockValue(tooltipPayload.lineDataPoint))}`
         : `${numberToMoneyFormat(
@@ -124,12 +120,13 @@ export function TotalYears({ className, lineIndex }: TotalYearsProps) {
 
   const years = calculateYearsBetween(
     lineData[0].date,
-    tooltipPayload ? tooltipPayload.lineDataPoint.date : lineData[lineData.length - 1].date
+    tooltipPayload
+      ? tooltipPayload.lineDataPoint.date
+      : lineData[lineData.length - 1].date
   );
 
   return <span className={cn(defaultClass, className)}>{years} years</span>;
 }
-
 
 GraphSummaryHeader.Title = Title;
 GraphSummaryHeader.Value = Value;

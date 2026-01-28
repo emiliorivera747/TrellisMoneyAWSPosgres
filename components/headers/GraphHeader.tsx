@@ -11,7 +11,7 @@ import { GraphHeaderProps } from "@/types/components/headers/graph-headers";
  */
 const GraphHeader = ({ label, ref, className }: GraphHeaderProps) => {
   const defaultClassName =
-    "flex items-center justify-center text-[1.5rem] gap-1 tracking-wider font-light text-tertiary-900";
+    "flex items-center justify-start text-[1.5rem] gap-1 tracking-wider font-light text-tertiary-900";
   return (
     <h1 ref={ref} className={cn(defaultClassName, className)}>
       {label}
