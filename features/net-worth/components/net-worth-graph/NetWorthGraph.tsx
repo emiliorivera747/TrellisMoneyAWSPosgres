@@ -10,13 +10,13 @@ import DateAxisTooltip from "@/components/dashboard/DateAxisTooltip";
 import MultiLineTimeSeriesSvg from "@/components/dashboard/MultiLineTimeSeriesSvg";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
 import TimeValueGraphHeader, {
-  Title,
   Value,
   ValueChangeHeader,
   TotalYears,
 } from "@/components/dashboard/HeaderTimeValueGraph";
 import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";
 import GraphHeader from "@/components/headers/GraphHeader";
+import NetWorthGraphHeader from "@/features/net-worth/components/net-worth-graph/NetWorthGraphHeader";
 
 // Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
@@ -58,50 +58,10 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
 
     return (
       <div className={`h-full w-full`}>
-        <TimeValueGraphHeader
+        <NetWorthGraphHeader
           lineConfigs={lineConfigs}
           tooltipConfigs={tooltipConfigs || []}
-        >
-          <div className="grid grid-cols-2 w-full">
-            <div className={"grid grid-cols-[14rem_14rem]"}>
-              {lineConfigs.map((linePayload, index) => {
-                const direction = getLineDirection(linePayload.data);
-                const { primaryTextColor } = getDirectionalColors(
-                  direction,
-                  linePayload
-                );
-                return (
-                  <div key={index} className="flex flex-col">
-                    <div className="flex">
-                      <div className="flex items-center">
-                        <GraphHeader label={"Net Worth"} />
-                      </div>
-                    </div>
-                    <Value
-                      lineIndex={index}
-                      className={`${payloadLen > 1 ? "text-[1.2rem]" : ""}`}
-                    />
-                    <div className="flex gap-1">
-                      <ValueChangeHeader
-                        lineIndex={index}
-                        className="text-[0.7rem]"
-                        style={{ color: primaryTextColor }}
-                      />
-                      <TotalYears lineIndex={index} className="text-[0.7rem]" />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="flex justify-end">
-              <GraphFilterButtonWithModal
-                filterConfig={filterConfig}
-                ref={filterRef}
-                className="grid grid-cols-2"
-              />
-            </div>
-          </div>
-        </TimeValueGraphHeader>
+        />
 
         {/* The SVG for the graph */}
         <MultiLineTimeSeriesSvg
