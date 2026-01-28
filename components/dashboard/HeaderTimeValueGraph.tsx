@@ -5,6 +5,22 @@ import { cn } from "@/lib/utils";
 
 // Components
 import ValuePriceChangeLabel from "@/components/dashboard/ValuePriceChangeLabel";
+
+// Utils
+import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
+import {
+  getEndDate,
+  getStartDate,
+  getValue,
+} from "@/utils/helper-functions/accessors/accessors";
+import { calculateRateOfChange } from "@/utils/helper-functions/graph/calculations/calculateRateOfChange";
+import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateYearsBetween";
+import {
+  getStartValue,
+  getEndValue,
+} from "@/utils/helper-functions/accessors/accessors";
+
+// Types
 import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 import {
@@ -14,21 +30,6 @@ import {
   ValueChangeProps,
   TotalYearsProps,
 } from "@/types/components/admin/graphs/props";
-
-// Utils
-import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
-import {
-  getEndDate,
-  getStartDate,
-  getStockValue,
-} from "@/utils/helper-functions/accessors/accessors";
-import { calculateRateOfChange } from "@/utils/helper-functions/graph/calculations/calculateRateOfChange";
-import { calculateYearsBetween } from "@/utils/helper-functions/dates/calculateYearsBetween";
-import {
-  getStartValue,
-  getEndValue,
-} from "@/utils/helper-functions/accessors/accessors";
-import { lineColors1 } from "@/features/projected-net-worth/utils/data/lineColors";
 
 const GraphSummaryHeaderContext = createContext<{
   lineConfigs: LineSeriesConfig[];
@@ -69,17 +70,15 @@ export function Title({ children, className }: TitleProps) {
 export function Value({ className, lineConfig, tooltipConfig }: ValueProp) {
   const defaultClass =
     "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
-
-  if (!lineConfig) return null;
-  const lineData = lineConfig.data;
-
+  if (!lineConfig || !lineConfig.data) return null;
+  const endValue = getEndValue(lineConfig, tooltipConfig);
+  let currentValue = tooltipConfig?.lineDataPoint;
+  
   return (
     <span className={cn(defaultClass, className)}>
       {tooltipConfig
-        ? `${numberToMoneyFormat(getStockValue(tooltipConfig.lineDataPoint))}`
-        : `${numberToMoneyFormat(
-            lineData?.[lineData?.length - 1]?.value ?? 0
-          )}`}
+        ? `${numberToMoneyFormat(getValue(currentValue))}`
+        : `${numberToMoneyFormat(endValue)}`}
     </span>
   );
 }
