@@ -112,7 +112,7 @@ const SignInForm = () => {
 
       <Link
         href="/sign-up"
-        className="w-full px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] text-sm font-medium text-gray-700 bg-[#e9ecef] shadow-sm hover:bg-[#dee2e6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4 mb-4"
+        className="w-full px-[.94118rem] py-[1.05882rem] h-[3.2941176471rem] rounded-[12px] text-sm font-medium text-gray-700 bg-tertiary-300 shadow-sm hover:bg-tertiary-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 flex items-center justify-center gap-4 mb-4"
       >
         <span>Create Account</span>
       </Link>

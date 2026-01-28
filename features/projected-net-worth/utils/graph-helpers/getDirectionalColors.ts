@@ -1,8 +1,12 @@
-import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
+import {
+  LineSeriesConfig,
+} from "@/types/components/admin/graphs/data";
 import { Direction } from "@/features/projected-net-worth/types/graphComponents";
 
 // Data
 import { DEFAULT_COLORS } from "@/features/projected-net-worth/utils/data/defaultColors";
+
+import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 
 /**
  *
@@ -34,4 +38,14 @@ export const getDirectionalColors = (
     tagBgColor: getColor("tagBgColor"),
     primaryTextColor: getColor("subheaderColor"),
   };
+};
+
+export const getDirectionalColorsByLineConfig = (
+  lineConfig: LineSeriesConfig
+) => {
+  const direction = getLineDirection(lineConfig.data);
+  const { lineColor, tagTextColor, tagBgColor, primaryTextColor } =
+    getDirectionalColors(direction, lineConfig);
+
+  return { lineColor, tagBgColor, tagTextColor, primaryTextColor };
 };

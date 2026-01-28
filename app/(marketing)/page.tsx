@@ -61,7 +61,7 @@ export default async function Home() {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="bg-white h-auto">
+    <div className="bg-white dark:bg-gray-900 h-auto">
       <Navbar isAuthenticated={!!user} />
       <HeroSection isAuthenticated={!!user} />
       {!user && <PricingSection />}

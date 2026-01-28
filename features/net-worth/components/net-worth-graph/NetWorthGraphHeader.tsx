@@ -10,13 +10,12 @@ import GraphHeader from "@/components/headers/GraphHeader";
 import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";
 
 // Types
-import { LineSeriesConfig } from "@/types/components/admin/graphs/data";
-import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
 import { NetWorthGraphHeaderProps } from "@/features/net-worth/types/net-worth-graph-header";
 
 // Utils
-import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
-import { getDirectionalColors } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
+import {
+  getDirectionalColorsByLineConfig,
+} from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 // Config
 import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
@@ -33,12 +32,11 @@ const NetWorthGraphHeader = ({
     >
       <div className="grid grid-cols-2 w-full">
         <div className={"grid grid-cols-[14rem_14rem]"}>
-          {lineConfigs.map((linePayload, index) => {
-            const direction = getLineDirection(linePayload.data);
-            const { primaryTextColor } = getDirectionalColors(
-              direction,
-              linePayload
-            );
+          {lineConfigs.map((lineConfig, index) => {
+            
+            const { primaryTextColor } =
+              getDirectionalColorsByLineConfig(lineConfig);
+
             return (
               <div key={index} className="flex flex-col">
                 <div className="flex">
@@ -48,7 +46,7 @@ const NetWorthGraphHeader = ({
                 </div>
                 <Value
                   lineIndex={index}
-                  className={`${payloadLen > 1 ? "text-[1.2rem]" : ""}`}
+                  className={`${lineConfigs.length > 1 ? "text-[1.2rem]" : ""}`}
                 />
                 <div className="flex gap-1">
                   <ValueChangeHeader
