@@ -20,7 +20,8 @@ const MultipleValPriceChange = ({
     <div className="flex flex-row gap-2 w-[75%]">
       {lineConfigs.map((line, index) => {
         const direction = getLineDirection(line.data);
-        const { tailwindPrimaryTextColor, lineColor } = getDirectionalColors(
+        
+        const { primaryTextColor, lineColor } = getDirectionalColors(
           direction,
           line
         );
@@ -38,7 +39,7 @@ const MultipleValPriceChange = ({
               data={line.data}
               mainHeaderTailwindCss={`${headerSize} text-tertiary-1000 font-medium`}
               subHeaderTailwindCss="font-semibold text-[0.7rem]"
-              subHeaderStyle={{ color: tailwindPrimaryTextColor }}
+              subHeaderStyle={{ color: primaryTextColor }}
               lineName={lineName}
             />
             <LineIndicator

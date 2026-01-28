@@ -41,7 +41,7 @@ const InflationTag = ({
 
   if (!lineConfig) return null;
   const lineDirection = getLineDirection(lineConfig.data);
-  const { tailwindTagTextColor, tailwindTagBgColor } = getDirectionalColors(
+  const { tagTextColor, tagBgColor } = getDirectionalColors(
     lineDirection,
     lineConfig
   );
@@ -49,7 +49,7 @@ const InflationTag = ({
   return (
     <div
       className={`flex items-center p-[0.3rem] px-3 rounded-full font-semibold gap-2 text-[0.6rem]`}
-      style={{ backgroundColor: tailwindTagBgColor, color: tailwindTagTextColor }}
+      style={{ backgroundColor: tagBgColor, color: tagTextColor }}
     >
       {GetSvgV2({
         path: getSvgPath(lineDirection),

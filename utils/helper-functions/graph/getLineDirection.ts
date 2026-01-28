@@ -3,13 +3,10 @@ import { Direction } from "@/features/projected-net-worth/types/graphComponents"
 import { TimeSeriesData } from "@/types/components/admin/graphs/data";
 
 /**
- * Get the direction of the line by comparing the first and last stock value
- * - If initial stock value is less than the last stock value, return "up" (increasing)
- * - If initial stock value is greater than the last stock value, return "down" (decreasing)
- * - If initial stock value is equal to the last stock value, return "flat" (no change)
+ * Determines the line direction ("up", "down", "flat") based on the first and last stock values.
  *
- * @param data
- * @returns
+ * @param data - Time series data
+ * @returns Direction of the line
  */
 export const getLineDirection = (data: TimeSeriesData[]): Direction => {
   const len = data?.length;
