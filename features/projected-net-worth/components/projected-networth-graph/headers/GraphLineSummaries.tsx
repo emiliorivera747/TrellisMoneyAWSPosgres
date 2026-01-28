@@ -20,7 +20,9 @@ const GraphLineSummaries = ({
   return (
     <div className="flex flex-row gap-2 w-[75%]">
       {lineConfigs.map((lineConfig, index) => {
+        
         const direction = getLineDirection(lineConfig.data);
+        
         const { primaryTextColor, lineColor } = getDirectionalColors(
           direction,
           lineConfig

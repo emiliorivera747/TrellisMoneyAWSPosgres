@@ -78,7 +78,6 @@ export function Title({ children, className, ref }: TitleProps) {
 export function Value({ className, lineIndex, ref }: ValueProp) {
   const defaultClass =
     "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
-
   const { lineConfigs, tooltipConfigs } = useContext(TimeValueGraphHeaderContext);
 
   if (!lineConfigs) return null;
@@ -162,14 +161,10 @@ export function TotalYears({
 }) {
   const { lineConfigs, tooltipConfigs } = useContext(TimeValueGraphHeaderContext);
   const tooltipPayload = tooltipConfigs?.[lineIndex];
-
-
   const defaultClass = "text-tertiary-800 font-normal";
 
   if (!lineConfigs) return null;
-
   const lineData = lineConfigs[lineIndex].data;
-
   if (!lineData) return null;
 
   const years = calculateYearsBetween(
@@ -180,10 +175,6 @@ export function TotalYears({
   return <span className={cn(defaultClass, className)}>{years} years</span>;
 }
 
-
-export function Info(){
-
-}
 
 TimeValueGraphHeader.Title = Title;
 TimeValueGraphHeader.Value = Value;

@@ -31,6 +31,7 @@ type TooltipData = TooltipConfig[];
 
 // Config
 import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
+import { getLineDirection } from "@/utils/helper-functions/graph/getLineDirection";
 
 /**
  * Component for displaying a line graph.
@@ -64,7 +65,11 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
           <div className="grid grid-cols-2 w-full">
             <div className={"grid grid-cols-[14rem_14rem]"}>
               {lineConfigs.map((linePayload, index) => {
-                const { primaryTextColorTW } = getDirectionalColors(linePayload);
+                const direction = getLineDirection(linePayload.data);
+                const { primaryTextColor } = getDirectionalColors(
+                  direction,
+                  linePayload
+                );
                 return (
                   <div key={index} className="flex flex-col">
                     <div className="flex">
@@ -80,7 +85,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
                       <ValueChangeHeader
                         lineIndex={index}
                         className="text-[0.7rem]"
-                        style={{ color: primaryTextColorTW }}
+                        style={{ color: primaryTextColor }}
                       />
                       <TotalYears lineIndex={index} className="text-[0.7rem]" />
                     </div>
