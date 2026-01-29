@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 // Components
 import GraphSummaryHeader from "@/components/graphs/graph-header/HeaderTimeValueGraph";
@@ -7,7 +7,10 @@ import GraphSummaryHeader from "@/components/graphs/graph-header/HeaderTimeValue
 import { NetWorthGraphHeaderProps } from "@/features/net-worth/types/net-worth-graph-header";
 
 // Config
-import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
+import {
+  filterConfig,
+  AccountGraphFilter,
+} from "@/features/net-worth/utils/config/filterConfig";
 
 /**
  * Header component for the Net Worth graph.
@@ -15,12 +18,11 @@ import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
  * showing current values and changes over time.
  */
 const NetWorthGraphHeader = ({ graphConfigs }: NetWorthGraphHeaderProps) => {
-  const filterRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedFilter, setSelectFilter] = useState("net-worth");
-
-  const handleOpenChange = () => {};
-  const handleOnFilterChange = () => {};
+  const [selectedFilter, setSelectFilter] =
+    useState<AccountGraphFilter>("net-worth");
+  const handleOnFilterChange = (filter: AccountGraphFilter) => {
+    setSelectFilter(filter);
+  };
 
   return (
     <GraphSummaryHeader graphConfigs={graphConfigs}>
@@ -28,10 +30,8 @@ const NetWorthGraphHeader = ({ graphConfigs }: NetWorthGraphHeaderProps) => {
         <GraphSummaryHeader.Header label="Net Worth" />
         <GraphSummaryHeader.FilterButton
           filterConfig={filterConfig}
-          isOpen={isOpen}
-          onOpenChange={handleOpenChange}
           selectedFilter={selectedFilter}
-          onFilterChange={handleOnFilterChange}
+          handleFilterChange={handleOnFilterChange}
         />
       </div>
       <GraphSummaryHeader.ConfigSummaryList />

@@ -1,17 +1,11 @@
-import { AccountGraphFilter } from "@/features/accounts/types/graph";
 
-/**
- * Represents the configuration for a graph filter.
- * @export
- * @interface GraphFilterConfig
- */
-export interface GraphFilterConfig {
+export interface GraphFilterConfig<T> {
   /**
    * The key of the filter.
-   * @type {AccountGraphFilter}
+   * @type {T}
    * @memberof GraphFilterConfig
    */
-  key: AccountGraphFilter;
+  key: T;
   /**
    * The label of the filter.
    * @type {string}

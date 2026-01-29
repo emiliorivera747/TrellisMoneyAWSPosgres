@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import GraphHeaders from "@/components/headers/GraphHeader";
 
 import GraphFilterButtonWithModal from "@/components/graphs/filters/GraphFilterButtonWithModal";
@@ -8,14 +7,12 @@ import {
   useDashboardFilterActions,
 } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 
-
 import { PrimaryGraphHeaderProps } from "@/features/projected-net-worth/types/graphComponents";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 import { filterConfig } from "@/features/projected-net-worth/config/filterConfig";
 import GraphLineSummaries from "@/features/projected-net-worth/components/projected-networth-graph/headers/GraphLineSummaries";
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
-
 
 const PrimaryGraphHeader = ({
   graphConfigs,
@@ -31,11 +28,8 @@ const PrimaryGraphHeader = ({
     setSelectedProjectedYear,
   } = useDashboardFilterActions();
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const handleFilterSelection = (filter: InflationFilters) => {
     setSelectedInflationFilter(filter);
-    setIsDialogOpen(false);
   };
 
   const showInflationTag = withInflationTag && graphConfigs.length === 1;
@@ -57,8 +51,6 @@ const PrimaryGraphHeader = ({
         </div>
         <GraphFilterButtonWithModal
           filterConfig={filterConfig}
-          open={isDialogOpen}
-          handleOnOpenChange={setIsDialogOpen}
           selectedFilter={selectedInflationFilter}
           handleFilterChange={handleFilterSelection}
         />

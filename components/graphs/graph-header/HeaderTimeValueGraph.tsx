@@ -192,18 +192,14 @@ export function Header({
  * Renders a filter button that opens a modal with filter options.
  * Wraps the GraphFilterButtonWithModal component for use within GraphSummaryHeader.
  */
-export function FilterButton<T,>({
+export function FilterButton<T>({
   filterConfig,
-  open,
-  handleOnOpenChange,
   handleFilterChange,
   selectedFilter,
 }: GraphSummaryHeaderFilterButtonProps<T>) {
   return (
     <GraphFilterButtonWithModal
       filterConfig={filterConfig}
-      open={open}
-      handleOnOpenChange={handleOnOpenChange}
       handleFilterChange={handleFilterChange}
       selectedFilter={selectedFilter}
     />

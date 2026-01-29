@@ -442,8 +442,6 @@ export interface GraphSummaryHeaderHeaderProps {
  * @interface GraphSummaryHeaderFilterButtonProps
  */
 export interface GraphSummaryHeaderFilterButtonProps<T> {
-  open: boolean;
-  handleOnOpenChange: (open: boolean) => void;
   handleFilterChange: (filter: T) => void;
   selectedFilter: T;
   label?: string;
