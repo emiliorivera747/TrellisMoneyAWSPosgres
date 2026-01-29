@@ -86,6 +86,8 @@ export interface GraphFilterButtonWithModalProps {
    * @memberof GraphFilterButtonWithModalProps
    */
   className?: string;
+
+  label?: string;
 }
 
 /**

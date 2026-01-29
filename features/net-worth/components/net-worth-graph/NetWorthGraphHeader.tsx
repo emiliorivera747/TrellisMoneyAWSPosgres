@@ -26,7 +26,7 @@ const NetWorthGraphHeader = ({ graphConfigs }: NetWorthGraphHeaderProps) => {
           className="grid grid-cols-2"
         />
       </div>
-      <GraphSummaryHeader.ConfigList />
+      <GraphSummaryHeader.ConfigSummaryList />
     </GraphSummaryHeader>
   );
 };

@@ -13,6 +13,7 @@ import { GraphFilterButtonWithModalProps } from "@/types/components/admin/graphs
 
 const GraphFilterButtonWithModal = ({
   filterConfig,
+  label = "Filters",
   ref,
   className,
 }: GraphFilterButtonWithModalProps) => {
@@ -34,14 +35,14 @@ const GraphFilterButtonWithModal = ({
               d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
             />
           </svg>
-          Filters
+          {label}
         </button>
       </AlertDialogTrigger>
 
       <AlertDialogContent className="shadow-lg">
         <AlertDialogHeader>
           <AlertDialogTitle className="mb-6 border-b border-tertiary-400 pb-4 flex justify-between items-center">
-            Filters
+            {label}
             <AlertDialogCancel className="border-none shadow-none rounded-full p-3 flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -59,11 +60,7 @@ const GraphFilterButtonWithModal = ({
               </svg>
             </AlertDialogCancel>
           </AlertDialogTitle>
-          <Filter
-            filterConfig={filterConfig}
-            className={className}
-            ref={ref}
-          />
+          <Filter filterConfig={filterConfig} className={className} ref={ref} />
         </AlertDialogHeader>
         <AlertDialogFooter className="pt-6">
           <AlertDialogAction className="bg-tertiary-1000 py-6 rounded-[12px]">
