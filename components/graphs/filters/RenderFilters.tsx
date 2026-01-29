@@ -8,27 +8,24 @@ import { LineGraphFilterButtonsProps } from "@/features/projected-net-worth/type
  *
  * Render filter
  *
- * @param param0
- * @returns
  */
 const RenderFilters = <T,>({
-  filterConfigs,
+  filterConfig,
   selectedFilter,
   handleFilterChange,
 }: LineGraphFilterButtonsProps<T>) => {
   return (
     <div className="grid grid-rows-3 gap-3 py-2 px-8 pb-10">
-      {filterConfigs.map((filter, index) => (
-          <LineGraphFilterButton
-            key={index}
-            isSelected={selectedFilter === filter.key}
-            svgPath={filter.svgPath}
-            label={filter.label}
-            onClick={() => handleFilterChange(filter.key)}
-            color={filter.color}
-          />
-        )
-      )}
+      {filterConfig.map((filter, index) => (
+        <LineGraphFilterButton
+          key={index}
+          isSelected={selectedFilter === filter.key}
+          svgPath={filter.svgPath}
+          label={filter.label}
+          onClick={() => handleFilterChange(filter.key)}
+          color={filter.color}
+        />
+      ))}
     </div>
   );
 };

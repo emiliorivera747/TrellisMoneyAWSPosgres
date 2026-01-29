@@ -30,7 +30,7 @@ export interface LineGraphFilterButtonsProps<T> {
    * @type {Array<{ key: T; label: string; svgPath: string; color: string }>}
    * @memberof LineGraphFilterButtonsProps
    */
-  filterConfigs: Array<{
+  filterConfig: Array<{
     key: T;
     label: string;
     svgPath: string;

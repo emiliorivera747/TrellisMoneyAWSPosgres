@@ -4,25 +4,23 @@ import GraphHeaders from "@/components/headers/GraphHeader";
 import GraphLineSummaries from "@/features/projected-net-worth/components/projected-networth-graph/headers/GraphLineSummaries";
 import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
 import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
-import FilterDialog from "@/features/projected-net-worth/components/projected-networth-graph/dialogs/FilterDialog";
+import GraphFilterButtonWithDialog from "@/components/graphs/filters/GraphFilterButtonWithDialog";
 import {
   useDashboardFilters,
   useDashboardFilterActions,
 } from "@/stores/slices/dashboard/dashboardFilters.selectors";
 import { PrimaryGraphHeaderProps } from "@/features/projected-net-worth/types/graphComponents";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
+import { filterConfig } from "@/features/projected-net-worth/config/filterConfig";
+
 
 const PrimaryGraphHeader = ({
   graphConfigs,
   withInflationTag,
   years,
 }: PrimaryGraphHeaderProps) => {
-
-  const {
-    selectedProjectedYear,
-    retirementYear,
-    selectedInflationFilter,
-  } = useDashboardFilters();
+  const { selectedProjectedYear, retirementYear, selectedInflationFilter } =
+    useDashboardFilters();
 
   const {
     setSelectedInflationFilter,
@@ -54,7 +52,8 @@ const PrimaryGraphHeader = ({
             />
           </div>
         </div>
-        <FilterDialog
+        <GraphFilterButtonWithDialog
+          filterConfig={filterConfig}
           isOpen={isDialogOpen}
           onOpenChange={setIsDialogOpen}
           selectedFilter={selectedInflationFilter}
