@@ -1,18 +1,20 @@
 // Components
 import {
   Value,
-  ValueChange,
-  TotalYears,
 } from "@/components/graphs/graph-header/HeaderTimeValueGraph";
 
 // Types
 import { GraphConfigSummaryListProps } from "@/types/components/admin/graphs/props";
+
+// Components
+import ValueChangeWithYears from "./ValueChangeWithYears";
 
 // Utils
 import { getDirectionalColorsByLineConfig } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 import { cn } from "@/lib/utils";
 
 const defaultClassName = "grid grid-cols-[16rem_16rem]";
+
 
 const GraphConfigSummaryList = ({
   graphConfigs,
@@ -30,14 +32,10 @@ const GraphConfigSummaryList = ({
               graphConfig={graphConfig}
               className={`${graphConfigs.length > 1 ? "text-[1.2rem]" : ""}`}
             />
-            <span className="flex gap-1">
-              <ValueChange
-                graphConfig={graphConfig}
-                className="text-[0.7rem]"
-                style={{ color: primaryTextColor }}
-              />
-              <TotalYears graphConfig={graphConfig} className="text-[0.7rem]" />
-            </span>
+            <ValueChangeWithYears
+              graphConfig={graphConfig}
+              primaryTextColor={primaryTextColor}
+            />
           </div>
         );
       })}
