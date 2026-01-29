@@ -24,13 +24,13 @@ import {
 import { getDirectionalColorsByLineConfig } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 // Types
-import { GraphConfig } from "@/types/components/admin/graphs/graph-config";
 import {
   HeaderTimeValueGraphProps,
   TitleProps,
   GraphSummaryHeaderContextVal,
   GraphSummaryHeaderHeaderProps,
   GraphSummaryHeaderFilterButtonProps,
+  ValueHeaderProps,
 } from "@/types/components/admin/graphs/props";
 
 /** Context for providing graph configurations to child components. */
@@ -94,13 +94,7 @@ export function GraphConfigSummaryList({ className }: { className?: string }) {
 /**
  * Displays the current value of the graph line.
  */
-export function Value({
-  graphConfig,
-  className,
-}: {
-  graphConfig: GraphConfig;
-  className?: string;
-}) {
+export function Value({ graphConfig, className }: ValueHeaderProps) {
   const defaultClass =
     "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
   const { lineConfig, tooltipConfig } = graphConfig;
@@ -125,11 +119,7 @@ export function ValueChange({
   graphConfig,
   className,
   style,
-}: {
-  graphConfig: GraphConfig;
-  className?: string;
-  style?: React.CSSProperties;
-}) {
+}: ValueHeaderProps) {
   const { lineConfig, tooltipConfig } = graphConfig;
   if (!lineConfig || !lineConfig.data) return null;
 
@@ -154,14 +144,14 @@ export function ValueChange({
  * Uses directional coloring based on whether the value increased or decreased.
  */
 export function ValueChangeWithYears({
+  className,
   graphConfig,
-}: {
-  graphConfig: GraphConfig;
-}) {
+}: ValueHeaderProps) {
   const { lineConfig } = graphConfig;
   const { primaryTextColor } = getDirectionalColorsByLineConfig(lineConfig);
+  const defaultClass = "flex gap-1";
   return (
-    <span className="flex gap-1">
+    <span className={cn(defaultClass, className)}>
       <ValueChange
         graphConfig={graphConfig}
         className="text-[0.7rem]"
@@ -175,13 +165,7 @@ export function ValueChangeWithYears({
 /**
  * Displays the total years between the first and last data point of the line.
  */
-export function TotalYears({
-  graphConfig,
-  className,
-}: {
-  graphConfig: GraphConfig;
-  className?: string;
-}) {
+export function TotalYears({ graphConfig, className }: ValueHeaderProps) {
   const defaultClass = "text-tertiary-800 font-normal";
   const { lineConfig, tooltipConfig } = graphConfig;
   if (!lineConfig || !lineConfig.data) return null;
@@ -197,7 +181,11 @@ export function TotalYears({
  * Displays the header label for the graph.
  * Wraps the GraphHeader component for use within GraphSummaryHeader.
  */
-export function Header({ label, className, ref }: GraphSummaryHeaderHeaderProps) {
+export function Header({
+  label,
+  className,
+  ref,
+}: GraphSummaryHeaderHeaderProps) {
   return <GraphHeader label={label} className={className} ref={ref} />;
 }
 
@@ -213,7 +201,7 @@ export function FilterButton({
   return (
     <GraphFilterButtonWithModal
       filterConfig={filterConfig}
-      ref={filterRef}
+      innerRef={filterRef}
       className={className}
     />
   );

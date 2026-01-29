@@ -50,7 +50,7 @@ export interface LineGraphFilterButtonsProps {
    * @type {React.Ref<HTMLDivElement>}
    * @memberof LineGraphFilterButtonsProps
    */
-  ref?: React.Ref<HTMLDivElement>;
+  innerRef?: React.Ref<HTMLDivElement>;
 
   /**
    * The class name of the filter.
@@ -78,7 +78,7 @@ export interface GraphFilterButtonWithModalProps {
    * @type {React.Ref<HTMLDivElement>}
    * @memberof GraphFilterButtonWithModalProps
    */
-  ref?: React.Ref<HTMLDivElement>;
+  innerRef?: React.Ref<HTMLDivElement>;
 
   /**
    * The class name of the filter.

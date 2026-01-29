@@ -6,14 +6,14 @@ import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountF
 
 const Filter = ({
   filterConfig,
-  ref,
+  innerRef,
   className,
 }: LineGraphFilterButtonsProps) => {
   const defaultClass = "grid grid-cols-3 gap-3 py-2";
   const { selectedFilter, setSelectedFilter } =
   useAccountsFiltersWithActions();
   return (
-    <div ref={ref} className={cn(defaultClass, className)}>
+    <div ref={innerRef} className={cn(defaultClass, className)}>
       {filterConfig.map((filter, index) => (
         <LineGraphFilterButton
           key={index}

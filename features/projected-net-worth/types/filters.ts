@@ -10,20 +10,32 @@ export type InflationFilters = "inflationAdjusted" | "actual" | "both";
  * @export
  * @interface LineGraphFilterButtonsProps
  */
-export interface LineGraphFilterButtonsProps {
+export interface LineGraphFilterButtonsProps<T> {
   /**
    * The currently selected filter.
-   * @type {InflationFilters}
+   * @type {T}
    * @memberof LineGraphFilterButtonsProps
    */
-  selectedFilter: InflationFilters;
+  selectedFilter: T;
 
   /**
    * Function to handle filter changes.
-   * @type {(key: InflationFilters) => void}
+   * @type {(key: T) => void}
    * @memberof LineGraphFilterButtonsProps
    */
-  handleFilterChange: (key: InflationFilters) => void;
+  handleFilterChange: (key: T) => void;
+
+  /**
+   * Configuration for the filter buttons.
+   * @type {Array<{ key: T; label: string; svgPath: string; color: string }>}
+   * @memberof LineGraphFilterButtonsProps
+   */
+  filterConfigs: Array<{
+    key: T;
+    label: string;
+    svgPath: string;
+    color: string;
+  }>;
 }
 
 /**

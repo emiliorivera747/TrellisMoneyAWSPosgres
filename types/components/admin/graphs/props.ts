@@ -405,6 +405,12 @@ export type GraphSummaryHeaderContextVal = {
   graphConfigs: GraphConfig[];
 };
 
+export interface ValueHeaderProps {
+  graphConfig: GraphConfig;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
 /**
  * Props for the Header sub-component of GraphSummaryHeader.
  * @export

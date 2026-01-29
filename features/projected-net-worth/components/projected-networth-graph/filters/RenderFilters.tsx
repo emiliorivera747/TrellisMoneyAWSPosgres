@@ -1,12 +1,8 @@
-// Config
-import { filterConfig } from "@/features/projected-net-worth/config/filterConfig";
-
 // Components
 import LineGraphFilterButton from "@/components/buttons/LineGraphFilterButton";
 
 // Types
 import { LineGraphFilterButtonsProps } from "@/features/projected-net-worth/types/filters";
-import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 
 /**
  *
@@ -15,22 +11,14 @@ import { InflationFilters } from "@/features/projected-net-worth/types/filters";
  * @param param0
  * @returns
  */
-const RenderFilters = ({
+const RenderFilters = <T,>({
+  filterConfigs,
   selectedFilter,
   handleFilterChange,
-}: LineGraphFilterButtonsProps) => {
+}: LineGraphFilterButtonsProps<T>) => {
   return (
     <div className="grid grid-rows-3 gap-3 py-2 px-8 pb-10">
-      {filterConfig.map(
-        (
-          filter: {
-            key: InflationFilters;
-            label: string;
-            svgPath: string;
-            color: string;
-          },
-          index
-        ) => (
+      {filterConfigs.map((filter, index) => (
           <LineGraphFilterButton
             key={index}
             isSelected={selectedFilter === filter.key}
