@@ -1,7 +1,5 @@
 "use client";
-import GraphHeaders from "@/components/headers/GraphHeader";
-
-import GraphFilterButtonWithModal from "@/components/graphs/filters/GraphFilterButtonWithModal";
+import GraphSummaryHeader from "@/components/graphs/graph-header/HeaderTimeValueGraph";
 import {
   useDashboardFilters,
   useDashboardFilterActions,
@@ -35,10 +33,10 @@ const PrimaryGraphHeader = ({
   const showInflationTag = withInflationTag && graphConfigs.length === 1;
 
   return (
-    <header className="flex flex-col w-full h-auto">
+    <GraphSummaryHeader graphConfigs={graphConfigs}>
       <div className="flex flex-row text-[1.4rem] gap-2 w-full justify-between">
         <div className="flex flex-row gap-4">
-          <GraphHeaders label="Future Projection" />
+          <GraphSummaryHeader.Header label="Future Projection" />
           <div className="flex items-center">
             <SelectYearMenuButton
               selectedYear={selectedProjectedYear}
@@ -49,7 +47,7 @@ const PrimaryGraphHeader = ({
             />
           </div>
         </div>
-        <GraphFilterButtonWithModal
+        <GraphSummaryHeader.FilterButton
           filterConfig={filterConfig}
           selectedFilter={selectedInflationFilter}
           handleFilterChange={handleFilterSelection}
@@ -63,7 +61,7 @@ const PrimaryGraphHeader = ({
           </div>
         )}
       </div>
-    </header>
+    </GraphSummaryHeader>
   );
 };
 

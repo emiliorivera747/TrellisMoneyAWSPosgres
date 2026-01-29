@@ -75,7 +75,7 @@ export function Title({ children, className }: TitleProps) {
  */
 export function GraphConfigSummaryList({ className }: { className?: string }) {
   const { graphConfigs } = useGraphSummaryHeader();
-  const defaultClassName = "grid grid-cols-[15.5rem_15.5rem]";
+  const defaultClassName = "grid grid-cols-[14rem_14rem]";
   return (
     <div className={cn(defaultClassName, className)}>
       {graphConfigs.map((graphConfig, index) => (
