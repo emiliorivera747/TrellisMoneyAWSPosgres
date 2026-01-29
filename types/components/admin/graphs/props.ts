@@ -393,3 +393,64 @@ export interface GraphHeaderWithFilterProps {
   filterRef: React.Ref<HTMLDivElement>;
   label: string;
 }
+
+export type ValueChangeWithYearsProps = {
+  /** The graph configuration containing data for value change calculations */
+  graphConfig: GraphConfigSummaryListProps["graphConfigs"][number];
+  /** The color applied to the ValueChange text, typically derived from directional colors */
+  primaryTextColor: string;
+};
+
+export type GraphSummaryHeaderContextVal = {
+  graphConfigs: GraphConfig[];
+};
+
+/**
+ * Props for the Header sub-component of GraphSummaryHeader.
+ * @export
+ * @interface GraphSummaryHeaderHeaderProps
+ */
+export interface GraphSummaryHeaderHeaderProps {
+  /**
+   * The label text to display in the header.
+   * @type {string}
+   */
+  label: string;
+
+  /**
+   * Optional CSS class name.
+   * @type {string}
+   */
+  className?: string;
+
+  /**
+   * Optional ref for the header element.
+   * @type {React.Ref<HTMLHeadingElement>}
+   */
+  ref?: React.Ref<HTMLHeadingElement>;
+}
+
+/**
+ * Props for the FilterButton sub-component of GraphSummaryHeader.
+ * @export
+ * @interface GraphSummaryHeaderFilterButtonProps
+ */
+export interface GraphSummaryHeaderFilterButtonProps {
+  /**
+   * Configuration for the filter options.
+   * @type {GraphFilterConfig[]}
+   */
+  filterConfig: GraphFilterConfig[];
+
+  /**
+   * Optional ref for the filter component.
+   * @type {React.Ref<HTMLDivElement>}
+   */
+  filterRef?: React.Ref<HTMLDivElement>;
+
+  /**
+   * Optional CSS class name for the filter modal content.
+   * @type {string}
+   */
+  className?: string;
+}

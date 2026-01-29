@@ -1,10 +1,12 @@
 "use client";
 
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { cn } from "@/lib/utils";
 
 // Components
 import ValuePriceChangeLabel from "@/components/graphs/primary-time-value-graph/ValuePriceChangeLabel";
+import GraphHeader from "@/components/headers/GraphHeader";
+import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";
 
 // Utils
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
@@ -19,22 +21,29 @@ import {
   getStartValue,
   getEndValue,
 } from "@/utils/helper-functions/accessors/accessors";
+import { getDirectionalColorsByLineConfig } from "@/features/projected-net-worth/utils/graph-helpers/getDirectionalColors";
 
 // Types
 import { GraphConfig } from "@/types/components/admin/graphs/graph-config";
 import {
   HeaderTimeValueGraphProps,
   TitleProps,
-  ValueProp,
-  ValueChangeProps,
-  TotalYearsProps,
+  GraphSummaryHeaderContextVal,
+  GraphSummaryHeaderHeaderProps,
+  GraphSummaryHeaderFilterButtonProps,
 } from "@/types/components/admin/graphs/props";
 
-const GraphSummaryHeaderContext = createContext<{
-  graphConfigs: GraphConfig[];
-}>({
+/** Context for providing graph configurations to child components. */
+const GraphSummaryHeaderContext = createContext<GraphSummaryHeaderContextVal>({
   graphConfigs: [],
 });
+
+/**
+ * Hook to access graph configurations from GraphSummaryHeaderContext.
+ */
+export function useGraphSummaryHeader() {
+  return useContext(GraphSummaryHeaderContext);
+}
 
 /**
  * Context provider for graph summary header components.
@@ -61,15 +70,44 @@ export function Title({ children, className }: TitleProps) {
 }
 
 /**
+ * Renders a grid of graph configuration summaries from the GraphSummaryHeaderContext.
+ * Each summary displays the current value and value change with duration.
+ */
+export function GraphConfigSummaryList({ className }: { className?: string }) {
+  const { graphConfigs } = useGraphSummaryHeader();
+  const defaultClassName = "grid grid-cols-[16rem_16rem]";
+  return (
+    <div className={cn(defaultClassName, className)}>
+      {graphConfigs.map((graphConfig, index) => (
+        <div key={index} className="flex flex-col">
+          <Value
+            graphConfig={graphConfig}
+            className={`${graphConfigs.length > 1 ? "text-[1.2rem]" : ""}`}
+          />
+          <ValueChangeWithYears graphConfig={graphConfig} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/**
  * Displays the current value of the graph line.
  */
-export function Value({ className, graphConfig }: ValueProp) {
-  const { lineConfig, tooltipConfig } = graphConfig;
+export function Value({
+  graphConfig,
+  className,
+}: {
+  graphConfig: GraphConfig;
+  className?: string;
+}) {
   const defaultClass =
     "tracking-wider flex gap-2 items-center text-[1.4rem] font-medium text-tertiary-1000";
+  const { lineConfig, tooltipConfig } = graphConfig;
   if (!lineConfig || !lineConfig.data) return null;
+
   const endValue = getEndValue(lineConfig, tooltipConfig);
-  let currentValue = tooltipConfig?.lineDataPoint;
+  const currentValue = tooltipConfig?.lineDataPoint;
 
   return (
     <span className={cn(defaultClass, className)}>
@@ -84,10 +122,14 @@ export function Value({ className, graphConfig }: ValueProp) {
  * Displays the change in value and rate of change as a percentage.
  */
 export function ValueChange({
-  className,
   graphConfig,
+  className,
   style,
-}: ValueChangeProps) {
+}: {
+  graphConfig: GraphConfig;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const { lineConfig, tooltipConfig } = graphConfig;
   if (!lineConfig || !lineConfig.data) return null;
 
@@ -107,24 +149,83 @@ export function ValueChange({
 }
 
 /**
+ * Displays a compact summary of value change and time duration for a graph configuration.
+ * Combines the ValueChange and TotalYears components in a horizontal layout.
+ * Uses directional coloring based on whether the value increased or decreased.
+ */
+export function ValueChangeWithYears({
+  graphConfig,
+}: {
+  graphConfig: GraphConfig;
+}) {
+  const { lineConfig } = graphConfig;
+  const { primaryTextColor } = getDirectionalColorsByLineConfig(lineConfig);
+  return (
+    <span className="flex gap-1">
+      <ValueChange
+        graphConfig={graphConfig}
+        className="text-[0.7rem]"
+        style={{ color: primaryTextColor }}
+      />
+      <TotalYears graphConfig={graphConfig} className="text-[0.7rem]" />
+    </span>
+  );
+}
+
+/**
  * Displays the total years between the first and last data point of the line.
  */
 export function TotalYears({
-  className,
   graphConfig,
-}: TotalYearsProps) {
-  const { lineConfig, tooltipConfig } = graphConfig;
+  className,
+}: {
+  graphConfig: GraphConfig;
+  className?: string;
+}) {
   const defaultClass = "text-tertiary-800 font-normal";
+  const { lineConfig, tooltipConfig } = graphConfig;
   if (!lineConfig || !lineConfig.data) return null;
+
   const startDate = getStartDate(lineConfig);
   const endDate = getEndDate(lineConfig, tooltipConfig);
   const years = calculateYearsBetween(startDate, endDate);
+
   return <span className={cn(defaultClass, className)}>{years} years</span>;
+}
+
+/**
+ * Displays the header label for the graph.
+ * Wraps the GraphHeader component for use within GraphSummaryHeader.
+ */
+export function Header({ label, className, ref }: GraphSummaryHeaderHeaderProps) {
+  return <GraphHeader label={label} className={className} ref={ref} />;
+}
+
+/**
+ * Renders a filter button that opens a modal with filter options.
+ * Wraps the GraphFilterButtonWithModal component for use within GraphSummaryHeader.
+ */
+export function FilterButton({
+  filterConfig,
+  filterRef,
+  className,
+}: GraphSummaryHeaderFilterButtonProps) {
+  return (
+    <GraphFilterButtonWithModal
+      filterConfig={filterConfig}
+      ref={filterRef}
+      className={className}
+    />
+  );
 }
 
 GraphSummaryHeader.Title = Title;
 GraphSummaryHeader.Value = Value;
 GraphSummaryHeader.ValueChange = ValueChange;
 GraphSummaryHeader.TotalYears = TotalYears;
+GraphSummaryHeader.ConfigList = GraphConfigSummaryList;
+GraphSummaryHeader.ValueChangeWithYears = ValueChangeWithYears;
+GraphSummaryHeader.Header = Header;
+GraphSummaryHeader.FilterButton = FilterButton;
 
 export default GraphSummaryHeader;

@@ -2,8 +2,6 @@ import { useRef } from "react";
 
 // Components
 import GraphSummaryHeader from "@/components/graphs/graph-header/HeaderTimeValueGraph";
-import GraphConfigSummaryList from "@/components/graphs/graph-header/GraphConfigSummaryList";
-import GraphHeaderWithFilter from "@/components/graphs/graph-header/GraphHeaderWithFilter";
 
 // Types
 import { NetWorthGraphHeaderProps } from "@/features/net-worth/types/net-worth-graph-header";
@@ -11,16 +9,24 @@ import { NetWorthGraphHeaderProps } from "@/features/net-worth/types/net-worth-g
 // Config
 import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
 
+/**
+ * Header component for the Net Worth graph.
+ * Displays a filter dropdown and a summary list of graph configurations
+ * showing current values and changes over time.
+ */
 const NetWorthGraphHeader = ({ graphConfigs }: NetWorthGraphHeaderProps) => {
   const filterRef = useRef<HTMLDivElement>(null);
   return (
     <GraphSummaryHeader graphConfigs={graphConfigs}>
-      <GraphHeaderWithFilter
-        filterConfig={filterConfig}
-        filterRef={filterRef}
-        label={"Net Worth"}
-      />
-      <GraphConfigSummaryList graphConfigs={graphConfigs} />
+      <div className="flex flex-row justify-between">
+        <GraphSummaryHeader.Header label="Net Worth" />
+        <GraphSummaryHeader.FilterButton
+          filterConfig={filterConfig}
+          filterRef={filterRef}
+          className="grid grid-cols-2"
+        />
+      </div>
+      <GraphSummaryHeader.ConfigList />
     </GraphSummaryHeader>
   );
 };
