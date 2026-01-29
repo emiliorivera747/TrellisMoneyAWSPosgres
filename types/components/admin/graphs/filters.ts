@@ -146,12 +146,9 @@ export interface DateFilterProps {
   handleDateFilterChange: (startData: Date, endDate: Date) => void;
 }
 
-
 export interface GraphFilterButtonWithDialogProps<T> {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  handleFilterChange: (filter: T) => void;
   selectedFilter: T;
-  onFilterChange: (filter: T) => void;
   label?: string;
   filterConfig: Array<{
     key: T;

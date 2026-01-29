@@ -441,22 +441,16 @@ export interface GraphSummaryHeaderHeaderProps {
  * @export
  * @interface GraphSummaryHeaderFilterButtonProps
  */
-export interface GraphSummaryHeaderFilterButtonProps {
-  /**
-   * Configuration for the filter options.
-   * @type {GraphFilterConfig[]}
-   */
-  filterConfig: GraphFilterConfig[];
-
-  /**
-   * Optional ref for the filter component.
-   * @type {React.Ref<HTMLDivElement>}
-   */
-  filterRef?: React.Ref<HTMLDivElement>;
-
-  /**
-   * Optional CSS class name for the filter modal content.
-   * @type {string}
-   */
-  className?: string;
+export interface GraphSummaryHeaderFilterButtonProps<T> {
+  open: boolean;
+  handleOnOpenChange: (open: boolean) => void;
+  handleFilterChange: (filter: T) => void;
+  selectedFilter: T;
+  label?: string;
+  filterConfig: Array<{
+    key: T;
+    label: string;
+    svgPath: string;
+    color: string;
+  }>;
 }

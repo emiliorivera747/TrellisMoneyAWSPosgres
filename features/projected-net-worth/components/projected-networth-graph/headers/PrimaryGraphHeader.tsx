@@ -1,17 +1,20 @@
 "use client";
 import { useState } from "react";
 import GraphHeaders from "@/components/headers/GraphHeader";
-import GraphLineSummaries from "@/features/projected-net-worth/components/projected-networth-graph/headers/GraphLineSummaries";
-import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
-import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
-import GraphFilterButtonWithDialog from "@/components/graphs/filters/GraphFilterButtonWithDialog";
+
+import GraphFilterButtonWithModal from "@/components/graphs/filters/GraphFilterButtonWithModal";
 import {
   useDashboardFilters,
   useDashboardFilterActions,
 } from "@/stores/slices/dashboard/dashboardFilters.selectors";
+
+
 import { PrimaryGraphHeaderProps } from "@/features/projected-net-worth/types/graphComponents";
 import { InflationFilters } from "@/features/projected-net-worth/types/filters";
 import { filterConfig } from "@/features/projected-net-worth/config/filterConfig";
+import GraphLineSummaries from "@/features/projected-net-worth/components/projected-networth-graph/headers/GraphLineSummaries";
+import SelectYearMenuButton from "@/features/projected-net-worth/components/projected-networth-graph/select-year-menu/SelectYearMenuButton";
+import InflationTag from "@/features/projected-net-worth/components/projected-networth-graph/tags/InflationTag";
 
 
 const PrimaryGraphHeader = ({
@@ -52,12 +55,12 @@ const PrimaryGraphHeader = ({
             />
           </div>
         </div>
-        <GraphFilterButtonWithDialog
+        <GraphFilterButtonWithModal
           filterConfig={filterConfig}
-          isOpen={isDialogOpen}
-          onOpenChange={setIsDialogOpen}
+          open={isDialogOpen}
+          handleOnOpenChange={setIsDialogOpen}
           selectedFilter={selectedInflationFilter}
-          onFilterChange={handleFilterSelection}
+          handleFilterChange={handleFilterSelection}
         />
       </div>
       <div className="flex flex-row">

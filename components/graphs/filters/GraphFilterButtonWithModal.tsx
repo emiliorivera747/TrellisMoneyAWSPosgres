@@ -1,3 +1,4 @@
+// Components
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DialogHeader from "@/features/accounts/components/headers/DialogHeader";
 import RenderFilters from "@/components/graphs/filters/RenderFilters";
@@ -6,16 +7,13 @@ import FilterIcon from "@/components/graphs/filters/FilterIcon";
 // Types
 import { GraphFilterButtonWithDialogProps } from "@/types/components/admin/graphs/filters";
 
-
-const GraphFilterButtonWithDialog = <T,>({
-  isOpen,
-  onOpenChange,
+const GraphFilterButtonWithModal = <T,>({
   filterConfig,
   selectedFilter,
-  onFilterChange,
+  handleFilterChange,
   label = "Filters",
 }: GraphFilterButtonWithDialogProps<T>) => (
-  <Dialog open={isOpen} onOpenChange={onOpenChange}>
+  <Dialog>
     <DialogTrigger asChild>
       <div className="text-tertiary-1000 border border-tertiary-300 text-xs flex flex-row justify-center gap-2 p-3 px-4 rounded-[12px] hover:bg-tertiary-200 items-center">
         <FilterIcon />
@@ -30,10 +28,10 @@ const GraphFilterButtonWithDialog = <T,>({
       <RenderFilters
         filterConfig={filterConfig}
         selectedFilter={selectedFilter}
-        handleFilterChange={onFilterChange}
+        handleFilterChange={handleFilterChange}
       />
     </DialogContent>
   </Dialog>
 );
 
-export default GraphFilterButtonWithDialog;
+export default GraphFilterButtonWithModal;

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 // Components
 import ValuePriceChangeLabel from "@/components/graphs/primary-time-value-graph/ValuePriceChangeLabel";
 import GraphHeader from "@/components/headers/GraphHeader";
-import GraphFilterButtonWithModal from "@/components/buttons/GraphFilterButtonWithModal";
+import GraphFilterButtonWithModal from "@/components/graphs/filters/GraphFilterButtonWithModal";
 
 // Utils
 import numberToMoneyFormat from "@/utils/helper-functions/formatting/numberToMoneyFormat";
@@ -173,7 +173,6 @@ export function TotalYears({ graphConfig, className }: ValueHeaderProps) {
   const startDate = getStartDate(lineConfig);
   const endDate = getEndDate(lineConfig, tooltipConfig);
   const years = calculateYearsBetween(startDate, endDate);
-
   return <span className={cn(defaultClass, className)}>{years} years</span>;
 }
 
@@ -193,16 +192,20 @@ export function Header({
  * Renders a filter button that opens a modal with filter options.
  * Wraps the GraphFilterButtonWithModal component for use within GraphSummaryHeader.
  */
-export function FilterButton({
+export function FilterButton<T,>({
   filterConfig,
-  filterRef,
-  className,
-}: GraphSummaryHeaderFilterButtonProps) {
+  open,
+  handleOnOpenChange,
+  handleFilterChange,
+  selectedFilter,
+}: GraphSummaryHeaderFilterButtonProps<T>) {
   return (
     <GraphFilterButtonWithModal
       filterConfig={filterConfig}
-      innerRef={filterRef}
-      className={className}
+      open={open}
+      handleOnOpenChange={handleOnOpenChange}
+      handleFilterChange={handleFilterChange}
+      selectedFilter={selectedFilter}
     />
   );
 }
