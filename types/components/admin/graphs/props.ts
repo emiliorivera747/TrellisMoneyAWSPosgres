@@ -389,7 +389,7 @@ export interface GraphConfigSummaryListProps {
 }
 
 export interface GraphHeaderWithFilterProps {
-  filterConfig: GraphFilterConfig[];
+  filterConfig: GraphFilterConfig<any>[];
   filterRef: React.Ref<HTMLDivElement>;
   label: string;
 }

@@ -75,16 +75,19 @@ export function Title({ children, className }: TitleProps) {
  */
 export function GraphConfigSummaryList({ className }: { className?: string }) {
   const { graphConfigs } = useGraphSummaryHeader();
-  const defaultClassName = "grid grid-cols-[16rem_16rem]";
+  const defaultClassName = "grid grid-cols-[15.5rem_15.5rem]";
   return (
     <div className={cn(defaultClassName, className)}>
       {graphConfigs.map((graphConfig, index) => (
         <div key={index} className="flex flex-col">
           <Value
             graphConfig={graphConfig}
-            className={`${graphConfigs.length > 1 ? "text-[1.2rem]" : ""}`}
+            className={`${graphConfigs.length > 1 ? "text-[1.1rem]" : ""}`}
           />
-          <ValueChangeWithYears graphConfig={graphConfig} />
+          <ValueChangeWithYears
+            graphConfig={graphConfig}
+            className={`${graphConfigs.length > 1 ? "text-[0.68rem]" : ""}`}
+          />
         </div>
       ))}
     </div>
@@ -149,15 +152,15 @@ export function ValueChangeWithYears({
 }: ValueHeaderProps) {
   const { lineConfig } = graphConfig;
   const { primaryTextColor } = getDirectionalColorsByLineConfig(lineConfig);
-  const defaultClass = "flex gap-1";
+  const defaultClass = "flex gap-1 text-[0.7rem] font-semibold";
   return (
     <span className={cn(defaultClass, className)}>
       <ValueChange
         graphConfig={graphConfig}
-        className="text-[0.7rem]"
+        className=""
         style={{ color: primaryTextColor }}
       />
-      <TotalYears graphConfig={graphConfig} className="text-[0.7rem]" />
+      <TotalYears graphConfig={graphConfig} className="" />
     </span>
   );
 }

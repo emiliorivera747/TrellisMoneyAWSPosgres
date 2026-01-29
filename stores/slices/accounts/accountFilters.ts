@@ -25,7 +25,7 @@ export const createAccountFilterSlice: StateCreator<AccountFilterSlice> = (
 ) => ({
   startDate: DEFAULT_START_DATE,
   endDate: DEFAULT_END_DATE,
-  selectedFilterAccount: "net-worth",
+  selectedFilterAccount: "assets-liabilities",
 
   setStartDate: (date) => set({ startDate: date }),
   setEndDate: (date) => set({ endDate: date }),

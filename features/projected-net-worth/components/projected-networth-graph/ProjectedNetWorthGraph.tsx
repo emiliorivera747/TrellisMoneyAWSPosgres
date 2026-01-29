@@ -36,12 +36,15 @@ const ProjectedNetWorthGraph = ({
   futureProjectionHasError,
   futureProjectionLoading,
 }: ProjectedNetWorthGraphProps) => {
+
   const graphContainerRef = useRef(null);
   const { selectedProjectedYear, selectedInflationFilter } =
     useDashboardFilters();
+  
   if (futureProjectionLoading) return <ProjectedNetWorthGraphSkeleton />;
   if (futureProjectionHasError || futureProjectionData instanceof Error)
     return <ProjectedNetWorthGraphError error={futureProjectionError} />;
+  
   const lineConfigs = createLineConfigurations(futureProjectionData);
 
   return (
