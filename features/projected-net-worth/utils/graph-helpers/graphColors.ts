@@ -1,16 +1,16 @@
 // line colors
 export const primaryLinePositiveTrendColor = "#74b816";
-export const primaryLineNegativeTrendColor = "#e03131";
-export const primaryLineNeutralTrendColor = "#adb5bd";
+export const primaryLineNegativeTrendColor = "#ff5000";
+export const primaryLineNeutralTrendColor = "#E5E5E5";
 
 export const secondaryLinePositiveTrendColor = "#339af0";
-export const secondaryLineNegativeTrendColor = "#e03131";
-export const secondaryLineNeutralTrendColor = "#adb5bd";
+export const secondaryLineNegativeTrendColor = "#ff5000";
+export const secondaryLineNeutralTrendColor = "#E5E5E5";
 
 // tag text colors
-export const tagTextPositiveTrendColor = "#2f9e44";
-export const tagTextNegativeTrendColor = "#e03131";
-export const tagTextNeutralTrendColor = "#adb5bd";
+export const tagTextPositiveTrendColor = "#5c940d";
+export const tagTextNegativeTrendColor = "#ff5000";
+export const tagTextNeutralTrendColor = "#E5E5E5";
 
 // tag background colors
 export const tagBackgroundPositiveTrendColor = "#d3f9d8";
@@ -19,9 +19,9 @@ export const tagBackgroundNeutralTrendColor = "#f1f3f5";
 
 // subheader colors
 export const primarySubheaderPositiveTrendColor = "#5c940d";
-export const primarySubheaderNegativeTrendColor = "#e03131";
-export const primarySubheaderNeutralTrendColor = "#adb5bd";
+export const primarySubheaderNegativeTrendColor = "#ff5000";
+export const primarySubheaderNeutralTrendColor = "#E5E5E5";
 
 export const secondarySubheaderPositiveTrendColor = "#1c7ed6";
-export const secondarySubheaderNegativeTrendColor = "#e03131";
-export const secondarySubheaderNeutralTrendColor = "#adb5bd";
+export const secondarySubheaderNegativeTrendColor = "#ff5000";
+export const secondarySubheaderNeutralTrendColor = "#E5E5E5";

@@ -21,7 +21,7 @@ const DateAxisTooltip = ({
   return (
     <div className="">
       <Tooltip
-        top={margin.top + 140}
+        top={margin.top + 110}
         left={tooltipLeft - 10}
         style={{
           ...defaultStyles,
