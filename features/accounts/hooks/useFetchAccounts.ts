@@ -5,12 +5,7 @@ import { ApiResponse } from "@/types/services/responses/api-responses";
 /**
  * Custom hook to fetch accounts data using react-query.
  */
-export const useFetchAccounts: () => {
-  accountsResponse: ApiResponse<{ accounts: any[] }> | undefined;
-  accountsError: Error | null;
-  isLoadingAccounts: boolean;
-  isErrorAccounts: boolean;
-} = () => {
+export const useFetchAccounts = () => {
   const {
     data: accountsResponse,
     error: accountsError,

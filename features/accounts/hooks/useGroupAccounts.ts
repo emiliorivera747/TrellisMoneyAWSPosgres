@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Account } from "@/drizzle/schema";
+import { AccountWithMember } from "@/features/accounts/services/accountServices";
 
 import {
   AccountGroupedByType,
@@ -19,14 +19,14 @@ const useGroupAccounts = ({ accounts }: UseGroupAccountsProps) => {
 
   useEffect(() => {
     const groupedAccounts = accounts?.reduce(
-      (acc: { [key: string]: Account[] }, account) => {
-        const { type } = account;
+      (acc: { [key: string]: AccountWithMember[] }, item) => {
+        const { type } = item.account;
 
         if (!type) return acc;
 
         if (!acc[type]) acc[type] = [];
 
-        acc[type].push(account);
+        acc[type].push(item);
         return acc;
       },
       {}

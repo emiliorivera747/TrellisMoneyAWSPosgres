@@ -30,8 +30,14 @@ const AccountsList = ({
         return (
           <div key={type}>
             <AccountListHeader type={type} />
-            {accounts?.map((account) => {
-              return <AccountCardWithModal key={account.accountId} account={account} />;
+            {accounts?.map((item) => {
+              return (
+                <AccountCardWithModal
+                  key={item.account.accountId}
+                  account={item.account}
+                  member={item.member}
+                />
+              );
             })}
           </div>
         );
