@@ -35,12 +35,6 @@ export type DateFilterConfigItem = {
 
 export const dateFilterConfig: DateFilterConfigItem[] = [
   {
-    label: "1D",
-    value: "1D",
-    startDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
-    endDate: new Date(Date.now()),
-  },
-  {
     label: "1W",
     value: "1W",
     startDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),

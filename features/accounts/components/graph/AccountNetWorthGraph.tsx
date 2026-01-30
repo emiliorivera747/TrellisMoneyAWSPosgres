@@ -26,17 +26,6 @@ import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountF
  */
 const AccountNetWorthGraph = () => {
   const graphRef = useRef<HTMLDivElement>(null);
-  
-  const {
-    netWorthHistoryData,
-    netWorthHistoryLoading,
-    netWorthHistoryHasError,
-    netWorthHistoryError,
-  } = useFetchNetWorthHistory();
-
-  const { selectedFilter, startDate, endDate } =
-  useAccountsFiltersWithActions();
-
   const { filteredData, isLoading, hasError, error } = useFilteredNetWorth(); 
   if (isLoading) return <NetWorthGraphSkeleton />;
   if (hasError) return <NetWorthGraphError error={error} />;
