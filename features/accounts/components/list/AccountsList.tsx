@@ -1,6 +1,6 @@
 // Components
 import AccountListHeader from "@/features/accounts/components/headers/AccountListHeader";
-import Accountcard from "@/features/accounts/components/cards/AccountCard";
+import AccountCardWithModal from "@/features/accounts/components/cards/AccountCardWithModal";
 import NoAccountsFound from "@/features/accounts/components/cards/NoAccountsFound";
 
 // Types
@@ -31,7 +31,7 @@ const AccountsList = ({
           <div key={type}>
             <AccountListHeader type={type} />
             {accounts?.map((account) => {
-              return <Accountcard key={account.accountId} account={account} />;
+              return <AccountCardWithModal key={account.accountId} account={account} />;
             })}
           </div>
         );

@@ -24,7 +24,7 @@ import { Account } from "@/drizzle/schema";
  * @example
  * <AccountCard account={account} />
  */
-const AccountCard = ({ account }: { account: Account }) => {
+const AccountCardWithModal = ({ account }: { account: Account }) => {
   const { mutateItem, itemIsPending, itemHasError, itemError } =
     useRemoveItem();
   if (itemIsPending) return <div>Loading...</div>;
@@ -34,7 +34,6 @@ const AccountCard = ({ account }: { account: Account }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger className="w-full">
-        {" "}
         <div
           key={account.accountId}
           className="p-2 border rounded-[12px] grid grid-cols-3 mb-4  border-tertiary-200 hover:shadow-lg transition duration-500 ease-in-out  w-full"
@@ -54,23 +53,7 @@ const AccountCard = ({ account }: { account: Account }) => {
       <AlertDialogContent className="h-[70vh] w-[60vw] overflow-scroll max-w-screen rounded-[12px]">
         <AlertDialogHeader>
           <ModalHeader title={account.accountName || ""} />
-
           <div className="">
-            <div className="text-md font-semibold border-b border-tertiary-200 pb-4 mx-2 mb-4">
-              {" "}
-              Manage Connections
-            </div>
-            <div>
-              <button
-                className="px-4 py-4 border rounded-[12px]
-              mb-4 ml-2 text-red-600 font-semibold hover:bg-tertiary-200"
-                onClick={() => {
-                  if (account.itemId) mutateItem(account.itemId);
-                }}
-              >
-                Delete Connection
-              </button>
-            </div>
             <div className="text-md font-semibold border-b border-tertiary-200 pb-4 mx-2 mb-4 ">
               {" "}
               Transactions
@@ -103,4 +86,4 @@ const AccountCard = ({ account }: { account: Account }) => {
   );
 };
 
-export default AccountCard;
+export default AccountCardWithModal;
