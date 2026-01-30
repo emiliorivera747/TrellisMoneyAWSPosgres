@@ -26,10 +26,8 @@ export async function GET(req: NextRequest) {
   return withAuth(req, async (_request, user) => {
     try {
       const member = await getMemberByUserId(user.id);
-      if (!member?.householdId) {
-        return FailResponse("Household not found for user", 404);
-      }
-
+      if (!member?.householdId) return FailResponse("Household not found for user", 404);
+    
       const snapshots = await db
         .select({
           snapshotDate: netWorthSnapshot.snapshotDate,

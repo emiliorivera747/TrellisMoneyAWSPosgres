@@ -1,16 +1,15 @@
-import { useState } from "react";
-
 // Components
 import GraphSummaryHeader from "@/components/graphs/graph-header/HeaderTimeValueGraph";
 
+// Hooks
+import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountFilters.selectors";
+
 // Types
 import { NetWorthGraphHeaderProps } from "@/features/net-worth/types/net-worth-graph-header";
+import { AccountGraphFilter } from "@/features/accounts/types/graph";
 
 // Config
-import {
-  filterConfig,
-  AccountGraphFilter,
-} from "@/features/net-worth/utils/config/filterConfig";
+import { filterConfig } from "@/features/net-worth/utils/config/filterConfig";
 
 /**
  * Header component for the Net Worth graph.
@@ -18,10 +17,9 @@ import {
  * showing current values and changes over time.
  */
 const NetWorthGraphHeader = ({ graphConfigs }: NetWorthGraphHeaderProps) => {
-  const [selectedFilter, setSelectFilter] =
-    useState<AccountGraphFilter>("net-worth");
+  const { selectedFilter, setSelectedFilter } = useAccountsFiltersWithActions();
   const handleOnFilterChange = (filter: AccountGraphFilter) => {
-    setSelectFilter(filter);
+    setSelectedFilter(filter);
   };
 
   return (
