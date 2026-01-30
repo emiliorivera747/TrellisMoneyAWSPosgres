@@ -13,7 +13,6 @@ import AccountCard from "@/features/accounts/components/cards/AccountCard";
 
 // Utils
 import { transactions } from "@/features/accounts/utils/data/mockTransactionData";
-import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 
 // Hooks
 import { useRemoveItem } from "@/hooks/react-query/items/useRemoveItem";

@@ -37,13 +37,13 @@ const page = () => {
       <PrimaryAccountSection>
         <AccountNetWorthGraph />
         <div className="pt-8 w-full gap-8">
-          <RefreshAccounts />
           <AccountsList
             groups={groups}
             isLoadingAccounts={isLoadingAccounts}
             isErrorAccounts={isErrorAccounts}
             accountsError={accountsError}
           />
+          <RefreshAccounts />
         </div>
       </PrimaryAccountSection>
       <SecondaryAccountSection>
