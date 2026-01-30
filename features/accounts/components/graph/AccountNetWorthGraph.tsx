@@ -1,8 +1,5 @@
-import { useRef } from "react";
-
 // Components
 import DateFilter from "@/features/accounts/components/filter/DateFilter";
-import NetWorthTypeFilter from "@/features/accounts/components/filter/NetWorthTypeFilter";
 import NetWorthGraph from "@/features/net-worth/components/net-worth-graph/NetWorthGraph";
 import ResponsiveLineGraphContainer from "@/components/graphs/primary-time-value-graph/ResponsiveGraphContainer";
 import NetWorthGraphError from "@/features/accounts/components/graph/NetWorthGraphError";
@@ -10,12 +7,6 @@ import NetWorthGraphSkeleton from "@/features/accounts/components/skeleton/NetWo
 
 // Hooks
 import { useFilteredNetWorth } from "@/features/net-worth/hooks/useFilteredNetWorth";
-import { useFetchNetWorthHistory } from "@/features/net-worth/hooks/useFetchNetWorthHistory";
-
-
-// Store
-import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountFilters.selectors";
-
 
 /**
  * Renders a net worth graph with a date filter.

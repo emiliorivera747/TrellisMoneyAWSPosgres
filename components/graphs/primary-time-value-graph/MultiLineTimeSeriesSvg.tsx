@@ -1,3 +1,6 @@
+//React
+import { useEffect } from "react";
+
 //Visx
 import { Bar, LinePath } from "@visx/shape";
 import useDateScale from "@/hooks/graphs/useDateScale";
@@ -51,6 +54,11 @@ const MultiLineTimeSeriesSvg = ({
   curve = curveMonotoneX,
   backgroundFill = "url(#area-background-gradient)",
 }: MultiLineTimeSeriesSvgProps) => {
+
+  // Clear tooltip when data changes to prevent stale tooltip positions
+  useEffect(() => {
+    hideTooltip();
+  }, [lineConfigs]);
 
   if (width < 10 || height < 10) return null;
   if (!lineConfigs) return null;

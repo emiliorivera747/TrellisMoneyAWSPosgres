@@ -40,9 +40,12 @@ const handleMultipleDataPoints = (
         };
       });
 
+      // Snap tooltipLeft to the data point's X position so the circle stays on the line
+      const snappedX = dateScale(getDate(tooltipData[0].lineDataPoint));
+
       showTooltip({
         tooltipData,
-        tooltipLeft: x,
+        tooltipLeft: snappedX,
         tooltipTop: stockValueScale(getStockValue(tooltipData[0].lineDataPoint)),
       });
     },
