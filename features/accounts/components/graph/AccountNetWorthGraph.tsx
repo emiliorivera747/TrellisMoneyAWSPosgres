@@ -25,7 +25,6 @@ import { useAccountsFiltersWithActions } from "@/stores/slices/accounts/accountF
  * @returns {JSX.Element} The NetWorthGraph component.
  */
 const AccountNetWorthGraph = () => {
-  const graphRef = useRef<HTMLDivElement>(null);
   const { filteredData, isLoading, hasError, error } = useFilteredNetWorth(); 
   if (isLoading) return <NetWorthGraphSkeleton />;
   if (hasError) return <NetWorthGraphError error={error} />;
@@ -34,7 +33,6 @@ const AccountNetWorthGraph = () => {
     <div className="relative grid grid-rows-[22rem_6rem] h-[32rem] border-b">
       <ResponsiveLineGraphContainer
         className="w-full h-[26rem]"
-        ref={graphRef}
         component={NetWorthGraph}
         componentProps={{
           lineConfigs: filteredData,

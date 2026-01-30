@@ -60,7 +60,7 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
         {/* Tooltip div */}
         {tooltipConfigs && (
           <DateAxisTooltip
-            margin={margin}
+            margin={{ top: -14 }}
             tooltipLeft={tooltipLeft}
             defaultStyles={defaultStyles}
             tooltipConfigs={tooltipConfigs}

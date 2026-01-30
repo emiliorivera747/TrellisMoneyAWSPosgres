@@ -18,7 +18,7 @@ export const tagBackgroundNegativeTrendColor = "#ffe0e0";
 export const tagBackgroundNeutralTrendColor = "#f1f3f5";
 
 // subheader colors
-export const primarySubheaderPositiveTrendColor = "#5c940d";
+export const primarySubheaderPositiveTrendColor = "#74b816";
 export const primarySubheaderNegativeTrendColor = "#ff5000";
 export const primarySubheaderNeutralTrendColor = "#E5E5E5";
 
