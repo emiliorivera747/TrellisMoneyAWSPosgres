@@ -5,6 +5,7 @@
 ## Dashboard
 <img width="1512" height="859" alt="Screenshot 2026-01-21 at 5 45 11 PM" src="https://github.com/user-attachments/assets/3e2ba499-e44f-46d5-9587-bdcb851a59f5" />
 <img width="1512" height="856" alt="Screenshot 2026-01-21 at 5 49 38 PM" src="https://github.com/user-attachments/assets/dbba92a4-ce43-4b9a-a2ca-5199af8f2efa" />
+<img width="1516" height="826" alt="Screenshot 2026-01-31 at 12 21 59 PM" src="https://github.com/user-attachments/assets/f02db6a3-bf22-40ed-8396-a7436658f53b" />
 
 
 ## Add Multiple Members
