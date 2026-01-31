@@ -53,8 +53,8 @@ const AssetsAndLiabilitiesCard = () => {
   }, [accounts]);
 
   return (
-    <div className="w-[23rem]">
-      <h2 className="font-semibold text-tertiary-1000 mb-4">
+    <div className="w-[23rem] border border-tertiary-400 rounded-[12px] p-4 pb-6 text-[#343a40] no-scrollbars overflow-y-hidden">
+      <h2 className="font-bold text-foreground text-sm tracking-wider mb-4">
         Assets & Liabilities
       </h2>
 
