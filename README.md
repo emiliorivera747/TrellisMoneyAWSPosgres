@@ -4,10 +4,9 @@
 
 ## Dashboard
 <img width="1512" height="859" alt="Screenshot 2026-01-21 at 5 45 11 PM" src="https://github.com/user-attachments/assets/3e2ba499-e44f-46d5-9587-bdcb851a59f5" />
-<img width="1512" height="856" alt="Screenshot 2026-01-21 at 5 49 38 PM" src="https://github.com/user-a<img width="1506" height="825" alt="Screenshot 2026-01-31 at 12 24 12 PM" src="https://github.com/user-attachments/assets/fa45904c-3fce-45d0-a03d-8ed58db43502" />
+<img width="1512" height="856" alt="Screenshot 2026-01-21 at 5 49 38 PM" src="https://github.com/user-a
 ttachments/assets/dbba92a4-ce43-4b9a-a2ca-5199af8f2efa" />
-
-![Uploading Screenshot 2026-01-31 at 12.24.12 PM.png…]()
+<img width="1506" height="825" alt="Screenshot 2026-01-31 at 12 24 12 PM" src="https://github.com/user-attachments/assets/fa45904c-3fce-45d0-a03d-8ed58db43502" />
 
 
 
