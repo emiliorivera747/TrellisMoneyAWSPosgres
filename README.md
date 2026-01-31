@@ -21,7 +21,8 @@
 <img width="1512" height="820" alt="Screenshot 2026-01-10 at 6 18 52 PM" src="https://github.com/user-attachments/assets/6a61ceee-73e5-43ed-993e-d393505b1a1b" />
 
 ## Add Connection (Plaid Integration)
-<img width="1509" height="856" alt="Screenshot 2025-10-02 at 8 08 25 PM" src="https://github.com/user-attachments/assets/2cb12563-72d3-42a3-bb3d-3d28eb7f0d99" />
+<img width="1512" height="828" alt="Screenshot 2026-01-31 at 11 56 35 AM" src="https://github.com/user-attachments/assets/85523d36-036f-4aa4-a024-cf6b1ad0cfed" />
+
 
 ## Entity-Relationship Diagram 
 <img width="1791" height="2112" alt="trellis-money-schema (4)" src="https://github.com/user-attachments/assets/5dcf7e24-b70d-4629-a45a-08fe53d523c0" />
