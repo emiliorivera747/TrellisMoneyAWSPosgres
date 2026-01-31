@@ -33,7 +33,7 @@ const page = () => {
   const { groups = {} } = useGroupAccounts({ accounts: accounts });
 
   return (
-    <section className="h-screen mx-[2%] overflow-y-scroll no-scrollbar flex flex-row gap-8">
+    <section className="h-screen mx-[2%] overflow-y-scroll no-scrollbar flex flex-row gap-8 max-w-screen">
       <PrimaryAccountSection>
         <AccountNetWorthGraph />
         <div className="pt-8 w-full gap-8">

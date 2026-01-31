@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
 import { AccountWithMember } from "@/features/accounts/services/accountServices";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
+import ProjectedAssetsCard from "@/features/projected-financial-assets/components/assets-card/layout/ProjectedAssetsCard";
 
 const ASSET_TYPES = ["DEPOSITORY", "INVESTMENT", "OTHER"];
 const LIABILITY_TYPES = ["CREDIT", "LOAN"];
@@ -22,7 +23,12 @@ const AssetsAndLiabilitiesCard = () => {
 
   const { assets, liabilities, totalAssets, totalLiabilities } = useMemo(() => {
     if (!accounts) {
-      return { assets: [], liabilities: [], totalAssets: 0, totalLiabilities: 0 };
+      return {
+        assets: [],
+        liabilities: [],
+        totalAssets: 0,
+        totalLiabilities: 0,
+      };
     }
 
     const assets: AccountWithMember[] = [];
@@ -47,8 +53,10 @@ const AssetsAndLiabilitiesCard = () => {
   }, [accounts]);
 
   return (
-    <div className="h-[38rem] border rounded-[12px] w-[18rem] p-4 overflow-y-auto no-scrollbar">
-      <h2 className="font-semibold text-tertiary-1000 mb-4">Assets & Liabilities</h2>
+    <div className="w-[23rem]">
+      <h2 className="font-semibold text-tertiary-1000 mb-4">
+        Assets & Liabilities
+      </h2>
 
       {isLoadingAccounts ? (
         <div className="text-tertiary-600 text-sm">Loading...</div>
@@ -57,7 +65,9 @@ const AssetsAndLiabilitiesCard = () => {
           {/* Assets Section */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-tertiary-800">Assets</span>
+              <span className="text-sm font-medium text-tertiary-800">
+                Assets
+              </span>
               <span className="text-sm font-semibold text-green-600">
                 {convertToMoney(totalAssets)}
               </span>
@@ -71,7 +81,8 @@ const AssetsAndLiabilitiesCard = () => {
                   >
                     <div className="flex flex-col">
                       <span className="text-xs font-medium text-tertiary-900 truncate max-w-[120px]">
-                        {formatSubtype(item.account.subtype) || item.account.accountName}
+                        {formatSubtype(item.account.subtype) ||
+                          item.account.accountName}
                       </span>
                       <span className="text-[10px] text-tertiary-500">
                         {item.account.accountName}
@@ -83,7 +94,9 @@ const AssetsAndLiabilitiesCard = () => {
                   </div>
                 ))
               ) : (
-                <div className="text-xs text-tertiary-500 py-2">No assets found</div>
+                <div className="text-xs text-tertiary-500 py-2">
+                  No assets found
+                </div>
               )}
             </div>
           </div>
@@ -91,7 +104,9 @@ const AssetsAndLiabilitiesCard = () => {
           {/* Liabilities Section */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-tertiary-800">Liabilities</span>
+              <span className="text-sm font-medium text-tertiary-800">
+                Liabilities
+              </span>
               <span className="text-sm font-semibold text-red-600">
                 {convertToMoney(totalLiabilities)}
               </span>
@@ -105,7 +120,8 @@ const AssetsAndLiabilitiesCard = () => {
                   >
                     <div className="flex flex-col">
                       <span className="text-xs font-medium text-tertiary-900 truncate max-w-[120px]">
-                        {formatSubtype(item.account.subtype) || item.account.accountName}
+                        {formatSubtype(item.account.subtype) ||
+                          item.account.accountName}
                       </span>
                       <span className="text-[10px] text-tertiary-500">
                         {item.account.accountName}
@@ -117,7 +133,9 @@ const AssetsAndLiabilitiesCard = () => {
                   </div>
                 ))
               ) : (
-                <div className="text-xs text-tertiary-500 py-2">No liabilities found</div>
+                <div className="text-xs text-tertiary-500 py-2">
+                  No liabilities found
+                </div>
               )}
             </div>
           </div>
