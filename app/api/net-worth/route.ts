@@ -24,11 +24,10 @@ export async function GET(req: NextRequest) {
       const items = await getItemsByUserId(user.id);
       if (!items) return FailResponse("Items not found for household", 404);
 
-      const accountsWithMembers = await getAccountsFromItems(items);
-      if (!accountsWithMembers || accountsWithMembers.length === 0)
+      const accounts = await getAccountsFromItems(items);
+      if (!accounts || accounts.length === 0)
         return FailResponse("No accounts found", 404);
 
-      const accounts = accountsWithMembers.map((a) => a.account);
       const data = calculateNetWorth(accounts);
 
       return SuccessResponse(data, "Success");
