@@ -1,3 +1,4 @@
+// Components
 import NavBar from "@/components/nav-bars/SecondaryNavbar";
 
 export default function NotFound() {

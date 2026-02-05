@@ -1,7 +1,15 @@
 "use client";
+
+// React
 import React from "react";
-import { accountSideNavConfig } from "@/features/user-account/config/accountSideNavConfig";
+
+// Next
 import Link from "next/link";
+
+// Config
+import { accountSideNavConfig } from "@/features/user-account/config/accountSideNavConfig";
+
+// Hooks
 import useFetchUser from "@/hooks/user/useFetchUser";
 
 const AccountSideNav = () => {

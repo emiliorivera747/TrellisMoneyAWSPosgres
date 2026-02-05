@@ -1,9 +1,19 @@
 "use client";
+
+// React
 import { useEffect, useState } from "react";
-import useFetchHoldings from "@/hooks/react-query/holdings/useFetchHoldings";
-import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
+
+// Next
 import Link from "next/link";
+
+// Components
 import RefreshInvestments from "@/features/investments/components/RefreshInvestments";
+
+// Hooks
+import useFetchHoldings from "@/hooks/react-query/holdings/useFetchHoldings";
+
+// Utils
+import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 
 const page = () => {
   const { holdingsData, holdingsError, holdingsLoading, holdingsHasError } =

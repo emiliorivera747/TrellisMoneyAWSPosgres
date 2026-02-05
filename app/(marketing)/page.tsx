@@ -1,13 +1,16 @@
 export const dynamic = "force-dynamic";
 
+// Types
+import { Metadata } from "next";
+
 // Components
 import HeroSection from "@/components/marketing/layout/HeroSection";
 import Navbar from "@/components/nav-bars/NavBar";
 import Footer from "@/components/footers/Footer";
 import PricingSection from "@/features/subscription-plans/components/PricingSection";
 
+// Utils
 import { createClient } from "@/utils/supabase/server";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Trellis Money - Seeing value where others don't",

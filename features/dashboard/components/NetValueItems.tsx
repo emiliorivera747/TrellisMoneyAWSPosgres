@@ -1,5 +1,8 @@
-import { NET_VALUE_ITEMS } from "@/features/dashboard/config/netValueItems";
+// Components
 import NetValueDisplay from "@/components/dashboard/NetValueDisplay";
+
+// Config
+import { NET_VALUE_ITEMS } from "@/features/dashboard/config/netValueItems";
 
 /**
  * A React functional component that renders a grid of `NetValueDisplay` components

@@ -1,19 +1,22 @@
+// React
 import React from "react";
-import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/themes/theme-provider";
 
-//External Libraries
+// Types
+import type { Metadata } from "next";
+
+// External Libraries
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-
-//Styles
-import localFont from "next/font/local";
-import "./globals.css";
-import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 
-//Components
+// Styles
+import localFont from "next/font/local";
+import "./globals.css";
+import { Inter } from "next/font/google";
+
+// Components
+import { ThemeProvider } from "@/components/themes/theme-provider";
 import { ReactQueryClientProvider } from "@/features/react-query/components/ReactQueryClientProvider";
 
 /**

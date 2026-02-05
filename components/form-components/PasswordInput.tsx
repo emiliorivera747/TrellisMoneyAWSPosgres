@@ -1,15 +1,16 @@
+// React
 import React, { useEffect, useState } from "react";
+
+// External Libraries
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
 import { FieldValues } from "react-hook-form";
-import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
 
-//Components
+// Components
+import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
 import PasswordTooltip from "@/features/auth/components/tooltips/PasswordTooltip";
 import ErrorForInputs from "@/components/errors/ErrorForInputs";
 
-
-//Types
+// Types
 import { PasswordInputProps } from "@/types/components/forms/forms";
 
 

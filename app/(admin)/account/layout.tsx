@@ -1,8 +1,9 @@
-import { Toaster } from "@/components/ui/toaster";
-
-import AccountSideNav from "@/features/user-account/components/AccountSideNav";
-
+// Types
 import { Metadata } from "next";
+
+// Components
+import { Toaster } from "@/components/ui/toaster";
+import AccountSideNav from "@/features/user-account/components/AccountSideNav";
 
 export const metadata: Metadata = {
   title: "Dashboard | Trellis Money",

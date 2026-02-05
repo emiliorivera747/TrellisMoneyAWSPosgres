@@ -1,4 +1,7 @@
+// Context
 import { ConnectionProvider } from "@/features/manage-connections/context/ConnectionContext";
+
+// Components
 import AddAccount from "@/features/accounts/components/buttons/AddAccount";
 import AddConnection from "@/features/manage-connections/AddConnection";
 

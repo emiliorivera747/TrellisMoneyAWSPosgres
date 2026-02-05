@@ -1,8 +1,6 @@
 "use client";
-import { useRemoveItem } from "@/hooks/react-query/items/useRemoveItem";
-import useFetchItems from "@/hooks/react-query/items/useFetchItems";
 
-// Skelton
+// Components
 import ManageConnectionSkeleton from "@/features/manage-connections/components/ManageConnectionSkeleton";
 import RefreshItems from "@/features/manage-connections/components/RefreshItems";
 import {
@@ -11,6 +9,10 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
+
+// Hooks
+import { useRemoveItem } from "@/hooks/react-query/items/useRemoveItem";
+import useFetchItems from "@/hooks/react-query/items/useFetchItems";
 
 /**
  * Page component for managing connections.

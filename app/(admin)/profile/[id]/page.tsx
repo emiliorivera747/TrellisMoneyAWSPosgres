@@ -1,5 +1,6 @@
-'use client'
- 
+'use client';
+
+// Next
 import { useParams } from 'next/navigation';
 const page = () => {
     const params = useParams()

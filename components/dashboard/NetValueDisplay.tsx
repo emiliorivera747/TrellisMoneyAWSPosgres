@@ -1,15 +1,16 @@
+// Next
 import Link from "next/link";
 
+// Components
 import InformationIcon from "@/components/information-icon/InformationIcon";
+import NetValueDisplayCardSkeleton from "@/components/skeletons/dashboard/NetValueDisplayCardSkeleton";
+import PrimaryCardHeader from "@/components/cards/PrimaryCardHeader";
 
 // Types
 import { NetValueDisplayCardProps } from "@/types/components/admin/dashboard/dashboard";
 
-// Helpers
+// Utils
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
-
-import NetValueDisplayCardSkeleton from "@/components/skeletons/dashboard/NetValueDisplayCardSkeleton";
-import PrimaryCardHeader from "@/components/cards/PrimaryCardHeader";
 
 /**
  *

@@ -1,8 +1,14 @@
-'use client'
+'use client';
+
+// React
 import React from "react";
+
+// Next
 import Head from "next/head";
-import NavBar from "@/components/nav-bars/SecondaryNavbar";
 import { useSearchParams } from "next/navigation";
+
+// Components
+import NavBar from "@/components/nav-bars/SecondaryNavbar";
 import ResetPasswordForm from "@/features/auth/components/form/ResetPasswordForm";
 
 const page = () => {

@@ -1,5 +1,8 @@
-import { SubscriptionCardProps } from "@/features/subscription-plans/types/subscription";
+// Next
 import Link from "next/link";
+
+// Types
+import { SubscriptionCardProps } from "@/features/subscription-plans/types/subscription";
 
 /**
  * Renders a subscription card with title, price, features, a subscription link, and footer description.

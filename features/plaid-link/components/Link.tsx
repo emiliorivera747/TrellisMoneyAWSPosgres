@@ -1,12 +1,16 @@
 "use client";
+
+// React
 import { useCallback } from "react";
+
+// External Libraries
 import { usePlaidLink } from "react-plaid-link";
 
+// Types
 import { LinkProps } from "@/types/services/plaid/plaid";
-import { cn } from "@/lib/utils";
 
-// Services
-import plaidServices from "@/services/plaid/plaidServices";
+// Utils
+import { cn } from "@/lib/utils";
 
 const Link = ({ linkToken, ref, className, itemId }: LinkProps) => {
   const onSuccess = useCallback(async (public_token: string, metadata: any) => {

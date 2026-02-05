@@ -1,12 +1,17 @@
 "use client";
-import useFetchAggregateHoldings from "@/hooks/react-query/holdings/useFetchAggregateHoldings";
+
+// React
 import { use } from "react";
+
+// Components
 import HoldingHeader from "@/features/holding/components/headers/HoldingHeader";
 import MarketValueCards from "@/features/holding/components/cards/MarketValueCards";
 import AverageCostCard from "@/features/holding/components/cards/AverageCostCard";
 import AccountWithHoldingCard from "@/features/holding/components/cards/AccountWithHoldingCard";
 import PrimaryAccountSection from "@/features/accounts/components/sections/PrimaryAccountSection";
-import SecondaryAccountSection from "@/features/accounts/components/sections/SecondaryAccountSection";
+
+// Hooks
+import useFetchAggregateHoldings from "@/hooks/react-query/holdings/useFetchAggregateHoldings";
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);

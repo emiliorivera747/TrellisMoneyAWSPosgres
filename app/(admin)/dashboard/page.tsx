@@ -5,10 +5,10 @@ import ProjectedNetWorthGraph from "@/features/projected-net-worth/components/pr
 import AssetsCard from "@/features/projected-financial-assets/components/assets-card/assets-form/AssetsForm";
 import Footer from "@/components/footers/Footer";
 import NetValueItems from "@/features/dashboard/components/NetValueItems";
-import { AssetsDashboardProvider } from "@/context/dashboard/AssetsDashboardProvider";
-
-// Sections
 import PrimaryDashboardSection from "@/components/dashboard/PrimaryDashboardSection";
+
+// Context
+import { AssetsDashboardProvider } from "@/context/dashboard/AssetsDashboardProvider";
 
 // Hooks
 import { useFetchNetWorth } from "@/features/net-worth/hooks/useFetchNetWorth";

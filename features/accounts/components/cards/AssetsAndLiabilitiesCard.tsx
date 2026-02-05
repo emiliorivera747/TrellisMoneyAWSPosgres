@@ -1,10 +1,16 @@
 "use client";
 
+// React
 import { useMemo } from "react";
+
+// Hooks
 import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
+
+// Types
 import { AccountWithMember } from "@/features/accounts/services/accountServices";
+
+// Utils
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
-import ProjectedAssetsCard from "@/features/projected-financial-assets/components/assets-card/layout/ProjectedAssetsCard";
 
 const ASSET_TYPES = ["DEPOSITORY", "INVESTMENT", "OTHER"];
 const LIABILITY_TYPES = ["CREDIT", "LOAN"];

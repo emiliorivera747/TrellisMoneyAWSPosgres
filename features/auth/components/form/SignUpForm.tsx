@@ -23,13 +23,15 @@ import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHea
 // Schema
 import { signUpSchema } from "@/features/auth/schemas/formSchemas";
 
-// Server actions
-import { signUp} from "@/app/actions/actions";
-import { State } from "@/types/server/serverActionState";
+// Server Actions
+import { signUp } from "@/app/actions/actions";
 
-//Hooks
-import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
+// Types
+import { State } from "@/types/server/serverActionState";
 import { SignUpInputs } from "@/features/auth/schemas/formSchemas";
+
+// Hooks
+import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
 /**
  * Sign up form

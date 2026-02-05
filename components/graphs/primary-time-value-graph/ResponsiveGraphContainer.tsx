@@ -1,4 +1,7 @@
+// External Libraries
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
+
+// Types
 import { ResponsiveGraphContainerProps } from "@/types/components/admin/graphs/props";
 
 /**

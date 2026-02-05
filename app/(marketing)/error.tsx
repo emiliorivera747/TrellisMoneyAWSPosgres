@@ -1,6 +1,9 @@
 "use client";
 
+// React
 import { useEffect } from "react";
+
+// Components
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 
 export default function Error({

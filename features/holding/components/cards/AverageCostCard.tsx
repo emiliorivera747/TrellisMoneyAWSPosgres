@@ -1,10 +1,13 @@
-import { AggregateHoldingDetails } from "@/types/api-routes/holding/holding";
-import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
-
 // Components
 import Card from "@/components/cards/Card";
 import PrimaryCardHeader from "@/components/cards/PrimaryCardHeader";
 import CurrencyDisplay from "@/components/typography/CurrencyDisplay";
+
+// Types
+import { AggregateHoldingDetails } from "@/types/api-routes/holding/holding";
+
+// Utils
+import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 
 /**
  * Component to display market value and total return information for a given holding.

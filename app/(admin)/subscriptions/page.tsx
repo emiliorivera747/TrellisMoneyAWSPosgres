@@ -18,6 +18,7 @@ import { usePlans } from "@/hooks/react-query/stripe/StripeQueries";
 // Types
 import { StripePrice } from "@/features/stripe/types/price";
 
+// Skeletons
 import PricingSectionSkeleton from "@/features/subscription-plans/components/skeleton/PricingSectionSkeleton";
 
 const SubscriptionPage = () => {

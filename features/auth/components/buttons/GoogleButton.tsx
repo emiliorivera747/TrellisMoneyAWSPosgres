@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 // Components
 import DotLoader from "@/components/loading/DotLoader";
 
-//types
+// Types
 import { GoogleButtonProps } from "@/features/auth/types/buttons/buttons";
 
 const defaultClass =

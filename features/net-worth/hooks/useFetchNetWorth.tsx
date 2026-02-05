@@ -1,4 +1,7 @@
+// External Libraries
 import { useQuery } from "@tanstack/react-query";
+
+// Services
 import { networthService } from "@/features/net-worth/services/networthService";
 
 /**

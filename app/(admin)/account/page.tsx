@@ -1,6 +1,9 @@
 "use client";
+
+// React
 import React from "react";
-import { useParams } from "next/navigation";
+
+// Hooks
 import useFetchUser from "@/hooks/user/useFetchUser";
 
 const page = () => {

@@ -1,6 +1,10 @@
-'use client'
+'use client';
+
+// React
 import { useEffect, useState } from "react";
 import * as React from "react";
+
+// External Libraries
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 export function ThemeProvider({

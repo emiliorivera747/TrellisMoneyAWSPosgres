@@ -1,13 +1,13 @@
-// layout.tsx
+// Types
 import { Metadata } from "next";
+
+// Components
+import Footer from "@/components/footers/Footer";
 
 export const metadata: Metadata = {
   title: "Sign Up | Trellis Money",
   description: "Create a new account on Trellis Money",
 };
-
-// Components
-import Footer from "@/components/footers/Footer";
 
 /**
  * A layout component for the Sign-Up page that centers its children both

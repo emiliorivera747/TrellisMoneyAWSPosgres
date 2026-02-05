@@ -1,16 +1,15 @@
+// Types
 import { Metadata } from "next";
+
+// Components
 import NavBar from "@/components/nav-bars/SecondaryNavbar";
+import SignInForm from "@/features/auth/components/form/SignInForm";
+import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 
 export const metadata: Metadata = {
   title: "Sign In | Trellis Money",
   description: "Sign in to your Trellis Money account",
 };
-
-//Forms
-import SignInForm from "@/features/auth/components/form/SignInForm";
-
-//Protected Route
-import DashboardRedirect from "@/features/auth/components/private-route/DashboardRedirect";
 
 /**
  *  Allows the user to log into their account

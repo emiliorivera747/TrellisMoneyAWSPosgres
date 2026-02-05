@@ -1,8 +1,13 @@
+// React
 import React from "react";
+
+// Next
 import Link from "next/link";
+import Image from "next/image";
+
+// Components
 import SignInButton from "@/features/auth/components/buttons/SignInButton";
 import SignOutButton from "@/features/auth/components/buttons/SignOutButton";
-import Image from "next/image";
 
 interface NavbarProps {
   isAuthenticated?: boolean | null;

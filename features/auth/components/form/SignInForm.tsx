@@ -1,13 +1,15 @@
 "use client";
-import React, { useActionState, useRef} from "react";
 
-//External libraries
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+// React
+import React, { useActionState, useRef } from "react";
 
 // Next
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+// External Libraries
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 // Components
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
@@ -20,17 +22,19 @@ import TextInput from "@/components/form-components/TextInput";
 import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 
-//Schema
+// Server Actions
+import { login } from "@/app/actions/actions";
+
+// Types
+import { State } from "@/types/server/serverActionState";
+
+// Schema
 import {
   signInSchema,
   SignInInputs,
 } from "@/features/auth/schemas/formSchemas";
 
-// Server actions
-import { login} from "@/app/actions/actions";
-import { State } from "@/types/server/serverActionState";
-
-//Hooks
+// Hooks
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
 /**

@@ -1,10 +1,12 @@
 "use client";
 
-// React & Next
+// React
 import React, { useActionState } from "react";
+
+// Next
 import { useRouter } from "next/navigation";
 
-//External libraries
+// External Libraries
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -15,17 +17,19 @@ import PasswordInput from "@/components/form-components/PasswordInput";
 import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHeader";
 import PrimaryAuthContainer from "../containers/PrimaryAuthContainer";
 
-//Schema
+// Server Actions
+import { resetPassword } from "@/app/actions/actions";
+
+// Types
+import { State } from "@/types/server/serverActionState";
+
+// Schema
 import {
   ResetPasswordInputs,
   resetPasswordSchema,
 } from "@/features/auth/schemas/formSchemas";
 
-//Server Actions
-import { resetPassword } from "@/app/actions/actions";
-import { State } from "@/types/server/serverActionState";
-
-//Hooks
+// Hooks
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
 /**

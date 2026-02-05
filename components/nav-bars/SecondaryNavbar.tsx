@@ -1,4 +1,7 @@
+// React
 import React from "react";
+
+// Next
 import Link from "next/link";
 import Image from "next/image";
 

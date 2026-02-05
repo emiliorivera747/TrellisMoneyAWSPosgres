@@ -1,23 +1,23 @@
 "use client";
+
+// Next
 import { usePathname } from "next/navigation";
-
-// Icons
-import SideNavItemLink from "@/components/navigation/SideNavItemLink";
-
-//Data
-import { navigationItems } from "@/utils/mock/data/navigation-bar-data/navigationItems";
-import UserProfileAvatarMenu from "@/features/user-account/components/UserProfileAvatarMenu";
 import Link from "next/link";
 import Image from "next/image";
 
 // Components
+import SideNavItemLink from "@/components/navigation/SideNavItemLink";
+import UserProfileAvatarMenu from "@/features/user-account/components/UserProfileAvatarMenu";
 import AddConnectionButton from "@/features/manage-connections/components/AddConnectionButton";
+
+// Skeletons
+import SideNavSkeleton from "@/components/skeletons/navigation/SideNavSkeleton";
 
 // Hooks
 import useSubscription from "@/hooks/react-query/subscription/useSubscription";
 
-// Skeleton
-import SideNavSkeleton from "@/components/skeletons/navigation/SideNavSkeleton";
+// Data
+import { navigationItems } from "@/utils/mock/data/navigation-bar-data/navigationItems";
 
 /**
  * Renders a responsive side navigation bar with navigation items and a user profile menu.

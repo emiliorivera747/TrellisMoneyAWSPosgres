@@ -1,5 +1,9 @@
 "use client";
+
+// Components
 import RefreshButton from "@/components/buttons/RefreshButton";
+
+// Hooks
 import useRefreshItems from "@/hooks/react-query/items/useRefreshItems";
 
 /**

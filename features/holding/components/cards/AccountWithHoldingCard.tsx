@@ -1,7 +1,14 @@
+// React
 import { useState } from "react";
+
+// External Libraries
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
+
+// Types
 import { DetailedHolding } from "@/types/api-routes/holding/holding";
+
+// Utils
+import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
 
 const getTimeAgo = (date: Date): string => {
   const diffMs = Date.now() - date.getTime();

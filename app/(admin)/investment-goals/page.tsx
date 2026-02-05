@@ -1,4 +1,6 @@
 "use client";
+
+// React
 import React from "react";
 
 const InvestmentGoals = () => {

@@ -1,6 +1,11 @@
+// React
 import React from "react";
 import { useFormStatus } from "react-dom";
+
+// Components
 import DotLoader from "@/components/loading/DotLoader";
+
+// Types
 import { SubmitButtonProps } from "@/types/components/buttons/buttons";
 
 const PrimarySubmitButton = ({

@@ -15,6 +15,8 @@ import { createLineConfigurations } from "@/features/projected-net-worth/utils/g
 
 // Selectors
 import { useDashboardFilters } from "@/stores/slices/dashboard/dashboardFilters.selectors";
+
+// Types
 import { ProjectedNetWorthGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 
 // Constants

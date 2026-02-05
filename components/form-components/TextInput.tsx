@@ -1,10 +1,11 @@
+// External Libraries
 import { FieldValues } from "react-hook-form";
 
-//Components
+// Components
 import PrimaryInputLabel from "@/components/form-components/PrimaryInputLabel";
 import ErrorForInputs from "@/components/errors/ErrorForInputs";
 
-//Interface
+// Types
 import { TextInputProps } from "@/types/components/forms/forms";
 
 const TextInput = <TFieldValues extends FieldValues>({

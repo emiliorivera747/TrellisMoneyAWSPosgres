@@ -1,8 +1,10 @@
 "use client";
-import useRefreshAccounts from "@/hooks/accounts/useRefreshAccounts";
 
 // Components
 import RefreshButton from "@/components/buttons/RefreshButton";
+
+// Hooks
+import useRefreshAccounts from "@/hooks/accounts/useRefreshAccounts";
 
 /**
  * RefreshAccounts component renders a button that triggers a refresh of accounts.

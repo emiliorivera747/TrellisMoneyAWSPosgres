@@ -3,17 +3,15 @@
 // Components
 import AccountsList from "@/features/accounts/components/list/AccountsList";
 import PrimaryAccountSection from "@/features/accounts/components/sections/PrimaryAccountSection";
+import SecondaryAccountSection from "@/features/accounts/components/sections/SecondaryAccountSection";
 import AssetsAndLiabilitiesCard from "@/features/accounts/components/cards/AssetsAndLiabilitiesCard";
 import AddConnectionButtonAccount from "@/features/accounts/components/buttons/AddConnectionButtonAccount";
 import RefreshAccounts from "@/features/accounts/components/buttons/RefreshAccounts";
-
-// Section
-import SecondaryAccountSection from "@/features/accounts/components/sections/SecondaryAccountSection";
+import AccountNetWorthGraph from "@/features/accounts/components/graph/AccountNetWorthGraph";
 
 // Hooks
 import useGroupAccounts from "@/features/accounts/hooks/useGroupAccounts";
 import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
-import AccountNetWorthGraph from "@/features/accounts/components/graph/AccountNetWorthGraph";
 
 /**
  *

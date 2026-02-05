@@ -1,15 +1,15 @@
 "use client";
 
 // React & Next
-import { useState, useActionState} from "react";
+import { useState, useActionState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-//External Libraries
+// External Libraries
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-//Compenents
+// Components
 import PrimarySubmitButton from "@/components/buttons/PrimarySubmitButton";
 import TextInput from "@/components/form-components/TextInput";
 import NavBar from "@/components/nav-bars/SecondaryNavbar";
@@ -18,17 +18,19 @@ import PrimaryAuthHeader from "@/features/auth/components/headers/PrimaryAuthHea
 import PrimaryAuthContainer from "@/features/auth/components/containers/PrimaryAuthContainer";
 import PrimaryErrorMessage from "@/components/errors/PrimaryErrorMessage";
 
-//Server Actions
+// Server Actions
 import { confirmReset } from "../../actions/actions";
+
+// Types
 import { State } from "@/types/server/serverActionState";
 
-//Schema
+// Schema
 import {
   loginHelpSchema,
   LoginHelpInputs,
 } from "@/features/auth/schemas/formSchemas";
 
-//Hooks
+// Hooks
 import { useHandleActionState } from "@/features/auth/hooks/useHandleActionState";
 
 export default function PasswordReset() {
