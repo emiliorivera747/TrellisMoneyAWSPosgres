@@ -1,4 +1,4 @@
-import { AccountWithMember } from "@/features/accounts/services/accountServices";
+import { Account } from "@/drizzle/schema";
 
 /**
  * Properties for the account list component.
@@ -29,10 +29,10 @@ export interface AccountListProps {
 
   /**
    * Accounts grouped by type.
-   * @type {Record<string, AccountWithMember[]>}
+   * @type {Record<string, Account[]>}
    * @memberof AccountListProps
    */
-  groups: Record<string, AccountWithMember[]>;
+  groups: Record<string, Account[]>;
 }
 
 /**
@@ -43,10 +43,10 @@ export interface AccountListProps {
 export interface AccountGroupedByType {
   /**
    * Accounts indexed by type key.
-   * @type {AccountWithMember[]}
+   * @type {Account[]}
    * @memberof AccountGroupedByType
    */
-  [key: string]: AccountWithMember[];
+  [key: string]: Account[];
 }
 
 /**
@@ -57,8 +57,8 @@ export interface AccountGroupedByType {
 export interface UseGroupAccountsProps {
   /**
    * Array of accounts to be grouped.
-   * @type {AccountWithMember[] | undefined}
+   * @type {Account[] | undefined}
    * @memberof UseGroupAccountsProps
    */
-  accounts: AccountWithMember[] | undefined;
+  accounts: Account[] | undefined;
 }

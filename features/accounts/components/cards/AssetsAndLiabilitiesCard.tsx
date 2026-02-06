@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { useFetchAccounts } from "@/features/accounts/hooks/useFetchAccounts";
 
 // Types
-import { AccountWithMember } from "@/features/accounts/services/accountServices";
+import { Account } from "@/drizzle/schema";
 
 // Utils
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
@@ -37,20 +37,20 @@ const AssetsAndLiabilitiesCard = () => {
       };
     }
 
-    const assets: AccountWithMember[] = [];
-    const liabilities: AccountWithMember[] = [];
+    const assets: Account[] = [];
+    const liabilities: Account[] = [];
     let totalAssets = 0;
     let totalLiabilities = 0;
 
-    accounts.forEach((item) => {
-      const { type, currentBalance } = item.account;
+    accounts.forEach((account) => {
+      const { type, currentBalance } = account;
       const balance = Number(currentBalance) || 0;
 
       if (ASSET_TYPES.includes(type)) {
-        assets.push(item);
+        assets.push(account);
         totalAssets += balance;
       } else if (LIABILITY_TYPES.includes(type)) {
-        liabilities.push(item);
+        liabilities.push(account);
         totalLiabilities += balance;
       }
     });
@@ -80,22 +80,22 @@ const AssetsAndLiabilitiesCard = () => {
             </div>
             <div className="space-y-2">
               {assets.length > 0 ? (
-                assets.map((item) => (
+                assets.map((account) => (
                   <div
-                    key={item.account.accountId}
+                    key={account.accountId}
                     className="flex justify-between items-center py-2 px-3 bg-tertiary-50 rounded-lg"
                   >
                     <div className="flex flex-col">
                       <span className="text-xs font-medium text-tertiary-900 truncate max-w-[120px]">
-                        {formatSubtype(item.account.subtype) ||
-                          item.account.accountName}
+                        {formatSubtype(account.subtype) ||
+                          account.accountName}
                       </span>
                       <span className="text-[10px] text-tertiary-500">
-                        {item.account.accountName}
+                        {account.accountName}
                       </span>
                     </div>
                     <span className="text-xs font-medium text-tertiary-800">
-                      {convertToMoney(Number(item.account.currentBalance))}
+                      {convertToMoney(Number(account.currentBalance))}
                     </span>
                   </div>
                 ))
@@ -119,22 +119,22 @@ const AssetsAndLiabilitiesCard = () => {
             </div>
             <div className="space-y-2">
               {liabilities.length > 0 ? (
-                liabilities.map((item) => (
+                liabilities.map((account) => (
                   <div
-                    key={item.account.accountId}
+                    key={account.accountId}
                     className="flex justify-between items-center py-2 px-3 bg-tertiary-50 rounded-lg"
                   >
                     <div className="flex flex-col">
                       <span className="text-xs font-medium text-tertiary-900 truncate max-w-[120px]">
-                        {formatSubtype(item.account.subtype) ||
-                          item.account.accountName}
+                        {formatSubtype(account.subtype) ||
+                          account.accountName}
                       </span>
                       <span className="text-[10px] text-tertiary-500">
-                        {item.account.accountName}
+                        {account.accountName}
                       </span>
                     </div>
                     <span className="text-xs font-medium text-tertiary-800">
-                      {convertToMoney(Number(item.account.currentBalance))}
+                      {convertToMoney(Number(account.currentBalance))}
                     </span>
                   </div>
                 ))

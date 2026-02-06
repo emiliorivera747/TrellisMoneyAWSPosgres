@@ -30,12 +30,12 @@ const AccountsList = ({
         return (
           <div key={type}>
             <AccountListHeader type={type} />
-            {accounts?.map((item) => {
+            {accounts?.map((account) => {
               return (
                 <AccountCardWithModal
-                  key={item.account.accountId}
-                  account={item.account}
-                  member={item.member}
+                  key={account.accountId}
+                  account={account}
+                  member={null}
                 />
               );
             })}
