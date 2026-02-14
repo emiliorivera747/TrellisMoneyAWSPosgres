@@ -9,6 +9,7 @@ import MarketValueCards from "@/features/holding/components/cards/MarketValueCar
 import AverageCostCard from "@/features/holding/components/cards/AverageCostCard";
 import AccountWithHoldingCard from "@/features/holding/components/cards/AccountWithHoldingCard";
 import PrimaryAccountSection from "@/features/accounts/components/sections/PrimaryAccountSection";
+import HoldingHistoryGraph from "@/features/holding/components/graphs/HoldingHistoryGraph";
 
 // Hooks
 import useFetchAggregateHoldings from "@/hooks/react-query/holdings/useFetchAggregateHoldings";
@@ -49,7 +50,8 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
       <PrimaryAccountSection>
         <header className="w-full sm:w-[46rem]">
           <HoldingHeader holding={holding} />
-          <div className="grid grid-cols-2 sm:gap-4  gap-3 mb-6 w-full">
+          <HoldingHistoryGraph securityId={id} />
+          <div className="grid grid-cols-2 sm:gap-4  gap-3 mb-6 w-full mt-6">
             <MarketValueCards holding={holding} />
             <AverageCostCard holding={holding} />
           </div>

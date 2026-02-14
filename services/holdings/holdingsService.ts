@@ -4,6 +4,7 @@ import { API_URL } from "@/utils/global-variables/globals";
 import { ApiResponse } from "@/types/services/responses/api-responses";
 import { HoldingsResponse } from "@/types/services/responses/holdings";
 import { AggregateHoldingDetails } from "@/types/api-routes/holding/holding";
+import { HoldingHistoryData } from "@/app/api/investments/holding-history/[securityId]/route";
 
 /**
  * Fetches investment holdings from the API with the current timestamp.
@@ -44,7 +45,26 @@ const getAggregateHoldings = async (
   return data;
 };
 
+const getHoldingHistory = async (
+  securityId: string
+): Promise<ApiResponse<{ securityId: string; history: HoldingHistoryData[] }>> => {
+  const timestamp = new Date().toISOString();
+
+  const res = await fetch(
+    `${API_URL}/investments/holding-history/${securityId}?timestamp=${timestamp}`,
+    {
+      method: "GET",
+      cache: "no-store",
+    }
+  );
+  if (!res.ok) throw new Error("Error fetching holding history data");
+  const data: ApiResponse<{ securityId: string; history: HoldingHistoryData[] }> =
+    await res.json();
+  return data;
+};
+
 export const holdingService = {
   getHoldings,
   getAggregateHoldings,
+  getHoldingHistory,
 };
