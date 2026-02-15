@@ -1,6 +1,6 @@
 {
-  "id": "9b1e58e3-60fd-4c59-8e13-77fea22c839d",
-  "prevId": "32b63de9-370f-4648-8166-093410f0520e",
+  "id": "f4a96776-69d8-480e-92e2-f72c59d0b156",
+  "prevId": "9b1e58e3-60fd-4c59-8e13-77fea22c839d",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -1353,6 +1353,231 @@
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
+    },
+    "public.NetWorthSnapshot": {
+      "name": "NetWorthSnapshot",
+      "schema": "",
+      "columns": {
+        "net_worth_snapshot_id": {
+          "name": "net_worth_snapshot_id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "household_id": {
+          "name": "household_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "snapshot_date": {
+          "name": "snapshot_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "snapshot_at": {
+          "name": "snapshot_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "total_assets": {
+          "name": "total_assets",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_liabilities": {
+          "name": "total_liabilities",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "net_worth": {
+          "name": "net_worth",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cash_assets": {
+          "name": "cash_assets",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "investment_assets": {
+          "name": "investment_assets",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "other_assets": {
+          "name": "other_assets",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "credit_liabilities": {
+          "name": "credit_liabilities",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "loan_liabilities": {
+          "name": "loan_liabilities",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "other_liabilities": {
+          "name": "other_liabilities",
+          "type": "numeric(28, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "calculation_version": {
+          "name": "calculation_version",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source": {
+          "name": "source",
+          "type": "SnapshotSource",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'SYSTEM'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {
+        "NetWorthSnapshot_household_id_idx": {
+          "name": "NetWorthSnapshot_household_id_idx",
+          "columns": [
+            {
+              "expression": "household_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "NetWorthSnapshot_snapshot_date_idx": {
+          "name": "NetWorthSnapshot_snapshot_date_idx",
+          "columns": [
+            {
+              "expression": "snapshot_date",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "NetWorthSnapshot_household_id_fkey": {
+          "name": "NetWorthSnapshot_household_id_fkey",
+          "tableFrom": "NetWorthSnapshot",
+          "tableTo": "Household",
+          "columnsFrom": [
+            "household_id"
+          ],
+          "columnsTo": [
+            "household_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "NetWorthSnapshot_household_id_snapshot_date_unique": {
+          "name": "NetWorthSnapshot_household_id_snapshot_date_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "household_id",
+            "snapshot_date"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.Waitlist": {
+      "name": "Waitlist",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {
+        "Waitlist_email_key": {
+          "name": "Waitlist_email_key",
+          "columns": [
+            {
+              "expression": "email",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "Waitlist_email_unique": {
+          "name": "Waitlist_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {
@@ -1416,6 +1641,15 @@
       "values": [
         "METERED",
         "LICENSED"
+      ]
+    },
+    "public.SnapshotSource": {
+      "name": "SnapshotSource",
+      "schema": "public",
+      "values": [
+        "SYSTEM",
+        "BACKFILL",
+        "MANUAL"
       ]
     }
   },

@@ -8,6 +8,7 @@ export * from "./profile";
 export * from "./security";
 export * from "./stripe";
 export * from "./net-worth";
+export * from "./waitlist";
 
 // Import tables for type inference
 import { user } from "./user";
@@ -26,6 +27,7 @@ import {
   usageType,
 } from "./stripe";
 import { netWorthSnapshot } from "./net-worth";
+import { waitlist } from "./waitlist";
 
 // Export User types
 /**
@@ -217,6 +219,10 @@ export type NetWorthSnapshot = typeof netWorthSnapshot.$inferSelect;
  * @typedef {typeof netWorthSnapshot.$inferInsert} NetWorthSnapshotInsert
  */
 export type NetWorthSnapshotInsert = typeof netWorthSnapshot.$inferInsert;
+
+// Export Waitlist types
+export type Waitlist = typeof waitlist.$inferSelect;
+export type WaitlistInsert = typeof waitlist.$inferInsert;
 
 // Export Enum types
 /**
