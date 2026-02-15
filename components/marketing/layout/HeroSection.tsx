@@ -2,6 +2,15 @@
 
 import { useState, FormEvent } from "react";
 import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface HeroSectionProps {
   isAuthenticated: boolean;
@@ -17,7 +26,7 @@ export default function HeroSection({ isAuthenticated }: HeroSectionProps) {
         <p className="mt-2 mb-1 bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-[0.9rem] text-transparent sm:text-[1.2rem]">
           Take control of your finances with Trellis Money
         </p>
-        {isAuthenticated ? <AuthenticatedCTA /> : <WaitlistForm />}
+        {isAuthenticated ? <AuthenticatedCTA /> : <WaitlistCTA />}
       </div>
     </header>
   );
@@ -34,7 +43,8 @@ function AuthenticatedCTA() {
   );
 }
 
-function WaitlistForm() {
+function WaitlistCTA() {
+  const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -68,52 +78,67 @@ function WaitlistForm() {
     }
   };
 
-  if (status === "success") {
-    return (
-      <div className="mt-10 flex flex-col items-center">
-        <div className="flex h-[3.5rem] items-center justify-center rounded-[12px] px-[4rem] py-[1.05882rem] font-semibold text-tertiary-900 border border-tertiary-300">
-          {message}
-        </div>
-        <p className="mt-2 pt-4 text-[0.8rem] text-tertiary-700 w-[18rem] font-light">
-          We&apos;ll let you know when Trellis Money is ready.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="mt-10 flex flex-col items-center">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-3 items-center"
+      <Button
+        onClick={() => setOpen(true)}
+        variant="outline"
+        className="h-[3.5rem] px-[4rem] rounded-[12px] font-semibold text-tertiary-900 border-tertiary-300 hover:bg-tertiary-100 transition delay-150 duration-300 ease-in-out"
+        style={{
+          boxShadow: `rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px`,
+        }}
       >
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          required
-          className="h-[3.5rem] w-[18rem] rounded-[12px] border border-tertiary-300 px-4 text-tertiary-900 placeholder:text-tertiary-500 focus:outline-none focus:ring-2 focus:ring-primary-700"
-        />
-        <button
-          type="submit"
-          disabled={status === "loading"}
-          style={{
-            boxShadow: `rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px`,
-          }}
-          className="flex h-[3.5rem] items-center justify-center rounded-[12px] hover:bg-tertiary-100 px-[2rem] py-[1.05882rem] transition delay-150 duration-300 ease-in-out font-semibold text-tertiary-900 border-none border-tertiary-300 disabled:opacity-50"
-        >
-          {status === "loading" ? "Joining..." : "Join Waitlist"}
-        </button>
-      </form>
-      {status === "error" && (
-        <p className="mt-2 pt-2 text-[0.8rem] text-red-600 font-light">
-          {message}
-        </p>
-      )}
+        Join Waitlist
+      </Button>
       <p className="mt-2 pt-4 text-[0.8rem] text-tertiary-700 w-[18rem] font-light">
         Join the waitlist to get early access.
       </p>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[425px] rounded-[12px]">
+          <DialogHeader>
+            <DialogTitle className="text-tertiary-900">
+              Join the Waitlist
+            </DialogTitle>
+            <DialogDescription>
+              Enter your email and we&apos;ll let you know when Trellis Money is
+              ready.
+            </DialogDescription>
+          </DialogHeader>
+
+          {status === "success" ? (
+            <div className="flex flex-col items-center gap-2 py-4">
+              <p className="font-semibold text-tertiary-900">{message}</p>
+              <p className="text-[0.85rem] text-tertiary-600 font-light">
+                We&apos;ll be in touch soon.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2">
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="h-[3rem] rounded-[12px]"
+              />
+              {status === "error" && (
+                <p className="text-[0.8rem] text-red-600 font-light">
+                  {message}
+                </p>
+              )}
+              <Button
+                type="submit"
+                disabled={status === "loading"}
+                className="h-[3rem] rounded-[12px] bg-tertiary-1000 text-white hover:bg-tertiary-900"
+              >
+                {status === "loading" ? "Joining..." : "Join Waitlist"}
+              </Button>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
