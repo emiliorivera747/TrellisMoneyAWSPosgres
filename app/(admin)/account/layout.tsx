@@ -11,6 +11,15 @@ export const metadata: Metadata = {
     "Dashboard for Trellis Money gives you insights into your investments, goals, budgets, Networth and other key financial metrics.",
 };
 
+/**
+ * Account layout component.
+ *
+ * Wraps all account sub-pages with a side navigation bar and a toast
+ * notification provider.
+ *
+ * @param {React.ReactNode} children - The child route content to render.
+ * @returns {JSX.Element} The rendered layout.
+ */
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="max-h-screen ml-[2%] sm:ml-[2%] 2xl:ml-[10%] border-box">

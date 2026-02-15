@@ -1,6 +1,13 @@
 // React
 import React from "react";
 
+/**
+ * Billing history page component.
+ *
+ * Displays the user's past billing records and payment history.
+ *
+ * @returns {JSX.Element} The rendered billing history page.
+ */
 const page = () => {
   return (
     <div className="mt-[3%]">

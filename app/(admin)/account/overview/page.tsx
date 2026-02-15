@@ -1,3 +1,10 @@
+/**
+ * Account overview page component.
+ *
+ * Displays a summary overview of the user's account information.
+ *
+ * @returns {JSX.Element} The rendered overview page.
+ */
 const page = () => {
   return (
     <div className="mt-[3%]">

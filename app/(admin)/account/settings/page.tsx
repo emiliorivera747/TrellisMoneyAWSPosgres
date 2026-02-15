@@ -1,6 +1,13 @@
 // React
 import React from "react";
 
+/**
+ * Account settings page component.
+ *
+ * Displays the user's account settings and configuration options.
+ *
+ * @returns {JSX.Element} The rendered settings page.
+ */
 const page = () => {
   return (
     <div className="mt-[3%]">

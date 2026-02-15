@@ -6,6 +6,13 @@ import React from "react";
 // Hooks
 import useFetchUser from "@/hooks/user/useFetchUser";
 
+/**
+ * Account page component.
+ *
+ * Fetches the current authenticated user and displays their email address.
+ *
+ * @returns {JSX.Element} The rendered account page.
+ */
 const page = () => {
   const { user } = useFetchUser();
 
