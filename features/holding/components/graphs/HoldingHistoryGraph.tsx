@@ -24,13 +24,13 @@ const HoldingHistoryGraph = ({ securityId }: HoldingHistoryGraphProps) => {
 
   if (historyLoading) {
     return (
-      <div className="h-[22rem] w-full animate-pulse rounded-lg bg-tertiary-200" />
+      <div className="h-[32rem] w-full animate-pulse rounded-lg bg-tertiary-200" />
     );
   }
 
   if (historyHasError || !historyData?.data?.history) {
     return (
-      <div className="h-[22rem] w-full flex items-center justify-center text-tertiary-600">
+      <div className="h-[32rem] w-full flex items-center justify-center text-tertiary-600">
         Unable to load price history
       </div>
     );
@@ -52,9 +52,9 @@ const HoldingHistoryGraph = ({ securityId }: HoldingHistoryGraphProps) => {
   ];
 
   return (
-    <div className="h-[22rem] grid border-b border-tertiary-300">
+    <div className="h-[32rem] grid border-b border-tertiary-300">
       <ResponsiveGraphContainer
-        className="h-[18rem] w-full border-box"
+        className="h-[26rem] w-full border-box"
         ref={graphContainerRef}
         component={HoldingHistoryLineGraph}
         componentProps={{
