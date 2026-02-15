@@ -55,7 +55,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="mb-4 font-light text-tertiary-800 text-[1.2rem] mt-4">
           Positions
         </div>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col gap-2 w-full pb-10">
           {holding.holdings.map((h) => (
             <AccountWithHoldingCard holding={h} key={h.holdingId} />
           ))}

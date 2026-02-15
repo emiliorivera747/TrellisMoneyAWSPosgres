@@ -37,7 +37,7 @@ export interface LineGraphFilterButtonsProps {
    * @type {GraphFilterConfig[]}
    * @memberof LineGraphFilterButtonsProps
    */
-  filterConfig: GraphFilterConfig[];
+  filterConfig: GraphFilterConfig<any>[];
 
   /**
    * The ref of the filter.
@@ -65,7 +65,7 @@ export interface GraphFilterButtonWithModalProps {
    * @type {GraphFilterConfig[]}
    * @memberof GraphFilterButtonWithModalProps
    */
-  filterConfig: GraphFilterConfig[];
+  filterConfig: GraphFilterConfig<any>[];
 
   /**
    * The ref of the filter.

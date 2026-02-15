@@ -15,7 +15,7 @@ const GraphHeaderWithFilter: React.FC<GraphHeaderWithFilterProps> = ({
       <GraphHeader label={label} />
       <GraphFilterButtonWithModal
         filterConfig={filterConfig}
-        ref={filterRef}
+        innerRef={filterRef}
         className="grid grid-cols-2"
       />
     </div>
