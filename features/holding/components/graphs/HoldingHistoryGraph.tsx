@@ -5,6 +5,7 @@ import { useRef } from "react";
 
 // Components
 import HoldingHistoryLineGraph from "@/features/holding/components/graphs/HoldingHistoryLineGraph";
+import HoldingHeader from "@/features/holding/components/headers/HoldingHeader";
 import ResponsiveGraphContainer from "@/components/graphs/primary-time-value-graph/ResponsiveGraphContainer";
 
 // Hooks
@@ -12,12 +13,14 @@ import useFetchHoldingHistory from "@/hooks/react-query/holdings/useFetchHolding
 
 // Types
 import { LineSeriesConfig, TimeSeriesData } from "@/types/components/admin/graphs/data";
+import { AggregateHoldingDetails } from "@/types/api-routes/holding/holding";
 
 interface HoldingHistoryGraphProps {
   securityId: string;
+  holding: AggregateHoldingDetails;
 }
 
-const HoldingHistoryGraph = ({ securityId }: HoldingHistoryGraphProps) => {
+const HoldingHistoryGraph = ({ securityId, holding }: HoldingHistoryGraphProps) => {
   const graphContainerRef = useRef(null);
   const { historyData, historyLoading, historyHasError } =
     useFetchHoldingHistory(securityId);
@@ -53,6 +56,7 @@ const HoldingHistoryGraph = ({ securityId }: HoldingHistoryGraphProps) => {
 
   return (
     <div className="h-[32rem] grid border-b border-tertiary-300">
+      <HoldingHeader holding={holding} />
       <ResponsiveGraphContainer
         className="h-[26rem] w-full border-box"
         ref={graphContainerRef}

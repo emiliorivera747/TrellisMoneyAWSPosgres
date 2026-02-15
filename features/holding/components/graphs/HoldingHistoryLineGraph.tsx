@@ -8,13 +8,9 @@ import { WithTooltipProvidedProps } from "@visx/tooltip/lib/enhancers/withToolti
 import DateAxisTooltip from "@/components/graphs/primary-time-value-graph/DateAxisTooltip";
 import MultiLineTimeSeriesSvg from "@/components/graphs/primary-time-value-graph/MultiLineTimeSeriesSvg";
 import NoLinePayloads from "@/features/projected-net-worth/components/projected-networth-graph/errors/NoLinePayloads";
-import HoldingHistoryGraphHeader from "@/features/holding/components/graphs/HoldingHistoryGraphHeader";
-
 // Types
 import { ProjectedLineGraphProps } from "@/features/projected-net-worth/types/graphComponents";
 import { TooltipConfig } from "@/types/components/admin/graphs/tooltips";
-import { createGraphConfigs } from "@/types/components/admin/graphs/graph-config";
-
 // Utils
 import { checkLinePayloads } from "@/features/projected-net-worth/utils/graph-helpers/checkLinePayloads";
 
@@ -34,12 +30,9 @@ export default withTooltip<ProjectedLineGraphProps, TooltipData>(
   }: ProjectedLineGraphProps & WithTooltipProvidedProps<TooltipData>) => {
     if (width < 10) return null;
     if (checkLinePayloads(lineConfigs) === false) return <NoLinePayloads />;
-    const graphConfigs = createGraphConfigs(lineConfigs, tooltipConfigs);
 
     return (
       <div className="h-full w-full">
-        <HoldingHistoryGraphHeader graphConfigs={graphConfigs} />
-
         <MultiLineTimeSeriesSvg
           width={width}
           height={height}

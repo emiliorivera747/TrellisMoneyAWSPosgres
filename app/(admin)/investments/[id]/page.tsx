@@ -4,7 +4,6 @@
 import { use } from "react";
 
 // Components
-import HoldingHeader from "@/features/holding/components/headers/HoldingHeader";
 import MarketValueCards from "@/features/holding/components/cards/MarketValueCards";
 import AverageCostCard from "@/features/holding/components/cards/AverageCostCard";
 import AccountWithHoldingCard from "@/features/holding/components/cards/AccountWithHoldingCard";
@@ -48,8 +47,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <section className="h-screen mx-[2%] overflow-y-scroll no-scrollbar flex flex-row gap-8 max-w-screen">
       <PrimaryAccountSection>
-        <HoldingHeader holding={holding} />
-        <HoldingHistoryGraph securityId={id} />
+        <HoldingHistoryGraph securityId={id} holding={holding} />
         <div className="grid grid-cols-2 sm:gap-4 gap-3 mb-6 w-full mt-6">
           <MarketValueCards holding={holding} />
           <AverageCostCard holding={holding} />
