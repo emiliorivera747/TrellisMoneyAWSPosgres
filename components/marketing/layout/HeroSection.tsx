@@ -1,7 +1,10 @@
 "use client";
 
+// React & Next.js imports
 import { useState, FormEvent } from "react";
 import Link from "next/link";
+
+// UI component imports
 import {
   Dialog,
   DialogContent,
@@ -12,20 +15,25 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+// Props
 interface HeroSectionProps {
   isAuthenticated: boolean;
 }
 
+// Main hero section - full-height banner with headline, subtitle, and CTA
 export default function HeroSection({ isAuthenticated }: HeroSectionProps) {
   return (
     <header className="flex h-[90vh] flex-col items-center justify-center text-center ">
       <div className=" -translate-y-[20%] sm:-translate-y-[20%] w-[86%] sm:w-[90%] flex flex-col justify-center items-center">
+        {/* Headline */}
         <h1 className="bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-[1.8rem]  text-transparent sm:text-[3.2rem] tracking-wide font-bold pb-2">
           See the bigger picture
         </h1>
+        {/* Subtitle */}
         <p className="mt-2 mb-1 bg-gradient-to-r from-tertiary-800 to-tertiary-600 bg-clip-text text-[0.9rem] text-transparent sm:text-[1.2rem]">
           Take control of your finances with Trellis Money
         </p>
+        {/* CTA - show dashboard link if authenticated, otherwise waitlist */}
         {isAuthenticated ? <AuthenticatedCTA /> : <WaitlistCTA />}
       </div>
     </header>
