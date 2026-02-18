@@ -40,6 +40,7 @@ export default function HeroSection({ isAuthenticated }: HeroSectionProps) {
   );
 }
 
+// Authenticated CTA - links directly to the dashboard
 function AuthenticatedCTA() {
   return (
     <Link
@@ -51,6 +52,7 @@ function AuthenticatedCTA() {
   );
 }
 
+// Waitlist CTA - opens a dialog for unauthenticated users to join the waitlist
 function WaitlistCTA() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -59,6 +61,7 @@ function WaitlistCTA() {
   >("idle");
   const [message, setMessage] = useState("");
 
+  // Submit email to the waitlist API
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setStatus("loading");
@@ -88,6 +91,7 @@ function WaitlistCTA() {
 
   return (
     <div className="mt-10 flex flex-col items-center">
+      {/* Waitlist trigger button */}
       <Button
         onClick={() => setOpen(true)}
         variant="outline"
@@ -102,8 +106,10 @@ function WaitlistCTA() {
         Join the waitlist to get early access.
       </p>
 
+      {/* Waitlist signup dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[425px] rounded-[12px]">
+          {/* Dialog header */}
           <DialogHeader>
             <DialogTitle className="text-tertiary-900">
               Join the Waitlist
@@ -114,6 +120,7 @@ function WaitlistCTA() {
             </DialogDescription>
           </DialogHeader>
 
+          {/* Success message after signup */}
           {status === "success" ? (
             <div className="flex flex-col items-center gap-2 py-4">
               <p className="font-semibold text-tertiary-900">{message}</p>
@@ -122,6 +129,7 @@ function WaitlistCTA() {
               </p>
             </div>
           ) : (
+            /* Email submission form */
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2">
               <Input
                 type="email"
@@ -131,6 +139,7 @@ function WaitlistCTA() {
                 required
                 className="h-[3rem] rounded-[12px]"
               />
+              {/* Error message */}
               {status === "error" && (
                 <p className="text-[0.8rem] text-red-600 font-light">
                   {message}
