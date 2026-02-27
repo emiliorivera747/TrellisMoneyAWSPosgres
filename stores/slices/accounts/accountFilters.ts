@@ -2,7 +2,7 @@ import { StateCreator } from "zustand";
 import { AccountFilterSlice } from "@/types/stores/accounts";
 import { AccountGraphFilter } from "@/features/accounts/types/graph";
 
-const DEFAULT_START_DATE = new Date();
+const DEFAULT_START_DATE = new Date(0);
 const DEFAULT_END_DATE = new Date(
   new Date().setFullYear(new Date().getFullYear() + 1)
 );
@@ -25,7 +25,7 @@ export const createAccountFilterSlice: StateCreator<AccountFilterSlice> = (
 ) => ({
   startDate: DEFAULT_START_DATE,
   endDate: DEFAULT_END_DATE,
-  selectedFilterAccount: "assets-liabilities",
+  selectedFilterAccount: "net-worth",
 
   setStartDate: (date) => set({ startDate: date }),
   setEndDate: (date) => set({ endDate: date }),

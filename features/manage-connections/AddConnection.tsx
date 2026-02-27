@@ -24,7 +24,7 @@ const AddConnection = ({ children }: { children: ReactNode }) => {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger className="">{children}</DialogTrigger>
+      <DialogTrigger className="w-full">{children}</DialogTrigger>
       <DialogContent className="p-0 pt-4 pb-6 rounded-[12px]">
         <DialogHeader title={currentStep.title ?? "Untitled"} />
         <PrimaryDialogSection currentStep={currentStep} />

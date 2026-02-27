@@ -8,7 +8,7 @@ import { ReactNode } from "react";
  */
 const SecondaryAccountSection = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="w-[18rem] sticky top-0  justify-start flex flex-col gap-4 pt-12">
+    <div className="w-[23rem] sticky top-0  justify-start flex flex-col gap-4 pt-12">
       {children}
     </div>
   );

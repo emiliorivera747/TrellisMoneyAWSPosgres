@@ -1,5 +1,3 @@
-import { FaAirbnb } from "react-icons/fa";
-
 // Components
 import {
   AlertDialog,
@@ -23,6 +21,7 @@ import { Account, HouseholdMember } from "@/drizzle/schema";
 interface AccountCardWithModalProps {
   account: Account;
   member: HouseholdMember | null;
+  logoUrl?: string;
 }
 
 /**
@@ -40,6 +39,7 @@ interface AccountCardWithModalProps {
 const AccountCardWithModal = ({
   account,
   member,
+  logoUrl,
 }: AccountCardWithModalProps) => {
   const { mutateItem, itemIsPending, itemHasError, itemError } =
     useRemoveItem();
@@ -50,7 +50,7 @@ const AccountCardWithModal = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger className="w-full">
-        <AccountCard account={account} member={member} />
+        <AccountCard account={account} member={member} logoUrl={logoUrl} />
       </AlertDialogTrigger>
       <AlertDialogContent className="h-[70vh] w-[60vw] overflow-scroll max-w-screen rounded-[12px]">
         <AlertDialogHeader>
