@@ -15,7 +15,7 @@ const NumberInputV2 = ({
 }: NumberInputV2Props & React.ComponentProps<"input">) => {
   const { error } = useFormField();
 
-  const defaultClassName = `h-[2rem] border-box rounded-[6px] align-text-bottom w-[4rem] px-[1rem] p-2  border leading-[1.23536] ${
+  const defaultClassName = `h-[2rem] border-box rounded-[6px] align-text-bottom w-[4rem] px-[1rem] p-2 border leading-[1.23536] bg-tertiary-100 text-tertiary-1000 ${
     error ? "border-red-500 bg-[#fff5f5] text-red-500" : "border-tertiary-600"
   } focus:outline-none focus:ring-2 ${
     error ? "focus:ring-red-500" : "focus:ring-primary-500 focus:border-none"
