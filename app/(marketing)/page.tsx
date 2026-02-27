@@ -70,7 +70,7 @@ export default async function Home() {
       <HeroSection isAuthenticated={!!user} />
       {!user && (
         <ProjectSection
-          subtitle="Plan for the Future"
+          subtitle="Plan for the future"
           url={"/#"}
           title={"Forecast"}
           videoUrl={
