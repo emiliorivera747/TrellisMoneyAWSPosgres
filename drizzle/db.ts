@@ -6,16 +6,18 @@ declare global {
   var pgPool: Pool | undefined;
 }
 
-const connectionString = process.env.DATABASE_URL;
-
-if (!connectionString) {
-  throw new Error("DATABASE_URL is not set! Check Vercel environment variables.");
+if (!process.env.DB_HOST) {
+  throw new Error("DB_HOST is not set! Check environment variables.");
 }
 
 export const client =
   global.pgPool ??
   new Pool({
-    connectionString,
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT ?? 5432),
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     ssl: {
       rejectUnauthorized: false,
     },
