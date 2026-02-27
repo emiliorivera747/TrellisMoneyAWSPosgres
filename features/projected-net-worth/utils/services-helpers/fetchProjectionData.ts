@@ -51,6 +51,7 @@ const fetchAndFormatProjection = async (
     endDate,
     isInflationAdjusted
   );
+  if (!res.data) throw new Error(res.message ?? "Failed to fetch projection data");
   const { projectedNetWorth, projectedAssets } = res.data;
   return {
     netWorth: { filterValue: filter, data: projectedNetWorth },
