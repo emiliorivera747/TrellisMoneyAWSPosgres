@@ -8,6 +8,7 @@
     "sync:stripe": "tsx scripts/syncProductsAndPrices.ts",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "tsx ./drizzle/migrate.ts",
+    "db:seed": "tsx ./drizzle/seed.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
