@@ -22,10 +22,13 @@ const NetWorthGraphHeader = ({ graphConfigs }: NetWorthGraphHeaderProps) => {
     setSelectedFilter(filter);
   };
 
+  const title =
+    filterConfig.find((f) => f.key === selectedFilter)?.label ?? "Net Worth";
+
   return (
     <GraphSummaryHeader graphConfigs={graphConfigs}>
       <div className="flex flex-row justify-between">
-        <GraphSummaryHeader.Header label="Net Worth" />
+        <GraphSummaryHeader.Header label={title} />
         <GraphSummaryHeader.FilterButton
           filterConfig={filterConfig}
           selectedFilter={selectedFilter}
