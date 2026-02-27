@@ -74,7 +74,7 @@ export default async function Home() {
           url={"/#"}
           title={"Forecast"}
           videoUrl={
-            "https://res.cloudinary.com/davx3yyob/video/upload/v1760242424/Portfolio_Video_1_hnsfub.mp4"
+            "https://res.cloudinary.com/dxxdfgpdh/video/upload/v1772235119/Portfolio_Video_2_tupy6r.mp4"
           }
           buttonLabel={"Learn More"}
           titleClassName="text-2xl sm:text-4xl text-tertiary-1000 font-semibold"
