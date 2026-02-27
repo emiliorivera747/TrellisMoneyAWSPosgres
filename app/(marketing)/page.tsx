@@ -8,6 +8,7 @@ import HeroSection from "@/components/marketing/layout/HeroSection";
 import Navbar from "@/components/nav-bars/NavBar";
 import Footer from "@/components/footers/Footer";
 import PricingSection from "@/features/subscription-plans/components/PricingSection";
+import ProjectSection from "@/components/marketing/layout/ProjectSection";
 
 // Utils
 import { createClient } from "@/utils/supabase/server";
@@ -67,6 +68,19 @@ export default async function Home() {
     <div className="bg-white dark:bg-gray-900 h-auto">
       <Navbar isAuthenticated={!!user} />
       <HeroSection isAuthenticated={!!user} />
+      <ProjectSection
+        subtitle="Plan for the Future"
+        url={"/#"}
+        title={"Forecast"}
+        videoUrl={
+          "https://res.cloudinary.com/davx3yyob/video/upload/v1760242424/Portfolio_Video_1_hnsfub.mp4"
+        }
+        buttonLabel={"Learn More"}
+        titleClassName="text-2xl sm:text-4xl text-tertiary-1000 font-semibold"
+        buttonClassName="flex items-center absolute rounded-[12px] border-2 border-zinc-800 hover:border-zinc-800 bg-transparent text-[#495057] w-60 h-[3.6rem] font-semibold self-center justify-center text-center p-2 bottom-6 hover:bg-tertiary-1000 hover:text-white"
+        bgColor="bg-white"
+        videoCover="sm:object-cover"
+      />
       {!user && <PricingSection />}
       <Footer />
     </div>

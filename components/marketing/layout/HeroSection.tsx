@@ -23,7 +23,7 @@ interface HeroSectionProps {
 // Main hero section - full-height banner with headline, subtitle, and CTA
 export default function HeroSection({ isAuthenticated }: HeroSectionProps) {
   return (
-    <header className="flex h-[90vh] flex-col items-center justify-center text-center ">
+    <header className="flex h-[90vh] flex-col items-center justify-center text-center border-b border-tertiary-200">
       <div className=" -translate-y-[20%] sm:-translate-y-[20%] w-[86%] sm:w-[90%] flex flex-col justify-center items-center">
         {/* Headline */}
         <h1 className="bg-gradient-to-r from-tertiary-1000 to-tertiary-800 bg-clip-text text-[1.8rem]  text-transparent sm:text-[3.2rem] tracking-wide font-bold pb-2">
