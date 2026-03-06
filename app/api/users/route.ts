@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { z } from "zod";
+import crypto from "crypto";
 import { withAuth } from "@/lib/protected";
 import {
   recordSchema,
@@ -7,6 +8,7 @@ import {
 } from "@/features/auth/schemas/formSchemas";
 
 import { handleZodError } from "@/utils/api-helpers/errors/handleZodErrors";
+import { rateLimit } from "@/utils/api-helpers/rate-limit";
 import {
   getUserByEmailOrId,
   createUserWithDetails,
@@ -16,6 +18,31 @@ import {
   getUserById,
   deleteUserById,
 } from "@/utils/drizzle/user/user";
+
+const verifyWebhookHmac = async (req: NextRequest): Promise<{ body: string } | NextResponse> => {
+  const secret = req.headers.get("x-supabase-secret");
+  const timestamp = req.headers.get("x-supabase-timestamp");
+
+  if (!timestamp) {
+    return NextResponse.json({ error: "Timestamp missing" }, { status: 400 });
+  }
+
+  const timestampInt = parseInt(timestamp);
+  if (Date.now() - timestampInt > 60000) {
+    return NextResponse.json({ error: "Timestamp expired" }, { status: 400 });
+  }
+
+  const body = await req.text();
+  const hmac = crypto.createHmac("sha256", process.env.PRIVATE_SUPABASE_KEY || "");
+  hmac.update(`${timestamp}${body}`);
+  const calculatedSignature = hmac.digest("hex");
+
+  if (!secret || !crypto.timingSafeEqual(Buffer.from(secret), Buffer.from(calculatedSignature))) {
+    return NextResponse.json({ error: "Invalid secret" }, { status: 403 });
+  }
+
+  return { body };
+};
 
 const getNameFromBody = (body: RecordSchema) =>
   body?.record?.raw_user_meta_data?.name || body?.record?.email || "none";
@@ -50,8 +77,14 @@ const parseRecord = (body: RecordSchema) => {
  * @access Public
  */
 export const POST = async (req: NextRequest) => {
+  const limited = rateLimit(req, 20, 60_000);
+  if (limited) return limited;
+
+  const result = await verifyWebhookHmac(req);
+  if (result instanceof NextResponse) return result;
+
   try {
-    const body = await req.json();
+    const body = JSON.parse(result.body);
 
     /**
      * Validate the user schema

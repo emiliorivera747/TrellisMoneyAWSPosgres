@@ -1,38 +1,40 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getUserById } from "@/utils/drizzle/user/user";
+import { withAuth } from "@/lib/protected";
 
 export const GET = async (
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ _id: string }> }
-) => {
-  try {
-    const { _id } = await params;
+) =>
+  withAuth(request, async () => {
+    try {
+      const { _id } = await params;
 
-    if (!_id) {
+      if (!_id) {
+        return NextResponse.json(
+          { message: "User ID not provided", status: "error" },
+          { status: 400 }
+        );
+      }
+
+      const user = await getUserById(_id);
+
+      if (!user) {
+        return NextResponse.json(
+          { message: "User not found", status: "error" },
+          { status: 404 }
+        );
+      }
+
       return NextResponse.json(
-        { message: "User ID not provided", status: "error" },
-        { status: 400 }
+        { status: "success", data: user.userId },
+        { status: 200 }
+      );
+    } catch (error) {
+      //("Error", error);
+      return NextResponse.json(
+        { message: "Server Error", status: "error" },
+        { status: 500 }
       );
     }
-
-    const user = await getUserById(_id);
-
-    if (!user) {
-      return NextResponse.json(
-        { message: "User not found", status: "error" },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json(
-      { status: "success", data: user.userId },
-      { status: 200 }
-    );
-  } catch (error) {
-    //("Error", error);
-    return NextResponse.json(
-      { message: "Server Error", status: "error" },
-      { status: 500 }
-    );
-  }
-};
+  });

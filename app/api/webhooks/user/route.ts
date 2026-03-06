@@ -45,7 +45,11 @@ export async function DELETE(req: Request) {
     //("calculatedSignature", calculatedSignature);
 
     // Check if x-supabase-secret matches our PRIVATE_SUPABASE_KEY
-    if (secret !== calculatedSignature) {
+    if (
+      !secret ||
+      secret.length !== calculatedSignature.length ||
+      !crypto.timingSafeEqual(Buffer.from(secret), Buffer.from(calculatedSignature))
+    ) {
       return NextResponse.json({ error: "Invalid secret" }, { status: 403 });
     }
 
@@ -73,9 +77,9 @@ export async function DELETE(req: Request) {
       },
       { status: 200 }
     );
-  } catch (err) {
+  } catch {
     return NextResponse.json(
-      { message: "Server Error", error: err, status: "error" },
+      { message: "Server Error", status: "error" },
       { status: 500 }
     );
   }

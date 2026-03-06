@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/drizzle/db";
 import { waitlist } from "@/drizzle/schema";
 import { handleZodError } from "@/utils/api-helpers/errors/handleZodErrors";
+import { rateLimit } from "@/utils/api-helpers/rate-limit";
 
 const waitlistSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -15,6 +16,9 @@ const waitlistSchema = z.object({
  * @access Public
  */
 export const POST = async (req: NextRequest) => {
+  const limited = rateLimit(req, 5, 60_000);
+  if (limited) return limited;
+
   try {
     const body = await req.json();
     const { email } = waitlistSchema.parse(body);
