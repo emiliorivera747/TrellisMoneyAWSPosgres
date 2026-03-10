@@ -2,15 +2,18 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useVideoIntersectionObserver } from "@/hooks/video-display/useVideoIntersectionObserver";
 
 import { PrimaryHeader, SecondaryHeader } from "../headers/Headers";
 
 interface ProjectSectionProps {
   title: string;
-  videoUrl: string;
   buttonLabel: string;
   url: string;
+  videoUrl?: string;
+  imageUrl?: string;
+  imageAlt?: string;
   subtitle?: string;
   bgColor?: string;
   videoCover?: string;
@@ -45,6 +48,8 @@ const DEFAULT_BUTTON_CLASS =
 function ProjectSection({
   title,
   videoUrl,
+  imageUrl,
+  imageAlt = "",
   buttonLabel,
   url,
   subtitle,
@@ -77,15 +82,24 @@ function ProjectSection({
             )}
           </div>
         </motion.div>
-        <video
-          ref={videoRef}
-          className={`h-full w-full ${videoCover}`}
-          src={videoUrl}
-          preload="none"
-          loop
-          muted
-          playsInline
-        />
+        {videoUrl ? (
+          <video
+            ref={videoRef}
+            className={`h-full w-full ${videoCover}`}
+            src={videoUrl}
+            preload="none"
+            loop
+            muted
+            playsInline
+          />
+        ) : imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={imageAlt}
+            fill
+            className={videoCover}
+          />
+        ) : null}
         <div className="flex items-end justify-center">
           <Link
             href={url}
