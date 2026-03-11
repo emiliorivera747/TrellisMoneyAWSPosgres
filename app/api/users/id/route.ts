@@ -33,8 +33,8 @@ export async function GET(request: NextRequest) {
         { message: "Protected data", user: userData },
         { status: 200 }
       );
-    } catch (error) {
-      return NextResponse.json({ error: error }, { status: 500 });
+    } catch {
+      return NextResponse.json({ message: "Server Error", status: "error" }, { status: 500 });
     }
   });
 }
@@ -75,9 +75,9 @@ export async function DELETE(request: NextRequest) {
         { status: "success", message: "User deleted" },
         { status: 200 }
       );
-    } catch (err) {
+    } catch {
       return NextResponse.json(
-        { message: "Server Error", error: err, status: "error" },
+        { message: "Server Error", status: "error" },
         { status: 500 }
       );
     }

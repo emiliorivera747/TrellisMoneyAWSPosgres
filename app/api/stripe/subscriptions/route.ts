@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { stripe } from "@/lib/stripe";
+import { withAuth } from "@/lib/protected";
 
 /**
  * Handles the GET request to retrieve a list of active Stripe subscriptions.
@@ -14,7 +15,8 @@ import { stripe } from "@/lib/stripe";
  * @throws {Error} If an error occurs while fetching the subscriptions from the Stripe API,
  * the error message and status code are returned in the response.
  */
-export async function GET() {
+export async function GET(req: NextRequest) {
+  return withAuth(req, async () => {
     try {
         /**
          * Get all of the subscriptions
@@ -28,7 +30,8 @@ export async function GET() {
             { data: subscriptions.data, status: "success" },
             { status: 200 }
         );
-    } catch (error: any) {
-        return new Response(error.message, { status: error.statusCode || 500 });
+    } catch {
+        return NextResponse.json({ message: "Server Error" }, { status: 500 });
     }
+  });
 }

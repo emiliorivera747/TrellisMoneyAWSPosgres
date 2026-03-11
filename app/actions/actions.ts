@@ -187,34 +187,25 @@ export const confirmReset = async (
 
     if (error) return handleOtherErrors(error) as State;
 
+    // Generic message used in all cases to prevent email enumeration
+    const genericSuccess: State = {
+      status: "success",
+      message: "If an account with that email exists, a password reset link has been sent.",
+      user: { email },
+    };
+
     if (data) {
       const user = data.users.find((user) => user.email === email);
-      
-      if (!user) {
-        return {
-          status: "error",
-          message: "User not found",
-          errors: new Error("user_not_found"),
-        };
-      }
-      if (user.app_metadata.provider !== "email") {
-        return {
-          status: "error",
-          message: "Please sign in with Google or another provider.",
-          errors: new Error("User not registered with email."),
-        };
-      }
+
+      // Return generic success regardless of whether user exists
+      if (!user || user.app_metadata.provider !== "email") return genericSuccess;
     }
 
     await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/reset-password`,
     });
 
-    return {
-      status: "success",
-      message: "Password reset email sent successfully.",
-      user: { email },
-    };
+    return genericSuccess;
   } catch (e) {
     if (e instanceof z.ZodError) return handleZodError(e) as State;
     return handleOtherErrors(e) as State;
