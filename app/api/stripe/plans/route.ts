@@ -18,20 +18,18 @@ import { withAuth } from "@/lib/protected";
  * the error message and status code are returned in the response.
  */
 export async function GET(req: NextRequest) {
-  return withAuth(req, async () => {
-    try {
-      const prices = await stripe.prices.list({
-        active: true,
-        limit: 100,
-        expand: ["data.product"],
-      });
+  try {
+    const prices = await stripe.prices.list({
+      active: true,
+      limit: 100,
+      expand: ["data.product"],
+    });
 
-      return NextResponse.json(
-        { data: prices.data, status: "success" },
-        { status: 200 }
-      );
-    } catch {
-      return NextResponse.json({ message: "Server Error" }, { status: 500 });
-    }
-  });
+    return NextResponse.json(
+      { data: prices.data, status: "success" },
+      { status: 200 }
+    );
+  } catch {
+    return NextResponse.json({ message: "Server Error" }, { status: 500 });
+  }
 }
