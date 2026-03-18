@@ -83,6 +83,21 @@ export default async function Home() {
           videoCover="sm:object-cover"
         />
       )}
+      {!user && (
+        <ProjectSection
+          subtitle="Manage all of your accounts in one place"
+          url={"/#"}
+          title={"Manage Accounts"}
+          imageUrl={
+            "https://res.cloudinary.com/dxxdfgpdh/image/upload/v1773793831/Untitled_design_2_awosab.png"
+          }
+          buttonLabel={"Learn More"}
+          titleClassName="text-2xl sm:text-4xl text-tertiary-1000 font-semibold"
+          buttonClassName="flex items-center absolute rounded-[12px] border-2 border-zinc-800 hover:border-zinc-800 bg-transparent text-[#495057] w-60 h-[3.6rem] font-semibold self-center justify-center text-center p-2 bottom-6 hover:bg-tertiary-1000 hover:text-white"
+          bgColor="bg-white"
+          videoCover="sm:object-cover"
+        />
+      )}
       {!user && <PricingSection />}
       <Footer />
     </div>
