@@ -89,7 +89,7 @@ export default async function Home() {
           url={"/#"}
           title={"Manage Accounts"}
           imageUrl={
-            "https://res.cloudinary.com/dxxdfgpdh/image/upload/v1773793831/Untitled_design_2_awosab.png"
+            "https://res.cloudinary.com/dxxdfgpdh/image/upload/v1773794860/Untitled_design_3_dm4i7y.png"
           }
           buttonLabel={"Learn More"}
           titleClassName="text-2xl sm:text-4xl text-tertiary-1000 font-semibold"
