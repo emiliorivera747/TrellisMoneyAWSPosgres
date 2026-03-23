@@ -97,7 +97,7 @@ function ProjectSection({
             src={imageUrl}
             alt={imageAlt}
             fill
-            className={videoCover}
+            className={"object-scale-down"}
           />
         ) : null}
         <div className="flex items-end justify-center">
