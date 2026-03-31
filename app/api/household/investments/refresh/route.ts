@@ -28,18 +28,22 @@ import { refreshHouseholdHoldings } from "@/utils/drizzle/investments/getInvestm
 export async function POST(req: NextRequest) {
   return withAuth(req, async (request, user) => {
     try {
-      
-      
       // Step 1: Get items (sequential - needed first)
       const items = await getItemsByUserId(user.id);
       if (!items || items.length === 0)
         return FailResponse("No connected financial institutions found", 404);
 
+      console.log("items", items);
+
       // Step 2: Get accounts first (needed for holdings query)
       const accountsDB = await getAccountsFromItems(items);
 
+      console.log(accountsDB)
+
       // Step 3: Get holdings for these accounts
       const holdingsDB = await getHoldingsByAccounts(accountsDB);
+
+      console.log(holdingsDB)
 
       // Step 4: Refresh from Plaid and update database
       const result = await refreshHouseholdHoldings({
@@ -48,6 +52,8 @@ export async function POST(req: NextRequest) {
         timestamp: "",
         holdingsDB: holdingsDB || [],
       });
+
+      console.log()
 
       const { accountsUpdated, holdingsUpdated, securitiesUpdated } =
         result.stats;
@@ -63,6 +69,7 @@ export async function POST(req: NextRequest) {
         "Household holdings refreshed successfully"
       );
     } catch (error) {
+      console.log(getServerErrorMessage(error));
       return ErrorResponse(getServerErrorMessage(error));
     }
   });
