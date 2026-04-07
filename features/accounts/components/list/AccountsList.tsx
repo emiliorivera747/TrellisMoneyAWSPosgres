@@ -36,6 +36,7 @@ const AccountsList = ({
                   key={account.accountId}
                   account={account}
                   member={null}
+                  institutionName={account.institutionName}
                 />
               );
             })}

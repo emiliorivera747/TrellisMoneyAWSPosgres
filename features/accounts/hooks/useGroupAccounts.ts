@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Account } from "@/drizzle/schema";
 
 import {
   AccountGroupedByType,
+  AccountWithInstitution,
   UseGroupAccountsProps,
 } from "@/features/accounts/types/accounts";
 
@@ -19,7 +19,7 @@ const useGroupAccounts = ({ accounts }: UseGroupAccountsProps) => {
 
   useEffect(() => {
     const groupedAccounts = accounts?.reduce(
-      (acc: { [key: string]: Account[] }, account) => {
+      (acc: { [key: string]: AccountWithInstitution[] }, account) => {
         const { type } = account;
 
         if (!type) return acc;

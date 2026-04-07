@@ -1,5 +1,10 @@
 import { Account } from "@/drizzle/schema";
 
+export type AccountWithInstitution = Account & {
+  institutionName?: string | null;
+  institutionId?: string | null;
+};
+
 /**
  * Properties for the account list component.
  * @export
@@ -29,10 +34,10 @@ export interface AccountListProps {
 
   /**
    * Accounts grouped by type.
-   * @type {Record<string, Account[]>}
+   * @type {Record<string, AccountWithInstitution[]>}
    * @memberof AccountListProps
    */
-  groups: Record<string, Account[]>;
+  groups: Record<string, AccountWithInstitution[]>;
 }
 
 /**
@@ -43,10 +48,10 @@ export interface AccountListProps {
 export interface AccountGroupedByType {
   /**
    * Accounts indexed by type key.
-   * @type {Account[]}
+   * @type {AccountWithInstitution[]}
    * @memberof AccountGroupedByType
    */
-  [key: string]: Account[];
+  [key: string]: AccountWithInstitution[];
 }
 
 /**
@@ -57,8 +62,8 @@ export interface AccountGroupedByType {
 export interface UseGroupAccountsProps {
   /**
    * Array of accounts to be grouped.
-   * @type {Account[] | undefined}
+   * @type {AccountWithInstitution[] | undefined}
    * @memberof UseGroupAccountsProps
    */
-  accounts: Account[] | undefined;
+  accounts: AccountWithInstitution[] | undefined;
 }

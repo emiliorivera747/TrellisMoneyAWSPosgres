@@ -1,21 +1,27 @@
 import { db } from "@/drizzle/db";
-import { account, Item, householdMember } from "@/drizzle/schema";
+import { account, item, Item, householdMember } from "@/drizzle/schema";
 import { inArray, desc, eq } from "drizzle-orm";
+import { getTableColumns } from "drizzle-orm";
 
 /**
- * Retrieves all accounts associated with the provided items.
+ * Retrieves all accounts associated with the provided items, including institution info.
  *
  * @param items - Array of items to get accounts for
- * @returns A promise that resolves to an array of accounts for the given items
+ * @returns A promise that resolves to an array of accounts with institution data
  */
 export const getAccountsFromItems = async (items: Pick<Item, "itemId">[]) => {
-  const itemIds = items.map((item) => item.itemId);
+  const itemIds = items.map((i) => i.itemId);
 
   if (itemIds.length === 0) return [];
 
   const accounts = await db
-    .select()
+    .select({
+      ...getTableColumns(account),
+      institutionName: item.institutionName,
+      institutionId: item.institutionId,
+    })
     .from(account)
+    .leftJoin(item, eq(account.itemId, item.itemId))
     .where(inArray(account.itemId, itemIds))
     .orderBy(desc(account.currentBalance));
 

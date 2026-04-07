@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { Account, HouseholdMember } from "@/drizzle/schema";
 import { convertToMoney } from "@/utils/helper-functions/formatting/convertToMoney";
+import { getInstitutionStyle } from "@/utils/accounts/institutionStyles";
 
 interface AccountCardProps {
   account: Account;
   member: HouseholdMember | null;
-  logoUrl?: string;
+  institutionName?: string | null;
 }
 
 function hashToHue(str: string): number {
@@ -15,12 +17,20 @@ function hashToHue(str: string): number {
   return hash % 360;
 }
 
-const AccountCard = ({ account, member, logoUrl }: AccountCardProps) => {
+const AccountCard = ({ account, member, institutionName }: AccountCardProps) => {
+  const [logoError, setLogoError] = useState(false);
   const initials = account.accountName.trim().charAt(0).toUpperCase();
+  const { color, logoUrl } = getInstitutionStyle(institutionName);
+
   const hue = hashToHue(account.itemId);
-  const gradientStyle = {
+  const fallbackGradient = {
     background: `linear-gradient(to right, hsl(${hue}, 65%, 45%), hsl(${(hue + 40) % 360}, 65%, 35%))`,
   };
+  const brandStyle = color
+    ? { background: `linear-gradient(to right, ${color}cc, ${color})` }
+    : fallbackGradient;
+
+  const showLogo = logoUrl && !logoError;
 
   return (
     <div
@@ -28,11 +38,16 @@ const AccountCard = ({ account, member, logoUrl }: AccountCardProps) => {
       className="bg-white/5 backdrop-blur-md  p-4 px-4 rounded-[12px] grid grid-cols-3 mb-4 border border-tertiary-200 hover:shadow-lg transition duration-500 ease-in-out w-full items-center"
     >
       <div
-        className="flex flex-col rounded-full items-center justify-center text-white h-12 w-12 overflow-hidden"
-        style={logoUrl ? undefined : gradientStyle}
+        className={`flex flex-col rounded-full items-center justify-center h-12 w-12 overflow-hidden shrink-0 ${showLogo ? "bg-white border border-tertiary-100" : "text-white"}`}
+        style={showLogo ? undefined : brandStyle}
       >
-        {logoUrl ? (
-          <img src={logoUrl} alt={account.accountName} className="h-full w-full object-contain p-1" />
+        {showLogo ? (
+          <img
+            src={logoUrl}
+            alt={institutionName ?? account.accountName}
+            className="h-8 w-8 object-contain"
+            onError={() => setLogoError(true)}
+          />
         ) : (
           <span className="text-lg font-semibold">{initials}</span>
         )}

@@ -21,7 +21,7 @@ import { Account, HouseholdMember } from "@/drizzle/schema";
 interface AccountCardWithModalProps {
   account: Account;
   member: HouseholdMember | null;
-  logoUrl?: string;
+  institutionName?: string | null;
 }
 
 /**
@@ -39,7 +39,7 @@ interface AccountCardWithModalProps {
 const AccountCardWithModal = ({
   account,
   member,
-  logoUrl,
+  institutionName,
 }: AccountCardWithModalProps) => {
   const { mutateItem, itemIsPending, itemHasError, itemError } =
     useRemoveItem();
@@ -50,7 +50,7 @@ const AccountCardWithModal = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger className="w-full">
-        <AccountCard account={account} member={member} logoUrl={logoUrl} />
+        <AccountCard account={account} member={member} institutionName={institutionName} />
       </AlertDialogTrigger>
       <AlertDialogContent className="h-[70vh] w-[60vw] overflow-scroll max-w-screen rounded-[12px]">
         <AlertDialogHeader>
