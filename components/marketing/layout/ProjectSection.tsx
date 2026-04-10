@@ -39,7 +39,7 @@ const variants = {
 };
 
 const DEFAULT_BUTTON_CLASS =
-  "flex items-center absolute rounded-[12px] border-2 border-zinc-800 bg-transparent text-zinc-700 w-60 h-[3.6rem] font-semibold self-center justify-center text-center p-2 bottom-6";
+  "flex items-center absolute rounded-[12px] border-2 border-zinc-800 bg-transparent text-zinc-700 w-60 h-[3.6rem] font-semibold self-center justify-center text-center p-2 bottom-6 transition-all delay-150 duration-900 ease-in-out hover:bg-zinc-800 hover:text-white";
 
 /**
  * Displays a full-screen project section with a background video, animated
