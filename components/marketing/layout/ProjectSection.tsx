@@ -100,7 +100,7 @@ function ProjectSection({
             className={"object-scale-down"}
           />
         ) : null}
-        <div className="flex items-end justify-center">
+        {/* <div className="flex items-end justify-center">
           <Link
             href={url}
             className={buttonClassName}
@@ -108,7 +108,7 @@ function ProjectSection({
           >
             {buttonLabel}
           </Link>
-        </div>
+        </div> */}
       </motion.div>
     </section>
   );
